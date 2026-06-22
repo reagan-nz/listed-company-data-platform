@@ -78,7 +78,7 @@ SQLite 本地库（outputs/db/listed_companies_v1.db）
 | no_announcement | **73 家**（与 baseline 一致） |
 | hard error | **0** |
 | 非金融公司 | 936 家（headline 统计范围） |
-| 金融公司（ok） | 11 家（12 家 tagged，1 家 no_announcement） |
+| 金融公司（ok） | 11 家（**13 家 tagged**，1 家 no_announcement；601825 补标待下次 eval 生效） |
 
 ### 质量指标（非金融，936 家 — eval1000_v2）
 
@@ -126,7 +126,7 @@ SQLite 本地库（outputs/db/listed_companies_v1.db）
 
 1. **strict 审计未重跑**：eval1000_v2 proxy headline 已更新（10.33/11）；strict-usable 仍为 eval1000 修复前 **10.16/11**。
 2. **收入表格 empty-label 行**：603132、605090 共 4 字段实例 — pdfplumber 丢失行标签导致误拒。
-3. **金融 schema 已实现并首次全量验证**：11 家 ok 金融公司已分 bank/broker/insurer/other_financial；numeric 抽取质量未做 strict 审计；部分银行（如 601825 沪农商行）YAML 未标 `financial: true`。
+3. **金融 schema 已实现并首次全量验证**：11 家 ok 金融公司已分 bank/broker/insurer/other_financial；numeric 抽取质量未做 strict 审计。~~部分银行（如 601825 沪农商行）YAML 未标 `financial: true`~~ **已补全**（2026-06-22 标签审计：+1 家 601825；`financial: true` 共 13 家）。
 4. **BrowserUser 扩展未启动**：见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)。
 5. **`strict_audit_result` loader 未实现**：`db_import.py` 尚未从 strict audit 结果回填。
 6. **其他字段级问题**（非 blocking）：客户/供应商集中度偶抓单项而非合计；`major_subsidiaries` 约 132 家「无/不适用」披露内容为空。
@@ -138,7 +138,7 @@ SQLite 本地库（outputs/db/listed_companies_v1.db）
 1. **BrowserUser 规划/试点**：见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)。
 2. **strict 审计重跑**（eval1000_v2 plausible 单元格 adversarial 复核）— 更新 strict-usable headline。
 3. **补 `strict_audit_result` loader**；DB 已导入 eval1000_v2（10428 行）。
-4. **金融 YAML 标签补全**：将 601825 等未标 `financial: true` 的银行纳入金融子 schema。
+4. ~~**金融 YAML 标签补全**~~ **Done**（601825 沪农商行；`_BANK_NAME_KW` 增加 农商行/城商行）。待人工复核：`000419`/`000968`/`300292` 等「控股」非金融公司；`600390`/`600061`/`000987` 等「资本」类是否纳入金融。
 
 ---
 

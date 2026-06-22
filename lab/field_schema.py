@@ -591,7 +591,7 @@ PROFILE_FIELD_MAP: dict[str, list[FieldSpec]] = {
 FINANCIAL_PROFILES = frozenset({"bank", "broker", "insurer", "other_financial", "financial"})
 
 # Name-based hints (generic, not company-specific).
-_BANK_NAME_KW = ("银行",)
+_BANK_NAME_KW = ("银行", "农商行", "城商行")
 _BROKER_NAME_KW = ("证券",)
 _INSURER_NAME_KW = ("保险", "人寿", "财险", "再保险")
 _FUTURES_NAME_KW = ("期货",)

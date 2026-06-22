@@ -82,7 +82,7 @@ companies:
   exchange: SSE
   orgid: '9900010687'
   board: sse_main
-  financial: false
+  financial: true
 - short_name: 华菱精工
   stock_code: '603356'
   exchange: SSE

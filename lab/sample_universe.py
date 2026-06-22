@@ -42,7 +42,7 @@ def board_of(code: str) -> tuple[str, str]:
 # Target counts per stratum (sums to ~200 at scale=1).
 TARGETS = {"sse_main": 60, "star": 25, "szse_main": 50, "chinext": 45, "bse": 20}
 
-_FIN_KW = ("银行", "证券", "保险", "期货", "信托", "再保险", "人寿", "财险", "金控", "金融", "资管", "基金")
+_FIN_KW = ("银行", "证券", "保险", "期货", "信托", "再保险", "人寿", "财险", "金控", "金融", "资管", "基金", "农商行", "城商行")
 
 
 def is_financial(name: str) -> bool:
