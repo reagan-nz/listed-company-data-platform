@@ -446,6 +446,85 @@ def extract_table_near(
     return best
 
 
+# Revenue table plausibility: require at least one data row (label + numeric value).
+_REVENUE_TABLE_HEADER_CELLS = frozenset({
+    "分行业", "分产品", "分地区", "分销售模式",
+})
+_REVENUE_TABLE_HEADER_WORDS = (
+    "营业收入", "营业成本", "毛利率", "毛利", "比上年", "增减", "百分点", "比例",
+)
+_TABLE_NUM_RE = re.compile(r"[-+]?\d[\d,]*\.?\d*")
+
+
+def _table_cell_text(cell) -> str:
+    return str(cell or "").strip()
+
+
+def _table_meaningful_number(cell: str) -> bool:
+    """True if cell contains a revenue/cost/margin-style numeric value."""
+    s = _table_cell_text(cell)
+    if not s or not any(ch.isdigit() for ch in s):
+        return False
+    if re.search(r"[%％]", s):
+        return bool(_TABLE_NUM_RE.search(s))
+    if re.search(r"(?:亿元|万元|千元|元)", s):
+        return bool(_TABLE_NUM_RE.search(s))
+    m = _TABLE_NUM_RE.search(s.replace(" ", ""))
+    if not m:
+        return False
+    raw = m.group(0).replace(",", "")
+    try:
+        val = float(raw)
+    except ValueError:
+        return False
+    if "," in m.group(0):
+        return True
+    if abs(val) >= 100:
+        return True
+    if "." in raw and val != int(val):
+        return True
+    return False
+
+
+def _table_is_header_cell(cell: str) -> bool:
+    if not cell:
+        return True
+    if cell in _REVENUE_TABLE_HEADER_CELLS:
+        return True
+    if "主营业务分" in cell and "情况" in cell:
+        return True
+    if not any(ch.isdigit() for ch in cell):
+        if any(w in cell for w in _REVENUE_TABLE_HEADER_WORDS):
+            return True
+    return False
+
+
+def _table_row_is_data_row(row: list) -> bool:
+    """True when row has a non-header label and at least one meaningful numeric cell."""
+    cells = [_table_cell_text(c) for c in row]
+    if not any(cells):
+        return False
+    if not any(_table_meaningful_number(c) for c in cells):
+        return False
+    label_cells = [c for c in cells if c and not _table_is_header_cell(c) and not _table_meaningful_number(c)]
+    if label_cells:
+        return True
+    first = cells[0]
+    return bool(first) and not _table_is_header_cell(first)
+
+
+def revenue_table_plausible(value: dict | None) -> bool:
+    """Stricter plausibility for revenue_by_segment / revenue_by_region table previews."""
+    if not isinstance(value, dict):
+        return False
+    rows = value.get("rows")
+    if not rows:
+        return False
+    if value.get("match_hits", 0) < 1:
+        return False
+    return any(_table_row_is_data_row(row) for row in rows)
+
+
 _PCT_RE = re.compile(r"\d[\d,]*\.?\d*\s*[%％]")
 _AMT_RE = re.compile(r"\d[\d,]*\.?\d*\s*(?:亿元|万元|千元|元)")
 

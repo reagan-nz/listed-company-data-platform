@@ -8,6 +8,8 @@
 
 **rnd_investment proxy（2026-06-22 起）**：`status=found` 且 `labeled` 中至少含一条实质 R&D 金额（非 ratio-only、非 0.00 资本化行、非列表编号）；抽取侧优先 `研发投入金额/总额/合计` 标签，并排除利润表 `研发费用` 行。
 
+**revenue table proxy（2026-06-22 起）**：`revenue_by_region` / `revenue_by_segment` 在 `status=found` 且 `match_hits≥1` 基础上，preview 须含至少一行真实数据行（非表头标签 + 至少一个实质金额/比例数值）；拒绝 header-only 或空 preview。
+
 ## 测试层级
 
 ### 1. 单公司测试

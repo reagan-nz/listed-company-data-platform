@@ -34,7 +34,8 @@ from lab.probe_cninfo import (CATEGORY_CODES, EXCHANGE_COLUMN, STATIC_HOST,  # n
                               _session, pick_full_report, query_announcements,
                               resolve_org_id)
 from lab.extract_annual_report import (compute_regions, extract_field,  # noqa: E402
-                                       parse_pages, rnd_investment_plausible)
+                                       parse_pages, revenue_table_plausible,
+                                       rnd_investment_plausible)
 
 
 def _retry(fn, tries=3, gap=1.5):
@@ -69,6 +70,8 @@ def field_plausible(f: dict) -> bool:
     if ex == "concentration":
         return isinstance(v, dict) and bool(v.get("ratio") or v.get("amount"))
     if ex == "table":
+        if f.get("field") in ("revenue_by_region", "revenue_by_segment"):
+            return revenue_table_plausible(v)
         return isinstance(v, dict) and bool(v.get("rows")) and v.get("match_hits", 0) >= 1
     return False
 
