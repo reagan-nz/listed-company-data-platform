@@ -2,7 +2,7 @@
 
 _最后更新：2026-06-22（eval1000_v2 重跑 + 金融标签审计完成）_
 
-> **本文档是项目主进度页。** 老师或项目 supervisor 建议从这里开始阅读；技术细节见 [docs/](docs/)，变更记录见 [CHANGELOG.md](CHANGELOG.md)。
+> **本文档是项目主进度页。** 老师建议从这里开始阅读；技术细节见 [docs/](docs/)，变更记录见 [CHANGELOG.md](CHANGELOG.md)。
 
 **2026-06-22 日结**：同 cohort 全量重跑 eval1000_v2 完成；Issue #1/#2/#4 变更经全量验证；金融 YAML 标签补全至 16 家；baseline eval1000 保留未覆盖。
 
