@@ -2,17 +2,18 @@
 
 基于中国 A 股上市公司**公开年报 PDF**，程序化抽取 11 项基础字段，构建可证据追溯的公司基础标签库。后续计划用 BrowserUser 爬虫智能体补充普通程序难以获取的数据。
 
-**当前阶段**：第一阶段末期 — 年报抽取链路已跑通，1000 家受控评估已完成。
+**当前阶段**：第一阶段末期 — 年报抽取链路已跑通，1000 家受控评估已完成，SQLite 数据平台原型已就绪。
 
 ## 如何查看当前进度
 
-本项目不仅包含代码，也使用 GitHub Project 看板记录当前工作方向、版本进度和后续计划。
+**主进度页：[CURRENT_STATUS.md](CURRENT_STATUS.md)** — 项目目标、已完成工作、关键数字、已知问题与下一步计划。
 
 建议查看顺序：
 
-1. 先阅读 `CURRENT_STATUS.md`，了解项目当前阶段、测试结果和主要问题；
-2. 再查看 GitHub Project 看板，了解我正在做什么、下一步准备做什么、哪些任务已经完成；
-3. 如需了解技术细节，可继续查看 `docs/` 下的数据来源、年报抽取流程、评估方法和数据库结构说明。
+1. **[CURRENT_STATUS.md](CURRENT_STATUS.md)** — 项目阶段进度（老师 / supervisor 建议从这里开始）；
+2. **GitHub Project 看板** — Todo / In Progress / Done 任务状态；
+3. **[CHANGELOG.md](CHANGELOG.md)** — 变更记录；
+4. **[docs/](docs/)** — 技术细节（数据源、抽取、评估、数据库）。
 
 当前看板重点包括：
 
@@ -62,7 +63,7 @@ python lab/calibration_sample.py --eval-dir outputs/generalization/eval1000 --n 
 
 | 文档 | 说明 |
 |---|---|
-| [CURRENT_STATUS.md](CURRENT_STATUS.md) | 当前状态与最新测试结果 |
+| [CURRENT_STATUS.md](CURRENT_STATUS.md) | **主进度页** — 阶段成果、关键数字、已知问题、下一步 |
 | [ROADMAP.md](ROADMAP.md) | 分阶段路线图 |
 | [CHANGELOG.md](CHANGELOG.md) | 关键更新记录 |
 | [docs/](docs/) | 技术文档（数据源、抽取、评估、协作） |
