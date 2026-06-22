@@ -4,6 +4,9 @@
 
 ## [Unreleased]
 
+### 新增
+- **数据库存储方案 v1**（Issue #7）：`docs/database_schema.md` 定义四表（company_basic / report_source / extracted_field / evaluation_result）；推荐 SQLite 原型，后续迁 PostgreSQL
+
 ### 计划
 - 收紧 rnd_investment 数值抽取与 plausible 代理规则
 - 表格抽取增加 data-row 校验

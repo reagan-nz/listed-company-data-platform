@@ -1,6 +1,123 @@
-# 数据库字段 Schema
+# 数据库 Schema
 
-## 目标字段（11 项）
+本文档包含两部分：**年报抽取字段定义**（当前 pipeline 输出）与 **关系型数据库存储方案 v1**（Issue #7）。
+
+---
+
+## 一、数据库存储方案 v1
+
+### 设计目标
+
+- 将分散在 `company_profile.json` / `eval_results.json` 中的结果**结构化入库**，便于查询、导出与跨批次对比。
+- **第一版仅设计、不实现**：先固定表结构与字段语义，待 schema 稳定后再写导入脚本。
+- 与现有 JSON 产物**并存**：JSON 仍为抽取主输出，数据库为聚合查询层。
+
+### 表关系概览
+
+```
+company_basic (1) ──< report_source (N)
+       │                    │
+       └──────< extracted_field (N)  [company_code + report_year + field_name]
+       
+evaluation_result (N)  ── 关联 run_name + company_code + field_name（评估快照，可选 strict 结果）
+```
+
+### 1. `company_basic` — 公司主数据
+
+| 列名 | 类型 | 说明 |
+|---|---|---|
+| `company_code` | TEXT PK | 股票代码，如 `600031` |
+| `company_name` | TEXT | 公司简称或全称 |
+| `exchange` | TEXT | `SSE` / `SZSE` / `BSE` |
+| `board` | TEXT | `sse_main` / `star` / `chinext` / `szse_main` / `bse` |
+| `is_financial` | INTEGER | 0/1，是否金融类（银行/券商/保险等） |
+| `listing_status` | TEXT | `listed` / `delisted` / `st` 等（可选，后续扩展） |
+| `created_at` | TEXT | ISO8601，首次入库时间 |
+| `updated_at` | TEXT | ISO8601，最后更新时间 |
+
+**来源映射**：`lab/eval_companies_1000.yaml`、`eval_results.json` 中的 `stock_code`、`short_name`、`exchange`、`financial`。
+
+### 2. `report_source` — 年报来源与解析状态
+
+| 列名 | 类型 | 说明 |
+|---|---|---|
+| `company_code` | TEXT | FK → company_basic |
+| `report_year` | INTEGER | 报告年度，如 `2024` |
+| `report_title` | TEXT | 公告标题（如「2024年年度报告」） |
+| `source_url` | TEXT | 巨潮静态 PDF URL |
+| `pdf_sha256` | TEXT NULL | PDF 哈希（有则填，来自 `company_profile.source`） |
+| `download_status` | TEXT | `ok` / `no_announcement` / `error` / `skipped_cached` |
+| `parse_status` | TEXT | `ok` / `no_text_layer` / `error` |
+| `text_layer_ok` | INTEGER | 0/1，是否有可用文本层 |
+| `created_at` | TEXT | ISO8601 |
+| `updated_at` | TEXT | ISO8601 |
+
+**主键建议**：`(company_code, report_year)`。
+
+**来源映射**：`<code>/meta.json`、`eval_results.json` 的 `status`、`picked_title`、`source_url`、`page_count` / `text_len`。
+
+### 3. `extracted_field` — 抽取字段（核心事实表）
+
+| 列名 | 类型 | 说明 |
+|---|---|---|
+| `company_code` | TEXT | FK → company_basic |
+| `report_year` | INTEGER | 与 report_source 一致 |
+| `field_name` | TEXT | 字段 key，如 `mda`、`rnd_investment` |
+| `field_label_cn` | TEXT | 中文标签 |
+| `value` | TEXT | JSON 字符串（table/numeric/concentration 等复杂结构统一序列化） |
+| `status` | TEXT | `found` / `partial` / `not_found` |
+| `page` | INTEGER NULL | PDF 页码 |
+| `evidence_sentence` | TEXT | 证据句（≤200 字符） |
+| `source_url` | TEXT | 与 report_source 一致，便于单条追溯 |
+| `extraction_version` | TEXT | 抽取器/git 版本或日期标签，如 `20260618` |
+| `updated_at` | TEXT | ISO8601 |
+
+**主键建议**：`(company_code, report_year, field_name, extraction_version)`；若只保留最新版，可对 `(company_code, report_year, field_name)` 做 UPSERT。
+
+**来源映射**：`company_profile.json` → `fields[]`。
+
+**value 存储说明**：与下方「各类型 value 格式」一致；入库前 `json.dumps(value, ensure_ascii=False)`。
+
+### 4. `evaluation_result` — 评估与审计快照
+
+| 列名 | 类型 | 说明 |
+|---|---|---|
+| `run_name` | TEXT | 评估批次，如 `eval1000`、`eval200` |
+| `company_code` | TEXT | 公司代码 |
+| `field_name` | TEXT | 字段 key |
+| `proxy_plausible` | INTEGER | 0/1，自动 plausible 代理 |
+| `strict_audit_result` | TEXT NULL | 严格审计结论：`PASS` / `FAIL` / `EYES` / `NA`（有则填） |
+| `notes` | TEXT NULL | 备注（如 MISSED、FP 原因） |
+| `created_at` | TEXT | ISO8601 |
+
+**主键建议**：`(run_name, company_code, field_name)`。
+
+**来源映射**：`eval_results.json` 各 field 的 `plausible`；严格审计结果来自离线审计脚本输出（当前未持久化为单文件，可后续导入）。
+
+### SQLite vs PostgreSQL
+
+| 维度 | SQLite | PostgreSQL |
+|---|---|---|
+| 部署 | 单文件，零配置 | 需独立服务与账号 |
+| 适用阶段 | **本地原型、小团队、可复现** | 生产、多用户、大规模 |
+| 并发写入 | 单写为主，够用 | 多连接、高并发 |
+| 分享协作 | 复制 `.db` 文件即可 | 需托管实例与备份策略 |
+| 迁移成本 | 后期可 pgloader / 自定义脚本迁 PG | — |
+| 与当前产物 | 与 eval JSON 体量（946×11 行）匹配良好 | 全 A 股后仍适用 |
+
+### 推荐路线
+
+**先用 SQLite 做原型与可复现验证**（例如 `outputs/db/listed_companies_v1.db`）：
+
+1. 表结构稳定、导入脚本可重复跑通 eval1000 样本；
+2. 团队内共享单文件数据库 + 文档即可复现查询；
+3. 待字段 schema、金融拆分、BrowserUser 补充字段方向稳定后，**再迁移 PostgreSQL** 支撑全 A 股与多用户访问。
+
+**暂不实现**：本 Issue 仅文档定稿；实现时新增独立模块（如 `lab/db_import.py`），不修改 `extract_annual_report.py` / `field_schema.py`。
+
+---
+
+## 二、年报抽取字段（11 项）
 
 当前 pipeline 从年报 PDF 抽取以下 11 项基础字段，适用于工业/制造业/科技类 A 股上市公司。
 
@@ -107,8 +224,8 @@
 
 ## 未来 schema 扩展
 
-- **金融 schema**：独立的字段集（业务条线、贷款结构、不良率等）
-- **BrowserUser 补充字段**：投资者问答、官网业务描述、专利数量等
-- **跨年度字段**：同一公司多年年报的字段变化追踪
+- **金融 schema**：独立的字段集（业务条线、贷款结构、不良率等）→ 可增 `extracted_field.field_schema` 或独立表
+- **BrowserUser 补充字段**：投资者问答等 → 新 `field_name` + `source_type` 列（v2）
+- **跨年度字段**：同一公司多年 `report_year` 对比，依赖 `extracted_field` + `report_source` 时间序列
 
-详见 [ROADMAP.md](../ROADMAP.md) 第三阶段。
+详见 [ROADMAP.md](../ROADMAP.md) 第二阶段与第三阶段。

@@ -1,12 +1,16 @@
 # 当前状态
 
-_最后更新：2026-06-18_
+_最后更新：2026-06-22_
 
 ## 当前主方向
 
 搭建中国上市公司**基础数据库**。短期目标：基于巨潮资讯网公开年报 PDF，抽取所有上市公司的 11 项基础标签字段；中期目标：覆盖全部 A 股；长期目标：用 BrowserUser 爬虫智能体补充程序化难以获取的数据，扩充数据库宽度与深度。
 
-当前处于**第一阶段末期**：年报程序化抽取链路稳定，1000 家受控泛化评估与严格二次审计已完成。
+当前处于**第一阶段末期 → 第二阶段启动前**：年报程序化抽取与 1000 家评估已完成；**当前活跃任务（Issue #7）为数据库存储方案 v1 设计**（见 [docs/database_schema.md](docs/database_schema.md) 第一节）。
+
+## 当前进行中
+
+- **数据库存储方案 v1**（Issue #7）：已定稿四表结构（`company_basic`、`report_source`、`extracted_field`、`evaluation_result`）；推荐 SQLite 原型 → 稳定后迁 PostgreSQL；**尚未实现导入代码**。
 
 ## 已完成工作
 
@@ -81,11 +85,12 @@ _最后更新：2026-06-18_
 
 ## 下一步建议
 
-1. 收紧 `rnd_investment` 抽取规则：要求 TOTAL 标签 + 实质金额，拒绝 list-marker 和 ratio-only
-2. 表格抽取增加「至少一行含数字的数据行」校验
-3. 金融公司单独 schema（或标记 N/A 并排除 headline 统计）
-4. concentration 字段优先提取「合计/前五名合计」比例
-5. 启动 BrowserUser 试点：投资者互动、官网 IR 等非 PDF 数据源（见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)）
+1. **实现 SQLite 建表与 eval1000 → DB 导入脚本**（基于 v1 schema，不改抽取逻辑）
+2. 收紧 `rnd_investment` 抽取规则：要求 TOTAL 标签 + 实质金额，拒绝 list-marker 和 ratio-only
+3. 表格抽取增加「至少一行含数字的数据行」校验
+4. 金融公司单独 schema（或标记 N/A 并排除 headline 统计）
+5. concentration 字段优先提取「合计/前五名合计」比例
+6. 启动 BrowserUser 试点（见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)）
 
 ## 关键产物路径
 
