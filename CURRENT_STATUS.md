@@ -31,6 +31,7 @@ _最后更新：2026-06-22_
 | **SQLite 导入加固** | 单公司容错、审计元数据（`in_region` / `anchor_matched`）、FK 约束、`evaluation_result.report_year`（Issue #9） |
 | **字段质量改进** | `rnd_investment` 抽取收紧（Issue #1）；收入表格 proxy 收紧（Issue #2） |
 | **金融公司 schema 设计** | [docs/financial_company_schema.md](docs/financial_company_schema.md) 银行/券商/保险三类子 schema v1（Issue #3，文档 only） |
+| **Cached validation** | eval1000 缓存数据验证 Issue #1/#2 proxy 与 SQLite 全量导入 — 见 [outputs/validation/recent_changes_cached_validation.md](outputs/validation/recent_changes_cached_validation.md) |
 
 **更早的基础工作**（支撑上述里程碑）：
 
@@ -64,7 +65,7 @@ SQLite 本地库（outputs/db/listed_companies_v1.db）
 
 ## 4. 当前关键数字
 
-基于 **eval1000**（2026-06-18 前后跑完的全量评估）。**Issue #1 / #2 的 targeted fixes 尚未触发全量重跑**，下列 headline 数字为修复前 baseline。
+基于 **eval1000**（2026-06-18 前后跑完的全量评估）。**2026-06-22 cached validation** 已在现有 profile 上重算 proxy，**全量 eval 管道与 strict 审计尚未重跑**。
 
 ### 样本与成功率
 
@@ -81,11 +82,22 @@ SQLite 本地库（outputs/db/listed_companies_v1.db）
 
 | 指标 | 数值 | 说明 |
 |---|---|---|
-| proxy plausible | **10.5 / 11（≈ 96%）** | 自动规则：`status=found` + 值形态合法 |
-| strict-usable | **10.16 / 11（≈ 92.4%）** | 全量 9937 plausible 单元格 adversarial 复核 |
+| proxy plausible（eval 跑完时） | **10.54 / 11** | 非金融 936 家，stored |
+| proxy plausible（cached 重算） | **10.36 / 11** | Issue #1/#2 新规则，−0.18；**非最终 headline** |
+| strict-usable | **10.16 / 11（≈ 92.4%）** | 全量 9937 plausible 单元格 adversarial 复核（**未重跑**） |
 | hard-wrong 率 | **1.9%** | 真 false positive |
 
-> **注意**：`rnd_investment`（Issue #1）与 `revenue_by_region` / `revenue_by_segment`（Issue #2）的 proxy / strict 数字**尚未在 eval1000 全量上重跑验证**。小样本与 cached-profile 扫描显示改进方向正确，但 headline 仍以表中数字为准，待 controlled validation 后更新。
+> **注意**：cached validation 仅重算 proxy，未重跑抽取与 strict 审计。rnd −101 / revenue −75 单元格被新规则拒绝；详见 [validation report](outputs/validation/recent_changes_cached_validation.md)。
+
+### Cached validation 摘要（2026-06-22）
+
+| 项目 | 结果 |
+|---|---|
+| SQLite `--limit 0` | 1020 / 1020 / 10417 / 10417 行；0 profile_errors；可重复导入 |
+| rnd_investment 新 proxy | 745 found → **644 pass**（−101：list-marker 39, ratio-only 28, no-amount 28, 0.00-only 6） |
+| revenue_by_region 新 proxy | 902 found → **851 pass**（−51） |
+| revenue_by_segment 新 proxy | 922 found → **898 pass**（−24） |
+| 其他字段回归 | **0** 处 plausible 逻辑变化 |
 
 ### 最弱字段（修复前 baseline）
 
@@ -101,8 +113,8 @@ SQLite 本地库（outputs/db/listed_companies_v1.db）
 
 ## 5. 已知问题
 
-1. **eval1000 headline 数字已 stale**：Issue #1 / #2 修复后未全量重跑；proxy 与 strict-usable 需 controlled validation 后更新。
-2. **收入表格 empty-label 行**：pdfplumber 偶发丢失行标签（首列为空），`revenue_table_plausible` 会误拒含真实数值的行（已知约 4 字段 / 2 家公司，0.2% 量级）。
+1. **eval1000 strict 审计未重跑**：cached validation 已确认 proxy 改进方向；strict-usable 仍为修复前 **10.16/11**。
+2. **收入表格 empty-label 行**：603132、605090 共 4 字段实例 — pdfplumber 丢失行标签导致误拒（validation 已确认）。
 3. **金融 schema 仅设计未实现**：`docs/financial_company_schema.md` 已完成；`field_schema.py` 仍为 generic `FINANCIAL_FIELD_SPECS`，bank/broker/insurer 子 schema 未写入代码。
 4. **BrowserUser 扩展未启动**：见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)，尚无实现或试点。
 5. **`strict_audit_result` loader 未实现**：数据库 schema 已预留该列（`evaluation_result.strict_audit_result`），但 `db_import.py` 尚未从 strict audit 结果回填。
@@ -112,11 +124,11 @@ SQLite 本地库（outputs/db/listed_companies_v1.db）
 
 ## 6. 下一步计划
 
-1. **Controlled validation**：在 Issue #1 / #2 修复后，对 eval1000 cached profiles 或小子集重跑 plausible / strict，更新 headline 数字；确认无回归后再决定是否全量重跑。
-2. **路线决策**（validation 之后二选一或并行）：
-   - **金融 schema 实现**（Issue #4）：按 [docs/financial_company_schema.md](docs/financial_company_schema.md) 写入 `bank_v1` / `broker_v1` / `insurer_v1`；
-   - **BrowserUser 规划/试点**：评估能否补充非年报公开数据。
-3. **SQLite 全量导入**：validation 通过后，`db_import.py --limit 0` 导入 eval1000；补 `strict_audit_result` loader。
+1. **路线决策**（cached validation **PASS**，可并行推进）：
+   - **金融 schema 实现**（Issue #4）：按 [docs/financial_company_schema.md](docs/financial_company_schema.md)；
+   - **BrowserUser 规划/试点**：见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)。
+2. **可选**：小子集重抽取验证 rnd 抽取逻辑（Issue #1 改动了 extraction，不仅是 proxy）；或预算允许时全量 eval 重跑。
+3. **补 `strict_audit_result` loader**；SQLite 全量导入已完成（10417 行）。
 
 ---
 
@@ -145,5 +157,8 @@ outputs/generalization/eval1000/
   <code>/<code>.pdf           # 年报 PDF（不提交 Git）
 
 outputs/db/
-  listed_companies_v1.db       # SQLite 原型（不提交 Git）
+  listed_companies_v1.db       # SQLite 全量导入（1020 公司，gitignored）
+
+outputs/validation/
+  recent_changes_cached_validation.md   # Issue #1/#2/SQLite cached 验证报告
 ```
