@@ -32,3 +32,15 @@ outputs/generalization/**/eval_results.json
 lab/eval_companies.yaml
 lab/eval_companies_200.yaml
 # lab/eval_companies_1000.yaml → 建议纳入版本控制（可复现 1000 测试）
+
+# Local generated outputs - keep GitHub lightweight
+outputs/cninfo_probe_report.md
+outputs/coverage_summary.md
+outputs/source_coverage.csv
+outputs/extraction/
+outputs/generalization/generalization_report.md
+outputs/generalization/eval/
+outputs/generalization/eval200/
+outputs/generalization/[0-9]*/
+outputs/generalization/eval1000/[0-9]*/
+outputs/generalization/eval1000/run.log
