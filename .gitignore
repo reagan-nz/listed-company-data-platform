@@ -1,0 +1,34 @@
+# ── Git 提交指南 ──────────────────────────────────────────
+# 建议提交：源代码、docs/、plans/、*.md 文档、eval_summary.md、
+#           calibration_sample*.csv、lab/eval_companies_1000.yaml
+# 不要提交：*.pdf、.cache/、.venv/、eval_results.json（~1.9MB）、run.log
+# ─────────────────────────────────────────────────────────
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# OS
+.DS_Store
+
+# Generated outputs (sample run artifacts kept out of version control)
+outputs/raw_samples/*.jsonl
+
+# Local test artifacts (real-company test runs are not committed)
+test_catl.yaml
+outputs/catl_test/
+
+# Plan B heavy/derived artifacts (downloaded PDFs + parse cache)
+outputs/extraction/*.pdf
+outputs/extraction/.cache/
+
+# Generalization test heavy artifacts (keep reports, drop PDFs + cache + large JSON)
+outputs/generalization/**/*.pdf
+outputs/generalization/**/.cache/
+outputs/generalization/**/eval_results.json
+lab/eval_companies.yaml
+lab/eval_companies_200.yaml
+# lab/eval_companies_1000.yaml → 建议纳入版本控制（可复现 1000 测试）

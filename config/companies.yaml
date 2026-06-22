@@ -1,0 +1,35 @@
+# Company configuration for the data source validation framework.
+#
+# IMPORTANT:
+#   - This framework is company-agnostic. No company-specific logic lives in code.
+#   - Fill in the entries below with the companies you want to validate.
+#   - Leave values empty or use placeholders; do NOT commit real example data here.
+#
+# Fields:
+#   company_name           Full legal/registered name (required)
+#   short_name             Common short name / ticker name (required)
+#   stock_code             Exchange code, e.g. "000000" / "600000" / "800000" (required)
+#   exchange               One of: SSE | SZSE | BSE  (required)
+#   official_website       Company homepage URL (optional)
+#   investor_relations_url Investor relations page URL (optional)
+#   keywords               Extra search terms used to build source queries (optional)
+
+companies:
+  - company_name: ""
+    short_name: ""
+    stock_code: ""
+    exchange: ""
+    official_website: ""
+    investor_relations_url: ""
+    keywords: []
+
+  # Add more companies by copying the block above.
+  # - company_name: "<PLACEHOLDER COMPANY>"
+  #   short_name: "<PLACEHOLDER>"
+  #   stock_code: "<000000>"
+  #   exchange: "SZSE"
+  #   official_website: "https://example.com/"
+  #   investor_relations_url: "https://example.com/ir"
+  #   keywords:
+  #     - "<keyword 1>"
+  #     - "<keyword 2>"

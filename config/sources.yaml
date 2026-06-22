@@ -1,0 +1,651 @@
+# Source configuration for the data source validation framework.
+#
+# This file is the ONLY place where source-specific behavior is declared.
+# Collectors read these entries; no source URL or risk policy is hard-coded in code.
+#
+# `defaults` are merged into every source entry; a source may override any key.
+#
+# Field reference (per source):
+#   name                       Human-readable source name (required)
+#   category                   Maps 1:1 to a collector module (required)
+#   base_url                   Landing / entry URL used for existence + fetch checks
+#   recommended_method         Suggested real collection strategy (free text)
+#   risk_level                 low | medium | high
+#   priority                   P0 | P1 | P2  (P2 = not recommended for first-stage use)
+#   fetch_mode                 fetch | existence  (existence = HEAD / light GET only)
+#   query_template             URL template containing {query}; empty = no search
+#   needs_playwright           true if JS rendering is likely required
+#   needs_llm                  true if LLM adds value (summary/classification/extraction)
+#   can_store_full_text        true only if terms clearly allow storing full text
+#   suggested_storage          What is safe to persist (free text)
+#   legal_risk_note            Short legal/compliance note
+#   needs_legal_review         true if terms are unclear / require legal sign-off
+#   authorization_required     true if API/authorization/login is likely required
+
+defaults:
+  base_url: ""
+  recommended_method: ""
+  risk_level: "low"
+  priority: "P1"
+  fetch_mode: "fetch"
+  query_template: ""
+  needs_playwright: false
+  needs_llm: false
+  can_store_full_text: false
+  suggested_storage: "metadata + source_url only"
+  legal_risk_note: "Public page; respect robots.txt and terms of use."
+  needs_legal_review: false
+  authorization_required: false
+
+sources:
+  # ---------------------------------------------------------------------------
+  # 1. Legal disclosure (P0)
+  # ---------------------------------------------------------------------------
+  - name: "CNINFO"
+    category: "legal_disclosure"
+    base_url: "https://www.cninfo.com.cn/"
+    recommended_method: "announcement_list_monitoring + pdf_download"
+    risk_level: "low"
+    priority: "P0"
+    needs_playwright: true
+    needs_llm: true
+    can_store_full_text: true
+    suggested_storage: "announcement metadata + downloaded official PDFs + extracted sections"
+    legal_risk_note: "Statutory public disclosure; storage of official filings is generally permitted."
+
+  - name: "SSE"
+    category: "legal_disclosure"
+    base_url: "http://www.sse.com.cn/"
+    recommended_method: "disclosure_query + announcement_list"
+    risk_level: "low"
+    priority: "P0"
+    needs_playwright: true
+    needs_llm: true
+    can_store_full_text: true
+    suggested_storage: "announcement metadata + official PDFs"
+    legal_risk_note: "Statutory public disclosure on Shanghai Stock Exchange."
+
+  - name: "SZSE"
+    category: "legal_disclosure"
+    base_url: "https://www.szse.cn/"
+    recommended_method: "disclosure_query + announcement_list"
+    risk_level: "low"
+    priority: "P0"
+    needs_playwright: true
+    needs_llm: true
+    can_store_full_text: true
+    suggested_storage: "announcement metadata + official PDFs"
+    legal_risk_note: "Statutory public disclosure on Shenzhen Stock Exchange."
+
+  - name: "BSE"
+    category: "legal_disclosure"
+    base_url: "https://www.bse.cn/"
+    recommended_method: "disclosure_query + announcement_list"
+    risk_level: "low"
+    priority: "P0"
+    needs_playwright: true
+    needs_llm: true
+    can_store_full_text: true
+    suggested_storage: "announcement metadata + official PDFs"
+    legal_risk_note: "Statutory public disclosure on Beijing Stock Exchange."
+
+  # ---------------------------------------------------------------------------
+  # 2. Company official sources (P0)
+  # ---------------------------------------------------------------------------
+  - name: "COMPANY_OFFICIAL_WEBSITE"
+    category: "company_official"
+    base_url: ""   # taken from company.official_website at runtime
+    recommended_method: "homepage_crawl + section_discovery (news/product/ESG/recruitment/contact)"
+    risk_level: "low"
+    priority: "P0"
+    needs_llm: true
+    suggested_storage: "page metadata + section links + short snippets"
+    legal_risk_note: "Company-owned public site; respect robots.txt."
+
+  - name: "COMPANY_INVESTOR_RELATIONS"
+    category: "company_official"
+    base_url: ""   # taken from company.investor_relations_url at runtime
+    recommended_method: "ir_page_crawl + announcement_links"
+    risk_level: "low"
+    priority: "P0"
+    needs_llm: true
+    suggested_storage: "page metadata + announcement links"
+    legal_risk_note: "Company-owned investor relations page."
+
+  # ---------------------------------------------------------------------------
+  # 3. Policy sources (P0)
+  # ---------------------------------------------------------------------------
+  - name: "CSRC"
+    category: "policy"
+    base_url: "http://www.csrc.gov.cn/"
+    recommended_method: "policy_search + document_list"
+    risk_level: "low"
+    priority: "P0"
+    needs_llm: true
+    legal_risk_note: "Government regulator public site."
+
+  - name: "NDRC"
+    category: "policy"
+    base_url: "https://www.ndrc.gov.cn/"
+    recommended_method: "policy_search + document_list"
+    risk_level: "low"
+    priority: "P0"
+    needs_llm: true
+    legal_risk_note: "Government public site."
+
+  - name: "MIIT"
+    category: "policy"
+    base_url: "https://www.miit.gov.cn/"
+    recommended_method: "policy_search + document_list"
+    risk_level: "low"
+    priority: "P0"
+    needs_llm: true
+    legal_risk_note: "Government public site."
+
+  - name: "MOF"
+    category: "policy"
+    base_url: "http://www.mof.gov.cn/"
+    recommended_method: "policy_search + document_list"
+    risk_level: "low"
+    priority: "P0"
+    needs_llm: true
+    legal_risk_note: "Government public site (Ministry of Finance)."
+
+  - name: "MOFCOM"
+    category: "policy"
+    base_url: "http://www.mofcom.gov.cn/"
+    recommended_method: "policy_search + document_list"
+    risk_level: "low"
+    priority: "P1"
+    needs_llm: true
+    legal_risk_note: "Government public site (Ministry of Commerce)."
+
+  - name: "NBS"
+    category: "policy"
+    base_url: "https://www.stats.gov.cn/"
+    recommended_method: "statistics_search + dataset_list"
+    risk_level: "low"
+    priority: "P0"
+    needs_llm: true
+    legal_risk_note: "Government public site (National Bureau of Statistics)."
+
+  # ---------------------------------------------------------------------------
+  # 4. News signal sources (metadata only)
+  # ---------------------------------------------------------------------------
+  - name: "财联社"
+    category: "news_signal"
+    base_url: "https://www.cls.cn/"
+    recommended_method: "metadata_only: title/source/publish_time/url"
+    risk_level: "medium"
+    priority: "P1"
+    needs_playwright: true
+    needs_llm: true
+    legal_risk_note: "News copyright; store metadata only, never full article text."
+
+  - name: "证券时报"
+    category: "news_signal"
+    base_url: "http://www.stcn.com/"
+    recommended_method: "metadata_only"
+    risk_level: "medium"
+    priority: "P1"
+    needs_llm: true
+    legal_risk_note: "News copyright; metadata only."
+
+  - name: "上海证券报"
+    category: "news_signal"
+    base_url: "https://www.cnstock.com/"
+    recommended_method: "metadata_only"
+    risk_level: "medium"
+    priority: "P1"
+    needs_llm: true
+    legal_risk_note: "News copyright; metadata only."
+
+  - name: "中国证券报"
+    category: "news_signal"
+    base_url: "https://www.cs.com.cn/"
+    recommended_method: "metadata_only"
+    risk_level: "medium"
+    priority: "P1"
+    needs_llm: true
+    legal_risk_note: "News copyright; metadata only."
+
+  - name: "第一财经"
+    category: "news_signal"
+    base_url: "https://www.yicai.com/"
+    recommended_method: "metadata_only"
+    risk_level: "medium"
+    priority: "P1"
+    needs_llm: true
+    legal_risk_note: "News copyright; metadata only."
+
+  - name: "21世纪经济报道"
+    category: "news_signal"
+    base_url: "https://www.21jingji.com/"
+    recommended_method: "metadata_only"
+    risk_level: "medium"
+    priority: "P1"
+    needs_llm: true
+    legal_risk_note: "News copyright; metadata only."
+
+  - name: "经济观察报"
+    category: "news_signal"
+    base_url: "http://www.eeo.com.cn/"
+    recommended_method: "metadata_only"
+    risk_level: "medium"
+    priority: "P1"
+    needs_llm: true
+    legal_risk_note: "News copyright; metadata only."
+
+  - name: "澎湃财经"
+    category: "news_signal"
+    base_url: "https://www.thepaper.cn/"
+    recommended_method: "metadata_only"
+    risk_level: "medium"
+    priority: "P1"
+    needs_llm: true
+    legal_risk_note: "News copyright; metadata only."
+
+  - name: "新浪财经"
+    category: "news_signal"
+    base_url: "https://finance.sina.com.cn/"
+    recommended_method: "metadata_only"
+    risk_level: "medium"
+    priority: "P1"
+    needs_llm: true
+    legal_risk_note: "News copyright; metadata only."
+
+  - name: "东方财富资讯"
+    category: "news_signal"
+    base_url: "https://www.eastmoney.com/"
+    recommended_method: "metadata_only"
+    risk_level: "medium"
+    priority: "P1"
+    needs_llm: true
+    legal_risk_note: "News copyright; metadata only."
+
+  - name: "腾讯财经"
+    category: "news_signal"
+    base_url: "https://new.qq.com/ch/finance/"
+    recommended_method: "metadata_only"
+    risk_level: "medium"
+    priority: "P1"
+    needs_llm: true
+    legal_risk_note: "News copyright; metadata only."
+
+  # ---------------------------------------------------------------------------
+  # 5. Industry / supply chain (config-driven)
+  # ---------------------------------------------------------------------------
+  - name: "INDUSTRY_CHAIN_PUBLIC_REPORTS"
+    category: "industry_chain"
+    base_url: ""   # configure per target industry
+    recommended_method: "config_driven: public white papers / industry reports / gov industry docs"
+    risk_level: "medium"
+    priority: "P1"
+    needs_llm: true
+    needs_legal_review: true
+    legal_risk_note: "Industry report terms vary; verify reuse rights before storing."
+
+  - name: "UPSTREAM_DOWNSTREAM_PUBLIC_INFO"
+    category: "industry_chain"
+    base_url: ""   # configure per target industry
+    recommended_method: "config_driven: derive from annual report customer/supplier disclosure + product pages"
+    risk_level: "medium"
+    priority: "P1"
+    needs_llm: true
+    needs_legal_review: true
+    legal_risk_note: "Relationship inference must rely on public disclosure only."
+
+  # ---------------------------------------------------------------------------
+  # 6. Tender / procurement (P1)
+  # ---------------------------------------------------------------------------
+  - name: "中国政府采购网"
+    category: "tender"
+    base_url: "http://www.ccgp.gov.cn/"
+    recommended_method: "keyword_search: bidding/winning announcements"
+    risk_level: "medium"
+    priority: "P1"
+    query_template: "http://search.ccgp.gov.cn/bxsearch?searchtype=1&kw={query}"
+    needs_playwright: true
+    needs_llm: true
+    legal_risk_note: "Public procurement portal; store announcement metadata + link."
+
+  - name: "全国公共资源交易平台"
+    category: "tender"
+    base_url: "http://www.ggzy.gov.cn/"
+    recommended_method: "keyword_search: project/bid announcements"
+    risk_level: "medium"
+    priority: "P1"
+    needs_playwright: true
+    needs_llm: true
+    legal_risk_note: "Public resources trading portal; metadata + link."
+
+  - name: "地方公共资源交易中心"
+    category: "tender"
+    base_url: ""   # configure per province/municipality
+    recommended_method: "config_driven per-region public resources trading center"
+    risk_level: "medium"
+    priority: "P1"
+    needs_legal_review: true
+    legal_risk_note: "Regional portals vary; configure per company location."
+
+  # ---------------------------------------------------------------------------
+  # 7. Patent / trademark (P1)
+  # ---------------------------------------------------------------------------
+  - name: "CNIPA_PATENT_SEARCH"
+    category: "patent_trademark"
+    base_url: "http://epub.cnipa.gov.cn/"
+    recommended_method: "applicant_name_search: patent publications"
+    risk_level: "medium"
+    priority: "P1"
+    needs_playwright: true
+    needs_llm: false
+    legal_risk_note: "Official patent publication; anti-crawl/captcha may apply."
+
+  - name: "CNIPA_TRADEMARK_SEARCH"
+    category: "patent_trademark"
+    base_url: "http://wcjs.sbj.cnipa.gov.cn/"
+    recommended_method: "applicant_name_search: trademark records"
+    risk_level: "medium"
+    priority: "P1"
+    needs_playwright: true
+    legal_risk_note: "Official trademark query; captcha likely."
+
+  # ---------------------------------------------------------------------------
+  # 8. Enterprise relationship
+  # ---------------------------------------------------------------------------
+  - name: "国家企业信用信息公示系统"
+    category: "enterprise_relation"
+    base_url: "https://www.gsxt.gov.cn/"
+    recommended_method: "existence_check; official registration lookup (anti-crawl heavy)"
+    risk_level: "high"
+    priority: "P1"
+    fetch_mode: "existence"
+    needs_playwright: true
+    legal_risk_note: "Official registry; strong anti-crawling. Do not bypass protections."
+
+  - name: "企查查"
+    category: "enterprise_relation"
+    base_url: "https://www.qcc.com/"
+    recommended_method: "existence_check_only; commercial platform"
+    risk_level: "high"
+    priority: "P1"
+    fetch_mode: "existence"
+    authorization_required: true
+    needs_legal_review: true
+    legal_risk_note: "Commercial platform; do not scrape at scale. API/authorization likely required."
+
+  - name: "天眼查"
+    category: "enterprise_relation"
+    base_url: "https://www.tianyancha.com/"
+    recommended_method: "existence_check_only; commercial platform"
+    risk_level: "high"
+    priority: "P1"
+    fetch_mode: "existence"
+    authorization_required: true
+    needs_legal_review: true
+    legal_risk_note: "Commercial platform; do not scrape at scale. API/authorization likely required."
+
+  - name: "爱企查"
+    category: "enterprise_relation"
+    base_url: "https://aiqicha.baidu.com/"
+    recommended_method: "existence_check_only; commercial platform"
+    risk_level: "high"
+    priority: "P1"
+    fetch_mode: "existence"
+    authorization_required: true
+    needs_legal_review: true
+    legal_risk_note: "Commercial platform; do not scrape at scale. API/authorization likely required."
+
+  - name: "启信宝"
+    category: "enterprise_relation"
+    base_url: "https://www.qixin.com/"
+    recommended_method: "existence_check_only; commercial platform"
+    risk_level: "high"
+    priority: "P1"
+    fetch_mode: "existence"
+    authorization_required: true
+    needs_legal_review: true
+    legal_risk_note: "Commercial platform; do not scrape at scale. API/authorization likely required."
+
+  # ---------------------------------------------------------------------------
+  # 9. Market / financial data
+  # ---------------------------------------------------------------------------
+  - name: "东方财富行情"
+    category: "market_financial"
+    base_url: "https://quote.eastmoney.com/"
+    recommended_method: "public_quote_page existence + metadata"
+    risk_level: "medium"
+    priority: "P1"
+    needs_playwright: true
+    legal_risk_note: "Data redistribution may be restricted; verify before reuse."
+    needs_legal_review: true
+
+  - name: "新浪财经行情"
+    category: "market_financial"
+    base_url: "https://finance.sina.com.cn/"
+    recommended_method: "public_quote_page existence + metadata"
+    risk_level: "medium"
+    priority: "P1"
+    legal_risk_note: "Data redistribution may be restricted; verify before reuse."
+    needs_legal_review: true
+
+  - name: "腾讯财经行情"
+    category: "market_financial"
+    base_url: "https://stockapp.finance.qq.com/"
+    recommended_method: "public_quote_page existence + metadata"
+    risk_level: "medium"
+    priority: "P1"
+    legal_risk_note: "Data redistribution may be restricted; verify before reuse."
+    needs_legal_review: true
+
+  - name: "Tushare"
+    category: "market_financial"
+    base_url: "https://tushare.pro/"
+    recommended_method: "library_api; token + usage tier required"
+    risk_level: "medium"
+    priority: "P1"
+    fetch_mode: "existence"
+    authorization_required: true
+    needs_legal_review: true
+    legal_risk_note: "Open-source/library: license + usage uncertain. Do not assume commercial permission or redistribute raw data."
+
+  - name: "AkShare"
+    category: "market_financial"
+    base_url: "https://akshare.akfamily.xyz/"
+    recommended_method: "library_api; aggregates third-party sources"
+    risk_level: "medium"
+    priority: "P1"
+    fetch_mode: "existence"
+    needs_legal_review: true
+    legal_risk_note: "Open-source library wraps upstream sources; underlying data license uncertain. Do not redistribute without confirmation."
+
+  - name: "BaoStock"
+    category: "market_financial"
+    base_url: "http://baostock.com/"
+    recommended_method: "library_api; free historical data"
+    risk_level: "medium"
+    priority: "P1"
+    fetch_mode: "existence"
+    needs_legal_review: true
+    legal_risk_note: "Open-source library; verify license and redistribution terms."
+
+  # ---------------------------------------------------------------------------
+  # 10. Investor interaction (metadata only)
+  # ---------------------------------------------------------------------------
+  - name: "互动易"
+    category: "investor_interaction"
+    base_url: "https://irm.cninfo.com.cn/"
+    recommended_method: "question/answer summary + metadata + event tags"
+    risk_level: "medium"
+    priority: "P1"
+    needs_playwright: true
+    needs_llm: true
+    legal_risk_note: "SZSE investor interaction platform; Q&A is not investment advice."
+
+  - name: "上证e互动"
+    category: "investor_interaction"
+    base_url: "https://sns.sseinfo.com/"
+    recommended_method: "question/answer summary + metadata + event tags"
+    risk_level: "medium"
+    priority: "P1"
+    needs_playwright: true
+    needs_llm: true
+    legal_risk_note: "SSE investor interaction platform; Q&A is not investment advice."
+
+  # ---------------------------------------------------------------------------
+  # 11. Sentiment / social (high risk, metadata only)
+  # ---------------------------------------------------------------------------
+  - name: "雪球"
+    category: "sentiment"
+    base_url: "https://xueqiu.com/"
+    recommended_method: "existence + metadata only (platform/query/result_count/sample_link)"
+    risk_level: "high"
+    priority: "P2"
+    fetch_mode: "existence"
+    needs_legal_review: true
+    legal_risk_note: "Social UGC; anti-crawl + copyright + privacy risk. No full-text at scale."
+
+  - name: "股吧"
+    category: "sentiment"
+    base_url: "https://guba.eastmoney.com/"
+    recommended_method: "existence + metadata only"
+    risk_level: "high"
+    priority: "P2"
+    fetch_mode: "existence"
+    needs_legal_review: true
+    legal_risk_note: "Social UGC; copyright/privacy risk. Metadata only."
+
+  - name: "微博"
+    category: "sentiment"
+    base_url: "https://s.weibo.com/"
+    recommended_method: "existence + metadata only"
+    risk_level: "high"
+    priority: "P2"
+    fetch_mode: "existence"
+    needs_legal_review: true
+    legal_risk_note: "Social UGC; login/anti-crawl + privacy risk. Metadata only."
+
+  # ---------------------------------------------------------------------------
+  # 12. Research reports (metadata only)
+  # ---------------------------------------------------------------------------
+  - name: "东方财富研报"
+    category: "research_report"
+    base_url: "https://data.eastmoney.com/report/"
+    recommended_method: "metadata_only: title/institution/publish_date/source_url"
+    risk_level: "medium"
+    priority: "P1"
+    needs_playwright: true
+    needs_llm: true
+    authorization_required: true
+    needs_legal_review: true
+    legal_risk_note: "Reports are copyrighted. Metadata only; never store paid/login/full text."
+
+  - name: "公开券商研报页"
+    category: "research_report"
+    base_url: ""   # configure per broker public research page
+    recommended_method: "metadata_only; public broker research listing"
+    risk_level: "high"
+    priority: "P2"
+    authorization_required: true
+    needs_legal_review: true
+    legal_risk_note: "Broker reports copyrighted; many require login. Metadata only."
+
+  # ---------------------------------------------------------------------------
+  # 13. Standards and technical documents
+  # ---------------------------------------------------------------------------
+  - name: "国家标准全文公开系统"
+    category: "standards"
+    base_url: "https://openstd.samr.gov.cn/"
+    recommended_method: "standard_search; metadata + links unless terms allow full text"
+    risk_level: "low"
+    priority: "P1"
+    needs_playwright: true
+    legal_risk_note: "Standards full-text terms vary; default to metadata + links."
+
+  - name: "行业标准公告页"
+    category: "standards"
+    base_url: ""   # configure per relevant industry standard body
+    recommended_method: "config_driven: industry standard announcement listing"
+    risk_level: "medium"
+    priority: "P1"
+    needs_legal_review: true
+    legal_risk_note: "Industry standard terms vary; verify reuse rights."
+
+  # ---------------------------------------------------------------------------
+  # 14. Local government (config-driven, P0/P1)
+  # ---------------------------------------------------------------------------
+  - name: "地方发改委"
+    category: "local_government"
+    base_url: ""   # configure per company location
+    recommended_method: "config_driven local DRC site: industrial plans/policy docs"
+    risk_level: "low"
+    priority: "P1"
+    needs_llm: true
+    legal_risk_note: "Local government public site; configure base_url per region."
+
+  - name: "地方工信厅/局"
+    category: "local_government"
+    base_url: ""   # configure per company location
+    recommended_method: "config_driven local IIT site"
+    risk_level: "low"
+    priority: "P1"
+    needs_llm: true
+    legal_risk_note: "Local government public site; configure base_url per region."
+
+  - name: "地方科技厅/局"
+    category: "local_government"
+    base_url: ""   # configure per company location
+    recommended_method: "config_driven local S&T site"
+    risk_level: "low"
+    priority: "P1"
+    needs_llm: true
+    legal_risk_note: "Local government public site; configure base_url per region."
+
+  - name: "产业园区/开发区官网"
+    category: "local_government"
+    base_url: ""   # configure per company location
+    recommended_method: "config_driven industrial park / development zone site"
+    risk_level: "low"
+    priority: "P1"
+    legal_risk_note: "Public site; configure base_url per region."
+
+  # ---------------------------------------------------------------------------
+  # 15. Associations + litigation/enforcement P2 risk signals
+  # ---------------------------------------------------------------------------
+  - name: "中国上市公司协会"
+    category: "association"
+    base_url: "https://www.capco.org.cn/"
+    recommended_method: "public notices + member/industry documents"
+    risk_level: "low"
+    priority: "P1"
+    needs_llm: true
+    legal_risk_note: "Industry association public site."
+
+  - name: "行业协会(通用)"
+    category: "association"
+    base_url: ""   # configure per target industry association
+    recommended_method: "config_driven industry association / alliance site"
+    risk_level: "medium"
+    priority: "P1"
+    needs_legal_review: true
+    legal_risk_note: "Association terms vary; verify reuse rights."
+
+  - name: "中国裁判文书网"
+    category: "association"
+    base_url: "https://wenshu.court.gov.cn/"
+    recommended_method: "P2 risk signal only; existence + metadata; no personal data beyond legal minimum"
+    risk_level: "high"
+    priority: "P2"
+    fetch_mode: "existence"
+    needs_legal_review: true
+    legal_risk_note: "Litigation public info: P2 risk signal only, not first-stage core. Avoid personal data; strong anti-crawl."
+
+  - name: "中国执行信息公开网"
+    category: "association"
+    base_url: "http://zxgk.court.gov.cn/"
+    recommended_method: "P2 risk signal only; existence + metadata"
+    risk_level: "high"
+    priority: "P2"
+    fetch_mode: "existence"
+    needs_legal_review: true
+    legal_risk_note: "Enforcement public info: P2 risk signal only. Avoid personal data; legal review required."

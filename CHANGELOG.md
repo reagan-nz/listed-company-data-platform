@@ -1,0 +1,59 @@
+# 更新日志
+
+格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)。
+
+## [Unreleased]
+
+### 计划
+- 收紧 rnd_investment 数值抽取与 plausible 代理规则
+- 表格抽取增加 data-row 校验
+- 金融公司独立 schema 设计
+- BrowserUser 数据源试点
+
+## 2026-06-18
+
+### 新增
+- **1000 家受控评估**（eval1000）：1020 家样本，946 家成功，非金融 10.5/11 plausible
+- **严格二次审计**：全量 9937 plausible 单元格 adversarial 复核，strict-usable 10.16/11（92.4%）
+- **人工校准工具增强**：MISSED 分级、分层评分、calibrated population estimate
+- **sample_universe.py --scale**：支持 5× 分层抽样生成 1000 公司列表
+- **金融公司标签**：eval 列表增加 `financial: true` 标记，summary 单独统计
+
+### 修复
+- **risk_factors 召回**：扩展锚点（面临的风险/可能面临的风险），增加 pointer avoid（详见/请见）
+- **revenue_by_region 精度**：移除 bare 境内/境外 anchor；combined-table preview 从分地区行开始
+- **major_products 召回**：fallback_anchors 机制，从业务概述段落回退抽取
+- **A+H 报告选择**：`pick_full_report` 优先 A 股年报，降级 H 股/境外版
+- **no_announcement clean failure**：eval 不再因无公告而 hard crash
+- **heading 识别**：带编号前缀的标题（如「（五）公司2025年度可能面临的风险」）不再误判为 partial
+- **page-boundary snippet**：页底 heading 自动续接下一页内容
+
+### 文档
+- GitHub 协作结构与中文文档整理（README、docs/、plans/、CURRENT_STATUS）
+
+## 2026-06-17
+
+### 新增
+- **200 家分层评估**（eval200）：按板块分层抽样，184 家成功抽取
+- **calibration_sample.py**：40 格分层校准样本 + 评分器
+- **eval_generalize.py 断点续跑**：已缓存 PDF + meta.json 跳过网络
+
+### 修复
+- eval200 hard crash（16 家 no_announcement 导致 TypeError）→ clean status 记录
+
+## 2026-06-16
+
+### 新增
+- **4 公司泛化测试**（CATL / 三一重工 / 招商银行 / 澜起科技）
+- **5 项通用鲁棒性修复**：prose concentration、avoid 负上下文、narrative anchors、header-aware table、full-report filter
+
+### 变更
+- 项目重心从多数据源覆盖率验证转向年报 PDF 基础字段抽取（Plan B）
+
+## 2026-06-15（及更早）
+
+### 新增
+- 多数据源验证框架（`main.py` + 15 类 collector + `config/sources.yaml`）
+- CNINFO 年报 probe（`lab/probe_cninfo.py`）
+- 确定性年报抽取器 v1（`lab/extract_annual_report.py` + `lab/field_schema.py`）
+- 11 字段 schema 定义（工业/制造业模板）
