@@ -6,11 +6,11 @@ _最后更新：2026-06-22_
 
 搭建中国上市公司**基础数据库**。短期目标：基于巨潮资讯网公开年报 PDF，抽取所有上市公司的 11 项基础标签字段；中期目标：覆盖全部 A 股；长期目标：用 BrowserUser 爬虫智能体补充程序化难以获取的数据，扩充数据库宽度与深度。
 
-当前处于**第一阶段末期 → 第二阶段启动前**：年报程序化抽取与 1000 家评估已完成；**当前活跃任务（Issue #7）为数据库存储方案 v1 设计**（见 [docs/database_schema.md](docs/database_schema.md) 第一节）。
+当前处于**第一阶段末期 → 第二阶段启动前**：年报程序化抽取与 1000 家评估已完成；**SQLite 建表与导入原型（Issue #8）已实现**（见 [docs/database_schema.md](docs/database_schema.md)）。
 
 ## 当前进行中
 
-- **数据库存储方案 v1**（Issue #7）：已定稿四表结构（`company_basic`、`report_source`、`extracted_field`、`evaluation_result`）；推荐 SQLite 原型 → 稳定后迁 PostgreSQL；**尚未实现导入代码**。
+- **SQLite 原型验证**：`lab/db_init.py` + `lab/db_import.py` 可从 eval1000 导入样本至 `outputs/db/listed_companies_v1.db`（本地生成，不提交 Git）；全量导入与 PostgreSQL 迁移尚未做。
 
 ## 已完成工作
 
@@ -22,6 +22,7 @@ _最后更新：2026-06-22_
 - 字段修复：`risk_factors` 锚点扩展、`revenue_by_region` 表格预览切片、heading 识别改进
 - **1020 家受控评估**（eval1000，200 家的 strict superset，复用 184 份缓存 PDF）
 - **严格二次审计**：对全部 9937 个 plausible 单元格做 adversarial 规则复核（非 60 格样本）
+- **SQLite 建表与导入原型**（Issue #8）：`lab/db_init.py`、`lab/db_import.py`，四表 v1 schema
 
 ## 1000 家测试结果（eval1000）
 
@@ -85,7 +86,7 @@ _最后更新：2026-06-22_
 
 ## 下一步建议
 
-1. **实现 SQLite 建表与 eval1000 → DB 导入脚本**（基于 v1 schema，不改抽取逻辑）
+1. 全量 eval1000 → SQLite 导入（当前原型默认 `--limit 10` 小样本）
 2. 收紧 `rnd_investment` 抽取规则：要求 TOTAL 标签 + 实质金额，拒绝 list-marker 和 ratio-only
 3. 表格抽取增加「至少一行含数字的数据行」校验
 4. 金融公司单独 schema（或标记 N/A 并排除 headline 统计）
@@ -104,4 +105,7 @@ outputs/generalization/eval1000/
   eval_results.json            # ~1.9MB，不建议提交 Git
   <code>/company_profile.json  # 单公司结构化结果（本地保留）
   <code>/<code>.pdf           # 不提交 Git
+
+outputs/db/
+  listed_companies_v1.db       # SQLite 原型（lab/db_init.py + db_import.py 生成，不提交 Git）
 ```

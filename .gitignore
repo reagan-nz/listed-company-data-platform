@@ -44,3 +44,7 @@ outputs/generalization/eval200/
 outputs/generalization/[0-9]*/
 outputs/generalization/eval1000/[0-9]*/
 outputs/generalization/eval1000/run.log
+
+# SQLite prototype (generated locally via lab/db_init.py + lab/db_import.py)
+outputs/db/*.db
+outputs/db/*.db-journal
