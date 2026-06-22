@@ -274,7 +274,7 @@ companies:
   exchange: SSE
   orgid: gssh0600390
   board: sse_main
-  financial: false
+  financial: true
 - short_name: 春雪食品
   stock_code: '605567'
   exchange: SSE
@@ -2626,7 +2626,7 @@ companies:
   exchange: SSE
   orgid: gssh0600061
   board: sse_main
-  financial: false
+  financial: true
 - short_name: 福能股份
   stock_code: '600483'
   exchange: SSE
@@ -4024,7 +4024,7 @@ companies:
   exchange: SZSE
   orgid: gssz0000987
   board: szse_main
-  financial: false
+  financial: true
 - short_name: 峰璟股份
   stock_code: '002662'
   exchange: SZSE

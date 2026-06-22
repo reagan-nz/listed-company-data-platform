@@ -11,7 +11,7 @@
 - **金融公司子 schema 实现**（Issue #4）：`BANK/BROKER/INSURER/OTHER_FINANCIAL_FIELD_SPECS`、`detect_profile`/`resolve_profile`/`get_field_specs`；eval 对 `financial: true` 启用子 schema
 
 ### 变更
-- **金融公司 YAML 标签审计**（eval1000 列表）：补全 601825 沪农商行 `financial: true`；`field_schema`/`sample_universe` 增加 农商行/城商行 关键词
+- **金融公司 YAML 标签审计**（eval1000 列表）：601825 沪农商行 + 000987/600061/600390 资本类补标；`financial: true` 共 16 家
 - **eval1000_v2 全量重跑**：同 cohort 1020 家验证 Issue #1/#2/#4；proxy headline 10.33/11（−0.21）；金融子 schema 首次全量 coverage — 见 `outputs/generalization/eval1000_v2/eval1000_v2_comparison.md`
 - **CURRENT_STATUS.md 重构**：作为主阶段进度页，面向 supervisor 可读；含目标、成果、关键数字、已知问题、下一步与进度查看指引
 - **Cached validation**（eval1000 缓存）：SQLite 全量导入 PASS；rnd/revenue 新 proxy 在 10417 字段上验证；无其他字段回归 — 见 `outputs/validation/recent_changes_cached_validation.md`
