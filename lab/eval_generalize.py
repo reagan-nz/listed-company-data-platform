@@ -29,7 +29,14 @@ if _PROJECT_ROOT not in sys.path:
 
 import requests  # noqa: E402
 
-from lab.field_schema import FIELD_SPECS, detect_profile  # noqa: E402
+from lab.field_schema import (  # noqa: E402
+    FIELD_SPECS,
+    detect_profile,
+    get_field_specs,
+    is_financial_profile,
+    profile_field_count,
+    resolve_profile,
+)
 from lab.probe_cninfo import (CATEGORY_CODES, EXCHANGE_COLUMN, STATIC_HOST,  # noqa: E402
                               _session, pick_full_report, query_announcements,
                               resolve_org_id)
@@ -133,13 +140,21 @@ def evaluate_company(c: dict, sess, out_dir: str) -> dict:
             res["status"] = "no_text_layer"  # likely scanned -> would need OCR
             return res
 
-        # Auto financial-profile is OFF (it regressed); eval uses the shipped
-        # industrial profile. `suggested` is recorded for visibility only.
-        res["suggested_profile"] = detect_profile(pages)
-        specs = FIELD_SPECS
+        # Non-financial companies use industrial schema (unchanged).
+        # Financial companies use bank/broker/insurer/other_financial sub-schemas.
+        is_fin = bool(c.get("financial"))
+        schema_profile = resolve_profile(
+            pages, short_name=short, industry=c.get("industry", ""), financial=is_fin,
+        )
+        res["schema_profile"] = schema_profile
+        res["suggested_profile"] = detect_profile(
+            pages, short_name=short, industry=c.get("industry", ""), financial=is_fin,
+        )
+        specs = get_field_specs(schema_profile)
         regions = compute_regions(pages)
         res["regions"] = {k: [min(v), max(v)] for k, v in regions.items() if v}
         fields = [extract_field(spec, pages, pdf_path, url, regions) for spec in specs]
+        res["field_total"] = len(specs)
         res["fields"] = {f["field"]: {"status": f["status"], "in_region": f.get("in_region"),
                                       "page": f.get("page"), "plausible": field_plausible(f)}
                          for f in fields}
@@ -152,6 +167,8 @@ def evaluate_company(c: dict, sess, out_dir: str) -> dict:
         profile = {"company": {"short_name": short, "stock_code": code, "exchange": ex},
                    "source": {"report_title": res.get("picked_title", ""), "source_url": url,
                               "pdf_sha256": meta["sha256"], "page_count": meta["page_count"]},
+                   "schema_profile": schema_profile,
+                   "suggested_profile": res["suggested_profile"],
                    "field_counts": {"found": res["found"], "partial": res["partial"],
                                     "not_found": res["not_found"], "total": len(fields)},
                    "fields": fields}
@@ -200,6 +217,13 @@ def write_summary(results: list[dict], path: str) -> None:
     fin = [r for r in ok if r["financial"]]
     errs = [r for r in results if r["status"] != "ok"]
 
+    def infer_schema_profile(r: dict) -> str:
+        if r.get("schema_profile"):
+            return r["schema_profile"]
+        if r.get("financial"):
+            return resolve_profile([], short_name=r.get("short_name", ""), financial=True)
+        return "industrial"
+
     def field_rate(rows, key):
         if not rows:
             return 0, 0
@@ -238,13 +262,25 @@ def write_summary(results: list[dict], path: str) -> None:
         a(f"| {r['short_name']} | {r['stock_code']} | {r['industry']} | {r.get('page_count')} | "
           f"{r.get('found')} | {r.get('plausible')}/11 |")
     a("")
-    a("## Financials (reported separately - schema is industrial-shaped)")
+    a("## Financial companies (separate schema; not in non-financial headline)")
     a("")
-    a("| company | code | found | plausible | note |")
-    a("|---|---|---|---|---|")
+    fin_by_profile: dict[str, list] = {}
     for r in fin:
-        a(f"| {r['short_name']} | {r['stock_code']} | {r.get('found')} | {r.get('plausible')}/11 | "
-          f"many fields N/A for financials |")
+        prof = infer_schema_profile(r)
+        fin_by_profile.setdefault(prof, []).append(r)
+    a("| subtype | count |")
+    a("|---|---|")
+    for prof in ("bank", "broker", "insurer", "other_financial"):
+        if fin_by_profile.get(prof):
+            a(f"| {prof} | {len(fin_by_profile[prof])} |")
+    a("")
+    a("| company | code | schema | fields | found | plausible | note |")
+    a("|---|---|---|---|---|---|---|")
+    for r in fin:
+        prof = infer_schema_profile(r)
+        n_fields = r.get("field_total") or profile_field_count(prof)
+        a(f"| {r['short_name']} | {r['stock_code']} | {prof} | {n_fields} | {r.get('found')} | "
+          f"{r.get('plausible')}/{n_fields} | sub-schema v1 |")
     a("")
     if errs:
         a("## Excluded / failures (these ARE findings)")

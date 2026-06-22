@@ -2,6 +2,8 @@
 
 _最后更新：2026-06-22_
 
+> **实现状态（Issue #4）**：`lab/field_schema.py` 已实现 `BANK_FIELD_SPECS` / `BROKER_FIELD_SPECS` / `INSURER_FIELD_SPECS` / `OTHER_FINANCIAL_FIELD_SPECS`，以及 `detect_profile()` / `resolve_profile()` / `get_field_specs()` 分发。eval 对 `financial: true` 公司使用子 schema；非金融仍用工业 11 字段。全量 eval1000 未重跑。
+
 ## 1. 为什么需要单独 schema
 
 当前 11 字段 schema（`lab/field_schema.py` 中的 `FIELD_SPECS`）面向工业/制造/科技/消费类公司设计，假设年报中存在：
@@ -44,7 +46,7 @@ _最后更新：2026-06-22_
 
 ## 3. 子 schema 字段提案（v1）
 
-以下字段均沿用 `FieldSpec` 结构（`key`, `label_cn`, `definition`, `anchors`, `expected_location`, `extraction`, `region`, `avoid`, `table_match` 等）。**v1 为设计文档，尚未写入 `field_schema.py`。**
+以下字段均沿用 `FieldSpec` 结构。**v1 已写入 `field_schema.py`（Issue #4）。**
 
 ### 3.1 银行子 schema（`bank_v1`）
 
@@ -167,11 +169,10 @@ _最后更新：2026-06-22_
 ```
 FieldSpec (base)
 ├── industrial (当前 11 字段，默认)
-├── financial (现有 generic，实验性)
-│   ├── bank_v1      ← Issue #3 设计，Issue #4+ 实现
-│   ├── broker_v1
-│   ├── insurer_v1
-│   └── other_financial_v1
+├── bank_v1      ← 已实现 (13 字段)
+├── broker_v1    ← 已实现 (12 字段)
+├── insurer_v1   ← 已实现 (12 字段)
+└── other_financial_v1 ← 已实现 (8 字段; legacy alias: financial)
 ```
 
 ## 5. 评估报告建议
@@ -205,13 +206,14 @@ FieldSpec (base)
 - `extracted_field.field_name` 将包含金融专用 key（如 `npl_ratio`）；需与 industrial 字段并存
 - `evaluation_result` 可按 `run_name` + `profile` 分维度汇总
 
-## 6. 实现路径（Issue #4 及以后，本文档不实施）
+## 6. 实现路径
 
-1. **Phase 1**：在 `field_schema.py` 新增 `BANK_FIELD_SPECS`、`BROKER_FIELD_SPECS`、`INSURER_FIELD_SPECS` 列表。
-2. **Phase 2**：扩展 `detect_profile()` 返回子类型；扩展 `get_field_specs(profile)` 分发。
-3. **Phase 3**：为 numeric/table 新字段添加抽取与 plausible 逻辑（可复用 `extract_numeric` / `extract_table` 模式）。
-4. **Phase 4**：eval 列表增加 `financial_subtype`；summary 分类型报告。
-5. **Phase 5**：`db_import.py` / PostgreSQL schema 支持新 field_name；文档同步。
+| Phase | 状态 |
+|---|---|
+| Phase 1–2：子 schema + profile 检测/分发 | **Done**（Issue #4） |
+| Phase 3：金融专用 numeric/table plausible 规则 | 未做（复用 generic extract_numeric/table） |
+| Phase 4：eval summary 分 subtype 报告 | **部分**（`schema_profile` + summary 表格） |
+| Phase 5：DB `financial_subtype` + 新 field_name 入库 | 未做 |
 
 **验证样本（cached PDF）：**
 

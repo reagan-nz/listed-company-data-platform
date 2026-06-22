@@ -8,6 +8,7 @@
 - **数据库存储方案 v1**（Issue #7）：`docs/database_schema.md` 定义四表（company_basic / report_source / extracted_field / evaluation_result）；推荐 SQLite 原型，后续迁 PostgreSQL
 - **SQLite 建表与导入原型**（Issue #8）：`lab/db_init.py`（建表）、`lab/db_import.py`（从 eval1000 导入小样本）；`.db` 写入 `outputs/db/` 且已 gitignore
 - **金融公司 schema 设计 v1**（Issue #3）：`docs/financial_company_schema.md` 定义银行/券商/保险三类子 schema，明确各类适用字段与不适用字段，并给出评估分开报告建议
+- **金融公司子 schema 实现**（Issue #4）：`BANK/BROKER/INSURER/OTHER_FINANCIAL_FIELD_SPECS`、`detect_profile`/`resolve_profile`/`get_field_specs`；eval 对 `financial: true` 启用子 schema
 
 ### 变更
 - **CURRENT_STATUS.md 重构**：作为主阶段进度页，面向 supervisor 可读；含目标、成果、关键数字、已知问题、下一步与进度查看指引
@@ -17,7 +18,7 @@
 - **收入表格 proxy 收紧**（Issue #2）：`revenue_table_plausible` 要求 `revenue_by_region` / `revenue_by_segment` preview 含至少一行非表头数据行
 
 ### 计划
-- 金融公司子 schema 实现（Issue #4）
+- 金融子 schema 小样本抽取验证（cached PDF smoke test）
 - BrowserUser 数据源试点
 
 ## 2026-06-18

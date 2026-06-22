@@ -32,7 +32,7 @@ if _PROJECT_ROOT not in sys.path:
     sys.path.insert(0, _PROJECT_ROOT)
 
 from lab.field_schema import (FIELD_SPECS, FieldSpec, detect_profile,  # noqa: E402
-                              get_field_specs)
+                              get_field_specs, is_financial_profile, resolve_profile)
 from utils.text_cleaner import clean_text, truncate  # noqa: E402
 
 _SENT_SPLIT = re.compile(r"(?<=[。！？；\n])")
@@ -652,8 +652,10 @@ def main() -> int:
     ap.add_argument("--exchange", default="")
     ap.add_argument("--source-url", required=True, help="official PDF URL (provenance)")
     ap.add_argument("--report-title", default="", help="e.g. 2024 annual report")
-    ap.add_argument("--profile", default="auto", choices=["auto", "industrial", "financial"],
-                    help="field-schema profile; 'auto' detects financial vs industrial from the text")
+    ap.add_argument("--profile", default="auto",
+                    choices=["auto", "industrial", "financial", "bank", "broker", "insurer",
+                             "other_financial"],
+                    help="field-schema profile; 'auto' stays industrial (financial sub-schemas opt-in)")
     ap.add_argument("--output-dir", default=os.path.join(_PROJECT_ROOT, "outputs", "extraction"))
     args = ap.parse_args()
 
@@ -674,12 +676,17 @@ def main() -> int:
     # with finance subsidiaries, e.g. 贵州茅台; and underperformed for brokers).
     # The financial profile is available as an explicit opt-in (--profile financial)
     # for future per-subtype (bank/insurer/broker) work; 'auto' stays industrial.
-    suggested = detect_profile(pages)
-    profile = "industrial" if args.profile == "auto" else args.profile
-    specs = get_field_specs(profile)
-    if suggested == "financial" and profile != "financial":
-        print(f"[extract] note: text looks financial (try --profile financial; experimental)")
-    print(f"[extract] profile={profile} text_layer_ok={text_layer_ok} text_len={text_len}")
+    suggested = detect_profile(pages, short_name=args.short_name or args.company_name)
+    schema_profile = resolve_profile(
+        pages,
+        short_name=args.short_name or args.company_name,
+        explicit="industrial" if args.profile == "auto" else args.profile,
+    )
+    specs = get_field_specs(schema_profile)
+    if is_financial_profile(suggested) and schema_profile == "industrial":
+        print(f"[extract] note: text/name suggests {suggested} "
+              f"(try --profile {suggested})")
+    print(f"[extract] profile={schema_profile} text_layer_ok={text_layer_ok} text_len={text_len}")
 
     if not text_layer_ok:
         fields = []
@@ -699,7 +706,7 @@ def main() -> int:
     partial = sum(1 for f in fields if f["status"] == "partial")
     missing = sum(1 for f in fields if f["status"] == "not_found")
 
-    profile = {
+    out_profile = {
         "company": {
             "company_name": args.company_name,
             "short_name": args.short_name,
@@ -712,7 +719,8 @@ def main() -> int:
             "pdf_sha256": meta["sha256"],
             "page_count": meta["page_count"],
         },
-        "profile": profile,
+        "schema_profile": schema_profile,
+        "suggested_profile": suggested,
         "text_layer_ok": text_layer_ok,
         "extracted_at": datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds"),
         "field_counts": {"found": found, "partial": partial, "not_found": missing, "total": len(fields)},
@@ -722,12 +730,12 @@ def main() -> int:
     os.makedirs(args.output_dir, exist_ok=True)
     profile_path = os.path.join(args.output_dir, "company_profile.json")
     with open(profile_path, "w", encoding="utf-8") as fh:
-        json.dump(profile, fh, ensure_ascii=False, indent=2)
+        json.dump(out_profile, fh, ensure_ascii=False, indent=2)
     print(f"[extract] wrote {profile_path} (found={found} partial={partial} missing={missing})")
 
     brief_path = os.path.join(args.output_dir, "company_brief.md")
     with open(brief_path, "w", encoding="utf-8") as fh:
-        fh.write(render_brief(profile))
+        fh.write(render_brief(out_profile))
     print(f"[extract] wrote {brief_path}")
     return 0
 

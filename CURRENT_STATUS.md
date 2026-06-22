@@ -30,7 +30,8 @@ _最后更新：2026-06-22_
 | **SQLite 原型** | `lab/db_init.py` 建表 + `lab/db_import.py` 从 eval1000 导入（Issue #8） |
 | **SQLite 导入加固** | 单公司容错、审计元数据（`in_region` / `anchor_matched`）、FK 约束、`evaluation_result.report_year`（Issue #9） |
 | **字段质量改进** | `rnd_investment` 抽取收紧（Issue #1）；收入表格 proxy 收紧（Issue #2） |
-| **金融公司 schema 设计** | [docs/financial_company_schema.md](docs/financial_company_schema.md) 银行/券商/保险三类子 schema v1（Issue #3，文档 only） |
+| **金融公司 schema 设计** | [docs/financial_company_schema.md](docs/financial_company_schema.md) 银行/券商/保险三类子 schema v1（Issue #3） |
+| **金融公司子 schema 实现** | `BANK/BROKER/INSURER/OTHER_FINANCIAL_FIELD_SPECS` + `detect_profile` / `resolve_profile` / `get_field_specs`（Issue #4） |
 | **Cached validation** | eval1000 缓存数据验证 Issue #1/#2 proxy 与 SQLite 全量导入 — 见 [outputs/validation/recent_changes_cached_validation.md](outputs/validation/recent_changes_cached_validation.md) |
 
 **更早的基础工作**（支撑上述里程碑）：
@@ -115,7 +116,7 @@ SQLite 本地库（outputs/db/listed_companies_v1.db）
 
 1. **eval1000 strict 审计未重跑**：cached validation 已确认 proxy 改进方向；strict-usable 仍为修复前 **10.16/11**。
 2. **收入表格 empty-label 行**：603132、605090 共 4 字段实例 — pdfplumber 丢失行标签导致误拒（validation 已确认）。
-3. **金融 schema 仅设计未实现**：`docs/financial_company_schema.md` 已完成；`field_schema.py` 仍为 generic `FINANCIAL_FIELD_SPECS`，bank/broker/insurer 子 schema 未写入代码。
+3. **金融 schema 子类型已实现、未全量验证**：bank/broker/insurer/other_financial 已写入 `field_schema.py`；eval 对 `financial: true` 公司启用子 schema；eval1000 全量未重跑，无新 coverage 数字。
 4. **BrowserUser 扩展未启动**：见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)，尚无实现或试点。
 5. **`strict_audit_result` loader 未实现**：数据库 schema 已预留该列（`evaluation_result.strict_audit_result`），但 `db_import.py` 尚未从 strict audit 结果回填。
 6. **其他字段级问题**（非 blocking）：客户/供应商集中度偶抓单项而非合计；`major_subsidiaries` 约 132 家「无/不适用」披露内容为空。
@@ -125,9 +126,9 @@ SQLite 本地库（outputs/db/listed_companies_v1.db）
 ## 6. 下一步计划
 
 1. **路线决策**（cached validation **PASS**，可并行推进）：
-   - **金融 schema 实现**（Issue #4）：按 [docs/financial_company_schema.md](docs/financial_company_schema.md)；
-   - **BrowserUser 规划/试点**：见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)。
-2. **可选**：小子集重抽取验证 rnd 抽取逻辑（Issue #1 改动了 extraction，不仅是 proxy）；或预算允许时全量 eval 重跑。
+   - **BrowserUser 规划/试点**：见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)；
+   - **金融子 schema 小样本抽取验证**：对 eval1000 缓存 PDF 跑 4–6 家金融 smoke test（不重跑全量）。
+2. **可选**：小子集重抽取验证 rnd 抽取逻辑；或预算允许时全量 eval 重跑。
 3. **补 `strict_audit_result` loader**；SQLite 全量导入已完成（10417 行）。
 
 ---
