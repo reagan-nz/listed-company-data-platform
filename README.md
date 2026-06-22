@@ -2,7 +2,7 @@
 
 基于中国 A 股上市公司**公开年报 PDF**，程序化抽取 11 项基础字段，构建可证据追溯的公司基础标签库。后续计划用 BrowserUser 爬虫智能体补充普通程序难以获取的数据。
 
-**当前阶段**：第一阶段末期 — 年报抽取链路已跑通，1000 家受控评估已完成，SQLite 数据平台原型已就绪。
+**当前阶段**：eval1000_v2 全量重跑完成（2026-06-22）；SQLite 数据平台原型已就绪；金融子 schema 与标签审计完成。
 
 ## 如何查看当前进度
 
@@ -50,14 +50,16 @@ python lab/calibration_sample.py --eval-dir outputs/generalization/eval1000 --n 
 
 ## 当前结果（摘要）
 
+最新数字见 **[CURRENT_STATUS.md](CURRENT_STATUS.md)**（eval1000_v2，2026-06-22）：
+
 | 指标 | 数值 |
 |---|---|
-| 1000 家测试样本 | 1020 家 |
-| 成功抽取 | 946 家 |
-| 非金融 proxy plausible | 10.5 / 11 |
-| 严格可用（strict-usable） | **10.16 / 11（≈ 92.4%）** |
+| 测试样本 | 1020 家 |
+| 成功抽取（ok） | 947 家 |
+| 非金融 proxy plausible | **10.33 / 11** |
+| strict-usable | **10.16 / 11**（eval1000 审计，**未重跑**） |
 
-详细数字与问题分析见 [CURRENT_STATUS.md](CURRENT_STATUS.md)。
+详细对比、SQLite 行数与已知问题见 [CURRENT_STATUS.md](CURRENT_STATUS.md)。
 
 ## 文档
 

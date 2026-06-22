@@ -11,8 +11,10 @@
 - **金融公司子 schema 实现**（Issue #4）：`BANK/BROKER/INSURER/OTHER_FINANCIAL_FIELD_SPECS`、`detect_profile`/`resolve_profile`/`get_field_specs`；eval 对 `financial: true` 启用子 schema
 
 ### 变更
-- **金融公司 YAML 标签审计**（eval1000 列表）：601825 沪农商行 + 000987/600061/600390 资本类补标；`financial: true` 共 16 家
-- **eval1000_v2 全量重跑**：同 cohort 1020 家验证 Issue #1/#2/#4；proxy headline 10.33/11（−0.21）；金融子 schema 首次全量 coverage — 见 `outputs/generalization/eval1000_v2/eval1000_v2_comparison.md`
+- **eval1000_v2 同 cohort 全量重跑**：1020 家 / 947 ok / 73 no_announcement / 0 error；非金融 proxy **10.33/11**（baseline 10.54，−0.21 为更严 proxy 所致）；SQLite 10428 行 — 见 `outputs/generalization/eval1000_v2/eval1000_v2_comparison.md`
+- **schema_profile 可追溯性**：`eval_generalize.py` 写入 `company_profile.json` 时同步记录 `schema_profile` / `suggested_profile`
+- **金融标签补全 — 601825 沪农商行**：`financial: true`；`_BANK_NAME_KW` / `sample_universe` 增加 农商行/城商行
+- **金融标签人工复核 — 资本类**：000987 越秀资本、600061 国投资本、600390 五矿资本 → `financial: true`（other_financial）；列表共 **16 家** tagged
 - **CURRENT_STATUS.md 重构**：作为主阶段进度页，面向 supervisor 可读；含目标、成果、关键数字、已知问题、下一步与进度查看指引
 - **Cached validation**（eval1000 缓存）：SQLite 全量导入 PASS；rnd/revenue 新 proxy 在 10417 字段上验证；无其他字段回归 — 见 `outputs/validation/recent_changes_cached_validation.md`
 - **SQLite 导入加固**：单公司 `company_profile.json` 失败不中断全量导入；`in_region`/`anchor_matched` 入库；`evaluation_result` 主键含 `report_year`；启用 FK；移除冗余索引
@@ -20,7 +22,7 @@
 - **收入表格 proxy 收紧**（Issue #2）：`revenue_table_plausible` 要求 `revenue_by_region` / `revenue_by_segment` preview 含至少一行非表头数据行
 
 ### 计划
-- 金融子 schema 小样本抽取验证（cached PDF smoke test）
+- strict 审计重跑（eval1000_v2 plausible 单元格）
 - BrowserUser 数据源试点
 
 ## 2026-06-18

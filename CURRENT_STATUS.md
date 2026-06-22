@@ -1,8 +1,10 @@
 # 当前状态
 
-_最后更新：2026-06-22（eval1000_v2 全量重跑后）_
+_最后更新：2026-06-22（eval1000_v2 重跑 + 金融标签审计完成）_
 
 > **本文档是项目主进度页。** 老师或项目 supervisor 建议从这里开始阅读；技术细节见 [docs/](docs/)，变更记录见 [CHANGELOG.md](CHANGELOG.md)。
+
+**2026-06-22 日结**：同 cohort 全量重跑 eval1000_v2 完成；Issue #1/#2/#4 变更经全量验证；金融 YAML 标签补全至 16 家；baseline eval1000 保留未覆盖。
 
 ---
 
@@ -34,6 +36,8 @@ _最后更新：2026-06-22（eval1000_v2 全量重跑后）_
 | **金融公司子 schema 实现** | `BANK/BROKER/INSURER/OTHER_FINANCIAL_FIELD_SPECS` + `detect_profile` / `resolve_profile` / `get_field_specs`（Issue #4） |
 | **Cached validation** | eval1000 缓存数据验证 Issue #1/#2 proxy 与 SQLite 全量导入 — 见 [outputs/validation/recent_changes_cached_validation.md](outputs/validation/recent_changes_cached_validation.md) |
 | **eval1000_v2 全量重跑** | 同 cohort 1020 家，验证 Issue #1/#2/#4 后最新代码 — 见 [outputs/generalization/eval1000_v2/eval1000_v2_comparison.md](outputs/generalization/eval1000_v2/eval1000_v2_comparison.md) |
+| **schema_profile 可追溯性** | `eval_generalize.py` 写入 `company_profile.json` 时同步记录 `schema_profile` / `suggested_profile` |
+| **金融 YAML 标签审计** | 601825 沪农商行（bank）；000987/600061/600390 资本类（other_financial）；`financial: true` 共 **16 家** |
 
 **更早的基础工作**（支撑上述里程碑）：
 
@@ -69,6 +73,8 @@ SQLite 本地库（outputs/db/listed_companies_v1.db）
 
 **最新 headline 来自 eval1000_v2**（2026-06-22 全量重跑，同 cohort `lab/eval_companies_1000.yaml`）。**strict 审计尚未重跑**。
 
+> **关于 proxy 下降（10.54 → 10.33）**：成功率不变（947 ok / 73 no_announcement / 0 error），下降来自 Issue #1/#2 更严格的抽取与 proxy 规则主动拒绝低质量命中，**不是管道故障**。其他 8 个工业字段 plausible 零回归。
+
 ### 样本与成功率（eval1000_v2）
 
 | 指标 | 数值 |
@@ -101,6 +107,17 @@ SQLite 本地库（outputs/db/listed_companies_v1.db）
 | insurer | 1 | 601336 |
 | other_financial | 1 | 600927 |
 
+### SQLite 导入（eval1000_v2，run_name=`eval1000_v2`）
+
+| 表 | 行数 |
+|---|---:|
+| company_basic | 1020 |
+| report_source | 1020 |
+| extracted_field | 10428 |
+| evaluation_result | 10428 |
+
+（baseline eval1000 为 10417 行；+11 来自金融子 schema 字段数差异。DB 文件 gitignored。）
+
 ### Cached validation 摘要（2026-06-22，eval1000 缓存 proxy 重算）
 
 | 项目 | 结果 |
@@ -124,21 +141,23 @@ SQLite 本地库（outputs/db/listed_companies_v1.db）
 
 ## 5. 已知问题
 
-1. **strict 审计未重跑**：eval1000_v2 proxy headline 已更新（10.33/11）；strict-usable 仍为 eval1000 修复前 **10.16/11**。
-2. **收入表格 empty-label 行**：603132、605090 共 4 字段实例 — pdfplumber 丢失行标签导致误拒。
-3. **金融 schema 已实现并首次全量验证**：11 家 ok 金融公司已分 bank/broker/insurer/other_financial；numeric 抽取质量未做 strict 审计。**YAML 标签审计完成**（2026-06-22）：+601825 沪农商行（bank）；+000987/600061/600390 资本类（other_financial）；`financial: true` 共 **16 家**。
-4. **BrowserUser 扩展未启动**：见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)。
-5. **`strict_audit_result` loader 未实现**：`db_import.py` 尚未从 strict audit 结果回填。
-6. **其他字段级问题**（非 blocking）：客户/供应商集中度偶抓单项而非合计；`major_subsidiaries` 约 132 家「无/不适用」披露内容为空。
+1. **strict-usable 未重跑**：eval1000_v2 proxy headline 已更新（10.33/11）；strict-usable 仍为 eval1000 修复前 **10.16/11** — 不能据此声称 strict 改善。
+2. **rnd 召回下降**：更严格规则后 found 742→619（−123）；换取更高命中质量，但 recall 下降需后续评估。
+3. **金融字段质量未 strict 审计**：11 家 ok 金融公司已分 bank/broker/insurer/other_financial；numeric 抽取（如 year-noise）未 adversarial 复核。
+4. **金融 YAML 标签**：审计完成，`financial: true` 共 16 家；601825/资本类 4 家补标待下次 eval 生效（eval1000_v2 跑在补标前）。
+5. **收入表格 empty-label 行**：603132、605090 共 4 字段实例 — pdfplumber 丢失行标签导致误拒。
+6. **BrowserUser 扩展未启动**：见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)。
+7. **`strict_audit_result` loader 未实现**：`db_import.py` 尚未从 strict audit 结果回填。
+8. **其他字段级问题**（非 blocking）：客户/供应商集中度偶抓单项而非合计；`major_subsidiaries` 约 132 家「无/不适用」披露内容为空。
 
 ---
 
 ## 6. 下一步计划
 
-1. **BrowserUser 规划/试点**：见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)。
-2. **strict 审计重跑**（eval1000_v2 plausible 单元格 adversarial 复核）— 更新 strict-usable headline。
-3. **补 `strict_audit_result` loader**；DB 已导入 eval1000_v2（10428 行）。
-4. ~~**金融 YAML 标签补全**~~ **Done**。~~资本类人工复核~~ **Done**（000987 越秀资本、600061 国投资本、600390 五矿资本 → `financial: true` / `other_financial`）。「控股」类 8 家确认为非金融，无需改标。
+1. **strict 审计重跑**（eval1000_v2 plausible 单元格 adversarial 复核）— 更新 strict-usable headline。
+2. **BrowserUser 规划/试点**：见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)。
+3. **补 `strict_audit_result` loader**。
+4. **可选**：对 601825/资本类 4 家补标公司做 targeted re-eval（无需全量重跑）。
 
 ---
 
