@@ -10,7 +10,7 @@ _最后更新：2026-06-22_
 
 ## 当前进行中
 
-- **SQLite 原型验证**：`lab/db_init.py` + `lab/db_import.py` 可从 eval1000 导入样本至 `outputs/db/listed_companies_v1.db`（本地生成，不提交 Git）；全量导入与 PostgreSQL 迁移尚未做。
+- **SQLite 原型验证**：`lab/db_init.py` + `lab/db_import.py` 可从 eval1000 导入样本至 `outputs/db/listed_companies_v1.db`（本地生成，不提交 Git）；已加固导入（单公司容错、审计元数据、FK 约束、`evaluation_result.report_year`）；全量 `--limit 0` 导入与 PostgreSQL 迁移尚未做。
 
 ## 已完成工作
 
@@ -23,6 +23,7 @@ _最后更新：2026-06-22_
 - **1020 家受控评估**（eval1000，200 家的 strict superset，复用 184 份缓存 PDF）
 - **严格二次审计**：对全部 9937 个 plausible 单元格做 adversarial 规则复核（非 60 格样本）
 - **SQLite 建表与导入原型**（Issue #8）：`lab/db_init.py`、`lab/db_import.py`，四表 v1 schema
+- **SQLite 导入加固**：单公司 profile 容错、审计字段入库、`evaluation_result.report_year`、FK 启用
 
 ## 1000 家测试结果（eval1000）
 

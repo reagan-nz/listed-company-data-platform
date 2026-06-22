@@ -11,7 +11,6 @@ import argparse
 import json
 import os
 import re
-import sqlite3
 import sys
 from datetime import datetime, timezone
 
@@ -21,7 +20,7 @@ _PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if _PROJECT_ROOT not in sys.path:
     sys.path.insert(0, _PROJECT_ROOT)
 
-from lab.db_init import DEFAULT_DB_PATH, create_schema  # noqa: E402
+from lab.db_init import DEFAULT_DB_PATH, connect_db, create_schema  # noqa: E402
 
 DEFAULT_EVAL_DIR = os.path.join(_PROJECT_ROOT, "outputs", "generalization", "eval1000")
 DEFAULT_COMPANIES_YAML = os.path.join(_PROJECT_ROOT, "lab", "eval_companies_1000.yaml")
@@ -43,13 +42,25 @@ def _infer_report_year(title: str | None) -> int:
 def _load_company_meta(yaml_path: str) -> dict[str, dict]:
     if not os.path.exists(yaml_path):
         return {}
-    data = yaml.safe_load(open(yaml_path, encoding="utf-8")) or {}
+    with open(yaml_path, encoding="utf-8") as f:
+        data = yaml.safe_load(f) or {}
     out: dict[str, dict] = {}
     for c in data.get("companies", []):
         code = str(c.get("stock_code", "")).strip()
         if code:
             out[code] = c
     return out
+
+
+def _load_profile(profile_path: str) -> tuple[dict | None, str | None]:
+    """Return (profile, error). error is set when file exists but cannot be read."""
+    if not os.path.exists(profile_path):
+        return None, None
+    try:
+        with open(profile_path, encoding="utf-8") as f:
+            return json.load(f), None
+    except (json.JSONDecodeError, OSError) as exc:
+        return None, str(exc)
 
 
 def _status_maps(eval_status: str) -> tuple[str, str, int]:
@@ -73,6 +84,12 @@ def _serialize_value(value) -> str | None:
     return json.dumps(value, ensure_ascii=False)
 
 
+def _in_region_value(raw) -> int | None:
+    if raw is None:
+        return None
+    return 1 if raw else 0
+
+
 def import_eval(
     eval_dir: str,
     db_path: str,
@@ -91,15 +108,17 @@ def import_eval(
     if not os.path.exists(results_path):
         raise FileNotFoundError(f"eval_results.json not found under {eval_dir}")
 
-    results = json.load(open(results_path, encoding="utf-8"))
+    with open(results_path, encoding="utf-8") as f:
+        results = json.load(f)
     if limit is not None:
         results = results[:limit]
 
     meta_by_code = _load_company_meta(companies_yaml)
     ts = _now()
     counts = {"company_basic": 0, "report_source": 0, "extracted_field": 0, "evaluation_result": 0}
+    profile_errors = 0
 
-    conn = sqlite3.connect(db_path)
+    conn = connect_db(db_path)
     try:
         for row in results:
             code = str(row["stock_code"]).strip()
@@ -130,9 +149,13 @@ def import_eval(
             source_url = row.get("source_url") or ""
 
             profile_path = os.path.join(eval_dir, code, "company_profile.json")
+            prof, prof_err = _load_profile(profile_path)
+            if prof_err:
+                profile_errors += 1
+                print(f"[db_import] WARN skip profile {code}: {prof_err}", file=sys.stderr)
+
             pdf_sha256 = None
-            if os.path.exists(profile_path):
-                prof = json.load(open(profile_path, encoding="utf-8"))
+            if prof:
                 src = prof.get("source") or {}
                 pdf_sha256 = src.get("pdf_sha256")
                 if not title:
@@ -157,15 +180,15 @@ def import_eval(
             )
             counts["report_source"] += 1
 
-            if os.path.exists(profile_path):
-                prof = json.load(open(profile_path, encoding="utf-8"))
+            if prof:
                 for f in prof.get("fields", []):
                     conn.execute(
                         """INSERT INTO extracted_field (
                                company_code, report_year, field_name, field_label_cn, value,
                                status, page, evidence_sentence, source_url,
+                               in_region, anchor_matched,
                                extraction_version, updated_at)
-                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                            ON CONFLICT(company_code, report_year, field_name, extraction_version)
                            DO UPDATE SET
                                field_label_cn=excluded.field_label_cn,
@@ -174,6 +197,8 @@ def import_eval(
                                page=excluded.page,
                                evidence_sentence=excluded.evidence_sentence,
                                source_url=excluded.source_url,
+                               in_region=excluded.in_region,
+                               anchor_matched=excluded.anchor_matched,
                                updated_at=excluded.updated_at""",
                         (
                             code,
@@ -185,6 +210,8 @@ def import_eval(
                             f.get("page"),
                             f.get("evidence_sentence", ""),
                             f.get("source_url") or source_url,
+                            _in_region_value(f.get("in_region")),
+                            f.get("anchor_matched"),
                             extraction_version,
                             ts,
                         ),
@@ -194,15 +221,16 @@ def import_eval(
             for field_name, finfo in (row.get("fields") or {}).items():
                 conn.execute(
                     """INSERT INTO evaluation_result (
-                           run_name, company_code, field_name, proxy_plausible,
+                           run_name, company_code, report_year, field_name, proxy_plausible,
                            strict_audit_result, notes, created_at)
-                       VALUES (?, ?, ?, ?, ?, ?, ?)
-                       ON CONFLICT(run_name, company_code, field_name) DO UPDATE SET
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                       ON CONFLICT(run_name, company_code, report_year, field_name) DO UPDATE SET
                            proxy_plausible=excluded.proxy_plausible,
                            created_at=excluded.created_at""",
                     (
                         run_name,
                         code,
+                        yr,
                         field_name,
                         1 if finfo.get("plausible") else 0,
                         None,
@@ -216,6 +244,8 @@ def import_eval(
     finally:
         conn.close()
 
+    if profile_errors:
+        counts["profile_errors"] = profile_errors
     return counts
 
 
