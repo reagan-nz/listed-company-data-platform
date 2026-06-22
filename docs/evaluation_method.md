@@ -6,6 +6,8 @@
 >
 > 解读任何 headline 数字时，必须结合人工校准（calibration_sample）与严格二次审计（对 stored value 的 adversarial 规则复核）。直接把 plausible 当准确率会高估 3–4 个百分点。
 
+**rnd_investment proxy（2026-06-22 起）**：`status=found` 且 `labeled` 中至少含一条实质 R&D 金额（非 ratio-only、非 0.00 资本化行、非列表编号）；抽取侧优先 `研发投入金额/总额/合计` 标签，并排除利润表 `研发费用` 行。
+
 ## 测试层级
 
 ### 1. 单公司测试

@@ -10,9 +10,9 @@
 
 ### 变更
 - **SQLite 导入加固**：单公司 `company_profile.json` 失败不中断全量导入；`in_region`/`anchor_matched` 入库；`evaluation_result` 主键含 `report_year`；启用 FK；移除冗余索引
+- **rnd_investment 抽取收紧**（Issue #1）：`extract_rnd_numeric` 优先总额标签、拒绝 ratio-only / 资本化 0.00 / 列表编号 / 利润表行；proxy 同步收紧
 
 ### 计划
-- 收紧 rnd_investment 数值抽取与 plausible 代理规则
 - 表格抽取增加 data-row 校验
 - 金融公司独立 schema 设计
 - BrowserUser 数据源试点

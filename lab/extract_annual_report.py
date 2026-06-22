@@ -207,6 +207,158 @@ def extract_numeric(window: str, labels: list[str]) -> list[dict]:
     return out
 
 
+# R&D numeric extraction: prefer total-amount labels; reject ratio-only, list
+# markers, and capitalized-zero-only rows. Company-agnostic template rules.
+_RND_AMOUNT_LABELS = (
+    "研发投入金额",
+    "研发投入总额",
+    "研发投入合计",
+    "研发费用",
+)
+_RND_GENERIC_LABEL = "研发投入"
+_RND_SKIP_LINE_MARKERS = (
+    "研发人员情况",
+    "研发人员占",
+    "研发人员总计",
+    "比重较上年发生显著变化",
+    "资本化率",
+    "变化的原因",
+    "教育程度",
+)
+_RND_INCOME_STMT_MARKERS = (
+    "财务费用",
+    "管理费用",
+    "销售费用",
+    "营业成本",
+    "税金及附加",
+    "资产减值损失",
+    "信用减值损失",
+)
+_RND_RATIO_RE = re.compile(r"[%％]")
+_RND_AMT_UNIT_RE = re.compile(r"(?:亿元|万元|千元|元)")
+
+
+def _numeric_magnitude(val: str) -> float | None:
+    s = re.sub(r"[^\d.\-+]", "", val.replace(",", ""))
+    if not s or s in (".", "-", "+"):
+        return None
+    try:
+        return float(s)
+    except ValueError:
+        return None
+
+
+def _is_rnd_ratio(val: str) -> bool:
+    return bool(_RND_RATIO_RE.search(val)) and not _RND_AMT_UNIT_RE.search(val)
+
+
+def _is_rnd_list_marker(val: str) -> bool:
+    mag = _numeric_magnitude(val)
+    if mag is None:
+        return False
+    if re.fullmatch(r"\s*\(?[123]\)?\s*", val.strip()):
+        return True
+    if not _RND_AMT_UNIT_RE.search(val) and not _RND_RATIO_RE.search(val):
+        if mag == int(mag) and 1 <= mag <= 9 and len(re.sub(r"[^\d]", "", val)) <= 2:
+            return True
+    return False
+
+
+def rnd_amount_ok(val: str) -> bool:
+    """True when value looks like a substantive R&D money amount (not ratio/list marker)."""
+    if not val or _is_rnd_ratio(val) or _is_rnd_list_marker(val):
+        return False
+    mag = _numeric_magnitude(val)
+    if mag is None or mag <= 0:
+        return False
+    if _RND_AMT_UNIT_RE.search(val):
+        return True
+    if "," in val:
+        return True
+    return mag >= 10000
+
+
+def rnd_investment_plausible(value: dict | None) -> bool:
+    if not isinstance(value, dict):
+        return False
+    return any(rnd_amount_ok(x.get("value") or "") for x in value.get("labeled") or [])
+
+
+def _looks_like_income_statement_block(window: str) -> bool:
+    """Reject P&L expense tables (研发费用 beside 财务费用/管理费用 etc.)."""
+    return sum(1 for m in _RND_INCOME_STMT_MARKERS if m in window) >= 2
+
+
+def extract_rnd_numeric(window: str) -> list[dict]:
+    """Extract R&D total amounts; reject ratio-only and capitalized-zero-only hits."""
+    if _looks_like_income_statement_block(window):
+        return []
+    window = glue_numbers(window)
+    seen: set[tuple[str, str]] = set()
+    results: list[dict] = []
+
+    def try_add(label: str, val: str, line: str) -> None:
+        if (label, val) in seen:
+            return
+        if _is_rnd_list_marker(val) or _is_rnd_ratio(val):
+            return
+        if "资本化" in line and not rnd_amount_ok(val):
+            return
+        if not rnd_amount_ok(val):
+            return
+        seen.add((label, val))
+        results.append({"label": label, "value": val})
+
+    lines = [ln.strip() for ln in window.split("\n")]
+    for i, line in enumerate(lines):
+        if not line:
+            continue
+        skip_line = any(m in line for m in _RND_SKIP_LINE_MARKERS)
+        if "占营业收入" in line or ("比例" in line and "金额" not in line):
+            continue
+
+        for lab in _RND_AMOUNT_LABELS:
+            if lab not in line:
+                continue
+            pos = line.find(lab)
+            after = line[pos + len(lab):].strip()
+            nm = _NUM_RE.search(after)
+            if nm:
+                try_add(lab, nm.group(0).strip(), line)
+            elif not after or after.startswith(("（", "(", "：", ":")):
+                for nxt in lines[i + 1: i + 4]:
+                    if not nxt or any(m in nxt for m in _RND_SKIP_LINE_MARKERS):
+                        break
+                    if any(l in nxt for l in _RND_AMOUNT_LABELS):
+                        break
+                    if "占营业收入" in nxt or ("比例" in nxt and "金额" not in nxt):
+                        break
+                    nm = _NUM_RE.search(nxt)
+                    if nm:
+                        try_add(lab, nm.group(0).strip(), line + " " + nxt)
+                        break
+
+        if not skip_line and _RND_GENERIC_LABEL in line:
+            if "占营业收入" in line or "占研发" in line or "比例" in line:
+                continue
+            pos = line.find(_RND_GENERIC_LABEL)
+            after = line[pos + len(_RND_GENERIC_LABEL):].strip()
+            nm = _NUM_RE.search(after)
+            if nm:
+                try_add(_RND_GENERIC_LABEL, nm.group(0).strip(), line)
+
+    label_rank = {l: i for i, l in enumerate(_RND_AMOUNT_LABELS + (_RND_GENERIC_LABEL,))}
+    results.sort(key=lambda x: label_rank.get(x["label"], 99))
+    deduped: list[dict] = []
+    seen_vals: set[str] = set()
+    for item in results:
+        if item["value"] in seen_vals:
+            continue
+        seen_vals.add(item["value"])
+        deduped.append(item)
+    return deduped[:6]
+
+
 # A heading is the anchor at/near a line start, OR a line whose only prefix
 # before the anchor is CN section numbering + a few descriptive chars, e.g.
 # "（五）公司2025 年度可能面临的风险". This rescues real headings that carry a
@@ -386,8 +538,11 @@ def extract_field(
         out["status"] = "found" if located_well else "partial"
     elif spec.extraction == "numeric":
         window = page_text[loc["idx"]: loc["idx"] + 600]
-        labels = list(dict.fromkeys(list(spec.anchors) + list(_TOTAL_LABELS)))
-        labeled = extract_numeric(window, labels)
+        if spec.key == "rnd_investment":
+            labeled = extract_rnd_numeric(window)
+        else:
+            labels = list(dict.fromkeys(list(spec.anchors) + list(_TOTAL_LABELS)))
+            labeled = extract_numeric(window, labels)
         out["value"] = {"labeled": labeled, "context": truncate(clean_text(window[:200]), 200)}
         out["status"] = "found" if (labeled and located_well) else ("partial" if labeled else "not_found")
     elif spec.extraction == "concentration":

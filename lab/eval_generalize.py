@@ -34,7 +34,7 @@ from lab.probe_cninfo import (CATEGORY_CODES, EXCHANGE_COLUMN, STATIC_HOST,  # n
                               _session, pick_full_report, query_announcements,
                               resolve_org_id)
 from lab.extract_annual_report import (compute_regions, extract_field,  # noqa: E402
-                                       parse_pages)
+                                       parse_pages, rnd_investment_plausible)
 
 
 def _retry(fn, tries=3, gap=1.5):
@@ -61,6 +61,8 @@ def field_plausible(f: dict) -> bool:
     if ex == "section_snippet":
         return isinstance(v, str) and len(v) >= 25
     if ex == "numeric":
+        if f.get("field") == "rnd_investment":
+            return rnd_investment_plausible(v)
         return isinstance(v, dict) and any(
             any(c.isdigit() for c in (x.get("value") or "")) for x in v.get("labeled", [])
         )

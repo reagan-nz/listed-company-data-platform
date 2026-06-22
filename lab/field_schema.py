@@ -119,10 +119,11 @@ FIELD_SPECS: list[FieldSpec] = [
         key="rnd_investment",
         label_cn="研发投入",
         definition="R&D expenditure amount and/or as a percentage of revenue.",
-        anchors=("研发投入", "研发费用", "研发投入合计", "研究开发"),
+        anchors=("研发投入金额", "研发投入总额", "研发投入合计", "研发费用", "研发投入"),
         expected_location="MD&A '研发投入' table/paragraph (not the income-statement 研发费用 line)",
         extraction="numeric",
         region="mda",
+        avoid=("占营业收入", "比重", "研发人员", "不适用", "变化的原因"),
     ),
     FieldSpec(
         key="major_subsidiaries",

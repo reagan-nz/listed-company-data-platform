@@ -24,6 +24,7 @@ _最后更新：2026-06-22_
 - **严格二次审计**：对全部 9937 个 plausible 单元格做 adversarial 规则复核（非 60 格样本）
 - **SQLite 建表与导入原型**（Issue #8）：`lab/db_init.py`、`lab/db_import.py`，四表 v1 schema
 - **SQLite 导入加固**：单公司 profile 容错、审计字段入库、`evaluation_result.report_year`、FK 启用
+- **rnd_investment 抽取收紧**（Issue #1）：优先总额标签、拒绝 ratio-only / 资本化 0.00 / 列表编号 / 利润表研发费用行
 
 ## 1000 家测试结果（eval1000）
 
@@ -79,7 +80,7 @@ _最后更新：2026-06-22_
 
 ## 当前主要问题
 
-1. **研发投入（rnd_investment）**：proxy 对任意数字过于宽松，常抓到 `(1)(2)` 列表编号、仅比例无金额、资本化 `0.00` 行；严格后仅约 67.7% 含可用 R&D 总额。
+1. **研发投入（rnd_investment）**：已收紧抽取与 proxy 规则（优先总额标签、拒绝 ratio-only / 资本化 0.00 / 列表编号）；eval1000 全量 strict 数字待重跑验证。
 2. **收入分地区/分行业表格**：部分公司表格预览为 header-only（如 `-` 占位行），或 pdfplumber 无法解析合并单元格；严格后 region 约 90.7%。
 3. **金融公司 schema**：当前 11 字段按工业/制造业设计，银行/券商/保险的 segment、客户、R&D 等字段不适用，需单独 schema。
 4. **客户/供应商集中度**：偶发抓取单个客户占比而非前五名合计（如 `利亚德` 10.40% vs 实际 74.42%）。
@@ -88,11 +89,10 @@ _最后更新：2026-06-22_
 ## 下一步建议
 
 1. 全量 eval1000 → SQLite 导入（当前原型默认 `--limit 10` 小样本）
-2. 收紧 `rnd_investment` 抽取规则：要求 TOTAL 标签 + 实质金额，拒绝 list-marker 和 ratio-only
-3. 表格抽取增加「至少一行含数字的数据行」校验
-4. 金融公司单独 schema（或标记 N/A 并排除 headline 统计）
-5. concentration 字段优先提取「合计/前五名合计」比例
-6. 启动 BrowserUser 试点（见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)）
+2. 表格抽取增加「至少一行含数字的数据行」校验
+3. 金融公司单独 schema（或标记 N/A 并排除 headline 统计）
+4. concentration 字段优先提取「合计/前五名合计」比例
+5. 启动 BrowserUser 试点（见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)）
 
 ## 关键产物路径
 
