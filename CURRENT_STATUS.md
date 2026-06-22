@@ -1,6 +1,6 @@
 # 当前状态
 
-_最后更新：2026-06-22_
+_最后更新：2026-06-22（eval1000_v2 全量重跑后）_
 
 > **本文档是项目主进度页。** 老师或项目 supervisor 建议从这里开始阅读；技术细节见 [docs/](docs/)，变更记录见 [CHANGELOG.md](CHANGELOG.md)。
 
@@ -33,6 +33,7 @@ _最后更新：2026-06-22_
 | **金融公司 schema 设计** | [docs/financial_company_schema.md](docs/financial_company_schema.md) 银行/券商/保险三类子 schema v1（Issue #3） |
 | **金融公司子 schema 实现** | `BANK/BROKER/INSURER/OTHER_FINANCIAL_FIELD_SPECS` + `detect_profile` / `resolve_profile` / `get_field_specs`（Issue #4） |
 | **Cached validation** | eval1000 缓存数据验证 Issue #1/#2 proxy 与 SQLite 全量导入 — 见 [outputs/validation/recent_changes_cached_validation.md](outputs/validation/recent_changes_cached_validation.md) |
+| **eval1000_v2 全量重跑** | 同 cohort 1020 家，验证 Issue #1/#2/#4 后最新代码 — 见 [outputs/generalization/eval1000_v2/eval1000_v2_comparison.md](outputs/generalization/eval1000_v2/eval1000_v2_comparison.md) |
 
 **更早的基础工作**（支撑上述里程碑）：
 
@@ -66,47 +67,56 @@ SQLite 本地库（outputs/db/listed_companies_v1.db）
 
 ## 4. 当前关键数字
 
-基于 **eval1000**（2026-06-18 前后跑完的全量评估）。**2026-06-22 cached validation** 已在现有 profile 上重算 proxy，**全量 eval 管道与 strict 审计尚未重跑**。
+**最新 headline 来自 eval1000_v2**（2026-06-22 全量重跑，同 cohort `lab/eval_companies_1000.yaml`）。**strict 审计尚未重跑**。
 
-### 样本与成功率
+### 样本与成功率（eval1000_v2）
 
 | 指标 | 数值 |
 |---|---|
-| 测试样本 | **1020 家**（200 家 strict superset + 820 新增） |
-| 成功抽取（status=ok） | **946 家** |
-| no_announcement | **73 家**（退市/无 2024 年报，属正常发现） |
+| 测试样本 | **1020 家**（与 eval1000 相同 cohort） |
+| 成功抽取（status=ok） | **947 家** |
+| no_announcement | **73 家**（与 baseline 一致） |
 | hard error | **0** |
 | 非金融公司 | 936 家（headline 统计范围） |
-| 金融公司 | 12 家（单独统计，不计入非金融 headline） |
+| 金融公司（ok） | 11 家（12 家 tagged，1 家 no_announcement） |
 
-### 质量指标（非金融，936 家）
+### 质量指标（非金融，936 家 — eval1000_v2）
 
-| 指标 | 数值 | 说明 |
-|---|---|---|
-| proxy plausible（eval 跑完时） | **10.54 / 11** | 非金融 936 家，stored |
-| proxy plausible（cached 重算） | **10.36 / 11** | Issue #1/#2 新规则，−0.18；**非最终 headline** |
-| strict-usable | **10.16 / 11（≈ 92.4%）** | 全量 9937 plausible 单元格 adversarial 复核（**未重跑**） |
-| hard-wrong 率 | **1.9%** | 真 false positive |
+| 指标 | eval1000 (baseline) | eval1000_v2 (latest) | Delta |
+|---|---:|---:|---:|
+| proxy plausible | **10.54 / 11** | **10.33 / 11** | −0.21 |
+| rnd_investment plausible | 742/936 | 619/936 | −123（抽取收紧） |
+| revenue_by_region plausible | 899/936 | 849/936 | −50（proxy 收紧） |
+| revenue_by_segment plausible | 920/936 | 896/936 | −24（proxy 收紧） |
+| strict-usable | **10.16 / 11** | **未重跑** | — |
 
-> **注意**：cached validation 仅重算 proxy，未重跑抽取与 strict 审计。rnd −101 / revenue −75 单元格被新规则拒绝；详见 [validation report](outputs/validation/recent_changes_cached_validation.md)。
+> rnd −123 = 抽取层拒绝（742→619 found）；revenue −74 = proxy 层拒绝（found 不变）。其他 8 个工业字段 **0 回归**。详见 [comparison report](outputs/generalization/eval1000_v2/eval1000_v2_comparison.md)。
 
-### Cached validation 摘要（2026-06-22）
+### 金融子 schema（eval1000_v2 首次全量数字）
+
+| 子类型 | 数量 | 代表 |
+|---|---:|---|
+| bank | 4 | 601988, 601398, 601939, 601328 |
+| broker | 5 | 600958, 601901, 601162, 002500, 002736 |
+| insurer | 1 | 601336 |
+| other_financial | 1 | 600927 |
+
+### Cached validation 摘要（2026-06-22，eval1000 缓存 proxy 重算）
 
 | 项目 | 结果 |
 |---|---|
-| SQLite `--limit 0` | 1020 / 1020 / 10417 / 10417 行；0 profile_errors；可重复导入 |
-| rnd_investment 新 proxy | 745 found → **644 pass**（−101：list-marker 39, ratio-only 28, no-amount 28, 0.00-only 6） |
+| SQLite `--limit 0` | 1020 / 1020 / 10417 / 10417 行；0 profile_errors |
+| rnd_investment 新 proxy | 745 found → **644 pass**（−101） |
 | revenue_by_region 新 proxy | 902 found → **851 pass**（−51） |
 | revenue_by_segment 新 proxy | 922 found → **898 pass**（−24） |
-| 其他字段回归 | **0** 处 plausible 逻辑变化 |
 
-### 最弱字段（修复前 baseline）
+### 最弱字段（eval1000_v2 proxy）
 
-| 字段 | proxy | strict |
-|---|---|---|
-| rnd_investment | 79.3% | **67.7%** |
-| revenue_by_region | 96.0% | **90.7%** |
-| revenue_by_segment | 98.3% | 95.7% |
+| 字段 | v2 proxy | baseline proxy |
+|---|---:|---:|
+| rnd_investment | **66.1%** (619/936) | 79.3% (742/936) |
+| revenue_by_region | **90.7%** (849/936) | 96.0% (899/936) |
+| revenue_by_segment | **95.7%** (896/936) | 98.3% (920/936) |
 
 评估方法详见 [docs/evaluation_method.md](docs/evaluation_method.md)。
 
@@ -114,22 +124,21 @@ SQLite 本地库（outputs/db/listed_companies_v1.db）
 
 ## 5. 已知问题
 
-1. **eval1000 strict 审计未重跑**：cached validation 已确认 proxy 改进方向；strict-usable 仍为修复前 **10.16/11**。
-2. **收入表格 empty-label 行**：603132、605090 共 4 字段实例 — pdfplumber 丢失行标签导致误拒（validation 已确认）。
-3. **金融 schema 子类型已实现、未全量验证**：bank/broker/insurer/other_financial 已写入 `field_schema.py`；eval 对 `financial: true` 公司启用子 schema；eval1000 全量未重跑，无新 coverage 数字。
-4. **BrowserUser 扩展未启动**：见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)，尚无实现或试点。
-5. **`strict_audit_result` loader 未实现**：数据库 schema 已预留该列（`evaluation_result.strict_audit_result`），但 `db_import.py` 尚未从 strict audit 结果回填。
+1. **strict 审计未重跑**：eval1000_v2 proxy headline 已更新（10.33/11）；strict-usable 仍为 eval1000 修复前 **10.16/11**。
+2. **收入表格 empty-label 行**：603132、605090 共 4 字段实例 — pdfplumber 丢失行标签导致误拒。
+3. **金融 schema 已实现并首次全量验证**：11 家 ok 金融公司已分 bank/broker/insurer/other_financial；numeric 抽取质量未做 strict 审计；部分银行（如 601825 沪农商行）YAML 未标 `financial: true`。
+4. **BrowserUser 扩展未启动**：见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)。
+5. **`strict_audit_result` loader 未实现**：`db_import.py` 尚未从 strict audit 结果回填。
 6. **其他字段级问题**（非 blocking）：客户/供应商集中度偶抓单项而非合计；`major_subsidiaries` 约 132 家「无/不适用」披露内容为空。
 
 ---
 
 ## 6. 下一步计划
 
-1. **路线决策**（cached validation **PASS**，可并行推进）：
-   - **BrowserUser 规划/试点**：见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)；
-   - **金融子 schema 小样本抽取验证**：对 eval1000 缓存 PDF 跑 4–6 家金融 smoke test（不重跑全量）。
-2. **可选**：小子集重抽取验证 rnd 抽取逻辑；或预算允许时全量 eval 重跑。
-3. **补 `strict_audit_result` loader**；SQLite 全量导入已完成（10417 行）。
+1. **BrowserUser 规划/试点**：见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)。
+2. **strict 审计重跑**（eval1000_v2 plausible 单元格 adversarial 复核）— 更新 strict-usable headline。
+3. **补 `strict_audit_result` loader**；DB 已导入 eval1000_v2（10428 行）。
+4. **金融 YAML 标签补全**：将 601825 等未标 `financial: true` 的银行纳入金融子 schema。
 
 ---
 
@@ -150,16 +159,20 @@ SQLite 本地库（outputs/db/listed_companies_v1.db）
 ## 附录：关键产物路径
 
 ```
-outputs/generalization/eval1000/
-  eval_summary.md              # 自动评估汇总
-  calibration_sample*.csv/md    # 人工校准样本
-  eval_results.json            # 批量结果（~1.9MB，本地保留）
-  <code>/company_profile.json  # 单公司结构化结果
-  <code>/<code>.pdf           # 年报 PDF（不提交 Git）
+outputs/generalization/eval1000/          # baseline（保留，未覆盖）
+  eval_summary.md
+  eval_results.json
+  <code>/company_profile.json
+
+outputs/generalization/eval1000_v2/       # 最新全量重跑（2026-06-22）
+  eval_summary.md
+  eval1000_v2_comparison.md               # vs baseline 对比报告
+  eval_results.json
+  <code>/company_profile.json
 
 outputs/db/
-  listed_companies_v1.db       # SQLite 全量导入（1020 公司，gitignored）
+  listed_companies_v1.db                  # eval1000_v2 导入（10428 行，gitignored）
 
 outputs/validation/
-  recent_changes_cached_validation.md   # Issue #1/#2/SQLite cached 验证报告
+  recent_changes_cached_validation.md
 ```
