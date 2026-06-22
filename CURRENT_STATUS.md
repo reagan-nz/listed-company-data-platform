@@ -26,6 +26,7 @@ _最后更新：2026-06-22_
 - **SQLite 导入加固**：单公司 profile 容错、审计字段入库、`evaluation_result.report_year`、FK 启用
 - **rnd_investment 抽取收紧**（Issue #1）：优先总额标签、拒绝 ratio-only / 资本化 0.00 / 列表编号 / 利润表研发费用行
 - **收入表格 proxy 收紧**（Issue #2）：`revenue_table_plausible` 要求 preview 含至少一行真实数据行（非表头 + 实质数值）
+- **金融公司字段体系 v1 文档**（Issue #3）：`docs/financial_company_schema.md` 定义银行/券商/保险三类子 schema 与评估分开报告建议（文档设计，未改抽取代码）
 
 ## 1000 家测试结果（eval1000）
 
@@ -83,14 +84,14 @@ _最后更新：2026-06-22_
 
 1. **研发投入（rnd_investment）**：已收紧抽取与 proxy 规则（优先总额标签、拒绝 ratio-only / 资本化 0.00 / 列表编号）；eval1000 全量 strict 数字待重跑验证。
 2. **收入分地区/分行业表格**：已收紧 proxy（preview 须含真实数据行）；pdfplumber 合并单元格解析仍有限；eval1000 strict 数字待重跑验证。
-3. **金融公司 schema**：当前 11 字段按工业/制造业设计，银行/券商/保险的 segment、客户、R&D 等字段不适用，需单独 schema。
+3. **金融公司 schema 实现**：v1 设计文档已完成（[docs/financial_company_schema.md](docs/financial_company_schema.md)）；`field_schema.py` 仍为 generic `FINANCIAL_FIELD_SPECS`，bank/broker/insurer 子 schema 尚未写入代码。
 4. **客户/供应商集中度**：偶发抓取单个客户占比而非前五名合计（如 `利亚德` 10.40% vs 实际 74.42%）。
 5. **major_subsidiaries**：约 132 家「无/不适用」披露被标 plausible，内容为空但不算错误；另有少量 cross-reference 指针误匹配。
 
 ## 下一步建议
 
 1. 全量 eval1000 → SQLite 导入（当前原型默认 `--limit 10` 小样本）
-2. 金融公司单独 schema（或标记 N/A 并排除 headline 统计）
+2. 金融公司子 schema 实现（Issue #4）：按 [docs/financial_company_schema.md](docs/financial_company_schema.md) 写入 `bank_v1` / `broker_v1` / `insurer_v1` 至 `field_schema.py`
 3. concentration 字段优先提取「合计/前五名合计」比例
 4. 启动 BrowserUser 试点（见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)）
 
