@@ -11,6 +11,8 @@ _状态：待执行（2026-06-23 规划）_
 
 下一步：对 **全 A 股 universe** 跑 2024 年报基础字段抽取，形成可入库的全市场数据集。
 
+> **Disk-safe 模式（默认）**：不预拷贝 PDF；VPN 关闭；batch 顺序 **bse → star → szse_main → chinext → sse_main**；每 batch 完成后删除 PDF/`.cache`，保留 JSON/profile/meta。旧 eval run 的 PDF 已在 2026-06-23 预清理（2812 份，释放 ~11 GiB）。
+
 ## 目标
 
 1. 抽取全部 A 股上市公司 2024 年报 11 项（工业）/ 金融子 schema 基础字段
@@ -95,14 +97,14 @@ if __name__ == "__main__":
 
 `eval_generalize.py` 仅在全部跑完后写入 `eval_results.json`。5300 家中途崩溃会丢失内存结果。每 board 独立 subdir 可保存 5 份独立 checkpoint。
 
-| Board | 预估家数 | 预估耗时 |
-|---|---:|---:|
-| `sse_main` | ~1700 | ~6–8 h |
-| `star` | ~560 | ~2–3 h |
-| `szse_main` | ~1400 | ~5–7 h |
-| `chinext` | ~1300 | ~5–6 h |
-| `bse` | ~300 | ~1–2 h |
-| **合计** | **~5300** | **~20–26 h** |
+| Board | 预估家数 | 预估耗时 | disk-safe 顺序 |
+|---|---:|---:|---|
+| `bse` | ~300 | ~1–2 h | **1** |
+| `star` | ~560 | ~2–3 h | **2** |
+| `szse_main` | ~1400 | ~5–7 h | **3** |
+| `chinext` | ~1300 | ~5–6 h | **4** |
+| `sse_main` | ~1700 | ~6–8 h | **5** |
+| **合计** | **~5300** | **~20–26 h** | 小→大 |
 
 ### 目录结构
 
@@ -125,23 +127,53 @@ outputs/generalization/full_market_2024/
 
 ---
 
-## 3. 运行策略
+## 3. 运行策略（disk-safe 默认）
 
-- **顺序执行 5 个 batch**（不并行）— 避免 CNINFO 限流
+- **顺序执行 5 个 batch**（不并行）— 避免 CNINFO 限流；顺序 **bse → star → szse_main → chinext → sse_main**（小→大，峰值磁盘更低）
 - 使用 **`nohup`**，终端断开不影响进程
-- **batch 内可 resume**：已有 `<code>.pdf` + `meta.json` 的公司跳过下载，仅重跑未完成部分
+- **VPN 关闭** — CNINFO 为国内站点
+- **batch 内可 resume**：已有 `<code>.pdf` + `meta.json` 的公司跳过下载；删除 PDF 后重跑须重新下载
 - **`--throttle 1.5`** 保持不变；全市场 run 不建议低于 1.0
+- **batch 后清理**（每 batch 完成后）：
+  1. 确认 `outputs/generalization/full_market_2024/<board>/eval_results.json` 存在
+  2. 删除该 batch subdir 下所有 `*.pdf` 与 `.cache/`
+  3. **保留**：`company_profile.json`、`meta.json`、`eval_summary.md`（若已生成）
+  4. 运行 `df -h .` 监控剩余空间
+
+### batch 后清理命令
+
+```bash
+BOARD=bse   # 替换为刚完成的 board
+OUT=outputs/generalization/full_market_2024/${BOARD}
+test -f "${OUT}/eval_results.json" || { echo "missing eval_results.json"; exit 1; }
+find "${OUT}" -name "*.pdf" -type f -delete
+find "${OUT}" -type d -name ".cache" -prune -exec rm -rf {} +
+df -h .
+```
+
+> 删除 PDF 意味着日后重跑该 batch 需从 CNINFO 重新下载；`meta.json` 与 `company_profile.json` 仍保留，SQLite 导入不受影响。
 
 ---
 
-## 4. 网络 / 缓存策略
+## 4. 磁盘 / 网络 / 缓存策略
 
-| 策略 | 建议 |
-|---|---|
-| VPN | **关闭** — CNINFO 为国内站点；independent run 曾出现 18 次 ChunkedEncodingError |
-| PDF 预拷贝 | **推荐** — 从 eval1000 / v2 / independent 预拷贝 ~2000 重叠 PDF+meta，节省 2–3 h 与 ~25 GB 下载 |
-| parse cache | 可选 — 拷贝 `.cache/*.pages.json` 可再省 ~1 h parse，非必须 |
-| 全新下载 | 仅 ~3300 家无重叠 PDF 需下载 |
+| 策略 | disk-safe 默认 | 说明 |
+|---|---|---|
+| 磁盘 | **≥80 GiB** 最低；保留 PDF 时建议 **100 GiB+** | 2026-06-23 预清理后约 **95 GiB** 可用；每 batch 后复查 |
+| VPN | **关闭** | independent run 曾出现 18 次 ChunkedEncodingError |
+| PDF 预拷贝 | **跳过** | 旧 eval PDF 已删除；全量 fresh 下载 |
+| batch 后删 PDF | **是** | 仅保留 JSON/profile/meta |
+| parse cache | 随 PDF 一并删除 | 重跑时自动重建 |
+| throttle | **1.5** | — |
+
+### 2026-06-23 预清理（已完成）
+
+从 eval1000 / eval1000_v2 / eval1000_independent_20260623 安全删除：
+
+- **2812** 个 `*.pdf`
+- **3** 个 `.cache/` 目录（各 run 根目录）
+
+**保留**：`eval_results.json`、`company_profile.json`（2812）、`meta.json`（2812）、`eval_summary.md`、对比报告。释放约 **11 GiB**（84 → 95 GiB 可用）。
 
 ---
 
@@ -187,7 +219,7 @@ lab/batch_*_2024.yaml
 ```bash
 cd listed_company_data_collector
 git status --short     # 须 clean
-df -h .                # 需要 ≥80 GiB 可用
+df -h .                # disk-safe：≥80 GiB；每 batch 后复查
 ```
 
 ### Step 1：生成全市场 YAML
@@ -224,46 +256,28 @@ for board in ["sse_main", "star", "szse_main", "chinext", "bse"]:
 PY
 ```
 
-### Step 3：（推荐）预拷贝重叠 PDF
+### Step 3：跳过 PDF 预拷贝（disk-safe 默认）
+
+旧 eval run 的 PDF 已在 2026-06-23 预清理删除，**不要**从 eval1000 / v2 / independent 预拷贝。全量从 CNINFO 下载。
+
+若将来有充足磁盘（≥100 GiB）且需加速，可选手动预拷贝；当前默认跳过。
+
+<!--
+以下为已废弃的预拷贝脚本（disk-safe 模式下不使用）：
 
 ```bash
 mkdir -p outputs/generalization/full_market_2024
-
-.venv/bin/python - <<'PY'
-import yaml, os, shutil
-full = {c["stock_code"] for c in yaml.safe_load(open("lab/eval_companies_full_market_2024.yaml"))["companies"]}
-src_dirs = [
-    "outputs/generalization/eval1000",
-    "outputs/generalization/eval1000_v2",
-    "outputs/generalization/eval1000_independent_20260623",
-]
-dst_base = "outputs/generalization/full_market_2024"
-copied = 0
-for code in full:
-    for src in src_dirs:
-        src_pdf = f"{src}/{code}/{code}.pdf"
-        src_meta = f"{src}/{code}/meta.json"
-        dst_dir = f"{dst_base}/{code}"
-        if os.path.exists(src_pdf) and os.path.getsize(src_pdf) >= 10000:
-            os.makedirs(dst_dir, exist_ok=True)
-            if not os.path.exists(f"{dst_dir}/{code}.pdf"):
-                shutil.copy2(src_pdf, f"{dst_dir}/{code}.pdf")
-            if os.path.exists(src_meta) and not os.path.exists(f"{dst_dir}/meta.json"):
-                shutil.copy2(src_meta, f"{dst_dir}/meta.json")
-            copied += 1
-            break
-print(f"Pre-copied {copied} PDFs")
-PY
-
-df -h .   # 预拷贝后再确认磁盘
+# ... pre-copy from eval1000/v2/independent ...
+df -h .
 ```
+-->
 
-### Step 4：顺序跑 5 个 batch（overnight）
+### Step 4：顺序跑 5 个 batch + batch 后清理（小→大）
 
 ```bash
-mkdir -p outputs/generalization/full_market_2024/{sse_main,star,szse_main,chinext,bse}
+mkdir -p outputs/generalization/full_market_2024/{bse,star,szse_main,chinext,sse_main}
 
-for board in sse_main star szse_main chinext bse; do
+for board in bse star szse_main chinext sse_main; do
   echo "=== Starting $board $(date) ===" | tee -a outputs/generalization/full_market_2024/batch_${board}.log
   .venv/bin/python lab/eval_generalize.py \
     --companies lab/batch_${board}_2024.yaml \
@@ -271,6 +285,14 @@ for board in sse_main star szse_main chinext bse; do
     --throttle 1.5 \
     2>&1 | tee -a outputs/generalization/full_market_2024/batch_${board}.log
   echo "=== Done $board $(date) ===" | tee -a outputs/generalization/full_market_2024/batch_${board}.log
+
+  # batch 后清理（确认 checkpoint 后）
+  OUT=outputs/generalization/full_market_2024/${board}
+  test -f "${OUT}/eval_results.json" || { echo "ERROR: missing eval_results.json for ${board}"; exit 1; }
+  find "${OUT}" -name "*.pdf" -type f -delete
+  find "${OUT}" -type d -name ".cache" -prune -exec rm -rf {} +
+  echo "=== Cleaned PDFs/cache for $board; df -h ==="
+  df -h .
 done
 ```
 
@@ -425,13 +447,13 @@ sqlite3 outputs/db/listed_companies_v1.db \
 
 | 风险 | 可能性 | 缓解 |
 |---|---|---|
-| 磁盘：~70 GB 新 PDF | **高** | 预拷贝 ~2000 PDF；运行前 `df -h` ≥80 GiB |
+| 磁盘：单 batch 峰值 ~15–25 GB PDF | **中** | disk-safe：小→大顺序 + batch 后删 PDF；每 batch 后 `df -h`；最低 80 GiB，推荐 100 GiB+ 若保留 PDF |
 | 总耗时 20–26 h | 确定 | 5 batch 顺序 overnight；nohup |
 | CNINFO 403 / 限流 | 中 | throttle 1.5；VPN off；error retry |
 | no_announcement 10–15% | 预期 | BSE/退市正常，非失败 |
 | batch 中途崩溃丢 JSON | 低 | 每 board 独立 subdir 保存 JSON |
 | 金融 auto-tag 遗漏（资本类） | 低 | `_FIN_KW` 未含「资本」；约 10–20 家可能走 industrial schema |
-| error retry 路径不一致 | 中 | 预拷贝 PDF 至 flat `full_market_2024/<code>/` 结构 |
+| error retry 路径不一致 | 中 | retry 时 `evaluate_company` 的 `out_dir` 须与 batch subdir 一致；PDF 已删则自动 re-download |
 
 ---
 
@@ -451,11 +473,11 @@ sqlite3 outputs/db/listed_companies_v1.db \
 
 **建议暂不立即开跑**，先确认：
 
-1. **磁盘 ≥80 GiB 可用**（当前 ~88 GiB，预拷贝 + 新下载后偏紧）
+1. **磁盘 ≥80 GiB 可用**（2026-06-23 预清理后约 **95 GiB**；disk-safe 每 batch 后复查）
 2. 机器可 **overnight 无人值守** 20–26 h
 3. **VPN 关闭**
 
-满足后再按 Step 0 → 1 → 2 → 3 → 4 顺序执行。
+满足后再按 Step 0 → 1 → 2 → 4 顺序执行（Step 3 预拷贝跳过）。
 
 ---
 
@@ -466,26 +488,28 @@ sqlite3 outputs/db/listed_companies_v1.db \
 
 ### Pre-run
 - [ ] git status clean
-- [ ] df -h: ≥80 GiB free
+- [ ] df -h: ≥80 GiB free（disk-safe；每 batch 后复查）
+- [ ] Old eval PDFs cleaned (2026-06-23: eval1000/v2/independent)
 - [ ] Add .gitignore entries (full_market_2024 subdirs, batch_*.log, batch_*_2024.yaml)
 - [ ] Create lab/make_full_market_yaml.py
+- [ ] VPN off
 
 ### YAML generation
 - [ ] Run make_full_market_yaml.py → lab/eval_companies_full_market_2024.yaml
 - [ ] Verify ~5300 companies; financial ~150–200
 - [ ] Split into 5 board batch YAMLs
 
-### PDF pre-copy (recommended)
-- [ ] Pre-copy ~2000 PDFs+meta.json from eval1000/v2/independent
-- [ ] Verify disk ≥80 GiB after pre-copy
+### PDF pre-copy
+- [ ] **Skipped** (disk-safe default; old eval PDFs already deleted)
 
-### Batch evaluation (sequential, overnight)
-- [ ] Batch 1: sse_main (~1700, ~6–8 h)
-- [ ] Batch 2: star (~560, ~2–3 h)
-- [ ] Batch 3: szse_main (~1400, ~5–7 h)
-- [ ] Batch 4: chinext (~1300, ~5–6 h)
-- [ ] Batch 5: bse (~300, ~1–2 h)
+### Batch evaluation (sequential, small→large, overnight)
+- [ ] Batch 1: bse (~300, ~1–2 h) → cleanup PDFs/cache
+- [ ] Batch 2: star (~560, ~2–3 h) → cleanup PDFs/cache
+- [ ] Batch 3: szse_main (~1400, ~5–7 h) → cleanup PDFs/cache
+- [ ] Batch 4: chinext (~1300, ~5–6 h) → cleanup PDFs/cache
+- [ ] Batch 5: sse_main (~1700, ~6–8 h) → cleanup PDFs/cache
 - [ ] Spot-check each batch log for mass errors
+- [ ] df -h after each batch
 
 ### Post-run
 - [ ] Merge 5 batch eval_results.json → full_market_2024/eval_results.json
