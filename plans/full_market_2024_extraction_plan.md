@@ -31,11 +31,14 @@ lab/eval_companies_full_market_2024.yaml  (~5300 家)
     ↓  按 board 拆成 5 个 batch YAML
 eval_generalize.py × 5（顺序执行，每 board 独立 subdir）
     ↓
+lab/merge_full_market_batches.py（合并 JSON + symlinks + summary）
+    ↓
 outputs/generalization/full_market_2024/
-    sse_main/  star/  szse_main/  chinext/  bse/
+    bse/ star/ szse_main/ chinext/ sse_main/
     eval_results.json（合并后）
     eval_summary.md
     full_market_2024_summary.md
+    {code}/ → symlink 至 {board}/{code}
     ↓  lab/db_import.py --run-name full_market_2024
 outputs/db/listed_companies_v1.db
 ```
@@ -307,30 +310,26 @@ nohup .venv/bin/python lab/eval_generalize.py \
 echo "PID: $!"
 ```
 
-### Step 5：合并 batch 结果
+### Step 5：合并 batch 结果 + db_import 兼容层
+
+`db_import.py` 期望 profile 位于 `eval_dir/{code}/company_profile.json`，但 batch 输出在 `eval_dir/{board}/{code}/`。使用 `lab/merge_full_market_batches.py` 合并 JSON 并在 root 创建 symlink `{code}` → `{board}/{code}`。
 
 ```bash
-.venv/bin/python - <<'PY'
-import json, os
-from lab.eval_generalize import write_summary
-
-OUT = "outputs/generalization/full_market_2024"
-boards = ["sse_main", "star", "szse_main", "chinext", "bse"]
-all_results = []
-for board in boards:
-    p = f"{OUT}/{board}/eval_results.json"
-    if os.path.exists(p):
-        r = json.load(open(p, encoding="utf-8"))
-        all_results.extend(r)
-        print(f"  {board}: {len(r)}")
-
-json.dump(all_results, open(f"{OUT}/eval_results.json", "w"), ensure_ascii=False, indent=2)
-write_summary(all_results, f"{OUT}/eval_summary.md")
-print(f"Merged total: {len(all_results)}")
-PY
+.venv/bin/python lab/merge_full_market_batches.py \
+  --out-dir outputs/generalization/full_market_2024
 ```
 
-### Step 6：快速指标检查
+产出：
+- `eval_results.json`（5 batch 合并）
+- `eval_summary.md`（via `write_summary`）
+- `full_market_2024_summary.md`（status / proxy / field rates / board counts）
+- root `{code}/` symlinks → `{board}/{code}/`
+
+> error retry 后须重新运行 merge（更新 symlink 与合并 JSON）。
+
+### Step 6：快速指标检查（可选）
+
+merge 工具已写入 `full_market_2024_summary.md`。如需 CLI 复查：
 
 ```bash
 .venv/bin/python - <<'PY'
@@ -400,11 +399,14 @@ PY
 
 ### Step 8：SQLite 导入
 
+merge 完成后（symlinks 就位）再导入：
+
 ```bash
 .venv/bin/python lab/db_init.py
 
 .venv/bin/python lab/db_import.py \
   --eval-dir outputs/generalization/full_market_2024 \
+  --companies-yaml lab/eval_companies_full_market_2024.yaml \
   --run-name full_market_2024 \
   --limit 0
 
@@ -412,9 +414,9 @@ sqlite3 outputs/db/listed_companies_v1.db \
   "SELECT run_name, COUNT(*) FROM evaluation_result GROUP BY run_name;"
 ```
 
-### Step 9：撰写报告
+### Step 9：补充报告（可选）
 
-创建 `outputs/generalization/full_market_2024/full_market_2024_summary.md`，对比：
+`merge_full_market_batches.py` 已生成 `full_market_2024_summary.md`。如需手写对比段落，可追加：
 - status 计数 vs eval1000_v2 / independent
 - 非金融 proxy mean
 - rnd / revenue 字段率
@@ -453,7 +455,8 @@ sqlite3 outputs/db/listed_companies_v1.db \
 | no_announcement 10–15% | 预期 | BSE/退市正常，非失败 |
 | batch 中途崩溃丢 JSON | 低 | 每 board 独立 subdir 保存 JSON |
 | 金融 auto-tag 遗漏（资本类） | 低 | `_FIN_KW` 未含「资本」；约 10–20 家可能走 industrial schema |
-| error retry 路径不一致 | 中 | retry 时 `evaluate_company` 的 `out_dir` 须与 batch subdir 一致；PDF 已删则自动 re-download |
+| error retry 路径不一致 | 中 | retry 写入 batch subdir；retry 后重新 `merge_full_market_batches.py` |
+| db_import 找不到 profile | 低 | merge 创建 root symlink；未 merge 则 extracted_field 为空 |
 
 ---
 
@@ -512,10 +515,10 @@ sqlite3 outputs/db/listed_companies_v1.db \
 - [ ] df -h after each batch
 
 ### Post-run
-- [ ] Merge 5 batch eval_results.json → full_market_2024/eval_results.json
+- [ ] merge_full_market_batches.py → eval_results.json + symlinks + summaries
 - [ ] Run status summary; compare vs eval1000_v2 (10.33/11) and independent (10.30/11)
-- [ ] Retry error companies (VPN off)
-- [ ] db_import.py --run-name full_market_2024 --limit 0
+- [ ] Retry error companies (VPN off); re-merge after retry
+- [ ] db_import.py --companies-yaml lab/eval_companies_full_market_2024.yaml --run-name full_market_2024 --limit 0
 - [ ] Confirm SQLite ~55000–58000 extracted_field rows
 
 ### Documentation
