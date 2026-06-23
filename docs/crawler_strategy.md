@@ -8,21 +8,25 @@
 
 ## 分阶段策略
 
-### 阶段一（当前）：CNINFO 年报程序化获取
+### 阶段一（已完成）：CNINFO 年报程序化获取
 
 - **方式**：HTTP API 查询 + 静态 PDF 下载
 - **工具**：`lab/probe_cninfo.py` + `requests`
-- **频率**：1 req/s（`--throttle`）
+- **频率**：1 req/s（`--throttle 1.5` 全量时推荐）
 - **缓存**：PDF + parsed-page cache，支持断点续跑
-- **状态**：946/1020 成功，链路稳定
+- **状态**：eval1000_v2 947/1020 ok；independent eval1000 918/1000 ok（retry 后 0 error）
 
-### 阶段二：全 A 股批量跑
+### 阶段二（下一步）：full_market_2024 全量批量跑
 
-- 复用阶段一链路，按 `sample_universe.py` 生成全量列表
-- 断点续跑 + 失败重试（network timeout → 重跑跳过已缓存）
+- 复用阶段一链路，`make_full_market_yaml.py` 生成全市场列表（~5300 家）
+- 按 board 拆 5 批次顺序执行，独立 subdir 保存 checkpoint
+- 断点续跑 + 失败重试（VPN off；network timeout → 重跑跳过已缓存 PDF）
 - 不并行（避免 CNINFO 限流）
+- 详见 [plans/v0.6_full_market_2024_plan.md](../plans/v0.6_full_market_2024_plan.md)
 
 ### 阶段三：BrowserUser 补充
+
+> **时序说明**：BrowserUser **不是** full_market_2024 之前的下一步。待全量基线稳定后再启动。
 
 - **适用场景**：
   - 需要 JavaScript 渲染的页面（公司官网 IR）
@@ -49,7 +53,7 @@ BrowserUser 是**后续补充工具**，不是当前主链路：
 | 适用 | API、静态 PDF、结构化页面 | JS 渲染、交互、复杂导航 |
 | 成本 | 低（无 LLM） | 较高（智能体调用） |
 | 稳定性 | 高（确定性） | 中（页面变化敏感） |
-| 当前优先级 | **主链路** | 补充 |
+| 当前优先级 | **主链路（全量 full_market_2024）** | 全量基线稳定后（补充，非当前） |
 
 ## 合规红线
 

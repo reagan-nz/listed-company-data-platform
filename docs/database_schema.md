@@ -107,13 +107,23 @@ evaluation_result (N)  ── 关联 run_name + company_code + report_year + fie
 | 迁移成本 | 后期可 pgloader / 自定义脚本迁 PG | — |
 | 与当前产物 | 与 eval JSON 体量（946×11 行）匹配良好 | 全 A 股后仍适用 |
 
+### SQLite 导入里程碑
+
+| run_name | 导入时间 | company_basic | report_source | extracted_field | 说明 |
+|---|---|---:|---:|---:|---|
+| `eval1000` | 2026-06-18 | 1020 | 1020 | 10417 | baseline；cached validation 已验证 |
+| `eval1000_v2` | 2026-06-22 | 1020 | 1020 | 10428 | 同 cohort 重跑，rules v2，PASS |
+| `eval1000_independent_20260623` | 2026-06-23 | 1000 | 1000 | 10112 | 独立 cohort，泛化验证，PASS |
+| `full_market_2024` | 待做 | ~5300 | ~5300 | ~55000–58000 | **下一大规模导入测试** |
+
 ### 推荐路线
 
 **先用 SQLite 做原型与可复现验证**（例如 `outputs/db/listed_companies_v1.db`）：
 
-1. 表结构稳定、导入脚本可重复跑通 eval1000 样本；
+1. 表结构稳定，三批次导入（eval1000 / v2 / independent）均已通过；
 2. 团队内共享单文件数据库 + 文档即可复现查询；
-3. 待字段 schema、金融拆分、BrowserUser 补充字段方向稳定后，**再迁移 PostgreSQL** 支撑全 A 股与多用户访问。
+3. full_market_2024 导入（~55000 行）将是首次大规模规模测试；
+4. 待 full_market_2024 稳定、字段 schema 迭代完成后，**再迁移 PostgreSQL** 支撑全 A 股与多用户访问。
 
 **原型实现**（Issue #8）：`lab/db_init.py` + `lab/db_import.py`，默认写入 `outputs/db/listed_companies_v1.db`（gitignore）。连接启用 `PRAGMA foreign_keys = ON`；导入支持单公司 profile 失败容错、审计字段 `in_region`/`anchor_matched` 入库。不修改 `extract_annual_report.py` / `field_schema.py`。
 

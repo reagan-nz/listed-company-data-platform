@@ -37,7 +37,7 @@
 - **结果**：184 家 OK；proxy plausible 约 88%；校准后 precision 约 88–93%
 - **发现**：hard crash（16 家）、major_products 低召回（59%）、A+H 选错报告
 
-### 4. 1000 家受控评估（eval1000）
+### 4. 1000 家受控评估（eval1000，baseline）
 
 - **目的**：大规模验证改进后 pipeline 的稳定性与泛化
 - **方法**：
@@ -46,11 +46,43 @@
   - 金融公司单独标记与统计
 - **结果**：
   - 1020 样本，946 OK，73 no_announcement，0 hard error
-  - 非金融 proxy plausible：10.5/11（96%）
+  - 非金融 proxy plausible：10.5/11（96%）；strict-usable：10.16/11（92.4%）
   - 200 子集：27 改进，0 回归
 - **产出**：`outputs/generalization/eval1000/eval_summary.md`
 
-### 5. 人工校准（calibration_sample）
+### 5. 同 cohort 全量重跑（eval1000_v2）
+
+- **目的**：在 Issue #1/#2/#4（规则收紧 + 金融 schema）后，验证同一公司列表上无回归
+- **方法**：
+  - 同 YAML（`lab/eval_companies_1000.yaml`，1020 家）
+  - 从 eval1000 预拷贝 947 份 PDF（无重新下载）
+  - 运行最新代码，对比 baseline 与修复后数字
+- **结果**：
+  - 947 OK / 73 no_announcement / 0 error
+  - 非金融 proxy：**10.33/11**（baseline 10.54，下降系更严规则所致，非故障）
+  - SQLite 导入 10428 行（`run_name=eval1000_v2`）
+- **产出**：`outputs/generalization/eval1000_v2/eval1000_v2_comparison.md`
+
+> **与 baseline 的区别**：同 cohort 重跑验证的是「修复后同一批公司上无回归」，不是新公司的泛化能力。
+
+### 6. 独立 cohort 泛化验证（independent eval1000）
+
+- **目的**：验证管道在从未见过的公司上的泛化能力（真正的 out-of-sample 测试）
+- **方法**：
+  - 新 cohort：`lab/eval_companies_1000_independent_20260623.yaml`（seed 20260623，1000 家）
+  - 与 eval1000 重叠 159 家（15.9%），841 家全新
+  - 不预拷贝 PDF（新鲜下载，完整验证抓取链路）
+  - 18 家 ChunkedEncodingError（VPN 干扰）经 VPN-off 重试全部恢复
+- **结果**：
+  - 918 OK / 82 no_announcement / 0 error（retry 后）
+  - 非金融 proxy：**10.30/11**（vs eval1000_v2 10.33，Δ −0.04，在 ±0.15 容差内）
+  - SQLite 导入 10112 行（`run_name=eval1000_independent_20260623`）
+  - **泛化结论：PASS**
+- **产出**：`outputs/generalization/eval1000_independent_20260623/independent_comparison.md`
+
+> **与 eval1000_v2 的区别**：独立泛化验证使用不同 seed 抽取的公司，且不共享缓存 PDF，是对管道泛化能力更严格的测试。
+
+### 7. 人工校准（calibration_sample）
 
 - **目的**：测量 proxy plausible 与人工判断的一致率
 - **工具**：`lab/calibration_sample.py`
@@ -64,7 +96,7 @@
   - false-positive rate：3%
   - calibrated population correctness：约 91%
 
-### 6. 严格二次审计
+### 8. 严格二次审计
 
 - **目的**：不依赖小样本，对**全部 plausible 单元格**做 adversarial 规则复核
 - **方法**：读取每个 plausible 字段的 stored `value`，按类型应用严格规则：
@@ -81,14 +113,16 @@
 
 ## 指标对照表
 
-| 指标 | eval1000 非金融 | 含义 | 可信度 |
-|---|---|---|---|
-| proxy plausible | 10.5/11 (96%) | 自动规则判定 | 中（高估 3–4pp） |
-| 校准 precision | 94% (60 格) | 人工 CORRECT / plausible | 高（但样本小） |
-| strict-usable | 10.16/11 (92.4%) | 全量 adversarial 复核 | **最高** |
-| hard-wrong rate | 1.9% | 全量真 false positive | 高 |
+| 指标 | eval1000（baseline） | eval1000_v2（同 cohort） | independent（新 cohort） | 含义 | 可信度 |
+|---|---|---|---|---|---|
+| proxy plausible | 10.5/11 | **10.33/11** | **10.30/11** | 自动规则判定 | 中（高估 3–4pp） |
+| 校准 precision | 94%（60 格） | 未重跑 | 未重跑 | 人工 CORRECT/plausible | 高（但样本小） |
+| strict-usable | **10.16/11** (92.4%) | **未重跑** | **未重跑** | 全量 adversarial 复核 | **最高** |
+| hard-wrong rate | 1.9% | 未重跑 | 未重跑 | 全量真 false positive | 高 |
 
-**推荐对外报告数字**：strict-usable **10.16/11（92.4%）**，而非 proxy 的 10.5/11。
+> **重要说明**：strict-usable 10.16/11 来自 eval1000 baseline（Issue #1/#2 前）。v2/independent 的更严规则使 proxy 下降至 10.33/10.30，strict 是否同步改善**尚未重新审计**，不得声称 strict 已改善。
+
+**推荐对外报告**：如需报告单一数字，用 strict-usable **10.16/11（92.4%）**并标注「eval1000 baseline，v2 未重跑」；如需报告泛化结论，用 independent 非金融 proxy **10.30/11**。
 
 ## 如何运行评估
 

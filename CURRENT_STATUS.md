@@ -159,9 +159,17 @@ SQLite 本地库（outputs/db/listed_companies_v1.db）
 
 ## 6. 下一步计划
 
-1. **strict 审计重跑**（eval1000_v2 + independent plausible 单元格）。
-2. **BrowserUser 规划/试点**。
-3. **补 `strict_audit_result` loader**；考虑 `sample_universe` 增加「资本」关键词。
+优先级从高到低：
+
+1. **full_market_2024 全量提取**（~5300 家 A 股 2024 年报）
+   - 创建 `lab/make_full_market_yaml.py` → 生成全市场 YAML
+   - 按 board 拆 5 批次顺序执行（预计 20–26 h，需 ≥80 GiB 磁盘）
+   - 合并结果 → SQLite 导入（`run_name=full_market_2024`）
+   - 详见 [plans/v0.6_full_market_2024_plan.md](plans/v0.6_full_market_2024_plan.md)
+2. **full_market_2024 strict 审计**（全量基线稳定后）
+3. **多年度扩展**（2023 / 2022 年报，依赖全量基线）
+4. **BrowserUser 试点**（补充 PDF 无法覆盖的数据；在全量基线稳定后启动，不是当前直接下一步）
+5. **补 `strict_audit_result` loader**；考虑 `sample_universe` 增加「资本」关键词（低优先级）
 
 ---
 
@@ -170,7 +178,7 @@ SQLite 本地库（outputs/db/listed_companies_v1.db）
 | 入口 | 用途 |
 |---|---|
 | **本文档**（`CURRENT_STATUS.md`） | 项目阶段、关键数字、已知问题、下一步 — **主进度页** |
-| **GitHub Project 看板** | Todo / In Progress / Done 任务状态；当前重点：数据库、字段优化、金融 schema、BrowserUser |
+| **GitHub Project 看板** | Todo / In Progress / Done 任务状态；当前重点：full_market_2024 提取、磁盘准备 |
 | **[CHANGELOG.md](CHANGELOG.md)** | 每次重要变更的记录（Keep a Changelog 格式） |
 | **[docs/](docs/)** | 技术细节：数据源、抽取流程、评估方法、数据库 schema、金融 schema 设计 |
 | **[ROADMAP.md](ROADMAP.md)** | 分阶段路线图 |
@@ -200,7 +208,7 @@ outputs/generalization/eval1000_v2/       # 同 cohort 重跑（2026-06-22）
   <code>/company_profile.json
 
 outputs/db/
-  listed_companies_v1.db                  # eval1000_v2 导入（10428 行，gitignored）
+  listed_companies_v1.db                  # eval1000_v2（10428 行）+ independent（10112 行）已导入；gitignored
 
 outputs/validation/
   recent_changes_cached_validation.md

@@ -1,8 +1,15 @@
 # 金融公司字段体系 v1
 
-_最后更新：2026-06-22_
+_最后更新：2026-06-23_
 
-> **实现状态（Issue #4）**：`lab/field_schema.py` 已实现 `BANK_FIELD_SPECS` / `BROKER_FIELD_SPECS` / `INSURER_FIELD_SPECS` / `OTHER_FINANCIAL_FIELD_SPECS`，以及 `detect_profile()` / `resolve_profile()` / `get_field_specs()` 分发。eval 对 `financial: true` 公司使用子 schema；非金融仍用工业 11 字段。全量 eval1000 未重跑。
+> **实现状态（Issue #4）**：`lab/field_schema.py` 已实现 `BANK_FIELD_SPECS` / `BROKER_FIELD_SPECS` / `INSURER_FIELD_SPECS` / `OTHER_FINANCIAL_FIELD_SPECS`，以及 `detect_profile()` / `resolve_profile()` / `get_field_specs()` 分发。eval 对 `financial: true` 公司使用子 schema；非金融仍用工业 11 字段。
+>
+> **已运行的 eval**：eval1000_v2（16 家金融；11 ok）与 independent eval1000（11 ok）已用子 schema 跑通。
+>
+> **尚未完成**：
+> - 金融字段的 **strict 审计**尚未执行（不得声称金融字段质量）；
+> - 金融专用 plausible 规则（Phase 3）未实现，当前仍复用 generic `extract_numeric` / `table_match`，**数值字段可能含噪声**（如利息净收入混入其他行）；
+> - DB `financial_subtype` 列未入库（Phase 5 未做）。
 
 ## 1. 为什么需要单独 schema
 
@@ -179,8 +186,8 @@ FieldSpec (base)
 
 ### 5.1 当前做法（eval1000 已部分实现）
 
-- eval 公司列表中 `financial: true` 标记（12 家：4 银行、6 券商、1 保险、1 期货）
-- summary 中**非金融 headline** 仅统计 `financial: false` 的 936 家（或 1008 非金融，视 no_announcement 过滤）
+- eval 公司列表中 `financial: true` 标记（**16 家**：银行含沪农商行、券商若干、保险、资本类）
+- summary 中**非金融 headline** 仅统计 `financial: false` 的公司（eval1000_v2：936 家；independent：907 家）
 - 金融公司单独一行：「金融公司（单独统计）」
 
 ### 5.2 推荐报告结构（实现子 schema 后）

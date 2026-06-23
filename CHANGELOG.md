@@ -22,9 +22,14 @@
 - **rnd_investment 抽取收紧**（Issue #1）：`extract_rnd_numeric` 优先总额标签、拒绝 ratio-only / 资本化 0.00 / 列表编号 / 利润表行；proxy 同步收紧
 - **收入表格 proxy 收紧**（Issue #2）：`revenue_table_plausible` 要求 `revenue_by_region` / `revenue_by_segment` preview 含至少一行非表头数据行
 
+### 文档
+- **文档同步**（2026-06-23）：所有主要文档与 eval1000_v2 / independent eval1000 里程碑对齐；ROADMAP 阶段重排（full_market_2024 → strict 审计 → 多年度 → BrowserUser）；docs/evaluation_method 增加同 cohort 重跑与独立泛化验证说明；docs/database_schema 注明三批次 SQLite 导入状态；docs/financial_company_schema 补充 strict 未重跑说明；docs/crawler_strategy 明确 BrowserUser 在 full_market_2024 基线稳定后才启动；新增 plans/v0.6_full_market_2024_plan.md
+
 ### 计划
-- strict 审计重跑（eval1000_v2 plausible 单元格）
-- BrowserUser 数据源试点
+- full_market_2024 全量提取（~5300 家，下一主要里程碑）
+- strict 审计重跑（全量基线稳定后）
+- 多年度扩展
+- BrowserUser 数据源试点（full_market_2024 基线稳定后）
 
 ## 2026-06-18
 

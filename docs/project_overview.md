@@ -4,11 +4,11 @@
 
 搭建中国 **A 股上市公司基础数据库**，从公开披露信息中提取结构化基础标签，为后续公司分析、行业研究、产业链挖掘提供数据基础。
 
-**短期**（当前）：基于巨潮资讯网公开年报 PDF，抽取 11 项基础字段。
+**短期**（当前）：基于巨潮资讯网公开年报 PDF，抽取 11 项基础字段；eval1000_v2（同 cohort）与 independent eval1000（新 cohort）泛化验证均已通过，下一步为 full_market_2024 全量提取。
 
-**中期**：覆盖全部 A 股上市公司，形成可查询、可更新的基础数据库。
+**中期**：覆盖全部 ~5300 家 A 股上市公司（full_market_2024），形成可查询、可更新的基础数据库；多年度扩展。
 
-**长期**：用 BrowserUser 爬虫智能体补充 PDF 无法覆盖的数据（投资者互动、官网 IR、招投标等），并用跨年度对比提供变化追踪能力。
+**长期**：用 BrowserUser 爬虫智能体补充 PDF 无法覆盖的数据（投资者互动、官网 IR、招投标等），并用跨年度对比提供变化追踪能力。BrowserUser 在 full_market_2024 基线稳定后启动。
 
 ## 设计原则
 
@@ -70,10 +70,12 @@ listed_company_data_collector/
 | 模块 | 文件 | 职责 |
 |---|---|---|
 | 年报获取 | `lab/probe_cninfo.py` | CNINFO API 查询、orgId 解析、PDF 下载、全文筛选 |
-| 字段 schema | `lab/field_schema.py` | 11 字段定义：锚点、区域、抽取方式、avoid 规则 |
+| 字段 schema | `lab/field_schema.py` | 11 字段定义；金融子 schema（bank/broker/insurer/other） |
 | 抽取器 | `lab/extract_annual_report.py` | PDF 解析 → 定位 → 抽取 → 输出 profile |
-| 评估 | `lab/eval_generalize.py` | 批量跑抽取 + plausible 代理评分 |
+| 评估 | `lab/eval_generalize.py` | 批量跑抽取 + plausible 代理评分；支持断点续跑 |
 | 校准 | `lab/calibration_sample.py` | 分层抽样 + 人工评分 + 指标计算 |
+| SQLite | `lab/db_init.py` / `lab/db_import.py` | 建表（四表 v1 schema）；从 eval 产物导入 |
+| 抽样 | `lab/sample_universe.py` | 按板块分层抽样（eval200 / eval1000）|
 
 ## 相关文档
 

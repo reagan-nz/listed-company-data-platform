@@ -1,8 +1,8 @@
 # 上市公司基础数据库
 
-基于中国 A 股上市公司**公开年报 PDF**，程序化抽取 11 项基础字段，构建可证据追溯的公司基础标签库。后续计划用 BrowserUser 爬虫智能体补充普通程序难以获取的数据。
+基于中国 A 股上市公司**公开年报 PDF**，程序化抽取 11 项基础字段，构建可证据追溯的公司基础标签库。
 
-**当前阶段**：eval1000_v2 全量重跑完成（2026-06-22）；SQLite 数据平台原型已就绪；金融子 schema 与标签审计完成。
+**当前阶段**：eval1000_v2 同 cohort 重跑（2026-06-22）与 independent eval1000 泛化验证（2026-06-23）均已完成，管道泛化良好；SQLite 数据平台原型就绪；下一步为 full_market_2024 全量提取。
 
 ## 如何查看当前进度
 
@@ -17,11 +17,10 @@
 
 当前看板重点包括：
 
-- 正在推进的数据库存储方案；
-- 研发投入字段优化；
-- 收入表格校验；
-- 金融公司专用字段体系；
-- BrowserUser 数据扩展实验。
+- full_market_2024 全量提取（~5300 家，规划中）；
+- 磁盘与运行时间准备；
+- strict 审计重跑（延期至全量基线稳定后）；
+- BrowserUser 数据扩展（全量基线稳定后，暂不启动）。
 
 我会在后续每次本地更新后，同步更新 GitHub 文档、提交记录和项目看板，方便持续追踪项目进度。
 
@@ -50,16 +49,14 @@ python lab/calibration_sample.py --eval-dir outputs/generalization/eval1000 --n 
 
 ## 当前结果（摘要）
 
-最新数字见 **[CURRENT_STATUS.md](CURRENT_STATUS.md)**（eval1000_v2，2026-06-22）：
+最新数字见 **[CURRENT_STATUS.md](CURRENT_STATUS.md)**：
 
-| 指标 | 数值 |
-|---|---|
-| 测试样本 | 1020 家 |
-| 成功抽取（ok） | 947 家 |
-| 非金融 proxy plausible | **10.33 / 11** |
-| strict-usable | **10.16 / 11**（eval1000 审计，**未重跑**） |
+| run | 样本 | ok | 非金融 proxy |
+|---|---:|---:|---:|
+| eval1000_v2（同 cohort，2026-06-22） | 1020 | 947 | **10.33 / 11** |
+| independent eval1000（新 cohort，2026-06-23） | 1000 | 918 | **10.30 / 11** |
 
-详细对比、SQLite 行数与已知问题见 [CURRENT_STATUS.md](CURRENT_STATUS.md)。
+> strict-usable **10.16/11**（eval1000 审计，尚未在 v2/independent 上重跑）。详细对比、SQLite 行数与已知问题见 [CURRENT_STATUS.md](CURRENT_STATUS.md)。
 
 ## 文档
 
@@ -69,7 +66,7 @@ python lab/calibration_sample.py --eval-dir outputs/generalization/eval1000 --n 
 | [ROADMAP.md](ROADMAP.md) | 分阶段路线图 |
 | [CHANGELOG.md](CHANGELOG.md) | 关键更新记录 |
 | [docs/](docs/) | 技术文档（数据源、抽取、评估、协作） |
-| [plans/](plans/) | 历史方案记录（v0.1–v0.5） |
+| [plans/](plans/) | 历史方案记录（v0.1–v0.6） |
 
 ## GitHub Project 看板建议
 
