@@ -11,6 +11,7 @@
 - **金融公司子 schema 实现**（Issue #4）：`BANK/BROKER/INSURER/OTHER_FINANCIAL_FIELD_SPECS`、`detect_profile`/`resolve_profile`/`get_field_specs`；eval 对 `financial: true` 启用子 schema
 
 ### 变更
+- **Independent eval1000 泛化验证**：新 cohort 1000 家（seed 20260623，重叠 159/15.9%）；**918 ok / 82 no_announcement / 0 error**（18 ChunkedEncodingError 经 VPN-off 重试恢复）；非金融 proxy **10.30/11**（vs v2 10.33，Δ −0.04 PASS）；SQLite 10112 行 — 见 `outputs/generalization/eval1000_independent_20260623/independent_comparison.md`
 - **eval1000_v2 同 cohort 全量重跑**：1020 家 / 947 ok / 73 no_announcement / 0 error；非金融 proxy **10.33/11**（baseline 10.54，−0.21 为更严 proxy 所致）；SQLite 10428 行 — 见 `outputs/generalization/eval1000_v2/eval1000_v2_comparison.md`
 - **schema_profile 可追溯性**：`eval_generalize.py` 写入 `company_profile.json` 时同步记录 `schema_profile` / `suggested_profile`
 - **金融标签补全 — 601825 沪农商行**：`financial: true`；`_BANK_NAME_KW` / `sample_universe` 增加 农商行/城商行

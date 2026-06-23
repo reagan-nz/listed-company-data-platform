@@ -29,6 +29,7 @@ outputs/extraction/.cache/
 outputs/generalization/**/*.pdf
 outputs/generalization/**/.cache/
 outputs/generalization/**/eval_results.json
+outputs/generalization/eval1000_independent_20260623/*.log
 lab/eval_companies.yaml
 lab/eval_companies_200.yaml
 # lab/eval_companies_1000.yaml → 建议纳入版本控制（可复现 1000 测试）
@@ -46,6 +47,8 @@ outputs/generalization/eval1000/[0-9]*/
 outputs/generalization/eval1000/run.log
 outputs/generalization/eval1000_v2/[0-9]*/
 outputs/generalization/eval1000_v2/run.log
+outputs/generalization/eval1000_independent_20260623/[0-9]*/
+outputs/generalization/eval1000_independent_20260623/run.log
 
 # SQLite prototype (generated locally via lab/db_init.py + lab/db_import.py)
 outputs/db/*.db

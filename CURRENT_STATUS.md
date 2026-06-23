@@ -1,8 +1,10 @@
 # 当前状态
 
-_最后更新：2026-06-22（eval1000_v2 重跑 + 金融标签审计完成）_
+_最后更新：2026-06-23（independent eval1000 泛化验证完成）_
 
 > **本文档是项目主进度页。** 老师建议从这里开始阅读；技术细节见 [docs/](docs/)，变更记录见 [CHANGELOG.md](CHANGELOG.md)。
+
+**2026-06-23 日结**：独立 cohort 1000 家 eval 完成；18 家 ChunkedEncodingError 经 VPN-off 重试全部恢复；最终 **918 ok / 0 error / 82 no_announcement**（91.8%）；非金融 proxy **10.30/11**，泛化验证 **PASS**。
 
 **2026-06-22 日结**：同 cohort 全量重跑 eval1000_v2 完成；Issue #1/#2/#4 变更经全量验证；金融 YAML 标签补全至 16 家；baseline eval1000 保留未覆盖。
 
@@ -38,6 +40,7 @@ _最后更新：2026-06-22（eval1000_v2 重跑 + 金融标签审计完成）_
 | **eval1000_v2 全量重跑** | 同 cohort 1020 家，验证 Issue #1/#2/#4 后最新代码 — 见 [outputs/generalization/eval1000_v2/eval1000_v2_comparison.md](outputs/generalization/eval1000_v2/eval1000_v2_comparison.md) |
 | **schema_profile 可追溯性** | `eval_generalize.py` 写入 `company_profile.json` 时同步记录 `schema_profile` / `suggested_profile` |
 | **金融 YAML 标签审计** | 601825 沪农商行（bank）；000987/600061/600390 资本类（other_financial）；`financial: true` 共 **16 家** |
+| **Independent eval1000** | 新 cohort 1000 家（seed 20260623，841 新样本）；泛化验证 PASS — 见 [independent_comparison.md](outputs/generalization/eval1000_independent_20260623/independent_comparison.md) |
 
 **更早的基础工作**（支撑上述里程碑）：
 
@@ -71,52 +74,58 @@ SQLite 本地库（outputs/db/listed_companies_v1.db）
 
 ## 4. 当前关键数字
 
-**最新 headline 来自 eval1000_v2**（2026-06-22 全量重跑，同 cohort `lab/eval_companies_1000.yaml`）。**strict 审计尚未重跑**。
+**泛化 headline 来自 independent eval1000**（2026-06-23，新 cohort seed 20260623，与 eval1000 重叠 159 家 / 15.9%）。**strict 审计尚未重跑**。
 
-> **关于 proxy 下降（10.54 → 10.33）**：成功率不变（947 ok / 73 no_announcement / 0 error），下降来自 Issue #1/#2 更严格的抽取与 proxy 规则主动拒绝低质量命中，**不是管道故障**。其他 8 个工业字段 plausible 零回归。
+> **泛化结论**：独立样本非金融 proxy **10.30/11** vs eval1000_v2 **10.33/11**（Δ −0.03，在 ±0.15 内）。rnd/revenue 字段率与 v2 一致。**管道在新公司上泛化良好**。
 
-### 样本与成功率（eval1000_v2）
+### 样本与成功率（independent eval1000，2026-06-23）
 
 | 指标 | 数值 |
 |---|---|
-| 测试样本 | **1020 家**（与 eval1000 相同 cohort） |
-| 成功抽取（status=ok） | **947 家** |
-| no_announcement | **73 家**（与 baseline 一致） |
-| hard error | **0** |
-| 非金融公司 | 936 家（headline 统计范围） |
-| 金融公司（ok） | 11 家（**16 家 tagged**，1 家 no_announcement；601825/资本类补标待下次 eval 生效） |
+| 测试样本 | **1000 家**（seed 20260623；与 eval1000 重叠 159 家） |
+| 成功抽取（status=ok） | **918 家**（91.8%） |
+| no_announcement | **82 家** |
+| hard error | **0**（18 家 ChunkedEncodingError 经 VPN-off 重试已恢复） |
+| 非金融公司 | 907 家（headline 统计范围） |
+| 金融公司（ok） | 11 家 |
 
-### 质量指标（非金融，936 家 — eval1000_v2）
+### 质量指标（非金融，907 家 — independent，post-retry）
 
-| 指标 | eval1000 (baseline) | eval1000_v2 (latest) | Delta |
+| 指标 | independent | eval1000_v2 | Delta |
 |---|---:|---:|---:|
-| proxy plausible | **10.54 / 11** | **10.33 / 11** | −0.21 |
-| rnd_investment plausible | 742/936 | 619/936 | −123（抽取收紧） |
-| revenue_by_region plausible | 899/936 | 849/936 | −50（proxy 收紧） |
-| revenue_by_segment plausible | 920/936 | 896/936 | −24（proxy 收紧） |
-| strict-usable | **10.16 / 11** | **未重跑** | — |
+| proxy plausible | **10.30 / 11** | 10.33 / 11 | **−0.04** |
+| rnd_investment plausible | 605/907 (66.7%) | 619/936 (66.1%) | +0.6 pp |
+| revenue_by_region plausible | 816/907 (90.0%) | 849/936 (90.7%) | −0.7 pp |
+| revenue_by_segment plausible | 861/907 (94.9%) | 896/936 (95.7%) | −0.8 pp |
+| strict-usable | **未重跑** | **未重跑** | — |
 
-> rnd −123 = 抽取层拒绝（742→619 found）；revenue −74 = proxy 层拒绝（found 不变）。其他 8 个工业字段 **0 回归**。详见 [comparison report](outputs/generalization/eval1000_v2/eval1000_v2_comparison.md)。
+详见 [independent_comparison.md](outputs/generalization/eval1000_independent_20260623/independent_comparison.md)。
 
-### 金融子 schema（eval1000_v2 首次全量数字）
+### 同 cohort 参考（eval1000_v2，2026-06-22）
 
-| 子类型 | 数量 | 代表 |
-|---|---:|---|
-| bank | 4 | 601988, 601398, 601939, 601328 |
-| broker | 5 | 600958, 601901, 601162, 002500, 002736 |
-| insurer | 1 | 601336 |
-| other_financial | 1 | 600927 |
+| 指标 | 数值 |
+|---|---|
+| 测试样本 | 1020 家 |
+| ok / no_announcement / error | 947 / 73 / 0 |
+| 非金融 proxy | 10.33 / 11 |
 
-### SQLite 导入（eval1000_v2，run_name=`eval1000_v2`）
+> proxy 从 baseline 10.54 降至 10.33 系 Issue #1/#2 更严规则所致，非管道故障。详见 [eval1000_v2_comparison.md](outputs/generalization/eval1000_v2/eval1000_v2_comparison.md)。
+
+### 金融子 schema（independent，11 ok）
+
+| 子类型 | 数量 |
+|---|---:|
+| bank | 3 |
+| broker | 8 |
+
+### SQLite 导入（independent，run_name=`eval1000_independent_20260623`）
 
 | 表 | 行数 |
 |---|---:|
-| company_basic | 1020 |
-| report_source | 1020 |
-| extracted_field | 10428 |
-| evaluation_result | 10428 |
-
-（baseline eval1000 为 10417 行；+11 来自金融子 schema 字段数差异。DB 文件 gitignored。）
+| company_basic | 1000 |
+| report_source | 1000 |
+| extracted_field | 10112 |
+| evaluation_result | 10112 |
 
 ### Cached validation 摘要（2026-06-22，eval1000 缓存 proxy 重算）
 
@@ -141,23 +150,18 @@ SQLite 本地库（outputs/db/listed_companies_v1.db）
 
 ## 5. 已知问题
 
-1. **strict-usable 未重跑**：eval1000_v2 proxy headline 已更新（10.33/11）；strict-usable 仍为 eval1000 修复前 **10.16/11** — 不能据此声称 strict 改善。
-2. **rnd 召回下降**：更严格规则后 found 742→619（−123）；换取更高命中质量，但 recall 下降需后续评估。
-3. **金融字段质量未 strict 审计**：11 家 ok 金融公司已分 bank/broker/insurer/other_financial；numeric 抽取（如 year-noise）未 adversarial 复核。
-4. **金融 YAML 标签**：审计完成，`financial: true` 共 16 家；601825/资本类 4 家补标待下次 eval 生效（eval1000_v2 跑在补标前）。
-5. **收入表格 empty-label 行**：603132、605090 共 4 字段实例 — pdfplumber 丢失行标签导致误拒。
-6. **BrowserUser 扩展未启动**：见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)。
-7. **`strict_audit_result` loader 未实现**：`db_import.py` 尚未从 strict audit 结果回填。
-8. **其他字段级问题**（非 blocking）：客户/供应商集中度偶抓单项而非合计；`major_subsidiaries` 约 132 家「无/不适用」披露内容为空。
+1. **strict-usable 未重跑**：不能据此声称 strict 改善。
+2. **独立样本资本类未 auto-tag**：重叠公司 600061 国投资本在 independent YAML 仍为 `financial: false`。
+3. **BrowserUser 扩展未启动**。
+4. **`strict_audit_result` loader 未实现**。
 
 ---
 
 ## 6. 下一步计划
 
-1. **strict 审计重跑**（eval1000_v2 plausible 单元格 adversarial 复核）— 更新 strict-usable headline。
-2. **BrowserUser 规划/试点**：见 [plans/v0.5_next_step_browser_agent_plan.md](plans/v0.5_next_step_browser_agent_plan.md)。
-3. **补 `strict_audit_result` loader**。
-4. **可选**：对 601825/资本类 4 家补标公司做 targeted re-eval（无需全量重跑）。
+1. **strict 审计重跑**（eval1000_v2 + independent plausible 单元格）。
+2. **BrowserUser 规划/试点**。
+3. **补 `strict_audit_result` loader**；考虑 `sample_universe` 增加「资本」关键词。
 
 ---
 
@@ -183,7 +187,13 @@ outputs/generalization/eval1000/          # baseline（保留，未覆盖）
   eval_results.json
   <code>/company_profile.json
 
-outputs/generalization/eval1000_v2/       # 最新全量重跑（2026-06-22）
+outputs/generalization/eval1000_independent_20260623/  # 独立 cohort（2026-06-23）
+  eval_summary.md
+  independent_comparison.md
+  eval_results.json
+  <code>/company_profile.json
+
+outputs/generalization/eval1000_v2/       # 同 cohort 重跑（2026-06-22）
   eval_summary.md
   eval1000_v2_comparison.md               # vs baseline 对比报告
   eval_results.json
