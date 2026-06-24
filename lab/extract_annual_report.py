@@ -210,9 +210,13 @@ def extract_numeric(window: str, labels: list[str]) -> list[dict]:
 # R&D numeric extraction: prefer total-amount labels; reject ratio-only, list
 # markers, and capitalized-zero-only rows. Company-agnostic template rules.
 _RND_AMOUNT_LABELS = (
-    "研发投入金额",
-    "研发投入总额",
     "研发投入合计",
+    "研发投入总额",
+    "费用化研发投入",
+    "研发支出金额",
+    "研发支出合计",
+    "研发支出总额",
+    "研发投入金额",
     "研发费用",
 )
 _RND_GENERIC_LABEL = "研发投入"
