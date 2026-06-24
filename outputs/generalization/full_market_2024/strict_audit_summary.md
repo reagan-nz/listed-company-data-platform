@@ -1,6 +1,6 @@
 # full_market_2024 Strict Audit Summary
 
-_Generated: 2026-06-24 01:30 UTC_
+_Generated: 2026-06-24 02:35 UTC_
 
 ## 1. Sample design
 
@@ -23,8 +23,8 @@ _Generated: 2026-06-24 01:30 UTC_
 
 | label | count | pct |
 |---|---:|---:|
-| usable | 50657 | 81.9% |
-| partial | 8218 | 13.3% |
+| usable | 50953 | 82.4% |
+| partial | 7922 | 12.8% |
 | not_found_unverified | 2080 | 3.4% |
 | wrong | 876 | 1.4% |
 
@@ -33,17 +33,17 @@ _Generated: 2026-06-24 01:30 UTC_
 | metric | mean / 11 |
 |---|---:|
 | proxy plausible (eval) | **10.35** |
-| strict usable (automated, usable only) | **9.01** |
+| strict usable (automated, usable only) | **9.06** |
 | strict lenient (usable + partial) | **10.47** |
-| gap proxy − strict usable | **1.34** |
+| gap proxy − strict usable | **1.29** |
 
 > Old baseline strict-usable **10.16/11** was on eval1000 with looser proxy (10.5/11). Current proxy already uses tightened rnd/table rules (10.35/11). **Do not claim strict improved** without like-for-like comparison.
 
 ## 5. Strict-usable estimate
 
-- **Population automated strict-usable: 9.01 / 11** (81.9%) over 5621 non-financial companies.
+- **Population automated strict-usable: 9.06 / 11** (82.4%) over 5621 non-financial companies.
 - **Lenient band (usable+partial): 10.47 / 11** (95.2%).
-- Manual PDF subset: **6** `not_found_missed` cells in 105 targeted manual cells (**0** `not_found_correct` in this subset — conservative PDF search may over-call missed on thin anchors).
+- Manual PDF subset: 6 `not_found_missed` of 6 not_found-class cells in targeted fields (105 cells).
 - Automated vs manual label agreement on manual subset: **52/105 (50%)** (same strict_label).
 
 ## 6. Major error patterns
@@ -56,7 +56,7 @@ _Generated: 2026-06-24 01:30 UTC_
 - `mda`: 42
 - `major_products`: 29
 
-- proxy=true but strict=partial: **7021** cells (overstated as fully correct by proxy).
+- proxy=true but strict=partial: **6725** cells (overstated as fully correct by proxy).
 - Common rnd pattern: per-product R&D rows without clear total label ≥10万元.
 - Common section pattern: short snippets or out-of-region extractions marked plausible.
 
@@ -68,8 +68,8 @@ _Generated: 2026-06-24 01:30 UTC_
 | major_products | 5532 | 41 | 29 | 19 |
 | revenue_by_segment | 5225 | 271 | 109 | 16 |
 | revenue_by_region | 4861 | 469 | 258 | 33 |
-| top_customers | 5199 | 386 | 0 | 36 |
-| top_suppliers | 5189 | 401 | 0 | 31 |
+| top_customers | 5309 | 276 | 0 | 36 |
+| top_suppliers | 5375 | 215 | 0 | 31 |
 | rnd_investment | 3332 | 498 | 0 | 1791 |
 | major_subsidiaries | 0 | 5549 | 55 | 17 |
 | risk_factors | 4859 | 441 | 221 | 100 |
@@ -80,7 +80,7 @@ _Generated: 2026-06-24 01:30 UTC_
 
 | board | n | strict usable mean /11 |
 |---|---:|---:|
-| bse | 513 | 7.14 |
+| bse | 513 | 7.71 |
 | star | 584 | 9.47 |
 | szse_main | 1487 | 9.42 |
 | chinext | 1385 | 9.66 |
@@ -92,7 +92,7 @@ _Generated: 2026-06-24 01:30 UTC_
   - `mda`: status=found, evidence="管理层讨论与分析 36 平安银行股份有限公司 2024 年年度报告 贴现 185,729 5.5% - 214,799 6.3% - - 个人贷款（注） 1,7..."
   - `industry_discussion`: status=found, evidence="宏观经济预计仍将持续保持稳健增长，经济回升向好态势将进一步巩固和增强。..."
   - `risk_factors`: status=found, evidence="风险管理部等专业部门负责全行信用风险管理工作。..."
-- **金融街 (000402)**, subtype `broker` (auto-tag via「金融」keyword — actually real estate): found=5/12, proxy_plausible=5/12, schema=broker. Numeric fields may contain table noise; not strict-audited for headline.
+- **金融街 (000402)**, subtype `broker`: found=5/12, proxy_plausible=5/12, schema=broker. Numeric fields may contain table noise; not strict-audited for headline.
   - `industry_discussion`: status=found, evidence="经营环境及影响..."
   - `risk_factors`: status=found, evidence="风险管理委员会召开2 次会议、提名委员会召开3 次会议、薪酬与考核委员会召开1 次会议。..."
 - **新华保险 (601336)**, subtype `insurer`: found=11/12, proxy_plausible=11/12, schema=insurer. Numeric fields may contain table noise; not strict-audited for headline.
