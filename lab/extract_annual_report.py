@@ -579,6 +579,60 @@ def _stitch_revenue_table_continuation(
     return tbl
 
 
+def _is_region_sales_mode_header_row(row: list) -> bool:
+    """Standalone 分销售模式 / 销售模式 subsection header (not a data row)."""
+    if _table_row_is_data_row(row):
+        return False
+    cells = [_table_cell_text(c) for c in row]
+    nonempty = [c.replace(" ", "").replace("\n", "") for c in cells if c]
+    if not nonempty:
+        return False
+    first = nonempty[0]
+    return first in ("分销售模式", "销售模式")
+
+
+def _preview_needs_region_trim(rows: list) -> bool:
+    """Bleed signature from focus cases: sales-mode section after region rows."""
+    if not any(_is_region_sales_mode_header_row(r) for r in rows):
+        return False
+    has_placeholder = any(
+        _table_cell_text(c) in ("--", "—", "－")
+        for r in rows for c in r
+    )
+    has_online_offline = any(
+        "线上订单" in _table_row_joined(r) or "线下订单" in _table_row_joined(r)
+        for r in rows
+    )
+    return has_placeholder or has_online_offline
+
+
+def _is_region_stacked_boundary_row(row: list) -> bool:
+    """Next-section header row while previewing revenue_by_region."""
+    return _is_region_sales_mode_header_row(row)
+
+
+def _trim_revenue_stacked_preview(tbl: dict, field_key: str) -> dict:
+    """Trim same-page stacked preview before the next subsection header."""
+    if field_key != "revenue_by_region":
+        return tbl
+    rows = tbl.get("rows") or []
+    if len(rows) < 2 or not _preview_needs_region_trim(rows):
+        return tbl
+
+    trimmed: list[list] = []
+    for i, row in enumerate(rows):
+        if i > 0 and _is_region_stacked_boundary_row(row):
+            break
+        trimmed.append(row)
+
+    if len(trimmed) == len(rows):
+        return tbl
+    out = dict(tbl)
+    out["rows"] = trimmed
+    out["preview_trimmed"] = True
+    return out
+
+
 # Revenue table plausibility: require at least one data row (label + numeric value).
 _REVENUE_TABLE_HEADER_CELLS = frozenset({
     "分行业", "分产品", "分地区", "分销售模式",
@@ -802,6 +856,7 @@ def extract_field(
                                  preview_focus=focus)
         if tbl and spec.key in _REVENUE_CONTINUATION_FIELDS:
             tbl = _stitch_revenue_table_continuation(pdf_path, tbl, spec.key, focus)
+            tbl = _trim_revenue_stacked_preview(tbl, spec.key)
         if tbl:
             out["value"] = tbl
             out["page"] = tbl["table_page"]
