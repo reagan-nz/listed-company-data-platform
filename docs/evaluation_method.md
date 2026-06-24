@@ -1,5 +1,22 @@
 # 评估方法
 
+## 术语 Glossary
+
+| 术语 | 英文 | 含义 |
+|---|---|---|
+| **total** | total | 评估 universe 中的公司总数。 |
+| **ok** | ok | 脚本成功找到 2024 年报、下载/解析并写出 `company_profile.json`。**不等于每个字段都正确。** |
+| **no_announcement** | no_announcement | CNINFO 当前规则下未找到可用 2024 年报。不一定是代码错误。 |
+| **error** | error | 网络/下载/解析等技术失败。 |
+| **proxy plausible** | proxy plausible | 自动 plausibility 分数：字段结构看起来合理。**不等于人工确认正确。** 当前 proxy 已含 Issue #1/#2 收紧规则。 |
+| **strict usable** | strict usable | 更严格的 adversarial 审计标签（usable only）。比 proxy 更保守。 |
+| **strict lenient** | strict lenient | usable + partial 的上界：证据相关但可能不完整/有噪声。 |
+| **manual PDF deep-read** | manual PDF deep-read | 读取 PDF 页文本验证 evidence；检查 `not_found` 是否应为 missed。小样本校准，非全量人工验证。 |
+| **not_found_missed** | not_found_missed | 字段在 PDF 中存在但抽取返回 not_found（false negative）。仅 manual PDF deep-read 可可靠判定。 |
+| **非金融 headline** | non-financial headline | 11 字段均值仅统计工业类（`financial: false`）公司；金融公司用独立子 schema，不混入。 |
+
+**板块名称**：bse=北交所 | star=科创板 | szse_main=深市主板 | chinext=创业板 | sse_main=沪市主板
+
 ## 核心原则
 
 > **自动 `plausible` ≠ 人工准确率。**
@@ -111,18 +128,40 @@
   - strict-usable：10.16/11（92.4%）
   - 最弱字段：rnd_investment 67.7%，revenue_by_region 90.7%
 
+### 9. full_market_2024 混合 strict 审计（2026-06-24）
+
+- **目的**：在全 A 股规模上估计 strict-usable，并用小样本 PDF deep-read 校准
+- **方法**（`lab/strict_audit_full_market.py`）：
+  1. **自动化 adversarial recheck**：全部 5621 非金融 ok 公司 × 11 工业字段 = 61,831 cells；规则比 proxy 更严（如 rnd 要求总额标签 + ≥10万元、section 要求 in_region + len≥80、拒绝 pointer-only）
+  2. **分层样本 CSV**：55 公司 × 7 targeted 字段 = 476 rows
+  3. **manual PDF deep-read**：15 公司 × 7 字段 = 105 rows；PyMuPDF 读 cited page + anchor 搜索判定 `not_found_missed`
+- **结果**：
+  - proxy plausible：**10.35/11**
+  - strict usable（usable only）：**9.01/11**（81.9%）
+  - strict lenient（usable + partial）：**10.47/11**（95.2%）
+  - gap proxy − strict usable：**1.34**
+  - 手动 vs 自动化一致率：52/105（50%）
+- **产出**：`outputs/generalization/full_market_2024/strict_audit_summary.md`、`strict_audit_sample.csv`
+
+> **为何 proxy 10.35 与 strict 9.01 差距小于旧 gap（10.54→10.16）？** 当前 proxy 已含 Issue #1/#2 收紧规则，本身更接近 strict。**不得将 9.01 与旧 10.16 比较并声称「改善」或「下降」**——baseline、proxy 规则、universe 规模均不同。
+
+> **不得声称全量人工验证**：9.01/11 是自动化 adversarial 全 population 估计 + 15 家 PDF 小样本校准，不是 62,890 SQLite 行的人工逐条核对。
+
 ## 指标对照表
 
-| 指标 | eval1000（baseline） | eval1000_v2（同 cohort） | independent（新 cohort） | 含义 | 可信度 |
-|---|---|---|---|---|---|
-| proxy plausible | 10.5/11 | **10.33/11** | **10.30/11** | 自动规则判定 | 中（高估 3–4pp） |
-| 校准 precision | 94%（60 格） | 未重跑 | 未重跑 | 人工 CORRECT/plausible | 高（但样本小） |
-| strict-usable | **10.16/11** (92.4%) | **未重跑** | **未重跑** | 全量 adversarial 复核 | **最高** |
-| hard-wrong rate | 1.9% | 未重跑 | 未重跑 | 全量真 false positive | 高 |
+| 指标 | eval1000 | eval1000_v2 | independent | full_market_2024 | 含义 |
+|---|---:|---:|---:|---:|---|
+| proxy plausible | 10.5/11 | 10.33/11 | 10.30/11 | **10.35/11** | 自动规则 |
+| strict usable | **10.16/11** | 未重跑 | 未重跑 | **9.01/11** | adversarial 复核 |
+| strict lenient | — | — | — | **10.47/11** | usable+partial |
+| 样本 | 1020 | 1020 | 1000 | **6124** | universe |
 
-> **重要说明**：strict-usable 10.16/11 来自 eval1000 baseline（Issue #1/#2 前）。v2/independent 的更严规则使 proxy 下降至 10.33/10.30，strict 是否同步改善**尚未重新审计**，不得声称 strict 已改善。
+> **重要说明**：eval1000 strict 10.16/11 基于 proxy 10.5/11（Issue #1/#2 前）。full_market strict 9.01/11 基于 proxy 10.35/11（Issue #1/#2 后）。**不可直接比较为改善或退步。**
 
-**推荐对外报告**：如需报告单一数字，用 strict-usable **10.16/11（92.4%）**并标注「eval1000 baseline，v2 未重跑」；如需报告泛化结论，用 independent 非金融 proxy **10.30/11**。
+**推荐对外报告**：
+- 全市场规模：**strict usable 9.01/11**（自动化 adversarial + 小样本 PDF 校准）
+- 受控泛化：**proxy 10.30–10.35/11**（independent / full_market）
+- 历史 baseline：**strict 10.16/11**（eval1000 only，标注 baseline 与 proxy 版本）
 
 ## 如何运行评估
 

@@ -1,6 +1,6 @@
 # 路线图
 
-_最后更新：2026-06-23_
+_最后更新：2026-06-24_
 
 ## 第一阶段：年报数据获取与基础字段抽取
 
@@ -16,40 +16,39 @@ _最后更新：2026-06-23_
 | rnd / 表格规则收紧（Issue #1/#2） | 已完成 |
 | 金融公司子 schema 实现（Issue #4） | 已完成 |
 | eval1000_v2 同 cohort 全量重跑 | 已完成（2026-06-22） |
-| independent eval1000 泛化验证（新 cohort） | 已完成（2026-06-23）|
+| independent eval1000 泛化验证 | 已完成（2026-06-23）|
 | SQLite 原型（db_init / db_import） | 已完成 |
 
-> **泛化结论**：非金融 proxy **10.30–10.33/11**；strict-usable **10.16/11**（eval1000 基线，v2/independent 尚未重跑）。管道可进入全量提取阶段。
+## 第二阶段：full_market_2024 全量提取（已完成）
 
-## 第二阶段：full_market_2024 全量提取（下一步）
-
-**目标**：覆盖全部 ~5300 家 A 股 2024 年报，建立可查询的基础数据库。
+**目标**：覆盖全部 A 股 2024 年报，建立可查询的基础数据库。
 
 | 事项 | 状态 |
 |---|---|
-| `lab/make_full_market_yaml.py`（无抽样全市场 YAML 生成） | 待做 |
-| 按 board 拆 5 批次顺序执行（sse_main / star / szse_main / chinext / bse） | 待做 |
-| 失败公司重试（VPN off；网络错误） | 待做 |
-| 合并 5 批次 → SQLite 导入 `run_name=full_market_2024` | 待做 |
-| 与 eval1000_v2 / independent 对比 proxy 率 | 待做 |
-| full_market_2024 strict 审计 | 待做（全量 proxy 稳定后） |
+| `lab/make_full_market_yaml.py` | 已完成 |
+| 5 board 批次顺序执行 | 已完成 |
+| 失败公司重试（688267 中触媒） | 已完成 |
+| merge + SQLite 导入 `run_name=full_market_2024` | 已完成 |
+| 与 eval1000_v2 / independent 对比 proxy 率 | 已完成（10.35/11，一致） |
+| 混合 strict 审计 | 已完成（9.01/11 自动化 adversarial） |
 
-> **前置条件**：磁盘 ≥80 GiB 可用；VPN 关闭；可 overnight 运行 20–26 h。详见 [plans/v0.6_full_market_2024_plan.md](plans/v0.6_full_market_2024_plan.md)。
+**最终结果**：6124 total / 5707 ok / 417 no_announcement / 0 error；非金融 proxy **10.35/11**；strict usable **9.01/11**；SQLite **62,890** 字段行。
 
-**完成标准**：≥ 85% A 股 status=ok；non-fin proxy 在 10.2–10.4/11 范围内；SQLite ~55000–58000 extracted_field 行。
+> **完成含义**：管道执行 + 数据库导入 + 混合 strict 审计均已完成。**不等于** 62,890 行全量人工验证。详见 [strict_audit_summary.md](outputs/generalization/full_market_2024/strict_audit_summary.md)。
 
-## 第三阶段：多年度扩展与字段质量提升
+## 第三阶段：质量 follow-up 与多年度扩展（当前焦点）
 
-**目标**：扩展至多年度，提升字段准确率与行业适配。
+**目标**：提升字段质量，扩展至多年度，专项处理薄弱板块。
 
-- 2023 / 2022 年报增量提取（依赖全量 2024 基线）
-- full_market_2024 strict 审计（若未在第二阶段完成）
-- rnd 与表格字段持续优化
-- 北交所 / 科创板特殊模板适配
-- 金融公司专用字段 plausible 规则（Phase 3 of financial schema）
+- BSE（北交所）模板适配 — strict 最弱（7.14/11）
+- rnd_investment 召回优化（not_found_missed 问题）
+- revenue 表格跨页 / page-boundary 切片修复
+- 金融公司字段质量专项 review（numeric 噪声、auto-tag 误标）
+- 2023 / 2022 年报增量提取
 - `sample_universe` 增加「资本」等关键词补丁
+- `strict_audit_result` loader 入库（可选）
 
-**完成标准**：全 A 股 strict-usable ≥ 95%；支持多年度时间序列查询。
+**完成标准**：BSE strict 提升至 ≥8.5/11；rnd missed 率下降；支持 2023 时间序列查询。
 
 ## 第四阶段：BrowserUser 爬虫智能体补充数据
 

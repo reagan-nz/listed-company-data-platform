@@ -1,6 +1,42 @@
 # Full-Market 2024 Annual Report Extraction Plan
 
-_状态：待执行（2026-06-23 规划）_
+_状态：**已完成**（2026-06-24）_
+
+## 最终结果摘要
+
+| 指标 | 数值 |
+|---|---|
+| total | **6124** |
+| ok | **5707**（93.2%） |
+| no_announcement | 417 |
+| error | **0** |
+| 非金融 proxy | **10.35/11** |
+| 非金融 strict usable | **9.01/11**（自动化 adversarial + 15 家 PDF 校准） |
+| SQLite rows | **62,890**（extracted_field / evaluation_result） |
+
+> 完成 = 提取 + merge + SQLite 导入 + 混合 strict 审计。**非全量人工验证。** 详见 [full_market_2024_summary.md](../outputs/generalization/full_market_2024/full_market_2024_summary.md)。
+
+### 板块名称
+
+| code | 中文 |
+|---|---|
+| bse | 北交所 |
+| star | 科创板 |
+| szse_main | 深市主板 |
+| chinext | 创业板 |
+| sse_main | 沪市主板 |
+
+### 板块 strict usable（非金融）
+
+| board | 中文 | strict /11 |
+|---|---|---:|
+| bse | 北交所 | 7.14 |
+| sse_main | 沪市主板 | 8.53 |
+| szse_main | 深市主板 | 9.42 |
+| star | 科创板 | 9.47 |
+| chinext | 创业板 | 9.66 |
+
+---
 
 ## 背景
 
@@ -484,49 +520,30 @@ sqlite3 outputs/db/listed_companies_v1.db \
 
 ---
 
-## GitHub Issue Checklist
+# Full-market 2024 — completed checklist (2026-06-24)
 
-```markdown
-## Full-market 2024 annual report extraction — checklist
+### Pre-run ✅
+- git status clean
+- df -h sufficient
+- Old eval PDFs cleaned (2026-06-23)
+- .gitignore entries added
+- lab/make_full_market_yaml.py created
+- VPN off for retries
 
-### Pre-run
-- [ ] git status clean
-- [ ] df -h: ≥80 GiB free（disk-safe；每 batch 后复查）
-- [ ] Old eval PDFs cleaned (2026-06-23: eval1000/v2/independent)
-- [ ] Add .gitignore entries (full_market_2024 subdirs, batch_*.log, batch_*_2024.yaml)
-- [ ] Create lab/make_full_market_yaml.py
-- [ ] VPN off
+### Execution ✅
+- Universe: **6124** companies (not ~5300)
+- 5 board batches completed (bse→star→szse_main→chinext→sse_main)
+- 688267 中触媒 retried → ok
+- merge_full_market_batches.py → eval_results.json + symlinks
+- db_import.py → **62,890** rows
 
-### YAML generation
-- [ ] Run make_full_market_yaml.py → lab/eval_companies_full_market_2024.yaml
-- [ ] Verify ~5300 companies; financial ~150–200
-- [ ] Split into 5 board batch YAMLs
+### Results ✅
+- ok **5707** / no_announcement 417 / error **0**
+- non-fin proxy **10.35/11** (vs v2 10.33, independent 10.30)
+- strict usable **9.01/11** (hybrid audit)
+- full_market_2024_summary.md + strict_audit_summary.md written
+- CURRENT_STATUS / CHANGELOG / ROADMAP updated
 
-### PDF pre-copy
-- [ ] **Skipped** (disk-safe default; old eval PDFs already deleted)
-
-### Batch evaluation (sequential, small→large, overnight)
-- [ ] Batch 1: bse (~300, ~1–2 h) → cleanup PDFs/cache
-- [ ] Batch 2: star (~560, ~2–3 h) → cleanup PDFs/cache
-- [ ] Batch 3: szse_main (~1400, ~5–7 h) → cleanup PDFs/cache
-- [ ] Batch 4: chinext (~1300, ~5–6 h) → cleanup PDFs/cache
-- [ ] Batch 5: sse_main (~1700, ~6–8 h) → cleanup PDFs/cache
-- [ ] Spot-check each batch log for mass errors
-- [ ] df -h after each batch
-
-### Post-run
-- [ ] merge_full_market_batches.py → eval_results.json + symlinks + summaries
-- [ ] Run status summary; compare vs eval1000_v2 (10.33/11) and independent (10.30/11)
-- [ ] Retry error companies (VPN off); re-merge after retry
-- [ ] db_import.py --companies-yaml lab/eval_companies_full_market_2024.yaml --run-name full_market_2024 --limit 0
-- [ ] Confirm SQLite ~55000–58000 extracted_field rows
-
-### Documentation
-- [ ] Write full_market_2024_summary.md
-- [ ] Update CURRENT_STATUS.md and CHANGELOG.md
-
-### Commit
-- [ ] Commit: make_full_market_yaml.py, eval_companies_full_market_2024.yaml,
-       eval_summary.md, full_market_2024_summary.md, CURRENT_STATUS, CHANGELOG
-- [ ] Do NOT commit: PDFs, [0-9]*/ dirs, eval_results.json, *.log, .db, batch_*_2024.yaml
-```
+### Commit guidance
+- **Commit**: scripts, YAML, eval_summary.md, full_market_2024_summary.md, strict_audit_summary.md, strict_audit_sample.csv, docs
+- **Do NOT commit**: PDFs, company dirs, symlinks, eval_results.json, *.log, .pid, .db, batch_*_2024.yaml

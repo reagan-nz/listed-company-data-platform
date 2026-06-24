@@ -1,14 +1,15 @@
 # 金融公司字段体系 v1
 
-_最后更新：2026-06-23_
+_最后更新：2026-06-24_
 
 > **实现状态（Issue #4）**：`lab/field_schema.py` 已实现 `BANK_FIELD_SPECS` / `BROKER_FIELD_SPECS` / `INSURER_FIELD_SPECS` / `OTHER_FINANCIAL_FIELD_SPECS`，以及 `detect_profile()` / `resolve_profile()` / `get_field_specs()` 分发。eval 对 `financial: true` 公司使用子 schema；非金融仍用工业 11 字段。
 >
-> **已运行的 eval**：eval1000_v2（16 家金融；11 ok）与 independent eval1000（11 ok）已用子 schema 跑通。
+> **full_market_2024**：86 家金融 ok 已用子 schema 跑通；**不纳入**非金融 11 字段 headline（proxy / strict usable 仅统计 `financial: false` 的 5621 家）。
 >
 > **尚未完成**：
 > - 金融字段的 **strict 审计**尚未执行（不得声称金融字段质量）；
 > - 金融专用 plausible 规则（Phase 3）未实现，当前仍复用 generic `extract_numeric` / `table_match`，**数值字段可能含噪声**（如利息净收入混入其他行）；
+> - auto-tag 可能误标（如「金融街」000402 含「金融」被标为 broker）；
 > - DB `financial_subtype` 列未入库（Phase 5 未做）。
 
 ## 1. 为什么需要单独 schema

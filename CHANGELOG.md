@@ -5,12 +5,16 @@
 ## [Unreleased]
 
 ### 新增
+- **full_market_2024 全量提取**：6124 家 A 股 universe；5707 ok / 417 no_announcement / 0 error；5 board 批次（bse→star→szse_main→chinext→sse_main）+ merge + SQLite 导入（62,890 行）— 见 `outputs/generalization/full_market_2024/full_market_2024_summary.md`
+- **full_market_2024 混合 strict 审计**：5621 非金融 × 11 字段自动化 adversarial recheck；55 家样本 + 15 家 PDF deep-read；strict usable **9.01/11** — 见 `strict_audit_summary.md`
+- **全市场工具链**：`lab/make_full_market_yaml.py`、`lab/merge_full_market_batches.py`、`lab/strict_audit_full_market.py`、`lab/run_full_market_2024.sh`
 - **数据库存储方案 v1**（Issue #7）：`docs/database_schema.md` 定义四表（company_basic / report_source / extracted_field / evaluation_result）；推荐 SQLite 原型，后续迁 PostgreSQL
 - **SQLite 建表与导入原型**（Issue #8）：`lab/db_init.py`（建表）、`lab/db_import.py`（从 eval1000 导入小样本）；`.db` 写入 `outputs/db/` 且已 gitignore
 - **金融公司 schema 设计 v1**（Issue #3）：`docs/financial_company_schema.md` 定义银行/券商/保险三类子 schema，明确各类适用字段与不适用字段，并给出评估分开报告建议
 - **金融公司子 schema 实现**（Issue #4）：`BANK/BROKER/INSURER/OTHER_FINANCIAL_FIELD_SPECS`、`detect_profile`/`resolve_profile`/`get_field_specs`；eval 对 `financial: true` 启用子 schema
 
 ### 变更
+- **full_market_2024 完成**：非金融 proxy **10.35/11**；strict usable **9.01/11**（自动化 adversarial，非全量人工验证）；不得与旧 10.16/11 baseline 直接比较
 - **Independent eval1000 泛化验证**：新 cohort 1000 家（seed 20260623，重叠 159/15.9%）；**918 ok / 82 no_announcement / 0 error**（18 ChunkedEncodingError 经 VPN-off 重试恢复）；非金融 proxy **10.30/11**（vs v2 10.33，Δ −0.04 PASS）；SQLite 10112 行 — 见 `outputs/generalization/eval1000_independent_20260623/independent_comparison.md`
 - **eval1000_v2 同 cohort 全量重跑**：1020 家 / 947 ok / 73 no_announcement / 0 error；非金融 proxy **10.33/11**（baseline 10.54，−0.21 为更严 proxy 所致）；SQLite 10428 行 — 见 `outputs/generalization/eval1000_v2/eval1000_v2_comparison.md`
 - **schema_profile 可追溯性**：`eval_generalize.py` 写入 `company_profile.json` 时同步记录 `schema_profile` / `suggested_profile`
@@ -23,13 +27,14 @@
 - **收入表格 proxy 收紧**（Issue #2）：`revenue_table_plausible` 要求 `revenue_by_region` / `revenue_by_segment` preview 含至少一行非表头数据行
 
 ### 文档
+- **Phase 3 文档同步**（2026-06-24）：CURRENT_STATUS / ROADMAP / evaluation_method / database_schema / financial_company_schema / full_market_2024_summary / plans v0.6 更新；新增指标解释 glossary
 - **文档同步**（2026-06-23）：所有主要文档与 eval1000_v2 / independent eval1000 里程碑对齐；ROADMAP 阶段重排（full_market_2024 → strict 审计 → 多年度 → BrowserUser）；docs/evaluation_method 增加同 cohort 重跑与独立泛化验证说明；docs/database_schema 注明三批次 SQLite 导入状态；docs/financial_company_schema 补充 strict 未重跑说明；docs/crawler_strategy 明确 BrowserUser 在 full_market_2024 基线稳定后才启动；新增 plans/v0.6_full_market_2024_plan.md
 
 ### 计划
-- full_market_2024 全量提取（~5300 家，下一主要里程碑）
-- strict 审计重跑（全量基线稳定后）
-- 多年度扩展
-- BrowserUser 数据源试点（full_market_2024 基线稳定后）
+- 质量 follow-up：BSE 模板、rnd 召回、revenue 跨页切片
+- 金融公司字段质量专项 review
+- 多年度扩展（2023 / 2022）
+- BrowserUser 数据源试点（全量基线稳定后）
 
 ## 2026-06-18
 

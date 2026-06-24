@@ -50,6 +50,28 @@ outputs/generalization/eval1000_v2/run.log
 outputs/generalization/eval1000_independent_20260623/[0-9]*/
 outputs/generalization/eval1000_independent_20260623/run.log
 
+# Full-market 2024 (heavy artifacts; keep summary .md + strict_audit files committable)
+outputs/generalization/full_market_2024/[0-9]*/
+outputs/generalization/full_market_2024/[0-9]*
+outputs/generalization/full_market_2024/bse/
+outputs/generalization/full_market_2024/bse/[0-9]*/
+outputs/generalization/full_market_2024/star/
+outputs/generalization/full_market_2024/star/[0-9]*/
+outputs/generalization/full_market_2024/szse_main/
+outputs/generalization/full_market_2024/szse_main/[0-9]*/
+outputs/generalization/full_market_2024/chinext/
+outputs/generalization/full_market_2024/chinext/[0-9]*/
+outputs/generalization/full_market_2024/sse_main/
+outputs/generalization/full_market_2024/sse_main/[0-9]*/
+outputs/generalization/full_market_2024/*.log
+outputs/generalization/full_market_2024/*.pid
+outputs/generalization/full_market_2024/eval_results.json
+outputs/generalization/full_market_2024/**/eval_results.json
+outputs/generalization/full_market_2024/**/*.pdf
+outputs/generalization/full_market_2024/**/.cache/
+# Committable: eval_summary.md, full_market_2024_summary.md, strict_audit_summary.md, strict_audit_sample.csv
+lab/batch_*_2024.yaml
+
 # SQLite prototype (generated locally via lab/db_init.py + lab/db_import.py)
 outputs/db/*.db
 outputs/db/*.db-journal
