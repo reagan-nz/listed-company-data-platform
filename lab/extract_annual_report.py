@@ -461,6 +461,124 @@ def extract_table_near(
     return best
 
 
+_PREVIEW_ROW_LIMIT = 8
+_REVENUE_CONTINUATION_FIELDS = frozenset({"revenue_by_region", "revenue_by_segment"})
+
+
+def _table_row_joined(row: list) -> str:
+    return " ".join(_table_cell_text(c) for c in row)
+
+
+def _preview_has_revenue_section_header(rows: list, preview_focus: tuple[str, ...]) -> bool:
+    markers = tuple(preview_focus) + ("分地区", "分行业", "分产品",
+                                      "主营业务分地区", "主营业务分行业", "主营业务分产品")
+    for row in rows[:4]:
+        rt = _table_row_joined(row)
+        if any(m in rt for m in markers):
+            return True
+    return False
+
+
+def _reject_continuation_table(flat: str) -> bool:
+    if "科目" in flat and ("本期数" in flat or "上年同期" in flat):
+        return True
+    if "合同标的" in flat and "履行金额" in flat:
+        return True
+    if "分行业情况" in flat and ("成本构成" in flat or "成本构" in flat):
+        return True
+    if "主要产品" in flat and ("生产量" in flat or "销售量" in flat):
+        return True
+    return False
+
+
+def _continuation_stop_row(row: list, field_key: str) -> bool:
+    rt = _table_row_joined(row)
+    if not rt.strip():
+        return False
+    if "分销售模式" in rt or "主营业务分销售" in rt:
+        return True
+    if any(x in rt for x in ("主要产品", "生产量", "销售量", "库存量", "合同标的", "成本构成")):
+        return True
+    if field_key == "revenue_by_region":
+        if "主营业务分行业" in rt or "主营业务分产品" in rt:
+            return True
+        compact = rt.replace(" ", "").replace("\n", "")
+        if compact in ("分行业", "分产品") or compact.startswith("分行业") and "营业收入" in rt:
+            return True
+        if compact.startswith("分产品") and "营业收入" in rt:
+            return True
+    elif field_key == "revenue_by_segment":
+        if "主营业务分地区" in rt:
+            return True
+        compact = rt.replace(" ", "").replace("\n", "")
+        if compact.startswith("分地区") and "营业收入" in rt:
+            return True
+    return False
+
+
+def _format_preview_row(row: list) -> list:
+    return [truncate(str(c or ""), 40) for c in row[:6]]
+
+
+def _stitch_revenue_table_continuation(
+    pdf_path: str,
+    tbl: dict,
+    field_key: str,
+    preview_focus: tuple[str, ...],
+) -> dict:
+    """Append page N+1 revenue table body when preview on page N is header-only."""
+    if field_key not in _REVENUE_CONTINUATION_FIELDS:
+        return tbl
+    rows = tbl.get("rows") or []
+    if any(_table_row_is_data_row(r) for r in rows):
+        return tbl
+    if not _preview_has_revenue_section_header(rows, preview_focus):
+        return tbl
+
+    header_page = tbl.get("table_page")
+    if not header_page:
+        return tbl
+    next_page = header_page + 1
+
+    try:
+        import pdfplumber  # type: ignore
+    except Exception:
+        return tbl
+
+    best_append: list[list] = []
+    try:
+        with open(pdf_path, "rb") as fh:
+            data = fh.read()
+        with pdfplumber.open(io.BytesIO(data)) as pdf:
+            if next_page < 1 or next_page > len(pdf.pages):
+                return tbl
+            page = pdf.pages[next_page - 1]
+            for raw_tbl in (page.extract_tables() or []):
+                flat = " ".join(str(c) for row in raw_tbl for c in row if c)
+                if _reject_continuation_table(flat):
+                    continue
+                append: list[list] = []
+                for row in raw_tbl:
+                    if _continuation_stop_row(row, field_key):
+                        break
+                    if _table_row_is_data_row(row):
+                        append.append(_format_preview_row(row))
+                if len(append) > len(best_append):
+                    best_append = append
+    except Exception:
+        return tbl
+
+    if not best_append:
+        return tbl
+
+    combined = list(rows) + best_append
+    tbl = dict(tbl)
+    tbl["rows"] = combined[:_PREVIEW_ROW_LIMIT]
+    tbl["continuation_page"] = next_page
+    tbl["stitched"] = True
+    return tbl
+
+
 # Revenue table plausibility: require at least one data row (label + numeric value).
 _REVENUE_TABLE_HEADER_CELLS = frozenset({
     "分行业", "分产品", "分地区", "分销售模式",
@@ -679,8 +797,11 @@ def extract_field(
         out["value"] = conc
         out["status"] = "found" if (conc["ratio"] or conc["amount"]) else "partial"
     elif spec.extraction == "table":
+        focus = spec.table_match or spec.anchors
         tbl = extract_table_near(pdf_path, loc["page"], spec.anchors, spec.table_match, spec.table_require,
-                                 preview_focus=spec.table_match or spec.anchors)
+                                 preview_focus=focus)
+        if tbl and spec.key in _REVENUE_CONTINUATION_FIELDS:
+            tbl = _stitch_revenue_table_continuation(pdf_path, tbl, spec.key, focus)
         if tbl:
             out["value"] = tbl
             out["page"] = tbl["table_page"]
