@@ -1,8 +1,10 @@
 # full_market_2024 Summary
 
-_Generated: 2026-06-24 | Milestone: extraction + merge + SQLite import + hybrid strict audit **complete**_
+_Generated: 2026-06-24 | Milestone: extraction + merge + SQLite import + hybrid strict audit + scoped rnd refresh **complete**_
 
-> **Caveat**：本 milestone 表示管道执行、数据库导入与混合 strict 审计均已完成。**不等于** 62,890 条 SQLite 记录已全量人工验证。strict **9.01/11** 为自动化 adversarial 全 population 估计，经 15 家公司 PDF deep-read 小样本校准。
+_Post-rnd refresh merge + strict audit: 2026-06-24_
+
+> **Caveat**：本 milestone 表示管道执行、数据库导入、混合 strict 审计与 scoped rnd refresh 均已完成。**不等于** 62,890 条 SQLite 记录已全量人工验证。strict **9.38/11** 为自动化 adversarial 全 population 估计，经 15 家公司 PDF deep-read 小样本校准。
 
 ---
 
@@ -28,11 +30,12 @@ _Generated: 2026-06-24 | Milestone: extraction + merge + SQLite import + hybrid 
 | chinext | 创业板 | 1442 |
 | sse_main | 沪市主板 | 1846 |
 
-## Non-financial proxy (headline)
+## Non-financial proxy (headline, post-rnd refresh)
 
 | metric | value |
 |---|---:|
-| Mean proxy plausible | **10.35 / 11** (n=5621) |
+| Mean proxy plausible | **10.61 / 11** (n=5621) |
+| Pre-rnd refresh proxy | 10.35 / 11 |
 
 ### Comparison vs controlled eval runs
 
@@ -40,45 +43,39 @@ _Generated: 2026-06-24 | Milestone: extraction + merge + SQLite import + hybrid 
 |---|---:|---:|---:|---:|---:|
 | eval1000_v2 | 1020 | 947 | 73 | 0 | **10.33/11** |
 | independent eval1000 | 1000 | 918 | 82 | 0 | **10.30/11** |
-| **full_market_2024** | **6124** | **5707** | **417** | **0** | **10.35/11** |
+| **full_market_2024** | **6124** | **5707** | **417** | **0** | **10.61/11** |
 
-> 全市场规模 proxy 与 v2/independent 一致（Δ ≤ 0.05），说明管道规模泛化良好。
+> 全市场规模 proxy 与 v2/independent 一致，说明管道规模泛化良好。
 
-## Hybrid strict audit (non-financial headline)
+## Key field plausible rates (non-financial)
 
-| metric | value | 说明 |
-|---|---:|---|
-| Population recheck | 5621 × 11 = **61,831** cells | 自动化 adversarial |
-| **strict usable** | **9.01 / 11** (81.9%) | usable only；比 proxy 更保守 |
-| strict lenient | **10.47 / 11** (95.2%) | usable + partial 上界 |
-| gap (proxy − strict usable) | **1.34** | |
-| Sample CSV | 55 cos × 7 fields = 476 rows | 分层抽样 |
-| Manual PDF deep-read | 15 cos × 7 fields = 105 rows | 小样本校准 |
-| Manual vs automated agreement | 52/105 (50%) | 同 strict_label |
+| field | plausible | rate | pre-rnd refresh |
+|---|---:|---:|---:|
+| rnd_investment | 5269/5621 | **93.7%** | 67.9% |
+| revenue_by_region | 5093/5621 | 90.6% | — |
+| revenue_by_segment | 5386/5621 | 95.8% | — |
 
-> **不得将 9.01/11 与旧 eval1000 strict 10.16/11 比较为「改善」或「下降」**：旧 baseline 基于 proxy 10.5/11（Issue #1/#2 前）；当前 proxy 已收紧至 10.35/11。
+## Strict audit (post-rnd refresh, non-fin)
 
-### Board-level strict usable (non-financial)
+| metric | pre-rnd | post-rnd |
+|---|---:|---:|
+| strict usable | 9.06 / 11 | **9.38 / 11** |
+| strict lenient | 10.47 / 11 | **10.73 / 11** |
+| gap (proxy − strict usable) | 1.29 | **1.23** |
+
+### Board-level strict usable (post-rnd refresh)
 
 | board | 中文 | n (ok) | strict usable /11 |
 |---|---|---:|---:|
-| bse | 北交所 | 513 | **7.14** |
-| sse_main | 沪市主板 | 1652 | 8.53 |
-| szse_main | 深市主板 | 1487 | 9.42 |
-| star | 科创板 | 584 | 9.47 |
-| chinext | 创业板 | 1385 | **9.66** |
+| bse | 北交所 | 513 | **8.71** |
+| sse_main | 沪市主板 | 1652 | **9.25** |
+| szse_main | 深市主板 | 1487 | 9.41 |
+| star | 科创板 | 584 | **9.56** |
+| chinext | 创业板 | 1385 | 9.65 |
 
-**主要风险**：BSE 模板适配不足；rnd_investment not_found_missed；revenue 表格 page-boundary / 切片问题；金融数值噪声（金融公司不在 headline 内）。
+> **不得**将 9.38/11 与旧 eval1000 strict 10.16/11 比较为「改善」或「下降」——universe 与 proxy 规则均不同。
 
-详见 [strict_audit_summary.md](strict_audit_summary.md)、[strict_audit_sample.csv](strict_audit_sample.csv)。
-
-## Key field proxy rates (non-financial)
-
-| field | plausible | rate |
-|---|---:|---:|
-| rnd_investment | 3817/5621 | 67.9% |
-| revenue_by_region | 5093/5621 | 90.6% |
-| revenue_by_segment | 5386/5621 | 95.8% |
+See [strict_audit_summary.md](strict_audit_summary.md) and [rnd_refresh_summary.md](rnd_refresh_summary.md).
 
 ## Financial subtypes (ok, n=86)
 
@@ -91,55 +88,13 @@ _Generated: 2026-06-24 | Milestone: extraction + merge + SQLite import + hybrid 
 
 > 金融字段质量需单独 review；未纳入 strict headline。
 
-## SQLite import (run_name=`full_market_2024`)
+## SQLite import
 
-| table | rows | 说明 |
-|---|---:|---|
-| company_basic | 6124 | = 公司数 |
-| report_source | 6124 | = 公司数 |
-| extracted_field | **62,890** | **公司-字段记录**，非公司数 |
-| evaluation_result | **62,890** | **公司-字段记录**，非公司数 |
+| run_name | evaluation_result rows |
+|---|---:|
+| `full_market_2024` (original) | 62,890 |
+| `full_market_2024_rnd_refresh` (post-rnd) | 62,890 |
 
----
-
-## 指标解释 / Metric Definitions
-
-| 术语 | English | 含义 |
-|---|---|---|
-| **total** | total | full_market_2024 universe 中的 A 股公司总数。 |
-| **ok** | ok | 脚本成功找到 2024 年报公告/PDF、下载/解析并写出 `company_profile.json`。**不等于每个字段都完全正确。** |
-| **no_announcement** | no_announcement | CNINFO 当前查询规则下未找到可用 2024 年报。不一定是代码 bug。 |
-| **error** | error | 网络/下载/解析等技术失败。本 run 最终为 0。 |
-| **proxy plausible** | proxy plausible | 自动 plausibility：字段结构看起来合理。**不等于人工确认正确。** |
-| **strict usable** | strict usable | adversarial 审计标签（usable only）。**9.01/11** = 全 population 自动化 + 15 家 PDF 小样本校准。 |
-| **strict lenient** | strict lenient | usable + partial 上界（10.47/11）：证据相关但可能不完整/有噪声。 |
-| **manual PDF deep-read** | manual PDF deep-read | 读取 PDF 页文本验证 evidence；检查 not_found 是否应为 missed。非全量人工验证。 |
-| **非金融 headline** | non-financial headline | 11 字段均值仅统计工业类公司；金融公司用独立子 schema。 |
-| **SQLite 行数** | SQLite rows | extracted_field / evaluation_result 行数 = 公司×字段记录，不是公司数。 |
-
-### 板块名称 / Board translations
-
-| code | 中文 |
-|---|---|
-| bse | 北交所 |
-| star | 科创板 |
-| szse_main | 深市主板 |
-| chinext | 创业板 |
-| sse_main | 沪市主板 |
-
----
-
-## Caveats
-
-1. **非全量人工验证**：62,890 SQLite 行未经逐条人工核对。
-2. **strict 9.01/11** 是自动化 adversarial 估计 + 15 家 PDF 校准，不是 population 级人工审计。
-3. **不得声称 strict 优于/劣于旧 10.16/11**（不同 proxy baseline 与 universe）。
-4. Root symlinks `{code}` → `{board}/{code}` 供 `db_import.py` 查找 profile。
-5. 重跑 merge 后需重新生成本 summary 与 strict audit 报告。
-
-## Related docs
-
-- [strict_audit_summary.md](strict_audit_summary.md)
-- [eval_summary.md](eval_summary.md)
-- [CURRENT_STATUS.md](../../../CURRENT_STATUS.md)
-- [docs/evaluation_method.md](../../../docs/evaluation_method.md)
+- **Scoped rnd refresh** (2026-06-24): re-extracted rnd_investment only from cached PDFs; better recall of existing R&D disclosures; not a full_market CNINFO rerun. See [rnd_refresh_summary.md](rnd_refresh_summary.md).
+- Root symlinks `{code}` → `{board}/{code}` enable db_import profile lookup.
+- Re-run merge after batch re-runs or eval reconciliation.

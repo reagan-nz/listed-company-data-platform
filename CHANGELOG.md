@@ -5,8 +5,9 @@
 ## [Unreleased]
 
 ### 新增
+- **scoped rnd_investment refresh**（P2）：`lab/refresh_rnd_full_market.py`；cached PDF 仅重抽取 rnd 字段；+1,460 not_found→found；merge + strict audit + SQLite `run_name=full_market_2024_rnd_refresh` — 见 [rnd_refresh_summary.md](outputs/generalization/full_market_2024/rnd_refresh_summary.md)
 - **full_market_2024 全量提取**：6124 家 A 股 universe；5707 ok / 417 no_announcement / 0 error；5 board 批次（bse→star→szse_main→chinext→sse_main）+ merge + SQLite 导入（62,890 行）— 见 `outputs/generalization/full_market_2024/full_market_2024_summary.md`
-- **full_market_2024 混合 strict 审计**：5621 非金融 × 11 字段自动化 adversarial recheck；55 家样本 + 15 家 PDF deep-read；strict usable **9.01/11** — 见 `strict_audit_summary.md`
+- **full_market_2024 混合 strict 审计**：5621 非金融 × 11 字段自动化 adversarial recheck；post-rnd strict usable **9.38/11** — 见 `strict_audit_summary.md`
 - **全市场工具链**：`lab/make_full_market_yaml.py`、`lab/merge_full_market_batches.py`、`lab/strict_audit_full_market.py`、`lab/run_full_market_2024.sh`
 - **数据库存储方案 v1**（Issue #7）：`docs/database_schema.md` 定义四表（company_basic / report_source / extracted_field / evaluation_result）；推荐 SQLite 原型，后续迁 PostgreSQL
 - **SQLite 建表与导入原型**（Issue #8）：`lab/db_init.py`（建表）、`lab/db_import.py`（从 eval1000 导入小样本）；`.db` 写入 `outputs/db/` 且已 gitignore
@@ -14,7 +15,9 @@
 - **金融公司子 schema 实现**（Issue #4）：`BANK/BROKER/INSURER/OTHER_FINANCIAL_FIELD_SPECS`、`detect_profile`/`resolve_profile`/`get_field_specs`；eval 对 `financial: true` 启用子 schema
 
 ### 变更
-- **full_market_2024 完成**：非金融 proxy **10.35/11**；strict usable **9.01/11**（自动化 adversarial，非全量人工验证）；不得与旧 10.16/11 baseline 直接比较
+- **rnd_investment 召回修复**（P1+P2）：BSE 研发支出锚点 + summary-total 优先级；scoped refresh over cached PDFs；rnd found 67.9%→**93.7%**（5,269/5,621）；BSE rnd 22.8%→99.2%；proxy 10.35→**10.61/11**；strict 9.06→**9.38/11**；BSE strict 7.71→**8.71/11**；15 found→not_found/partial regressions noted（非 CNINFO 重跑）
+- **BSE strict audit 规则修正**（P0）：TOP_KW 扩展识别北交所客户/供应商表格列头；BSE strict 7.14→7.71（审计规则，非抽取变更）
+- **full_market_2024 完成**：非金融 proxy **10.61/11**（post-rnd）；strict usable **9.38/11**（自动化 adversarial，非全量人工验证）；不得与旧 10.16/11 baseline 直接比较
 - **Independent eval1000 泛化验证**：新 cohort 1000 家（seed 20260623，重叠 159/15.9%）；**918 ok / 82 no_announcement / 0 error**（18 ChunkedEncodingError 经 VPN-off 重试恢复）；非金融 proxy **10.30/11**（vs v2 10.33，Δ −0.04 PASS）；SQLite 10112 行 — 见 `outputs/generalization/eval1000_independent_20260623/independent_comparison.md`
 - **eval1000_v2 同 cohort 全量重跑**：1020 家 / 947 ok / 73 no_announcement / 0 error；非金融 proxy **10.33/11**（baseline 10.54，−0.21 为更严 proxy 所致）；SQLite 10428 行 — 见 `outputs/generalization/eval1000_v2/eval1000_v2_comparison.md`
 - **schema_profile 可追溯性**：`eval_generalize.py` 写入 `company_profile.json` 时同步记录 `schema_profile` / `suggested_profile`
@@ -27,11 +30,12 @@
 - **收入表格 proxy 收紧**（Issue #2）：`revenue_table_plausible` 要求 `revenue_by_region` / `revenue_by_segment` preview 含至少一行非表头数据行
 
 ### 文档
+- **P2 rnd refresh 文档同步**（2026-06-24）：rnd_refresh_summary.md、CURRENT_STATUS、full_market_2024_summary、strict_audit 重跑后数字
 - **Phase 3 文档同步**（2026-06-24）：CURRENT_STATUS / ROADMAP / evaluation_method / database_schema / financial_company_schema / full_market_2024_summary / plans v0.6 更新；新增指标解释 glossary
 - **文档同步**（2026-06-23）：所有主要文档与 eval1000_v2 / independent eval1000 里程碑对齐；ROADMAP 阶段重排（full_market_2024 → strict 审计 → 多年度 → BrowserUser）；docs/evaluation_method 增加同 cohort 重跑与独立泛化验证说明；docs/database_schema 注明三批次 SQLite 导入状态；docs/financial_company_schema 补充 strict 未重跑说明；docs/crawler_strategy 明确 BrowserUser 在 full_market_2024 基线稳定后才启动；新增 plans/v0.6_full_market_2024_plan.md
 
 ### 计划
-- 质量 follow-up：BSE 模板、rnd 召回、revenue 跨页切片
+- 质量 follow-up：revenue 跨页切片；rnd 8 家回归；金融 review
 - 金融公司字段质量专项 review
 - 多年度扩展（2023 / 2022）
 - BrowserUser 数据源试点（全量基线稳定后）
