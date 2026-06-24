@@ -15,7 +15,8 @@
 - **金融公司子 schema 实现**（Issue #4）：`BANK/BROKER/INSURER/OTHER_FINANCIAL_FIELD_SPECS`、`detect_profile`/`resolve_profile`/`get_field_specs`；eval 对 `financial: true` 启用子 schema
 
 ### 变更
-- **rnd_investment 召回修复**（P1+P2）：BSE 研发支出锚点 + summary-total 优先级；scoped refresh over cached PDFs；rnd found 67.9%→**93.7%**（5,269/5,621）；BSE rnd 22.8%→99.2%；proxy 10.35→**10.61/11**；strict 9.06→**9.38/11**；BSE strict 7.71→**8.71/11**；15 found→not_found/partial regressions noted（非 CNINFO 重跑）
+- **P2.1 rnd candidate-fallback**（`lab/extract_annual_report.py`）：top-priority anchor 无 parseable 金额时尝试下一候选窗口；修复 15 个原回归；rnd found 93.7%→**94.2%**；0 found→not_found 回退
+- **rnd_investment 召回修复**（P1+P2）：BSE 研发支出锚点 + summary-total 优先级；scoped refresh over cached PDFs；rnd found 67.9%→94.2%；BSE rnd 22.8%→99.2%；proxy 10.35→**10.61/11**；strict 9.06→**9.38/11**；BSE strict 7.71→**8.71/11**（非 CNINFO 重跑）
 - **BSE strict audit 规则修正**（P0）：TOP_KW 扩展识别北交所客户/供应商表格列头；BSE strict 7.14→7.71（审计规则，非抽取变更）
 - **full_market_2024 完成**：非金融 proxy **10.61/11**（post-rnd）；strict usable **9.38/11**（自动化 adversarial，非全量人工验证）；不得与旧 10.16/11 baseline 直接比较
 - **Independent eval1000 泛化验证**：新 cohort 1000 家（seed 20260623，重叠 159/15.9%）；**918 ok / 82 no_announcement / 0 error**（18 ChunkedEncodingError 经 VPN-off 重试恢复）；非金融 proxy **10.30/11**（vs v2 10.33，Δ −0.04 PASS）；SQLite 10112 行 — 见 `outputs/generalization/eval1000_independent_20260623/independent_comparison.md`

@@ -4,7 +4,7 @@ _最后更新：2026-06-24（full_market_2024 + scoped rnd_investment refresh + 
 
 > **本文档是项目主进度页。** 老师建议从这里开始阅读；技术细节见 [docs/](docs/)，变更记录见 [CHANGELOG.md](CHANGELOG.md)。
 
-**2026-06-24 日结（rnd refresh）**：scoped rnd_investment 刷新完成（cached PDF，非 CNINFO 重跑）；rnd found **67.9% → 93.7%**（5,269/5,621）；BSE rnd **22.8% → 99.2%**；非金融 proxy **10.61/11**；strict usable **9.38/11**；BSE strict **8.71/11**；15 个 found→not_found/partial 回归待 follow-up。详见 [rnd_refresh_summary.md](outputs/generalization/full_market_2024/rnd_refresh_summary.md)。
+**2026-06-24 日结（rnd refresh + P2.1）**：scoped rnd_investment 刷新完成（cached PDF，非 CNINFO 重跑）；P2.1 candidate-fallback 修复 15 个回归；rnd found **67.9% → 94.2%**（5,297/5,621）；BSE rnd **22.8% → 99.2%**；非金融 proxy **10.61/11**；strict usable **9.38/11**；BSE strict **8.71/11**。详见 [rnd_refresh_summary.md](outputs/generalization/full_market_2024/rnd_refresh_summary.md)。
 
 **2026-06-24 日结（full_market）**：full_market_2024 全 A 股 2024 年报提取完成（6124 家 universe）；5707 ok / 417 no_announcement / 0 error；SQLite **62,890** 行。
 
@@ -56,7 +56,7 @@ eval_results.json + root symlinks
     ↓  lab/db_import.py (run_name=full_market_2024)
 SQLite（62,890 extracted_field 行）
     ↓  lab/refresh_rnd_full_market.py（scoped rnd only, cached PDF）
-rnd found 67.9% → 93.7%；merge + strict audit 重跑
+rnd found 67.9% → 94.2%（P2.1 candidate-fallback）；merge + strict audit 重跑
     ↓  lab/strict_audit_full_market.py
 strict_audit_summary.md（9.38/11 非金融 strict usable）
 ```
@@ -85,7 +85,7 @@ strict_audit_summary.md（9.38/11 非金融 strict usable）
 | **非金融 proxy plausible** | **10.61 / 11**（post-rnd refresh） |
 | **非金融 strict usable**（自动化 adversarial） | **9.38 / 11** |
 | strict lenient（usable + partial） | 10.73 / 11 |
-| rnd_investment found | **5,269 / 5,621（93.7%）** |
+| rnd_investment found | **5,297 / 5,621（94.2%）** |
 
 ### 与受控评估对比（非金融 proxy）
 

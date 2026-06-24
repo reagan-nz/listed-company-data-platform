@@ -102,22 +102,16 @@ def _anchor_regex(anchor: str) -> re.Pattern:
     return re.compile(r"[ \t\r\n]{0,2}".join(re.escape(ch) for ch in anchor))
 
 
-def locate_section(
+def locate_candidates(
     pages: list[str], anchors: tuple[str, ...], preferred_pages: set[int] | None = None,
-    avoid: tuple[str, ...] = (),
-) -> dict | None:
-    """Find the BODY occurrence of an anchor, scoring all occurrences by:
-      - being in the field's PREFERRED region (MD&A vs notes) - dominant bonus,
-      - NOT being on a table-of-contents page (heavy penalty),
-      - NOT being immediately followed by an `avoid` token (wrong-occurrence
-        signal, e.g. a table column header or the employee-count line),
-      - anchor PRIORITY (earlier anchors are more specific - dominant among hits),
-      - sitting at a heading boundary (line start) rather than mid-paragraph,
-      - a small length / following-text bonus.
-    Anchor matching is line-break tolerant (see `_anchor_regex`).
+    avoid: tuple[str, ...] = (), limit: int = 8,
+) -> list[dict]:
+    """Return anchor occurrences scored and sorted descending (best first).
+
+    Scoring matches ``locate_section``: preferred region, TOC penalty, avoid
+    tokens, anchor priority, heading boundary, length bonus.
     """
-    best = None
-    best_score = float("-inf")
+    scored: list[tuple[float, dict]] = []
     n_anchors = len(anchors)
     for pno, text in enumerate(pages, start=1):
         toc = page_is_toc(text)
@@ -139,11 +133,28 @@ def locate_section(
                 score += _heading_bonus(text, idx)
                 score += len(anchor) * 1.0
                 score += min((len(text) - idx) / 1000.0, 5.0)
-                if score > best_score:
-                    best_score = score
-                    best = {"page": pno, "idx": idx, "anchor": anchor,
-                            "in_region": in_region, "col": col}
-    return best
+                scored.append((score, {"page": pno, "idx": idx, "anchor": anchor,
+                                       "in_region": in_region, "col": col, "score": score}))
+    scored.sort(key=lambda x: x[0], reverse=True)
+    return [item for _, item in scored[:limit]]
+
+
+def locate_section(
+    pages: list[str], anchors: tuple[str, ...], preferred_pages: set[int] | None = None,
+    avoid: tuple[str, ...] = (),
+) -> dict | None:
+    """Find the BODY occurrence of an anchor, scoring all occurrences by:
+      - being in the field's PREFERRED region (MD&A vs notes) - dominant bonus,
+      - NOT being on a table-of-contents page (heavy penalty),
+      - NOT being immediately followed by an `avoid` token (wrong-occurrence
+        signal, e.g. a table column header or the employee-count line),
+      - anchor PRIORITY (earlier anchors are more specific - dominant among hits),
+      - sitting at a heading boundary (line start) rather than mid-paragraph,
+      - a small length / following-text bonus.
+    Anchor matching is line-break tolerant (see `_anchor_regex`).
+    """
+    cands = locate_candidates(pages, anchors, preferred_pages, avoid, limit=1)
+    return cands[0] if cands else None
 
 
 def _loc_page(pages: list[str], anchors: tuple[str, ...]) -> int | None:
@@ -598,6 +609,43 @@ def extract_field(
 
     if not loc:
         return out
+
+    if spec.extraction == "numeric" and spec.key == "rnd_investment":
+        candidates = locate_candidates(pages, spec.anchors, preferred, spec.avoid, limit=8)
+        if not candidates:
+            return out
+        chosen = candidates[0]
+        page_text = pages[chosen["page"] - 1]
+        window = page_text[chosen["idx"]: chosen["idx"] + 600]
+        labeled = extract_rnd_numeric(window)
+        if not labeled:
+            # Explicit "R&D not applicable" disclosure — do not fall through to
+            # unrelated 研发费用 hits elsewhere in the report (e.g. 000996).
+            skip_fallback = (
+                chosen["anchor"] == "研发投入"
+                and "不适用" in window
+                and "适用" in window
+            )
+            if not skip_fallback:
+                for cand in candidates[1:]:
+                    page_text = pages[cand["page"] - 1]
+                    window = page_text[cand["idx"]: cand["idx"] + 600]
+                    labeled = extract_rnd_numeric(window)
+                    if labeled:
+                        chosen = cand
+                        break
+        page_text = pages[chosen["page"] - 1]
+        in_region = bool(chosen.get("in_region"))
+        heading = _is_heading(page_text, chosen["idx"], chosen.get("col", 99))
+        out["page"] = chosen["page"]
+        out["anchor_matched"] = chosen["anchor"]
+        out["in_region"] = in_region
+        out["evidence_sentence"] = evidence_sentence(page_text, chosen["idx"], chosen["anchor"])
+        located_well = (in_region or not preferred) and heading
+        out["value"] = {"labeled": labeled, "context": truncate(clean_text(window[:200]), 200)}
+        out["status"] = "found" if (labeled and located_well) else ("partial" if labeled else "not_found")
+        return out
+
     page_text = pages[loc["page"] - 1]
     in_region = bool(loc.get("in_region"))
     heading = _is_heading(page_text, loc["idx"], loc.get("col", 99))
@@ -621,11 +669,8 @@ def extract_field(
         out["status"] = "found" if located_well else "partial"
     elif spec.extraction == "numeric":
         window = page_text[loc["idx"]: loc["idx"] + 600]
-        if spec.key == "rnd_investment":
-            labeled = extract_rnd_numeric(window)
-        else:
-            labels = list(dict.fromkeys(list(spec.anchors) + list(_TOTAL_LABELS)))
-            labeled = extract_numeric(window, labels)
+        labels = list(dict.fromkeys(list(spec.anchors) + list(_TOTAL_LABELS)))
+        labeled = extract_numeric(window, labels)
         out["value"] = {"labeled": labeled, "context": truncate(clean_text(window[:200]), 200)}
         out["status"] = "found" if (labeled and located_well) else ("partial" if labeled else "not_found")
     elif spec.extraction == "concentration":

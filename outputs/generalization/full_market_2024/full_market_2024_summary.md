@@ -2,7 +2,7 @@
 
 _Generated: 2026-06-24 | Milestone: extraction + merge + SQLite import + hybrid strict audit + scoped rnd refresh **complete**_
 
-_Post-rnd refresh merge + strict audit: 2026-06-24_
+_Post P2.1 candidate-fallback merge + strict audit: 2026-06-24_
 
 > **Caveat**：本 milestone 表示管道执行、数据库导入、混合 strict 审计与 scoped rnd refresh 均已完成。**不等于** 62,890 条 SQLite 记录已全量人工验证。strict **9.38/11** 为自动化 adversarial 全 population 估计，经 15 家公司 PDF deep-read 小样本校准。
 
@@ -30,7 +30,7 @@ _Post-rnd refresh merge + strict audit: 2026-06-24_
 | chinext | 创业板 | 1442 |
 | sse_main | 沪市主板 | 1846 |
 
-## Non-financial proxy (headline, post-rnd refresh)
+## Non-financial proxy (headline, post P2.1)
 
 | metric | value |
 |---|---:|
@@ -51,19 +51,19 @@ _Post-rnd refresh merge + strict audit: 2026-06-24_
 
 | field | plausible | rate | pre-rnd refresh |
 |---|---:|---:|---:|
-| rnd_investment | 5269/5621 | **93.7%** | 67.9% |
+| rnd_investment | 5297/5621 | **94.2%** | 67.9% |
 | revenue_by_region | 5093/5621 | 90.6% | — |
 | revenue_by_segment | 5386/5621 | 95.8% | — |
 
-## Strict audit (post-rnd refresh, non-fin)
+## Strict audit (post P2.1, non-fin)
 
-| metric | pre-rnd | post-rnd |
+| metric | pre-rnd | post P2.1 |
 |---|---:|---:|
 | strict usable | 9.06 / 11 | **9.38 / 11** |
-| strict lenient | 10.47 / 11 | **10.73 / 11** |
-| gap (proxy − strict usable) | 1.29 | **1.23** |
+| strict lenient | 10.47 / 11 | **10.74 / 11** |
+| gap (proxy − strict usable) | 1.29 | **1.24** |
 
-### Board-level strict usable (post-rnd refresh)
+### Board-level strict usable (post P2.1)
 
 | board | 中文 | n (ok) | strict usable /11 |
 |---|---|---:|---:|
@@ -95,6 +95,5 @@ See [strict_audit_summary.md](strict_audit_summary.md) and [rnd_refresh_summary.
 | `full_market_2024` (original) | 62,890 |
 | `full_market_2024_rnd_refresh` (post-rnd) | 62,890 |
 
-- **Scoped rnd refresh** (2026-06-24): re-extracted rnd_investment only from cached PDFs; better recall of existing R&D disclosures; not a full_market CNINFO rerun. See [rnd_refresh_summary.md](rnd_refresh_summary.md).
+- **Scoped rnd refresh + P2.1 fallback** (2026-06-24): re-extracted rnd_investment only from cached PDFs; better recall of existing R&D disclosures; not a full_market CNINFO rerun. See [rnd_refresh_summary.md](rnd_refresh_summary.md).
 - Root symlinks `{code}` → `{board}/{code}` enable db_import profile lookup.
-- Re-run merge after batch re-runs or eval reconciliation.

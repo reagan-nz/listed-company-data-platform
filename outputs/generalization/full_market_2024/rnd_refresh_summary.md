@@ -1,6 +1,6 @@
 # full_market_2024 rnd_investment Scoped Refresh Summary
 
-_Generated: 2026-06-24 (post-remediation)_
+_Generated: 2026-06-24 (post P2.1 candidate-fallback)_
 
 ## What changed
 
@@ -8,42 +8,41 @@ _Generated: 2026-06-24 (post-remediation)_
 
 1. **P1 code fix** (`lab/field_schema.py`, `lab/extract_annual_report.py`): added BSE 研发支出 anchors; reordered summary-total labels above project-table column headers.
 2. **`lab/refresh_rnd_full_market.py`**: re-extracted **only** `rnd_investment` from cached PDFs; updated `company_profile.json` and batch `eval_results.json` rnd field.
-3. **Downstream refresh**: merge → strict audit → SQLite import (`run_name=full_market_2024_rnd_refresh`).
-4. **Post-audit remediation** (2026-06-24): patched 7 stale batch `eval_results.json` entries from refreshed profiles (earlier killed `--apply` had updated profiles but not batch eval); re-merge + re-audit + re-import.
+3. **P2.1 candidate-fallback** (`lab/extract_annual_report.py`): when top-priority anchor window yields no parseable amount, try next-best anchor candidates; skip fallback when primary 研发投入 disclosure is explicitly 不适用.
+4. **Downstream refresh**: merge → strict audit → SQLite import (`run_name=full_market_2024_rnd_refresh`).
 
 > Better recall of **existing** R&D disclosures (especially BSE 研发支出 template and 研发投入合计 summary tables). **Not** full manual validation. **Not** a CNINFO re-download or full-field re-extraction.
 
-## Refresh run results
+## Refresh run results (latest P2.1 apply)
 
 | Metric | Value |
 |---|---|
 | Profiles processed (non-fin ok) | 5,621 |
-| Changed | 1,988 |
-| not_found → found | **+1,460** |
-| found → not_found / partial (vs original baseline) | **15** (known follow-up) |
-| Errors | 0 |
-| Profiles with `rnd_refresh` tag | 2,003 |
+| Changed (this P2.1 run) | 155 |
+| not_found → found (this run) | **+28** |
+| found → not_found / partial (this run) | **0** |
+| Errors | 0 (non-fin) |
+
+Cumulative since original baseline: not_found→found **+1,488**; original 15 regressions **resolved** (13→found, 2→partial).
 
 ## rnd_investment found rate
 
-| Scope | Before | After | Δ |
+| Scope | Before (original) | After (post P2.1) | Δ |
 |---|---:|---:|---:|
-| Non-fin rnd found (profile status=found) | 3,817 / 5,621 (**67.9%**) | **5,269 / 5,621 (93.7%)** | +25.8 pp |
-| BSE rnd found (profiles) | 117 / 513 (**22.8%**) | **509 / 513 (99.2%)** | +76.4 pp |
-
-> Proxy plausible for rnd equals status=found after remediation (5,269 / 93.7%). Earlier docs cited 5,276 / 93.9% due to 7 stale batch eval rows; reconciled 2026-06-24.
+| Non-fin rnd found | 3,817 / 5,621 (**67.9%**) | **5,297 / 5,621 (94.2%)** | +26.3 pp |
+| BSE rnd found | 117 / 513 (**22.8%**) | **509 / 513 (99.2%)** | +76.4 pp |
 
 ## Post-refresh headline metrics (non-fin)
 
-| Metric | Pre-rnd refresh | Post-rnd refresh |
+| Metric | Pre-rnd refresh | Post P2.1 |
 |---|---:|---:|
 | proxy plausible | 10.35 / 11 | **10.61 / 11** |
 | strict usable | 9.06 / 11 | **9.38 / 11** |
-| strict lenient | 10.47 / 11 | **10.73 / 11** |
-| rnd strict usable (field) | 3,332 / 5,621 | **5,078 / 5,621** |
-| rnd not_found_unverified | 1,791 | **331** |
+| strict lenient | 10.47 / 11 | **10.74 / 11** |
+| rnd strict usable (field) | 3,332 / 5,621 | **5,086 / 5,621** |
+| rnd not_found_unverified | 1,791 | **280** |
 
-### Board strict usable (post-rnd refresh)
+### Board strict usable (post P2.1)
 
 | board | 中文 | before | after |
 |---|---|---:|---:|
@@ -62,31 +61,29 @@ _Generated: 2026-06-24 (post-remediation)_
 | `full_market_2024` (original) | 62,890 |
 | `full_market_2024_rnd_refresh` (post-refresh) | 62,890 |
 
-`extracted_field` upserts from refreshed profiles; `evaluation_result` uses updated proxy from merged `eval_results.json`. Original `full_market_2024` evaluation_result run preserved.
+## P2.1 regression resolution (15 companies)
 
-## Known follow-up (15 regressions vs original baseline)
+All 15 original regressions resolved by candidate-fallback (no guard relaxation):
 
-Old `found` → new `not_found` / `partial` after anchor reorder. Cause: high-priority summary labels (`费用化研发投入`, `研发投入总额/合计`) sometimes anchor narrative or governance sentences without a parseable total.
+| code | name | status after P2.1 | anchor |
+|---|---|---|---|
+| 600011 | 华能国际 | found | 研发费用 |
+| 600020 | 中原高速 | found | 研发费用 |
+| 600033 | 福建高速 | found | 研发投入 |
+| 600346 | 恒力石化 | found | 研发费用 |
+| 600808 | 马钢股份 | found | 研发费用 |
+| 601778 | 晶科科技 | found | 研发费用 |
+| 603776 | 永安行 | found | 研发费用 |
+| 301221 | 光庭信息 | partial | 研发投入合计 |
+| 000063 | 中兴通讯 | found | 研发投入金额 |
+| 000333 | 美的集团 | partial | 研发投入合计 |
+| 002296 | 辉煌科技 | found | 研发投入金额 |
+| 000517 | 荣安地产 | found | 研发投入金额 |
+| 001300 | 三柏硕 | found | 研发投入金额 |
+| 002907 | 华森制药 | found | 研发投入金额 |
+| 300445 | 康斯特 | found | 研发投入金额 |
 
-| code | name | board | after | anchor |
-|---|---|---|---|---|
-| 600011 | 华能国际 | sse_main | not_found | 费用化研发投入 |
-| 600020 | 中原高速 | sse_main | not_found | 费用化研发投入 |
-| 600033 | 福建高速 | sse_main | not_found | 费用化研发投入 |
-| 600346 | 恒力石化 | sse_main | not_found | 费用化研发投入 |
-| 600808 | 马钢股份 | sse_main | not_found | 费用化研发投入 |
-| 601778 | 晶科科技 | sse_main | not_found | 费用化研发投入 |
-| 603776 | 永安行 | sse_main | not_found | 费用化研发投入 |
-| 301221 | 光庭信息 | chinext | partial | 研发投入合计 |
-| 000063 | 中兴通讯 | szse_main | not_found | 研发投入总额 |
-| 000333 | 美的集团 | szse_main | partial | 研发投入合计 |
-| 002296 | 辉煌科技 | szse_main | not_found | 研发投入总额 |
-| 000517 | 荣安地产 | szse_main | not_found | 研发投入总额 |
-| 001300 | 三柏硕 | szse_main | not_found | 研发投入总额 |
-| 002907 | 华森制药 | szse_main | not_found | 研发投入合计 |
-| 300445 | 康斯特 | chinext | not_found | 研发投入合计 |
-
-8 detected in final refresh run; 7 additional from earlier interrupted `--apply` (profiles updated, batch eval stale until remediation). Net rnd gain remains strongly positive (+1,452 vs original). Follow-up anchor/window tuning; not blockers for this milestone.
+**Residuals (documented, not blockers):** 000333/301221 remain `partial` (narrative cumulative figures). 600011/600020/etc. recover full-yuan 费用化/研发费用 baseline values, not 亿元-table 合计 (P2.2 unit-aware parsing follow-up).
 
 ## Artifacts
 
@@ -94,10 +91,9 @@ Old `found` → new `not_found` / `partial` after anchor reorder. Cause: high-pr
 |---|---|
 | [strict_audit_summary.md](strict_audit_summary.md) | Post-refresh strict audit |
 | [full_market_2024_summary.md](full_market_2024_summary.md) | Post-merge proxy summary |
-| `rnd_refresh_changes.csv` | Per-company change log (~5,621 rows; **gitignored**) |
+| `rnd_refresh_changes.csv` | Per-company change log (**gitignored**) |
 
 ## Caveats
 
 - Completion = scoped field refresh + merge + audit + DB import. **≠** 62,890 rows manually verified.
-- 15 regressions need separate anchor/window tuning (P1.1 follow-up).
 - Revenue table slicing, financial review, multi-year remain open (Stage 3).
