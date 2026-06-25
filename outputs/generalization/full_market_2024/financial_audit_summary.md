@@ -1,6 +1,6 @@
 # full_market_2024 Financial Strict Audit Summary
 
-_Generated: 2026-06-25 01:24 UTC | automated financial-only audit (Phase 1A)_
+_Generated: 2026-06-25 03:45 UTC | automated financial-only audit (Phase 1A)_
 
 ## 1. Population breakdown
 
@@ -22,8 +22,6 @@ Excluded from audit: 1 financial company(ies) not ok (000562).
 | `broker` | 12.0 | **7.66 / 12** | 9.00 / 12 | 8.57 / 12 |
 | `insurer` | 12.0 | **9.25 / 12** | 10.50 / 12 | 10.50 / 12 |
 | `other_financial` | 8.0 | **5.75 / 8** | 7.00 / 8 | 5.50 / 8 |
-
-> **Insurer low-n:** only **2** insurer companies in population; subtype means are **not statistically meaningful** — treat as directional only until more insurers are tagged/audited.
 
 ## 3. Proxy vs strict gap by subtype
 
@@ -122,30 +120,18 @@ Automated audit uses **stored** `schema_profile`; caveat flags are informational
 - **Not full manual validation** — automated adversarial recheck over stored values.
 - **Not mixed into non-financial headline** — industrial strict usable remains **9.43/11** (5621 companies); this report is financial-only.
 - **Numeric/table noise likely** — financial fields use generic extractors; strict rules flag wrong-line-item and orphan numerics but cannot eliminate all false positives.
-- **Phase 1B** — stratified manual PDF calibration worksheet generated (**325 cells / 30 companies**); **`manual_grade` pending** — not yet calibrated.
-- **`not_found_missed` (75 cells) — recall hint, not confirmed truth** — assigned when automated PDF anchor search finds anchor + financial-looking number nearby. **Broker-heavy** (~58/75); pervasive anchors (e.g. `投资收益`) inflate recall hints. **Do not treat as confirmed extraction failure** until Phase 1B manual grade (`MISSED` vs `ABSENT-OK`).
-- **`major_subsidiaries` structurally partial** — **0/86 usable** across subtypes reflects industrial-style `in_region` / notes-vs-MD&A gating on a generic field, **not** a financial-subtype extraction regression. Low usable counts here **must not be overread** as financial-specific miss rate without manual review.
-- **Insurer metrics low-n** — population has **n=2** insurers; §2 subtype means are illustrative only.
-- **Financial under-tagging scan deferred** — YAML `financial: true` completeness / missed financial companies **not audited in #27**; follow-up **#28 or later**.
+- **Phase 1B** — stratified manual PDF calibration worksheet is the next step.
+- **`not_found_missed`** — only assigned when PDF anchor search finds anchor+digit; conservative to avoid overclaiming.
 
-## 8. Phase 1B manual calibration status
+## 8. Phase 1B manual calibration recommendation
 
-**Worksheet generated** (`financial_audit_sample.csv`): 30 companies × **325** field-cells (`seed=20260627`).
+Proceed with worksheet generation. Suggested 30-company sample:
 
-- Grades allowed: **CORRECT | PARTIAL | WRONG | MISSED | ABSENT-OK**
-- **`manual_grade` is blank** — ready for higher-model / human PDF review
-- After grading: `python lab/financial_calibration_sample.py --score financial_audit_sample.csv`
+- **Force-include:** 601963, 601375, 601377, 601878, 000402, 600816, 600318
+- **bank (12):** 601398, 601939, 601988, 601328, 601825, 002807, 001227, 601997, 601963, 600318, 601166, 600816
+- **broker (12):** 601901, 002500, 600999, 000776, 601375, 601377, 601878, 600958, 601162, 600030, 002736, 601108
+- **insurer (2):** 601336, 601628 (both)
+- **other_financial (4):** 600927, 001236, 002961, 603093 (all)
 
-## 9. Phase 1B generated calibration sample (`financial_audit_sample.csv`)
-
-Worksheet generated (`seed=20260627`); **30 companies / 325 field-cells**. Use this list (matches CSV):
-
-- **bank (12):** 600318, 600816, 601963, 002966, 600908, 601328, 600015, 600000, 601939, 600016, 002142, 000001
-- **broker (12):** 000402, 601375, 601377, 601878, 600369, 601990, 601696, 600030, 601108, 000783, 601059, 601136
-- **insurer (2):** 601336, 601628
-- **other_financial (4):** 001236, 002961, 600927, 603093
-
-Includes force-includes from suspicious / caveat list (601963, 601375, 601377, 601878, 000402, 600816, 600318). Review numeric fields (`net_interest_income`, `npl_ratio`, broker income lines) and table fields first; treat **000402** as tag review, not broker control.
-
-_Original pre-generation design note (superseded): bank/broker lists included 601398, 601988, 601901, 002500, etc.; actual stratified draw is above._
+Review numeric fields (`net_interest_income`, `npl_ratio`, broker income lines) and table fields first; treat 000402 as tag review, not broker control.
 

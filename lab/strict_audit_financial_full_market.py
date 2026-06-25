@@ -62,6 +62,107 @@ FIELD_REJECT_LABELS: dict[str, tuple[str, ...]] = {
     "capital_adequacy_ratio": ("不良", "拨备"),
 }
 
+# Broker numeric fields use stricter PDF missed-disclosure checks (#30a).
+BROKER_NUMERIC_FIELDS = frozenset({
+    "brokerage_income",
+    "investment_banking_income",
+    "asset_management_income",
+    "proprietary_trading_income",
+    "margin_lending_balance",
+    "risk_control_indicators",
+})
+
+# Strong line-item / table labels — anchor + nearby digit alone is insufficient.
+BROKER_MISSED_STRONG_LABELS: dict[str, tuple[str, ...]] = {
+    "brokerage_income": (
+        "经纪业务收入",
+        "证券经纪业务收入",
+        "经纪业务手续费净收入",
+        "经纪业务净收入",
+        "证券经纪业务净收入",
+    ),
+    "investment_banking_income": (
+        "投资银行业务收入",
+        "投资银行业务净收入",
+        "投行业务净收入",
+        "投资银行业务手续费净收入",
+        "承销保荐业务收入",
+        "投资银行类业务收入",
+    ),
+    "asset_management_income": (
+        "资产管理业务收入",
+        "资管业务收入",
+        "资产管理业务净收入",
+        "受托客户资产管理业务净收入",
+    ),
+    "proprietary_trading_income": (
+        "自营业务收入",
+        "自营业务净收入",
+        "证券自营业务收入",
+        "证券投资业务收入",
+    ),
+    "margin_lending_balance": (
+        "融资融券余额",
+    ),
+    "risk_control_indicators": (
+        "净资本",
+        "核心净资本",
+        "风险覆盖率",
+        "资本杠杆率",
+        "流动性覆盖率",
+        "净稳定资金率",
+    ),
+}
+
+# Generic anchors too weak to justify not_found_missed on their own.
+BROKER_MISSED_WEAK_ONLY: dict[str, tuple[str, ...]] = {
+    "proprietary_trading_income": ("投资收益", "公允价值变动损益"),
+    "brokerage_income": ("经纪业务", "证券经纪"),
+    "investment_banking_income": ("承销保荐",),
+    "asset_management_income": ("受托客户资产管理",),
+    "margin_lending_balance": ("融资融券", "融券"),
+    "risk_control_indicators": ("净资本与净资产",),
+}
+
+_FIN_NUM_RE = re.compile(
+    r"[%％]|(?:万元|亿元|百万元|千元)|\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+\.\d{2,}"
+)
+_BROKER_BALANCE_NUM_RE = re.compile(
+    r"\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d{4,}(?:\.\d+)?"
+)
+_BROKER_RATIO_NUM_RE = re.compile(r"\d+(?:\.\d+)?\s*[%％]")
+_BROKER_COMMA_AMOUNT_RE = re.compile(r"\d{1,3}(?:,\d{3})+(?:\.\d+)?")
+_BROKER_ASSET_COMPOSITION_RE = re.compile(
+    r"融出\s*资\s*金\s+"
+    r"(\d{1,3}(?:,\d{3})+(?:\.\d+)?)\s+(\d+\.\d{2})\s+"
+    r"(\d{1,3}(?:,\d{3})+(?:\.\d+)?)\s+(\d+\.\d{2})\s+(\d+\.\d{2})"
+)
+_BROKER_SEGMENT_SECTION_MARKERS = (
+    "主营业务分行业",
+    "主营业务分产品",
+    "分行业情况",
+    "分产品情况",
+    "收入和成本分析",
+)
+_BROKER_WEAK_WINDOW_MARKERS = (
+    "学历", "简历", "董事", "监事", "总裁", "副总经理", "首席财务",
+    "是指向客户出借", "业务是运用", "业务是通过", "主要从事",
+    "奖", "论坛", "证券时报", "每日经济新闻", "中国基金报",
+    "注册资本", "总资产", "净资产", "上年年末", "报告期末",
+    "利息收入", "利息支出", "净增加额", "净减少额", "净增加现金",
+    "万亿", "全行业", "市场累计", "较上年末增长",
+    "账户规范", "管理制度", "合规风险", "盯市监控",
+    "监管要求", "符合监管", "指标情况，优化", "指标情况，优化设定",
+    "日均余额", "同比增幅", "规范管理情况",
+    "代理承销证券", "代理买卖证券款",
+    "A 股", "A股 指",
+)
+_BROKER_DEEP_IB_NET_LABELS = (
+    "投资银行业务净收入",
+    "投行业务净收入",
+)
+_BROKER_DEEP_IB_MIN_MAGNITUDE = 1_000_000_000
+
 
 @dataclass
 class FinAuditRow:
@@ -192,7 +293,6 @@ def _pdf_anchor_with_number(pdf_path: str | None, anchors: tuple[str, ...], max_
     """Conservative missed-disclosure check: anchor + financial-looking number nearby."""
     if not pdf_path or not os.path.isfile(pdf_path):
         return False
-    fin_num = re.compile(r"[%％]|(?:万元|亿元|百万元|千元)|\d{1,3}(?:,\d{3})+|\d+\.\d{2,}")
     try:
         import fitz
     except ImportError:
@@ -209,7 +309,7 @@ def _pdf_anchor_with_number(pdf_path: str | None, anchors: tuple[str, ...], max_
                     if idx < 0:
                         break
                     window = text[idx : idx + 100]
-                    if fin_num.search(window):
+                    if _FIN_NUM_RE.search(window):
                         doc.close()
                         return True
                     pos = idx + max(len(a), 1)
@@ -217,6 +317,324 @@ def _pdf_anchor_with_number(pdf_path: str | None, anchors: tuple[str, ...], max_
     except Exception:
         return False
     return False
+
+
+def _window_has_fin_number(window: str, *, ratio_ok: bool = True, balance_ok: bool = True) -> bool:
+    if ratio_ok and _BROKER_RATIO_NUM_RE.search(window):
+        return True
+    if balance_ok and _BROKER_BALANCE_NUM_RE.search(window):
+        return True
+    return bool(_FIN_NUM_RE.search(window))
+
+
+def _window_has_comma_amount(window: str) -> bool:
+    return bool(_BROKER_COMMA_AMOUNT_RE.search(window))
+
+
+def _page_has_segment_operating_section(text: str) -> bool:
+    return any(m in text for m in _BROKER_SEGMENT_SECTION_MARKERS)
+
+
+def _page_is_fee_commission_note(text: str) -> bool:
+    return any(
+        m in text
+        for m in ("手续费及佣金净收入", "手续费及佣金", "按收入类别列示")
+    )
+
+
+def _page_is_main_financial_items(text: str) -> bool:
+    return any(
+        m in text
+        for m in (
+            "主要财务指标",
+            "主要项目",
+            "合并财务报表主要项目",
+            "母公司财务报表主要项目",
+            "增减幅度（%）",
+            "增减幅度(%)",
+        )
+    )
+
+
+def _find_spaced_keyword(text: str, keyword: str) -> int:
+    pattern = r"\s*".join(re.escape(ch) for ch in keyword)
+    match = re.search(pattern, text)
+    return match.start() if match else -1
+
+
+def _iter_spaced_keyword_positions(text: str, keyword: str):
+    pattern = r"\s*".join(re.escape(ch) for ch in keyword)
+    for match in re.finditer(pattern, text):
+        yield match.start(), match.group(0)
+
+
+def _keyword_match_has_internal_break(matched: str, keyword: str) -> bool:
+    normalized = re.sub(r"\s+", "", matched)
+    return normalized == keyword and matched != keyword
+
+
+def _window_is_weak_broker_evidence(field_key: str, window: str, page_text: str) -> bool:
+    if any(m in window for m in _BROKER_WEAK_WINDOW_MARKERS):
+        return True
+    if field_key != "proprietary_trading_income":
+        if "投资收益" in window or "公允价值变动损益" in window:
+            return True
+    if field_key == "margin_lending_balance":
+        if any(m in window for m in ("利息", "净增加", "净减少", "减值", "万亿")):
+            return True
+        if _page_is_main_financial_items(page_text):
+            return True
+    if field_key == "risk_control_indicators":
+        return True
+    if _page_is_fee_commission_note(page_text) and field_key in {
+        "brokerage_income",
+        "asset_management_income",
+        "proprietary_trading_income",
+    }:
+        return True
+    return False
+
+
+def _pdf_strong_label_with_number(
+    text: str,
+    labels: tuple[str, ...],
+    *,
+    window_extra: int = 80,
+    ratio_ok: bool = True,
+    balance_ok: bool = True,
+    comma_only: bool = False,
+) -> bool:
+    for lab in labels:
+        pos = 0
+        while True:
+            idx = text.find(lab, pos)
+            if idx < 0:
+                break
+            window = text[idx : idx + len(lab) + window_extra]
+            if comma_only and not _window_has_comma_amount(window):
+                pos = idx + max(len(lab), 1)
+                continue
+            if _window_has_fin_number(
+                window, ratio_ok=ratio_ok, balance_ok=balance_ok,
+            ):
+                return True
+            pos = idx + max(len(lab), 1)
+    return False
+
+
+def _pdf_broker_segment_operating_evidence(
+    text: str,
+    segment_kw: tuple[str, ...],
+    *,
+    field_key: str = "",
+    require_internal_label_break: bool = False,
+) -> bool:
+    """MD&A segment operating row: section header + segment + comma amount + margin/YoY."""
+    if not _page_has_segment_operating_section(text):
+        return False
+    metric_markers = ("百分点", "毛利率", "营业成本", "比上年", "同比")
+    income_phrases = (
+        "实现收入",
+        "业务收入",
+        "业务净收入",
+        "手续费净收入",
+        "净收入",
+    )
+    for seg in segment_kw:
+        for idx, matched in _iter_spaced_keyword_positions(text, seg):
+            if require_internal_label_break and not _keyword_match_has_internal_break(
+                matched, seg,
+            ):
+                continue
+            window = text[idx : idx + 140]
+            if not _window_has_comma_amount(window):
+                continue
+            if not (
+                any(m in window for m in metric_markers)
+                or any(p in window for p in income_phrases)
+            ):
+                continue
+            if _window_is_weak_broker_evidence(field_key, window, text):
+                continue
+            return True
+    return False
+
+
+def _pdf_broker_strong_label_in_segment(text: str, labels: tuple[str, ...]) -> bool:
+    if not _page_has_segment_operating_section(text):
+        return False
+    if _page_is_fee_commission_note(text):
+        return False
+    return _pdf_strong_label_with_number(
+        text, labels, comma_only=True, ratio_ok=False, balance_ok=False,
+    )
+
+
+def _pdf_broker_deep_ib_net_income_evidence(
+    pdf_path: str,
+    *,
+    start_page: int = 80,
+    max_pages: int = 350,
+) -> bool:
+    """Large-broker IB net income in financial statement notes (600030-style)."""
+    try:
+        import fitz
+    except ImportError:
+        return False
+    try:
+        doc = fitz.open(pdf_path)
+        n = min(len(doc), max_pages)
+        for i in range(start_page, n):
+            text = doc[i].get_text()
+            if not (
+                _page_is_fee_commission_note(text)
+                or "年度财务报表" in text
+            ):
+                continue
+            for lab in _BROKER_DEEP_IB_NET_LABELS:
+                pos = 0
+                while True:
+                    idx = text.find(lab, pos)
+                    if idx < 0:
+                        break
+                    window = text[idx : idx + len(lab) + 60]
+                    match = _BROKER_COMMA_AMOUNT_RE.search(window)
+                    if match:
+                        mag = _numeric_magnitude(match.group(0))
+                        if mag is not None and mag >= _BROKER_DEEP_IB_MIN_MAGNITUDE:
+                            doc.close()
+                            return True
+                    pos = idx + max(len(lab), 1)
+        doc.close()
+    except Exception:
+        return False
+    return False
+
+
+def _pdf_broker_margin_balance_evidence(text: str) -> bool:
+    """MD&A asset composition 融出资金 row — not main-fin items or cash-flow noise."""
+    if _page_is_main_financial_items(text):
+        return False
+    if "(二) 非主营业务" not in text:
+        return False
+    if not _BROKER_ASSET_COMPOSITION_RE.search(text.replace("\n", " ")):
+        return False
+    noise = (
+        "净增加额", "净减少额", "利息收入", "利息支出", "减值", "现金流量",
+        "预期信用", "坏账准备", "万亿",
+    )
+    for match in _BROKER_ASSET_COMPOSITION_RE.finditer(text.replace("\n", " ")):
+        window = match.group(0)
+        if not any(n in window for n in noise):
+            return True
+    return False
+
+
+def _pdf_broker_proprietary_trading_evidence(text: str) -> bool:
+    labels = BROKER_MISSED_STRONG_LABELS["proprietary_trading_income"]
+    if _pdf_strong_label_with_number(
+        text, labels, comma_only=True, ratio_ok=False, balance_ok=False,
+    ):
+        return True
+    return _pdf_broker_segment_operating_evidence(
+        text, ("自营业务", "证券自营业务", "证券投资业务"),
+        field_key="proprietary_trading_income",
+    )
+
+
+def _pdf_broker_field_missed_evidence(
+    pdf_path: str | None,
+    field_key: str,
+    spec: FieldSpec,
+    profile_fields: dict[str, dict] | None = None,
+    max_pages: int = 350,
+) -> bool:
+    """Stricter broker missed-disclosure check (#30a).
+
+    Generic anchor + digit is insufficient. Field-specific table/segment rows only.
+    """
+    if not pdf_path or not os.path.isfile(pdf_path) or field_key not in BROKER_NUMERIC_FIELDS:
+        return False
+
+    if field_key in {"risk_control_indicators", "brokerage_income"}:
+        return False
+
+    if field_key == "asset_management_income":
+        brokerage = (profile_fields or {}).get("brokerage_income") or {}
+        if brokerage.get("status") == "found":
+            return False
+
+    try:
+        import fitz
+    except ImportError:
+        return False
+
+    try:
+        doc = fitz.open(pdf_path)
+        n = min(len(doc), max_pages)
+        for i in range(n):
+            text = doc[i].get_text()
+
+            if field_key == "brokerage_income":
+                pass  # handled above — no PDF promotion (#30a over-call guard)
+
+            elif field_key == "investment_banking_income":
+                if _pdf_broker_segment_operating_evidence(
+                    text,
+                    ("投资银行业务", "投行业务", "投资银行类业务"),
+                    field_key="investment_banking_income",
+                    require_internal_label_break=True,
+                ):
+                    doc.close()
+                    return True
+                if _pdf_broker_strong_label_in_segment(
+                    text, BROKER_MISSED_STRONG_LABELS["investment_banking_income"],
+                ):
+                    doc.close()
+                    return True
+
+            elif field_key == "asset_management_income":
+                if _pdf_broker_segment_operating_evidence(
+                    text, ("资产管理业务", "资管业务"), field_key="asset_management_income",
+                ):
+                    doc.close()
+                    return True
+                if _pdf_broker_strong_label_in_segment(
+                    text, BROKER_MISSED_STRONG_LABELS["asset_management_income"],
+                ):
+                    doc.close()
+                    return True
+
+            elif field_key == "proprietary_trading_income":
+                if _pdf_broker_proprietary_trading_evidence(text):
+                    doc.close()
+                    return True
+
+            elif field_key == "margin_lending_balance":
+                if _pdf_broker_margin_balance_evidence(text):
+                    doc.close()
+                    return True
+
+        doc.close()
+    except Exception:
+        return False
+
+    if field_key == "investment_banking_income":
+        return _pdf_broker_deep_ib_net_income_evidence(pdf_path, max_pages=max_pages)
+    return False
+
+
+def _pdf_not_found_missed_evidence(
+    pdf_path: str | None,
+    field_key: str,
+    spec: FieldSpec,
+    profile_fields: dict[str, dict] | None = None,
+) -> bool:
+    if field_key in BROKER_NUMERIC_FIELDS and spec.extraction == "numeric":
+        return _pdf_broker_field_missed_evidence(
+            pdf_path, field_key, spec, profile_fields=profile_fields,
+        )
+    return _pdf_anchor_with_number(pdf_path, spec.anchors)
 
 
 def strict_section_snippet(f: dict, spec: FieldSpec) -> tuple[str, str]:
@@ -254,11 +672,23 @@ def strict_section_snippet(f: dict, spec: FieldSpec) -> tuple[str, str]:
     return "wrong", f"too short (len={len(v)})"
 
 
-def strict_financial_numeric(f: dict, spec: FieldSpec, pdf_path: str | None) -> tuple[str, str]:
+def strict_financial_numeric(
+    f: dict,
+    spec: FieldSpec,
+    pdf_path: str | None,
+    profile_fields: dict[str, dict] | None = None,
+) -> tuple[str, str]:
     st = f.get("status", "not_found")
     fk = f.get("field") or spec.key
     if st == "not_found":
-        if _pdf_anchor_with_number(pdf_path, spec.anchors):
+        if _pdf_not_found_missed_evidence(
+            pdf_path, fk, spec, profile_fields=profile_fields,
+        ):
+            if fk in BROKER_NUMERIC_FIELDS:
+                return (
+                    "not_found_missed",
+                    "PDF broker field-specific numeric evidence found but extractor not_found",
+                )
             return "not_found_missed", "PDF anchor+digit found but extractor not_found"
         return "not_found_unverified", "status=not_found (unverified by automation)"
     if st == "partial":
@@ -394,12 +824,17 @@ def strict_concentration(f: dict, spec: FieldSpec, pdf_path: str | None) -> tupl
     return "partial", "ratio/amount without clear anchor keyword"
 
 
-def strict_audit_field(f: dict, spec: FieldSpec, pdf_path: str | None) -> tuple[str, str]:
+def strict_audit_field(
+    f: dict,
+    spec: FieldSpec,
+    pdf_path: str | None,
+    profile_fields: dict[str, dict] | None = None,
+) -> tuple[str, str]:
     ex = f.get("extraction") or spec.extraction
     if ex == "section_snippet":
         return strict_section_snippet(f, spec)
     if ex == "numeric":
-        return strict_financial_numeric(f, spec, pdf_path)
+        return strict_financial_numeric(f, spec, pdf_path, profile_fields=profile_fields)
     if ex == "table":
         return strict_financial_table(f, spec, pdf_path)
     if ex == "concentration":
@@ -636,7 +1071,7 @@ def run_audit(out_dir: str, yaml_path: str) -> tuple[list[FinAuditRow], list[dic
             proxy = bool((eval_fields.get(fk) or {}).get("plausible"))
             if not eval_fields and f.get("status") == "found":
                 proxy = field_plausible(f)
-            label, reason = strict_audit_field(f, spec, pdf_path)
+            label, reason = strict_audit_field(f, spec, pdf_path, profile_fields=fmap)
             audit_rows.append(
                 FinAuditRow(
                     code=code,

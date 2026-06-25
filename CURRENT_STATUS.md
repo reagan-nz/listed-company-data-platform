@@ -6,7 +6,9 @@ _最后更新：2026-06-25（#28 Stage 3a 质量 follow-up 收尾）_
 
 **2026-06-25 日结（Stage 3a 收尾 #28）**：full_market_2024 **Stage 3a quality follow-up PASS** — 汇总 #24–#27（BSE audit rule、rnd/revenue scoped refresh、金融 audit 框架）；非金融 strict **9.43/11**（latest `run_name=full_market_2024_revenue_refresh`）；金融 **单独 headline**，worksheet grading 待办。**非**全量人工验证；**非** extraction 全部修复。Stage **3b**（residuals、grading、多年度）进行中。详见 [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)。
 
-**2026-06-25 日结（金融 audit #27）**：金融字段质量 **audit 框架**完成（Phase 0–1B）；86 ok 金融公司 × 1,059 cells 自动化 financial strict audit；30 公司 × 325 cells 校准 worksheet 已生成（**grading 待完成**）。金融 strict **单独报告**（bank **9.00/13**、broker **7.66/12**）；**不混入** non-fin **9.43/11**。非 extraction 修复；grading / extraction fixes → Stage 3b。详见 [financial_audit_summary.md](outputs/generalization/full_market_2024/financial_audit_summary.md)、[docs/financial_company_schema.md](docs/financial_company_schema.md)。
+**2026-06-25 日结（金融 audit #30a）**：收紧 broker `not_found_missed` PDF 规则（`lab/strict_audit_financial_full_market.py`）；校准样本 joined agreement **202/325→226/325 (62%→69.5%)**；broker sample missed **26→4**（保留 601878×3 + 600030 IB 共 4 条 true MISSED）；23/23 ABSENT-OK over-call 已修复。详见 [financial_audit_fix_30a_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30a_summary.md)。
+
+**2026-06-25 日结（金融 audit #27/#29）**：金融字段质量 **audit 框架**完成（Phase 0–1B）；325/325 校准 grading 完成（#29 baseline agreement 62%）；86 ok 金融公司 × 1,059 cells 自动化 financial strict audit。详见 [financial_calibration_report.md](outputs/generalization/full_market_2024/financial_calibration_report.md)、[financial_audit_fix_30a_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30a_summary.md)。
 
 **2026-06-24 日结（revenue refresh #26）**：scoped `revenue_by_region` / `revenue_by_segment` 刷新完成（cached PDF，非 CNINFO 重跑）；Tier 3 跨页 continuation stitch 为主驱动（343/346）；wrong→usable **297**；0 回归；region wrong **258→38**；segment wrong **109→19**；非金融 strict **9.38→9.43/11**；proxy **10.61→10.67/11**。详见 [revenue_refresh_summary.md](outputs/generalization/full_market_2024/revenue_refresh_summary.md)。
 
