@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ### 新增
+- **#30b ratio/table reject + major_subsidiaries gate**（2026-06-25）：ratio 行业叙述/优先股触发拒绝、table plausibility 增强、子公司表 out-of-region usable；joined agreement **69.5%→71.7%** — 见 [financial_audit_fix_30b_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30b_summary.md)
 - **#30a broker `not_found_missed` tightening**（2026-06-25）：`lab/strict_audit_financial_full_market.py` field-specific PDF gates；joined calibration agreement **62%→69.5%**；23/23 ABSENT-OK over-call 修复 — 见 [financial_audit_fix_30a_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30a_summary.md)
 - **金融字段质量 audit 框架**（Issue #27）：`lab/strict_audit_financial_full_market.py` + `lab/financial_calibration_sample.py`；Phase 0 inventory（87 tagged / 86 ok）；Phase 1A automated financial strict（1,059 cells；bank **9.00/13**、broker **7.66/12**）；Phase 1B worksheet（30 公司 × 325 cells，grading 待完成）— 见 [financial_audit_summary.md](outputs/generalization/full_market_2024/financial_audit_summary.md)；**不混入** non-fin 9.43/11；非 extraction 修复
 - **revenue 跨页 split-table 修复**（Issue #26，`lab/extract_annual_report.py`）：`_stitch_revenue_table_continuation` + `_trim_revenue_stacked_preview`；主增益为 header-only split 表的 wrong-cell 恢复；partial 人口基本不变

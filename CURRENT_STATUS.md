@@ -6,7 +6,9 @@ _最后更新：2026-06-25（#28 Stage 3a 质量 follow-up 收尾）_
 
 **2026-06-25 日结（Stage 3a 收尾 #28）**：full_market_2024 **Stage 3a quality follow-up PASS** — 汇总 #24–#27（BSE audit rule、rnd/revenue scoped refresh、金融 audit 框架）；非金融 strict **9.43/11**（latest `run_name=full_market_2024_revenue_refresh`）；金融 **单独 headline**，worksheet grading 待办。**非**全量人工验证；**非** extraction 全部修复。Stage **3b**（residuals、grading、多年度）进行中。详见 [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)。
 
-**2026-06-25 日结（金融 audit #30a）**：收紧 broker `not_found_missed` PDF 规则（`lab/strict_audit_financial_full_market.py`）；校准样本 joined agreement **202/325→226/325 (62%→69.5%)**；broker sample missed **26→4**（保留 601878×3 + 600030 IB 共 4 条 true MISSED）；23/23 ABSENT-OK over-call 已修复。详见 [financial_audit_fix_30a_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30a_summary.md)。
+**2026-06-25 日结（金融 audit #30b）**：ratio/table 语义拒绝 + `major_subsidiaries` out-of-region usable 门控；joined agreement **226/325→233/325 (69.5%→71.7%)**；broker missed 与 #30a 相同（sample 4 / pop 7）。详见 [financial_audit_fix_30b_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30b_summary.md)。
+
+**2026-06-25 日结（金融 audit #30a）**：收紧 broker `not_found_missed` PDF 规则；joined agreement **202/325→226/325 (62%→69.5%)**；详见 [financial_audit_fix_30a_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30a_summary.md)。
 
 **2026-06-25 日结（金融 audit #27/#29）**：金融字段质量 **audit 框架**完成（Phase 0–1B）；325/325 校准 grading 完成（#29 baseline agreement 62%）；86 ok 金融公司 × 1,059 cells 自动化 financial strict audit。详见 [financial_calibration_report.md](outputs/generalization/full_market_2024/financial_calibration_report.md)、[financial_audit_fix_30a_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30a_summary.md)。
 

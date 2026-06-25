@@ -58,9 +58,77 @@ FIELD_REJECT_LABELS: dict[str, tuple[str, ...]] = {
     "non_interest_income": ("营业收入", "营业成本"),
     "brokerage_income": ("营业收入", "营业总收入"),
     "premium_income": ("营业总收入", "净利润"),
-    "npl_ratio": ("拨备", "覆盖率", "资本充足"),
-    "capital_adequacy_ratio": ("不良", "拨备"),
+    "npl_ratio": (
+        "拨备", "覆盖率", "资本充足", "合计", "总额", "金额", "余额", "占比",
+        "不良率增减", "较上年", "制造业", "房地产业", "批发和零售", "建筑业",
+        "长江三角洲", "珠江三角洲", "环渤海", "中部地区", "西部地区", "东北地区",
+        "长三角", "京津冀", "成渝",
+    ),
+    "capital_adequacy_ratio": ("不良", "拨备", "优先股", "转为", "触发"),
+    "provision_coverage_ratio": ("不良", "资本充足", "优先股"),
 }
+
+# #30b: ratio context that indicates industry narrative or wrong semantic source.
+_RATIO_INDUSTRY_NARRATIVE = (
+    "银行业运行", "商业银行正积极", "主要风险指标处于合理区间",
+    "整体而言，2024 年银行业", "银行要发挥好主力军", "全球经济延续低增长",
+    "全面加强风险内控管理", "为经济社会发展提供高质量金融服务",
+)
+_RATIO_PREFERRED_SHARE_TRIGGER = (
+    "优先股", "转为A股", "转为 a 股", "强制转股", "则境内优先",
+    "核心一级资本充足率降至", "促使核心一级资本充足率恢复",
+)
+_NPL_WRONG_LABELS = (
+    "合计", "总额", "金额", "余额", "占比", "不良率增减", "较上年",
+)
+_REGIONAL_NPL_LABELS = (
+    "长江三角洲", "珠江三角洲", "环渤海", "中部地区", "西部地区", "东北地区",
+    "长三角", "京津冀", "成渝", "制造业", "房地产业", "批发和零售", "建筑业",
+    "电力、热力", "交通运输", "采矿业", "农、林、牧",
+)
+
+# #30b: major_subsidiaries section routing.
+_MAJOR_SUBSIDIARY_VOCAB = (
+    "子公司", "控股", "参股", "持股比例", "注册资本", "主要子公司", "主要控股",
+    "附属公司", "主要子公司情况", "参股公司情况",
+)
+_MAJOR_SUBSIDIARY_WRONG_SECTION = (
+    "在职员工", "在職員工", "员工数量", "业务资格", "专业构成", "專業構成",
+    "学历类别", "學歷", "离退休", "離退休", "人均创收", "员工情况", "需承担费用的离退休",
+)
+_MAJOR_SUBSIDIARY_TABLE_HEADERS = (
+    "主要子公司", "主要控股参股", "子公司名称", "主要子公司情况", "附属公司",
+    "参股公司情况", "主要控股参股公司情况",
+)
+
+# #30b: financial table reject/plausibility vocabulary.
+_LOAN_TABLE_REJECT = (
+    "利息收入", "利息净收入", "存放中央银行", "拆出资金", "存放同业",
+    "金融投资", "现金及存放中央银行", "资产总额", "报告期，集团实现利息",
+)
+_LOAN_TABLE_REQUIRE = (
+    "贷款结构", "按产品", "按担保", "按行业", "五级分类", "公司贷款", "个人贷款",
+    "票据贴现", "垫款", "信用贷款", "保证贷款",
+)
+_DEPOSIT_TABLE_REJECT = (
+    "长期股权投资", "应付职工薪酬", "应交税费", "现金流量", "利息支出",
+    "卖出回购", "应付债券", "向中央银行借款", "同业及其他金融机构存放",
+)
+_REGIONAL_TABLE_REJECT = (
+    "营业网点", "分支机构数量", "机构数量", "证券持仓", "债券投资", "持有至到期",
+    "可供出售", "股权投资", "地址：", "邮编：", "电话：",
+)
+_REVENUE_TABLE_REJECT = (
+    "现金流量", "经营活动", "收取利息", "投资活动", "筹资活动",
+    "业务及管理费", "税金及附加", "减值损失", "其他业务成本",
+    "EV", "敏感性", "变动分析", "风险限额", "母公司利润表", "合并利润表",
+    "手续费及佣金的现金", "代理买卖证券", "拆入资金", "回购业务",
+    "利息净收入", "利息支出", "投资收益（损", "公允价值变动",
+)
+_REVENUE_TABLE_REQUIRE = (
+    "营业收入", "营业总收入", "分部报告", "主营业务分", "分行业", "分产品", "分地区",
+    "期货经纪", "财富管理", "资产管理", "投资银行", "证券经纪", "营业总收入",
+)
 
 # Broker numeric fields use stricter PDF missed-disclosure checks (#30a).
 BROKER_NUMERIC_FIELDS = frozenset({
@@ -637,12 +705,124 @@ def _pdf_not_found_missed_evidence(
     return _pdf_anchor_with_number(pdf_path, spec.anchors)
 
 
+def _ratio_context_industry_narrative(ctx: str, ev: str = "") -> bool:
+    combined = (ctx or "") + (ev or "")
+    return any(m in combined for m in _RATIO_INDUSTRY_NARRATIVE)
+
+
+def _ratio_context_preferred_share_trigger(ctx: str, ev: str = "") -> bool:
+    combined = (ctx or "") + (ev or "")
+    return any(m in combined for m in _RATIO_PREFERRED_SHARE_TRIGGER)
+
+
+def _npl_label_is_wrong_line_item(label: str) -> bool:
+    lab = (label or "").strip()
+    if not lab:
+        return True
+    if any(r in lab for r in _NPL_WRONG_LABELS):
+        return True
+    if any(r in lab for r in _REGIONAL_NPL_LABELS):
+        return True
+    if lab in ("不良率",) and "不良贷款率" not in lab:
+        return True
+    return False
+
+
+def _major_subsidiaries_wrong_section(combined: str) -> bool:
+    return any(m in combined for m in _MAJOR_SUBSIDIARY_WRONG_SECTION)
+
+
+def _major_subsidiaries_structured_only(combined: str) -> bool:
+    if "结构化主体" not in combined:
+        return False
+    if any(h in combined for h in _MAJOR_SUBSIDIARY_TABLE_HEADERS):
+        return False
+    if re.search(r"子公司名称|主要子公司情况|主要控股参股公司", combined):
+        return False
+    return True
+
+
+def _major_subsidiaries_table_substantive(combined: str) -> bool:
+    if len(combined) < 80:
+        return False
+    if not any(v in combined for v in _MAJOR_SUBSIDIARY_VOCAB):
+        return False
+    if not any(h in combined for h in _MAJOR_SUBSIDIARY_TABLE_HEADERS):
+        if not re.search(r"子公司名称|参股公司情况|附属公司", combined):
+            return False
+    has_table_nums = bool(
+        re.search(r"注册资本|持股比例|总资产|净资产|净利润", combined)
+        and re.search(r"\d{1,3}(?:,\d{3})+|\d{4,}", combined)
+    )
+    return has_table_nums or (
+        "注册资本" in combined and any(c.isdigit() for c in combined)
+    )
+
+
+def _evaluate_ratio_numeric(
+    fk: str,
+    labeled: list,
+    ctx: str,
+    ev: str,
+    spec: FieldSpec,
+) -> tuple[str, str]:
+    """Shared ratio evaluation for found/partial numeric fields (#30b)."""
+    reject = FIELD_REJECT_LABELS.get(fk, ())
+    best: tuple[str, str] | None = None
+    for item in labeled:
+        lab = (item.get("label") or "").strip()
+        num = (item.get("value") or "").strip()
+        if not num or not any(c.isdigit() for c in num):
+            continue
+        if fk == "npl_ratio" and _npl_label_is_wrong_line_item(lab):
+            best = best or ("wrong", f"npl wrong-line-item label '{lab}'")
+            continue
+        if any(r in lab for r in reject):
+            best = best or ("wrong", f"wrong-line-item label '{lab}'")
+            continue
+        if any(r in lab for r in AMOUNT_NOISE_LABELS):
+            continue
+        anchor_ok = _anchor_in_text(lab, spec.anchors) or _anchor_in_text(ctx + ev, spec.anchors)
+        if not anchor_ok:
+            best = best or ("wrong", f"orphan numeric without field anchor (label='{lab}')")
+            continue
+        if fk == "capital_adequacy_ratio" and _ratio_context_preferred_share_trigger(ctx, ev):
+            return "wrong", "preferred-share trigger threshold, not company capital ratio"
+        if fk in ("capital_adequacy_ratio", "provision_coverage_ratio"):
+            if _ratio_context_industry_narrative(ctx, ev):
+                return "wrong", "industry-level banking narrative, not company ratio"
+            if not _looks_like_ratio_value(num):
+                if re.fullmatch(r"20\d{2}", num):
+                    return "wrong", f"capital ratio narrative year token '{num}'"
+                best = best or ("wrong", f"ratio field with non-ratio value '{num}'")
+                continue
+        if not _looks_like_ratio_value(num):
+            best = best or ("wrong", f"ratio field with non-ratio value '{num}'")
+            continue
+        return "usable", f"ratio label '{lab}' value={num}"
+    if best:
+        return best
+    if _anchor_in_text(ctx + ev, spec.anchors) and any(c.isdigit() for c in ctx):
+        if fk in ("capital_adequacy_ratio", "provision_coverage_ratio"):
+            if _ratio_context_industry_narrative(ctx, ev):
+                return "wrong", "industry-level banking narrative, not company ratio"
+        return "partial", "context-only numbers without labeled pairs"
+    return "wrong", "empty labeled list"
+
+
 def strict_section_snippet(f: dict, spec: FieldSpec) -> tuple[str, str]:
+    fk = f.get("field") or spec.key
     st = f.get("status", "not_found")
     if st == "not_found":
         return "not_found_unverified", "status=not_found (unverified by automation)"
     if st == "partial":
         v = f.get("value") if isinstance(f.get("value"), str) else ""
+        if fk == "major_subsidiaries" and v and len(v) >= 25:
+            combined = v + (f.get("evidence_sentence") or "")
+            if _major_subsidiaries_wrong_section(combined):
+                return "wrong", "subsidiary field hit employee/qualifications section"
+            if _major_subsidiaries_structured_only(combined):
+                return "wrong", "structured-entity note, not major subsidiaries table"
         if v and len(v) >= 25:
             return "partial", "status=partial with some content"
         return "partial", "status=partial low confidence"
@@ -651,9 +831,22 @@ def strict_section_snippet(f: dict, spec: FieldSpec) -> tuple[str, str]:
         return "wrong", "expected string snippet"
     ev = f.get("evidence_sentence") or ""
     combined = v + ev
+    if fk == "major_subsidiaries":
+        if _major_subsidiaries_wrong_section(combined):
+            return "wrong", "subsidiary field hit employee/qualifications section"
+        if _major_subsidiaries_structured_only(combined):
+            return "wrong", "structured-entity note, not major subsidiaries table"
+        if _is_pointer_only(v) or (_is_pointer_only(ev) and len(v) < 80):
+            return "wrong", "pointer-only reference"
+        anchor_hit = _anchor_in_text(combined, spec.anchors)
+        if _major_subsidiaries_table_substantive(combined) and anchor_hit:
+            return (
+                "usable",
+                f"subsidiary table/snippet substantive (out-of-region ok, len={len(v)})",
+            )
     if _is_pointer_only(v) or (_is_pointer_only(ev) and len(v) < 80):
         return "wrong", "pointer-only reference"
-    if any(b in combined for b in FIN_BOILER_KW):
+    if fk != "major_subsidiaries" and any(b in combined for b in FIN_BOILER_KW):
         return "wrong", "financial/legal boilerplate"
     if any(b in combined for b in LEGAL_DISCLAIMER_KW):
         return "wrong", "legal disclaimer text"
@@ -692,6 +885,14 @@ def strict_financial_numeric(
             return "not_found_missed", "PDF anchor+digit found but extractor not_found"
         return "not_found_unverified", "status=not_found (unverified by automation)"
     if st == "partial":
+        if fk in RATIO_FIELDS:
+            val = f.get("value")
+            if isinstance(val, dict):
+                labeled = val.get("labeled") or []
+                ctx = val.get("context") or ""
+                ev = f.get("evidence_sentence") or ""
+                if labeled or ctx:
+                    return _evaluate_ratio_numeric(fk, labeled, ctx, ev, spec)
         return "partial", "status=partial"
     val = f.get("value")
     if not isinstance(val, dict):
@@ -699,6 +900,8 @@ def strict_financial_numeric(
     labeled = val.get("labeled") or []
     ctx = val.get("context") or ""
     ev = f.get("evidence_sentence") or ""
+    if fk in RATIO_FIELDS:
+        return _evaluate_ratio_numeric(fk, labeled, ctx, ev, spec)
     if not labeled:
         if _anchor_in_text(ctx + ev, spec.anchors) and any(c.isdigit() for c in ctx):
             return "partial", "context-only numbers without labeled pairs"
@@ -719,11 +922,6 @@ def strict_financial_numeric(
         if not anchor_ok:
             best = best or ("wrong", f"orphan numeric without field anchor (label='{lab}')")
             continue
-        if fk in RATIO_FIELDS:
-            if not _looks_like_ratio_value(num):
-                best = best or ("wrong", f"ratio field with non-ratio value '{num}'")
-                continue
-            return "usable", f"ratio label '{lab}' value={num}"
         if fk == "risk_control_indicators":
             if _looks_like_ratio_value(num) or _looks_like_amount_value(num):
                 return "usable", f"risk indicator '{lab}' value={num}"
@@ -747,29 +945,72 @@ def _table_text_blob(val: dict) -> str:
     return " ".join(" ".join(str(c) for c in row) for row in rows)
 
 
-def _financial_table_plausible(fk: str, val: dict) -> tuple[bool, str]:
+def _financial_table_plausible(
+    fk: str,
+    val: dict,
+    *,
+    evidence: str = "",
+) -> tuple[bool, str]:
     if not isinstance(val, dict):
         return False, "missing table dict"
     rows = val.get("rows") or []
     if not rows:
         return False, "empty rows"
-    if val.get("match_hits", 0) < 1:
+    if val.get("match_hits", 0) < 1 and fk not in ("regional_distribution",):
         return False, "match_hits<1"
     blob = _table_text_blob(val)
-    data_rows = [r for r in rows if _table_row_is_data_row(r)]
+    combined = blob + " " + (evidence or "")
 
-    if fk in ("loan_structure",):
-        if not any(k in blob for k in ("贷款", "垫款", "票据")):
+    if fk == "loan_structure":
+        if any(k in combined for k in _LOAN_TABLE_REJECT):
+            return False, "loan table looks like interest income or asset composition"
+        if not any(k in combined for k in ("贷款", "垫款", "票据")):
             return False, "missing loan vocabulary"
-    elif fk in ("deposit_structure",):
-        if not any(k in blob for k in ("存款", "吸收存款")):
+        if not any(k in combined for k in _LOAN_TABLE_REQUIRE):
+            if "发放贷款和垫款" in combined and any(
+                k in combined for k in ("金融投资", "存放中央银行", "拆出资金")
+            ):
+                return False, "loan table mixed with non-loan balance-sheet lines"
+            if len([r for r in rows if _table_row_is_data_row(r)]) <= 1:
+                return False, "loan table lacks breakdown categories"
+
+    elif fk == "deposit_structure":
+        if any(k in combined for k in _DEPOSIT_TABLE_REJECT):
+            return False, "deposit table looks like liability/cash-flow summary"
+        if not any(k in combined for k in ("存款", "吸收存款")):
             return False, "missing deposit vocabulary"
+        if "长期股权投资" in combined or "应付职工薪酬" in combined:
+            return False, "deposit table looks like liability summary"
+
     elif fk in ("regional_distribution", "revenue_by_region"):
-        if not any(k in blob for k in ("地区", "境内", "境外", "区域", "长三角", "环渤海")):
+        if any(k in combined for k in _REGIONAL_TABLE_REJECT):
+            return False, "regional table looks like branch roster or holdings"
+        if not any(k in combined for k in ("地区", "境内", "境外", "区域", "长三角", "环渤海")):
             return False, "missing region vocabulary"
-    elif fk in ("revenue_by_segment",):
-        if not any(k in blob for k in ("分部", "业务", "收入", "手续费", "险种", "经纪", "投行", "资管")):
-            return False, "missing segment vocabulary"
+
+    elif fk == "revenue_by_segment":
+        if any(k in combined for k in _REVENUE_TABLE_REJECT):
+            return False, "segment table looks like cash-flow/cost/income-statement page"
+        segment_markers = ("分部", "主营业务分", "分行业", "分产品", "分地区情况")
+        if "利息净收入" in combined and "利息支出" in combined:
+            if not any(k in combined for k in segment_markers):
+                return False, "mother-company income statement, not segment table"
+        if not any(k in combined for k in _REVENUE_TABLE_REQUIRE):
+            return False, "missing segment revenue vocabulary"
+        cost_heavy = sum(
+            1 for r in rows
+            if _table_row_is_data_row(r)
+            and any(k in " ".join(str(c) for c in r) for k in ("业务及管理费", "减值损失", "其他业务成本"))
+        )
+        rev_rows = sum(
+            1 for r in rows
+            if _table_row_is_data_row(r)
+            and any(k in " ".join(str(c) for c in r) for k in ("收入", "营业收入", "手续费"))
+        )
+        if cost_heavy >= 2 and rev_rows == 0:
+            return False, "segment table is business-cost allocation, not revenue"
+
+    data_rows = [r for r in rows if _table_row_is_data_row(r)]
     if len(data_rows) >= 2:
         return True, f"{len(data_rows)} data rows"
     if len(data_rows) == 1:
@@ -777,22 +1018,45 @@ def _financial_table_plausible(fk: str, val: dict) -> tuple[bool, str]:
     return False, "no data rows in preview"
 
 
+def _revenue_table_plausible_strict(val: dict | None, evidence: str = "") -> tuple[bool, str]:
+    if not revenue_table_plausible(val):
+        return False, "fails revenue_table_plausible"
+    ok, detail = _financial_table_plausible(
+        "revenue_by_segment", val if isinstance(val, dict) else {}, evidence=evidence,
+    )
+    if not ok:
+        return False, detail
+    return True, "revenue_table_plausible"
+
+
 def strict_financial_table(f: dict, spec: FieldSpec, pdf_path: str | None) -> tuple[str, str]:
     st = f.get("status", "not_found")
     fk = f.get("field") or spec.key
+    ev = f.get("evidence_sentence") or ""
     if st == "not_found":
         if _pdf_anchor_with_number(pdf_path, spec.anchors):
             return "not_found_missed", "PDF table anchor found but extractor not_found"
         return "not_found_unverified", "status=not_found (unverified by automation)"
     if st == "partial":
+        if fk in ("loan_structure", "deposit_structure", "regional_distribution",
+                  "revenue_by_segment", "revenue_by_region"):
+            val = f.get("value")
+            if isinstance(val, dict) and (val.get("rows") or val.get("snippet")):
+                ok, detail = _financial_table_plausible(
+                    fk if fk != "revenue_by_region" else "regional_distribution",
+                    val,
+                    evidence=ev or str(val.get("snippet") or ""),
+                )
+                if not ok:
+                    return "wrong", detail
         return "partial", "status=partial"
     val = f.get("value")
     if fk in ("revenue_by_region", "revenue_by_segment"):
-        ok, detail = (True, "revenue_table_plausible") if revenue_table_plausible(val) else (
-            False, "fails revenue_table_plausible",
-        )
+        ok, detail = _revenue_table_plausible_strict(val, evidence=ev)
     else:
-        ok, detail = _financial_table_plausible(fk, val if isinstance(val, dict) else {})
+        ok, detail = _financial_table_plausible(
+            fk, val if isinstance(val, dict) else {}, evidence=ev,
+        )
     if not ok:
         return "wrong", detail
     rows = (val or {}).get("rows") or []

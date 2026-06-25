@@ -218,6 +218,346 @@ def extract_numeric(window: str, labels: list[str]) -> list[dict]:
     return out
 
 
+_FIN_RATIO_FIELDS = frozenset({
+    "npl_ratio",
+    "capital_adequacy_ratio",
+    "provision_coverage_ratio",
+})
+_FIN_RATIO_BAD_LABEL_MARKERS = (
+    "合计", "总额", "金额", "余额", "不良率增减", "较上年", "变化", "上升", "下降",
+)
+_FIN_RATIO_INDUSTRY_CONTEXT = (
+    "银行业", "行业", "主要风险指标处于合理区间", "商业银行", "世界经济复苏",
+    "整体而言", "宏观", "经济复苏", "监管部门推出",
+)
+_FIN_RATIO_PREFERRED_SHARE_CONTEXT = (
+    "优先股", "转为A股", "转为a股", "强制转股", "转股", "触发事件",
+    "核心一级资本充足率降至", "恢复到5.125%以上",
+)
+_FIN_RATIO_CAPITAL_NARRATIVE_REJECT = (
+    "营业收入", "净利润", "增幅", "利润表", "加权平均净资产收益率", "总资产收益率",
+    "附加资本", "附加杠杆率", "系统重要性银行名单", "名单内第一组",
+)
+_FIN_RATIO_NPL_ROW_REJECT = (
+    "长江三角洲", "珠江三角洲", "环渤海地区", "中部地区", "西部地区", "东北地区",
+    "长三角", "浙江省", "江苏省", "北京市", "广东省",
+    "制造业", "房地产业", "批发和零售业", "建筑业", "农、林、牧、渔业", "采矿业",
+    "交通运输、仓储及邮政业", "信息传输、计算机服务和软件业",
+    "信用贷款", "保证贷款", "抵押贷款", "质押贷款",
+    "本行境内贷款和垫款", "公司类贷款和垫款",
+)
+# npl_ratio only: reject delta/comparison wording before the first ratio value, not
+# after a valid inline ratio like 不良贷款率1.36%，较上年末下降...
+_FIN_RATIO_NPL_DELTA_MARKERS = (
+    "较上年", "较年初", "比上年", "下降", "上升", "变化", "增减", "不良率增减",
+)
+_FIN_RATIO_NPL_STRUCTURAL_REJECT = ("合计", "总额", "金额")
+_FIN_RATIO_UNITS = ("元", "万元", "亿元", "千元", "百万元")
+_FIN_RATIO_LINE_LOOKAHEAD = 3
+_FIN_RATIO_CARRIER_RE = re.compile(r"[-+]?\d[\d,]*\.?\d*\s*[%％]?")
+_FIN_RATIO_YEAR_RE = re.compile(r"20\d{2}")
+_FIN_RATIO_HEADER_HINTS = ("（%）", "(%)", "％", "%", "指标", "情况", "如下", "如下表")
+
+
+def _ratio_priority_labels(field_key: str, anchors: tuple[str, ...]) -> tuple[str, ...]:
+    if field_key == "npl_ratio":
+        pref = ("不良贷款率", "不良贷款比例", "不良率")
+    elif field_key == "capital_adequacy_ratio":
+        pref = ("资本充足率", "核心一级资本充足率", "一级资本充足率")
+    elif field_key == "provision_coverage_ratio":
+        pref = ("拨备覆盖率", "贷款损失准备覆盖率")
+    else:
+        pref = anchors
+    seen: set[str] = set()
+    ordered: list[str] = []
+    for lab in pref + anchors:
+        if lab not in seen:
+            seen.add(lab)
+            ordered.append(lab)
+    return tuple(ordered)
+
+
+def _ratio_is_year_token(val: str) -> bool:
+    s = re.sub(r"[^\d]", "", val or "")
+    return len(s) == 4 and bool(_FIN_RATIO_YEAR_RE.fullmatch(s))
+
+
+def _ratio_numeric_ok(val: str, field_key: str, context: str) -> bool:
+    s = (val or "").strip()
+    if not s or not any(ch.isdigit() for ch in s):
+        return False
+    if _ratio_is_year_token(s):
+        return False
+    if any(u in s for u in _FIN_RATIO_UNITS):
+        return False
+    if "," in s and "%" not in s and "％" not in s:
+        return False
+    mag = _numeric_magnitude(s)
+    if mag is None or mag < 0 or mag > 500:
+        return False
+    if "%" in s or "％" in s:
+        return True
+    local_pct = any(h in context for h in ("（%）", "(%)", "%", "％"))
+    # Bare numerics are only allowed when the local context clearly signals a
+    # ratio header/table instead of an amount/balance row.
+    if any(h in context for h in ("（%）", "(%)", "%", "％", "比率", "比例", "指标", "率")):
+        if "." not in s and not local_pct:
+            return False
+        if mag >= 100 and "." not in s:
+            return False
+        return True
+    if field_key == "npl_ratio":
+        return False
+    return False
+
+
+def _ratio_bad_anchor_context(field_key: str, label: str, line: str, window: str) -> bool:
+    combined = (line or "") + " " + (window or "")
+    if any(m in label for m in _FIN_RATIO_BAD_LABEL_MARKERS):
+        return True
+    if field_key == "npl_ratio":
+        if any(m in combined for m in _FIN_RATIO_NPL_ROW_REJECT):
+            return True
+        if label == "不良率" and "不良率增减" in combined:
+            return True
+        if any(m in combined for m in _FIN_RATIO_NPL_STRUCTURAL_REJECT):
+            return True
+        if "余额" in combined and "不良贷款余额" not in combined:
+            return True
+        w = window or ""
+        pre = w
+        nm = _FIN_RATIO_CARRIER_RE.search(w)
+        if nm:
+            pre = w[: nm.start()]
+        if any(m in pre for m in _FIN_RATIO_NPL_DELTA_MARKERS):
+            return True
+    if field_key in ("capital_adequacy_ratio", "provision_coverage_ratio"):
+        if any(m in combined for m in _FIN_RATIO_INDUSTRY_CONTEXT):
+            return True
+    if field_key == "capital_adequacy_ratio" and any(
+        m in combined for m in _FIN_RATIO_CAPITAL_NARRATIVE_REJECT
+    ):
+        return True
+    if field_key == "capital_adequacy_ratio" and any(
+        m in combined for m in _FIN_RATIO_PREFERRED_SHARE_CONTEXT
+    ):
+        return True
+    return False
+
+
+def _ratio_header_like(line: str, after: str) -> bool:
+    aft = (after or "").strip()
+    if not aft:
+        return True
+    if aft.startswith(("：", ":", "（", "(")):
+        return True
+    if any(h in line or h in aft for h in _FIN_RATIO_HEADER_HINTS):
+        return True
+    return False
+
+
+def _extract_ratio_value_from_text(
+    field_key: str,
+    label: str,
+    text: str,
+    context: str,
+    *,
+    max_chars: int | None = None,
+) -> str | None:
+    scan = text[:max_chars] if max_chars else text
+    accepted: list[tuple[str, int, str]] = []
+    for match in _FIN_RATIO_CARRIER_RE.finditer(scan):
+        val = match.group(0).strip()
+        if not val or not any(ch.isdigit() for ch in val):
+            continue
+        if _ratio_bad_anchor_context(field_key, label, context, text):
+            return None
+        if _ratio_numeric_ok(val, field_key, context + " " + text):
+            accepted.append((val, match.start(), scan[match.end(): match.end() + 8]))
+    if not accepted:
+        return None
+    pct = [item for item in accepted if ("%" in item[0] or "％" in item[0]) and "百分点" not in item[2]]
+    if pct:
+        return pct[0][0]
+    if field_key == "npl_ratio":
+        ranked = sorted(
+            accepted,
+            key=lambda v: ((_numeric_magnitude(v[0]) or 9999.0), v[1]),
+        )
+        return ranked[0][0]
+    return accepted[0][0]
+
+
+def extract_financial_ratio_numeric(
+    window: str,
+    field_key: str,
+    anchors: tuple[str, ...],
+) -> list[dict]:
+    """Bank-only ratio extraction with spaced-label matching and line fallback."""
+    if field_key not in _FIN_RATIO_FIELDS:
+        return []
+    window = glue_numbers(window)
+    lines = [ln.strip() for ln in window.split("\n")]
+    labels = _ratio_priority_labels(field_key, anchors)
+    for label in labels:
+        pattern = _anchor_regex(label)
+        for i, line in enumerate(lines):
+            if not line:
+                continue
+            merged = " ".join(lines[i: i + 1 + _FIN_RATIO_LINE_LOOKAHEAD])
+            for m in pattern.finditer(line):
+                after = line[m.end():].strip()
+                if _ratio_bad_anchor_context(field_key, label, line, after):
+                    continue
+                val = _extract_ratio_value_from_text(
+                    field_key, label, after, line, max_chars=24,
+                )
+                if val:
+                    return [{"label": label, "value": val}]
+                if not _ratio_header_like(line, after):
+                    continue
+                for j, nxt in enumerate(lines[i + 1: i + 1 + _FIN_RATIO_LINE_LOOKAHEAD], start=1):
+                    if not nxt:
+                        break
+                    if any(_anchor_regex(other).search(nxt) for other in labels):
+                        break
+                    context = " ".join(lines[i: i + j + 1])
+                    val = _extract_ratio_value_from_text(
+                        field_key, label, nxt, context,
+                    )
+                    if val:
+                        return [{"label": label, "value": val}]
+            mm = pattern.search(merged)
+            if not mm:
+                continue
+            merged_after = merged[mm.end():].strip()
+            if _ratio_bad_anchor_context(field_key, label, merged, merged_after):
+                continue
+            val = _extract_ratio_value_from_text(
+                field_key, label, merged_after, merged, max_chars=96,
+            )
+            if val:
+                return [{"label": label, "value": val}]
+    return []
+
+
+_NPL_RATIO_PRIMARY_ANCHORS = ("不良贷款率", "不良贷款比例")
+_NPL_RATIO_CROSS_PAGE_RANK = (2, 7)
+
+
+def _npl_ratio_amount_column_row(window: str) -> bool:
+    """True when a label line mixes a comma-amount column with a ratio column."""
+    w = glue_numbers(window)
+    for line in [ln.strip() for ln in w.split("\n")[:12]]:
+        for lab in _NPL_RATIO_PRIMARY_ANCHORS + ("不良率",):
+            m = _anchor_regex(lab).search(line)
+            if not m:
+                continue
+            after = line[m.end():]
+            if re.search(r"\d{1,3},\d{3}", after) and re.search(r"[\d.]+\s*[%％]", after):
+                return True
+    return False
+
+
+def _npl_ratio_kpi_table_window(window: str) -> bool:
+    """True when the anchor sits on a multi-column KPI summary row."""
+    w = glue_numbers(window)
+    flat = w[:200].replace("\n", " ")
+    for lab in _NPL_RATIO_PRIMARY_ANCHORS + ("不良率",):
+        m = _anchor_regex(lab).search(flat)
+        if not m:
+            continue
+        after = flat[m.end(): m.end() + 120]
+        nums = [
+            x.group(0).strip()
+            for x in _FIN_RATIO_CARRIER_RE.finditer(after)
+            if any(ch.isdigit() for ch in x.group(0))
+        ]
+        ratioish = 0
+        for val in nums[:6]:
+            if "%" in val or "％" in val:
+                ratioish += 1
+                continue
+            s = re.sub(r"[^\d.\-+]", "", val.replace(",", ""))
+            if not s:
+                continue
+            try:
+                mag = float(s)
+            except ValueError:
+                continue
+            if 0 < mag <= 100:
+                ratioish += 1
+        if ratioish >= 2:
+            return True
+    return False
+
+
+def _try_npl_ratio_window(
+    pages: list[str],
+    cand: dict,
+    anchors: tuple[str, ...],
+    *,
+    use_anchors: tuple[str, ...] | None = None,
+) -> list[dict]:
+    page_text = pages[cand["page"] - 1]
+    window = page_text[cand["idx"]: cand["idx"] + 600]
+    if _npl_ratio_amount_column_row(window):
+        return []
+    return extract_financial_ratio_numeric(
+        window, "npl_ratio", use_anchors or anchors,
+    )
+
+
+def _pick_npl_ratio_candidate(
+    pages: list[str],
+    candidates: list[dict],
+    preferred: set[int] | None,
+    anchors: tuple[str, ...],
+) -> tuple[list[dict], dict]:
+    """Multi-pass npl_ratio candidate search with guarded cross-page fallback."""
+    if not candidates:
+        return [], {}
+    chosen = candidates[0]
+    base_page = chosen["page"]
+    rank_of = {id(c): idx + 1 for idx, c in enumerate(candidates)}
+    primary_anchors = tuple(a for a in _NPL_RATIO_PRIMARY_ANCHORS if a in anchors) or anchors
+
+    for cand in candidates:
+        if cand["page"] != base_page:
+            continue
+        labeled = _try_npl_ratio_window(pages, cand, anchors)
+        if labeled:
+            return labeled, cand
+
+    if preferred:
+        cross_page = [
+            cand for cand in candidates
+            if cand.get("in_region")
+            and cand["page"] != base_page
+            and _NPL_RATIO_CROSS_PAGE_RANK[0] <= rank_of[id(cand)] <= _NPL_RATIO_CROSS_PAGE_RANK[1]
+        ]
+        for cand in cross_page:
+            labeled = _try_npl_ratio_window(
+                pages, cand, anchors, use_anchors=primary_anchors,
+            )
+            if labeled:
+                return labeled, cand
+
+        if not any(c.get("in_region") for c in candidates[:8]):
+            for cand in candidates:
+                if cand.get("in_region"):
+                    continue
+                page_text = pages[cand["page"] - 1]
+                window = page_text[cand["idx"]: cand["idx"] + 600]
+                if not _npl_ratio_kpi_table_window(window):
+                    continue
+                labeled = _try_npl_ratio_window(pages, cand, anchors)
+                if labeled:
+                    return labeled, cand
+
+    return [], chosen
+
+
 # R&D numeric extraction: prefer total-amount labels; reject ratio-only, list
 # markers, and capitalized-zero-only rows. Company-agnostic template rules.
 _RND_AMOUNT_LABELS = (
@@ -807,6 +1147,43 @@ def extract_field(
                         chosen = cand
                         break
         page_text = pages[chosen["page"] - 1]
+        in_region = bool(chosen.get("in_region"))
+        heading = _is_heading(page_text, chosen["idx"], chosen.get("col", 99))
+        out["page"] = chosen["page"]
+        out["anchor_matched"] = chosen["anchor"]
+        out["in_region"] = in_region
+        out["evidence_sentence"] = evidence_sentence(page_text, chosen["idx"], chosen["anchor"])
+        located_well = (in_region or not preferred) and heading
+        out["value"] = {"labeled": labeled, "context": truncate(clean_text(window[:200]), 200)}
+        out["status"] = "found" if (labeled and located_well) else ("partial" if labeled else "not_found")
+        return out
+
+    if spec.extraction == "numeric" and spec.key in _FIN_RATIO_FIELDS:
+        cand_limit = 12 if spec.key == "npl_ratio" else 8
+        candidates = locate_candidates(
+            pages, spec.anchors, preferred, spec.avoid, limit=cand_limit,
+        )
+        if not candidates:
+            return out
+        chosen = candidates[0]
+        base_page = chosen["page"]
+        if spec.key == "npl_ratio":
+            labeled, chosen = _pick_npl_ratio_candidate(
+                pages, candidates, preferred, spec.anchors,
+            )
+        else:
+            labeled = []
+            for cand in candidates:
+                if cand["page"] != base_page:
+                    continue
+                page_text = pages[cand["page"] - 1]
+                window = page_text[cand["idx"]: cand["idx"] + 600]
+                labeled = extract_financial_ratio_numeric(window, spec.key, spec.anchors)
+                if labeled:
+                    chosen = cand
+                    break
+        page_text = pages[chosen["page"] - 1]
+        window = page_text[chosen["idx"]: chosen["idx"] + 600]
         in_region = bool(chosen.get("in_region"))
         heading = _is_heading(page_text, chosen["idx"], chosen.get("col", 99))
         out["page"] = chosen["page"]
