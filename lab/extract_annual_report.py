@@ -558,6 +558,267 @@ def _pick_npl_ratio_candidate(
     return [], chosen
 
 
+# Broker income / margin extraction (#30d) — broker-only spaced-label parsers
+# aligned with #30a audit evidence rules. Generic extract_numeric remains unchanged.
+_BROKER_SEGMENT_INCOME_FIELDS = frozenset({
+    "investment_banking_income",
+    "asset_management_income",
+})
+_BROKER_SEGMENT_SECTION_MARKERS = (
+    "主营业务分行业", "分行业情况", "收入和成本分析", "分业务",
+    "营业收入", "营业支出", "营业利润率",
+)
+_BROKER_SEGMENT_HARD_REJECT = (
+    "是指", "包括", "主要从事", "业务资格", "荣誉", "排名",
+)
+_BROKER_SEGMENT_SOFT_REJECT = ("同比", "增长", "下降", "百分点")
+_BROKER_AM_REJECT_PAGE = ("注册资本", "总资产", "净资产", "净利润")
+_BROKER_COMMA_AMOUNT_RE = re.compile(r"[-+]?\d{1,3}(?:,\d{3})+(?:\.\d+)?")
+_BROKER_IB_INCOME_LABELS = (
+    "投资银行业务净收入", "投资银行业务手续费净收入",
+    "投资银行业务", "投行业务",
+)
+_BROKER_AM_INCOME_LABELS = (
+    "受托客户资产管理业务净收入", "资产管理业务净收入",
+    "资产管理业务", "资管业务",
+)
+_BROKER_DEEP_IB_LABELS = ("投资银行业务净收入", "投行业务净收入")
+_BROKER_DEEP_IB_FEE_CONTEXT = ("手续费及佣金净收入", "手续费及佣金")
+_BROKER_DEEP_IB_MIN_MAGNITUDE = 1_000_000_000
+_BROKER_MARGIN_LABELS = ("融出资金", "融资融券余额")
+_BROKER_MARGIN_CONTEXT = ("非主营业务", "资产、负债情况分析", "资产构成", "占总资产")
+_BROKER_MARGIN_REJECT = (
+    "融资融券利息收入", "融出资金净增加额", "融出资金净减少额",
+    "利息收入", "现金流", "减值", "预期信用",
+    "及买入返售", "为人民币", "占比",
+)
+_BROKER_MARGIN_PAGE_REJECT = ("交易性金融资产",)
+_BROKER_ASSET_COMPOSITION_RE = re.compile(
+    r"融出\s*资\s*金\s+"
+    r"(\d{1,3}(?:,\d{3})+(?:\.\d+)?)\s+(\d+\.\d{2})\s+"
+    r"(\d{1,3}(?:,\d{3})+(?:\.\d+)?)\s+(\d+\.\d{2})\s+(\d+\.\d{2})"
+)
+_BROKER_MARGIN_ROW_RE = re.compile(
+    r"融出\s*资\s*金\s+(\d{1,3}(?:,\d{3})+(?:\.\d+)?)\s+(\d+\.\d{2})"
+)
+
+
+def _spaced_keyword_regex(keyword: str) -> re.Pattern:
+    return re.compile(r"\s*".join(re.escape(ch) for ch in keyword))
+
+
+def _broker_income_labels(field_key: str) -> tuple[str, ...]:
+    if field_key == "investment_banking_income":
+        return _BROKER_IB_INCOME_LABELS
+    if field_key == "asset_management_income":
+        return _BROKER_AM_INCOME_LABELS
+    return ()
+
+
+def _page_has_broker_segment_context(page_text: str) -> bool:
+    return any(m in page_text for m in _BROKER_SEGMENT_SECTION_MARKERS)
+
+
+def _page_has_margin_balance_context(page_text: str) -> bool:
+    return any(m in page_text for m in _BROKER_MARGIN_CONTEXT)
+
+
+def _broker_window_is_narrative(window: str) -> bool:
+    local = window[:160]
+    if any(m in local for m in _BROKER_SEGMENT_HARD_REJECT):
+        return True
+    if _BROKER_COMMA_AMOUNT_RE.search(local):
+        return False
+    return any(m in local for m in _BROKER_SEGMENT_SOFT_REJECT)
+
+
+def extract_broker_segment_income(window: str, page_text: str, field_key: str) -> list[dict]:
+    """Parse MD&A broker segment rows with whitespace-tolerant label matching."""
+    if not _page_has_broker_segment_context(page_text):
+        return []
+    if field_key == "asset_management_income" and any(m in page_text for m in _BROKER_AM_REJECT_PAGE):
+        return []
+    window = glue_numbers(window)
+    for lab in _broker_income_labels(field_key):
+        for m in _spaced_keyword_regex(lab).finditer(window):
+            local = window[max(0, m.start() - 20): m.end() + 100]
+            if _broker_window_is_narrative(local):
+                continue
+            after = window[m.end(): m.end() + 60]
+            amt_m = _BROKER_COMMA_AMOUNT_RE.search(after)
+            if not amt_m:
+                continue
+            return [{"label": lab, "value": amt_m.group(0).strip()}]
+    return []
+
+
+def extract_broker_deep_ib_income(
+    pages: list[str], regions: dict[str, set[int]] | None,
+) -> tuple[list[dict], dict] | None:
+    """Notes-only IB net income fallback for large-broker fee-note disclosures."""
+    notes = (regions or {}).get("notes") or set()
+    search_pages = [p for p in range(1, len(pages) + 1) if p in notes or p >= 80]
+    best: tuple[list[dict], dict] | None = None
+    for pno in search_pages:
+        page_text = pages[pno - 1]
+        if not any(m in page_text for m in _BROKER_DEEP_IB_FEE_CONTEXT):
+            continue
+        for lab in _BROKER_DEEP_IB_LABELS:
+            for m in _spaced_keyword_regex(lab).finditer(page_text):
+                after = page_text[m.end(): m.end() + 80]
+                amt_m = _BROKER_COMMA_AMOUNT_RE.search(after)
+                if not amt_m:
+                    continue
+                val = amt_m.group(0).strip()
+                mag = _numeric_magnitude(val)
+                if mag is None or mag < _BROKER_DEEP_IB_MIN_MAGNITUDE:
+                    continue
+                chosen = {
+                    "page": pno,
+                    "idx": m.start(),
+                    "anchor": lab,
+                    "in_region": pno in notes,
+                    "col": m.start() - (page_text.rfind("\n", 0, m.start()) + 1),
+                }
+                pair = ([{"label": lab, "value": val}], chosen)
+                if best is None or lab == "投资银行业务净收入":
+                    best = pair
+                    if lab == "投资银行业务净收入":
+                        return best
+    return best
+
+
+def extract_broker_margin_balance(page_text: str) -> tuple[list[dict], int | None]:
+    """MD&A asset-composition 融出资金 row; intentionally excludes notes search."""
+    if not _page_has_margin_balance_context(page_text):
+        return [], None
+    if any(m in page_text for m in _BROKER_MARGIN_PAGE_REJECT):
+        return [], None
+    flat = page_text.replace("\n", " ")
+    comp = _BROKER_ASSET_COMPOSITION_RE.search(flat)
+    if comp:
+        for m in re.finditer(r"融出\s*资\s*金", page_text):
+            chunk = page_text[m.start(): m.start() + 220]
+            if any(r in chunk for r in _BROKER_MARGIN_REJECT):
+                continue
+            row = _BROKER_MARGIN_ROW_RE.search(chunk.replace("\n", " "))
+            if row and row.group(1) == comp.group(1):
+                return [{"label": "融出资金", "value": comp.group(1)}], m.start()
+    for lab in _BROKER_MARGIN_LABELS:
+        for m in _spaced_keyword_regex(lab).finditer(page_text):
+            chunk = page_text[m.start(): m.start() + 220]
+            if any(r in chunk for r in _BROKER_MARGIN_REJECT):
+                continue
+            row = _BROKER_MARGIN_ROW_RE.search(chunk.replace("\n", " "))
+            if row:
+                return [{"label": lab, "value": row.group(1)}], m.start()
+    return [], None
+
+
+def _extract_broker_segment_income_field(
+    spec: FieldSpec,
+    pages: list[str],
+    source_url: str,
+    regions: dict[str, set[int]] | None,
+    out: dict,
+    profile_fields: dict[str, dict] | None = None,
+) -> dict:
+    if (
+        spec.key == "asset_management_income"
+        and ((profile_fields or {}).get("brokerage_income") or {}).get("status") == "found"
+    ):
+        return out
+    preferred = (regions or {}).get(spec.region)
+    candidates = locate_candidates(pages, spec.anchors, preferred, spec.avoid, limit=8)
+    chosen: dict | None = None
+    labeled: list[dict] = []
+    for cand in candidates:
+        if preferred and not cand.get("in_region"):
+            continue
+        page_text = pages[cand["page"] - 1]
+        window = page_text[cand["idx"]: cand["idx"] + 600]
+        labeled = extract_broker_segment_income(window, page_text, spec.key)
+        if labeled:
+            chosen = cand
+            break
+    if not labeled and spec.key == "investment_banking_income":
+        deep = extract_broker_deep_ib_income(pages, regions)
+        if deep:
+            labeled, chosen = deep
+    if not chosen or not labeled:
+        return out
+    page_text = pages[chosen["page"] - 1]
+    window = page_text[chosen["idx"]: chosen["idx"] + 600]
+    in_region = bool(chosen.get("in_region"))
+    heading = _is_heading(page_text, chosen["idx"], chosen.get("col", 99))
+    out["page"] = chosen["page"]
+    out["anchor_matched"] = chosen.get("anchor") or labeled[0]["label"]
+    out["in_region"] = in_region
+    out["evidence_sentence"] = evidence_sentence(page_text, chosen["idx"], out["anchor_matched"])
+    located_well = (in_region or not preferred) and heading
+    out["source_url"] = source_url
+    out["value"] = {"labeled": labeled, "context": truncate(clean_text(window[:200]), 200)}
+    out["status"] = "found" if (labeled and located_well) else ("partial" if labeled else "not_found")
+    return out
+
+
+def _extract_broker_margin_balance_field(
+    spec: FieldSpec,
+    pages: list[str],
+    source_url: str,
+    regions: dict[str, set[int]] | None,
+    out: dict,
+) -> dict:
+    preferred = (regions or {}).get(spec.region)
+    if not preferred:
+        return out
+    chosen: dict | None = None
+    labeled: list[dict] = []
+    row_idx: int | None = None
+    seen_pages: set[int] = set()
+    candidates = locate_candidates(pages, _BROKER_MARGIN_LABELS, preferred, spec.avoid, limit=8)
+    for cand in candidates:
+        pno = cand["page"]
+        if pno in seen_pages:
+            continue
+        seen_pages.add(pno)
+        page_text = pages[pno - 1]
+        labeled, row_idx = extract_broker_margin_balance(page_text)
+        if labeled:
+            chosen = {**cand, "idx": row_idx if row_idx is not None else cand["idx"]}
+            break
+    if not chosen or not labeled:
+        for pno in sorted(preferred):
+            if pno in seen_pages:
+                continue
+            page_text = pages[pno - 1]
+            labeled, row_idx = extract_broker_margin_balance(page_text)
+            if labeled:
+                chosen = {
+                    "page": pno,
+                    "idx": row_idx or 0,
+                    "anchor": labeled[0]["label"],
+                    "in_region": True,
+                    "col": 0,
+                }
+                break
+    if not chosen or not labeled:
+        return out
+    page_text = pages[chosen["page"] - 1]
+    window = page_text[chosen["idx"]: chosen["idx"] + 600]
+    in_region = bool(chosen.get("in_region"))
+    heading = _is_heading(page_text, chosen["idx"], chosen.get("col", 99))
+    out["page"] = chosen["page"]
+    out["anchor_matched"] = chosen.get("anchor") or labeled[0]["label"]
+    out["in_region"] = in_region
+    out["evidence_sentence"] = evidence_sentence(page_text, chosen["idx"], out["anchor_matched"])
+    located_well = (in_region or not preferred) and heading
+    out["source_url"] = source_url
+    out["value"] = {"labeled": labeled, "context": truncate(clean_text(window[:200]), 200)}
+    out["status"] = "found" if (labeled and located_well) else ("partial" if labeled else "not_found")
+    return out
+
+
 # R&D numeric extraction: prefer total-amount labels; reject ratio-only, list
 # markers, and capitalized-zero-only rows. Company-agnostic template rules.
 _RND_AMOUNT_LABELS = (
@@ -1083,6 +1344,7 @@ def first_sentence_local(text: str, limit: int = 200) -> str:
 def extract_field(
     spec: FieldSpec, pages: list[str], pdf_path: str, source_url: str,
     regions: dict[str, set[int]] | None = None,
+    profile_fields: dict[str, dict] | None = None,
 ) -> dict:
     out = {
         "field": spec.key,
@@ -1194,6 +1456,14 @@ def extract_field(
         out["value"] = {"labeled": labeled, "context": truncate(clean_text(window[:200]), 200)}
         out["status"] = "found" if (labeled and located_well) else ("partial" if labeled else "not_found")
         return out
+
+    if spec.extraction == "numeric" and spec.key in _BROKER_SEGMENT_INCOME_FIELDS:
+        return _extract_broker_segment_income_field(
+            spec, pages, source_url, regions, out, profile_fields=profile_fields,
+        )
+
+    if spec.extraction == "numeric" and spec.key == "margin_lending_balance":
+        return _extract_broker_margin_balance_field(spec, pages, source_url, regions, out)
 
     page_text = pages[loc["page"] - 1]
     in_region = bool(loc.get("in_region"))

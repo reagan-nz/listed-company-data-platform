@@ -362,7 +362,10 @@ BROKER_FIELD_SPECS: list[FieldSpec] = [
         key="investment_banking_income",
         label_cn="投资银行业务收入",
         definition="Investment banking income.",
-        anchors=("投资银行业务", "投行业务", "承销保荐"),
+        anchors=(
+            "投资银行业务", "投行业务", "承销保荐",
+            "投资银行业务净收入", "投资银行业务手续费净收入",
+        ),
         expected_location="MD&A segment operating results",
         extraction="numeric",
         region="mda",
@@ -371,7 +374,10 @@ BROKER_FIELD_SPECS: list[FieldSpec] = [
         key="asset_management_income",
         label_cn="资产管理业务收入",
         definition="Asset management fee income.",
-        anchors=("资产管理业务", "资管业务", "受托客户资产管理"),
+        anchors=(
+            "资产管理业务", "资管业务", "受托客户资产管理",
+            "资产管理业务净收入",
+        ),
         expected_location="MD&A segment operating results",
         extraction="numeric",
         region="mda",
