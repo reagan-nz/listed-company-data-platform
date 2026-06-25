@@ -2,7 +2,7 @@
 
 基于中国 A 股上市公司**公开年报 PDF**，程序化抽取 11 项基础字段，构建可证据追溯的公司基础标签库。
 
-**当前阶段**：full_market_2024 全 A 股 2024 年报提取、SQLite 入库与混合 strict 审计均已完成（2026-06-24）。Headline：非金融 proxy **10.35/11**，strict usable **9.01/11**。指标含义见 **[CURRENT_STATUS.md](CURRENT_STATUS.md)** 第 4.1 节。
+**当前阶段**：full_market_2024 2024 基线 + **Stage 3a 质量 follow-up PASS**（2026-06-25）。最新指标与 Stage 3b backlog 见 **[CURRENT_STATUS.md](CURRENT_STATUS.md)**；Stage 3a 汇总见 **[stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)**。
 
 ## 如何查看当前进度
 
@@ -11,15 +11,17 @@
 建议查看顺序：
 
 1. **[CURRENT_STATUS.md](CURRENT_STATUS.md)** — 项目阶段进度（老师 / supervisor 建议从这里开始）；
-2. **GitHub Project 看板** — Todo / In Progress / Done 任务状态；
-3. **[CHANGELOG.md](CHANGELOG.md)** — 变更记录；
-4. **[docs/](docs/)** — 技术细节（数据源、抽取、评估、数据库）。
+2. **[stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)** — Stage 3a 质量 follow-up 汇总（#24–#28）；
+3. **GitHub Project 看板** — Todo / In Progress / Done 任务状态；
+4. **[CHANGELOG.md](CHANGELOG.md)** — 变更记录；
+5. **[docs/](docs/)** — 技术细节（数据源、抽取、评估、数据库）。
 
-当前看板重点包括：
+当前看板重点（Stage 3b）：
 
-- 质量 follow-up：BSE 模板、rnd 召回、revenue 跨页切片；
-- 金融公司字段质量专项 review；
-- 多年度扩展（2023 / 2022）；
+- 金融 manual calibration grading（325-cell worksheet）；
+- revenue / rnd 剩余 strict-wrong follow-up；
+- financial under-tagging scan 与 extraction/tag fixes；
+- 多年度扩展决策（2025 / 2023 / 2022）；
 - BrowserUser（全量基线稳定后，暂不启动）。
 
 我会在后续每次本地更新后，同步更新 GitHub 文档、提交记录和项目看板，方便持续追踪项目进度。
@@ -49,21 +51,16 @@ python lab/calibration_sample.py --eval-dir outputs/generalization/eval1000 --n 
 
 ## 当前结果（摘要）
 
-最新数字与**指标解释**见 **[CURRENT_STATUS.md](CURRENT_STATUS.md)**（full_market_2024，2026-06-24）：
+**不在此重复 headline 数字**（避免 stale）。最新指标见 **[CURRENT_STATUS.md](CURRENT_STATUS.md)** §4；Stage 3a 汇总见 **[stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)**。
 
-| 指标 | full_market_2024 |
-|---|---|
-| total / ok | 6124 / **5707** |
-| 非金融 proxy | **10.35 / 11** |
-| 非金融 strict usable | **9.01 / 11** |
-
-> strict usable 为自动化 adversarial 估计 + 小样本 PDF 校准，**非全量人工验证**。不得与旧 eval1000 baseline 10.16/11 直接比较「改善」。
+> strict usable 为 automated adversarial 估计 + sampled/manual calibration support，**非全量人工验证**。不得与 eval1000 baseline 10.16/11 直接比较为「改善」；金融指标**不得**与非金融 headline 混报。
 
 ## 文档
 
 | 文档 | 说明 |
 |---|---|
 | [CURRENT_STATUS.md](CURRENT_STATUS.md) | **主进度页** — 阶段成果、关键数字、已知问题、下一步 |
+| [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md) | Stage 3a 质量 follow-up 汇总（#24–#28） |
 | [ROADMAP.md](ROADMAP.md) | 分阶段路线图 |
 | [CHANGELOG.md](CHANGELOG.md) | 关键更新记录 |
 | [docs/](docs/) | 技术文档（数据源、抽取、评估、协作） |

@@ -1,10 +1,12 @@
 # 当前状态
 
-_最后更新：2026-06-25（#27 金融 audit 框架 + non-fin 9.43/11 post-revenue）_
+_最后更新：2026-06-25（#28 Stage 3a 质量 follow-up 收尾）_
 
-> **本文档是项目主进度页。** 老师建议从这里开始阅读；技术细节见 [docs/](docs/)，变更记录见 [CHANGELOG.md](CHANGELOG.md)。
+> **本文档是项目主进度页。** 老师建议从这里开始阅读；技术细节见 [docs/](docs/)，变更记录见 [CHANGELOG.md](CHANGELOG.md)。Stage 3a 汇总见 **[stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)**。
 
-**2026-06-25 日结（金融 audit #27）**：金融字段质量 **audit 框架**完成（Phase 0–1B）；86 ok 金融公司 × 1,059 cells 自动化 financial strict audit；30 公司 × 325 cells 校准 worksheet 已生成（**grading 待完成**）。金融 strict **单独报告**（bank **9.00/13**、broker **7.66/12**）；**不混入** non-fin **9.43/11**。非 extraction 修复；抽取/tag 改进 deferred #28。详见 [financial_audit_summary.md](outputs/generalization/full_market_2024/financial_audit_summary.md)、[docs/financial_company_schema.md](docs/financial_company_schema.md)。
+**2026-06-25 日结（Stage 3a 收尾 #28）**：full_market_2024 **Stage 3a quality follow-up PASS** — 汇总 #24–#27（BSE audit rule、rnd/revenue scoped refresh、金融 audit 框架）；非金融 strict **9.43/11**（latest `run_name=full_market_2024_revenue_refresh`）；金融 **单独 headline**，worksheet grading 待办。**非**全量人工验证；**非** extraction 全部修复。Stage **3b**（residuals、grading、多年度）进行中。详见 [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)。
+
+**2026-06-25 日结（金融 audit #27）**：金融字段质量 **audit 框架**完成（Phase 0–1B）；86 ok 金融公司 × 1,059 cells 自动化 financial strict audit；30 公司 × 325 cells 校准 worksheet 已生成（**grading 待完成**）。金融 strict **单独报告**（bank **9.00/13**、broker **7.66/12**）；**不混入** non-fin **9.43/11**。非 extraction 修复；grading / extraction fixes → Stage 3b。详见 [financial_audit_summary.md](outputs/generalization/full_market_2024/financial_audit_summary.md)、[docs/financial_company_schema.md](docs/financial_company_schema.md)。
 
 **2026-06-24 日结（revenue refresh #26）**：scoped `revenue_by_region` / `revenue_by_segment` 刷新完成（cached PDF，非 CNINFO 重跑）；Tier 3 跨页 continuation stitch 为主驱动（343/346）；wrong→usable **297**；0 回归；region wrong **258→38**；segment wrong **109→19**；非金融 strict **9.38→9.43/11**；proxy **10.61→10.67/11**。详见 [revenue_refresh_summary.md](outputs/generalization/full_market_2024/revenue_refresh_summary.md)。
 
@@ -22,13 +24,11 @@ _最后更新：2026-06-25（#27 金融 audit 框架 + non-fin 9.43/11 post-reve
 
 - **当前数据来源**：巨潮资讯网（CNINFO）公开年报 PDF，程序化抽取 11 项基础字段（工业/制造类公司为主）。
 - **已完成**：全 A 股 2024 年报首次全量提取 + SQLite 入库 + 混合 strict 审计 + scoped rnd/revenue 字段刷新。
-- **后续扩展（尚未实现）**：
-  - 多年度扩展（2023 / 2022 年报）；
-  - 金融 manual calibration grading + extraction/tag fixes（#28）；
-  - revenue 剩余 ~57 strict-wrong 单元格 follow-up；
-  - **BrowserUser** 爬虫智能体（全量基线稳定后，非当前直接下一步）。
+- **Stage 3a（Done）**：#24–#28 质量 follow-up — 见 [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)。
+- **Stage 3b（进行中）**：金融 manual grading、revenue/rnd 剩余 wrong、financial under-tagging、多年度扩展决策。
+- **BrowserUser** 爬虫智能体（全量基线稳定后，非当前直接下一步）。
 
-当前阶段：**可维护的数据平台原型已覆盖全 A 股 2024 基线**（见第 3 节）。
+当前阶段：**full_market_2024 2024 基线 + Stage 3a 质量 follow-up 已 PASS**； residuals 见 §5–§6（见第 3 节）。
 
 ---
 
@@ -41,6 +41,7 @@ _最后更新：2026-06-25（#27 金融 audit 框架 + non-fin 9.43/11 post-reve
 | **full_market_2024 scoped revenue refresh (#26)** | revenue_by_region/segment 仅字段重抽取（cached PDF）；wrong→usable 297；stitch 343 — 见 [revenue_refresh_summary.md](outputs/generalization/full_market_2024/revenue_refresh_summary.md) |
 | **full_market_2024 混合 strict 审计** | 5621 非金融 × 11 字段；post-revenue strict **9.43/11** — 见 [strict_audit_summary.md](outputs/generalization/full_market_2024/strict_audit_summary.md) |
 | **full_market_2024 金融 audit（#27）** | 86 ok × 子 schema；automated financial strict + 325-cell calibration worksheet（grading 待完成）— 见 [financial_audit_summary.md](outputs/generalization/full_market_2024/financial_audit_summary.md) |
+| **Stage 3a 质量 follow-up 汇总（#28）** | #24–#27 合并快照 + closure — 见 [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md) |
 | **工具链** | `make_full_market_yaml.py`、`merge_full_market_batches.py`、`strict_audit_full_market.py`、`strict_audit_financial_full_market.py`、`financial_calibration_sample.py`、`refresh_rnd_full_market.py`、`refresh_revenue_full_market.py`、`run_full_market_2024.sh` |
 | **Independent eval1000** | 新 cohort 1000 家；泛化验证 PASS |
 | **eval1000_v2** | 同 cohort 1020 家全量重跑 |
@@ -150,7 +151,7 @@ financial_audit_sample.csv（30 公司 × 325 cells；manual_grade 待填写）
 | **other_financial strict usable** | **5.75 / 8**（lenient 7.00/8） |
 | 校准 worksheet | **30 公司 × 325 cells**（`manual_grade` **待填写**） |
 
-> **#27 = audit 框架 + automated review + worksheet**；非 extraction 修复；非全量人工验证。`not_found_missed`（75 cells，**broker-heavy ~58/75**）为 **recall hint 非确认 truth**，待 worksheet manual grade。`major_subsidiaries` 0/86 usable 为 **结构性 partial**（industrial in_region 门控），非金融抽取专项失败。**insurer n=2**，subtype 均值勿过度解读。**financial under-tagging scan** deferred **#28+**。Subtype caveats：000402 / 600816 / 600318。
+> **#27 = audit 框架 + automated review + worksheet**；非 extraction 修复；非全量人工验证。`not_found_missed`（75 cells，**broker-heavy ~58/75**）为 **recall hint 非确认 truth**，待 worksheet manual grade。`major_subsidiaries` 0/86 usable 为 **结构性 partial**（industrial in_region 门控），非金融抽取专项失败。**insurer n=2**，subtype 均值勿过度解读。**financial under-tagging scan** deferred **Stage 3b**。Subtype caveats：000402 / 600816 / 600318。
 
 ### SQLite
 
@@ -203,19 +204,21 @@ financial_audit_sample.csv（30 公司 × 325 cells；manual_grade 待填写）
 1. **BSE strict**（8.82/11，post-revenue）；客户/供应商表格 strict 规则已修正（P0 TOP_KW）。
 2. **rnd 8 家回归**（sse_main 费用化研发投入 锚点）：600011 等 7 家 + 301221 partial — 小 follow-up。
 3. **revenue 剩余 strict-wrong**：region **38** + segment **19**（#26 已修复 header-only 跨页 split；非 fully fixed）。
-4. **金融字段 numeric/table 噪声 + tag/subtype 疑点**（#27 audit 完成；325-cell grading 待完成；extraction fixes → #28）：broker proxy−strict gap 最大；000402 / 600816 / 600318 subtype caveats。
+4. **金融字段 numeric/table 噪声 + tag/subtype 疑点**（#27 audit 框架完成；325-cell grading 待完成；extraction fixes → Stage 3b）：broker proxy−strict gap 最大；000402 / 600816 / 600318 subtype caveats。
 5. **BrowserUser 未启动**（计划中，非当前优先级）。
 
 ---
 
-## 6. 下一步计划
+## 6. 下一步计划（Stage 3b）
 
-1. **#27 收尾**：填写 `financial_audit_sample.csv` manual grades → `--score` 校准报告。
-2. **#28 金融 extraction/tag fixes**（numeric plausible、subtype 标签、000402 等待定）。
-3. **质量 follow-up**：revenue 剩余 wrong；rnd 8 家回归。
-4. **多年度扩展**（2023 / 2022 年报）。
-5. **BrowserUser 试点**（PDF 无法覆盖的数据；全量基线稳定后）。
-6. **`strict_audit_result` loader** 入库（低优先级）。
+1. **金融 manual calibration grading** — 填写 `financial_audit_sample.csv` → `--score`。
+2. **Broker `not_found_missed` refinement** — 基于 grading 收紧 audit 规则。
+3. **Revenue 剩余 strict-wrong** — region 38 + segment 19；scoped cached-PDF follow-up。
+4. **rnd 8 家回归** — sse_main 费用化研发投入锚点。
+5. **Financial under-tagging scan** — YAML `financial: true` 完整性。
+6. **金融 extraction/tag fixes** — numeric plausible、subtype 标签（000402 等）。
+7. **多年度扩展决策**（2025 / 2023 / 2022）— 范围与 run_name 策略。
+8. **BrowserUser 试点**（全量基线稳定后）；**`strict_audit_result` loader**（低优先级）。
 
 ---
 
@@ -231,6 +234,7 @@ financial_audit_sample.csv（30 公司 × 325 cells；manual_grade 待填写）
 | **[revenue_refresh_summary.md](outputs/generalization/full_market_2024/revenue_refresh_summary.md)** | #26 revenue scoped refresh 报告 |
 | **[financial_audit_summary.md](outputs/generalization/full_market_2024/financial_audit_summary.md)** | #27 金融 strict audit（单独 headline） |
 | **[strict_audit_summary.md](outputs/generalization/full_market_2024/strict_audit_summary.md)** | 非金融 strict 审计详细报告 |
+| **[stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)** | Stage 3a 汇总与 closure（#28） |
 
 ---
 
@@ -247,6 +251,7 @@ outputs/generalization/full_market_2024/
   financial_audit_population.csv          # 可 commit
   financial_audit_sample.csv              # 可 commit（grading 进行中可更新）
   financial_population_inventory.csv      # 可 commit
+  stage3_quality_followup_summary.md      # 可 commit（#28 Stage 3a）
   strict_audit_sample.csv                 # 可 commit
   eval_results.json                       # gitignored
   rnd_refresh_changes.csv                 # gitignored

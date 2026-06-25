@@ -34,6 +34,7 @@
 - **收入表格 proxy 收紧**（Issue #2）：`revenue_table_plausible` 要求 `revenue_by_region` / `revenue_by_segment` preview 含至少一行非表头数据行
 
 ### 文档
+- **#28 Stage 3a 质量 follow-up 汇总**（2026-06-25）：[`stage3_quality_followup_summary.md`](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md) — 合并 #24–#27 快照；Stage 3a **PASS**；Stage 3b backlog；CURRENT_STATUS / ROADMAP / evaluation_method 交叉链接
 - **#27 金融 audit 文档同步**（2026-06-25）：financial_company_schema、CURRENT_STATUS、ROADMAP、evaluation_method；financial audit 单独 headline
 - **#26 revenue refresh 文档同步**（2026-06-24）：revenue_refresh_summary.md、CURRENT_STATUS、full_market_2024_summary、strict_audit 重跑后数字
 - **P2 rnd refresh 文档同步**（2026-06-24）：rnd_refresh_summary.md、CURRENT_STATUS、full_market_2024_summary、strict_audit 重跑后数字
@@ -41,10 +42,10 @@
 - **文档同步**（2026-06-23）：所有主要文档与 eval1000_v2 / independent eval1000 里程碑对齐；ROADMAP 阶段重排（full_market_2024 → strict 审计 → 多年度 → BrowserUser）；docs/evaluation_method 增加同 cohort 重跑与独立泛化验证说明；docs/database_schema 注明三批次 SQLite 导入状态；docs/financial_company_schema 补充 strict 未重跑说明；docs/crawler_strategy 明确 BrowserUser 在 full_market_2024 基线稳定后才启动；新增 plans/v0.6_full_market_2024_plan.md
 
 ### 计划
-- #27 收尾：financial_audit_sample.csv manual grading + score
-- #28 金融 extraction/tag fixes（numeric plausible、subtype 标签）
-- 质量 follow-up：revenue 剩余 strict-wrong（~57 cells）；rnd 8 家回归
-- 多年度扩展（2023 / 2022）
+- Stage 3b：financial manual calibration grading + broker not_found_missed refinement
+- Stage 3b：revenue 剩余 strict-wrong（~57 cells）；rnd 8 家回归；financial under-tagging scan
+- Stage 3b：金融 extraction/tag fixes（numeric plausible、subtype 标签）
+- 多年度扩展决策（2025 / 2023 / 2022）
 - BrowserUser 数据源试点（全量基线稳定后）
 
 ## 2026-06-18

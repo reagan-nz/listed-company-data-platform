@@ -1,6 +1,6 @@
 # 路线图
 
-_最后更新：2026-06-25_
+_最后更新：2026-06-25（#28 Stage 3a 收尾）_
 
 ## 第一阶段：年报数据获取与基础字段抽取
 
@@ -34,26 +34,41 @@ _最后更新：2026-06-25_
 
 **最终结果**：6124 total / 5707 ok / 417 no_announcement / 0 error；非金融 proxy **10.35/11**；strict usable **9.01/11**；SQLite **62,890** 字段行。
 
-> **完成含义**：管道执行 + 数据库导入 + 混合 strict 审计均已完成。**不等于** 62,890 行全量人工验证。详见 [strict_audit_summary.md](outputs/generalization/full_market_2024/strict_audit_summary.md)。
+> **完成含义**：管道执行 + 数据库导入 + 混合 strict 审计均已完成。**不等于** 62,890 行全量人工验证。详见 [strict_audit_summary.md](outputs/generalization/full_market_2024/strict_audit_summary.md)。Post–Stage 3a latest non-fin strict **9.43/11** — 见 [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)。
 
-## 第三阶段：质量 follow-up 与多年度扩展（当前焦点）
+## 第三阶段：质量 follow-up 与多年度扩展
 
-**目标**：提升字段质量，扩展至多年度，专项处理薄弱板块。
+### 3a — full_market_2024 质量 follow-up（**Done**, #24–#28）
+
+**目标**：针对性提升 2024 基线字段质量；建立金融 audit 框架；形成 closure 文档。
 
 | 事项 | 状态 |
 |---|---|
-| rnd_investment scoped refresh（P2.1） | 已完成 — rnd found 94.2% |
-| revenue split-table scoped refresh（Issue #26） | 已完成 — wrong→usable 297；region wrong 258→38 |
-| BSE 模板适配 | 部分改善 — strict 8.82/11（post-revenue） |
-| 金融公司字段质量 audit（Issue #27） | **Phase 0–1B 完成** — inventory + automated strict + worksheet（grading 待完成）；extraction fixes → #28 |
-| revenue 剩余 strict-wrong follow-up | 待办 — ~38 region + ~19 segment |
-| rnd 8 家 sse_main 回归 follow-up | 待办 |
-| 金融 manual calibration grading | 待办 — 325 cells worksheet 已生成 |
-- 2023 / 2022 年报增量提取
-- `sample_universe` 增加「资本」等关键词补丁
-- `strict_audit_result` loader 入库（可选）
+| #24 BSE strict audit-rule（TOP_KW） | **Done** — BSE strict 7.14→7.71 |
+| #25 rnd scoped refresh | **Done** — rnd found 94.2%；strict 9.06→9.38 |
+| #26 revenue scoped refresh | **Done** — wrong→usable 297；strict 9.38→9.43 |
+| #27 金融 audit 框架 | **Done** — 1,059 cells automated strict + 325-cell worksheet（grading 待 Stage 3b） |
+| #28 Stage 3a 汇总 | **Done** — [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md) |
 
-**完成标准**：BSE strict 维持 ≥8.5/11（当前 8.82）；revenue 剩余 wrong 单元格下降；支持 2023 时间序列查询。
+**Stage 3a 结论**：**full_market_2024 Stage 3a quality follow-up PASS** — automated strict audit + targeted scoped refreshes (cached PDF) + sampled/manual calibration support。**非**全量人工验证；**非** extraction 全部修复。
+
+### 3b — residuals、grading 与多年度（**In Progress**）
+
+**目标**：消化剩余 wrong 单元格；完成金融 manual grading；决策多年度扩展。
+
+| 事项 | 状态 |
+|---|---|
+| 金融 manual calibration grading | 待办 — 325 cells worksheet 已生成 |
+| broker `not_found_missed` refinement | 待办 — 依赖 grading |
+| revenue 剩余 strict-wrong | 待办 — ~38 region + ~19 segment |
+| rnd 8 家 sse_main 回归 | 待办 |
+| financial under-tagging scan | 待办 |
+| 金融 extraction/tag fixes | 待办 — numeric plausible、subtype 标签 |
+| 2023 / 2022 / 2025 扩展决策 | 待办 |
+| BSE 模板 residual gap | 部分 — strict 8.82/11（≥8.5 阈值已满足） |
+| `strict_audit_result` loader 入库 | 可选 |
+
+**3b 完成标准（draft）**：金融 worksheet graded；revenue/rnd 剩余 wrong 有 scoped follow-up 计划或 fix；2023 时间序列 scope 决策 documented。
 
 ## 第四阶段：BrowserUser 爬虫智能体补充数据
 

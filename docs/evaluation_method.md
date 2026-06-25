@@ -165,7 +165,7 @@
 | other_financial (4) | **5.75 / 8** | 7.00 / 8 | 5.50 / 8 |
 
 - **产出**：`financial_audit_summary.md`、`financial_audit_population.csv`、`financial_audit_sample.csv`
-- **不得声称**：金融 audit 已 fully validated；`not_found_missed`（75 cells，broker-heavy）为 **recall hint 非确认 truth**；`major_subsidiaries` 低 usable 为 **结构性 partial**（industrial in_region 门控）；**insurer n=2** 勿过度解读 subtype 均值；**financial under-tagging scan** deferred #28+；extraction fixes deferred #28
+- **不得声称**：金融 audit 已 fully validated；`not_found_missed`（75 cells，broker-heavy）为 **recall hint 非确认 truth**；`major_subsidiaries` 低 usable 为 **结构性 partial**（industrial in_region 门控）；**insurer n=2** 勿过度解读 subtype 均值；**financial under-tagging scan** deferred Stage 3b；extraction fixes deferred Stage 3b
 
 ```bash
 # 金融 automated strict audit
@@ -181,21 +181,39 @@ python lab/financial_calibration_sample.py \
   --score outputs/generalization/full_market_2024/financial_audit_sample.csv
 ```
 
+### 11. full_market_2024 Stage 3a quality follow-up（#28，2026-06-25）
+
+- **目的**：合并 #24–#27 成果；给出 Stage 3a closure 决策与 Stage 3b backlog
+- **方法**：文档汇总 only — 无 extraction / refresh / audit rerun
+- **非金融最终快照**（latest `run_name=full_market_2024_revenue_refresh`）：
+  - proxy plausible：**10.67/11**
+  - strict usable：**9.43/11**
+  - strict lenient：**10.80/11**
+  - all-field wrong：**566**
+  - rnd found：**5,297 / 5,621 (94.2%)**
+  - revenue_by_region / segment strict wrong：**38 / 19**
+- **Strict 轨迹**（full_market_2024 内，不可与 eval1000 10.16/11 比较）：**9.01 → 9.06 → 9.38 → 9.43**
+- **Stage 3a 结论**：**PASS** — automated strict audit + targeted scoped refreshes (cached PDF) + sampled/manual calibration support。**非**全量人工验证
+- **产出**：[stage3_quality_followup_summary.md](../outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)
+
+> **不得声称**：Full Stage 3 complete；all extraction fixed；financial metrics mixed into non-fin 9.43/11
+
 ## 指标对照表
 
-| 指标 | eval1000 | eval1000_v2 | independent | full_market_2024 | 含义 |
-|---|---:|---:|---:|---:|---|
-| proxy plausible | 10.5/11 | 10.33/11 | 10.30/11 | **10.35/11** | 自动规则 |
-| strict usable | **10.16/11** | 未重跑 | 未重跑 | **9.01/11** | adversarial 复核 |
-| strict lenient | — | — | — | **10.47/11** | usable+partial |
-| 样本 | 1020 | 1020 | 1000 | **6124** | universe |
+| 指标 | eval1000 | eval1000_v2 | independent | full_market_2024 (initial) | full_market_2024 (post–Stage 3a) | 含义 |
+|---|---:|---:|---:|---:|---:|---|
+| proxy plausible | 10.5/11 | 10.33/11 | 10.30/11 | **10.35/11** | **10.67/11** | 自动规则 |
+| strict usable | **10.16/11** | 未重跑 | 未重跑 | **9.01/11** | **9.43/11** | adversarial 复核 |
+| strict lenient | — | — | — | **10.47/11** | **10.80/11** | usable+partial |
+| 样本 | 1020 | 1020 | 1000 | **6124** | **6124** | universe |
 
-> **重要说明**：eval1000 strict 10.16/11 基于 proxy 10.5/11（Issue #1/#2 前）。full_market strict 9.01/11 基于 proxy 10.35/11（Issue #1/#2 后）。**不可直接比较为改善或退步。**
+> **重要说明**：eval1000 strict 10.16/11 基于 proxy 10.5/11（Issue #1/#2 前）。full_market post–Stage 3a strict **9.43/11** 基于 proxy **10.67/11** 与 scoped refresh 后的同一 universe。**不可直接比较为改善或退步。**
 
 **推荐对外报告**：
-- 全市场规模：**strict usable 9.01/11**（自动化 adversarial + 小样本 PDF 校准）
-- 受控泛化：**proxy 10.30–10.35/11**（independent / full_market）
-- 历史 baseline：**strict 10.16/11**（eval1000 only，标注 baseline 与 proxy 版本）
+- 全市场规模（non-fin）：**strict usable 9.43/11**（post–Stage 3a；automated adversarial + calibration support）
+- 金融（单独）：bank **9.00/13**、broker **7.66/12** 等 — 见 [stage3_quality_followup_summary.md](../outputs/generalization/full_market_2024/stage3_quality_followup_summary.md) §3
+- 受控泛化：**proxy 10.30–10.35/11**（independent / full_market initial）
+- 历史 baseline：**strict 10.16/11**（eval1000 only — 标注 baseline 与 proxy 版本；**不得**与 9.43/11 比较为改善）
 
 ## 如何运行评估
 
@@ -232,5 +250,6 @@ python lab/calibration_sample.py \
 ## 相关文档
 
 - [当前状态](../CURRENT_STATUS.md)
+- [Stage 3a 质量 follow-up 汇总](../outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)
 - [字段 schema](database_schema.md)
 - [年报抽取流程](annual_report_extraction.md)
