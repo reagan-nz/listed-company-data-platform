@@ -105,18 +105,22 @@ _MAJOR_SUBSIDIARY_TABLE_HEADERS = (
 _LOAN_TABLE_REJECT = (
     "利息收入", "利息净收入", "存放中央银行", "拆出资金", "存放同业",
     "金融投资", "现金及存放中央银行", "资产总额", "报告期，集团实现利息",
+    "到期日", "到期期限", "剩余期限", "到期时间", "逾期", "现金流量",
 )
 _LOAN_TABLE_REQUIRE = (
     "贷款结构", "按产品", "按担保", "按行业", "五级分类", "公司贷款", "个人贷款",
-    "票据贴现", "垫款", "信用贷款", "保证贷款",
+    "票据贴现", "垫款", "信用贷款", "保证贷款", "抵押贷款", "质押贷款",
+    "发放贷款和垫款",
 )
 _DEPOSIT_TABLE_REJECT = (
     "长期股权投资", "应付职工薪酬", "应交税费", "现金流量", "利息支出",
     "卖出回购", "应付债券", "向中央银行借款", "同业及其他金融机构存放",
+    "负债合计", "负债总额", "负债结构", "到期日", "到期期限",
 )
 _REGIONAL_TABLE_REJECT = (
     "营业网点", "分支机构数量", "机构数量", "证券持仓", "债券投资", "持有至到期",
     "可供出售", "股权投资", "地址：", "邮编：", "电话：",
+    "营业网点及分公司", "分行", "支行", "营业部", "网点分布",
 )
 _REVENUE_TABLE_REJECT = (
     "现金流量", "经营活动", "收取利息", "投资活动", "筹资活动",
@@ -124,6 +128,7 @@ _REVENUE_TABLE_REJECT = (
     "EV", "敏感性", "变动分析", "风险限额", "母公司利润表", "合并利润表",
     "手续费及佣金的现金", "代理买卖证券", "拆入资金", "回购业务",
     "利息净收入", "利息支出", "投资收益（损", "公允价值变动",
+    "营业总支出", "股票价格", "上升5%", "下降5%", "敏感性测试",
 )
 _REVENUE_TABLE_REQUIRE = (
     "营业收入", "营业总收入", "分部报告", "主营业务分", "分行业", "分产品", "分地区",
@@ -966,6 +971,8 @@ def _financial_table_plausible(
             return False, "loan table looks like interest income or asset composition"
         if not any(k in combined for k in ("贷款", "垫款", "票据")):
             return False, "missing loan vocabulary"
+        if "发放贷款和垫款" in combined and not any(k in combined for k in _LOAN_TABLE_REQUIRE):
+            return False, "loan table is total-only without structure breakdown"
         if not any(k in combined for k in _LOAN_TABLE_REQUIRE):
             if "发放贷款和垫款" in combined and any(
                 k in combined for k in ("金融投资", "存放中央银行", "拆出资金")
@@ -981,12 +988,19 @@ def _financial_table_plausible(
             return False, "missing deposit vocabulary"
         if "长期股权投资" in combined or "应付职工薪酬" in combined:
             return False, "deposit table looks like liability summary"
+        if "吸收存款" in combined and not any(
+            k in combined for k in ("公司存款", "个人存款", "活期存款", "定期存款", "保证金存款")
+        ):
+            if len([r for r in rows if _table_row_is_data_row(r)]) <= 1:
+                return False, "deposit table is total-only without deposit breakdown"
 
     elif fk in ("regional_distribution", "revenue_by_region"):
         if any(k in combined for k in _REGIONAL_TABLE_REJECT):
             return False, "regional table looks like branch roster or holdings"
         if not any(k in combined for k in ("地区", "境内", "境外", "区域", "长三角", "环渤海")):
             return False, "missing region vocabulary"
+        if any(k in combined for k in ("分行", "支行", "营业部", "地址", "邮编")):
+            return False, "regional table looks like branch roster"
 
     elif fk == "revenue_by_segment":
         if any(k in combined for k in _REVENUE_TABLE_REJECT):
@@ -1009,6 +1023,10 @@ def _financial_table_plausible(
         )
         if cost_heavy >= 2 and rev_rows == 0:
             return False, "segment table is business-cost allocation, not revenue"
+        if rev_rows == 0 and any(
+            k in combined for k in ("业务及管理费", "税金及附加", "减值损失", "营业总支出")
+        ):
+            return False, "segment table is cost-only without revenue rows"
 
     data_rows = [r for r in rows if _table_row_is_data_row(r)]
     if len(data_rows) >= 2:
