@@ -1,16 +1,23 @@
 # 金融公司字段体系 v1
 
-_最后更新：2026-06-24_
+_最后更新：2026-06-25（#27 金融字段质量 audit 框架完成）_
 
-> **实现状态（Issue #4）**：`lab/field_schema.py` 已实现 `BANK_FIELD_SPECS` / `BROKER_FIELD_SPECS` / `INSURER_FIELD_SPECS` / `OTHER_FINANCIAL_FIELD_SPECS`，以及 `detect_profile()` / `resolve_profile()` / `get_field_specs()` 分发。eval 对 `financial: true` 公司使用子 schema；非金融仍用工业 11 字段。
+> **实现状态（Issue #4 + #27）**：`lab/field_schema.py` 已实现 `BANK_FIELD_SPECS` / `BROKER_FIELD_SPECS` / `INSURER_FIELD_SPECS` / `OTHER_FINANCIAL_FIELD_SPECS`，以及 `detect_profile()` / `resolve_profile()` / `get_field_specs()` 分发。eval 对 `financial: true` 公司使用子 schema；非金融仍用工业 11 字段。
 >
-> **full_market_2024**：86 家金融 ok 已用子 schema 跑通；**不纳入**非金融 11 字段 headline（proxy / strict usable 仅统计 `financial: false` 的 5621 家）。
+> **full_market_2024**：86 家金融 ok 已用子 schema 跑通；**不纳入**非金融 11 字段 headline（proxy / strict usable 仅统计 `financial: false` 的 5621 家；非金融 strict **9.43/11**）。
 >
-> **尚未完成**：
-> - 金融字段的 **strict 审计**尚未执行（不得声称金融字段质量）；
-> - 金融专用 plausible 规则（Phase 3）未实现，当前仍复用 generic `extract_numeric` / `table_match`，**数值字段可能含噪声**（如利息净收入混入其他行）；
-> - auto-tag 可能误标（如「金融街」000402 含「金融」被标为 broker）；
-> - DB `financial_subtype` 列未入库（Phase 5 未做）。
+> **#27 金融 audit（2026-06-25，Phase 0–1B）**：
+> - Phase 0：`financial_population_inventory.csv`（87 tagged / 86 ok；bank 43 / broker 37 / insurer 2 / other 4）
+> - Phase 1A：`lab/strict_audit_financial_full_market.py` + `financial_audit_population.csv`（1,059 cells）+ [financial_audit_summary.md](../outputs/generalization/full_market_2024/financial_audit_summary.md)
+> - Phase 1B：`lab/financial_calibration_sample.py` + `financial_audit_sample.csv`（30 公司 × 325 cells；**manual_grade 待填写**）
+> - **单独报告**金融 strict（按 subtype）；**不得**与 non-fin 9.43/11 混报
+> - 详见 [CURRENT_STATUS.md](../CURRENT_STATUS.md) §4.2
+>
+> **尚未完成（#28+）**：
+> - 金融专用 plausible / extract 规则（Phase 3）；当前仍复用 generic `extract_numeric` / `table_match`，**数值字段可能含噪声**
+> - auto-tag / subtype 修正（000402 金融街、600816 建元信托、600318 新力金融 等待 review）
+> - 325 格 manual calibration **grading 待完成**（非全量人工验证）
+> - DB `financial_subtype` 列未入库（Phase 5 未做）
 
 ## 1. 为什么需要单独 schema
 
@@ -219,9 +226,45 @@ FieldSpec (base)
 | Phase | 状态 |
 |---|---|
 | Phase 1–2：子 schema + profile 检测/分发 | **Done**（Issue #4） |
-| Phase 3：金融专用 numeric/table plausible 规则 | 未做（复用 generic extract_numeric/table） |
-| Phase 4：eval summary 分 subtype 报告 | **部分**（`schema_profile` + summary 表格） |
+| Phase 3：金融专用 numeric/table plausible 规则 | 未做（#28+；复用 generic extract_numeric/table） |
+| Phase 4：eval summary 分 subtype 报告 | **部分**（`schema_profile` + eval_summary 金融段） |
+| **#27 Phase 0–1B：金融 audit 框架** | **Done**（inventory + automated strict + calibration worksheet；grading 待完成） |
 | Phase 5：DB `financial_subtype` + 新 field_name 入库 | 未做 |
+
+### #27 金融 automated strict（Phase 1A，86 ok × ~1,059 cells）
+
+**不得与 non-fin 9.43/11 混报。** 非全量人工验证。
+
+| subtype | strict usable | strict lenient | proxy |
+|---|---:|---:|---:|
+| bank (43) | **9.00 / 13** | 11.28 / 13 | 8.98 / 13 |
+| broker (37) | **7.66 / 12** | 9.00 / 12 | 8.57 / 12 |
+| insurer (2) | **9.25 / 12** | 10.50 / 12 | 10.50 / 12 |
+| other_financial (4) | **5.75 / 8** | 7.00 / 8 | 5.50 / 8 |
+
+标签分布（population）：usable 557 / partial 310 / wrong 81 / not_found_missed 75 / not_found_unverified 36。
+
+**Audit 解读 caveat（#27 严格 review）：**
+
+- `not_found_missed`（75 cells）为 PDF anchor **recall hint**，**非确认 truth**；**broker 占比高**（~58/75），`投资收益` 等锚点易触发 — 须 Phase 1B worksheet 人工 grade（`MISSED` vs `ABSENT-OK`）确认。
+- `major_subsidiaries` **0/86 usable** 主因 industrial-style `in_region` / 附注 vs MD&A 门控，**结构性 partial**；**不得**过度解读为金融 subtype 抽取失败。
+- **insurer n=2**：§ 上表 insurer 均值 **非统计显著**，仅作方向参考。
+- **financial under-tagging scan**（YAML `financial: true` 完整性）**未做**，deferred **#28 或更晚**。
+
+**Subtype caveats（stored schema；audit 仍按 stored 跑）：**
+
+| code | 说明 |
+|---|---|
+| 000402 金融街 | stored `broker`；疑为地产/REIT，非券商 |
+| 600816 建元信托 | stored `bank`；疑为 trust / `other_financial` |
+| 600318 新力金融 | stored `bank`；多元金融控股，subtype 不清 |
+
+**产物：**
+
+- [financial_audit_summary.md](../outputs/generalization/full_market_2024/financial_audit_summary.md)
+- `financial_audit_population.csv`（1,059 rows）
+- `financial_population_inventory.csv`（87 YAML financial）
+- `financial_audit_sample.csv`（30 公司 × 325 cells；**manual_grade blank**）
 
 **验证样本（cached PDF）：**
 

@@ -12,8 +12,9 @@
 | **strict usable** | strict usable | 更严格的 adversarial 审计标签（usable only）。比 proxy 更保守。 |
 | **strict lenient** | strict lenient | usable + partial 的上界：证据相关但可能不完整/有噪声。 |
 | **manual PDF deep-read** | manual PDF deep-read | 读取 PDF 页文本验证 evidence；检查 `not_found` 是否应为 missed。小样本校准，非全量人工验证。 |
-| **not_found_missed** | not_found_missed | 字段在 PDF 中存在但抽取返回 not_found（false negative）。仅 manual PDF deep-read 可可靠判定。 |
-| **非金融 headline** | non-financial headline | 11 字段均值仅统计工业类（`financial: false`）公司；金融公司用独立子 schema，不混入。 |
+| **not_found_missed** | not_found_missed | 字段在 PDF 中存在但抽取返回 not_found。**工业 strict**：manual PDF deep-read 可可靠判定。**金融 audit**：自动化 anchor 召回 hint only，须 calibration worksheet 人工 grade 确认。 |
+| **非金融 headline** | non-financial headline | 11 字段均值仅统计工业类（`financial: false`）公司；金融公司用独立子 schema，**不混入**（9.43/11）。 |
+| **金融 strict headline** | financial strict headline | 按 bank/broker/insurer/other 子 schema 单独报告（#27）；**不得**与 non-fin 9.43/11 混报。 |
 
 **板块名称**：bse=北交所 | star=科创板 | szse_main=深市主板 | chinext=创业板 | sse_main=沪市主板
 
@@ -146,6 +147,39 @@
 > **为何 proxy 10.35 与 strict 9.01 差距小于旧 gap（10.54→10.16）？** 当前 proxy 已含 Issue #1/#2 收紧规则，本身更接近 strict。**不得将 9.01 与旧 10.16 比较并声称「改善」或「下降」**——baseline、proxy 规则、universe 规模均不同。
 
 > **不得声称全量人工验证**：9.01/11 是自动化 adversarial 全 population 估计 + 15 家 PDF 小样本校准，不是 62,890 SQLite 行的人工逐条核对。
+
+### 10. full_market_2024 金融 strict audit（#27，2026-06-25）
+
+- **目的**：对 86 家 `financial: true` ok 公司按子 schema 做 **单独** automated strict audit；与 non-fin 9.43/11 **完全分开**
+- **方法**：
+  1. Phase 0：`financial_population_inventory.csv`（87 tagged / 86 ok；subtype breakdown）
+  2. Phase 1A：`lab/strict_audit_financial_full_market.py` — 1,059 field-cells；financial-specific numeric/table/section rules（非 industrial `revenue_table_plausible` 盲目复用）
+  3. Phase 1B：`lab/financial_calibration_sample.py` — 30 公司 × 325 cells worksheet；`manual_grade` **待填写**
+- **结果（automated strict usable，非全量人工验证）**：
+
+| subtype | strict usable | strict lenient | proxy |
+|---|---:|---:|---:|
+| bank (43) | **9.00 / 13** | 11.28 / 13 | 8.98 / 13 |
+| broker (37) | **7.66 / 12** | 9.00 / 12 | 8.57 / 12 |
+| insurer (2) | **9.25 / 12** | 10.50 / 12 | 10.50 / 12 |
+| other_financial (4) | **5.75 / 8** | 7.00 / 8 | 5.50 / 8 |
+
+- **产出**：`financial_audit_summary.md`、`financial_audit_population.csv`、`financial_audit_sample.csv`
+- **不得声称**：金融 audit 已 fully validated；`not_found_missed`（75 cells，broker-heavy）为 **recall hint 非确认 truth**；`major_subsidiaries` 低 usable 为 **结构性 partial**（industrial in_region 门控）；**insurer n=2** 勿过度解读 subtype 均值；**financial under-tagging scan** deferred #28+；extraction fixes deferred #28
+
+```bash
+# 金融 automated strict audit
+python lab/strict_audit_financial_full_market.py \
+  --out-dir outputs/generalization/full_market_2024
+
+# 生成校准 worksheet
+python lab/financial_calibration_sample.py --generate \
+  --out-dir outputs/generalization/full_market_2024
+
+# 填写 manual_grade 后：
+python lab/financial_calibration_sample.py \
+  --score outputs/generalization/full_market_2024/financial_audit_sample.csv
+```
 
 ## 指标对照表
 

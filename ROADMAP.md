@@ -1,6 +1,6 @@
 # 路线图
 
-_最后更新：2026-06-24_
+_最后更新：2026-06-25_
 
 ## 第一阶段：年报数据获取与基础字段抽取
 
@@ -45,11 +45,10 @@ _最后更新：2026-06-24_
 | rnd_investment scoped refresh（P2.1） | 已完成 — rnd found 94.2% |
 | revenue split-table scoped refresh（Issue #26） | 已完成 — wrong→usable 297；region wrong 258→38 |
 | BSE 模板适配 | 部分改善 — strict 8.82/11（post-revenue） |
+| 金融公司字段质量 audit（Issue #27） | **Phase 0–1B 完成** — inventory + automated strict + worksheet（grading 待完成）；extraction fixes → #28 |
 | revenue 剩余 strict-wrong follow-up | 待办 — ~38 region + ~19 segment |
 | rnd 8 家 sse_main 回归 follow-up | 待办 |
-| 金融公司字段质量专项 review | 待办 |
-
-- 金融公司字段质量专项 review（numeric 噪声、auto-tag 误标）
+| 金融 manual calibration grading | 待办 — 325 cells worksheet 已生成 |
 - 2023 / 2022 年报增量提取
 - `sample_universe` 增加「资本」等关键词补丁
 - `strict_audit_result` loader 入库（可选）
