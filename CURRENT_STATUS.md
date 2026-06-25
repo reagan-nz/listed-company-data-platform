@@ -1,10 +1,12 @@
 # 当前状态
 
-_最后更新：2026-06-24（full_market_2024 + scoped rnd_investment refresh + strict 审计重跑）_
+_最后更新：2026-06-24（full_market_2024 + scoped rnd/revenue refresh + strict 审计重跑）_
 
 > **本文档是项目主进度页。** 老师建议从这里开始阅读；技术细节见 [docs/](docs/)，变更记录见 [CHANGELOG.md](CHANGELOG.md)。
 
-**2026-06-24 日结（rnd refresh + P2.1）**：scoped rnd_investment 刷新完成（cached PDF，非 CNINFO 重跑）；P2.1 candidate-fallback 修复 15 个回归；rnd found **67.9% → 94.2%**（5,297/5,621）；BSE rnd **22.8% → 99.2%**；非金融 proxy **10.61/11**；strict usable **9.38/11**；BSE strict **8.71/11**。详见 [rnd_refresh_summary.md](outputs/generalization/full_market_2024/rnd_refresh_summary.md)。
+**2026-06-24 日结（revenue refresh #26）**：scoped `revenue_by_region` / `revenue_by_segment` 刷新完成（cached PDF，非 CNINFO 重跑）；Tier 3 跨页 continuation stitch 为主驱动（343/346）；wrong→usable **297**；0 回归；region wrong **258→38**；segment wrong **109→19**；非金融 strict **9.38→9.43/11**；proxy **10.61→10.67/11**。详见 [revenue_refresh_summary.md](outputs/generalization/full_market_2024/revenue_refresh_summary.md)。
+
+**2026-06-24 日结（rnd refresh + P2.1）**：scoped rnd_investment 刷新完成（cached PDF，非 CNINFO 重跑）；P2.1 candidate-fallback 修复 15 个回归；rnd found **67.9% → 94.2%**（5,297/5,621）；BSE rnd **22.8% → 99.2%**。详见 [rnd_refresh_summary.md](outputs/generalization/full_market_2024/rnd_refresh_summary.md)。
 
 **2026-06-24 日结（full_market）**：full_market_2024 全 A 股 2024 年报提取完成（6124 家 universe）；5707 ok / 417 no_announcement / 0 error；SQLite **62,890** 行。
 
@@ -17,10 +19,11 @@ _最后更新：2026-06-24（full_market_2024 + scoped rnd_investment refresh + 
 搭建中国上市公司**基础但完整的数据库**。
 
 - **当前数据来源**：巨潮资讯网（CNINFO）公开年报 PDF，程序化抽取 11 项基础字段（工业/制造类公司为主）。
-- **已完成**：全 A 股 2024 年报首次全量提取 + SQLite 入库 + 混合 strict 审计。
+- **已完成**：全 A 股 2024 年报首次全量提取 + SQLite 入库 + 混合 strict 审计 + scoped rnd/revenue 字段刷新。
 - **后续扩展（尚未实现）**：
   - 多年度扩展（2023 / 2022 年报）；
   - 金融公司字段质量专项 review；
+  - revenue 剩余 ~57 strict-wrong 单元格 follow-up；
   - **BrowserUser** 爬虫智能体（全量基线稳定后，非当前直接下一步）。
 
 当前阶段：**可维护的数据平台原型已覆盖全 A 股 2024 基线**（见第 3 节）。
@@ -33,8 +36,9 @@ _最后更新：2026-06-24（full_market_2024 + scoped rnd_investment refresh + 
 |---|---|
 | **full_market_2024 全量提取** | 6124 家 universe；5707 ok；5 board 批次 + merge + SQLite 导入 — 见 [full_market_2024_summary.md](outputs/generalization/full_market_2024/full_market_2024_summary.md) |
 | **full_market_2024 scoped rnd refresh** | rnd_investment 仅字段重抽取（cached PDF）；+1,460 not_found→found — 见 [rnd_refresh_summary.md](outputs/generalization/full_market_2024/rnd_refresh_summary.md) |
-| **full_market_2024 混合 strict 审计** | 5621 非金融 × 11 字段；post-rnd strict **9.38/11** — 见 [strict_audit_summary.md](outputs/generalization/full_market_2024/strict_audit_summary.md) |
-| **工具链** | `make_full_market_yaml.py`、`merge_full_market_batches.py`、`strict_audit_full_market.py`、`refresh_rnd_full_market.py`、`run_full_market_2024.sh` |
+| **full_market_2024 scoped revenue refresh (#26)** | revenue_by_region/segment 仅字段重抽取（cached PDF）；wrong→usable 297；stitch 343 — 见 [revenue_refresh_summary.md](outputs/generalization/full_market_2024/revenue_refresh_summary.md) |
+| **full_market_2024 混合 strict 审计** | 5621 非金融 × 11 字段；post-revenue strict **9.43/11** — 见 [strict_audit_summary.md](outputs/generalization/full_market_2024/strict_audit_summary.md) |
+| **工具链** | `make_full_market_yaml.py`、`merge_full_market_batches.py`、`strict_audit_full_market.py`、`refresh_rnd_full_market.py`、`refresh_revenue_full_market.py`、`run_full_market_2024.sh` |
 | **Independent eval1000** | 新 cohort 1000 家；泛化验证 PASS |
 | **eval1000_v2** | 同 cohort 1020 家全量重跑 |
 | **SQLite 原型** | 四表 v1 schema；eval1000 / v2 / independent / full_market_2024 均已导入 |
@@ -57,8 +61,10 @@ eval_results.json + root symlinks
 SQLite（62,890 extracted_field 行）
     ↓  lab/refresh_rnd_full_market.py（scoped rnd only, cached PDF）
 rnd found 67.9% → 94.2%（P2.1 candidate-fallback）；merge + strict audit 重跑
+    ↓  lab/refresh_revenue_full_market.py（scoped revenue only, cached PDF, #26）
+revenue wrong→usable 297（Tier 3 stitch 343）；merge + strict audit 重跑
     ↓  lab/strict_audit_full_market.py
-strict_audit_summary.md（9.38/11 非金融 strict usable）
+strict_audit_summary.md（9.43/11 非金融 strict usable）
 ```
 
 - **可复现**：universe YAML、batch 脚本、审计脚本均已版本化。
@@ -70,7 +76,7 @@ strict_audit_summary.md（9.38/11 非金融 strict usable）
 
 ## 4. 当前关键数字
 
-**Headline 来自 full_market_2024**（2026-06-24）。指标含义见第 4.1 节。
+**Headline 来自 full_market_2024**（2026-06-24，post rnd + revenue refresh）。指标含义见第 4.1 节。
 
 ### full_market_2024 最终结果
 
@@ -82,10 +88,12 @@ strict_audit_summary.md（9.38/11 非金融 strict usable）
 | error | **0** |
 | 非金融 ok | 5621 |
 | 金融 ok | 86 |
-| **非金融 proxy plausible** | **10.61 / 11**（post-rnd refresh） |
-| **非金融 strict usable**（自动化 adversarial） | **9.38 / 11** |
-| strict lenient（usable + partial） | 10.73 / 11 |
+| **非金融 proxy plausible** | **10.67 / 11**（post-revenue refresh） |
+| **非金融 strict usable**（自动化 adversarial） | **9.43 / 11** |
+| strict lenient（usable + partial） | **10.80 / 11** |
 | rnd_investment found | **5,297 / 5,621（94.2%）** |
+| revenue_by_region strict wrong | **38**（was 258 pre-#26） |
+| revenue_by_segment strict wrong | **19**（was 109 pre-#26） |
 
 ### 与受控评估对比（非金融 proxy）
 
@@ -93,7 +101,7 @@ strict_audit_summary.md（9.38/11 非金融 strict usable）
 |---|---:|---:|---:|
 | eval1000_v2 | 1020 | 947 | 10.33/11 |
 | independent eval1000 | 1000 | 918 | 10.30/11 |
-| **full_market_2024** | **6124** | **5707** | **10.61/11** |
+| **full_market_2024** | **6124** | **5707** | **10.67/11** |
 
 > proxy 在全市场规模上与 v2/independent 一致，说明管道规模泛化良好。
 
@@ -102,31 +110,33 @@ strict_audit_summary.md（9.38/11 非金融 strict usable）
 | 指标 | 数值 |
 |---|---|
 | 自动化 recheck 范围 | 5621 家 × 11 字段 = **61,831** cells |
-| strict usable（usable only） | **9.38 / 11** |
-| strict lenient（usable + partial） | **10.73 / 11** |
-| rnd strict usable（field-level） | **5,078 / 5,621** |
-| 样本 CSV | 55 家 × 7 字段 = 476 rows |
+| strict usable（usable only） | **9.43 / 11** |
+| strict lenient（usable + partial） | **10.80 / 11** |
+| population wrong（all fields） | **566**（was 876 pre-#26） |
+| rnd strict usable（field-level） | **5,086 / 5,621** |
+| 样本 CSV | 55 家 × 7 字段 = 490 rows |
 | 手动 PDF deep-read | 15 家 = 105 rows |
-| 手动 vs 自动化一致率 | 46/105（44%） |
+| 手动 vs 自动化一致率 | 45/105（43%） |
 
 **板块 strict usable（非金融，mean /11）**：
 
 | board | 中文 | strict usable |
 |---|---|---:|
-| bse | 北交所 | **8.71** |
-| sse_main | 沪市主板 | **9.25** |
-| szse_main | 深市主板 | 9.41 |
-| star | 科创板 | **9.56** |
-| chinext | 创业板 | 9.65 |
+| bse | 北交所 | **8.82** |
+| sse_main | 沪市主板 | **9.35** |
+| szse_main | 深市主板 | 9.43 |
+| star | 科创板 | **9.61** |
+| chinext | 创业板 | 9.67 |
 
-> **不得声称 strict 优于旧 baseline 10.16/11**：旧数字来自 eval1000（proxy 10.5/11，规则更松）。post-rnd strict **9.38/11** 是 scoped refresh 后的自动化 adversarial 估计，**非 62,890 行全量人工验证**。
+> **不得声称 strict 优于旧 baseline 10.16/11**：旧数字来自 eval1000（proxy 10.5/11，规则更松）。post-revenue strict **9.43/11** 是 scoped refresh 后的自动化 adversarial 估计，**非 62,890 行全量人工验证**。
 
 ### SQLite
 
 | run_name | extracted_field | evaluation_result |
 |---|---:|---:|
 | `full_market_2024` | 62,890 | 62,890 |
-| `full_market_2024_rnd_refresh`（post-rnd） | 62,890 | 62,890 |
+| `full_market_2024_rnd_refresh` | 62,890 | 62,890 |
+| `full_market_2024_revenue_refresh`（post-#26） | 62,890 | 62,890 |
 
 | 表 | 行数 | 说明 |
 |---|---:|---|
@@ -145,8 +155,8 @@ strict_audit_summary.md（9.38/11 非金融 strict usable）
 | **no_announcement** | 在 CNINFO 当前查询规则下未找到可用 2024 年报公告/PDF。不一定是代码 bug（可能是未披露、退市、查询窗口等）。 |
 | **error** | 网络/下载/解析等技术失败。full_market_2024 最终为 0（688267 中触媒经重试恢复）。 |
 | **proxy plausible** | 抽取评估时的自动 plausibility 分数：字段在结构上看起来合理（如 snippet 够长、表格有数据行）。**不等于人工确认正确。** |
-| **strict usable** | 更严格的 adversarial 审计标签（usable only）。post-rnd refresh 后 **9.38/11**。比 proxy 更保守。 |
-| **strict lenient** | usable + partial 的上界估计（10.73/11）。 |
+| **strict usable** | 更严格的 adversarial 审计标签（usable only）。post-revenue refresh 后 **9.43/11**。比 proxy 更保守。 |
+| **strict lenient** | usable + partial 的上界估计（10.80/11）。 |
 | **manual PDF deep-read** | 对 15 家公司读取 PDF 页文本，检查 evidence 是否支撑字段、`not_found` 是否可能为 missed。非全量人工验证。 |
 | **非金融 headline** | 11 字段 headline 仅统计 `financial: false` 的工业类公司；金融公司使用独立子 schema，**不混入** 11 字段 headline。 |
 | **SQLite 行数** | `extracted_field` / `evaluation_result` 行数 = **公司 × 字段** 记录数，不是公司数。6124 公司约产生 62890 条字段记录。 |
@@ -165,9 +175,9 @@ strict_audit_summary.md（9.38/11 非金融 strict usable）
 
 ## 5. 已知问题
 
-1. **BSE strict 已改善**（8.71/11，post-rnd）；客户/供应商表格 strict 规则已修正（P0 TOP_KW）。
+1. **BSE strict**（8.82/11，post-revenue）；客户/供应商表格 strict 规则已修正（P0 TOP_KW）。
 2. **rnd 8 家回归**（sse_main 费用化研发投入 锚点）：600011 等 7 家 + 301221 partial — 小 follow-up。
-3. **revenue 表格 page-boundary 问题**：evidence 不在 cited page 上（表格切片/跨页）。
+3. **revenue 剩余 strict-wrong**：region **38** + segment **19**（#26 已修复 header-only 跨页 split；非 fully fixed）。
 4. **金融字段质量未 strict 审计**：86 家 ok；数值字段可能有噪声。
 5. **BrowserUser 未启动**（计划中，非当前优先级）。
 
@@ -175,7 +185,7 @@ strict_audit_summary.md（9.38/11 非金融 strict usable）
 
 ## 6. 下一步计划
 
-1. **质量 follow-up**：revenue 表格跨页切片；rnd 8 家回归；金融 review。
+1. **质量 follow-up**：revenue 剩余 wrong 单元格；rnd 8 家回归；金融 review。
 2. **金融公司专项 review**（qualitative + 子 schema plausible 规则）。
 3. **多年度扩展**（2023 / 2022 年报）。
 4. **BrowserUser 试点**（PDF 无法覆盖的数据；全量基线稳定后）。
@@ -192,6 +202,7 @@ strict_audit_summary.md（9.38/11 非金融 strict usable）
 | **[CHANGELOG.md](CHANGELOG.md)** | 变更记录 |
 | **[docs/evaluation_method.md](docs/evaluation_method.md)** | 评估方法与术语 glossary |
 | **[full_market_2024_summary.md](outputs/generalization/full_market_2024/full_market_2024_summary.md)** | 全市场 run 详细报告 |
+| **[revenue_refresh_summary.md](outputs/generalization/full_market_2024/revenue_refresh_summary.md)** | #26 revenue scoped refresh 报告 |
 | **[strict_audit_summary.md](outputs/generalization/full_market_2024/strict_audit_summary.md)** | strict 审计详细报告 |
 
 ---
@@ -203,10 +214,12 @@ outputs/generalization/full_market_2024/
   eval_summary.md                         # 可 commit
   full_market_2024_summary.md             # 可 commit
   rnd_refresh_summary.md                  # 可 commit
+  revenue_refresh_summary.md              # 可 commit
   strict_audit_summary.md                 # 可 commit
   strict_audit_sample.csv                 # 可 commit
   eval_results.json                       # gitignored
   rnd_refresh_changes.csv                 # gitignored
+  revenue_refresh_changes.csv             # gitignored
   bse/ star/ szse_main/ chinext/ sse_main/  # gitignored（含 PDF）
 
 outputs/generalization/eval1000_v2/         # 保留

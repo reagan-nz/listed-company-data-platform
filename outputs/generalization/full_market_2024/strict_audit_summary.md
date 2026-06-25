@@ -1,12 +1,12 @@
 # full_market_2024 Strict Audit Summary
 
-_Generated: 2026-06-24 06:21 UTC_
+_Generated: 2026-06-24 11:23 UTC_
 
 ## 1. Sample design
 
 - **Method**: Hybrid — automated adversarial recheck over all non-financial ok companies, plus PDF-backed deep verification on a stratified manual subset.
 - **Population**: 5621 non-financial companies with status=ok, all 11 industrial fields (61831 field-cells).
-- **Targeted sample CSV**: 55 companies × 7 fields = 476 rows.
+- **Targeted sample CSV**: 55 companies × 7 fields = 490 rows.
 - **Manual PDF subset**: 15 companies × 7 targeted fields = 105 manual-verified cells.
 - **Stratification**: board (bse/star/szse_main/chinext/sse_main) × proxy tier (high≥11, mid 9–10, low<9) × risky-field state (rnd/revenue plausible vs missing). Industry field unavailable (empty in YAML).
 - **Targeted fields**: mda, main_business_segments, revenue_by_segment, revenue_by_region, rnd_investment, top_customers, top_suppliers.
@@ -16,35 +16,35 @@ _Generated: 2026-06-24 06:21 UTC_
 | scope | companies | field-cells |
 |---|---:|---:|
 | population (automated) | 5621 | 61831 |
-| sample CSV (7 fields) | 55 | 476 |
+| sample CSV (7 fields) | 55 | 490 |
 | manual PDF (7 fields) | 15 | 105 |
 
 ## 3. Label counts (population, all 11 fields)
 
 | label | count | pct |
 |---|---:|---:|
-| usable | 52707 | 85.2% |
-| partial | 7679 | 12.4% |
-| wrong | 876 | 1.4% |
+| usable | 53004 | 85.7% |
+| partial | 7692 | 12.4% |
 | not_found_unverified | 569 | 0.9% |
+| wrong | 566 | 0.9% |
 
 ## 4. Proxy vs strict comparison
 
 | metric | mean / 11 |
 |---|---:|
-| proxy plausible (eval) | **10.61** |
-| strict usable (automated, usable only) | **9.38** |
-| strict lenient (usable + partial) | **10.74** |
+| proxy plausible (eval) | **10.67** |
+| strict usable (automated, usable only) | **9.43** |
+| strict lenient (usable + partial) | **10.80** |
 | gap proxy − strict usable | **1.24** |
 
 > Old baseline strict-usable **10.16/11** was on eval1000 with looser proxy (10.5/11). Current proxy already uses tightened rnd/table rules (10.35/11). **Do not claim strict improved** without like-for-like comparison.
 
 ## 5. Strict-usable estimate
 
-- **Population automated strict-usable: 9.38 / 11** (85.2%) over 5621 non-financial companies.
-- **Lenient band (usable+partial): 10.74 / 11** (97.7%).
-- Manual PDF subset: 1 `not_found_missed` of 12 not_found-class cells in targeted fields (105 cells).
-- Automated vs manual label agreement on manual subset: **47/105 (45%)** (same strict_label).
+- **Population automated strict-usable: 9.43 / 11** (85.7%) over 5621 non-financial companies.
+- **Lenient band (usable+partial): 10.80 / 11** (98.2%).
+- Manual PDF subset: 2 `not_found_missed` of 16 not_found-class cells in targeted fields (105 cells).
+- Automated vs manual label agreement on manual subset: **45/105 (43%)** (same strict_label).
 
 ## 6. Major error patterns
 
@@ -56,7 +56,7 @@ _Generated: 2026-06-24 06:21 UTC_
 - `mda`: 42
 - `major_products`: 29
 
-- proxy=true but strict=partial: **6451** cells (overstated as fully correct by proxy).
+- proxy=true but strict=partial: **6464** cells (overstated as fully correct by proxy).
 - Common rnd pattern: per-product R&D rows without clear total label ≥10万元.
 - Common section pattern: short snippets or out-of-region extractions marked plausible.
 
@@ -66,8 +66,8 @@ _Generated: 2026-06-24 06:21 UTC_
 |---|---:|---:|---:|---:|
 | main_business_segments | 5459 | 75 | 85 | 2 |
 | major_products | 5532 | 41 | 29 | 19 |
-| revenue_by_segment | 5225 | 271 | 109 | 16 |
-| revenue_by_region | 4861 | 469 | 258 | 33 |
+| revenue_by_segment | 5313 | 273 | 19 | 16 |
+| revenue_by_region | 5070 | 480 | 38 | 33 |
 | top_customers | 5309 | 276 | 0 | 36 |
 | top_suppliers | 5375 | 215 | 0 | 31 |
 | rnd_investment | 5086 | 255 | 0 | 280 |
@@ -80,11 +80,11 @@ _Generated: 2026-06-24 06:21 UTC_
 
 | board | n | strict usable mean /11 |
 |---|---:|---:|
-| bse | 513 | 8.71 |
-| star | 584 | 9.56 |
-| szse_main | 1487 | 9.42 |
-| chinext | 1385 | 9.65 |
-| sse_main | 1652 | 9.25 |
+| bse | 513 | 8.82 |
+| star | 584 | 9.61 |
+| szse_main | 1487 | 9.43 |
+| chinext | 1385 | 9.67 |
+| sse_main | 1652 | 9.35 |
 
 ## 9. Financial companies (qualitative, separate from headline)
 

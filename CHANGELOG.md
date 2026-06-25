@@ -5,6 +5,8 @@
 ## [Unreleased]
 
 ### 新增
+- **scoped revenue table refresh**（Issue #26）：`lab/refresh_revenue_full_market.py`；cached PDF 仅重抽取 `revenue_by_region` / `revenue_by_segment`；Tier 3 continuation stitch（343）+ Tier 2 stacked trim（7）；wrong→usable **297**；0 回归；merge + strict audit + SQLite `run_name=full_market_2024_revenue_refresh` — 见 [revenue_refresh_summary.md](outputs/generalization/full_market_2024/revenue_refresh_summary.md)
+- **revenue 跨页 split-table 修复**（Issue #26，`lab/extract_annual_report.py`）：`_stitch_revenue_table_continuation` + `_trim_revenue_stacked_preview`；主增益为 header-only split 表的 wrong-cell 恢复；partial 人口基本不变
 - **scoped rnd_investment refresh**（P2）：`lab/refresh_rnd_full_market.py`；cached PDF 仅重抽取 rnd 字段；+1,460 not_found→found；merge + strict audit + SQLite `run_name=full_market_2024_rnd_refresh` — 见 [rnd_refresh_summary.md](outputs/generalization/full_market_2024/rnd_refresh_summary.md)
 - **full_market_2024 全量提取**：6124 家 A 股 universe；5707 ok / 417 no_announcement / 0 error；5 board 批次（bse→star→szse_main→chinext→sse_main）+ merge + SQLite 导入（62,890 行）— 见 `outputs/generalization/full_market_2024/full_market_2024_summary.md`
 - **full_market_2024 混合 strict 审计**：5621 非金融 × 11 字段自动化 adversarial recheck；post-rnd strict usable **9.38/11** — 见 `strict_audit_summary.md`
@@ -15,6 +17,7 @@
 - **金融公司子 schema 实现**（Issue #4）：`BANK/BROKER/INSURER/OTHER_FINANCIAL_FIELD_SPECS`、`detect_profile`/`resolve_profile`/`get_field_specs`；eval 对 `financial: true` 启用子 schema
 
 ### 变更
+- **revenue scoped refresh 完成**（#26）：region strict wrong 258→**38**；segment 109→**19**；非金融 proxy 10.61→**10.67/11**；strict 9.38→**9.43/11**；lenient 10.74→**10.80/11**；all-field wrong 876→**566**（cached PDF，非 CNINFO 重跑；非全量人工验证；不得与 eval1000 strict 10.16/11 直接比较）
 - **P2.1 rnd candidate-fallback**（`lab/extract_annual_report.py`）：top-priority anchor 无 parseable 金额时尝试下一候选窗口；修复 15 个原回归；rnd found 93.7%→**94.2%**；0 found→not_found 回退
 - **rnd_investment 召回修复**（P1+P2）：BSE 研发支出锚点 + summary-total 优先级；scoped refresh over cached PDFs；rnd found 67.9%→94.2%；BSE rnd 22.8%→99.2%；proxy 10.35→**10.61/11**；strict 9.06→**9.38/11**；BSE strict 7.71→**8.71/11**（非 CNINFO 重跑）
 - **BSE strict audit 规则修正**（P0）：TOP_KW 扩展识别北交所客户/供应商表格列头；BSE strict 7.14→7.71（审计规则，非抽取变更）
@@ -31,12 +34,13 @@
 - **收入表格 proxy 收紧**（Issue #2）：`revenue_table_plausible` 要求 `revenue_by_region` / `revenue_by_segment` preview 含至少一行非表头数据行
 
 ### 文档
+- **#26 revenue refresh 文档同步**（2026-06-24）：revenue_refresh_summary.md、CURRENT_STATUS、full_market_2024_summary、strict_audit 重跑后数字
 - **P2 rnd refresh 文档同步**（2026-06-24）：rnd_refresh_summary.md、CURRENT_STATUS、full_market_2024_summary、strict_audit 重跑后数字
 - **Phase 3 文档同步**（2026-06-24）：CURRENT_STATUS / ROADMAP / evaluation_method / database_schema / financial_company_schema / full_market_2024_summary / plans v0.6 更新；新增指标解释 glossary
 - **文档同步**（2026-06-23）：所有主要文档与 eval1000_v2 / independent eval1000 里程碑对齐；ROADMAP 阶段重排（full_market_2024 → strict 审计 → 多年度 → BrowserUser）；docs/evaluation_method 增加同 cohort 重跑与独立泛化验证说明；docs/database_schema 注明三批次 SQLite 导入状态；docs/financial_company_schema 补充 strict 未重跑说明；docs/crawler_strategy 明确 BrowserUser 在 full_market_2024 基线稳定后才启动；新增 plans/v0.6_full_market_2024_plan.md
 
 ### 计划
-- 质量 follow-up：revenue 跨页切片；rnd 8 家回归；金融 review
+- 质量 follow-up：revenue 剩余 strict-wrong（~57 cells）；rnd 8 家回归；金融 review
 - 金融公司字段质量专项 review
 - 多年度扩展（2023 / 2022）
 - BrowserUser 数据源试点（全量基线稳定后）

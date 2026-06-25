@@ -52,6 +52,7 @@ outputs/generalization/eval1000_independent_20260623/run.log
 
 # Full-market 2024 (heavy artifacts; keep summary .md + strict_audit files committable)
 outputs/generalization/full_market_2024/rnd_refresh_changes.csv
+outputs/generalization/full_market_2024/revenue_refresh_changes.csv
 outputs/generalization/full_market_2024/[0-9]*/
 outputs/generalization/full_market_2024/[0-9]*
 outputs/generalization/full_market_2024/bse/

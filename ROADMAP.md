@@ -40,15 +40,21 @@ _最后更新：2026-06-24_
 
 **目标**：提升字段质量，扩展至多年度，专项处理薄弱板块。
 
-- BSE（北交所）模板适配 — strict 最弱（7.14/11）
-- rnd_investment 召回优化（not_found_missed 问题）
-- revenue 表格跨页 / page-boundary 切片修复
+| 事项 | 状态 |
+|---|---|
+| rnd_investment scoped refresh（P2.1） | 已完成 — rnd found 94.2% |
+| revenue split-table scoped refresh（Issue #26） | 已完成 — wrong→usable 297；region wrong 258→38 |
+| BSE 模板适配 | 部分改善 — strict 8.82/11（post-revenue） |
+| revenue 剩余 strict-wrong follow-up | 待办 — ~38 region + ~19 segment |
+| rnd 8 家 sse_main 回归 follow-up | 待办 |
+| 金融公司字段质量专项 review | 待办 |
+
 - 金融公司字段质量专项 review（numeric 噪声、auto-tag 误标）
 - 2023 / 2022 年报增量提取
 - `sample_universe` 增加「资本」等关键词补丁
 - `strict_audit_result` loader 入库（可选）
 
-**完成标准**：BSE strict 提升至 ≥8.5/11；rnd missed 率下降；支持 2023 时间序列查询。
+**完成标准**：BSE strict 维持 ≥8.5/11（当前 8.82）；revenue 剩余 wrong 单元格下降；支持 2023 时间序列查询。
 
 ## 第四阶段：BrowserUser 爬虫智能体补充数据
 
