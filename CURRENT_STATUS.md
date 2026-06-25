@@ -1,8 +1,10 @@
 # 当前状态
 
-_最后更新：2026-06-25（#28 Stage 3a 质量 follow-up 收尾）_
+_最后更新：2026-06-25（#30 financial follow-up docs sync）_
 
 > **本文档是项目主进度页。** 老师建议从这里开始阅读；技术细节见 [docs/](docs/)，变更记录见 [CHANGELOG.md](CHANGELOG.md)。Stage 3a 汇总见 **[stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)**。
+
+**2026-06-25 日结（#30 financial follow-up 完结待关单）**：`#30a–#30g` 已完成并完成文档同步；涵盖 broker `not_found_missed` 收紧、ratio/table audit calibration、bank ratio helper、broker recall、financial table plausibility、insurer low-n audit hardening、subtype/tag diagnosis。**#30 ready to close after docs commit**；金融 wider rollout 仍 **deferred**。详见 [financial_audit_fix_30_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md)。
 
 **2026-06-25 日结（Stage 3a 收尾 #28）**：full_market_2024 **Stage 3a quality follow-up PASS** — 汇总 #24–#27（BSE audit rule、rnd/revenue scoped refresh、金融 audit 框架）；非金融 strict **9.43/11**（latest `run_name=full_market_2024_revenue_refresh`）；金融 **单独 headline**，worksheet grading 待办。**非**全量人工验证；**非** extraction 全部修复。Stage **3b**（residuals、grading、多年度）进行中。详见 [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)。
 
@@ -31,7 +33,8 @@ _最后更新：2026-06-25（#28 Stage 3a 质量 follow-up 收尾）_
 - **当前数据来源**：巨潮资讯网（CNINFO）公开年报 PDF，程序化抽取 11 项基础字段（工业/制造类公司为主）。
 - **已完成**：全 A 股 2024 年报首次全量提取 + SQLite 入库 + 混合 strict 审计 + scoped rnd/revenue 字段刷新。
 - **Stage 3a（Done）**：#24–#28 质量 follow-up — 见 [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)。
-- **Stage 3b（进行中）**：金融 manual grading、revenue/rnd 剩余 wrong、financial under-tagging、多年度扩展决策。
+- **Stage 3b（进行中）**：`#30` ready to close；后续聚焦 `#31` 金融漏标扫描、`#32` revenue/rnd residuals、`#33` 多年份扩展决策。
+- **#30（Done / docs closeout）**：`#30a`、`#30b`、`#30c`、`#30d`、`#30e`、`#30f`、`#30g` 均已完成；`#30` 在 docs commit 后可关闭。
 - **BrowserUser** 爬虫智能体（全量基线稳定后，非当前直接下一步）。
 
 当前阶段：**full_market_2024 2024 基线 + Stage 3a 质量 follow-up 已 PASS**； residuals 见 §5–§6（见第 3 节）。
@@ -46,7 +49,7 @@ _最后更新：2026-06-25（#28 Stage 3a 质量 follow-up 收尾）_
 | **full_market_2024 scoped rnd refresh** | rnd_investment 仅字段重抽取（cached PDF）；+1,460 not_found→found — 见 [rnd_refresh_summary.md](outputs/generalization/full_market_2024/rnd_refresh_summary.md) |
 | **full_market_2024 scoped revenue refresh (#26)** | revenue_by_region/segment 仅字段重抽取（cached PDF）；wrong→usable 297；stitch 343 — 见 [revenue_refresh_summary.md](outputs/generalization/full_market_2024/revenue_refresh_summary.md) |
 | **full_market_2024 混合 strict 审计** | 5621 非金融 × 11 字段；post-revenue strict **9.43/11** — 见 [strict_audit_summary.md](outputs/generalization/full_market_2024/strict_audit_summary.md) |
-| **full_market_2024 金融 audit（#27）** | 86 ok × 子 schema；automated financial strict + 325-cell calibration worksheet（grading 待完成）— 见 [financial_audit_summary.md](outputs/generalization/full_market_2024/financial_audit_summary.md) |
+| **full_market_2024 金融 audit（#27 + #30）** | 86 ok × 子 schema；`#30a–#30g` follow-up 已完成（audit-only + extraction helper + diagnosis-only）；金融 wider rollout 仍 deferred — 见 [financial_audit_fix_30_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md) |
 | **Stage 3a 质量 follow-up 汇总（#28）** | #24–#27 合并快照 + closure — 见 [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md) |
 | **工具链** | `make_full_market_yaml.py`、`merge_full_market_batches.py`、`strict_audit_full_market.py`、`strict_audit_financial_full_market.py`、`financial_calibration_sample.py`、`refresh_rnd_full_market.py`、`refresh_revenue_full_market.py`、`run_full_market_2024.sh` |
 | **Independent eval1000** | 新 cohort 1000 家；泛化验证 PASS |
@@ -210,21 +213,17 @@ financial_audit_sample.csv（30 公司 × 325 cells；manual_grade 待填写）
 1. **BSE strict**（8.82/11，post-revenue）；客户/供应商表格 strict 规则已修正（P0 TOP_KW）。
 2. **rnd 8 家回归**（sse_main 费用化研发投入 锚点）：600011 等 7 家 + 301221 partial — 小 follow-up。
 3. **revenue 剩余 strict-wrong**：region **38** + segment **19**（#26 已修复 header-only 跨页 split；非 fully fixed）。
-4. **金融字段 numeric/table 噪声 + tag/subtype 疑点**（#27 audit 框架完成；325-cell grading 待完成；extraction fixes → Stage 3b）：broker proxy−strict gap 最大；000402 / 600816 / 600318 subtype caveats。
+4. **金融 residuals 仍存在，但 #30 tranche 已完成**：金融 audit / extraction / subtype review 已在 `#30a–#30g` 完成并单独文档化；wider rollout deferred；000402 / 600816 / 600318 retagging 进入后续 issue。
 5. **BrowserUser 未启动**（计划中，非当前优先级）。
 
 ---
 
 ## 6. 下一步计划（Stage 3b）
 
-1. **金融 manual calibration grading** — 填写 `financial_audit_sample.csv` → `--score`。
-2. **Broker `not_found_missed` refinement** — 基于 grading 收紧 audit 规则。
-3. **Revenue 剩余 strict-wrong** — region 38 + segment 19；scoped cached-PDF follow-up。
-4. **rnd 8 家回归** — sse_main 费用化研发投入锚点。
-5. **Financial under-tagging scan** — YAML `financial: true` 完整性。
-6. **金融 extraction/tag fixes** — numeric plausible、subtype 标签（000402 等）。
-7. **多年度扩展决策**（2025 / 2023 / 2022）— 范围与 run_name 策略。
-8. **BrowserUser 试点**（全量基线稳定后）；**`strict_audit_result` loader**（低优先级）。
+1. **#31 Financial under-tagging scan / 金融公司漏标扫描** — 含 `000402` / `600816` / `600318` retagging follow-up（需单独审批，非本轮自动改 YAML）。
+2. **#32 Revenue + rnd residual fixes / 收入与研发字段残留问题** — revenue 剩余 strict-wrong + rnd 小范围残留回归。
+3. **#33 Multiyear expansion decision / 多年份扩展决策** — 2025 / 2023 / 2022 范围与 `run_name` 策略。
+4. **BrowserUser 试点**（全量基线稳定后）；**`strict_audit_result` loader**（低优先级）。
 
 ---
 

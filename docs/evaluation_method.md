@@ -167,6 +167,29 @@
 - **产出**：`financial_audit_summary.md`、`financial_audit_population.csv`、`financial_audit_sample.csv`
 - **不得声称**：金融 audit 已 fully validated；`not_found_missed`（75 cells，broker-heavy）为 **recall hint 非确认 truth**；`major_subsidiaries` 低 usable 为 **结构性 partial**（industrial in_region 门控）；**insurer n=2** 勿过度解读 subtype 均值；**financial under-tagging scan** deferred Stage 3b；extraction fixes deferred Stage 3b
 
+### 10.1 `#30` financial follow-up validation posture
+
+- `#30` (`#30a–#30g`) used the frozen `#29` manual calibration sample as a **validation anchor**.
+- This means frozen manual-vs-auto agreement is **not** the only success metric.
+- `#30` also used **targeted gates**, such as:
+  - confirmed `MISSED` recovery counts
+  - negative-control preservation
+  - no unintended sample/profile writes in dry-runs
+  - insurer negative targets staying non-usable while positives remain usable/partial
+
+**Important metric caveat:**
+
+Recovering a row that is manually labeled `MISSED` can make frozen agreement go **down**, because the manual row stays `MISSED` while automation correctly changes to `usable`.
+
+So for `#30`, agreement deltas must be read together with:
+
+- field-targeted validation gates
+- before/after strict labels
+- control rows
+- whether the change was audit-only, extraction, or diagnosis-only
+
+Consolidated closeout: [financial_audit_fix_30_summary.md](../outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md)
+
 ```bash
 # 金融 automated strict audit
 python lab/strict_audit_financial_full_market.py \

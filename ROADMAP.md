@@ -1,6 +1,6 @@
 # 路线图
 
-_最后更新：2026-06-25（#28 Stage 3a 收尾）_
+_最后更新：2026-06-25（#30 financial follow-up docs sync）_
 
 ## 第一阶段：年报数据获取与基础字段抽取
 
@@ -54,21 +54,18 @@ _最后更新：2026-06-25（#28 Stage 3a 收尾）_
 
 ### 3b — residuals、grading 与多年度（**In Progress**）
 
-**目标**：消化剩余 wrong 单元格；完成金融 manual grading；决策多年度扩展。
+**目标**：在不声称金融 extraction fully signed off 的前提下，完成 `#30` 收尾并推进 `#31` / `#32` / `#33`。
 
 | 事项 | 状态 |
 |---|---|
-| 金融 manual calibration grading | 待办 — 325 cells worksheet 已生成 |
-| broker `not_found_missed` refinement | 待办 — 依赖 grading |
-| revenue 剩余 strict-wrong | 待办 — ~38 region + ~19 segment |
-| rnd 8 家 sse_main 回归 | 待办 |
-| financial under-tagging scan | 待办 |
-| 金融 extraction/tag fixes | 待办 — numeric plausible、subtype 标签 |
-| 2023 / 2022 / 2025 扩展决策 | 待办 |
+| `#30` financial follow-up（`#30a–#30g`） | **Done / closing** — audit-only + extraction helper + subtype diagnosis；wider financial rollout deferred |
+| `#31` financial under-tagging scan | 下一项 — 含 `000402` / `600816` / `600318` retagging review |
+| `#32` revenue + rnd residual fixes | 下一项 — revenue 剩余 strict-wrong + rnd residuals |
+| `#33` multiyear expansion decision | 下一项 — 2025 / 2023 / 2022 scope / run naming |
 | BSE 模板 residual gap | 部分 — strict 8.82/11（≥8.5 阈值已满足） |
 | `strict_audit_result` loader 入库 | 可选 |
 
-**3b 完成标准（draft）**：金融 worksheet graded；revenue/rnd 剩余 wrong 有 scoped follow-up 计划或 fix；2023 时间序列 scope 决策 documented。
+**3b 完成标准（draft）**：`#30` docs closeout completed；`#31` / `#32` / `#33` 有明确范围；金融 wider rollout 仍单独评估，不混入 non-fin `9.43/11` headline。
 
 ## 第四阶段：BrowserUser 爬虫智能体补充数据
 

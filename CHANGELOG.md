@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ### 新增
+- **#30 financial field follow-up 汇总**（2026-06-25）：新增 [financial_audit_fix_30_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md)，汇总 `#30a–#30g` 的 audit-only、extraction helper 与 diagnosis-only 结果；明确后续工作转入 `#31` / `#32` / `#33`
 - **#30d broker income / margin recall**（2026-06-25）：`lab/extract_annual_report.py` 新增 broker-only 分部收入 / notes IB / MD&A 融出资金解析；sample-only apply 恢复 **4/4** confirmed MISSED（`601878` 投行 / 资管 / 融出资金，`600030` 投行净收入），23/23 ABSENT-OK controls 保持非 usable；population `usable` **+4** / `not_found_missed` **-4** — 见 [financial_audit_fix_30d_apply_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30d_apply_summary.md)
 - **#30b ratio/table reject + major_subsidiaries gate**（2026-06-25）：ratio 行业叙述/优先股触发拒绝、table plausibility 增强、子公司表 out-of-region usable；joined agreement **69.5%→71.7%** — 见 [financial_audit_fix_30b_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30b_summary.md)
 - **#30a broker `not_found_missed` tightening**（2026-06-25）：`lab/strict_audit_financial_full_market.py` field-specific PDF gates；joined calibration agreement **62%→69.5%**；23/23 ABSENT-OK over-call 修复 — 见 [financial_audit_fix_30a_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30a_summary.md)
@@ -20,6 +21,7 @@
 - **金融公司子 schema 实现**（Issue #4）：`BANK/BROKER/INSURER/OTHER_FINANCIAL_FIELD_SPECS`、`detect_profile`/`resolve_profile`/`get_field_specs`；eval 对 `financial: true` 启用子 schema
 
 ### 变更
+- **#30 金融 follow-up tranche 完成并待关单**：完成 broker `not_found_missed` audit tightening、ratio/table audit calibration、bank ratio helper、broker income/margin recall helper、financial table plausibility hardening、insurer audit hardening、subtype/tag diagnosis；**无** CNINFO rerun、**无** YAML tag changes、**无** SQLite import
 - **revenue scoped refresh 完成**（#26）：region strict wrong 258→**38**；segment 109→**19**；非金融 proxy 10.61→**10.67/11**；strict 9.38→**9.43/11**；lenient 10.74→**10.80/11**；all-field wrong 876→**566**（cached PDF，非 CNINFO 重跑；非全量人工验证；不得与 eval1000 strict 10.16/11 直接比较）
 - **P2.1 rnd candidate-fallback**（`lab/extract_annual_report.py`）：top-priority anchor 无 parseable 金额时尝试下一候选窗口；修复 15 个原回归；rnd found 93.7%→**94.2%**；0 found→not_found 回退
 - **rnd_investment 召回修复**（P1+P2）：BSE 研发支出锚点 + summary-total 优先级；scoped refresh over cached PDFs；rnd found 67.9%→94.2%；BSE rnd 22.8%→99.2%；proxy 10.35→**10.61/11**；strict 9.06→**9.38/11**；BSE strict 7.71→**8.71/11**（非 CNINFO 重跑）
@@ -37,6 +39,7 @@
 - **收入表格 proxy 收紧**（Issue #2）：`revenue_table_plausible` 要求 `revenue_by_region` / `revenue_by_segment` preview 含至少一行非表头数据行
 
 ### 文档
+- **#30 final summary + docs sync**（2026-06-25）：同步 `CURRENT_STATUS.md`、`CHANGELOG.md`、`ROADMAP.md`、`docs/financial_company_schema.md`、`docs/evaluation_method.md`、`stage3_quality_followup_summary.md`；将后续工作路由到 `#31` / `#32` / `#33`
 - **#28 Stage 3a 质量 follow-up 汇总**（2026-06-25）：[`stage3_quality_followup_summary.md`](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md) — 合并 #24–#27 快照；Stage 3a **PASS**；Stage 3b backlog；CURRENT_STATUS / ROADMAP / evaluation_method 交叉链接
 - **#27 金融 audit 文档同步**（2026-06-25）：financial_company_schema、CURRENT_STATUS、ROADMAP、evaluation_method；financial audit 单独 headline
 - **#26 revenue refresh 文档同步**（2026-06-24）：revenue_refresh_summary.md、CURRENT_STATUS、full_market_2024_summary、strict_audit 重跑后数字
@@ -45,10 +48,9 @@
 - **文档同步**（2026-06-23）：所有主要文档与 eval1000_v2 / independent eval1000 里程碑对齐；ROADMAP 阶段重排（full_market_2024 → strict 审计 → 多年度 → BrowserUser）；docs/evaluation_method 增加同 cohort 重跑与独立泛化验证说明；docs/database_schema 注明三批次 SQLite 导入状态；docs/financial_company_schema 补充 strict 未重跑说明；docs/crawler_strategy 明确 BrowserUser 在 full_market_2024 基线稳定后才启动；新增 plans/v0.6_full_market_2024_plan.md
 
 ### 计划
-- Stage 3b：financial manual calibration grading + broker not_found_missed refinement
-- Stage 3b：revenue 剩余 strict-wrong（~57 cells）；rnd 8 家回归；financial under-tagging scan
-- Stage 3b：金融 extraction/tag fixes（numeric plausible、subtype 标签）
-- 多年度扩展决策（2025 / 2023 / 2022）
+- `#31`：financial under-tagging scan / 金融公司漏标扫描（含 `000402` / `600816` / `600318` retag follow-up）
+- `#32`：revenue + rnd residual fixes / 收入与研发字段残留问题
+- `#33`：multiyear expansion decision / 多年份扩展决策（2025 / 2023 / 2022）
 - BrowserUser 数据源试点（全量基线稳定后）
 
 ## 2026-06-18

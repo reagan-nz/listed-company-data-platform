@@ -246,6 +246,8 @@ Optional lower priority: `strict_audit_result` DB loader; BrowserUser pilot (ROA
 
 Cross-links: [CURRENT_STATUS.md](../../CURRENT_STATUS.md) | [ROADMAP.md](../../ROADMAP.md) | [docs/evaluation_method.md](../../docs/evaluation_method.md)
 
+Stage 3b financial follow-up continued in `#30`; see [financial_audit_fix_30_summary.md](financial_audit_fix_30_summary.md).
+
 ---
 
 ## 12. Anti-claims checklist

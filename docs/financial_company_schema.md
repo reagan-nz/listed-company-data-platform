@@ -1,6 +1,6 @@
 # 金融公司字段体系 v1
 
-_最后更新：2026-06-25（#27 金融字段质量 audit 框架完成）_
+_最后更新：2026-06-25（#30 financial follow-up docs sync）_
 
 > **实现状态（Issue #4 + #27）**：`lab/field_schema.py` 已实现 `BANK_FIELD_SPECS` / `BROKER_FIELD_SPECS` / `INSURER_FIELD_SPECS` / `OTHER_FINANCIAL_FIELD_SPECS`，以及 `detect_profile()` / `resolve_profile()` / `get_field_specs()` 分发。eval 对 `financial: true` 公司使用子 schema；非金融仍用工业 11 字段。
 >
@@ -18,6 +18,36 @@ _最后更新：2026-06-25（#27 金融字段质量 audit 框架完成）_
 > - auto-tag / subtype 修正（000402 金融街、600816 建元信托、600318 新力金融 等待 review）
 > - 325 格 manual calibration **grading 待完成**（非全量人工验证）
 > - DB `financial_subtype` 列未入库（Phase 5 未做）
+
+## #30 results snapshot
+
+`#30a–#30g` has now completed as a focused financial follow-up tranche:
+
+- **audit-only**:
+  - `#30a` broker `not_found_missed` tightening
+  - `#30b` ratio/table calibration + `major_subsidiaries` gate
+  - `#30e` financial table plausibility hardening
+  - `#30f` insurer low-n semantic hardening
+- **extraction helpers**:
+  - `#30c` bank ratio helper
+  - `#30d` broker income / margin recall helper
+- **diagnosis-only**:
+  - `#30g` subtype/tag review
+
+Key outcome posture:
+
+- financial follow-up delivered meaningful audit/extraction improvements
+- financial metrics still remain **separate** from non-fin `9.43/11`
+- wider financial rollout is still **deferred**
+- insurer cohort remains **n=2**, so broader insurer generalization is not signed off
+
+Subtype caveats from `#30g` (diagnosis-only; **no YAML changes yet**):
+
+- `000402` 金融街: likely **not broker**; may be better treated as industrial / non-financial after human review
+- `600816` 建元信托: clearly trust-like; **not bank**
+- `600318` 新力金融: diversified financial holding; **not bank**
+
+See [financial_audit_fix_30_summary.md](../outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md) for the consolidated `#30` closeout.
 
 ## 1. 为什么需要单独 schema
 
