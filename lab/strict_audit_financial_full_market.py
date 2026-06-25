@@ -135,6 +135,35 @@ _REVENUE_TABLE_REQUIRE = (
     "期货经纪", "财富管理", "资产管理", "投资银行", "证券经纪", "营业总收入",
 )
 
+# #30f: insurer-specific semantic guards (n=2, keep narrow).
+_INSURER_NUMERIC_FIELDS = frozenset({
+    "premium_income", "investment_income", "claims_expense",
+    "solvency_ratio", "combined_ratio", "embedded_value",
+})
+_INSURER_SENSITIVITY_KW = (
+    "敏感性测试", "内含价值敏感性", "情景", "赔付率提高", "费用率提高", "费用率降低",
+    "死亡率提高", "死亡率降低", "退保率提高", "退保率降低",
+)
+_INSURER_COMBINED_STRONG = ("综合成本率",)
+_INSURER_CLAIMS_ACCEPT = (
+    "赔付支出", "赔款支出", "赔付及给付", "赔付及给付支出", "赔款及给付",
+)
+_INSURER_CLAIMS_REJECT = (
+    "退保金", "保单红利", "提取保险责任准备金", "手续费",
+    "产品", "渠道", "标准保费",
+)
+_INSURER_INVESTMENT_ACCEPT = ("总投资收益", "净投资收益", "投资收益")
+_INSURER_SOLVENCY_ACCEPT = (
+    "综合偿付能力充足率", "综合偿付能力", "核心偿付能力充足率",
+    "核心偿付能力", "偿付能力充足率",
+)
+_INSURER_SEGMENT_LABELS = (
+    "寿险业务", "健康险业务", "意外险业务", "保险业务", "年金业务",
+)
+_INSURER_SEGMENT_VALUE_KW = (
+    "已赚保费", "保险业务收入", "原保险保费收入", "总保费", "首年业务", "续期业务",
+)
+
 # Broker numeric fields use stricter PDF missed-disclosure checks (#30a).
 BROKER_NUMERIC_FIELDS = frozenset({
     "brokerage_income",
@@ -360,6 +389,110 @@ def _looks_like_amount_value(val: str) -> bool:
 def _anchor_in_text(text: str, anchors: tuple[str, ...]) -> bool:
     t = text or ""
     return any(a in t for a in anchors)
+
+
+def _is_year_token(val: str) -> bool:
+    s = re.sub(r"[^\d]", "", val or "")
+    return len(s) == 4 and s.startswith("20")
+
+
+def _is_insurer_numeric_field(fk: str, spec: FieldSpec) -> bool:
+    return fk in _INSURER_NUMERIC_FIELDS
+
+
+def _insurer_has_sensitivity(ctx: str, ev: str = "") -> bool:
+    combined = (ctx or "") + " " + (ev or "")
+    return any(k in combined for k in _INSURER_SENSITIVITY_KW)
+
+
+def _insurer_business_line_snippet(text: str) -> bool:
+    t = text or ""
+    if sum(1 for k in _INSURER_SEGMENT_LABELS if k in t) < 2:
+        return False
+    if not any(k in t for k in _INSURER_SEGMENT_VALUE_KW):
+        return False
+    return bool(re.search(r"\d{2,3}(?:,\d{3})+|\d{4,}", t))
+
+
+def _insurer_ratio_from_context(labels: tuple[str, ...], ctx: str, ev: str = "") -> str | None:
+    text = (ctx or "") + " " + (ev or "")
+    for lab in labels:
+        m = re.search(re.escape(lab) + r".{0,20}?(\d+(?:\.\d+)?\s*[%％])", text)
+        if m:
+            return m.group(1).strip()
+    return None
+
+
+def _evaluate_insurer_numeric(
+    fk: str,
+    labeled: list,
+    ctx: str,
+    ev: str,
+    spec: FieldSpec,
+) -> tuple[str, str] | None:
+    combined = (ctx or "") + " " + (ev or "")
+
+    if fk == "combined_ratio":
+        if _insurer_has_sensitivity(ctx, ev):
+            return "wrong", "insurer sensitivity/EV page, not combined ratio"
+        for item in labeled:
+            lab = (item.get("label") or "").strip()
+            num = (item.get("value") or "").strip()
+            if any(k in lab for k in _INSURER_COMBINED_STRONG) and _looks_like_ratio_value(num):
+                return "usable", f"insurer combined ratio '{lab}' value={num}"
+        return "wrong", "missing exact insurer combined-ratio label"
+
+    if fk == "claims_expense":
+        if _insurer_has_sensitivity(ctx, ev):
+            return "wrong", "insurer sensitivity page, not claims expense"
+        saw_reject = False
+        for item in labeled:
+            lab = (item.get("label") or "").strip()
+            num = (item.get("value") or "").strip()
+            if any(k in lab for k in _INSURER_CLAIMS_REJECT) or any(k in combined for k in _INSURER_CLAIMS_REJECT):
+                saw_reject = True
+                continue
+            if any(k in lab for k in _INSURER_CLAIMS_ACCEPT) and _looks_like_amount_value(num) and not _is_year_token(num):
+                return "usable", f"insurer claims label '{lab}' value={num}"
+        if saw_reject:
+            return "wrong", "insurer claims field hit surrender/dividend/reserve/product context"
+        return "wrong", "missing exact insurer claims-expense label"
+
+    if fk == "investment_income":
+        if _insurer_has_sensitivity(ctx, ev):
+            return "wrong", "insurer sensitivity/EV page, not investment income"
+        ranked: list[tuple[int, float, str, str]] = []
+        for item in labeled:
+            lab = (item.get("label") or "").strip()
+            num = (item.get("value") or "").strip()
+            mag = _numeric_magnitude(num)
+            if _is_year_token(num) or mag is None:
+                continue
+            if any(k in lab for k in _INSURER_INVESTMENT_ACCEPT):
+                if not _looks_like_amount_value(num) or mag < 1000:
+                    continue
+                rank = 3 if "总投资收益" in combined else (2 if "净投资收益" in combined else 1)
+                ranked.append((rank, mag, lab, num))
+        if ranked:
+            ranked.sort(key=lambda x: (x[0], x[1]), reverse=True)
+            _, _, lab, num = ranked[0]
+            return "usable", f"insurer investment label '{lab}' value={num}"
+        return "wrong", "insurer investment field only has year/tiny fragment values"
+
+    if fk == "solvency_ratio":
+        for item in labeled:
+            lab = (item.get("label") or "").strip()
+            num = (item.get("value") or "").strip()
+            if any(k in lab for k in _INSURER_SOLVENCY_ACCEPT) and _looks_like_ratio_value(num) and not _is_year_token(num):
+                mag = _numeric_magnitude(num)
+                if mag is not None and mag >= 10:
+                    return "usable", f"insurer solvency label '{lab}' value={num}"
+        ratio = _insurer_ratio_from_context(_INSURER_SOLVENCY_ACCEPT, ctx, ev)
+        if ratio:
+            return "usable", f"insurer solvency ratio from context value={ratio}"
+        return "wrong", "missing insurer solvency ratio value"
+
+    return None
 
 
 def _pdf_anchor_with_number(pdf_path: str | None, anchors: tuple[str, ...], max_pages: int = 80) -> bool:
@@ -836,6 +969,11 @@ def strict_section_snippet(f: dict, spec: FieldSpec) -> tuple[str, str]:
         return "wrong", "expected string snippet"
     ev = f.get("evidence_sentence") or ""
     combined = v + ev
+    if fk == "main_business_segments" and "insurance business lines" in (spec.definition or "").lower():
+        if _insurer_has_sensitivity(v, ev):
+            return "wrong", "insurer main-business field hit EV/sensitivity section"
+        if _insurer_business_line_snippet(combined) and f.get("in_region"):
+            return "usable", f"insurer business-line snippet substantive (len={len(v)})"
     if fk == "major_subsidiaries":
         if _major_subsidiaries_wrong_section(combined):
             return "wrong", "subsidiary field hit employee/qualifications section"
@@ -906,7 +1044,15 @@ def strict_financial_numeric(
     ctx = val.get("context") or ""
     ev = f.get("evidence_sentence") or ""
     if fk in RATIO_FIELDS:
+        if _is_insurer_numeric_field(fk, spec):
+            insurer = _evaluate_insurer_numeric(fk, labeled, ctx, ev, spec)
+            if insurer:
+                return insurer
         return _evaluate_ratio_numeric(fk, labeled, ctx, ev, spec)
+    if _is_insurer_numeric_field(fk, spec):
+        insurer = _evaluate_insurer_numeric(fk, labeled, ctx, ev, spec)
+        if insurer:
+            return insurer
     if not labeled:
         if _anchor_in_text(ctx + ev, spec.anchors) and any(c.isdigit() for c in ctx):
             return "partial", "context-only numbers without labeled pairs"
@@ -1051,11 +1197,23 @@ def strict_financial_table(f: dict, spec: FieldSpec, pdf_path: str | None) -> tu
     st = f.get("status", "not_found")
     fk = f.get("field") or spec.key
     ev = f.get("evidence_sentence") or ""
+    insurer_segment = (
+        fk == "revenue_by_segment"
+        and "insurance segment" in (spec.definition or "").lower()
+    )
     if st == "not_found":
         if _pdf_anchor_with_number(pdf_path, spec.anchors):
             return "not_found_missed", "PDF table anchor found but extractor not_found"
         return "not_found_unverified", "status=not_found (unverified by automation)"
     if st == "partial":
+        if insurer_segment:
+            val = f.get("value")
+            if isinstance(val, dict) and val.get("snippet"):
+                snippet = str(val.get("snippet") or "")
+                if _insurer_has_sensitivity(snippet, ev):
+                    return "wrong", "insurer segment field hit EV/sensitivity page"
+                if _insurer_business_line_snippet(snippet + " " + ev):
+                    return "partial", "insurer line-of-business snippet"
         if fk in ("loan_structure", "deposit_structure", "regional_distribution",
                   "revenue_by_segment", "revenue_by_region"):
             val = f.get("value")
@@ -1069,6 +1227,12 @@ def strict_financial_table(f: dict, spec: FieldSpec, pdf_path: str | None) -> tu
                     return "wrong", detail
         return "partial", "status=partial"
     val = f.get("value")
+    if insurer_segment and isinstance(val, dict) and val.get("snippet"):
+        snippet = str(val.get("snippet") or "")
+        if _insurer_has_sensitivity(snippet, ev):
+            return "wrong", "insurer segment field hit EV/sensitivity page"
+        if _insurer_business_line_snippet(snippet + " " + ev):
+            return "partial", "insurer line-of-business snippet"
     if fk in ("revenue_by_region", "revenue_by_segment"):
         ok, detail = _revenue_table_plausible_strict(val, evidence=ev)
     else:
