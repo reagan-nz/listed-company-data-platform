@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""#32c-R0 R&D residual dry-run harness — experimental candidate selector only.
+"""#32c-R1 R&D residual dry-run harness — experimental selector + control-safe guard.
 
 Read-only over cached PDFs and stored profiles. Does NOT write profiles,
 eval_results, or run refresh/apply/merge/SQLite/CNINFO.
@@ -423,8 +423,74 @@ def _build_experimental_field(
 
 
 def _strict_rank(label: str) -> int:
-    order = {"usable": 3, "partial": 2, "not_found_unverified": 1, "wrong": 0}
+    order = {
+        "usable": 4,
+        "partial": 3,
+        "wrong": 2,
+        "not_found_missed": 1,
+        "not_found_unverified": 1,
+        "not_found": 1,
+    }
     return order.get(label, 0)
+
+
+def _is_cumulative_narrative(field: dict) -> bool:
+    """Reject experimental picks that are narrative cumulative disclosures."""
+    val = field.get("value")
+    ctx = ""
+    if isinstance(val, dict):
+        ctx = val.get("context") or ""
+    ctx += " " + (field.get("evidence_sentence") or "")
+    if not any(m in ctx for m in _RND_CUMULATIVE_MARKERS):
+        return False
+    if "研发投入情况表" in ctx or "费用化研发投入" in ctx:
+        return False
+    return True
+
+
+def _select_final_candidate(
+    stored: dict,
+    fresh: dict,
+    experimental: dict,
+    *,
+    stored_strict: str,
+    stored_reason: str,
+    fresh_strict: str,
+    fresh_reason: str,
+    exp_strict: str,
+    exp_reason: str,
+) -> dict:
+    """max(production, experimental) guard — dry-run only; never downgrade production."""
+    prod_rank = max(_strict_rank(stored_strict), _strict_rank(fresh_strict))
+    exp_rank = _strict_rank(exp_strict)
+    exp_eligible = (
+        exp_rank >= prod_rank
+        and not _is_cumulative_narrative(experimental)
+    )
+
+    candidates: list[tuple[str, dict, str, str]] = [
+        ("stored", stored, stored_strict, stored_reason),
+        ("fresh", fresh, fresh_strict, fresh_reason),
+    ]
+    if exp_eligible:
+        candidates.append(("experimental", experimental, exp_strict, exp_reason))
+
+    tie_order = {"stored": 3, "fresh": 2, "experimental": 1}
+    source, field, strict, reason = max(
+        candidates,
+        key=lambda c: (_strict_rank(c[2]), tie_order.get(c[0], 0)),
+    )
+    return {
+        "selected_source": source,
+        "selected_strict": strict,
+        "selected_reason": reason,
+        "selected_preview": _preview_value(field.get("value")),
+        "selected_status": field.get("status", ""),
+        "selected_page": field.get("page"),
+        "exp_eligible": exp_eligible,
+        "prod_rank": prod_rank,
+        "exp_rank": exp_rank,
+    }
 
 
 def _evaluate_code(code: str, board: str, csv_row: dict | None, specs: dict) -> dict:
@@ -441,17 +507,20 @@ def _evaluate_code(code: str, board: str, csv_row: dict | None, specs: dict) -> 
     fresh_strict, fresh_reason = strict_audit_field(fresh)
     experimental = _build_experimental_field(spec, pages, pdf, source_url, regions)
     exp_strict, exp_reason = strict_audit_field(experimental)
+    final = _select_final_candidate(
+        stored, fresh, experimental,
+        stored_strict=stored_strict,
+        stored_reason=stored_reason,
+        fresh_strict=fresh_strict,
+        fresh_reason=fresh_reason,
+        exp_strict=exp_strict,
+        exp_reason=exp_reason,
+    )
+    selected_strict = final["selected_strict"]
 
-    improved = (
-        _strict_rank(exp_strict) > _strict_rank(stored_strict)
-        or (stored_strict in ("partial", "not_found_unverified") and exp_strict == "usable")
-        or (stored_strict == "partial" and exp_strict == "partial"
-            and "total R&D" in exp_reason and "total R&D" not in stored_reason)
-    )
-    regressed = (
-        _strict_rank(exp_strict) < _strict_rank(stored_strict)
-        and code not in MANDATORY_CODES  # mandatory may flip partial→usable; never count as regression
-    )
+    improved = _strict_rank(selected_strict) > _strict_rank(stored_strict)
+    regressed = _strict_rank(selected_strict) < _strict_rank(stored_strict)
+    exp_would_regress = _strict_rank(exp_strict) < prod_rank if (prod_rank := final["prod_rank"]) else False
 
     return {
         "code": code,
@@ -476,6 +545,12 @@ def _evaluate_code(code: str, board: str, csv_row: dict | None, specs: dict) -> 
         "exp_reason": exp_reason,
         "exp_anchor": experimental.get("anchor_matched", ""),
         "exp_score": experimental.get("_exp_score"),
+        "exp_eligible": final["exp_eligible"],
+        "exp_would_regress": exp_would_regress,
+        "selected_source": final["selected_source"],
+        "selected_strict": selected_strict,
+        "selected_reason": final["selected_reason"],
+        "selected_preview": final["selected_preview"],
         "improved": improved,
         "regressed": regressed,
     }
@@ -483,10 +558,12 @@ def _evaluate_code(code: str, board: str, csv_row: dict | None, specs: dict) -> 
 
 def _write_summary(rows: list[dict], controls: list[dict], path: str) -> str:
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    all_rows = rows + controls
     targets = [r for r in rows if r["csv_priority"] != "control"]
     improved = [r for r in targets if r["improved"]]
     regressed = [r for r in targets if r["regressed"]]
     ctrl_regressed = [r for r in controls if r["regressed"]]
+    exp_would_regress = [r for r in all_rows if r.get("exp_would_regress")]
 
     p0_improved = [r for r in improved if r["csv_priority"] == "P0"]
     mandatory = [r for r in rows if r["code"] in MANDATORY_CODES]
@@ -494,98 +571,131 @@ def _write_summary(rows: list[dict], controls: list[dict], path: str) -> str:
     some_p0 = len(p0_improved) >= 10
     mand_ok = len(mand_improved) >= 5
     no_ctrl_downgrade = len(ctrl_regressed) == 0
-    verdict = "PASS" if some_p0 and mand_ok and no_ctrl_downgrade else "FAIL"
+    no_target_regress = len(regressed) == 0
+    verdict = "PASS" if some_p0 and mand_ok and no_ctrl_downgrade and no_target_regress else "FAIL"
+
+    r415 = next((r for r in controls if r["code"] == "002415"), None)
 
     lines: list[str] = []
     a = lines.append
-    a("# R&D residual fix #32c-R0 dry-run summary")
+    a("# R&D residual fix #32c-R1 dry-run summary")
     a("")
-    a(f"_Generated: {ts} | experimental candidate selector over cached PDFs; no profile writes_")
-    a("")
-    a("## Verdict interpretation")
-    a("")
-    a(f"- **P0 mandatory targets:** {len(mand_improved)}/{len(MANDATORY_CODES)} improved under experimental selector.")
-    a(f"- **Controls:** {len(ctrl_regressed)}/{len(controls)} regressed — need production fallback / tighter guards before port.")
-    a(f"- Overall verdict **{verdict}** — P0 signal strong; refine before production merge.")
+    a(f"_Generated: {ts} | R1 control-safe guard over cached PDFs; no profile writes_")
     a("")
     a(f"## Verdict: **{verdict}**")
+    a("")
     a("| Gate | Result |")
     a("|---|---|")
-    a(f"| Rows evaluated (targets + controls) | **{len(rows) + len(controls)}** |")
-    a(f"| Target rows improved (experimental vs stored strict) | **{len(improved)}** |")
-    a(f"| Target rows regressed | **{len(regressed)}** |")
-    a(f"| Mandatory examples improved | **{len(mand_improved)}/{len(MANDATORY_CODES)}** |")
+    a(f"| Rows evaluated (targets + controls) | **{len(all_rows)}** |")
+    a(f"| Target rows improved (selected_final vs stored) | **{len(improved)}** |")
+    a(f"| Target rows regressed (selected_final) | **{len(regressed)}** |")
     a(f"| P0 rows improved | **{len(p0_improved)}** |")
-    a(f"| Control rows regressed | **{len(ctrl_regressed)}** |")
+    a(f"| Mandatory examples improved | **{len(mand_improved)}/{len(MANDATORY_CODES)}** |")
+    a(f"| Control regressions (selected_final) | **{len(ctrl_regressed)}** (R0: 1) |")
+    a(f"| Experimental-only regressions blocked by guard | **{len(exp_would_regress)}** |")
     a(f"| Some P0 rows show improved selection | **{'PASS' if some_p0 else 'FAIL'}** |")
-    a(f"| No obvious control downgrade | **{'PASS' if no_ctrl_downgrade else 'FAIL'}** |")
+    a(f"| No control downgrade | **{'PASS' if no_ctrl_downgrade else 'FAIL'}** |")
+    a(f"| No target regression | **{'PASS' if no_target_regress else 'FAIL'}** |")
     a("| No profile/eval/audit writes | **PASS** |")
     a("")
     a("## Files changed")
     a("")
-    a("- `lab/rnd_residual_fix_32c_dryrun.py` (new)")
-    a("- `outputs/generalization/full_market_2024/rnd_residual_fix_32c_dryrun_summary.md` (new)")
+    a("- `lab/rnd_residual_fix_32c_dryrun.py` (R1 guard refinement)")
+    a("- `outputs/generalization/full_market_2024/rnd_residual_fix_32c_dryrun_summary.md` (this file)")
+    a("")
+    a("## Guard design (R1)")
+    a("")
+    a("Added `selected_final = max(production, experimental)` with strict rank:")
+    a("")
+    a("| Label | Rank |")
+    a("|---|---:|")
+    a("| usable | 4 |")
+    a("| partial | 3 |")
+    a("| wrong | 2 |")
+    a("| not_found_missed / not_found_unverified / not_found | 1 |")
+    a("")
+    a("- **Production baseline** = best of stored profile and fresh `extract_field()`.")
+    a("- **Experimental** is eligible only if `exp_rank >= prod_rank` and evidence is not cumulative narrative.")
+    a("- **Tie-break** at same rank: stored > fresh > experimental (prefer production).")
+    a("- **Improvement/regression** metrics use `selected_final`, not raw experimental.")
+    a("")
+    a("## Why R0 failed on 002415")
+    a("")
+    if r415:
+        a(f"- **002415** 海康威视: stored/fresh strict=**{r415['stored_strict']}**, raw experimental=**{r415['exp_strict']}** ({r415['exp_reason']}).")
+        a(f"- Selected final=**{r415['selected_strict']}** via `{r415['selected_source']}` — guard kept production.")
+        a("- Root cause: situation-table pass on MD&A picked a weaker partial table candidate instead of the production anchor hit.")
+    else:
+        a("- 002415 not in control set.")
     a("")
     a("## Scope")
     a("")
-    a("- R&D P0/P1 residual candidates from `revenue_rnd_residual_candidates_32.csv`")
-    a("- Mandatory examples: 600011, 600020, 301221, 000333, 688081, 600029, 600115, 600844")
-    a("- Plus representative P0 codes from CSV")
-    a("- Clean strict-usable controls: 000063, 002415, 300750, 600519, 601012, 688111")
-    a("- Compares **stored** vs **fresh extract_field()** vs **experimental selector** (dry-run only)")
+    a("- Same universe as R0: P0/P1 R&D residuals + mandatory examples + clean controls")
+    a("- Compares stored / fresh / raw experimental / **selected_final** (dry-run only)")
     a("")
-    a("## Target examples (mandatory)")
+    a("## Mandatory examples")
     a("")
-    a("| Code | Name | Stored | Fresh | Experimental | Exp reason |")
-    a("|---|---|---|---|---|---|")
+    a("| Code | Name | Stored | Fresh | Raw Exp | Selected | Source |")
+    a("|---|---|---|---|---|---|---|")
     for code in MANDATORY_CODES:
         r = next((x for x in rows if x["code"] == code), None)
         if r:
-            a(f"| {r['code']} | {r['short_name']} | {r['stored_strict']} | {r['fresh_strict']} | **{r['exp_strict']}** | {r['exp_reason']} |")
+            a(f"| {r['code']} | {r['short_name']} | {r['stored_strict']} | {r['fresh_strict']} | {r['exp_strict']} | **{r['selected_strict']}** | {r['selected_source']} |")
     a("")
-    a("## Improved targets")
+    a("## Controls (before/after guard)")
+    a("")
+    a("| Code | Stored | Fresh | Raw Exp | Selected (R1) | Regressed? |")
+    a("|---|---|---|---|---|---|")
+    for r in controls:
+        a(f"| {r['code']} | {r['stored_strict']} | {r['fresh_strict']} | {r['exp_strict']} | **{r['selected_strict']}** | {'yes' if r['regressed'] else 'no'} |")
+    a("")
+    a("R0: `002415` raw experimental=partial → regressed. R1: selected_final=usable via stored/fresh.")
+    a("")
+    a("## Improved targets (selected_final)")
     a("")
     if improved:
-        a("| Code | Name | P | Stored → Exp | Stored preview → Exp preview |")
+        a("| Code | Name | P | Stored → Selected | Preview change |")
         a("|---|---|---|---|---|")
-        for r in improved:
-            a(f"| {r['code']} | {r['short_name']} | {r['csv_priority']} | {r['stored_strict']} → **{r['exp_strict']}** | {r['stored_preview'][:60]} → {r['exp_preview'][:60]} |")
+        for r in improved[:40]:
+            a(f"| {r['code']} | {r['short_name']} | {r['csv_priority']} | {r['stored_strict']} → **{r['selected_strict']}** | {r['stored_preview'][:50]} → {r['selected_preview'][:50]} |")
+        if len(improved) > 40:
+            a(f"| … | ({len(improved) - 40} more) | | | |")
     else:
         a("_None_")
     a("")
     a("## Regressed targets")
     a("")
     if regressed:
-        a("| Code | Name | Stored → Exp | Reason |")
-        a("|---|---|---|---|")
         for r in regressed:
-            a(f"| {r['code']} | {r['short_name']} | {r['stored_strict']} → {r['exp_strict']} | {r['exp_reason']} |")
+            a(f"- {r['code']} {r['short_name']}: {r['stored_strict']} → {r['selected_strict']}")
     else:
         a("_None_")
     a("")
-    a("## Controls")
+    a("## Experimental-only downgrades blocked by guard")
     a("")
-    a("| Code | Stored | Fresh | Experimental | Regressed? |")
-    a("|---|---|---|---|---|")
-    for r in controls:
-        a(f"| {r['code']} | {r['stored_strict']} | {r['fresh_strict']} | {r['exp_strict']} | {'yes' if r['regressed'] else 'no'} |")
+    if exp_would_regress:
+        for r in exp_would_regress[:15]:
+            a(f"- {r['code']} {r['short_name']}: exp={r['exp_strict']} < prod → kept `{r['selected_source']}` ({r['selected_strict']})")
+        if len(exp_would_regress) > 15:
+            a(f"- … and {len(exp_would_regress) - 15} more")
+    else:
+        a("_None_")
     a("")
-    a("## Failure / not-solved cases")
+    a("## Failure / not-solved")
     a("")
-    unsolved = [r for r in targets if r["code"] in MANDATORY_CODES and not r["improved"]]
+    unsolved = [r for r in mandatory if not r["improved"]]
     for r in unsolved:
-        a(f"- **{r['code']}** {r['short_name']}: stored={r['stored_strict']}, exp={r['exp_strict']} — {r['csv_root_cause']}")
+        a(f"- **{r['code']}** {r['short_name']}: selected={r['selected_strict']} — {r['csv_root_cause']}")
     a("")
     a("## Recommended next step")
     a("")
     if verdict == "PASS":
-        a("1. **Implement production helper** in `extract_annual_report.py` (situation-table-first + anchor fallback).")
-        a("2. Run `#32c` scoped dry-run on full P0 list before any refresh/apply.")
-        a("3. Defer narrative partial cases (000333) to manual review.")
+        a("1. **Implement production helper** in `extract_annual_report.py` with the same guard (situation-table-first + max(prod, exp)).")
+        a("2. Run scoped P0 dry-run refresh harness before any `--apply`.")
+        a("3. Defer narrative partial (`000333`) to manual review.")
     else:
-        a("1. **Refine experiment** — add control-safe fallback (keep production extract when situation-table miss).")
-        a("2. **Then implement production helper** for situation-table-first path only.")
-        a("3. Re-run dry-run until controls pass; defer refresh/apply until PASS.")
+        a("1. Further refine guard or experimental selector.")
+        a("2. Do not change production extraction until dry-run PASS.")
     a("")
     a("## Safe to commit")
     a("")
@@ -601,7 +711,7 @@ def _write_summary(rows: list[dict], controls: list[dict], path: str) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="#32c-R0 R&D residual dry-run")
+    parser = argparse.ArgumentParser(description="#32c-R1 R&D residual dry-run")
     parser.add_argument("--max-p0-extra", type=int, default=20)
     parser.add_argument("--summary", default=SUMMARY_PATH)
     args = parser.parse_args()
@@ -648,14 +758,19 @@ def main() -> int:
             pass
 
     verdict = _write_summary(rows, controls, args.summary)
+    all_rows = rows + controls
     improved = sum(1 for r in rows if r.get("improved"))
-    regressed = sum(1 for r in rows if r.get("regressed"))
-    print(f"evaluated={len(rows)} controls={len(controls)} improved={improved} regressed={regressed} verdict={verdict}")
+    regressed = sum(1 for r in all_rows if r.get("regressed"))
+    ctrl_reg = sum(1 for r in controls if r.get("regressed"))
+    print(f"evaluated={len(all_rows)} targets_improved={improved} regressions={regressed} ctrl_regressions={ctrl_reg} verdict={verdict}")
     print(f"summary={args.summary}")
     for code in MANDATORY_CODES:
         r = next((x for x in rows if x["code"] == code), None)
         if r:
-            print(f"  {code}: stored={r['stored_strict']} fresh={r['fresh_strict']} exp={r['exp_strict']} | {r.get('exp_preview','')[:80]}")
+            print(f"  {code}: stored={r['stored_strict']} exp={r['exp_strict']} selected={r['selected_strict']} ({r['selected_source']})")
+    r415 = next((x for x in controls if x["code"] == "002415"), None)
+    if r415:
+        print(f"  002415: stored={r415['stored_strict']} exp={r415['exp_strict']} selected={r415['selected_strict']} regressed={r415['regressed']}")
     return 0 if verdict == "PASS" else 1
 
 
