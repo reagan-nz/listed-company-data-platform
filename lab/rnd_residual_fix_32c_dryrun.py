@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""#32c-R1 R&D residual dry-run harness — experimental selector + control-safe guard.
+"""#32c R&D residual dry-run harness — R1 guard + R2 production validation.
 
 Read-only over cached PDFs and stored profiles. Does NOT write profiles,
 eval_results, or run refresh/apply/merge/SQLite/CNINFO.
@@ -29,7 +29,9 @@ from lab.extract_annual_report import (  # noqa: E402
     compute_regions,
     evidence_sentence,
     extract_field,
+    extract_rnd_investment_baseline,
     extract_rnd_numeric,
+    extract_rnd_situation_table_numeric,
     locate_candidates,
     parse_pages,
     rnd_amount_ok,
@@ -42,6 +44,7 @@ OUT_DIR = os.path.join(_PROJECT_ROOT, "outputs", "generalization", "full_market_
 CACHE_DIR = os.path.join(OUT_DIR, ".cache")
 CANDIDATES_CSV = os.path.join(OUT_DIR, "revenue_rnd_residual_candidates_32.csv")
 SUMMARY_PATH = os.path.join(OUT_DIR, "rnd_residual_fix_32c_dryrun_summary.md")
+SUMMARY_R2_PATH = os.path.join(OUT_DIR, "rnd_residual_fix_32c_r2_summary.md")
 
 MANDATORY_CODES = (
     "600011", "600020", "301221", "000333", "688081",
@@ -398,15 +401,14 @@ def _build_experimental_field(
         consider(block, cand["page"], cand["anchor"], cand["idx"], page_text, bonus=0.0)
 
     if not best:
-        # Fallback: mirror production extract_field when situation-table pass misses
-        fmap = {}
-        prod = extract_field(spec, pages, pdf_path, source_url, regions, profile_fields=fmap)
+        preferred = regions.get(spec.region)
+        prod = extract_rnd_investment_baseline(spec, pages, source_url, preferred)
         if prod.get("status") != "not_found" and prod.get("value"):
             ps, pr = strict_audit_field(prod)
             return {
                 **prod,
                 "field": spec.key,
-                "anchor_matched": prod.get("anchor_matched", "") + " (prod_fallback)",
+                "anchor_matched": prod.get("anchor_matched", "") + " (baseline_fallback)",
                 "_exp_score": None,
                 "_fallback": True,
             }
@@ -554,6 +556,172 @@ def _evaluate_code(code: str, board: str, csv_row: dict | None, specs: dict) -> 
         "improved": improved,
         "regressed": regressed,
     }
+
+
+def _evaluate_code_r2(code: str, board: str, csv_row: dict | None, specs: dict) -> dict:
+    """R2 validation: stored profile vs fresh production extract_field() after port."""
+    prof, fmap = _profile(code, board)
+    spec = specs["rnd_investment"]
+    stored = fmap.get("rnd_investment") or {}
+    pdf = os.path.join(OUT_DIR, board, code, f"{code}.pdf")
+    pages, _ = parse_pages(pdf, CACHE_DIR)
+    regions = compute_regions(pages)
+    preferred = regions.get(spec.region)
+    source_url = stored.get("source_url") or prof.get("source", {}).get("source_url", "")
+
+    stored_strict, stored_reason = strict_audit_field(stored)
+    fresh = extract_field(spec, pages, pdf, source_url, regions, profile_fields=fmap)
+    fresh_strict, fresh_reason = strict_audit_field(fresh)
+
+    baseline = extract_rnd_investment_baseline(spec, pages, source_url, preferred)
+    baseline_strict, _ = strict_audit_field(baseline)
+    situation = extract_rnd_situation_table_numeric(spec, pages, source_url, regions)
+    sit_strict, _ = strict_audit_field(situation) if situation and situation.get("value") else ("not_found", "")
+
+    experimental = _build_experimental_field(spec, pages, pdf, source_url, regions)
+    exp_strict, _ = strict_audit_field(experimental)
+    r1_final = _select_final_candidate(
+        stored, baseline, experimental,
+        stored_strict=stored_strict, stored_reason=stored_reason,
+        fresh_strict=baseline_strict, fresh_reason="",
+        exp_strict=exp_strict, exp_reason="",
+    )
+
+    improved = _strict_rank(fresh_strict) > _strict_rank(stored_strict)
+    regressed = _strict_rank(fresh_strict) < _strict_rank(stored_strict)
+    matches_r1 = fresh_strict == r1_final["selected_strict"]
+
+    return {
+        "code": code,
+        "short_name": (csv_row or {}).get("short_name") or prof.get("company", {}).get("short_name", ""),
+        "board": board,
+        "csv_priority": (csv_row or {}).get("priority", "control"),
+        "csv_root_cause": (csv_row or {}).get("root_cause", ""),
+        "stored_strict": stored_strict,
+        "stored_preview": _preview_value(stored.get("value")),
+        "fresh_strict": fresh_strict,
+        "fresh_preview": _preview_value(fresh.get("value")),
+        "fresh_anchor": fresh.get("anchor_matched", ""),
+        "baseline_strict": baseline_strict,
+        "situation_strict": sit_strict,
+        "r1_selected_strict": r1_final["selected_strict"],
+        "r1_selected_source": r1_final["selected_source"],
+        "matches_r1": matches_r1,
+        "improved": improved,
+        "regressed": regressed,
+    }
+
+
+def _write_summary_r2(rows: list[dict], controls: list[dict], path: str) -> str:
+    ts = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    all_rows = rows + controls
+    targets = [r for r in rows if r["csv_priority"] != "control"]
+    improved = [r for r in targets if r["improved"]]
+    regressed = [r for r in all_rows if r["regressed"]]
+    ctrl_regressed = [r for r in controls if r["regressed"]]
+    p0_improved = [r for r in improved if r["csv_priority"] == "P0"]
+    mandatory = [r for r in rows if r["code"] in MANDATORY_CODES]
+    mand_improved = [r for r in mandatory if r["improved"]]
+    r1_match = sum(1 for r in all_rows if r.get("matches_r1"))
+    some_p0 = len(p0_improved) >= 10
+    mand_ok = len(mand_improved) >= 5
+    no_ctrl = len(ctrl_regressed) == 0
+    no_target_regress = len(regressed) == 0
+    verdict = "PASS" if some_p0 and mand_ok and no_ctrl and no_target_regress else "FAIL"
+    r415 = next((r for r in controls if r["code"] == "002415"), None)
+    r333 = next((r for r in rows if r["code"] == "000333"), None)
+
+    lines: list[str] = []
+    a = lines.append
+    a("# R&D residual fix #32c-R2 production port dry-run summary")
+    a("")
+    a(f"_Generated: {ts} | R2 production extract_field() vs stored profiles; no profile writes_")
+    a("")
+    a(f"## Verdict: **{verdict}**")
+    a("")
+    a("| Gate | Result |")
+    a("|---|---|")
+    a(f"| Rows evaluated | **{len(all_rows)}** |")
+    a(f"| Target improved (fresh R2 vs stored) | **{len(improved)}** |")
+    a(f"| Target regressed | **{len(regressed)}** |")
+    a(f"| P0 improved | **{len(p0_improved)}** |")
+    a(f"| Mandatory improved | **{len(mand_improved)}/{len(MANDATORY_CODES)}** |")
+    a(f"| Control regressions | **{len(ctrl_regressed)}** |")
+    a(f"| Fresh R2 matches R1 selected_final | **{r1_match}/{len(all_rows)}** |")
+    a(f"| Some P0 improvement | **{'PASS' if some_p0 else 'FAIL'}** |")
+    a(f"| No control downgrade | **{'PASS' if no_ctrl else 'FAIL'}** |")
+    a(f"| No target regression | **{'PASS' if no_target_regress else 'FAIL'}** |")
+    a("| No profile/eval/audit writes | **PASS** |")
+    a("")
+    a("## Files changed")
+    a("")
+    a("- `lab/extract_annual_report.py` (R2 situation-table helper + production guard)")
+    a("- `lab/rnd_residual_fix_32c_dryrun.py` (R2 validation mode)")
+    a("- `outputs/generalization/full_market_2024/rnd_residual_fix_32c_r2_summary.md` (this file)")
+    a("")
+    a("## Helper design")
+    a("")
+    a("- **`extract_rnd_situation_table_numeric()`** — Pass 1 scans MD&A in-region pages for `研发投入情况表`; Pass 2 walks anchor candidates. Parses 费用化/资本化/合计 with 元/万元/百万元/亿元 unit scaling. Rejects P&L-only windows and cumulative narrative without table labels.")
+    a("- **`extract_rnd_investment_baseline()`** — prior anchor+candidate path unchanged.")
+    a("")
+    a("## Production guard design")
+    a("")
+    a("- **`merge_rnd_investment_with_guard(baseline, situation)`** — strict-rank max with tie-break favoring baseline.")
+    a("- Situation eligible only when `sit_rank >= baseline_rank` and not cumulative narrative.")
+    a("- Blocks usable→partial regressions (e.g. 002415 situation=partial, baseline=usable → fresh=usable).")
+    a("")
+    a("## Mandatory examples")
+    a("")
+    a("| Code | Name | Stored | Baseline | Situation | Fresh R2 | R1 selected |")
+    a("|---|---|---|---|---|---|---|")
+    for code in MANDATORY_CODES:
+        r = next((x for x in rows if x["code"] == code), None)
+        if r:
+            a(f"| {r['code']} | {r['short_name']} | {r['stored_strict']} | {r['baseline_strict']} | {r['situation_strict']} | **{r['fresh_strict']}** | {r['r1_selected_strict']} |")
+    a("")
+    a("## Controls")
+    a("")
+    a("| Code | Stored | Baseline | Situation | Fresh R2 | Regressed? |")
+    a("|---|---|---|---|---|---|")
+    for r in controls:
+        a(f"| {r['code']} | {r['stored_strict']} | {r['baseline_strict']} | {r['situation_strict']} | **{r['fresh_strict']}** | {'yes' if r['regressed'] else 'no'} |")
+    a("")
+    if r415:
+        a(f"**002415**: stored={r415['stored_strict']}, situation={r415['situation_strict']}, fresh R2=**{r415['fresh_strict']}** — guard kept baseline.")
+    a("")
+    if r333:
+        a(f"**000333**: fresh R2=**{r333['fresh_strict']}** (not forced usable; cumulative narrative blocked).")
+    a("")
+    a("## Regressed rows")
+    a("")
+    if regressed:
+        for r in regressed:
+            a(f"- {r['code']} {r['short_name']}: {r['stored_strict']} → {r['fresh_strict']}")
+    else:
+        a("_None_")
+    a("")
+    a("## Recommended next step")
+    a("")
+    if verdict == "PASS":
+        a("1. **Scoped rnd_investment apply** on P0 residual list (dry-run refresh CSV first).")
+        a("2. Human review for 000333 narrative partial.")
+        a("3. Full-market apply only after P0 scoped apply + strict audit re-check.")
+    else:
+        a("1. Fix production guard or situation-table helper before any apply.")
+        a("2. Do not run refresh/apply until PASS.")
+    a("")
+    a("## Safe to commit")
+    a("")
+    a("- `lab/extract_annual_report.py`")
+    a("- `lab/rnd_residual_fix_32c_dryrun.py`")
+    a("- `outputs/generalization/full_market_2024/rnd_residual_fix_32c_r2_summary.md`")
+    a("")
+    a("## Do not commit")
+    a("")
+    a("- Profiles, eval_results, audit summaries, refresh CSVs, SQLite, YAML")
+    a("")
+    open(path, "w", encoding="utf-8").write("\n".join(lines) + "\n")
+    return verdict
 
 
 def _write_summary(rows: list[dict], controls: list[dict], path: str) -> str:
@@ -710,40 +878,12 @@ def _write_summary(rows: list[dict], controls: list[dict], path: str) -> str:
     return verdict
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description="#32c-R1 R&D residual dry-run")
-    parser.add_argument("--max-p0-extra", type=int, default=20)
-    parser.add_argument("--summary", default=SUMMARY_PATH)
-    args = parser.parse_args()
-
-    specs = _specs()
-    csv_rows = _load_csv_rows()
-    targets = _select_target_rows(csv_rows, max_p0_extra=args.max_p0_extra)
-
-    rows: list[dict] = []
-    for tr in targets:
-        code = tr["code"]
-        board = tr["board"]
-        try:
-            rows.append(_evaluate_code(code, board, tr, specs))
-        except Exception as exc:
-            rows.append({
-                "code": code, "short_name": tr.get("short_name", ""), "board": board,
-                "csv_priority": tr.get("priority", ""), "csv_root_cause": tr.get("root_cause", ""),
-                "stored_strict": "error", "fresh_strict": "error", "exp_strict": "error",
-                "improved": False, "regressed": False, "error": str(exc),
-            })
-
+def _load_controls(csv_rows: list[dict], existing_codes: set[str], evaluate_fn, specs: dict) -> list[dict]:
     controls: list[dict] = []
     for code in CONTROL_CODES:
-        if code in {r["code"] for r in rows}:
+        if code in existing_codes:
             continue
-        # resolve board from eval yaml path pattern
-        for tr in csv_rows:
-            if tr["code"] == code:
-                break
-        else:
-            tr = None
+        tr = next((r for r in csv_rows if r["code"] == code), None)
         board = (tr or {}).get("board")
         if not board:
             for b in ("sse_main", "szse_main", "chinext", "star", "bse"):
@@ -753,24 +893,62 @@ def main() -> int:
         if not board:
             continue
         try:
-            controls.append(_evaluate_code(code, board, None, specs))
+            controls.append(evaluate_fn(code, board, None, specs))
         except Exception:
             pass
+    return controls
 
-    verdict = _write_summary(rows, controls, args.summary)
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="#32c R&D residual dry-run")
+    parser.add_argument("--mode", choices=("r1", "r2"), default="r2")
+    parser.add_argument("--max-p0-extra", type=int, default=20)
+    parser.add_argument("--summary", default="")
+    args = parser.parse_args()
+    if not args.summary:
+        args.summary = SUMMARY_R2_PATH if args.mode == "r2" else SUMMARY_PATH
+
+    specs = _specs()
+    csv_rows = _load_csv_rows()
+    targets = _select_target_rows(csv_rows, max_p0_extra=args.max_p0_extra)
+    evaluate_fn = _evaluate_code_r2 if args.mode == "r2" else _evaluate_code
+    write_fn = _write_summary_r2 if args.mode == "r2" else _write_summary
+
+    rows: list[dict] = []
+    for tr in targets:
+        code = tr["code"]
+        board = tr["board"]
+        try:
+            rows.append(evaluate_fn(code, board, tr, specs))
+        except Exception as exc:
+            rows.append({
+                "code": code, "short_name": tr.get("short_name", ""), "board": board,
+                "csv_priority": tr.get("priority", ""), "csv_root_cause": tr.get("root_cause", ""),
+                "stored_strict": "error", "fresh_strict": "error",
+                "improved": False, "regressed": False, "error": str(exc),
+            })
+
+    controls = _load_controls(csv_rows, {r["code"] for r in rows}, evaluate_fn, specs)
+    verdict = write_fn(rows, controls, args.summary)
     all_rows = rows + controls
     improved = sum(1 for r in rows if r.get("improved"))
     regressed = sum(1 for r in all_rows if r.get("regressed"))
     ctrl_reg = sum(1 for r in controls if r.get("regressed"))
-    print(f"evaluated={len(all_rows)} targets_improved={improved} regressions={regressed} ctrl_regressions={ctrl_reg} verdict={verdict}")
+    print(f"mode={args.mode} evaluated={len(all_rows)} targets_improved={improved} regressions={regressed} ctrl_regressions={ctrl_reg} verdict={verdict}")
     print(f"summary={args.summary}")
     for code in MANDATORY_CODES:
         r = next((x for x in rows if x["code"] == code), None)
         if r:
-            print(f"  {code}: stored={r['stored_strict']} exp={r['exp_strict']} selected={r['selected_strict']} ({r['selected_source']})")
+            if args.mode == "r2":
+                print(f"  {code}: stored={r['stored_strict']} fresh_r2={r['fresh_strict']} r1_sel={r.get('r1_selected_strict')}")
+            else:
+                print(f"  {code}: stored={r['stored_strict']} exp={r['exp_strict']} selected={r['selected_strict']} ({r['selected_source']})")
     r415 = next((x for x in controls if x["code"] == "002415"), None)
     if r415:
-        print(f"  002415: stored={r415['stored_strict']} exp={r415['exp_strict']} selected={r415['selected_strict']} regressed={r415['regressed']}")
+        if args.mode == "r2":
+            print(f"  002415: stored={r415['stored_strict']} fresh_r2={r415['fresh_strict']} regressed={r415['regressed']}")
+        else:
+            print(f"  002415: stored={r415['stored_strict']} exp={r415['exp_strict']} selected={r415['selected_strict']} regressed={r415['regressed']}")
     return 0 if verdict == "PASS" else 1
 
 

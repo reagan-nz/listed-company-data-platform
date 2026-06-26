@@ -975,6 +975,379 @@ def extract_rnd_numeric(window: str) -> list[dict]:
     return deduped[:6]
 
 
+# R&D situation-table path (#32c-R2): scan MD&A 研发投入情况表 blocks with unit
+# scaling; merged with anchor baseline via max-rank guard in extract_field().
+_RND_TABLE_CTX = (
+    "研发投入情况", "研发投入总额", "研发投入合计", "研发支出情况",
+    "费用化研发投入", "资本化研发投入", "研发投入情况表",
+)
+_RND_TOTAL_LABELS = ("研发投入合计", "研发投入总额", "研发支出合计", "研发支出总额", "合计")
+_RND_CUMULATIVE_MARKERS = ("累计", "近年来", "过去三年", "截至目前", "近三年")
+_STRICT_RND_MIN = 100_000
+_RND_LINE_NUM_RE = re.compile(r"[-+]?\d[\d,]*(?:\.\d+)?")
+
+
+def _detect_rnd_window_unit(window: str) -> str:
+    head = window[:220]
+    if "百万元" in head:
+        return "百万元"
+    if "单位：亿元" in head or "单位:亿元" in head or "人民币亿元" in head:
+        return "亿元"
+    if "单位：万元" in head or "单位:万元" in head or "人民币万元" in head:
+        return "万元"
+    if "单位：千元" in head or "单位:千元" in head:
+        return "千元"
+    if "单位：元" in head or "单位:元" in head:
+        return "元"
+    return ""
+
+
+def _rnd_amount_to_yuan(val: str, default_unit: str = "") -> float | None:
+    mag = _numeric_magnitude(val)
+    if mag is None:
+        return None
+    unit = default_unit
+    for u in ("百万元", "亿元", "万元", "千元", "元"):
+        if u in val:
+            unit = u
+            break
+    if unit == "亿元":
+        return mag * 1e8
+    if unit == "万元":
+        return mag * 1e4
+    if unit == "百万元":
+        return mag * 1e6
+    if unit == "千元":
+        return mag * 1e3
+    return mag
+
+
+def _parse_rnd_line_amount(line: str, label: str, default_unit: str = "") -> tuple[str, float] | None:
+    variants = [label, f"本期{label}", "本期费用化研发投入"]
+    pos = -1
+    matched = label
+    for v in variants:
+        if v in line:
+            pos = line.find(v)
+            matched = v
+            break
+    if pos < 0:
+        return None
+    after = line[pos + len(matched):]
+    m = _RND_LINE_NUM_RE.search(after)
+    if not m:
+        return None
+    raw = m.group(0).strip()
+    unit = default_unit
+    tail = after[m.end(): m.end() + 8]
+    for u in ("百万元", "亿元", "万元", "千元"):
+        if u in tail or u in after[max(0, m.start() - 4): m.end() + 8]:
+            unit = u
+            break
+    display = f"{raw} {unit}".strip() if unit and unit not in raw else raw
+    yuan = _rnd_amount_to_yuan(display, default_unit)
+    if yuan is None or yuan <= 0:
+        return None
+    if default_unit and unit not in display:
+        display = f"{raw} {default_unit}"
+        yuan = _rnd_amount_to_yuan(display, default_unit)
+    return display, yuan
+
+
+def _rnd_situation_block_on_page(page_text: str) -> str | None:
+    for marker in ("研发投入情况表", "研发支出情况", "(1).研发投入情况表"):
+        idx = page_text.find(marker)
+        if idx < 0:
+            continue
+        unit_pos = page_text.rfind("单位", max(0, idx - 150), idx + 80)
+        start = unit_pos if unit_pos >= 0 else max(0, idx - 60)
+        return page_text[start: idx + 650]
+    return None
+
+
+def _extract_rnd_table_amounts(window: str) -> list[dict]:
+    default_unit = _detect_rnd_window_unit(window)
+    cut = window
+    for stop in ("研发人员情况表", "研发人员情况", "(2).", "（2）"):
+        pos = cut.find(stop)
+        if pos > 0 and "研发投入合计" in cut[:pos]:
+            cut = cut[:pos]
+            break
+    flat = re.sub(r"\s+", " ", cut.replace("\n", " "))
+    found: dict[str, dict] = {}
+    labels = (
+        "研发投入合计", "费用化研发投入", "资本化研发投入",
+        "研发支出合计", "研发投入金额",
+    )
+    for text in (flat,):
+        if "同比增长" in text and "研发投入合计" not in text and "费用化研发投入" not in text:
+            continue
+        for label in labels:
+            if label not in text and f"本期{label}" not in text:
+                continue
+            parsed = _parse_rnd_line_amount(text, label, default_unit)
+            if not parsed:
+                continue
+            display, yuan = parsed
+            if label not in found or label in _RND_TOTAL_LABELS:
+                found[label] = {"label": label, "value": display, "_yuan": yuan}
+    return list(found.values())
+
+
+def _labeled_from_rnd_situation_block(block: str) -> list[dict]:
+    labeled = _extract_rnd_table_amounts(block)
+    if not labeled:
+        return []
+    exp = next((x for x in labeled if x.get("label") == "费用化研发投入"), None)
+    cap = next((x for x in labeled if x.get("label") == "资本化研发投入"), None)
+    total = next((x for x in labeled if x.get("label") == "研发投入合计"), None)
+    if total:
+        return [total]
+    if exp and cap:
+        ey, cy = exp.get("_yuan") or 0, cap.get("_yuan") or 0
+        if ey + cy > 0:
+            return [{"label": "研发投入合计", "value": exp["value"], "_yuan": ey + cy,
+                     "_display": _format_rnd_audit_value("研发投入合计", exp["value"], ey + cy)}]
+    if exp:
+        return [exp]
+    return labeled[:2]
+
+
+def _format_rnd_audit_value(label: str, display: str, yuan: float) -> str:
+    if yuan >= _STRICT_RND_MIN:
+        return f"{yuan:,.0f}"
+    if any(u in display for u in ("亿元", "万元", "百万元", "千元")):
+        return display
+    return display
+
+
+def _score_rnd_situation_window(window: str, labeled: list[dict], anchor: str) -> float:
+    score = 0.0
+    ctx = window[:600]
+    has_rnd_table = any(k in ctx for k in ("研发投入情况表", "研发支出情况", "费用化研发投入", "研发投入合计"))
+    if _looks_like_income_statement_block(ctx) and not has_rnd_table:
+        score -= 200.0
+    elif _looks_like_income_statement_block(ctx) and has_rnd_table:
+        score -= 40.0
+    if any(m in ctx for m in _RND_CUMULATIVE_MARKERS):
+        score -= 80.0
+    for kw in _RND_TABLE_CTX:
+        if kw in ctx:
+            score += 15.0
+    if "研发投入情况" in ctx or "研发支出情况" in ctx:
+        score += 80.0
+    if "单位：" in ctx or "单位:" in ctx:
+        score += 15.0
+    if "同比增长" in ctx and "研发投入合计" not in ctx:
+        score -= 60.0
+    if "单位：万元" in ctx or "单位:万元" in ctx:
+        score += 10.0
+    for item in labeled:
+        lab = item.get("label") or ""
+        val = item.get("value") or ""
+        if lab in _RND_TOTAL_LABELS or "合计" in lab or "总额" in lab:
+            score += 50.0
+        if lab == "费用化研发投入":
+            score += 5.0
+        if lab == "研发费用":
+            score -= 30.0
+        yuan = _rnd_amount_to_yuan(val) or 0
+        if yuan >= _STRICT_RND_MIN:
+            score += 20.0
+    if anchor in ("研发投入合计", "研发投入总额", "费用化研发投入"):
+        score += 12.0
+    if anchor == "研发费用":
+        score -= 25.0
+    return score
+
+
+def _rnd_field_template(spec: FieldSpec, source_url: str) -> dict:
+    return {
+        "field": spec.key,
+        "label_cn": spec.label_cn,
+        "definition": spec.definition,
+        "extraction": spec.extraction,
+        "region": spec.region,
+        "status": "not_found",
+        "in_region": False,
+        "value": None,
+        "evidence_sentence": "",
+        "page": None,
+        "anchor_matched": "",
+        "source_url": source_url,
+    }
+
+
+def extract_rnd_investment_baseline(
+    spec: FieldSpec, pages: list[str], source_url: str,
+    preferred: set[int] | None,
+) -> dict:
+    """Anchor-based rnd_investment extraction (pre-#32c-R2 baseline path)."""
+    out = _rnd_field_template(spec, source_url)
+    candidates = locate_candidates(pages, spec.anchors, preferred, spec.avoid, limit=8)
+    if not candidates:
+        return out
+    chosen = candidates[0]
+    page_text = pages[chosen["page"] - 1]
+    window = page_text[chosen["idx"]: chosen["idx"] + 600]
+    labeled = extract_rnd_numeric(window)
+    if not labeled:
+        skip_fallback = (
+            chosen["anchor"] == "研发投入"
+            and "不适用" in window
+            and "适用" in window
+        )
+        if not skip_fallback:
+            for cand in candidates[1:]:
+                page_text = pages[cand["page"] - 1]
+                window = page_text[cand["idx"]: cand["idx"] + 600]
+                labeled = extract_rnd_numeric(window)
+                if labeled:
+                    chosen = cand
+                    break
+    page_text = pages[chosen["page"] - 1]
+    in_region = bool(chosen.get("in_region"))
+    heading = _is_heading(page_text, chosen["idx"], chosen.get("col", 99))
+    out["page"] = chosen["page"]
+    out["anchor_matched"] = chosen["anchor"]
+    out["in_region"] = in_region
+    out["evidence_sentence"] = evidence_sentence(page_text, chosen["idx"], chosen["anchor"])
+    located_well = (in_region or not preferred) and heading
+    out["value"] = {"labeled": labeled, "context": truncate(clean_text(window[:200]), 200)}
+    out["status"] = "found" if (labeled and located_well) else ("partial" if labeled else "not_found")
+    return out
+
+
+def extract_rnd_situation_table_numeric(
+    spec: FieldSpec, pages: list[str], source_url: str,
+    regions: dict[str, set[int]] | None = None,
+) -> dict | None:
+    """Situation-table-first R&D selector (#32c-R2 production helper)."""
+    preferred = (regions or {}).get(spec.region)
+    best_score = float("-inf")
+    best: dict | None = None
+
+    def consider(window: str, page: int, anchor: str, idx: int, page_text: str, bonus: float = 0.0):
+        nonlocal best_score, best
+        if any(m in window for m in _RND_CUMULATIVE_MARKERS):
+            if "费用化研发投入" not in window and "研发投入合计" not in window:
+                return
+        sit = _labeled_from_rnd_situation_block(window)
+        if sit:
+            labeled = sit
+        else:
+            labeled = _extract_rnd_table_amounts(window)
+            if not labeled and not _looks_like_income_statement_block(window[:500]):
+                labeled = extract_rnd_numeric(window)
+        if not labeled:
+            return
+        total_item = labeled[0]
+        yuan = total_item.get("_yuan") or _rnd_amount_to_yuan(total_item.get("value") or "") or 0
+        if yuan < 10_000 and "研发投入情况表" not in window:
+            return
+        out_labeled = [{
+            "label": total_item["label"],
+            "value": total_item.get("_display") or _format_rnd_audit_value(
+                total_item["label"], total_item["value"], total_item.get("_yuan") or 0,
+            ),
+        }]
+        score = _score_rnd_situation_window(window, labeled, anchor) + bonus
+        if score <= best_score:
+            return
+        in_region = page in preferred if preferred else True
+        has_total = total_item.get("label") in _RND_TOTAL_LABELS or "合计" in (total_item.get("label") or "")
+        if has_total and yuan >= _STRICT_RND_MIN and (in_region or not preferred):
+            status = "found"
+        elif labeled:
+            status = "partial"
+        else:
+            status = "not_found"
+        best_score = score
+        best = {
+            **_rnd_field_template(spec, source_url),
+            "status": status,
+            "in_region": in_region,
+            "value": {
+                "labeled": out_labeled,
+                "context": truncate(clean_text(window[:250]), 250),
+            },
+            "evidence_sentence": evidence_sentence(page_text, idx, anchor),
+            "page": page,
+            "anchor_matched": anchor,
+        }
+
+    scan_pages = sorted(preferred) if preferred else range(1, len(pages) + 1)
+    for pno in scan_pages:
+        if pno < 1 or pno > len(pages):
+            continue
+        page_text = pages[pno - 1]
+        block = _rnd_situation_block_on_page(page_text)
+        if block:
+            idx = page_text.find("研发投入情况表")
+            if idx < 0:
+                idx = page_text.find("研发支出情况")
+            consider(block, pno, "研发投入情况表", max(idx, 0), page_text, bonus=120.0)
+
+    candidates = locate_candidates(pages, spec.anchors, preferred, spec.avoid, limit=12)
+    for cand in candidates:
+        page_text = pages[cand["page"] - 1]
+        win_start = max(0, cand["idx"] - 250)
+        window = page_text[win_start: cand["idx"] + 800]
+        block = _rnd_situation_block_on_page(window) or window
+        consider(block, cand["page"], cand["anchor"], cand["idx"], page_text, bonus=0.0)
+
+    return best
+
+
+def _rnd_strict_rank(label: str) -> int:
+    return {
+        "usable": 4, "partial": 3, "wrong": 2,
+        "not_found_missed": 1, "not_found_unverified": 1, "not_found": 1,
+    }.get(label, 0)
+
+
+def _is_cumulative_narrative_rnd(field: dict) -> bool:
+    val = field.get("value")
+    ctx = ""
+    if isinstance(val, dict):
+        ctx = val.get("context") or ""
+    ctx += " " + (field.get("evidence_sentence") or "")
+    if not any(m in ctx for m in _RND_CUMULATIVE_MARKERS):
+        return False
+    if "研发投入情况表" in ctx or "费用化研发投入" in ctx:
+        return False
+    return True
+
+
+def merge_rnd_investment_with_guard(baseline: dict, situation: dict | None) -> dict:
+    """max(baseline, situation-table) guard — never downgrade baseline strict rank."""
+    if not situation or situation.get("status") == "not_found" or not situation.get("value"):
+        return baseline
+    from lab.strict_audit_full_market import strict_audit_field  # lazy: circular import
+
+    base_strict, _ = strict_audit_field(baseline)
+    sit_strict, _ = strict_audit_field(situation)
+    prod_rank = _rnd_strict_rank(base_strict)
+    sit_rank = _rnd_strict_rank(sit_strict)
+    sit_eligible = sit_rank >= prod_rank and not _is_cumulative_narrative_rnd(situation)
+    if not sit_eligible:
+        return baseline
+    tie_order = {"baseline": 2, "situation": 1}
+    candidates = [
+        ("baseline", baseline, base_strict),
+        ("situation", situation, sit_strict),
+    ]
+    source, field, _ = max(
+        candidates,
+        key=lambda c: (_rnd_strict_rank(c[2]), tie_order.get(c[0], 0)),
+    )
+    if source == "situation":
+        merged = dict(field)
+        merged["anchor_matched"] = (field.get("anchor_matched") or "") + " (situation_table)"
+        return merged
+    return baseline
+
+
 # A heading is the anchor at/near a line start, OR a line whose only prefix
 # before the anchor is CN section numbering + a few descriptive chars, e.g.
 # "（五）公司2025 年度可能面临的风险". This rescues real headings that carry a
@@ -1381,43 +1754,15 @@ def extract_field(
             if _lands_well(floc):
                 loc = floc
 
-    if not loc:
-        return out
-
     if spec.extraction == "numeric" and spec.key == "rnd_investment":
-        candidates = locate_candidates(pages, spec.anchors, preferred, spec.avoid, limit=8)
-        if not candidates:
-            return out
-        chosen = candidates[0]
-        page_text = pages[chosen["page"] - 1]
-        window = page_text[chosen["idx"]: chosen["idx"] + 600]
-        labeled = extract_rnd_numeric(window)
-        if not labeled:
-            # Explicit "R&D not applicable" disclosure — do not fall through to
-            # unrelated 研发费用 hits elsewhere in the report (e.g. 000996).
-            skip_fallback = (
-                chosen["anchor"] == "研发投入"
-                and "不适用" in window
-                and "适用" in window
-            )
-            if not skip_fallback:
-                for cand in candidates[1:]:
-                    page_text = pages[cand["page"] - 1]
-                    window = page_text[cand["idx"]: cand["idx"] + 600]
-                    labeled = extract_rnd_numeric(window)
-                    if labeled:
-                        chosen = cand
-                        break
-        page_text = pages[chosen["page"] - 1]
-        in_region = bool(chosen.get("in_region"))
-        heading = _is_heading(page_text, chosen["idx"], chosen.get("col", 99))
-        out["page"] = chosen["page"]
-        out["anchor_matched"] = chosen["anchor"]
-        out["in_region"] = in_region
-        out["evidence_sentence"] = evidence_sentence(page_text, chosen["idx"], chosen["anchor"])
-        located_well = (in_region or not preferred) and heading
-        out["value"] = {"labeled": labeled, "context": truncate(clean_text(window[:200]), 200)}
-        out["status"] = "found" if (labeled and located_well) else ("partial" if labeled else "not_found")
+        baseline = (
+            extract_rnd_investment_baseline(spec, pages, source_url, preferred)
+            if loc else _rnd_field_template(spec, source_url)
+        )
+        situation = extract_rnd_situation_table_numeric(spec, pages, source_url, regions)
+        return merge_rnd_investment_with_guard(baseline, situation)
+
+    if not loc:
         return out
 
     if spec.extraction == "numeric" and spec.key in _FIN_RATIO_FIELDS:
