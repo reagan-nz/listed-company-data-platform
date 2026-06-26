@@ -1,53 +1,30 @@
 # 金融公司字段体系 v1
 
-_最后更新：2026-06-25（#30 financial follow-up docs sync）_
+_最后更新：2026-06-25（#30 金融跟进文档同步）_
 
-> **实现状态（Issue #4 + #27）**：`lab/field_schema.py` 已实现 `BANK_FIELD_SPECS` / `BROKER_FIELD_SPECS` / `INSURER_FIELD_SPECS` / `OTHER_FINANCIAL_FIELD_SPECS`，以及 `detect_profile()` / `resolve_profile()` / `get_field_specs()` 分发。eval 对 `financial: true` 公司使用子 schema；非金融仍用工业 11 字段。
+> **实现状态（Issue #4 + #27）**
 >
-> **full_market_2024**：86 家金融 ok 已用子 schema 跑通；**不纳入**非金融 11 字段 headline（proxy / strict usable 仅统计 `financial: false` 的 5621 家；非金融 strict **9.43/11**）。
+> - `lab/field_schema.py` 已实现银行/券商/保险/其他金融四类字段规格与分发逻辑。
+> - 对 `financial: true` 公司使用子字段体系；非金融仍用工业 11 字段。
+> - `full_market_2024`：86 家金融公司成功跑通；**不纳入**非金融核心指标 9.43/11。
+> - #27 金融审计：87 家标记 / 86 家成功；1059 个字段单元；325 格人工校准表待填写。
+> - 金融指标**单独报告**，不得与非金融 9.43/11 混报。
 >
-> **#27 金融 audit（2026-06-25，Phase 0–1B）**：
-> - Phase 0：`financial_population_inventory.csv`（87 tagged / 86 ok；bank 43 / broker 37 / insurer 2 / other 4）
-> - Phase 1A：`lab/strict_audit_financial_full_market.py` + `financial_audit_population.csv`（1,059 cells）+ [financial_audit_summary.md](../outputs/generalization/full_market_2024/financial_audit_summary.md)
-> - Phase 1B：`lab/financial_calibration_sample.py` + `financial_audit_sample.csv`（30 公司 × 325 cells；**manual_grade 待填写**）
-> - **单独报告**金融 strict（按 subtype）；**不得**与 non-fin 9.43/11 混报
-> - 详见 [CURRENT_STATUS.md](../CURRENT_STATUS.md) §4.2
->
-> **尚未完成（#28+）**：
-> - 金融专用 plausible / extract 规则（Phase 3）；当前仍复用 generic `extract_numeric` / `table_match`，**数值字段可能含噪声**
-> - auto-tag / subtype 修正（000402 金融街、600816 建元信托、600318 新力金融 等待 review）
-> - 325 格 manual calibration **grading 待完成**（非全量人工验证）
-> - DB `financial_subtype` 列未入库（Phase 5 未做）
+> **尚未完成**：金融专用抽取规则、标签自动修正、325 格人工打分、数据库子类型入库。
 
 ## #30 结果快照
 
-`#30a–#30g` 已作为金融 follow-up（跟进）批次完成：
+`#30a–#30g` 金融跟进批次已完成：
 
-- **audit-only（仅审计）**：
-  - `#30a` broker（券商）`not_found_missed`（应该找到但没有找到）收紧
-  - `#30b` ratio/table calibration（比率/表格校准）+ `major_subsidiaries`（主要子公司字段）门控
-  - `#30e` financial table plausibility hardening（金融表格合理性加固）
-  - `#30f` insurer（保险）low-n semantic hardening（小样本语义加固）
-- **extraction helpers（抽取辅助）**：
-  - `#30c` bank ratio helper（银行比率解析辅助）
-  - `#30d` broker income / margin recall（券商收入/两融召回）
-- **diagnosis-only（仅诊断）**：
-  - `#30g` subtype/tag review（子类型/标签复核）
+| 类型 | 内容 |
+|---|---|
+| 仅审计 | #30a 券商 not_found_missed 收紧；#30b 比率/表格校准；#30e 表格合理性；#30f 保险小样本语义加固 |
+| 抽取辅助 | #30c 银行比率解析；#30d 券商收入/两融召回 |
+| 仅诊断 | #30g 子类型复核（000402 / 600816 / 600318），尚无 YAML 变更 |
 
-关键结论口径：
+**结论**：审计与抽取均有改善；金融指标仍单独于非金融 9.43/11；全量金融推广暂缓；保险仅 2 家，不宜过度解读。
 
-- 金融 follow-up（跟进）带来了有意义的 audit/extraction（审计/抽取）改善
-- 金融指标仍**单独**于 non-fin（非金融）`9.43/11 headline（核心指标/对外口径）**
-- wider financial rollout（更大范围金融推广）仍**暂缓**
-- insurer cohort（保险分组）仍为 **n=2**，更广保险泛化**未**签核
-
-`#30g` 子类型注意事项（仅诊断；**尚无 YAML 变更**）：
-
-- `000402` 金融街：可能**不是** broker（券商）；人工复核后或应视为 industrial / non-financial（工业/非金融）
-- `600816` 建元信托：明显 trust-like（信托类）；**不是** bank（银行）
-- `600318` 新力金融：多元金融控股；**不是** bank（银行）
-
-详见 [financial_audit_fix_30_summary.md](../outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md) 的 `#30` 关单汇总。
+详见 [financial_audit_fix_30_summary.md](../outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md)。
 
 ## 1. 为什么需要单独 schema
 

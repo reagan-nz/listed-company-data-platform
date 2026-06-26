@@ -1,28 +1,28 @@
 # 评估方法
 
-## 术语 Glossary（术语表）
+## 术语表
 
-| 术语 | 英文 | 含义 |
+| 术语 | 英文标识 | 含义 |
 |---|---|---|
-| **total** | total | 评估 universe（评估全集）中的公司总数。 |
-| **ok** | ok | 脚本成功找到 2024 年报、下载/解析并写出 `company_profile.json`（公司档案 JSON）。**不等于每个字段都正确。** |
-| **no_announcement** | no_announcement | CNINFO 当前规则下未找到可用 2024 年报。不一定是代码 error（错误）。 |
-| **error** | error | 网络/下载/解析等技术 failure（失败）。 |
-| **proxy plausible** | proxy plausible | proxy plausible（自动合理性分数）：字段结构看起来合理。**不等于人工确认正确。** |
-| **strict usable** | strict usable | strict usable（严格审计下可用）：strict audit（严格质量审计）中仅计 `usable`（可用）的标签；比 proxy（自动合理性分数）更保守。 |
-| **strict lenient** | strict lenient | strict lenient（严格审计宽松口径）：`usable`（可用）+ `partial`（部分可用）的上界估计。 |
-| **manual PDF deep-read** | manual PDF deep-read | manual PDF deep-read（PDF 深度阅读）：读取 PDF 页文本验证 evidence（证据）；检查 `not_found`（未找到）是否应为 `not_found_missed`（应该找到但没有找到）。小样本校准，**非** full manual validation（全量人工验证）。 |
-| **not_found_missed** | not_found_missed | not_found_missed（应该找到但没有找到）：PDF 中存在但抽取返回 not_found（未找到）。工业 strict audit（严格质量审计）可经 PDF deep-read（深度阅读）判定；金融 audit（审计）中仅为 recall hint（召回提示），须 worksheet（校准表）人工 grade（打分）确认。 |
-| **非金融 headline** | non-financial headline | headline（核心指标/对外口径）：11 字段均值仅统计 `financial: false` 工业类公司；金融公司用独立子 schema（字段体系），**不混入**（9.43/11）。 |
-| **金融 strict headline** | financial strict headline | headline（核心指标/对外口径）：按 bank/broker/insurer/other 子 schema（字段体系）单独报告（#27）；**不得**与 non-fin（非金融）9.43/11 混报。 |
+| total | total | 评估公司全集总数 |
+| ok | ok | 成功找到年报并完成抽取；不等于每个字段都正确 |
+| no_announcement | no_announcement | CNINFO 未找到可用 2024 年报 |
+| error | error | 网络/下载/解析等技术失败 |
+| 自动合理性分数 | proxy plausible | 字段结构看起来合理；不等于人工确认正确 |
+| 严格审计下可用 | strict usable | 严格质量审计中仅计 `usable` 的均值 |
+| 严格审计宽松口径 | strict lenient | `usable` + `partial` 的上界估计 |
+| PDF 深度阅读 | manual PDF deep-read | 读 PDF 页验证证据；小样本校准，非全量人工验证 |
+| 应该找到但没有找到 | not_found_missed | PDF 中存在但抽取为未找到 |
+| 非金融核心指标 | non-financial headline | 仅统计工业类公司；金融单独报告 |
+| 金融核心指标 | financial strict headline | 按银行/券商/保险/其他分别报告 |
 
-**板块名称**：bse=北交所 | star=科创板 | szse_main=深市主板 | chinext=创业板 | sse_main=沪市主板
+**板块**：bse=北交所 | star=科创板 | szse_main=深市主板 | chinext=创业板 | sse_main=沪市主板
 
 ## 核心原则
 
-> **自动 `plausible` ≠ 人工准确率。**
+> **自动合理性分数 ≠ 人工准确率。**
 >
-> 解读任何 headline 数字时，必须结合人工校准（calibration_sample）与严格二次审计（对 stored value 的 adversarial 规则复核）。直接把 plausible 当准确率会高估 3–4 个百分点。
+> 解读任何核心指标时，必须结合人工校准与严格二次审计。直接把合理性分数当准确率会高估 3–4 个百分点。
 
 **rnd_investment proxy（2026-06-22 起）**：`status=found` 且 `labeled` 中至少含一条实质 R&D 金额（非 ratio-only、非 0.00 资本化行、非列表编号）；抽取侧优先 `研发投入金额/总额/合计` 标签，并排除利润表 `研发费用` 行。
 
@@ -167,28 +167,13 @@
 - **产出**：`financial_audit_summary.md`、`financial_audit_population.csv`、`financial_audit_sample.csv`
 - **不得声称**：金融 audit 已 fully validated；`not_found_missed`（75 cells，broker-heavy）为 **recall hint 非确认 truth**；`major_subsidiaries` 低 usable 为 **结构性 partial**（industrial in_region 门控）；**insurer n=2** 勿过度解读 subtype 均值；**financial under-tagging scan** deferred Stage 3b；extraction fixes deferred Stage 3b
 
-### 10.1 `#30` 金融 follow-up（跟进）验证口径
+### 10.1 `#30` 金融跟进验证口径
 
-- `#30`（`#30a–#30g`）以冻结的 `#29` 人工 calibration（校准）样本作为**验证锚点**。
-- 因此，冻结的人工 vs 自动 agreement（一致率）**不是**唯一成功指标。
-- `#30` 还使用了**定向关卡**，例如：
-  - 已确认 `MISSED`（漏抽）的恢复数量
-  - 负向对照（negative control）保持不 degraded（不降级）
-  - dry-run（只读试跑）中不意外写入 sample/profile（样本/公司档案）
-  - insurer（保险）负向目标保持 non-usable（不可用），正向保持 usable/partial（可用/部分可用）
+- `#30` 以冻结的 `#29` 人工校准样本作为验证锚点。
+- 冻结一致率**不是**唯一成功指标；还需看定向验证门槛（漏抽恢复数、对照组保持、只读试跑不写回等）。
+- 若人工标为 MISSED 的行被正确恢复为 `usable`，冻结一致率可能**下降**——这不一定是回归。
 
-**指标注意事项：**
-
-若人工标为 `MISSED`（漏抽）的行被新抽取正确恢复为 `usable`（可用），冻结 agreement（一致率）可能**下降**——因为人工列仍为 `MISSED`（漏抽），而自动化已变为 `usable`（可用）。
-
-因此读 `#30` 时，agreement（一致率）变化需结合：
-
-- 字段定向 validation gates（验证关卡）
-- strict（严格审计）标签前后对比
-- control rows（对照行）
-- 变更是 audit-only（仅审计）、extraction（抽取）还是 diagnosis-only（仅诊断）
-
-汇总关单文档：[financial_audit_fix_30_summary.md](../outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md)
+汇总：[financial_audit_fix_30_summary.md](../outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md)
 
 ```bash
 # 金融 automated strict audit
@@ -219,31 +204,28 @@ python lab/financial_calibration_sample.py \
 - **Stage 3a 结论**：**PASS** — automated strict audit + targeted scoped refreshes (cached PDF) + sampled/manual calibration support。**非**全量人工验证
 - **产出**：[stage3_quality_followup_summary.md](../outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)
 
-> **不得声称**：Full Stage 3 complete；all extraction fixed；financial metrics mixed into non-fin 9.43/11
+> **不得声称**：完整 Stage 3 已结束；全部抽取已修复；金融指标与非金融 9.43/11 混报
 
-### 12. #32c scoped P0 R&D validation（验证）（2026-06-26）
+### 12. #32c 研发 P0 小范围写回验证（2026-06-26）
 
-- **目的**：验证 guarded R&D situation-table helper（带防护的研发情况表辅助）与 scoped P0 apply（小范围 P0 定向应用）；**非** full population strict audit（全人口 strict audit（严格质量审计））重跑
-- **方法**：
-  - R2–R3：dry-run（只读试跑）harness（试跑框架） vs stored profiles（已存公司档案）
-  - R4：scoped apply（小范围定向应用）via `lab/refresh_rnd_full_market.py --apply --codes …`（cached PDF（已缓存 PDF））
-  - R5：post-apply read-only profile verification（应用后只读公司档案验证） vs apply CSV
-- **Apply（应用）结果（104 P0 targets（目标公司））**：updated（更新）**32**；errors（错误）**0**；not_found→found（未找到→找到）**14**；found→not_found（找到→未找到）**0**
-- **Post-apply verify（应用后验证）**：104/104 status（状态）与 apply CSV 一致；strict regressions（严格审计回归）**0**；000333 仍 partial（部分可用）
-- **Headline（核心指标/对外口径）**：non-fin strict usable（非金融严格审计下可用）**9.43/11 不变**
+- **目的**：验证研发情况表辅助函数与小范围写回；**非**全人口严格质量审计重跑
+- **写回结果**：104 家目标，32 家更新，0 错误，14 未找到→找到，0 找到→未找到
+- **写回后验证**：104/104 状态一致，0 回归；000333 仍 partial
+- **核心指标**：非金融 9.43/11 **不变**
 - **产出**：[rnd_residual_fix_32c_apply_summary.md](../outputs/generalization/full_market_2024/rnd_residual_fix_32c_apply_summary.md)、[rnd_residual_fix_32c_post_apply_verify.md](../outputs/generalization/full_market_2024/rnd_residual_fix_32c_post_apply_verify.md)
 
-> **不得声称**：Full R&D residual fix（全量研发残留修复）；global headline（全局核心指标）updated（已更新）；full manual validation（全量人工验证）；CNINFO/SQLite rerun（重跑）from #32c
+> **不得声称**：全量研发残留已修复；核心指标已更新；全量人工验证；#32c 触发 CNINFO/SQLite 重跑
 
-### 13. #32 关单 — scoped work（小范围工作）与 headline（核心指标/对外口径）（2026-06-26）
+### 13. #32 关单说明（2026-06-26）
 
-- **#32 未重跑 full strict audit（全量严格质量审计）**，也未更新 non-fin（非金融）**9.43/11 headline（核心指标/对外口径）**。
-- **Scoped R&D apply（小范围研发定向应用）（#32c）** 仅更新 32 家本地 profile（公司档案）— **不等价于**新的全市场 strict usable（严格审计下可用）分数。
-- **Post-apply verification（应用后验证）（#32c-R5）** 报告的是**本地小范围一致性**（profile（公司档案） vs apply CSV），不是全人口指标刷新。
-- **#32b revenue dry-run（收入只读诊断）** 已对 57 个 strict wrong（严格审计下错误）field-cell（字段单元格）分类；revenue production apply（收入生产应用）**暂缓**；harness（试跑框架）改善仅为实验信号。
-- **关单文档**：[revenue_rnd_fix_32_final_summary.md](../outputs/generalization/full_market_2024/revenue_rnd_fix_32_final_summary.md)
+- #32 **未**重跑全量严格质量审计，**未**更新非金融 9.43/11 核心指标
+- 小范围写回仅更新 32 家本地档案，**不等价于**新的全市场严格审计分数
+- 写回后验证报告的是本地一致性，不是全人口指标刷新
+- #32b 收入只读诊断已分类 57 个错误字段单元；生产写回暂缓
 
-> **不得声称**：#32 已修复全部 revenue/R&D residuals（收入与研发残留）；headline（核心指标/对外口径）因 scoped apply（小范围定向应用）而变动
+> **不得声称**：#32 已修复全部收入/研发残留；核心指标因小范围写回而变动
+
+关单文档：[revenue_rnd_fix_32_final_summary.md](../outputs/generalization/full_market_2024/revenue_rnd_fix_32_final_summary.md)
 
 ## 指标对照表
 

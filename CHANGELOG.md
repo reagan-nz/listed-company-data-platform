@@ -5,109 +5,81 @@
 ## [Unreleased]
 
 ### 新增
-- **#33 multiyear expansion decision memo**（2026-06-26）：[multiyear_expansion_decision_33.md](outputs/generalization/full_market_2024/multiyear_expansion_decision_33.md) — 2025-first staged rollout；per-year universe；run_name 方案；validation gates；**无** extraction / CNINFO / SQLite
-- **#32 revenue + R&D residual closure**（2026-06-26）：[revenue_rnd_fix_32_final_summary.md](outputs/generalization/full_market_2024/revenue_rnd_fix_32_final_summary.md) — inventory（513-row CSV）+ #32c scoped P0 R&D apply verified + #32b revenue dry-run（57/57 classified）；**无** global headline 更新
-- **#32b revenue residual dry-run**（2026-06-26）：`lab/revenue_residual_fix_32b_dryrun.py`；57 strict-wrong cells classified；Tier4/ranking harness signal 17 improved；production apply **deferred** — 见 [revenue_residual_fix_32b_dryrun_summary.md](outputs/generalization/full_market_2024/revenue_residual_fix_32b_dryrun_summary.md)
-- **#32c R&D P0 scoped apply + verification**（2026-06-26）：`lab/extract_annual_report.py` guarded situation-table helper（`extract_rnd_situation_table_numeric` + `merge_rnd_investment_with_guard`）；scoped P0 apply **104** targets / **32** updated / **0** errors / **14** not_found→found / **0** found→not_found；post-apply verification PASS — 见 [rnd_residual_fix_32c_apply_summary.md](outputs/generalization/full_market_2024/rnd_residual_fix_32c_apply_summary.md)、[rnd_residual_fix_32c_post_apply_verify.md](outputs/generalization/full_market_2024/rnd_residual_fix_32c_post_apply_verify.md)。**无** CNINFO 重跑、**无** SQLite import、**无** global strict audit headline 更新；local profile/eval apply 产物 **未 commit**
-- **#30 financial field follow-up 汇总**（2026-06-25）：新增 [financial_audit_fix_30_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md)，汇总 `#30a–#30g` 的 audit-only、extraction helper 与 diagnosis-only 结果；明确后续工作转入 `#31` / `#32` / `#33`
-- **#30d broker income / margin recall**（2026-06-25）：`lab/extract_annual_report.py` 新增 broker-only 分部收入 / notes IB / MD&A 融出资金解析；sample-only apply 恢复 **4/4** confirmed MISSED（`601878` 投行 / 资管 / 融出资金，`600030` 投行净收入），23/23 ABSENT-OK controls 保持非 usable；population `usable` **+4** / `not_found_missed` **-4** — 见 [financial_audit_fix_30d_apply_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30d_apply_summary.md)
-- **#30b ratio/table reject + major_subsidiaries gate**（2026-06-25）：ratio 行业叙述/优先股触发拒绝、table plausibility 增强、子公司表 out-of-region usable；joined agreement **69.5%→71.7%** — 见 [financial_audit_fix_30b_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30b_summary.md)
-- **#30a broker `not_found_missed` tightening**（2026-06-25）：`lab/strict_audit_financial_full_market.py` field-specific PDF gates；joined calibration agreement **62%→69.5%**；23/23 ABSENT-OK over-call 修复 — 见 [financial_audit_fix_30a_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30a_summary.md)
-- **金融字段质量 audit 框架**（Issue #27）：`lab/strict_audit_financial_full_market.py` + `lab/financial_calibration_sample.py`；Phase 0 inventory（87 tagged / 86 ok）；Phase 1A automated financial strict（1,059 cells；bank **9.00/13**、broker **7.66/12**）；Phase 1B worksheet（30 公司 × 325 cells，grading 待完成）— 见 [financial_audit_summary.md](outputs/generalization/full_market_2024/financial_audit_summary.md)；**不混入** non-fin 9.43/11；非 extraction 修复
-- **revenue 跨页 split-table 修复**（Issue #26，`lab/extract_annual_report.py`）：`_stitch_revenue_table_continuation` + `_trim_revenue_stacked_preview`；主增益为 header-only split 表的 wrong-cell 恢复；partial 人口基本不变
-- **scoped rnd_investment refresh**（P2）：`lab/refresh_rnd_full_market.py`；cached PDF 仅重抽取 rnd 字段；+1,460 not_found→found；merge + strict audit + SQLite `run_name=full_market_2024_rnd_refresh` — 见 [rnd_refresh_summary.md](outputs/generalization/full_market_2024/rnd_refresh_summary.md)
-- **full_market_2024 全量提取**：6124 家 A 股 universe；5707 ok / 417 no_announcement / 0 error；5 board 批次（bse→star→szse_main→chinext→sse_main）+ merge + SQLite 导入（62,890 行）— 见 `outputs/generalization/full_market_2024/full_market_2024_summary.md`
-- **full_market_2024 混合 strict 审计**：5621 非金融 × 11 字段自动化 adversarial recheck；post-rnd strict usable **9.38/11** — 见 `strict_audit_summary.md`
-- **全市场工具链**：`lab/make_full_market_yaml.py`、`lab/merge_full_market_batches.py`、`lab/strict_audit_full_market.py`、`lab/run_full_market_2024.sh`
-- **数据库存储方案 v1**（Issue #7）：`docs/database_schema.md` 定义四表（company_basic / report_source / extracted_field / evaluation_result）；推荐 SQLite 原型，后续迁 PostgreSQL
-- **SQLite 建表与导入原型**（Issue #8）：`lab/db_init.py`（建表）、`lab/db_import.py`（从 eval1000 导入小样本）；`.db` 写入 `outputs/db/` 且已 gitignore
-- **金融公司 schema 设计 v1**（Issue #3）：`docs/financial_company_schema.md` 定义银行/券商/保险三类子 schema，明确各类适用字段与不适用字段，并给出评估分开报告建议
-- **金融公司子 schema 实现**（Issue #4）：`BANK/BROKER/INSURER/OTHER_FINANCIAL_FIELD_SPECS`、`detect_profile`/`resolve_profile`/`get_field_specs`；eval 对 `financial: true` 启用子 schema
+- **#33 多年份扩展决策**（2026-06-26）：[multiyear_expansion_decision_33.md](outputs/generalization/full_market_2024/multiyear_expansion_decision_33.md)。结论：2025 优先、分阶段试点、按年重建公司全集；**无**抽取 / CNINFO / SQLite
+- **#32 收入与研发残留关单**（2026-06-26）：[revenue_rnd_fix_32_final_summary.md](outputs/generalization/full_market_2024/revenue_rnd_fix_32_final_summary.md)。盘点 513 行 + 研发小范围写回验证 + 收入只读诊断；**无**核心指标更新
+- **#32b 收入只读诊断**（2026-06-26）：`lab/revenue_residual_fix_32b_dryrun.py`；57 个错误字段单元已分类；试跑改善 17；**暂不**生产写回
+- **#32c 研发 P0 小范围写回**（2026-06-26）：104 家目标 / 32 家更新 / 0 错误 / 14 未找到→找到；写回后验证通过。**无** CNINFO、SQLite、核心指标更新
+- **#30 金融跟进汇总**（2026-06-25）：[financial_audit_fix_30_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md)，汇总 #30a–#30g
+- **#30d 券商收入召回**（2026-06-25）：4/4 确认漏抽恢复；23/23 对照组保持非可用
+- **#30b 比率/表格审计校准**（2026-06-25）：人工校准一致率 69.5%→71.7%
+- **#30a 券商 not_found_missed 收紧**（2026-06-25）：一致率 62%→69.5%
+- **金融审计框架**（#27）：1059 个字段单元；银行 9.00/13、券商 7.66/12；325 格校准表待填写
+- **收入跨页表格修复**（#26）：主增益为分页表头恢复
+- **研发字段小范围刷新**：+1460 未找到→找到
+- **2024 全量提取**：6124 家 / 5707 成功 / SQLite 62890 行
+- **数据库与金融 schema 设计**（Issue #3–#8）
 
 ### 变更
-- **#30 金融 follow-up tranche 完成并待关单**：完成 broker `not_found_missed` audit tightening、ratio/table audit calibration、bank ratio helper、broker income/margin recall helper、financial table plausibility hardening、insurer audit hardening、subtype/tag diagnosis；**无** CNINFO rerun、**无** YAML tag changes、**无** SQLite import
-- **revenue scoped refresh 完成**（#26）：region strict wrong 258→**38**；segment 109→**19**；非金融 proxy 10.61→**10.67/11**；strict 9.38→**9.43/11**；lenient 10.74→**10.80/11**；all-field wrong 876→**566**（cached PDF，非 CNINFO 重跑；非全量人工验证；不得与 eval1000 strict 10.16/11 直接比较）
-- **P2.1 rnd candidate-fallback**（`lab/extract_annual_report.py`）：top-priority anchor 无 parseable 金额时尝试下一候选窗口；修复 15 个原回归；rnd found 93.7%→**94.2%**；0 found→not_found 回退
-- **rnd_investment 召回修复**（P1+P2）：BSE 研发支出锚点 + summary-total 优先级；scoped refresh over cached PDFs；rnd found 67.9%→94.2%；BSE rnd 22.8%→99.2%；proxy 10.35→**10.61/11**；strict 9.06→**9.38/11**；BSE strict 7.71→**8.71/11**（非 CNINFO 重跑）
-- **BSE strict audit 规则修正**（P0）：TOP_KW 扩展识别北交所客户/供应商表格列头；BSE strict 7.14→7.71（审计规则，非抽取变更）
-- **full_market_2024 完成**：非金融 proxy **10.61/11**（post-rnd）；strict usable **9.38/11**（自动化 adversarial，非全量人工验证）；不得与旧 10.16/11 baseline 直接比较
-- **Independent eval1000 泛化验证**：新 cohort 1000 家（seed 20260623，重叠 159/15.9%）；**918 ok / 82 no_announcement / 0 error**（18 ChunkedEncodingError 经 VPN-off 重试恢复）；非金融 proxy **10.30/11**（vs v2 10.33，Δ −0.04 PASS）；SQLite 10112 行 — 见 `outputs/generalization/eval1000_independent_20260623/independent_comparison.md`
-- **eval1000_v2 同 cohort 全量重跑**：1020 家 / 947 ok / 73 no_announcement / 0 error；非金融 proxy **10.33/11**（baseline 10.54，−0.21 为更严 proxy 所致）；SQLite 10428 行 — 见 `outputs/generalization/eval1000_v2/eval1000_v2_comparison.md`
-- **schema_profile 可追溯性**：`eval_generalize.py` 写入 `company_profile.json` 时同步记录 `schema_profile` / `suggested_profile`
-- **金融标签补全 — 601825 沪农商行**：`financial: true`；`_BANK_NAME_KW` / `sample_universe` 增加 农商行/城商行
-- **金融标签人工复核 — 资本类**：000987 越秀资本、600061 国投资本、600390 五矿资本 → `financial: true`（other_financial）；列表共 **16 家** tagged
-- **CURRENT_STATUS.md 重构**：作为主阶段进度页，面向 supervisor 可读；含目标、成果、关键数字、已知问题、下一步与进度查看指引
-- **Cached validation**（eval1000 缓存）：SQLite 全量导入 PASS；rnd/revenue 新 proxy 在 10417 字段上验证；无其他字段回归 — 见 `outputs/validation/recent_changes_cached_validation.md`
-- **SQLite 导入加固**：单公司 `company_profile.json` 失败不中断全量导入；`in_region`/`anchor_matched` 入库；`evaluation_result` 主键含 `report_year`；启用 FK；移除冗余索引
-- **rnd_investment 抽取收紧**（Issue #1）：`extract_rnd_numeric` 优先总额标签、拒绝 ratio-only / 资本化 0.00 / 列表编号 / 利润表行；proxy 同步收紧
-- **收入表格 proxy 收紧**（Issue #2）：`revenue_table_plausible` 要求 `revenue_by_region` / `revenue_by_segment` preview 含至少一行非表头数据行
+- **#30 金融跟进批次完成**：审计加固 + 定向抽取辅助；**无** CNINFO / YAML / SQLite
+- **收入小范围刷新**（#26）：分地区错误 258→38；分业务 109→19；核心指标 9.38→**9.43/11**
+- **研发小范围刷新**：找到率 67.9%→94.2%；核心指标 9.06→9.38
+- **北交所审计规则修正**（#24）：7.14→7.71
+- **独立 1000 家泛化验证**：918 成功；自动合理性分数 10.30/11，**通过**
+- **eval1000_v2 同批重跑**：947 成功；自动合理性分数 10.33/11
+- **CURRENT_STATUS 重构**：面向评审的主进度页
 
 ### 文档
-- **中文可读性 pass（项目状态文档）**（2026-06-26）：重写 README / CURRENT_STATUS / ROADMAP / CHANGELOG / evaluation_method / financial_company_schema / stage3 与 #30/#32/#33 汇总为更清晰中文；保留技术标识符、指标、链接与文件名不变
-- **#33 multiyear expansion decision docs sync**（2026-06-26）：`multiyear_expansion_decision_33.md`；同步 CURRENT_STATUS / CHANGELOG / ROADMAP / stage3；#33 closed；#23 ready to close；headline **9.43/11 不变**
-- **#32 final closure docs sync**（2026-06-26）：`revenue_rnd_fix_32_final_summary.md`；同步 CURRENT_STATUS / CHANGELOG / ROADMAP / evaluation_method / inventory / stage3；mark #32 closed；headline **9.43/11 不变**
-- **#32c docs sync**（2026-06-26）：同步 `CURRENT_STATUS.md`、`CHANGELOG.md`、`ROADMAP.md`、`docs/evaluation_method.md`、`revenue_rnd_residual_inventory_32.md`、`stage3_quality_followup_summary.md`；记录 scoped P0 R&D apply verified；headline **9.43/11 不变**
-- **#30 final summary + docs sync**（2026-06-25）：同步 `CURRENT_STATUS.md`、`CHANGELOG.md`、`ROADMAP.md`、`docs/financial_company_schema.md`、`docs/evaluation_method.md`、`stage3_quality_followup_summary.md`；将后续工作路由到 `#31` / `#32` / `#33`
-- **#28 Stage 3a 质量 follow-up 汇总**（2026-06-25）：[`stage3_quality_followup_summary.md`](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md) — 合并 #24–#27 快照；Stage 3a **PASS**；Stage 3b backlog；CURRENT_STATUS / ROADMAP / evaluation_method 交叉链接
-- **#27 金融 audit 文档同步**（2026-06-25）：financial_company_schema、CURRENT_STATUS、ROADMAP、evaluation_method；financial audit 单独 headline
-- **#26 revenue refresh 文档同步**（2026-06-24）：revenue_refresh_summary.md、CURRENT_STATUS、full_market_2024_summary、strict_audit 重跑后数字
-- **P2 rnd refresh 文档同步**（2026-06-24）：rnd_refresh_summary.md、CURRENT_STATUS、full_market_2024_summary、strict_audit 重跑后数字
-- **Phase 3 文档同步**（2026-06-24）：CURRENT_STATUS / ROADMAP / evaluation_method / database_schema / financial_company_schema / full_market_2024_summary / plans v0.6 更新；新增指标解释 glossary
-- **文档同步**（2026-06-23）：所有主要文档与 eval1000_v2 / independent eval1000 里程碑对齐；ROADMAP 阶段重排（full_market_2024 → strict 审计 → 多年度 → BrowserUser）；docs/evaluation_method 增加同 cohort 重跑与独立泛化验证说明；docs/database_schema 注明三批次 SQLite 导入状态；docs/financial_company_schema 补充 strict 未重跑说明；docs/crawler_strategy 明确 BrowserUser 在 full_market_2024 基线稳定后才启动；新增 plans/v0.6_full_market_2024_plan.md
+- **项目文档中文润色**（2026-06-26）：重写 README / CURRENT_STATUS / ROADMAP / CHANGELOG / 评估文档与阶段汇总；集中术语表；保留文件名与指标不变
+- **#33 / #32 / #30 文档同步**（2026-06-25–26）
+- **#28 第 3a 阶段汇总**（2026-06-25）
+- **Phase 3 文档同步**（2026-06-24）
 
-### 计划
-- **Revenue Tier4 + wrong-table ranking pilot**（post-#32b harness signal；human sign-off before production）
-- **2025 pilot implementation**（post-#33 human sign-off §12；year-parameterized scripts）
-- **2023/2022 backfill**（after full_market_2025 validation gates）
-- **R&D remaining partial / unresolved**（72/104 P0 + full-population partial；000333/301221 deferred）
-- **Revenue partial full methodology**（~753 partial population not enumerated in #32）
-- `#31`：financial under-tagging scan / 金融公司漏标扫描（含 `000402` / `600816` / `600318` retag follow-up）
-- BrowserUser 数据源试点（全量基线稳定后）
+### 后续待办
+- 2025 试点（待 #33 人工确认）
+- 2023/2022 历史年份回填
+- #31 金融漏标扫描
+- 收入 Tier4 与错表排序试点
+- 研发部分可用残留
+- BrowserUser 数据源试点
 
 ## 2026-06-18
 
 ### 新增
-- **1000 家受控评估**（eval1000）：1020 家样本，946 家成功，非金融 10.5/11 plausible
-- **严格二次审计**：全量 9937 plausible 单元格 adversarial 复核，strict-usable 10.16/11（92.4%）
-- **人工校准工具增强**：MISSED 分级、分层评分、calibrated population estimate
-- **sample_universe.py --scale**：支持 5× 分层抽样生成 1000 公司列表
-- **金融公司标签**：eval 列表增加 `financial: true` 标记，summary 单独统计
+- **1000 家受控评估**（eval1000）：1020 家样本，946 家成功
+- **严格二次审计**：9937 个单元格复核，strict-usable 10.16/11
+- **人工校准工具增强**
+- **金融公司标签**：eval 列表增加 `financial: true`
 
 ### 修复
-- **risk_factors 召回**：扩展锚点（面临的风险/可能面临的风险），增加 pointer avoid（详见/请见）
-- **revenue_by_region 精度**：移除 bare 境内/境外 anchor；combined-table preview 从分地区行开始
-- **major_products 召回**：fallback_anchors 机制，从业务概述段落回退抽取
-- **A+H 报告选择**：`pick_full_report` 优先 A 股年报，降级 H 股/境外版
-- **no_announcement clean failure**：eval 不再因无公告而 hard crash
-- **heading 识别**：带编号前缀的标题（如「（五）公司2025年度可能面临的风险」）不再误判为 partial
-- **page-boundary snippet**：页底 heading 自动续接下一页内容
+- `risk_factors`、`revenue_by_region`、`major_products` 等字段召回与精度
+- A+H 报告选择、无公告时不崩溃、页底标题续接
 
 ### 文档
-- GitHub 协作结构与中文文档整理（README、docs/、plans/、CURRENT_STATUS）
+- GitHub 协作结构与中文文档整理
 
 ## 2026-06-17
 
 ### 新增
-- **200 家分层评估**（eval200）：按板块分层抽样，184 家成功抽取
-- **calibration_sample.py**：40 格分层校准样本 + 评分器
-- **eval_generalize.py 断点续跑**：已缓存 PDF + meta.json 跳过网络
+- **200 家分层评估**（eval200）
+- **calibration_sample.py** 校准工具
+- **eval_generalize.py 断点续跑**
 
 ### 修复
-- eval200 hard crash（16 家 no_announcement 导致 TypeError）→ clean status 记录
+- eval200 无公告导致崩溃 → 改为干净状态记录
 
 ## 2026-06-16
 
 ### 新增
-- **4 公司泛化测试**（CATL / 三一重工 / 招商银行 / 澜起科技）
-- **5 项通用鲁棒性修复**：prose concentration、avoid 负上下文、narrative anchors、header-aware table、full-report filter
+- **4 公司泛化测试**
+- **5 项通用鲁棒性修复**
 
 ### 变更
-- 项目重心从多数据源覆盖率验证转向年报 PDF 基础字段抽取（Plan B）
+- 项目重心转向年报 PDF 基础字段抽取
 
 ## 2026-06-15（及更早）
 
 ### 新增
-- 多数据源验证框架（`main.py` + 15 类 collector + `config/sources.yaml`）
-- CNINFO 年报 probe（`lab/probe_cninfo.py`）
-- 确定性年报抽取器 v1（`lab/extract_annual_report.py` + `lab/field_schema.py`）
-- 11 字段 schema 定义（工业/制造业模板）
+- 多数据源验证框架
+- CNINFO 年报探测
+- 确定性年报抽取器 v1
+- 11 字段 schema 定义
