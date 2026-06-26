@@ -19,35 +19,35 @@ _最后更新：2026-06-25（#30 financial follow-up docs sync）_
 > - 325 格 manual calibration **grading 待完成**（非全量人工验证）
 > - DB `financial_subtype` 列未入库（Phase 5 未做）
 
-## #30 results snapshot
+## #30 结果快照
 
-`#30a–#30g` has now completed as a focused financial follow-up tranche:
+`#30a–#30g` 已作为金融 follow-up（跟进）批次完成：
 
-- **audit-only**:
-  - `#30a` broker `not_found_missed` tightening
-  - `#30b` ratio/table calibration + `major_subsidiaries` gate
-  - `#30e` financial table plausibility hardening
-  - `#30f` insurer low-n semantic hardening
-- **extraction helpers**:
-  - `#30c` bank ratio helper
-  - `#30d` broker income / margin recall helper
-- **diagnosis-only**:
-  - `#30g` subtype/tag review
+- **audit-only（仅审计）**：
+  - `#30a` broker（券商）`not_found_missed`（应该找到但没有找到）收紧
+  - `#30b` ratio/table calibration（比率/表格校准）+ `major_subsidiaries`（主要子公司字段）门控
+  - `#30e` financial table plausibility hardening（金融表格合理性加固）
+  - `#30f` insurer（保险）low-n semantic hardening（小样本语义加固）
+- **extraction helpers（抽取辅助）**：
+  - `#30c` bank ratio helper（银行比率解析辅助）
+  - `#30d` broker income / margin recall（券商收入/两融召回）
+- **diagnosis-only（仅诊断）**：
+  - `#30g` subtype/tag review（子类型/标签复核）
 
-Key outcome posture:
+关键结论口径：
 
-- financial follow-up delivered meaningful audit/extraction improvements
-- financial metrics still remain **separate** from non-fin `9.43/11`
-- wider financial rollout is still **deferred**
-- insurer cohort remains **n=2**, so broader insurer generalization is not signed off
+- 金融 follow-up（跟进）带来了有意义的 audit/extraction（审计/抽取）改善
+- 金融指标仍**单独**于 non-fin（非金融）`9.43/11 headline（核心指标/对外口径）**
+- wider financial rollout（更大范围金融推广）仍**暂缓**
+- insurer cohort（保险分组）仍为 **n=2**，更广保险泛化**未**签核
 
-Subtype caveats from `#30g` (diagnosis-only; **no YAML changes yet**):
+`#30g` 子类型注意事项（仅诊断；**尚无 YAML 变更**）：
 
-- `000402` 金融街: likely **not broker**; may be better treated as industrial / non-financial after human review
-- `600816` 建元信托: clearly trust-like; **not bank**
-- `600318` 新力金融: diversified financial holding; **not bank**
+- `000402` 金融街：可能**不是** broker（券商）；人工复核后或应视为 industrial / non-financial（工业/非金融）
+- `600816` 建元信托：明显 trust-like（信托类）；**不是** bank（银行）
+- `600318` 新力金融：多元金融控股；**不是** bank（银行）
 
-See [financial_audit_fix_30_summary.md](../outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md) for the consolidated `#30` closeout.
+详见 [financial_audit_fix_30_summary.md](../outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md) 的 `#30` 关单汇总。
 
 ## 1. 为什么需要单独 schema
 

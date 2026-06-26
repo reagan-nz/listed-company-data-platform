@@ -1,74 +1,74 @@
-# full_market_2024 Stage 3a Quality Follow-up Summary
+# full_market_2024（2024 全市场运行）Stage 3a 质量 follow-up（质量跟进）汇总
 
-_Generated: 2026-06-25 | Issue #28 — Stage 3a closure documentation_
+_生成日期：2026-06-25 | Issue #28 — Stage 3a 关单文档_
 
-## 1. Scope and completion statement
+## 1. 范围与完成声明
 
-This document consolidates **Stage 3a quality follow-up** for the full_market_2024 2024 annual-report baseline (#24–#28).
+本文档汇总 **full_market_2024（2024 全市场运行）2024 年报基线**的 **Stage 3a quality follow-up（质量跟进）**（#24–#28）。
 
-**In scope (completed):**
+**范围内（已完成）：**
 
-- #24 BSE strict audit-rule correction (TOP_KW)
-- #25 rnd_investment extraction fixes + scoped cached-PDF refresh
-- #26 revenue page-boundary extraction fixes + scoped cached-PDF refresh
-- #27 financial-only audit framework (inventory + automated strict + calibration worksheet)
-- #28 this summary and doc sync
+- #24 BSE strict audit-rule（严格审计规则）修正（TOP_KW）
+- #25 `rnd_investment`（研发投入字段）extraction（抽取）修复 + scoped cached-PDF refresh（小范围已缓存 PDF 刷新）
+- #26 revenue page-boundary extraction（收入跨页抽取）修复 + scoped cached-PDF refresh（小范围已缓存 PDF 刷新）
+- #27 financial-only audit（金融专用审计）框架（inventory（盘点）+ automated strict（自动化严格审计）+ calibration worksheet（校准表））
+- #28 本汇总与文档同步
 
-**Out of scope (explicitly not done):**
+**范围外（明确未做）：**
 
-- Full CNINFO re-download or full-field re-extraction
-- Full manual validation of 62,890 SQLite rows
-- Financial extraction/tag sign-off (worksheet grading pending)
-- Multiyear expansion (2025 / 2023 / 2022)
-- Mixing financial metrics into the non-financial 9.43/11 headline
+- Full CNINFO re-download（全量 CNINFO 重下）或 full-field re-extraction（全字段重抽）
+- Full manual validation（全量人工验证）62,890 行 SQLite（轻量数据库）记录
+- Financial extraction/tag sign-off（金融抽取/标签签核）（worksheet grading（人工打分）待完成）
+- Multiyear expansion（多年份扩展）（2025 / 2023 / 2022）
+- 将金融指标混入 non-financial（非金融）9.43/11 headline（核心指标/对外口径）
 
-**Method posture:** automated strict audit + **targeted scoped refreshes over cached PDFs** + sampled / manual calibration **support** — not population-wide human review.
+**方法口径：** automated strict audit（自动化 strict audit（严格质量审计））+ **targeted scoped refresh（小范围定向刷新）over cached PDFs（已缓存 PDF）** + sampled / manual calibration（抽样/人工校准）**支持** — **非** population-wide human review（全人口人工复核）。
 
-**Closure decision:** **full_market_2024 Stage 3a quality follow-up PASS.** Residual issues are documented and deferred; they do **not** block baseline closure. **Full Stage 3** (ROADMAP) remains open for residuals, financial grading, and multiyear planning (Stage 3b).
-
----
-
-## 2. Final non-fin quality snapshot
-
-Latest SQLite `run_name`: **`full_market_2024_revenue_refresh`**
-
-| Metric | Value |
-|---|---:|
-| Universe total | 6,124 |
-| ok | 5,707 |
-| no_announcement | 417 |
-| error | **0** |
-| Non-fin ok companies | **5,621** |
-| Audit population | 5,621 × 11 = **61,831 cells** |
-| **Proxy plausible** | **10.67 / 11** |
-| **Strict usable** | **9.43 / 11** |
-| **Strict lenient** | **10.80 / 11** |
-| All-field strict **wrong** | **566** (was 876 pre-#26) |
-| rnd_investment **found** | **5,297 / 5,621 (94.2%)** |
-| rnd strict usable (field) | **5,086 / 5,621** |
-| revenue_by_region strict **wrong** | **38** (was 258 pre-#26) |
-| revenue_by_segment strict **wrong** | **19** (was 109 pre-#26) |
-| SQLite evaluation_result rows | **62,890** |
-
-**Board strict usable (non-fin, post-revenue):**
-
-| board | strict usable / 11 |
-|---|---:|
-| bse | **8.82** |
-| sse_main | **9.35** |
-| szse_main | **9.43** |
-| star | **9.61** |
-| chinext | **9.67** |
-
-**Calibration support (non-fin):** 55 companies × 7 targeted fields (sample CSV); 15-company PDF deep-read (105 cells). Manual vs automated agreement: 45/105 (43%). **Not full manual validation.**
-
-Detail: [strict_audit_summary.md](strict_audit_summary.md)
+**关单决定：** **full_market_2024 Stage 3a quality follow-up（质量跟进）PASS（通过）。** Residual issues（残留问题）已文档化并暂缓；**不**阻塞基线关单。**Full Stage 3（完整第 3 阶段）**（ROADMAP（路线图））仍对 residuals（残留）、financial grading（金融人工打分）、multiyear planning（多年份规划）（Stage 3b）开放。
 
 ---
 
-## 3. Financial audit snapshot (separate headline)
+## 2. 最终 non-fin（非金融）质量快照
 
-**Do not mix into non-fin 9.43/11.**
+最新 SQLite（轻量数据库）`run_name`（运行名称）：**`full_market_2024_revenue_refresh`**
+
+| 指标 | 数值 |
+|---|---:|
+| Universe total（评估全集总数） | 6,124 |
+| ok（成功抽取） | 5,707 |
+| no_announcement（未找到公告） | 417 |
+| error（错误） | **0** |
+| Non-fin ok companies（非金融成功公司） | **5,621** |
+| Audit population（审计人口） | 5,621 × 11 = **61,831 cells（字段单元格）** |
+| **Proxy plausible（自动合理性分数）** | **10.67 / 11** |
+| **Strict usable（严格审计下可用）** | **9.43 / 11** |
+| **Strict lenient（严格审计宽松口径）** | **10.80 / 11** |
+| All-field strict **wrong（严格审计下错误）** | **566**（#26 前 876） |
+| `rnd_investment`（研发投入字段）**found（找到）** | **5,297 / 5,621 (94.2%)** |
+| rnd strict usable（field-level）（字段级严格可用） | **5,086 / 5,621** |
+| `revenue_by_region`（分地区收入字段）strict **wrong（错误）** | **38**（#26 前 258） |
+| `revenue_by_segment`（分业务收入字段）strict **wrong（错误）** | **19**（#26 前 109） |
+| SQLite evaluation_result rows（评估结果行） | **62,890** |
+
+**Board strict usable（板块严格审计下可用）（non-fin（非金融），post-revenue（收入刷新后））：**
+
+| board（板块） | strict usable（严格审计下可用）/ 11 |
+|---|---:|
+| bse（北交所） | **8.82** |
+| sse_main（沪市主板） | **9.35** |
+| szse_main（深市主板） | **9.43** |
+| star（科创板） | **9.61** |
+| chinext（创业板） | **9.67** |
+
+**Calibration support（校准支持）（non-fin（非金融））：** 55 companies × 7 targeted fields（定向字段）（sample CSV（样本 CSV））；15-company PDF deep-read（PDF 深度阅读）（105 cells（字段单元格））。Manual vs automated agreement（人工 vs 自动一致率）：45/105（43%）。**非** full manual validation（全量人工验证）。
+
+详情：[strict_audit_summary.md](strict_audit_summary.md)
+
+---
+
+## 3. 金融 audit（审计）快照（单独 headline（核心指标/对外口径））
+
+**不得**混入 non-fin（非金融）9.43/11。
 
 | Metric | Value |
 |---|---:|
@@ -82,22 +82,22 @@ Detail: [strict_audit_summary.md](strict_audit_summary.md)
 | Calibration worksheet | **30 companies × 325 cells** — **`manual_grade` pending** |
 | Population labels | usable 557 / partial 310 / wrong 81 / not_found_missed 75 / not_found_unverified 36 |
 
-**#27 status:** audit **framework complete** — not financial extraction signed off. Worksheet generated; grading not done.
+**#27 状态：** audit（审计）**框架已完成** — **非** financial extraction（金融抽取）签核。Worksheet（校准表）已生成；grading（人工打分）未完成。
 
-Detail: [financial_audit_summary.md](financial_audit_summary.md)
+详情：[financial_audit_summary.md](financial_audit_summary.md)
 
 ---
 
-## 4. Strict metric trajectory (full_market_2024 only)
+## 4. Strict（严格审计）指标轨迹（仅 full_market_2024（2024 全市场运行）内）
 
-Population-consistent evolution within full_market_2024 after initial hybrid audit:
+同一 universe（评估全集）内、初始 hybrid audit（混合审计）后的演化：
 
-| Step | Trigger | Non-fin strict usable | Notes |
+| 步骤 | 触发 | Non-fin strict usable（非金融严格审计下可用） | 说明 |
 |---|---|---:|---|
-| Initial audit | Post–full_market merge | **9.01 / 11** | Automated adversarial + 15-co PDF sample |
-| #24 | BSE TOP_KW audit rule | **9.06 / 11** | Audit-rule only; BSE board **7.14 → 7.71** |
-| #25 | rnd scoped refresh | **9.38 / 11** | Extraction + cached-PDF refresh; BSE board **7.71 → 8.71** |
-| #26 | revenue scoped refresh | **9.43 / 11** | Extraction + cached-PDF refresh; BSE board **8.71 → 8.82** |
+| Initial audit（初始审计） | Post–full_market merge（全市场合并后） | **9.01 / 11** | Automated adversarial（自动化对抗式复核）+ 15-co PDF sample（15 家 PDF 样本） |
+| #24 | BSE TOP_KW audit rule（审计规则） | **9.06 / 11** | 仅 audit-rule（审计规则）；BSE **7.14 → 7.71** |
+| #25 | rnd scoped refresh（小范围定向刷新） | **9.38 / 11** | Extraction（抽取）+ cached-PDF refresh；BSE **7.71 → 8.71** |
+| #26 | revenue scoped refresh（小范围定向刷新） | **9.43 / 11** | Extraction（抽取）+ cached-PDF refresh；BSE **8.71 → 8.82** |
 
 ```
 9.01  →  9.06  →  9.38  →  9.43
@@ -105,7 +105,7 @@ Population-consistent evolution within full_market_2024 after initial hybrid aud
 initial   #24       #25       #26
 ```
 
-> This trajectory describes **scoped audit/refresh evolution on the same full_market_2024 universe**. **Do not** compare 9.43/11 to eval1000 strict **10.16/11** as improvement — different proxy rules, audit scope, and universe scale.
+> 此轨迹描述**同一 full_market_2024（2024 全市场运行）universe（评估全集）上** scoped audit/refresh（小范围审计/刷新）演化。**不得**将 9.43/11 与 eval1000 strict（严格审计）**10.16/11** 比较为「改善」— proxy（自动合理性）规则、audit（审计）范围、universe（评估全集）规模均不同。
 
 ---
 
@@ -206,25 +206,18 @@ Optional lower priority: `strict_audit_result` DB loader; BrowserUser pilot (ROA
 
 ---
 
-## 10. Stage 3a closure decision
+## 10. Stage 3a 关单决定
 
-**Verdict: full_market_2024 Stage 3a quality follow-up PASS.**
+**结论：full_market_2024 Stage 3a quality follow-up（质量跟进）PASS（通过）。**
 
-**Rationale:**
+**不得声称：**
 
-- Non-fin baseline after targeted scoped refreshes: strict **9.43/11**, proxy **10.67/11**, **0** pipeline errors, **0** usable→wrong regressions on #26 revenue refresh.
-- BSE board strict **8.82/11** meets ROADMAP threshold (≥8.5).
-- Financial audit **framework** delivered with separate headline and documented caveats.
-- Residual wrong cells and pending financial grading are **tracked**, not hidden.
+- Full Stage 3（完整第 3 阶段）已完成
+- 全部 extraction（抽取）问题已修复
+- Full manual validation（全量人工验证）
+- 金融指标 merged（合并）入 non-fin headline（非金融核心指标/对外口径）
 
-**Do not claim:**
-
-- Full Stage 3 (multiyear + all residuals) is complete
-- All extraction issues fixed
-- Full manual validation
-- Financial metrics merged into non-fin headline
-
-**ROADMAP:** Stage **3a** Done (#24–#28); Stage **3b** In Progress (residuals, grading, multiyear planning).
+**ROADMAP（路线图）：** Stage **3a** 已完成（#24–#28）；Stage **3b** 进行中。
 
 ---
 
@@ -248,31 +241,27 @@ Cross-links: [CURRENT_STATUS.md](../../CURRENT_STATUS.md) | [ROADMAP.md](../../R
 
 Stage 3b financial follow-up continued in `#30`; see [financial_audit_fix_30_summary.md](financial_audit_fix_30_summary.md).
 
-**#32c update (2026-06-26):** Scoped P0 R&D apply verification completed — 104 targets, 32 profile updates, post-apply verify PASS; global non-fin headline **9.43/11 unchanged**. See [rnd_residual_fix_32c_post_apply_verify.md](rnd_residual_fix_32c_post_apply_verify.md).
+**#32c 更新（2026-06-26）：** Scoped P0 R&D apply（小范围 P0 研发定向应用）verification（验证）已完成 — 104 targets（目标公司），32 profile（公司档案）更新，post-apply verify（应用后验证）PASS（通过）；global non-fin headline（全局非金融核心指标/对外口径）**9.43/11 不变**。见 [rnd_residual_fix_32c_post_apply_verify.md](rnd_residual_fix_32c_post_apply_verify.md)。
 
-**#32 closure (2026-06-26):** #32 current scope complete (inventory + #32c + #32b dry-run); revenue production fix deferred; non-fin headline **9.43/11 unchanged**. See [revenue_rnd_fix_32_final_summary.md](revenue_rnd_fix_32_final_summary.md).
+**#32 关单（2026-06-26）：** #32 当前范围完成（inventory（盘点）+ #32c + #32b dry-run（只读诊断））；revenue production fix（收入生产修复）暂缓；non-fin headline（非金融核心指标/对外口径）**9.43/11 不变**。见 [revenue_rnd_fix_32_final_summary.md](revenue_rnd_fix_32_final_summary.md)。
 
-**#33 decision (2026-06-26):** Multiyear expansion strategy documented — 2025 first, staged rollout; parent #23 ready to close. See [multiyear_expansion_decision_33.md](multiyear_expansion_decision_33.md).
+**#33 决策（2026-06-26）：** Multiyear expansion（多年份扩展）策略已文档化 — 2025 优先、staged rollout（分阶段推广）；parent #23 **可以关单**。见 [multiyear_expansion_decision_33.md](multiyear_expansion_decision_33.md)。
 
 ---
 
-## 12. Anti-claims checklist
+## 12. 不得声称清单（anti-claims checklist）
 
-Use this list when writing issues, reports, or supervisor summaries:
-
-| Claim | Allowed? |
+| 声称 | 是否允许 |
 |---|---|
-| Stage 3a quality follow-up PASS | **Yes** — with caveats in §10 |
-| Full Stage 3 / all roadmap Phase 3 complete | **No** — 3b remains |
-| Non-fin strict **9.43/11** as latest headline | **Yes** — separate from financial |
-| Financial bank **9.00/13**, broker **7.66/12**, etc. | **Yes** — **separate headline only** |
-| Mix financial into 9.43/11 | **No** |
-| 9.43/11 improved vs eval1000 **10.16/11** | **No** — unlike baselines |
-| Full manual validation of 62,890 rows | **No** |
-| All extraction / all fields fixed | **No** — §8 residuals |
-| Financial extraction signed off | **No** — grading pending |
-| Full CNINFO rerun required for closure | **No** — scoped refresh model |
-| Automated strict + scoped refresh + calibration support | **Yes** — correct framing |
+| Stage 3a quality follow-up（质量跟进）PASS（通过） | **是** |
+| Full Stage 3 / ROADMAP Phase 3 全部完成 | **否** |
+| Non-fin strict（非金融严格审计）**9.43/11** 作为最新 headline（核心指标/对外口径） | **是** — 与金融分开 |
+| 将金融指标混入 9.43/11 | **否** |
+| 9.43/11 相对 eval1000 **10.16/11** 为「改善」 | **否** |
+| 62,890 行 full manual validation（全量人工验证） | **否** |
+| 全部 extraction（抽取）/ 全部字段已修复 | **否** |
+| Financial extraction（金融抽取）已签核 | **否** |
+| Automated strict（自动化严格审计）+ scoped refresh（小范围定向刷新）+ calibration support（校准支持） | **是** |
 
 ---
 

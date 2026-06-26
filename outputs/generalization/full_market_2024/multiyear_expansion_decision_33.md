@@ -1,43 +1,42 @@
-# Multiyear expansion decision memo — Issue #33
+# 多年份扩展决策备忘录 — Issue #33
 
-_Generated: 2026-06-26 | Planning / documentation only — no extraction run_
+_生成日期：2026-06-26 | 仅规划/文档 — 无 extraction（抽取）运行_
 
-## Closure decision
+## 关单决定
 
-**#33 is closed** as a **decision memo**. This document records the recommended multiyear expansion strategy for human sign-off before any 2025 pilot execution. **Parent #23** (#24–#33) is **ready to close** after this memo and doc sync are committed.
+**#33 作为 decision memo（决策备忘录）已关闭**。本文档记录 multiyear expansion（多年份扩展）推荐策略，供任何 2025 pilot（试点）执行前人工签核。**Parent #23**（#24–#33）在本备忘录与文档同步提交后**可以关单**。
 
 ---
 
-## 1. Executive recommendation
+## 1. 执行摘要建议
 
-**Proceed with 2025 first, via staged rollout — not parallel multiyear, not 2023/2022 backfill first.**
+**优先 2025，via staged rollout（分阶段推广）— 非 parallel multiyear（并行多年份），非 2023/2022 backfill（历史年份回填）优先。**
 
-| Decision | Recommendation |
+| 决策项 | 建议 |
 |---|---|
-| Next year | **2025 annual reports first** |
-| Universe | **Per-year universe** from CNINFO (not frozen 2024 list) |
-| Rollout | **100-company stratified pilot → one-board pilot → full-market 2025 → backfill 2023/2022** |
-| CNINFO | **Do not** launch full-market CNINFO immediately; pilot uses controlled download scope |
-| 2024 outputs | **Do not overwrite** — separate `run_name` and output directories |
-| Headline | **2024 non-fin 9.43/11 unchanged** until intentional full strict audit on that cohort |
-
-**Rationale:** 2025 extends the live baseline forward with the same extraction stack validated on 2024; backfill years add historical depth but lower operational urgency and higher template drift risk. Staged rollout limits disk, CNINFO, and regression risk before committing to ~6k+ companies.
+| 下一年份 | **2025 年报优先** |
+| Universe（评估全集） | **Per-year universe（按年重建）** — 来自 CNINFO，**非**冻结 2024 名单 |
+| Rollout（推广） | **100 家分层 pilot（试点）→ 单板块 pilot（试点）→ full-market 2025（2025 全市场）→ backfill（回填）2023/2022** |
+| CNINFO | **不**立即全市场 CNINFO；pilot（试点）控制下载范围 |
+| 2024 产出 | **不覆盖** — 独立 `run_name`（运行名称）与输出目录 |
+| Headline（核心指标/对外口径） | **2024 non-fin（非金融）9.43/11 不变**，直至对该 cohort（分组样本）有意安排 full strict audit（全量 strict audit（严格质量审计）） |
+**理由：** 2025 用已在 2024 验证的 extraction stack（抽取栈）向前延伸 live baseline（活基线）；backfill（历史年份回填）增加历史深度但运营优先级较低、模板漂移风险更高。Staged rollout（分阶段推广）在承诺 ~6k+ 公司前限制磁盘、CNINFO 与 regression（回归）风险。
 
 ---
 
-## 2. Current 2024 readiness
+## 2. 当前 2024 就绪度
 
-| Dimension | Status | Notes |
+| 维度 | 状态 | 说明 |
 |---|---|---|
-| Stage 3a quality follow-up | **PASS** (caveats) | See [stage3_quality_followup_summary.md](stage3_quality_followup_summary.md) |
-| Non-fin strict headline | **9.43/11** | `run_name=full_market_2024_revenue_refresh`; **unchanged** through #32 |
-| Financial cohort | **Separate headline** | bank/broker/insurer sub-schema; grading worksheet partial |
-| Extraction pipeline | **Production-ready for industrial 11-field** | BSE/rnd/revenue improvements from #24–#26; #32c R&D helper |
-| Residuals (non-blocking) | Documented | #31 under-tagging; #32 revenue pilot deferred; R&D partials |
-| SQLite / CNINFO | **2024 imported** | 62,890 rows; no rerun required for this memo |
-| Tooling | **Year-parameterizable with minor script work** | `make_full_market_yaml.py`, batch merge, strict audit — **not in #33 scope** |
+| Stage 3a quality follow-up（质量跟进） | **PASS（通过）**（有限制说明） | 见 [stage3_quality_followup_summary.md](stage3_quality_followup_summary.md) |
+| Non-fin strict headline（非金融核心指标/对外口径） | **9.43/11** | `run_name`（运行名称）=`full_market_2024_revenue_refresh`；#32 后**不变** |
+| Financial cohort（金融公司分组） | **单独 headline（核心指标/对外口径）** | bank/broker/insurer sub-schema（子字段体系）；worksheet grading（人工打分）部分待完成 |
+| Extraction pipeline（抽取管道） | **工业 11 字段 production-ready（生产就绪）** | #24–#26 BSE/rnd/revenue 改善；#32c R&D helper（研发辅助） |
+| Residuals（残留问题）（非阻塞） | 已文档化 | #31 under-tagging（漏标）；#32 revenue pilot（试点）暂缓；R&D partial（研发部分可用） |
+| SQLite / CNINFO | **2024 已 import（导入）** | 62,890 行；本备忘录**无需** rerun（重跑） |
+| Tooling（工具链） | **年份参数化需少量脚本工作** | `make_full_market_yaml.py`、batch merge（批次合并）、strict audit（严格质量审计）— **不在** #33 范围 |
 
-**Readiness verdict:** 2024 baseline is **sufficient to start a 2025 pilot** after prerequisites (§5) and human checklist (§12) are satisfied. Full-market 2025 should wait until pilot gates pass.
+**就绪结论：** 2024 baseline（基线）在 prerequisites（前置条件）（§5）与 human checklist（人工清单）（§12）满足后**足以启动 2025 pilot（试点）**。Full-market 2025（2025 全市场）应待 pilot gates（试点验证关卡）通过。
 
 ---
 
@@ -213,19 +212,19 @@ Phase 5  full_market_2022_backfill — per-year universe, same batch strategy
 
 ---
 
-## 11. Anti-claims
+## 11. 不得声称（anti-claims）
 
-| Claim | Allowed? |
+| 声称 | 是否允许 |
 |---|---|
-| #33 decision memo complete | **Yes** |
-| Multiyear expansion executed | **No** — planning only |
-| CNINFO rerun performed in #33 | **No** |
-| Full manual validation of future years | **No** |
-| 2025 metrics comparable to 2024 9.43/11 as delta | **No** — until same audit on both |
-| Financial and non-fin metrics merged | **No** — separate headlines |
-| 2024 headline updated by #33 | **No** — remains 9.43/11 |
-| Parent #23 closed | **Yes** — after memo commit + human ack |
-| #31 / revenue pilot blocked forever | **No** — parallel backlog |
+| #33 decision memo（决策备忘录）已完成 | **是** |
+| Multiyear expansion（多年份扩展）已执行 | **否** — 仅规划 |
+| #33 中 performed CNINFO rerun（执行了 CNINFO 重跑） | **否** |
+| 未来年份 full manual validation（全量人工验证） | **否** |
+| 2025 指标可与 2024 9.43/11 直接比 delta（变化量） | **否** — 需同一 audit（审计）方法 |
+| 金融与非金融指标 merged（合并） | **否** — 单独 headline（核心指标/对外口径） |
+| #33 更新了 2024 headline（核心指标/对外口径） | **否** — 仍为 9.43/11 |
+| Parent #23 可以关单 | **是** — memo commit + 人工确认后 |
+| #31 / revenue pilot（试点）永久阻塞 | **否** — 并行待办 |
 
 ---
 

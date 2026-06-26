@@ -1,34 +1,96 @@
 # 当前状态
 
-_最后更新：2026-06-26（#33 multiyear expansion decision memo）_
+_最后更新：2026-06-26（#33 多年份扩展决策备忘录）_
 
-> **本文档是项目主进度页。** 老师建议从这里开始阅读；技术细节见 [docs/](docs/)，变更记录见 [CHANGELOG.md](CHANGELOG.md)。Stage 3a 汇总见 **[stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)**。
+> **本文档是项目主进度页，建议老师 / 评审从这里开始。** 技术细节见 [docs/](docs/)，变更记录见 [CHANGELOG.md](CHANGELOG.md)。Stage 3a（第 3a 阶段）汇总见 **[stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)**。
 
-**2026-06-26 日结（#33 多年份决策 + #23 可关单）**：`#33` 决策备忘录已完成 — **2025 优先**、按年 universe、分阶段 rollout（100 家 pilot → 单板块 → 全市场 2025 → backfill 2023/2022）；**不**覆盖 2024 产出；**不**立即全量 CNINFO。**#23**（#24–#33）当前范围 **ready to close**。下一执行阶段：**2025 pilot**（待 §12 人工签核 + 年份参数化脚本 implementation issue）。详见 [multiyear_expansion_decision_33.md](outputs/generalization/full_market_2024/multiyear_expansion_decision_33.md)。
+---
 
-**2026-06-26 日结（#32 关闭）**：`#32` 当前范围已完成 — 盘点 + `#32c` scoped P0 R&D apply 验证 + `#32b` 收入 strict-wrong dry-run 分类。**#32c**：104 家 / 32 更新 / 0 errors / 后验 PASS。**#32b**：57/57 wrong 已分类，harness 改善 17，生产 apply **defer**。**non-fin 9.43/11 headline 不变**。详见 [revenue_rnd_fix_32_final_summary.md](outputs/generalization/full_market_2024/revenue_rnd_fix_32_final_summary.md)。
+## 当前项目阶段（一览）
 
-**2026-06-26 日结（#32c R&D P0 scoped apply 已验证）**：`#32c-R2`–`R5` 完成 — guarded R&D situation-table helper 已入生产路径；scoped P0 apply **104** 家、**32** 更新、**0** errors、**14** not_found→found、**0** found→not_found；post-apply verification **PASS**（104/104 status 一致、0 回归）。Scoped 池当前 strict：**usable=32 / partial=71 / not_found_unverified=1**。**非**全市场 R&D rollout；**非** global strict audit 重跑；non-fin **9.43/11 headline 不变**。剩余：72/104 partial 未解、`000333`/`301221` deferred、revenue Tier 4 仍待 #32b。详见 [rnd_residual_fix_32c_apply_summary.md](outputs/generalization/full_market_2024/rnd_residual_fix_32c_apply_summary.md)、[rnd_residual_fix_32c_post_apply_verify.md](outputs/generalization/full_market_2024/rnd_residual_fix_32c_post_apply_verify.md)。
+| 项目 | 状态 |
+|---|---|
+| **数据底座** | 已完成 `full_market_2024`（2024 全市场运行）：6124 家公司 universe（评估全集），5707 家 ok（成功抽取），SQLite（轻量数据库）入库 62,890 行字段记录 |
+| **质量闭环 Stage 3a** | **通过（PASS）** — #24–#28 质量 follow-up（质量跟进）已完成；详见 [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md) |
+| **Stage 3b / 父 issue #23** | **可以关单** — #30 / #32 / #33 当前范围均已关闭；下一步为 2025 年 `pilot`（试点）实施（待人工签核） |
+| **产品形态** | **数据底座 + 质量审计**，非完整 RAG（检索增强生成）/ LLM Wiki（大模型辅助知识页）产品 |
 
-**2026-06-25 日结（#30 financial follow-up 完结待关单）**：`#30a–#30g` 已完成并完成文档同步；涵盖 broker `not_found_missed` 收紧、ratio/table audit calibration、bank ratio helper、broker recall、financial table plausibility、insurer low-n audit hardening、subtype/tag diagnosis。**#30 ready to close after docs commit**；金融 wider rollout 仍 **deferred**。详见 [financial_audit_fix_30_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md)。
+---
 
-**2026-06-25 日结（Stage 3a 收尾 #28）**：full_market_2024 **Stage 3a quality follow-up PASS** — 汇总 #24–#27（BSE audit rule、rnd/revenue scoped refresh、金融 audit 框架）；非金融 strict **9.43/11**（latest `run_name=full_market_2024_revenue_refresh`）；金融 **单独 headline**，worksheet grading 待办。**非**全量人工验证；**非** extraction 全部修复。Stage **3b**（residuals、grading、多年度）进行中。详见 [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)。
+## 当前核心指标
 
-**2026-06-25 日结（金融 audit #30d）**：broker 收入 / 两融 recall sample-only apply **PASS**；4/4 confirmed MISSED（`601878` 投行 / 资管 / 融出资金，`600030` 投行净收入）→ strict `usable`；23/23 ABSENT-OK 控制保持非 usable；broker population `usable` **+4**、`not_found_missed` **-4**；joined agreement **233/325→229/325**（MISSED→usable 口径下降，非新回归）。详见 [financial_audit_fix_30d_apply_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30d_apply_summary.md)。
+**非金融 cohort（非金融公司分组）headline（核心指标/对外口径）**（`run_name`（运行名称）=`full_market_2024_revenue_refresh`，2026-06-24 后）：
 
-**2026-06-25 日结（金融 audit #30b）**：ratio/table 语义拒绝 + `major_subsidiaries` out-of-region usable 门控；joined agreement **226/325→233/325 (69.5%→71.7%)**；broker missed 与 #30a 相同（sample 4 / pop 7）。详见 [financial_audit_fix_30b_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30b_summary.md)。
+- **strict usable（严格审计下可用）**：**9.43 / 11** — 5621 家非金融 ok 公司 × 11 个工业字段；11 表示每家公司平均检查的目标字段数，9.43 表示 strict audit（严格质量审计）下平均可用字段数。
+- **proxy plausible（自动合理性分数）**：**10.67 / 11**
+- **rnd_investment（研发投入字段）found（找到）率**：5,297 / 5,621（94.2%）
+- **revenue_by_region / revenue_by_segment（分地区/分业务收入字段）strict wrong（严格审计下错误）**：38 / 19
 
-**2026-06-25 日结（金融 audit #30a）**：收紧 broker `not_found_missed` PDF 规则；joined agreement **202/325→226/325 (62%→69.5%)**；详见 [financial_audit_fix_30a_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30a_summary.md)。
+**金融 cohort（金融公司分组）**：单独 headline（核心指标/对外口径），如 bank（银行）strict usable（严格审计下可用）**9.00 / 13**、broker（券商）**7.66 / 12**；**不得**与非金融 9.43/11 混报。详见 §4.2。
 
-**2026-06-25 日结（金融 audit #27/#29）**：金融字段质量 **audit 框架**完成（Phase 0–1B）；325/325 校准 grading 完成（#29 baseline agreement 62%）；86 ok 金融公司 × 1,059 cells 自动化 financial strict audit。详见 [financial_calibration_report.md](outputs/generalization/full_market_2024/financial_calibration_report.md)、[financial_audit_fix_30a_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30a_summary.md)。
+> **#32c scoped apply（小范围定向应用）未更新全局 9.43/11 headline（核心指标/对外口径）。** 仅 104 家 P0 池本地 profile（公司档案）有更新；全局指标需 intentional full strict audit rerun（有意安排的全量 strict audit（严格质量审计）重跑）后才变更。
 
-**2026-06-24 日结（revenue refresh #26）**：scoped `revenue_by_region` / `revenue_by_segment` 刷新完成（cached PDF，非 CNINFO 重跑）；Tier 3 跨页 continuation stitch 为主驱动（343/346）；wrong→usable **297**；0 回归；region wrong **258→38**；segment wrong **109→19**；非金融 strict **9.38→9.43/11**；proxy **10.61→10.67/11**。详见 [revenue_refresh_summary.md](outputs/generalization/full_market_2024/revenue_refresh_summary.md)。
+---
 
-**2026-06-24 日结（rnd refresh + P2.1）**：scoped rnd_investment 刷新完成（cached PDF，非 CNINFO 重跑）；P2.1 candidate-fallback 修复 15 个回归；rnd found **67.9% → 94.2%**（5,297/5,621）；BSE rnd **22.8% → 99.2%**。详见 [rnd_refresh_summary.md](outputs/generalization/full_market_2024/rnd_refresh_summary.md)。
+## 能达到的标准 / 不能宣称的内容
 
-**2026-06-24 日结（full_market）**：full_market_2024 全 A 股 2024 年报提取完成（6124 家 universe）；5707 ok / 417 no_announcement / 0 error；SQLite **62,890** 行。
+### 当前可以说
 
-**2026-06-23 日结**：独立 cohort 1000 家 eval 完成；918 ok / 0 error / 82 no_announcement；非金融 proxy **10.30/11**，泛化验证 **PASS**。
+- 已完成 **2024 年 A 股年报结构化数据底座**的第一阶段质量闭环（Stage 3a 通过）。
+- 系统可以**批量抽取**年报字段、**记录来源证据**（页码 / 证据句 / URL）、运行 **strict audit（严格质量审计）**，并支持 **scoped refresh（小范围定向刷新）** / **scoped apply（小范围定向应用）** 做定向修复。
+- 数据可支撑**内部分析、字段查询、公司 profile（公司档案）、RAG prototype（检索增强问答原型）** 的底层数据层。
+- 非金融 strict usable（严格审计下可用）**9.43/11** 与金融指标**分开报告**。
+
+### 当前不能说
+
+- **不是** full manual validation（全量人工验证）— 62,890 行 SQLite 字段记录未逐条人工核对。
+- **不是**完整 RAG（检索增强生成）/ LLM Wiki（大模型辅助知识页）**产品**。
+- **不是**所有字段都已完全修复 — revenue strict wrong（严格审计下收入错误）仍有 57 个 field-cell（字段单元格）待后续试点；R&D partial（研发部分可用）仍有残留。
+- **不能**将金融 cohort（金融公司分组）指标混入 non-fin headline（非金融核心指标/对外口径）9.43/11。
+- **不能**声称 #32c scoped apply（小范围定向应用）已更新全局 9.43/11 headline（核心指标/对外口径）。
+- **不能**将 9.43/11 与 eval1000 baseline（基线）10.16/11 直接比较为「改善」— 规则、样本规模不同。
+
+---
+
+## 术语说明
+
+| 术语 | 含义 |
+|---|---|
+| **strict audit（严格质量审计）** | 对已存字段值做 adversarial（对抗式）规则复核，标签含 `usable`（可用）、`partial`（部分可用）、`wrong`（错误）等。 |
+| **strict usable（严格审计下可用）** | strict audit（严格质量审计）中仅计 `usable`（可用）的字段均值。 |
+| **proxy plausible（自动合理性分数）** | 抽取时的结构合理性估计，通常高于 strict usable（严格审计下可用）。 |
+| **scoped refresh（小范围定向刷新）** | 用已缓存 PDF 仅重抽部分字段，非 CNINFO 全量重下。 |
+| **scoped apply（小范围定向应用）** | 经验证的修复小范围写回 `company_profile.json`（公司档案 JSON）。 |
+| **headline（核心指标/对外口径）** | 对外主质量数字；非金融与金融**分开**。 |
+| **run_name（运行名称）** | 运行标识，如 `full_market_2024`（2024 全市场运行）。 |
+| **cohort（分组样本）** | 按规则选出的公司集合。 |
+| **pilot（试点）** | 小规模试跑后再扩全市场。 |
+| **backfill（历史年份回填）** | 补跑 2023/2022 等历史年报。 |
+| **not_found_missed（应该找到但没有找到）** | PDF 中应有披露但抽取为 not_found（未找到）。 |
+| **not_found_unverified（未找到且尚未确认是否应存在）** | 未找到且 strict audit（严格质量审计）尚未确认是否应存在。 |
+| **dry-run（只读试跑/诊断）** | 不写回 profile（公司档案），仅评估修复效果。 |
+| **RAG（检索增强生成）** | 先检索再让大模型回答；本项目提供底层数据，非完整产品。 |
+| **LLM Wiki（大模型辅助知识页）** | 大模型辅助生成的知识页；本项目尚未交付。 |
+| **CNINFO** | 巨潮资讯网，法定信息披露来源。 |
+| **SQLite** | 轻量数据库，存放字段级抽取与评估结果。 |
+
+详细指标解释见 §4.1；评估方法见 [docs/evaluation_method.md](docs/evaluation_method.md)。
+
+---
+
+## 近期日结摘要
+
+**2026-06-26（#33 多年份决策 + #23 可以关单）**：`#33` 决策备忘录已完成 — **2025 优先**、按年重建 universe（评估全集）、分阶段 rollout（推广）：100 家 `pilot`（试点）→ 单板块 `pilot`（试点）→ 全市场 2025 → `backfill`（历史年份回填）2023/2022；**不**覆盖 2024 产出；**不**立即全量 CNINFO。**#23**（#24–#33）当前范围**可以关单**。下一执行：**2025 pilot（试点）**（待 §12 人工签核 + 年份参数化脚本）。详见 [multiyear_expansion_decision_33.md](outputs/generalization/full_market_2024/multiyear_expansion_decision_33.md)。
+
+**2026-06-26（#32 关闭）**：`#32` 当前范围已关闭：已完成收入与研发残留盘点、`#32c` 研发字段 P0 小范围 `scoped apply`（小范围定向应用）与后验验证、`#32b` 收入 strict wrong（严格审计下错误）只读 `dry-run`（诊断）分类。**#32c**：104 家 / 32 更新 / 0 errors（错误）/ 后验 **PASS（通过）**。**#32b**：57/57 wrong（错误）已分类，harness（试跑框架）改善 17，生产 apply **暂缓**。**non-fin（非金融）9.43/11 headline（核心指标/对外口径）不变**。详见 [revenue_rnd_fix_32_final_summary.md](outputs/generalization/full_market_2024/revenue_rnd_fix_32_final_summary.md)。
+
+**2026-06-26（#32c 研发 P0 scoped apply 已验证）**：`#32c-R2`–`R5` 完成 — guarded R&D situation-table helper（带防护的研发情况表解析辅助函数）已入生产路径；`scoped apply`（小范围定向应用）**104** 家、**32** 更新、**0** errors（错误）、**14** not_found→found（未找到→找到）、**0** found→not_found（找到→未找到）；post-apply verification（应用后验证）**PASS（通过）**。Scoped 池 strict（严格审计）分布：**usable（可用）=32 / partial（部分可用）=71 / not_found_unverified（未找到且未确认）=1**。**非**全市场 R&D rollout（推广）；**非** global strict audit（严格质量审计）重跑；non-fin（非金融）**9.43/11 headline（核心指标/对外口径）不变**。详见 [rnd_residual_fix_32c_apply_summary.md](outputs/generalization/full_market_2024/rnd_residual_fix_32c_apply_summary.md)、[rnd_residual_fix_32c_post_apply_verify.md](outputs/generalization/full_market_2024/rnd_residual_fix_32c_post_apply_verify.md)。
+
+**2026-06-25（#30 金融 follow-up 完结）**：`#30a–#30g` 已完成；涵盖 broker（券商）`not_found_missed`（应该找到但没有找到）收紧、ratio/table audit calibration（比率/表格审计校准）、bank ratio helper（银行比率解析辅助）、broker recall（券商召回修复）等。**#30 可以关单**；金融 wider rollout（更大范围推广）仍**暂缓**。详见 [financial_audit_fix_30_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md)。
+
+**2026-06-25（Stage 3a 收尾 #28）**：`full_market_2024`（2024 全市场运行）**Stage 3a quality follow-up（质量跟进）PASS（通过）**；非金融 strict usable（严格审计下可用）**9.43/11**（`run_name`（运行名称）=`full_market_2024_revenue_refresh`）；金融**单独 headline（核心指标/对外口径）**。**非**全量人工验证。详见 [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)。
+
+_更早日结见 CHANGELOG.md 与 stage3 汇总文档。_
 
 ---
 
@@ -38,13 +100,13 @@ _最后更新：2026-06-26（#33 multiyear expansion decision memo）_
 
 - **当前数据来源**：巨潮资讯网（CNINFO）公开年报 PDF，程序化抽取 11 项基础字段（工业/制造类公司为主）。
 - **已完成**：全 A 股 2024 年报首次全量提取 + SQLite 入库 + 混合 strict 审计 + scoped rnd/revenue 字段刷新。
-- **Stage 3a（Done）**：#24–#28 质量 follow-up — 见 [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)。
-- **Stage 3b（#23 可关单）**：`#30` / `#32` / `#33` closed for current scope；下一执行：**2025 pilot**（人工签核后）；并行 backlog：#31、revenue Tier4。
-- **#33（Done / decision memo）**：multiyear expansion strategy documented — 2025 first, staged rollout; see [multiyear_expansion_decision_33.md](outputs/generalization/full_market_2024/multiyear_expansion_decision_33.md).
-- **#32c（Done / scoped P0 only）**：guarded R&D situation-table extraction + scoped P0 apply（104 targets, 32 updated, 0 errors）+ post-apply verification PASS；**非** full R&D rollout。
-- **BrowserUser** 爬虫智能体（全量基线稳定后，非当前直接下一步）。
+- **Stage 3a（已完成）**：#24–#28 质量 follow-up（质量跟进）— 见 [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)。
+- **Stage 3b / #23（可以关单）**：`#30` / `#32` / `#33` 当前范围已关闭；下一执行：**2025 pilot（试点）**（人工签核后）；并行待办：#31、revenue Tier4（收入第四层修复）。
+- **#33（已完成 / 决策备忘录）**：多年份扩展策略已文档化 — 2025 优先、分阶段 rollout（推广）；见 [multiyear_expansion_decision_33.md](outputs/generalization/full_market_2024/multiyear_expansion_decision_33.md)。
+- **#32c（已完成 / 仅 P0 小范围）**：guarded R&D situation-table extraction（带防护的研发情况表抽取）+ `scoped apply`（小范围定向应用）（104 targets（目标公司）, 32 updated（更新）, 0 errors（错误））+ post-apply verification（应用后验证）PASS（通过）；**非** full R&D rollout（全市场研发推广）。
+- **BrowserUser（浏览器智能体）**：全量基线稳定后的爬虫智能体，**非**当前直接下一步。
 
-当前阶段：**full_market_2024 2024 基线 + Stage 3a 质量 follow-up 已 PASS**； residuals 见 §5–§6（见第 3 节）。
+当前阶段：**`full_market_2024`（2024 全市场运行）基线 + Stage 3a 质量 follow-up（质量跟进）已通过**；残留问题见 §5–§6。
 
 ---
 
@@ -53,19 +115,19 @@ _最后更新：2026-06-26（#33 multiyear expansion decision memo）_
 | 类别 | 内容 |
 |---|---|
 | **full_market_2024 全量提取** | 6124 家 universe；5707 ok；5 board 批次 + merge + SQLite 导入 — 见 [full_market_2024_summary.md](outputs/generalization/full_market_2024/full_market_2024_summary.md) |
-| **#32 revenue + R&D residual（closed）** | 盘点 + #32c scoped R&D apply verified + #32b revenue dry-run — 见 [revenue_rnd_fix_32_final_summary.md](outputs/generalization/full_market_2024/revenue_rnd_fix_32_final_summary.md) |
-| **#33 multiyear expansion decision（closed）** | 2025-first staged rollout memo — 见 [multiyear_expansion_decision_33.md](outputs/generalization/full_market_2024/multiyear_expansion_decision_33.md) |
-| **full_market_2024 scoped rnd refresh** | rnd_investment 仅字段重抽取（cached PDF）；+1,460 not_found→found — 见 [rnd_refresh_summary.md](outputs/generalization/full_market_2024/rnd_refresh_summary.md) |
-| **full_market_2024 scoped revenue refresh (#26)** | revenue_by_region/segment 仅字段重抽取（cached PDF）；wrong→usable 297；stitch 343 — 见 [revenue_refresh_summary.md](outputs/generalization/full_market_2024/revenue_refresh_summary.md) |
-| **full_market_2024 混合 strict 审计** | 5621 非金融 × 11 字段；post-revenue strict **9.43/11** — 见 [strict_audit_summary.md](outputs/generalization/full_market_2024/strict_audit_summary.md) |
-| **full_market_2024 金融 audit（#27 + #30）** | 86 ok × 子 schema；`#30a–#30g` follow-up 已完成（audit-only + extraction helper + diagnosis-only）；金融 wider rollout 仍 deferred — 见 [financial_audit_fix_30_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md) |
-| **Stage 3a 质量 follow-up 汇总（#28）** | #24–#27 合并快照 + closure — 见 [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md) |
+| **#32 revenue + R&D residual（已关闭）** | 盘点 + #32c `scoped apply`（小范围定向应用）已验证 + #32b revenue `dry-run`（只读诊断）— 见 [revenue_rnd_fix_32_final_summary.md](outputs/generalization/full_market_2024/revenue_rnd_fix_32_final_summary.md) |
+| **#33 multiyear expansion decision（已关闭）** | 2025 优先、分阶段 rollout（推广）决策备忘录 — 见 [multiyear_expansion_decision_33.md](outputs/generalization/full_market_2024/multiyear_expansion_decision_33.md) |
+| **full_market_2024 scoped rnd refresh** | `rnd_investment`（研发投入字段）仅字段重抽取（cached PDF（已缓存 PDF））；+1,460 not_found→found（未找到→找到）— 见 [rnd_refresh_summary.md](outputs/generalization/full_market_2024/rnd_refresh_summary.md) |
+| **full_market_2024 scoped revenue refresh (#26)** | `revenue_by_region` / `revenue_by_segment`（分地区/分业务收入字段）仅字段重抽取；wrong→usable（错误→可用）297 — 见 [revenue_refresh_summary.md](outputs/generalization/full_market_2024/revenue_refresh_summary.md) |
+| **full_market_2024 混合 strict audit（严格质量审计）** | 5621 非金融 × 11 字段；post-revenue strict usable（严格审计下可用）**9.43/11** — 见 [strict_audit_summary.md](outputs/generalization/full_market_2024/strict_audit_summary.md) |
+| **full_market_2024 金融 audit（#27 + #30）** | 86 ok × 子 schema（字段体系）；`#30a–#30g` follow-up（跟进）已完成；金融 wider rollout（更大范围推广）仍**暂缓** — 见 [financial_audit_fix_30_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md) |
+| **Stage 3a 质量 follow-up 汇总（#28）** | #24–#27 合并快照 + closure（关单）— 见 [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md) |
 | **工具链** | `make_full_market_yaml.py`、`merge_full_market_batches.py`、`strict_audit_full_market.py`、`strict_audit_financial_full_market.py`、`financial_calibration_sample.py`、`refresh_rnd_full_market.py`、`refresh_revenue_full_market.py`、`run_full_market_2024.sh` |
-| **Independent eval1000** | 新 cohort 1000 家；泛化验证 PASS |
-| **eval1000_v2** | 同 cohort 1020 家全量重跑 |
-| **SQLite 原型** | 四表 v1 schema；eval1000 / v2 / independent / full_market_2024 均已导入 |
-| **金融子 schema** | bank/broker/insurer/other_financial 实现（Issue #4） |
-| **更早** | eval1000 受控评估 + strict 审计（10.16/11 baseline）；eval200；4 公司泛化 |
+| **Independent eval1000** | 新 cohort（分组样本）1000 家；泛化验证 **PASS（通过）** |
+| **eval1000_v2** | 同 cohort（分组样本）1020 家全量重跑 |
+| **SQLite 原型** | 四表 v1 schema（字段体系）；eval1000 / v2 / independent / `full_market_2024`（2024 全市场运行）均已导入 |
+| **金融子 schema（字段体系）** | bank/broker/insurer/other_financial 实现（Issue #4） |
+| **更早** | eval1000 受控评估 + strict audit（严格质量审计）（10.16/11 baseline（基线））；eval200；4 公司泛化 |
 
 ---
 
@@ -102,7 +164,7 @@ financial_audit_sample.csv（30 公司 × 325 cells；manual_grade 待填写）
 
 ## 4. 当前关键数字
 
-**Headline 来自 full_market_2024**（2026-06-24，post rnd + revenue refresh）。指标含义见第 4.1 节。
+**Headline（核心指标/对外口径）来自 full_market_2024（2024 全市场运行）**（2026-06-24，post rnd + revenue refresh（研发与收入刷新后））。指标含义见 §4.1。
 
 ### full_market_2024 最终结果
 
@@ -219,25 +281,25 @@ financial_audit_sample.csv（30 公司 × 325 cells；manual_grade 待填写）
 
 ## 5. 已知问题
 
-1. **BSE strict**（8.82/11，post-revenue）；客户/供应商表格 strict 规则已修正（P0 TOP_KW）。
-2. **rnd P0 scoped apply（#32c，已关闭）**：104 家 / 32 strict 改善；72/104 仍 partial — defer；`000333`/`301221` narrative deferred。
-3. **revenue strict-wrong（#32b 已分类，生产 defer）**：region **38** + segment **19** — Tier4 / wrong-table ranking 待 scoped pilot。
-4. **金融 residuals 仍存在，但 #30 tranche 已完成**：金融 audit / extraction / subtype review 已在 `#30a–#30g` 完成并单独文档化；wider rollout deferred；000402 / 600816 / 600318 retagging 进入后续 issue。
+1. **BSE strict usable（严格审计下可用）**（8.82/11，post-revenue（收入刷新后））；客户/供应商表格 strict audit（严格质量审计）规则已修正（P0 TOP_KW）。
+2. **rnd P0 scoped apply（#32c，已关闭）**：104 家 / 32 strict（严格审计）改善；72/104 仍 partial（部分可用）— **暂缓**；`000333`/`301221` narrative（累计叙述类）**暂缓**。
+3. **revenue strict wrong（#32b 已分类，生产暂缓）**：region（分地区）**38** + segment（分业务）**19** — Tier4 / wrong-table ranking（错表排序）待 scoped pilot（小范围试点）。
+4. **金融 residuals（残留问题）仍存在，但 #30 批次已完成**：金融 audit（审计）/ extraction（抽取）/ subtype review（子类型复核）已在 `#30a–#30g` 完成；wider rollout（更大范围推广）**暂缓**；000402 / 600816 / 600318 retagging（重打标签）进入 #31。
 
-5. **BrowserUser 未启动**（计划中，非当前优先级）。
+5. **BrowserUser（浏览器智能体）未启动**（计划中，非当前优先级）。
 
 ---
 
 ## 6. 下一步计划（post-#23）
 
-1. **2025 pilot 实施** — 100 家分层 pilot → BSE board pilot → full_market_2025（**待** #33 §12 人工签核 + 年份参数化脚本）。
-2. **#31 Financial under-tagging / retag review** — 含 `000402` / `600816` / `600318` 及 8 个 financial-like revenue wrong；建议于 2025 pilot 前或并行完成。
-3. **Revenue Tier4 + wrong-table ranking pilot** — scoped production pilot after human sign-off（#32b harness signal）。
-4. **R&D remaining partial** — 72/104 P0 + full-population partial；`000333`/`301221` manual review。
-5. **2023/2022 backfill** — 仅在 full_market_2025 通过 validation gates 后启动。
-6. **BrowserUser 试点**（全量基线稳定后）；**`strict_audit_result` loader**（低优先级）。
+1. **2025 pilot（试点）实施** — 100 家分层 pilot（试点）→ BSE board pilot（板块试点）→ `full_market_2025`（2025 全市场运行）（**待** #33 §12 人工签核 + 年份参数化脚本）。
+2. **#31 金融漏标扫描 / retag review（重打标签复核）** — 含 `000402` / `600816` / `600318` 及 8 个 financial-like revenue wrong（金融控股类收入 strict wrong（严格审计下错误））；建议于 2025 pilot（试点）前或并行完成。
+3. **Revenue Tier4 + wrong-table ranking pilot（试点）** — `#32b` harness（试跑框架）信号验证通过后，经人工签核再做 scoped production pilot（小范围生产试点）。
+4. **R&D remaining partial（研发部分可用残留）** — 72/104 P0 + full-population partial（全人口部分可用）；`000333`/`301221` manual review（人工复核）。
+5. **2023/2022 backfill（历史年份回填）** — 仅在 `full_market_2025`（2025 全市场运行）通过 validation gates（验证关卡）后启动。
+6. **BrowserUser（浏览器智能体）试点**（全量基线稳定后）；**`strict_audit_result` loader**（低优先级）。
 
-> **Headline 政策**：non-fin **9.43/11** 保持不变，直至 intentional full strict audit rerun。
+> **Headline（核心指标/对外口径）政策**：non-fin（非金融）**9.43/11** 保持不变，直至 intentional full strict audit rerun（有意安排的全量 strict audit（严格质量审计）重跑）。
 
 ---
 
@@ -245,18 +307,19 @@ financial_audit_sample.csv（30 公司 × 325 cells；manual_grade 待填写）
 
 | 入口 | 用途 |
 |---|---|
-| **本文档** | 主进度页 — 含指标解释 |
+| **本文档** | 主进度页 — 含术语与指标解释 |
 | **[ROADMAP.md](ROADMAP.md)** | 分阶段路线图 |
 | **[CHANGELOG.md](CHANGELOG.md)** | 变更记录 |
-| **[docs/evaluation_method.md](docs/evaluation_method.md)** | 评估方法与术语 glossary |
-| **[full_market_2024_summary.md](outputs/generalization/full_market_2024/full_market_2024_summary.md)** | 全市场 run 详细报告 |
-| **[revenue_refresh_summary.md](outputs/generalization/full_market_2024/revenue_refresh_summary.md)** | #26 revenue scoped refresh 报告 |
-| **[financial_audit_summary.md](outputs/generalization/full_market_2024/financial_audit_summary.md)** | #27 金融 strict audit（单独 headline） |
-| **[strict_audit_summary.md](outputs/generalization/full_market_2024/strict_audit_summary.md)** | 非金融 strict 审计详细报告 |
-| **[rnd_residual_fix_32c_apply_summary.md](outputs/generalization/full_market_2024/rnd_residual_fix_32c_apply_summary.md)** | #32c-R4 scoped P0 R&D apply 报告 |
-| **[multiyear_expansion_decision_33.md](outputs/generalization/full_market_2024/multiyear_expansion_decision_33.md)** | #33 multiyear decision memo |
-| **[revenue_residual_fix_32b_dryrun_summary.md](outputs/generalization/full_market_2024/revenue_residual_fix_32b_dryrun_summary.md)** | #32b revenue dry-run |
-| **[stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)** | Stage 3a 汇总与 closure（#28） |
+| **[docs/evaluation_method.md](docs/evaluation_method.md)** | 评估方法与术语表 |
+| **[full_market_2024_summary.md](outputs/generalization/full_market_2024/full_market_2024_summary.md)** | `full_market_2024`（2024 全市场运行）详细报告 |
+| **[revenue_refresh_summary.md](outputs/generalization/full_market_2024/revenue_refresh_summary.md)** | #26 revenue scoped refresh（小范围定向收入刷新）报告 |
+| **[financial_audit_summary.md](outputs/generalization/full_market_2024/financial_audit_summary.md)** | #27 金融 strict audit（严格质量审计）（单独 headline（核心指标/对外口径）） |
+| **[strict_audit_summary.md](outputs/generalization/full_market_2024/strict_audit_summary.md)** | 非金融 strict audit（严格质量审计）详细报告 |
+| **[rnd_residual_fix_32c_apply_summary.md](outputs/generalization/full_market_2024/rnd_residual_fix_32c_apply_summary.md)** | #32c-R4 scoped P0 R&D apply（小范围 P0 研发应用）报告 |
+| **[multiyear_expansion_decision_33.md](outputs/generalization/full_market_2024/multiyear_expansion_decision_33.md)** | #33 多年份扩展决策备忘录 |
+| **[revenue_rnd_fix_32_final_summary.md](outputs/generalization/full_market_2024/revenue_rnd_fix_32_final_summary.md)** | #32 收入与研发残留关单汇总 |
+| **[revenue_residual_fix_32b_dryrun_summary.md](outputs/generalization/full_market_2024/revenue_residual_fix_32b_dryrun_summary.md)** | #32b revenue dry-run（收入只读诊断） |
+| **[stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)** | Stage 3a 汇总与关单（#28） |
 
 ---
 

@@ -1,110 +1,107 @@
-# Financial audit fix #30 summary
+# 金融 audit（审计）修复 #30 汇总
 
-_Generated: 2026-06-25 | docs-only consolidation for #30a–#30g_
+_生成日期：2026-06-25 | 文档汇总 #30a–#30g_
 
-## Scope and boundary
+## 范围与边界
 
-This document consolidates the **#30 financial follow-up series**:
+本文档汇总 **#30 金融 follow-up（跟进）系列**：
 
-- `#30a` broker `not_found_missed` audit tightening
-- `#30b` ratio/table audit calibration + `major_subsidiaries` gate
-- `#30c` bank ratio extraction helper
-- `#30d` broker income / margin recall
-- `#30e` financial table plausibility audit hardening
-- `#30f` insurer low-n audit hardening
-- `#30g` subtype/tag diagnosis only
+- `#30a` broker（券商）`not_found_missed`（应该找到但没有找到）audit（审计）收紧
+- `#30b` ratio/table audit calibration（比率/表格审计校准）+ `major_subsidiaries`（主要子公司字段）门控
+- `#30c` bank ratio extraction helper（银行比率抽取辅助）
+- `#30d` broker income / margin recall（券商收入/两融召回）
+- `#30e` financial table plausibility audit hardening（金融表格合理性审计加固）
+- `#30f` insurer（保险）low-n audit hardening（小样本审计加固）
+- `#30g` subtype/tag diagnosis only（子类型/标签仅诊断）
 
-**Boundary / anti-claims:**
+**边界 / 不得声称（anti-claims）：**
 
-- no full financial rollout
-- no full CNINFO rerun
-- no SQLite import
-- no YAML tag changes
-- no non-fin `9.43/11` headline change
-- financial extraction is **not** fully signed off
-- financial metrics remain **separate** from the non-financial headline
+- **无** full financial rollout（全量金融推广）
+- **无** full CNINFO rerun（全量 CNINFO 重下）
+- **无** SQLite（轻量数据库）import（导入）
+- **无** YAML tag changes（标签变更）
+- **无** non-fin（非金融）`9.43/11 headline（核心指标/对外口径）` 变更
+- 金融 extraction（抽取）**尚未** fully signed off（完全签核）
+- 金融指标仍**单独**于 non-financial headline（非金融核心指标/对外口径）
 
-## #30a–#30g changelog
+## #30a–#30g 变更记录
 
-| Step | Theme | Type | Main result | Rollout status |
+| 步骤 | 主题 | 类型 | 主要结果 | 推广状态 |
 |---|---|---|---|---|
-| `#30a` | broker `not_found_missed` tightening | audit-only | reduced broker over-calls; improved frozen agreement `202/325 -> 226/325` | committed |
-| `#30b` | ratio/table calibration + `major_subsidiaries` gate | audit-only | joined agreement `226/325 -> 233/325` | committed |
-| `#30c` | bank ratio helper | extraction + targeted sample apply | `6/6` bank-ratio `MISSED` recovered; `0/11` WRONG controls became usable | wider rollout deferred |
-| `#30d` | broker income / margin recall | extraction + targeted sample apply | `4/4` confirmed broker `MISSED` recovered; `0/23` negative controls usable | wider rollout deferred |
-| `#30e` | table plausibility hardening | audit-only | `18/18` manual-WRONG table targets strict wrong; harness artifact cleaned up | no sample apply |
-| `#30f` | insurer low-n semantic hardening | audit-only | `8/8` insurer negatives non-usable; `10/10` positives preserved | no sample apply |
-| `#30g` | subtype/tag review | diagnosis-only | reviewed `000402` / `600816` / `600318`; no YAML change | deferred |
+| `#30a` | broker（券商）`not_found_missed`（应该找到但没有找到）收紧 | audit-only（仅审计） | 减少 broker 过度召回；冻结 agreement（一致率）`202/325 -> 226/325` | 已提交代码 |
+| `#30b` | ratio/table calibration（比率/表格校准）+ `major_subsidiaries`（主要子公司字段）门控 | audit-only（仅审计） | joined agreement（合并一致率）`226/325 -> 233/325` | 已提交代码 |
+| `#30c` | bank ratio helper（银行比率辅助） | extraction（抽取）+ targeted sample apply（定向样本应用） | `6/6` bank-ratio `MISSED`（漏抽）恢复；`0/11` WRONG（错误）对照变为 usable（可用） | wider rollout（更大范围推广）**暂缓** |
+| `#30d` | broker income / margin recall（券商收入/两融召回） | extraction（抽取）+ targeted sample apply（定向样本应用） | `4/4` 已确认 broker `MISSED`（漏抽）恢复；`0/23` negative controls（负向对照）变为 usable（可用） | wider rollout（更大范围推广）**暂缓** |
+| `#30e` | table plausibility hardening（表格合理性加固） | audit-only（仅审计） | `18/18` manual-WRONG（人工标错）表格目标 strict wrong（严格审计下错误）；harness（试跑框架）产物已清理 | 无 sample apply（样本应用） |
+| `#30f` | insurer（保险）low-n semantic hardening（小样本语义加固） | audit-only（仅审计） | `8/8` insurer 负向目标 non-usable（不可用）；`10/10` 正向对照保持 | 无 sample apply（样本应用） |
+| `#30g` | subtype/tag review（子类型/标签复核） | diagnosis-only（仅诊断） | 复核 `000402` / `600816` / `600318`；无 YAML 变更 | **暂缓** |
 
-## What changed by category
+## 按类别变更说明
 
-### Audit-only fixes
+### audit-only（仅审计）修复
 
-- `#30a`: broker-specific `not_found_missed` PDF gates reduced false recall hints.
-- `#30b`: tightened ratio semantics, table semantics, and improved `major_subsidiaries` treatment.
-- `#30e`: tightened financial table plausibility for `loan_structure`, `deposit_structure`, `regional_distribution`, `revenue_by_region`, and `revenue_by_segment`.
-- `#30f`: added narrow insurer-only semantic guards for `combined_ratio`, `claims_expense`, `investment_income`, `solvency_ratio`, insurer segment tables/snippets, and insurer business-line snippets.
+- `#30a`：broker（券商）专用 `not_found_missed`（应该找到但没有找到）PDF 门控，减少 false recall hints（误召回提示）。
+- `#30b`：收紧 ratio（比率）语义、table（表格）语义，改善 `major_subsidiaries`（主要子公司字段）处理。
+- `#30e`：收紧 `loan_structure`（贷款结构）、`deposit_structure`（存款结构）、`regional_distribution`（地区分布）、`revenue_by_region`（分地区收入）、`revenue_by_segment`（分业务收入）的金融 table plausibility（表格合理性）。
+- `#30f`：为 `combined_ratio`（综合成本率）、`claims_expense`（赔付支出）、`investment_income`（投资收益）、`solvency_ratio`（偿付能力）等增加 insurer-only（仅保险）语义防护。
 
-### Extraction helpers
+### extraction helpers（抽取辅助）
 
-- `#30c`: bank-only ratio extraction helper for the targeted ratio recall failures.
-- `#30d`: broker-only helpers for:
-  - segment income extraction
-  - deep investment-banking notes fallback
-  - margin balance extraction
+- `#30c`：bank-only（仅银行）ratio extraction helper（比率抽取辅助），针对定向 ratio recall failures（比率召回失败）。
+- `#30d`：broker-only（仅券商）辅助：分部收入抽取、投行附注深度回退、两融余额抽取。
 
-### Diagnosis-only subtype review
+### diagnosis-only（仅诊断）子类型复核
 
-- `#30g`: read-only subtype/tag review for:
-  - `000402` 金融街: likely not broker; probably not financial at all
-  - `600816` 建元信托: trust-like, not bank
-  - `600318` 新力金融: diversified financial holding, not bank
-- No YAML or schema tags were changed in `#30g`.
+- `#30g`：只读 subtype/tag review（子类型/标签复核）：
+  - `000402` 金融街：可能不是 broker（券商）；可能根本不是 financial（金融）
+  - `600816` 建元信托：trust-like（信托类），不是 bank（银行）
+  - `600318` 新力金融：多元金融控股，不是 bank（银行）
+- `#30g` **未**变更 YAML 或 schema tags（标签）。
 
-## Validation summary
+## 验证汇总
 
-| Step | Validation result |
+| 步骤 | 验证结果 |
 |---|---|
-| `#30a` | broker `not_found_missed` reduced; frozen joined agreement `202/325 -> 226/325` |
-| `#30b` | joined agreement `226/325 -> 233/325` |
-| `#30c` | `6/6` bank-ratio `MISSED` recovered; `0/11` WRONG controls became usable; wider rollout deferred |
-| `#30d` | `4/4` broker `MISSED` recovered; `0/23` negative controls usable; wider rollout deferred |
-| `#30e` | `18/18` manual-WRONG table targets strict wrong; `0/26` controls newly downgraded after harness cleanup |
-| `#30f` | `8/8` insurer negative targets non-usable; `10/10` positive controls preserved |
-| `#30g` | subtype diagnosis only for `000402` / `600816` / `600318`; no YAML change |
+| `#30a` | broker（券商）`not_found_missed`（应该找到但没有找到）减少；冻结 joined agreement（合并一致率）`202/325 -> 226/325` |
+| `#30b` | joined agreement（合并一致率）`226/325 -> 233/325` |
+| `#30c` | `6/6` bank-ratio `MISSED`（漏抽）恢复；`0/11` WRONG（错误）对照变为 usable（可用）；wider rollout（更大范围推广）**暂缓** |
+| `#30d` | `4/4` broker `MISSED`（漏抽）恢复；`0/23` negative controls（负向对照）usable（可用）；wider rollout（更大范围推广）**暂缓** |
+| `#30e` | `18/18` manual-WRONG（人工标错）表格目标 strict wrong（严格审计下错误）；harness（试跑框架）清理后 `0/26` 对照新降级 |
+| `#30f` | `8/8` insurer（保险）负向 non-usable（不可用）；`10/10` 正向对照保持 |
+| `#30g` | 仅 subtype（子类型）诊断；无 YAML 变更 |
 
-## Metric caveat
+## 指标注意事项
 
-`#30` used the frozen `#29` manual calibration sample as a validation anchor.
+`#30` 以冻结的 `#29` manual calibration（人工校准）样本作为 validation anchor（验证锚点）。
 
-That means **agreement can decrease even when extraction improves**:
+因此 **agreement（一致率）可能在 extraction（抽取）改善时反而下降**：
 
-- if a row is manually labeled `MISSED`
-- and the new extraction correctly recovers it as `usable`
-- the frozen manual-vs-auto agreement metric can go down because the manual label stays `MISSED`
+- 若某行人工标为 `MISSED`（漏抽）
+- 而新 extraction（抽取）正确恢复为 `usable`（可用）
+- 冻结的人工 vs 自动 agreement（一致率）会下降（人工列仍为 `MISSED`（漏抽））
 
-This happened in sample applies such as `#30c` and `#30d`. It should be read as a **frozen-label metric caveat**, not automatically as a regression.
+`#30c`、`#30d` 的 sample apply（样本应用）中曾出现此情况。应读作 **frozen-label metric caveat（冻结标签指标注意事项）**，**不**应自动视为 regression（回归）。
 
-## Deferred work mapped to follow-up issues
+## 暂缓工作路由至后续 issue
 
-| Issue | Topic | Routed work |
+| Issue | 主题 | 路由工作 |
 |---|---|---|
-| `#31` | Financial under-tagging scan / 金融公司漏标扫描 | under-tagging scan; controlled retagging follow-up for `000402` / `600816` / `600318` |
-| `#32` | Revenue + rnd residual fixes / 收入与研发字段残留问题 | residual revenue/rnd wrong cells and related scoped fixes |
-| `#33` | Multiyear expansion decision / 多年份扩展决策 | 2025 / 2023 / 2022 scope, run naming, and expansion posture |
+| `#31` | Financial under-tagging scan（金融漏标扫描） | under-tagging scan（漏标扫描）；`000402` / `600816` / `600318` 受控 retagging（重打标签） |
+| `#32` | Revenue + rnd residual fixes（收入与研发残留修复） | residual revenue/rnd wrong cells（残留 wrong（错误）单元格）与 scoped fixes（小范围修复） |
+| `#33` | Multiyear expansion decision（多年份扩展决策） | 2025 / 2023 / 2022 范围、`run_name`（运行名称）与扩展口径 |
 
-If subtype retagging is approved later, it should be tracked under **`#31`** or a tightly scoped child task of `#31`.
+若后续批准 subtype retagging（子类型重打标签），应跟踪在 **`#31`** 或其子任务下。
 
-## Closure posture
+## 关单口径
 
-`#30` is ready to close as a **financial follow-up tranche**, with the following explicit framing:
+`#30` **可以关单**，作为 **financial follow-up tranche（金融 follow-up（跟进）批次）**，明确口径如下：
 
-- audit hardening delivered
-- targeted extraction helpers delivered where low-risk and validated
-- subtype/tag caveats diagnosed but **not** auto-changed
-- wider financial rollout remains deferred
+- audit hardening（审计加固）已交付
+- 低风险的 targeted extraction helpers（定向抽取辅助）已交付并验证
+- subtype/tag caveats（子类型/标签注意事项）已诊断但**未**自动变更
+- wider financial rollout（更大范围金融推广）仍**暂缓**
 
-## Safe-to-commit list
+## 可提交（safe-to-commit）列表
 
 - `outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md`
 - `CURRENT_STATUS.md`
@@ -112,20 +109,20 @@ If subtype retagging is approved later, it should be tracked under **`#31`** or 
 - `ROADMAP.md`
 - `docs/financial_company_schema.md`
 - `docs/evaluation_method.md`
-- `outputs/generalization/full_market_2024/stage3_quality_followup_summary.md` (cross-link only)
+- `outputs/generalization/full_market_2024/stage3_quality_followup_summary.md`（仅交叉链接）
 
-## Do-not-commit list
+## 勿提交（do-not-commit）列表
 
-- any `company_profile.json`
-- any `eval_results.json`
+- 任何 `company_profile.json`（公司档案 JSON）
+- 任何 `eval_results.json`
 - `financial_audit_sample.csv`
 - `financial_audit_population.csv`
 - `financial_audit_summary.md`
-- any YAML tag changes
+- 任何 YAML tag changes（标签变更）
 - PDFs / `.cache`
 - `outputs/db/*.db`
 
-## Related artifacts
+## 相关产物
 
 - [financial_audit_fix_30a_summary.md](financial_audit_fix_30a_summary.md)
 - [financial_audit_fix_30b_summary.md](financial_audit_fix_30b_summary.md)

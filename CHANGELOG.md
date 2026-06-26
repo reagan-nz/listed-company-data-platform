@@ -43,6 +43,7 @@
 - **收入表格 proxy 收紧**（Issue #2）：`revenue_table_plausible` 要求 `revenue_by_region` / `revenue_by_segment` preview 含至少一行非表头数据行
 
 ### 文档
+- **中文可读性 pass（项目状态文档）**（2026-06-26）：重写 README / CURRENT_STATUS / ROADMAP / CHANGELOG / evaluation_method / financial_company_schema / stage3 与 #30/#32/#33 汇总为更清晰中文；保留技术标识符、指标、链接与文件名不变
 - **#33 multiyear expansion decision docs sync**（2026-06-26）：`multiyear_expansion_decision_33.md`；同步 CURRENT_STATUS / CHANGELOG / ROADMAP / stage3；#33 closed；#23 ready to close；headline **9.43/11 不变**
 - **#32 final closure docs sync**（2026-06-26）：`revenue_rnd_fix_32_final_summary.md`；同步 CURRENT_STATUS / CHANGELOG / ROADMAP / evaluation_method / inventory / stage3；mark #32 closed；headline **9.43/11 不变**
 - **#32c docs sync**（2026-06-26）：同步 `CURRENT_STATUS.md`、`CHANGELOG.md`、`ROADMAP.md`、`docs/evaluation_method.md`、`revenue_rnd_residual_inventory_32.md`、`stage3_quality_followup_summary.md`；记录 scoped P0 R&D apply verified；headline **9.43/11 不变**
