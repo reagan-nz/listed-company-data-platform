@@ -1,6 +1,6 @@
 # 路线图
 
-_最后更新：2026-06-25（#30 financial follow-up docs sync）_
+_最后更新：2026-06-26（#32c R&D P0 scoped apply docs sync）_
 
 ## 第一阶段：年报数据获取与基础字段抽取
 
@@ -54,18 +54,21 @@ _最后更新：2026-06-25（#30 financial follow-up docs sync）_
 
 ### 3b — residuals、grading 与多年度（**In Progress**）
 
-**目标**：在不声称金融 extraction fully signed off 的前提下，完成 `#30` 收尾并推进 `#31` / `#32` / `#33`。
+**目标**：在不声称金融 extraction fully signed off 的前提下，完成 `#30` 收尾；`#32c` R&D P0 scoped fix 已 verified；推进 `#32b` / `#32` 剩余 / `#33`。
 
 | 事项 | 状态 |
 |---|---|
 | `#30` financial follow-up（`#30a–#30g`） | **Done / closing** — audit-only + extraction helper + subtype diagnosis；wider financial rollout deferred |
 | `#31` financial under-tagging scan | 下一项 — 含 `000402` / `600816` / `600318` retagging review |
-| `#32` revenue + rnd residual fixes | 下一项 — revenue 剩余 strict-wrong + rnd residuals |
+| `#32c` R&D P0 scoped fix | **Done / verified** — guarded helper + apply 104（32 updated, 0 errors）+ post-apply verify PASS；**scoped P0 only** |
+| `#32b` revenue Tier 4 / wrong-table | 下一项 — revenue 剩余 strict-wrong（57 cells） |
+| `#32` R&D remaining partial / unresolved | 进行中 — 72/104 P0 池仍 partial；000333/301221 deferred；**非** full rollout |
 | `#33` multiyear expansion decision | 下一项 — 2025 / 2023 / 2022 scope / run naming |
 | BSE 模板 residual gap | 部分 — strict 8.82/11（≥8.5 阈值已满足） |
 | `strict_audit_result` loader 入库 | 可选 |
+| Post-apply **full** strict audit rerun | **Deferred** — 仅在有 intentional schedule 时更新 headline |
 
-**3b 完成标准（draft）**：`#30` docs closeout completed；`#31` / `#32` / `#33` 有明确范围；金融 wider rollout 仍单独评估，不混入 non-fin `9.43/11` headline。
+**3b 完成标准（draft）**：`#30` docs closeout completed；`#32c` scoped P0 verified；`#31` / `#32b` / `#33` 有明确范围；金融 wider rollout 仍单独评估，不混入 non-fin `9.43/11` headline。
 
 ## 第四阶段：BrowserUser 爬虫智能体补充数据
 

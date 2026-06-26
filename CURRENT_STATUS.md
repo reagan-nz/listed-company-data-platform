@@ -1,8 +1,10 @@
 # 当前状态
 
-_最后更新：2026-06-25（#30 financial follow-up docs sync）_
+_最后更新：2026-06-26（#32c R&D P0 scoped apply docs sync）_
 
 > **本文档是项目主进度页。** 老师建议从这里开始阅读；技术细节见 [docs/](docs/)，变更记录见 [CHANGELOG.md](CHANGELOG.md)。Stage 3a 汇总见 **[stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)**。
+
+**2026-06-26 日结（#32c R&D P0 scoped apply 已验证）**：`#32c-R2`–`R5` 完成 — guarded R&D situation-table helper 已入生产路径；scoped P0 apply **104** 家、**32** 更新、**0** errors、**14** not_found→found、**0** found→not_found；post-apply verification **PASS**（104/104 status 一致、0 回归）。Scoped 池当前 strict：**usable=32 / partial=71 / not_found_unverified=1**。**非**全市场 R&D rollout；**非** global strict audit 重跑；non-fin **9.43/11 headline 不变**。剩余：72/104 partial 未解、`000333`/`301221` deferred、revenue Tier 4 仍待 #32b。详见 [rnd_residual_fix_32c_apply_summary.md](outputs/generalization/full_market_2024/rnd_residual_fix_32c_apply_summary.md)、[rnd_residual_fix_32c_post_apply_verify.md](outputs/generalization/full_market_2024/rnd_residual_fix_32c_post_apply_verify.md)。
 
 **2026-06-25 日结（#30 financial follow-up 完结待关单）**：`#30a–#30g` 已完成并完成文档同步；涵盖 broker `not_found_missed` 收紧、ratio/table audit calibration、bank ratio helper、broker recall、financial table plausibility、insurer low-n audit hardening、subtype/tag diagnosis。**#30 ready to close after docs commit**；金融 wider rollout 仍 **deferred**。详见 [financial_audit_fix_30_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md)。
 
@@ -33,8 +35,9 @@ _最后更新：2026-06-25（#30 financial follow-up docs sync）_
 - **当前数据来源**：巨潮资讯网（CNINFO）公开年报 PDF，程序化抽取 11 项基础字段（工业/制造类公司为主）。
 - **已完成**：全 A 股 2024 年报首次全量提取 + SQLite 入库 + 混合 strict 审计 + scoped rnd/revenue 字段刷新。
 - **Stage 3a（Done）**：#24–#28 质量 follow-up — 见 [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)。
-- **Stage 3b（进行中）**：`#30` ready to close；后续聚焦 `#31` 金融漏标扫描、`#32` revenue/rnd residuals、`#33` 多年份扩展决策。
+- **Stage 3b（进行中）**：`#30` ready to close；`#32c` R&D P0 scoped apply **verified**；后续 `#32b` revenue Tier 4、`#32` R&D 剩余 partial、`#33` 多年份扩展决策。
 - **#30（Done / docs closeout）**：`#30a`、`#30b`、`#30c`、`#30d`、`#30e`、`#30f`、`#30g` 均已完成；`#30` 在 docs commit 后可关闭。
+- **#32c（Done / scoped P0 only）**：guarded R&D situation-table extraction + scoped P0 apply（104 targets, 32 updated, 0 errors）+ post-apply verification PASS；**非** full R&D rollout；headline **9.43/11 不变**。
 - **BrowserUser** 爬虫智能体（全量基线稳定后，非当前直接下一步）。
 
 当前阶段：**full_market_2024 2024 基线 + Stage 3a 质量 follow-up 已 PASS**； residuals 见 §5–§6（见第 3 节）。
@@ -46,6 +49,7 @@ _最后更新：2026-06-25（#30 financial follow-up docs sync）_
 | 类别 | 内容 |
 |---|---|
 | **full_market_2024 全量提取** | 6124 家 universe；5707 ok；5 board 批次 + merge + SQLite 导入 — 见 [full_market_2024_summary.md](outputs/generalization/full_market_2024/full_market_2024_summary.md) |
+| **#32c R&D P0 scoped apply（verified）** | guarded situation-table helper + scoped apply 104 家（32 updated, 0 errors, 14 not_found→found）；post-apply verify PASS — 见 [rnd_residual_fix_32c_apply_summary.md](outputs/generalization/full_market_2024/rnd_residual_fix_32c_apply_summary.md) |
 | **full_market_2024 scoped rnd refresh** | rnd_investment 仅字段重抽取（cached PDF）；+1,460 not_found→found — 见 [rnd_refresh_summary.md](outputs/generalization/full_market_2024/rnd_refresh_summary.md) |
 | **full_market_2024 scoped revenue refresh (#26)** | revenue_by_region/segment 仅字段重抽取（cached PDF）；wrong→usable 297；stitch 343 — 见 [revenue_refresh_summary.md](outputs/generalization/full_market_2024/revenue_refresh_summary.md) |
 | **full_market_2024 混合 strict 审计** | 5621 非金融 × 11 字段；post-revenue strict **9.43/11** — 见 [strict_audit_summary.md](outputs/generalization/full_market_2024/strict_audit_summary.md) |
@@ -211,19 +215,21 @@ financial_audit_sample.csv（30 公司 × 325 cells；manual_grade 待填写）
 ## 5. 已知问题
 
 1. **BSE strict**（8.82/11，post-revenue）；客户/供应商表格 strict 规则已修正（P0 TOP_KW）。
-2. **rnd 8 家回归**（sse_main 费用化研发投入 锚点）：600011 等 7 家 + 301221 partial — 小 follow-up。
-3. **revenue 剩余 strict-wrong**：region **38** + segment **19**（#26 已修复 header-only 跨页 split；非 fully fixed）。
+2. **rnd P0 scoped apply（#32c）**：104 家 P0 池已 apply 32 家 strict 改善；**72/104** 仍为 partial；`000333`/`301221` narrative deferred；**非** full R&D rollout。
+3. **revenue 剩余 strict-wrong**：region **38** + segment **19**（#26 已修复 header-only 跨页 split；#32b Tier 4 待做）。
 4. **金融 residuals 仍存在，但 #30 tranche 已完成**：金融 audit / extraction / subtype review 已在 `#30a–#30g` 完成并单独文档化；wider rollout deferred；000402 / 600816 / 600318 retagging 进入后续 issue。
+
 5. **BrowserUser 未启动**（计划中，非当前优先级）。
 
 ---
 
 ## 6. 下一步计划（Stage 3b）
 
-1. **#31 Financial under-tagging scan / 金融公司漏标扫描** — 含 `000402` / `600816` / `600318` retagging follow-up（需单独审批，非本轮自动改 YAML）。
-2. **#32 Revenue + rnd residual fixes / 收入与研发字段残留问题** — revenue 剩余 strict-wrong + rnd 小范围残留回归。
-3. **#33 Multiyear expansion decision / 多年份扩展决策** — 2025 / 2023 / 2022 范围与 `run_name` 策略。
-4. **BrowserUser 试点**（全量基线稳定后）；**`strict_audit_result` loader**（低优先级）。
+1. **#32b Revenue Tier 4 / wrong-table ranking** — revenue 剩余 strict-wrong（57 cells）与 Tier 4 multipage。
+2. **#32 R&D 剩余 partial / unresolved** — 72/104 P0 池外或仍 partial；`000333`/`301221` manual review；**非** intentional global strict audit 重跑前不更新 headline。
+3. **#31 Financial under-tagging scan / 金融公司漏标扫描** — 含 `000402` / `600816` / `600318` retagging follow-up（需单独审批，非本轮自动改 YAML）。
+4. **#33 Multiyear expansion decision / 多年份扩展决策** — 2025 / 2023 / 2022 范围与 `run_name` 策略。
+5. **BrowserUser 试点**（全量基线稳定后）；**`strict_audit_result` loader**（低优先级）。
 
 ---
 
@@ -239,6 +245,8 @@ financial_audit_sample.csv（30 公司 × 325 cells；manual_grade 待填写）
 | **[revenue_refresh_summary.md](outputs/generalization/full_market_2024/revenue_refresh_summary.md)** | #26 revenue scoped refresh 报告 |
 | **[financial_audit_summary.md](outputs/generalization/full_market_2024/financial_audit_summary.md)** | #27 金融 strict audit（单独 headline） |
 | **[strict_audit_summary.md](outputs/generalization/full_market_2024/strict_audit_summary.md)** | 非金融 strict 审计详细报告 |
+| **[rnd_residual_fix_32c_apply_summary.md](outputs/generalization/full_market_2024/rnd_residual_fix_32c_apply_summary.md)** | #32c-R4 scoped P0 R&D apply 报告 |
+| **[rnd_residual_fix_32c_post_apply_verify.md](outputs/generalization/full_market_2024/rnd_residual_fix_32c_post_apply_verify.md)** | #32c-R5 post-apply verification |
 | **[stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)** | Stage 3a 汇总与 closure（#28） |
 
 ---
@@ -257,9 +265,12 @@ outputs/generalization/full_market_2024/
   financial_audit_sample.csv              # 可 commit（grading 进行中可更新）
   financial_population_inventory.csv      # 可 commit
   stage3_quality_followup_summary.md      # 可 commit（#28 Stage 3a）
+  rnd_residual_fix_32c_apply_summary.md  # 可 commit（#32c-R4 apply）
+  rnd_residual_fix_32c_post_apply_verify.md  # 可 commit（#32c-R5 verify）
   strict_audit_sample.csv                 # 可 commit
   eval_results.json                       # gitignored
   rnd_refresh_changes.csv                 # gitignored
+  rnd_refresh_changes_32c_apply.csv     # gitignored（apply 产物，除非明确批准）
   revenue_refresh_changes.csv             # gitignored
   bse/ star/ szse_main/ chinext/ sse_main/  # gitignored（含 PDF）
 

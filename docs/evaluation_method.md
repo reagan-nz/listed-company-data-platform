@@ -221,6 +221,21 @@ python lab/financial_calibration_sample.py \
 
 > **不得声称**：Full Stage 3 complete；all extraction fixed；financial metrics mixed into non-fin 9.43/11
 
+### 12. #32c scoped P0 R&D validation（2026-06-26）
+
+- **目的**：验证 guarded R&D situation-table helper 与 scoped P0 apply；**非** full population strict audit 重跑
+- **方法**：
+  - R2–R3：dry-run harness vs stored profiles（207-row + 104 P0 pool）
+  - R4：scoped apply via `lab/refresh_rnd_full_market.py --apply --codes …`（cached PDF）
+  - R5：post-apply read-only profile verification vs apply CSV
+- **Apply 结果（104 P0 targets）**：updated **32**；errors **0**；not_found→found **14**；found→not_found **0**
+- **Post-apply verify**：104/104 status 与 apply CSV 一致；strict regressions **0**；mandatory recovered rows usable（600011/600020/688081/600029/600115/600844）；000333 仍 partial
+- **Headline**：non-fin strict **9.43/11 不变** — 直至 intentional full strict audit rerun
+- **Metric artifact**：apply 后重跑 dry-run harness 时 `improved=0` / `verdict=FAIL` 可能为**预期现象**（profile 已含改善值，stored vs fresh 无 delta）；应以 R5 profile 直读验证为准
+- **产出**：[rnd_residual_fix_32c_apply_summary.md](../outputs/generalization/full_market_2024/rnd_residual_fix_32c_apply_summary.md)、[rnd_residual_fix_32c_post_apply_verify.md](../outputs/generalization/full_market_2024/rnd_residual_fix_32c_post_apply_verify.md)
+
+> **不得声称**：Full R&D residual fix；global headline updated；full manual validation；CNINFO/SQLite rerun from #32c
+
 ## 指标对照表
 
 | 指标 | eval1000 | eval1000_v2 | independent | full_market_2024 (initial) | full_market_2024 (post–Stage 3a) | 含义 |

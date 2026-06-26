@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ### 新增
+- **#32c R&D P0 scoped apply + verification**（2026-06-26）：`lab/extract_annual_report.py` guarded situation-table helper（`extract_rnd_situation_table_numeric` + `merge_rnd_investment_with_guard`）；scoped P0 apply **104** targets / **32** updated / **0** errors / **14** not_found→found / **0** found→not_found；post-apply verification PASS — 见 [rnd_residual_fix_32c_apply_summary.md](outputs/generalization/full_market_2024/rnd_residual_fix_32c_apply_summary.md)、[rnd_residual_fix_32c_post_apply_verify.md](outputs/generalization/full_market_2024/rnd_residual_fix_32c_post_apply_verify.md)。**无** CNINFO 重跑、**无** SQLite import、**无** global strict audit headline 更新；local profile/eval apply 产物 **未 commit**
 - **#30 financial field follow-up 汇总**（2026-06-25）：新增 [financial_audit_fix_30_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30_summary.md)，汇总 `#30a–#30g` 的 audit-only、extraction helper 与 diagnosis-only 结果；明确后续工作转入 `#31` / `#32` / `#33`
 - **#30d broker income / margin recall**（2026-06-25）：`lab/extract_annual_report.py` 新增 broker-only 分部收入 / notes IB / MD&A 融出资金解析；sample-only apply 恢复 **4/4** confirmed MISSED（`601878` 投行 / 资管 / 融出资金，`600030` 投行净收入），23/23 ABSENT-OK controls 保持非 usable；population `usable` **+4** / `not_found_missed` **-4** — 见 [financial_audit_fix_30d_apply_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30d_apply_summary.md)
 - **#30b ratio/table reject + major_subsidiaries gate**（2026-06-25）：ratio 行业叙述/优先股触发拒绝、table plausibility 增强、子公司表 out-of-region usable；joined agreement **69.5%→71.7%** — 见 [financial_audit_fix_30b_summary.md](outputs/generalization/full_market_2024/financial_audit_fix_30b_summary.md)
@@ -39,6 +40,7 @@
 - **收入表格 proxy 收紧**（Issue #2）：`revenue_table_plausible` 要求 `revenue_by_region` / `revenue_by_segment` preview 含至少一行非表头数据行
 
 ### 文档
+- **#32c docs sync**（2026-06-26）：同步 `CURRENT_STATUS.md`、`CHANGELOG.md`、`ROADMAP.md`、`docs/evaluation_method.md`、`revenue_rnd_residual_inventory_32.md`、`stage3_quality_followup_summary.md`；记录 scoped P0 R&D apply verified；headline **9.43/11 不变**
 - **#30 final summary + docs sync**（2026-06-25）：同步 `CURRENT_STATUS.md`、`CHANGELOG.md`、`ROADMAP.md`、`docs/financial_company_schema.md`、`docs/evaluation_method.md`、`stage3_quality_followup_summary.md`；将后续工作路由到 `#31` / `#32` / `#33`
 - **#28 Stage 3a 质量 follow-up 汇总**（2026-06-25）：[`stage3_quality_followup_summary.md`](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md) — 合并 #24–#27 快照；Stage 3a **PASS**；Stage 3b backlog；CURRENT_STATUS / ROADMAP / evaluation_method 交叉链接
 - **#27 金融 audit 文档同步**（2026-06-25）：financial_company_schema、CURRENT_STATUS、ROADMAP、evaluation_method；financial audit 单独 headline
@@ -48,8 +50,9 @@
 - **文档同步**（2026-06-23）：所有主要文档与 eval1000_v2 / independent eval1000 里程碑对齐；ROADMAP 阶段重排（full_market_2024 → strict 审计 → 多年度 → BrowserUser）；docs/evaluation_method 增加同 cohort 重跑与独立泛化验证说明；docs/database_schema 注明三批次 SQLite 导入状态；docs/financial_company_schema 补充 strict 未重跑说明；docs/crawler_strategy 明确 BrowserUser 在 full_market_2024 基线稳定后才启动；新增 plans/v0.6_full_market_2024_plan.md
 
 ### 计划
+- `#32b`：revenue Tier 4 / wrong-table ranking（#32 revenue 剩余 strict-wrong）
+- `#32`：R&D 剩余 partial / unresolved（72/104 P0 池；000333/301221 deferred）
 - `#31`：financial under-tagging scan / 金融公司漏标扫描（含 `000402` / `600816` / `600318` retag follow-up）
-- `#32`：revenue + rnd residual fixes / 收入与研发字段残留问题
 - `#33`：multiyear expansion decision / 多年份扩展决策（2025 / 2023 / 2022）
 - BrowserUser 数据源试点（全量基线稳定后）
 

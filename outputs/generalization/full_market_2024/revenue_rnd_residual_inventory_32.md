@@ -195,10 +195,7 @@ Full population: **280 not_found** (129 explicit N/A, ~151 true non-disclosure).
 - Tier 4 multipage: codes in §3.3
 - Pilot dry-run on `000972`, `300128`, `300729` before BSE batch
 
-**R&D (89 partial + 15 not_found = 104 CSV rows):**
-- 62 × 利润表 `研发费用` → prefer 研发投入情况表
-- 27 × 费用化/合计 anchor collision
-- 15 × not_found with table evidence in snippet
+**R&D (89 partial + 15 not_found = 104 CSV rows):** — **#32c scoped apply verified (2026-06-26)** — 32/104 strict improved in P0 pool; 72 still partial/unresolved; see Appendix B
 
 ### P1 — targeted PDF review first
 
@@ -229,7 +226,7 @@ Full population: **280 not_found** (129 explicit N/A, ~151 true non-disclosure).
 | **#32 (this task)** | Read-only inventory | 2 output files |
 | **#32a** | Revenue diagnosis + audit-only single-row proposal | `strict_audit_full_market.py` |
 | **#32b** | Revenue Tier 4 extraction | `extract_annual_report.py`, `refresh_revenue_full_market.py` |
-| **#32c** | R&D anchor/unit + not_found recovery | `extract_annual_report.py`, `field_schema.py`, `refresh_rnd_full_market.py` |
+| **#32c** | R&D anchor/unit + not_found recovery | `extract_annual_report.py`, `refresh_rnd_full_market.py` | **Scoped P0 apply verified** (104 targets, 32 updated) — not full rollout |
 | **#32d** | Dry-run validation harness | New dry-run script (pattern: `financial_audit_fix_30f_dryrun.py`) |
 
 **Recommended order:** #32 inventory → human P0 sign-off → #32c (lower regression risk) + #32b in parallel → #32d → scoped apply.
@@ -306,5 +303,44 @@ Full population: **280 not_found** (129 explicit N/A, ~151 true non-disclosure).
 | R&D partial | 255 |
 | R&D not_found suspicious | 15 |
 | **Total** | **513** |
+
+---
+
+## Appendix B: #32c status (#32c-R2–R5, 2026-06-26)
+
+**Scope:** Scoped P0 `rnd_investment` fix only — **not** full R&D rollout; **not** global strict audit headline update.
+
+| Phase | Result |
+|---|---|
+| **R2** | Production guarded helper in `extract_annual_report.py`; dry-run 207 rows — 117 improved, 0 regressed, mandatory 7/8 |
+| **R3** | P0 dry-run 104 targets — 32 strict improvements, 0 regressions; apply recommended |
+| **R4** | Scoped apply — 104 targets, **32 updated**, 0 errors, 14 not_found→found, 0 found→not_found |
+| **R5** | Post-apply verification **PASS** — 104/104 profile status matches apply CSV; 0 regressions |
+
+### P0 R&D pool status (post-apply, scoped pool only)
+
+| Bucket | Pre-#32c (inventory) | Post-#32c apply |
+|---|---|---|
+| P0 pool size | 104 companies | 104 processed |
+| Strict improved (scoped) | 32 predicted | **32 applied** |
+| Still partial / unresolved | 72 predicted | **71 partial + 1 not_found_unverified** (600238) |
+| Mandatory recovered → usable | 600011, 600020, 688081, 600029, 600115, 600844 | **Verified usable** |
+| Deferred narrative | 000333, 301221 | 000333 **partial**; 301221 **not in apply pool** (P2) |
+
+### Unresolved buckets (unchanged scope)
+
+- **Revenue:** 57 strict-wrong — still **#32b** candidate
+- **R&D P1:** 96 partial (unit-scale, audit-rejects-合计) — not in scoped P0 apply
+- **R&D P2:** narrative partial (000333, 301221) — manual review
+- **Full population R&D partial (~255 pre-apply inventory):** only 32/104 P0 scoped cells improved; **non-fin 9.43/11 headline unchanged**
+
+### Artifacts
+
+- [rnd_residual_fix_32c_r2_summary.md](rnd_residual_fix_32c_r2_summary.md)
+- [rnd_residual_fix_32c_r3_summary.md](rnd_residual_fix_32c_r3_summary.md)
+- [rnd_residual_fix_32c_apply_summary.md](rnd_residual_fix_32c_apply_summary.md)
+- [rnd_residual_fix_32c_post_apply_verify.md](rnd_residual_fix_32c_post_apply_verify.md)
+
+**Do not commit:** local `company_profile.json` / `eval_results.json` apply outputs; `rnd_refresh_changes_32c_apply.csv` unless explicitly approved.
 
 Detail: [revenue_rnd_residual_candidates_32.csv](revenue_rnd_residual_candidates_32.csv)

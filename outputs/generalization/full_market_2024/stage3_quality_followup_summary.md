@@ -196,8 +196,8 @@ Revenue extraction is **not fully fixed**. Financial audit framework is complete
 |---|---|---|
 | 1 | **Financial manual calibration grading** | Fill `financial_audit_sample.csv` → `--score` |
 | 2 | **Broker `not_found_missed` refinement** | After grading; tighten audit rules |
-| 3 | **Remaining revenue strict-wrong** | ~57 cells; scoped cached-PDF refresh only |
-| 4 | **rnd residual regressions** | ~8 companies; small scoped fix |
+| 4 | **rnd residual regressions** | ~~#32c scoped P0 apply verified~~ — 72/104 P0 pool still partial; full R&D rollout deferred |
+| 3 | **Remaining revenue strict-wrong** | ~57 cells; scoped cached-PDF refresh only (#32b Tier 4) |
 | 5 | **Financial under-tagging scan** | YAML `financial: true` completeness |
 | 6 | **Financial extraction/tag fixes** | Numeric plausible, subtype tags (000402 etc.) |
 | 7 | **2025 / 2023 / 2022 expansion decision** | Scope, batch strategy, run naming — **no default full CNINFO rerun** |
@@ -247,6 +247,8 @@ Optional lower priority: `strict_audit_result` DB loader; BrowserUser pilot (ROA
 Cross-links: [CURRENT_STATUS.md](../../CURRENT_STATUS.md) | [ROADMAP.md](../../ROADMAP.md) | [docs/evaluation_method.md](../../docs/evaluation_method.md)
 
 Stage 3b financial follow-up continued in `#30`; see [financial_audit_fix_30_summary.md](financial_audit_fix_30_summary.md).
+
+**#32c update (2026-06-26):** Scoped P0 R&D apply verification completed — 104 targets, 32 profile updates, post-apply verify PASS; global non-fin headline **9.43/11 unchanged**. See [rnd_residual_fix_32c_post_apply_verify.md](rnd_residual_fix_32c_post_apply_verify.md).
 
 ---
 
