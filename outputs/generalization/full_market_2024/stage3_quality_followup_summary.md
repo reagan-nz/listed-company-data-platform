@@ -250,6 +250,8 @@ Stage 3b financial follow-up continued in `#30`; see [financial_audit_fix_30_sum
 
 **#32c update (2026-06-26):** Scoped P0 R&D apply verification completed — 104 targets, 32 profile updates, post-apply verify PASS; global non-fin headline **9.43/11 unchanged**. See [rnd_residual_fix_32c_post_apply_verify.md](rnd_residual_fix_32c_post_apply_verify.md).
 
+**#32 closure (2026-06-26):** #32 current scope complete (inventory + #32c + #32b dry-run); revenue production fix deferred; non-fin headline **9.43/11 unchanged**. See [revenue_rnd_fix_32_final_summary.md](revenue_rnd_fix_32_final_summary.md).
+
 ---
 
 ## 12. Anti-claims checklist

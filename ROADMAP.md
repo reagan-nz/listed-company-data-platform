@@ -1,6 +1,6 @@
 # 路线图
 
-_最后更新：2026-06-26（#32c R&D P0 scoped apply docs sync）_
+_最后更新：2026-06-26（#32 revenue+R&D residual closure）_
 
 ## 第一阶段：年报数据获取与基础字段抽取
 
@@ -54,21 +54,22 @@ _最后更新：2026-06-26（#32c R&D P0 scoped apply docs sync）_
 
 ### 3b — residuals、grading 与多年度（**In Progress**）
 
-**目标**：在不声称金融 extraction fully signed off 的前提下，完成 `#30` 收尾；`#32c` R&D P0 scoped fix 已 verified；推进 `#32b` / `#32` 剩余 / `#33`。
+**目标**：`#30` / `#32` 当前范围已关闭；推进 revenue Tier4 pilot、#31、#33。
 
 | 事项 | 状态 |
 |---|---|
-| `#30` financial follow-up（`#30a–#30g`） | **Done / closing** — audit-only + extraction helper + subtype diagnosis；wider financial rollout deferred |
-| `#31` financial under-tagging scan | 下一项 — 含 `000402` / `600816` / `600318` retagging review |
-| `#32c` R&D P0 scoped fix | **Done / verified** — guarded helper + apply 104（32 updated, 0 errors）+ post-apply verify PASS；**scoped P0 only** |
-| `#32b` revenue Tier 4 / wrong-table | 下一项 — revenue 剩余 strict-wrong（57 cells） |
-| `#32` R&D remaining partial / unresolved | 进行中 — 72/104 P0 池仍 partial；000333/301221 deferred；**非** full rollout |
-| `#33` multiyear expansion decision | 下一项 — 2025 / 2023 / 2022 scope / run naming |
+| `#30` financial follow-up（`#30a–#30g`） | **Done** — wider financial rollout deferred |
+| `#32` revenue + R&D residual | **Done / closed** — inventory + #32c scoped R&D verified + #32b dry-run；见 [revenue_rnd_fix_32_final_summary.md](outputs/generalization/full_market_2024/revenue_rnd_fix_32_final_summary.md) |
+| `#31` financial under-tagging scan | **Next** — 含 `000402` / `600816` / `600318` retagging + 8 financial-like revenue wrong |
+| Revenue Tier4 + wrong-table pilot | **Backlog** — post-#32b harness; production apply deferred |
+| R&D remaining partial / unresolved | **Backlog** — 72/104 P0 + full-population partial |
+| Revenue partial full methodology | **Backlog** — ~753 partial not enumerated in #32 |
+| `#33` multiyear expansion decision | **Next** — 2025 / 2023 / 2022 scope / run naming |
 | BSE 模板 residual gap | 部分 — strict 8.82/11（≥8.5 阈值已满足） |
 | `strict_audit_result` loader 入库 | 可选 |
-| Post-apply **full** strict audit rerun | **Deferred** — 仅在有 intentional schedule 时更新 headline |
+| Post-apply **full** strict audit rerun | **Deferred** — 仅 intentional schedule 时更新 headline |
 
-**3b 完成标准（draft）**：`#30` docs closeout completed；`#32c` scoped P0 verified；`#31` / `#32b` / `#33` 有明确范围；金融 wider rollout 仍单独评估，不混入 non-fin `9.43/11` headline。
+**3b 完成标准（draft）**：`#30` / `#32` closed for current scope；`#31` / revenue pilot / `#33` 有明确范围；non-fin `9.43/11` headline 不变直至 full audit rerun。
 
 ## 第四阶段：BrowserUser 爬虫智能体补充数据
 

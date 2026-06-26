@@ -343,4 +343,18 @@ Full population: **280 not_found** (129 explicit N/A, ~151 true non-disclosure).
 
 **Do not commit:** local `company_profile.json` / `eval_results.json` apply outputs; `rnd_refresh_changes_32c_apply.csv` unless explicitly approved.
 
+---
+
+## Appendix C: #32 final status (2026-06-26)
+
+**#32 closed** for current scope. See [revenue_rnd_fix_32_final_summary.md](revenue_rnd_fix_32_final_summary.md).
+
+| Track | Status |
+|---|---|
+| **Inventory** | Done — 513-row CSV; 57 revenue wrong + R&D partial/not_found pools |
+| **#32c R&D** | Done — scoped P0 apply verified (32/104 strict improved); headline unchanged |
+| **#32b Revenue** | Done (dry-run) — 57/57 classified; **production apply deferred** |
+
+**Deferred:** revenue Tier4 pilot, wrong-table ranking, financial-like → #31, full revenue partial methodology, remaining R&D partials.
+
 Detail: [revenue_rnd_residual_candidates_32.csv](revenue_rnd_residual_candidates_32.csv)

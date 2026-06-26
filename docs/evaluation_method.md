@@ -236,6 +236,16 @@ python lab/financial_calibration_sample.py \
 
 > **不得声称**：Full R&D residual fix；global headline updated；full manual validation；CNINFO/SQLite rerun from #32c
 
+### 13. #32 closure — scoped work vs headline（2026-06-26）
+
+- **#32 did not rerun full strict audit** or update non-fin **9.43/11** headline.
+- **Scoped R&D apply (#32c)** updated 32 local profiles — **not equivalent** to a new full-market strict usable score.
+- **Post-apply verification (#32c-R5)** reports **local scoped consistency** (profile vs apply CSV), not population-wide metric refresh.
+- **#32b revenue dry-run** classified 57 strict-wrong cells; production revenue apply **deferred**; harness improvements are experimental only.
+- **Closure doc**：[revenue_rnd_fix_32_final_summary.md](../outputs/generalization/full_market_2024/revenue_rnd_fix_32_final_summary.md)
+
+> **不得声称**：#32 fixed all revenue/R&D residuals；headline moved because of scoped apply
+
 ## 指标对照表
 
 | 指标 | eval1000 | eval1000_v2 | independent | full_market_2024 (initial) | full_market_2024 (post–Stage 3a) | 含义 |
