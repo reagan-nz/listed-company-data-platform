@@ -1,8 +1,10 @@
 # 当前状态
 
-_最后更新：2026-06-26（#32 revenue+R&D residual closure）_
+_最后更新：2026-06-26（#33 multiyear expansion decision memo）_
 
 > **本文档是项目主进度页。** 老师建议从这里开始阅读；技术细节见 [docs/](docs/)，变更记录见 [CHANGELOG.md](CHANGELOG.md)。Stage 3a 汇总见 **[stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)**。
+
+**2026-06-26 日结（#33 多年份决策 + #23 可关单）**：`#33` 决策备忘录已完成 — **2025 优先**、按年 universe、分阶段 rollout（100 家 pilot → 单板块 → 全市场 2025 → backfill 2023/2022）；**不**覆盖 2024 产出；**不**立即全量 CNINFO。**#23**（#24–#33）当前范围 **ready to close**。下一执行阶段：**2025 pilot**（待 §12 人工签核 + 年份参数化脚本 implementation issue）。详见 [multiyear_expansion_decision_33.md](outputs/generalization/full_market_2024/multiyear_expansion_decision_33.md)。
 
 **2026-06-26 日结（#32 关闭）**：`#32` 当前范围已完成 — 盘点 + `#32c` scoped P0 R&D apply 验证 + `#32b` 收入 strict-wrong dry-run 分类。**#32c**：104 家 / 32 更新 / 0 errors / 后验 PASS。**#32b**：57/57 wrong 已分类，harness 改善 17，生产 apply **defer**。**non-fin 9.43/11 headline 不变**。详见 [revenue_rnd_fix_32_final_summary.md](outputs/generalization/full_market_2024/revenue_rnd_fix_32_final_summary.md)。
 
@@ -37,8 +39,8 @@ _最后更新：2026-06-26（#32 revenue+R&D residual closure）_
 - **当前数据来源**：巨潮资讯网（CNINFO）公开年报 PDF，程序化抽取 11 项基础字段（工业/制造类公司为主）。
 - **已完成**：全 A 股 2024 年报首次全量提取 + SQLite 入库 + 混合 strict 审计 + scoped rnd/revenue 字段刷新。
 - **Stage 3a（Done）**：#24–#28 质量 follow-up — 见 [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)。
-- **Stage 3b（进行中）**：`#30` closed；`#32` **closed（当前范围）**；后续 revenue Tier4 pilot、#31、#33。
-- **#32（Done / closed）**：inventory + #32c R&D scoped apply verified + #32b revenue dry-run；headline **9.43/11 不变**；剩余 revenue/R&D 工作 defer。
+- **Stage 3b（#23 可关单）**：`#30` / `#32` / `#33` closed for current scope；下一执行：**2025 pilot**（人工签核后）；并行 backlog：#31、revenue Tier4。
+- **#33（Done / decision memo）**：multiyear expansion strategy documented — 2025 first, staged rollout; see [multiyear_expansion_decision_33.md](outputs/generalization/full_market_2024/multiyear_expansion_decision_33.md).
 - **#32c（Done / scoped P0 only）**：guarded R&D situation-table extraction + scoped P0 apply（104 targets, 32 updated, 0 errors）+ post-apply verification PASS；**非** full R&D rollout。
 - **BrowserUser** 爬虫智能体（全量基线稳定后，非当前直接下一步）。
 
@@ -52,6 +54,7 @@ _最后更新：2026-06-26（#32 revenue+R&D residual closure）_
 |---|---|
 | **full_market_2024 全量提取** | 6124 家 universe；5707 ok；5 board 批次 + merge + SQLite 导入 — 见 [full_market_2024_summary.md](outputs/generalization/full_market_2024/full_market_2024_summary.md) |
 | **#32 revenue + R&D residual（closed）** | 盘点 + #32c scoped R&D apply verified + #32b revenue dry-run — 见 [revenue_rnd_fix_32_final_summary.md](outputs/generalization/full_market_2024/revenue_rnd_fix_32_final_summary.md) |
+| **#33 multiyear expansion decision（closed）** | 2025-first staged rollout memo — 见 [multiyear_expansion_decision_33.md](outputs/generalization/full_market_2024/multiyear_expansion_decision_33.md) |
 | **full_market_2024 scoped rnd refresh** | rnd_investment 仅字段重抽取（cached PDF）；+1,460 not_found→found — 见 [rnd_refresh_summary.md](outputs/generalization/full_market_2024/rnd_refresh_summary.md) |
 | **full_market_2024 scoped revenue refresh (#26)** | revenue_by_region/segment 仅字段重抽取（cached PDF）；wrong→usable 297；stitch 343 — 见 [revenue_refresh_summary.md](outputs/generalization/full_market_2024/revenue_refresh_summary.md) |
 | **full_market_2024 混合 strict 审计** | 5621 非金融 × 11 字段；post-revenue strict **9.43/11** — 见 [strict_audit_summary.md](outputs/generalization/full_market_2024/strict_audit_summary.md) |
@@ -225,13 +228,14 @@ financial_audit_sample.csv（30 公司 × 325 cells；manual_grade 待填写）
 
 ---
 
-## 6. 下一步计划（Stage 3b）
+## 6. 下一步计划（post-#23）
 
-1. **Revenue Tier4 + wrong-table ranking pilot** — scoped production pilot after human sign-off（#32b harness signal）。
-2. **#31 Financial under-tagging / retag review** — 含 `000402` / `600816` / `600318` 及 8 个 financial-like revenue wrong。
-3. **R&D remaining partial** — 72/104 P0 + full-population partial；`000333`/`301221` manual review。
-4. **#33 Multiyear expansion decision** — 2025 / 2023 / 2022 范围与 `run_name` 策略。
-5. **BrowserUser 试点**（全量基线稳定后）；**`strict_audit_result` loader**（低优先级）。
+1. **2025 pilot 实施** — 100 家分层 pilot → BSE board pilot → full_market_2025（**待** #33 §12 人工签核 + 年份参数化脚本）。
+2. **#31 Financial under-tagging / retag review** — 含 `000402` / `600816` / `600318` 及 8 个 financial-like revenue wrong；建议于 2025 pilot 前或并行完成。
+3. **Revenue Tier4 + wrong-table ranking pilot** — scoped production pilot after human sign-off（#32b harness signal）。
+4. **R&D remaining partial** — 72/104 P0 + full-population partial；`000333`/`301221` manual review。
+5. **2023/2022 backfill** — 仅在 full_market_2025 通过 validation gates 后启动。
+6. **BrowserUser 试点**（全量基线稳定后）；**`strict_audit_result` loader**（低优先级）。
 
 > **Headline 政策**：non-fin **9.43/11** 保持不变，直至 intentional full strict audit rerun。
 
@@ -250,7 +254,7 @@ financial_audit_sample.csv（30 公司 × 325 cells；manual_grade 待填写）
 | **[financial_audit_summary.md](outputs/generalization/full_market_2024/financial_audit_summary.md)** | #27 金融 strict audit（单独 headline） |
 | **[strict_audit_summary.md](outputs/generalization/full_market_2024/strict_audit_summary.md)** | 非金融 strict 审计详细报告 |
 | **[rnd_residual_fix_32c_apply_summary.md](outputs/generalization/full_market_2024/rnd_residual_fix_32c_apply_summary.md)** | #32c-R4 scoped P0 R&D apply 报告 |
-| **[revenue_rnd_fix_32_final_summary.md](outputs/generalization/full_market_2024/revenue_rnd_fix_32_final_summary.md)** | #32 closure summary |
+| **[multiyear_expansion_decision_33.md](outputs/generalization/full_market_2024/multiyear_expansion_decision_33.md)** | #33 multiyear decision memo |
 | **[revenue_residual_fix_32b_dryrun_summary.md](outputs/generalization/full_market_2024/revenue_residual_fix_32b_dryrun_summary.md)** | #32b revenue dry-run |
 | **[stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)** | Stage 3a 汇总与 closure（#28） |
 
@@ -273,6 +277,7 @@ outputs/generalization/full_market_2024/
   rnd_residual_fix_32c_apply_summary.md  # 可 commit（#32c-R4 apply）
   rnd_residual_fix_32c_post_apply_verify.md  # 可 commit（#32c-R5 verify）
   revenue_rnd_fix_32_final_summary.md     # 可 commit（#32 closure）
+  multiyear_expansion_decision_33.md      # 可 commit（#33 decision）
   revenue_residual_fix_32b_dryrun_summary.md  # 可 commit（#32b）
   strict_audit_sample.csv                 # 可 commit
   eval_results.json                       # gitignored

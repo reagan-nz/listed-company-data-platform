@@ -1,6 +1,6 @@
 # 路线图
 
-_最后更新：2026-06-26（#32 revenue+R&D residual closure）_
+_最后更新：2026-06-26（#33 multiyear expansion decision memo）_
 
 ## 第一阶段：年报数据获取与基础字段抽取
 
@@ -52,24 +52,40 @@ _最后更新：2026-06-26（#32 revenue+R&D residual closure）_
 
 **Stage 3a 结论**：**full_market_2024 Stage 3a quality follow-up PASS** — automated strict audit + targeted scoped refreshes (cached PDF) + sampled/manual calibration support。**非**全量人工验证；**非** extraction 全部修复。
 
-### 3b — residuals、grading 与多年度（**In Progress**）
+### 3b — residuals、grading 与多年度（**#23 ready to close**）
 
-**目标**：`#30` / `#32` 当前范围已关闭；推进 revenue Tier4 pilot、#31、#33。
+**目标**：`#30` / `#32` / `#33` 当前范围已关闭；下一执行阶段 = **2025 pilot**（人工签核后）。
 
 | 事项 | 状态 |
 |---|---|
 | `#30` financial follow-up（`#30a–#30g`） | **Done** — wider financial rollout deferred |
-| `#32` revenue + R&D residual | **Done / closed** — inventory + #32c scoped R&D verified + #32b dry-run；见 [revenue_rnd_fix_32_final_summary.md](outputs/generalization/full_market_2024/revenue_rnd_fix_32_final_summary.md) |
-| `#31` financial under-tagging scan | **Next** — 含 `000402` / `600816` / `600318` retagging + 8 financial-like revenue wrong |
-| Revenue Tier4 + wrong-table pilot | **Backlog** — post-#32b harness; production apply deferred |
+| `#32` revenue + R&D residual | **Done / closed** — 见 [revenue_rnd_fix_32_final_summary.md](outputs/generalization/full_market_2024/revenue_rnd_fix_32_final_summary.md) |
+| `#33` multiyear expansion decision | **Done / closed** — 见 [multiyear_expansion_decision_33.md](outputs/generalization/full_market_2024/multiyear_expansion_decision_33.md) |
+| **2025 pilot implementation** | **Next** — 100-co → board → full_market_2025；待 §12 人工签核 |
+| `#31` financial under-tagging scan | **Backlog** — 建议 pilot 前或并行 |
+| Revenue Tier4 + wrong-table pilot | **Backlog** — post-#32b harness |
 | R&D remaining partial / unresolved | **Backlog** — 72/104 P0 + full-population partial |
 | Revenue partial full methodology | **Backlog** — ~753 partial not enumerated in #32 |
-| `#33` multiyear expansion decision | **Next** — 2025 / 2023 / 2022 scope / run naming |
+| **2023/2022 backfill** | **Backlog** — after full_market_2025 gates |
 | BSE 模板 residual gap | 部分 — strict 8.82/11（≥8.5 阈值已满足） |
 | `strict_audit_result` loader 入库 | 可选 |
-| Post-apply **full** strict audit rerun | **Deferred** — 仅 intentional schedule 时更新 headline |
+| Post-apply **full** strict audit rerun (2024) | **Deferred** — 9.43/11 不变 |
 
-**3b 完成标准（draft）**：`#30` / `#32` closed for current scope；`#31` / revenue pilot / `#33` 有明确范围；non-fin `9.43/11` headline 不变直至 full audit rerun。
+**3b 完成标准（draft）**：`#23` 子 issue 全部 closed；2025 pilot 有明确 run_name / gate 方案 — **已满足**；执行待新 implementation issue。
+
+### 3c — 2025 多年份扩展执行（**Next phase**）
+
+**目标**：分阶段扩展至 2025 全市场，再 backfill 2023/2022。
+
+| 阶段 | `run_name` | 状态 |
+|---|---|---|
+| 100-co pilot | `full_market_2025_pilot` | **Planned** |
+| Board pilot (BSE) | `full_market_2025_pilot_bse` | **Planned** |
+| Full 2025 | `full_market_2025` | **Planned** |
+| 2023 backfill | `full_market_2023_backfill` | **Backlog** |
+| 2022 backfill | `full_market_2022_backfill` | **Backlog** |
+
+详见 [multiyear_expansion_decision_33.md](outputs/generalization/full_market_2024/multiyear_expansion_decision_33.md)。
 
 ## 第四阶段：BrowserUser 爬虫智能体补充数据
 

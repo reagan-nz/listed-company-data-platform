@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ### 新增
+- **#33 multiyear expansion decision memo**（2026-06-26）：[multiyear_expansion_decision_33.md](outputs/generalization/full_market_2024/multiyear_expansion_decision_33.md) — 2025-first staged rollout；per-year universe；run_name 方案；validation gates；**无** extraction / CNINFO / SQLite
 - **#32 revenue + R&D residual closure**（2026-06-26）：[revenue_rnd_fix_32_final_summary.md](outputs/generalization/full_market_2024/revenue_rnd_fix_32_final_summary.md) — inventory（513-row CSV）+ #32c scoped P0 R&D apply verified + #32b revenue dry-run（57/57 classified）；**无** global headline 更新
 - **#32b revenue residual dry-run**（2026-06-26）：`lab/revenue_residual_fix_32b_dryrun.py`；57 strict-wrong cells classified；Tier4/ranking harness signal 17 improved；production apply **deferred** — 见 [revenue_residual_fix_32b_dryrun_summary.md](outputs/generalization/full_market_2024/revenue_residual_fix_32b_dryrun_summary.md)
 - **#32c R&D P0 scoped apply + verification**（2026-06-26）：`lab/extract_annual_report.py` guarded situation-table helper（`extract_rnd_situation_table_numeric` + `merge_rnd_investment_with_guard`）；scoped P0 apply **104** targets / **32** updated / **0** errors / **14** not_found→found / **0** found→not_found；post-apply verification PASS — 见 [rnd_residual_fix_32c_apply_summary.md](outputs/generalization/full_market_2024/rnd_residual_fix_32c_apply_summary.md)、[rnd_residual_fix_32c_post_apply_verify.md](outputs/generalization/full_market_2024/rnd_residual_fix_32c_post_apply_verify.md)。**无** CNINFO 重跑、**无** SQLite import、**无** global strict audit headline 更新；local profile/eval apply 产物 **未 commit**
@@ -42,6 +43,7 @@
 - **收入表格 proxy 收紧**（Issue #2）：`revenue_table_plausible` 要求 `revenue_by_region` / `revenue_by_segment` preview 含至少一行非表头数据行
 
 ### 文档
+- **#33 multiyear expansion decision docs sync**（2026-06-26）：`multiyear_expansion_decision_33.md`；同步 CURRENT_STATUS / CHANGELOG / ROADMAP / stage3；#33 closed；#23 ready to close；headline **9.43/11 不变**
 - **#32 final closure docs sync**（2026-06-26）：`revenue_rnd_fix_32_final_summary.md`；同步 CURRENT_STATUS / CHANGELOG / ROADMAP / evaluation_method / inventory / stage3；mark #32 closed；headline **9.43/11 不变**
 - **#32c docs sync**（2026-06-26）：同步 `CURRENT_STATUS.md`、`CHANGELOG.md`、`ROADMAP.md`、`docs/evaluation_method.md`、`revenue_rnd_residual_inventory_32.md`、`stage3_quality_followup_summary.md`；记录 scoped P0 R&D apply verified；headline **9.43/11 不变**
 - **#30 final summary + docs sync**（2026-06-25）：同步 `CURRENT_STATUS.md`、`CHANGELOG.md`、`ROADMAP.md`、`docs/financial_company_schema.md`、`docs/evaluation_method.md`、`stage3_quality_followup_summary.md`；将后续工作路由到 `#31` / `#32` / `#33`
@@ -54,10 +56,11 @@
 
 ### 计划
 - **Revenue Tier4 + wrong-table ranking pilot**（post-#32b harness signal；human sign-off before production）
+- **2025 pilot implementation**（post-#33 human sign-off §12；year-parameterized scripts）
+- **2023/2022 backfill**（after full_market_2025 validation gates）
 - **R&D remaining partial / unresolved**（72/104 P0 + full-population partial；000333/301221 deferred）
 - **Revenue partial full methodology**（~753 partial population not enumerated in #32）
 - `#31`：financial under-tagging scan / 金融公司漏标扫描（含 `000402` / `600816` / `600318` retag follow-up）
-- `#33`：multiyear expansion decision / 多年份扩展决策（2025 / 2023 / 2022）
 - BrowserUser 数据源试点（全量基线稳定后）
 
 ## 2026-06-18

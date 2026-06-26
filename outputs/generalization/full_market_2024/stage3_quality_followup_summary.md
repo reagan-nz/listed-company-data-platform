@@ -252,6 +252,8 @@ Stage 3b financial follow-up continued in `#30`; see [financial_audit_fix_30_sum
 
 **#32 closure (2026-06-26):** #32 current scope complete (inventory + #32c + #32b dry-run); revenue production fix deferred; non-fin headline **9.43/11 unchanged**. See [revenue_rnd_fix_32_final_summary.md](revenue_rnd_fix_32_final_summary.md).
 
+**#33 decision (2026-06-26):** Multiyear expansion strategy documented — 2025 first, staged rollout; parent #23 ready to close. See [multiyear_expansion_decision_33.md](multiyear_expansion_decision_33.md).
+
 ---
 
 ## 12. Anti-claims checklist
