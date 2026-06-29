@@ -1,106 +1,71 @@
-# 上市公司基础数据库
+# 上市公司数据平台（在建）
 
-## 一句话介绍
+## 项目一句话介绍
 
-从 A 股公开年报 PDF 中批量抽取结构化字段，保留页码与证据句，建立可审计的公司数据底座。
-
----
-
-## 老师阅读版
-
-如果只看结论：
-
-本项目已完成 **2024 年 A 股年报结构化数据底座的第一阶段质量闭环**。系统可以批量抽取字段、保留来源证据、运行严格质量审计，并对问题字段做小范围修复。
-
-但它**还不是**完整的智能问答产品，**也不是**全量人工验证后的最终数据库。金融公司与非金融公司的质量指标**分开报告**，不得混为一谈。
+从 A 股公开年报 PDF 中批量抽取结构化字段、保留来源证据、运行质量审计，并正在把这份静态数据底座升级为**可持续更新、可证据追溯、可智能问答**的动态上市公司数据平台。
 
 ---
 
-## 现在已经完成什么
+## 当前已经完成什么
 
 | 事项 | 结果 |
 |---|---|
-| 2024 全市场抽取 | 6124 家公司全集，5707 家成功，417 家未找到公告，0 技术错误 |
-| 数据入库 | SQLite 共 62,890 条字段级记录 |
-| 质量审计与修复 | 第 3a 阶段通过；非金融核心指标 **9.43/11** |
-| 残留问题处理 | #30 金融跟进、#32 收入与研发残留、#33 多年份决策均已文档化 |
+| 2024 全市场抽取（`full_market_2024`） | 6124 家全集，5707 家成功，417 家未找到公告，0 错误 |
+| 数据入库 | `SQLite` 约 62,890 条字段级记录 |
+| 质量审计 | 非金融核心指标 `usable` **9.43/11**，自动合理性分数 **10.67/11**，`rnd_investment` 找到率 **94.2%** |
+| 证据留存 | 字段尽量保留来源 PDF、页码、证据句、URL |
 
-详细数字见 **[CURRENT_STATUS.md](CURRENT_STATUS.md)**。
-
----
-
-## 当前能达到什么标准
-
-- 已完成 2024 年 A 股年报**结构化数据底座**的第一阶段质量闭环。
-- 可批量抽取、记录证据、运行严格质量审计，并做小范围定向刷新或小范围写回。
-- 数据可支撑内部分析、字段查询、公司档案，以及检索增强问答原型的底层数据层。
+当前是**数据底座 + 质量审计层**，不是完整 `RAG` 产品，也不是完整 `LLM Wiki` 产品，更不是动态平台。
 
 ---
 
-## 当前不能宣称什么
+## 当前正在做什么
 
-- **不是**全量人工验证（62,890 行未逐条人工核对）。
-- **不是**完整的 RAG 产品或大模型知识页产品。
-- **不是**所有字段都已完全修复。
-- **不能**将金融公司指标与非金融核心指标 9.43/11 混报。
-- **不能**声称 #32c 小范围写回已更新全局 9.43/11。
+**动态平台架构设计阶段。** 当前不直接写代码或做全量迁移，而是先把方向想清楚：数据库路线、事件表边界、数据源验证机制、采集分层策略，然后做小范围试点。
+
+详见 [CURRENT_STATUS.md](CURRENT_STATUS.md) 与 [plans/dynamic_data_platform_plan.md](plans/dynamic_data_platform_plan.md)。
 
 ---
 
-## 老师 / 评审应该怎么阅读
+## 如何阅读本仓库
 
-1. **[CURRENT_STATUS.md](CURRENT_STATUS.md)** — 主进度页（建议从这里开始）
-2. **[stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md)** — 第 3a 阶段质量汇总
-3. **[ROADMAP.md](ROADMAP.md)** — 分阶段路线图
-4. **[CHANGELOG.md](CHANGELOG.md)** — 变更记录
-5. **[docs/](docs/)** — 评估方法、数据库、抽取流程等技术细节
-
----
-
-## 核心指标入口
-
-最新指标不在此重复（避免文档过期）。请查看 [CURRENT_STATUS.md](CURRENT_STATUS.md) 的「当前关键数字」一节。
-
-当前非金融核心指标：**9.43/11**（运行名称 `full_market_2024_revenue_refresh`）。
-
----
-
-## 文档目录
-
-| 文档 | 说明 |
+| 想了解 | 看这里 |
 |---|---|
-| [CURRENT_STATUS.md](CURRENT_STATUS.md) | 主进度页 |
-| [ROADMAP.md](ROADMAP.md) | 路线图 |
-| [CHANGELOG.md](CHANGELOG.md) | 变更记录 |
-| [docs/evaluation_method.md](docs/evaluation_method.md) | 评估方法 |
-| [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md) | 第 3a 阶段汇总 |
-| [multiyear_expansion_decision_33.md](outputs/generalization/full_market_2024/multiyear_expansion_decision_33.md) | 多年份扩展决策 |
-| [plans/](plans/) | 历史方案归档 |
+| 产品大方向、分几个阶段、现在在哪 | [ROADMAP.md](ROADMAP.md) |
+| 现在具体在做什么、下一步 | [CURRENT_STATUS.md](CURRENT_STATUS.md) |
+| 已经完成了什么 | [CHANGELOG.md](CHANGELOG.md) |
+| 各阶段详细计划 | [plans/README.md](plans/README.md) |
+| 当前阶段总体计划 | [plans/dynamic_data_platform_plan.md](plans/dynamic_data_platform_plan.md) |
+| 实时任务看板 | 见下方「项目看板入口」 |
 
 ---
 
-## 技术术语简表
+## 文档入口
 
-| 术语 | 含义 |
-|---|---|
-| `full_market_2024` | 2024 年全 A 股年报抽取运行 |
-| `run_name` | 一次运行的名称，用于输出目录与数据库批次 |
-| 严格质量审计 | 对已存字段做更严规则复核，标签含 `usable` / `partial` / `wrong` |
-| 自动合理性分数 | 抽取时的结构合理性估计，通常高于严格审计结果 |
-| 小范围定向刷新 | 用已缓存 PDF 仅重抽部分字段，不重新全量下载 |
-| 小范围写回 | 经验证通过的修复，写回少量公司档案 |
-| 只读诊断 | 不写回档案，仅评估修复效果 |
-| 核心指标 | 对外报告的主质量数字；非金融与金融分开 |
-| 分组样本 | 按规则选出的公司集合，如 eval1000 |
-| 试点 | 小规模试跑，验证管道后再扩全市场 |
-| 历史年份回填 | 在 2025 基线稳定后补跑 2023/2022 等历史年报 |
-| `not_found_missed` | PDF 中应有披露但抽取结果为未找到 |
-| CNINFO | 巨潮资讯网，法定信息披露来源 |
-| SQLite | 项目使用的轻量数据库原型 |
-| RAG | 检索增强生成；本项目提供底层数据，非完整产品 |
-| LLM Wiki | 大模型知识页原型；本项目尚未交付 |
+- [ROADMAP.md](ROADMAP.md) — 产品大方向
+- [CURRENT_STATUS.md](CURRENT_STATUS.md) — 当前小方向
+- [CHANGELOG.md](CHANGELOG.md) — 已完成成果
+- [plans/README.md](plans/README.md) — 计划目录说明
+- [plans/dynamic_data_platform_plan.md](plans/dynamic_data_platform_plan.md) — 动态平台计划
+- [docs/](docs/) — 评估方法、数据库、抽取流程等技术细节
 
-完整指标解释见 [CURRENT_STATUS.md](CURRENT_STATUS.md) 与 [docs/evaluation_method.md](docs/evaluation_method.md)。
+---
+
+## 项目看板入口
+
+Project board: [GitHub Projects 看板](https://github.com/users/reagan-nz/projects/1/views/1)
+
+看板用于展示 Todo / In Progress / Review / Done 的实时任务状态。
+
+---
+
+## 重要边界
+
+- **不是**全量人工验证（62,890 条字段记录未逐条人工核对）。
+- **不是**完整 `RAG` 产品，**不是**完整 `LLM Wiki` 产品，**不是**已上线的动态平台。
+- 金融公司指标与非金融核心指标 **9.43/11 分开报告**，不得混报。
+- `PostgreSQL` 仍在评估，**不**立即全量迁移。
+- 数据源需经「候选 → 小样本验证 → 已验证」后才声称可用。
 
 ---
 
@@ -134,5 +99,5 @@ listed_company_data_collector/
   config/        # 公司与数据源配置
   outputs/       # 运行产物（PDF 不提交 Git）
   docs/          # 技术文档
-  plans/         # 方案归档
+  plans/         # 分阶段详细计划
 ```
