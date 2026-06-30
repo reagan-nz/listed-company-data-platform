@@ -115,777 +115,351 @@ flowchart TD
 
 ---
 
-## 三、例子 A：CNINFO 年报 PDF 如何进入正式数据库
+## 三、用两个例子理解完整流程
+
+上面的流程图说明了系统分层。为了更容易理解，下面用两份数据从进入系统到形成时间线的全过程来说明：例子 A 是结构相对稳定的 CNINFO 年报 PDF，例子 B 是结构不稳定的官网新闻 / 互动问答。
+
+> 提醒：下面是**设计方案的预期流程**，不是已经上线的系统。当前阶段只做设计与小样本试点，尚未部署 `MinIO` / `MongoDB` / `PostgreSQL`。示例中的公司、数值与 ID 均为说明用的虚构值。
+
+### 例子 A：CNINFO 年报 PDF 如何进入正式数据库
 
 这个例子代表**结构相对稳定的数据源**。CNINFO 年报通常是 PDF，字段结构比较明确，所以可以从原始文件逐步进入正式数据库。
 
----
-
-### Step 1：发现公告
+#### Step 1：发现公告
 
 系统在 CNINFO 发现某家公司 2024 年年度报告，例如：
 
 ```text
-
 company_code = 600519
-
 company_name = 贵州茅台
-
 document_type = annual_report
-
 report_year = 2024
-
 source_url = https://...
-
 ```
 
-这一步只是发现“有一份年报”。
+这一步只是发现「有一份年报」。
 
----
+#### Step 2：下载 PDF
 
-### Step 2：下载 PDF
-
-采集层通过 HTTP 或已有 CNINFO 流程下载 PDF。
-
-得到一个本地文件，例如：
+采集层通过 HTTP 或已有 CNINFO 流程下载 PDF，得到一个本地文件，例如：
 
 ```text
-
 local_path = /data/raw/cninfo/2024/600519/annual_report.pdf
-
 ```
 
 当前阶段可以先存在本地文件系统，因为方便测试和跑流程。
 
----
-
-### Step 3：计算 `sha256`
+#### Step 3：计算 `sha256`
 
 系统对 PDF 文件计算 `sha256`，得到文件指纹：
 
 ```text
-
 content_hash = abc123...
-
 ```
 
-这个 hash 用来判断：
+这个 hash 用来判断：这个 PDF 是否已经存过、是否和数据库记录一致、迁移到 MinIO 后能否校验完整性。
 
-```text
-
-这个 PDF 是否已经存过？
-
-这个 PDF 是否和数据库记录一致？
-
-这个 PDF 迁移到 MinIO 后能不能校验完整性？
-
-```
-
----
-
-### Step 4：生成 MinIO 的 `object_key`
+#### Step 4：生成 MinIO 的 `object_key`
 
 系统根据规则生成 MinIO 文件路径：
 
 ```text
-
 bucket = listed-company-raw
-
 object_key = cninfo/2024/600519/annual/abc123.pdf
-
 ```
 
 这里的路径包含：
 
 | 部分 | 含义 |
-
 |---|---|
-
 | `cninfo` | 数据源 |
-
 | `2024` | 年份 |
-
 | `600519` | 公司代码 |
-
 | `annual` | 文档类型 |
-
 | `abc123.pdf` | 文件 hash + 后缀 |
 
----
+#### Step 5：原始 PDF 存入 MinIO
 
-### Step 5：原始 PDF 存入 MinIO
-
-PDF 本体进入 MinIO：
-
-```text
-
-MinIO:
-
-  bucket = listed-company-raw
-
-  object_key = cninfo/2024/600519/annual/abc123.pdf
-
-```
-
-数据库不直接存 PDF 文件本体。
-
-这样做的好处是：
+PDF 本体进入 MinIO（`bucket = listed-company-raw`，`object_key = cninfo/2024/600519/annual/abc123.pdf`），数据库不直接存 PDF 文件本体。这样做的好处是：
 
 - 大文件不塞进数据库；
-
 - 多个服务都能通过 object_key 访问；
-
 - 未来可以从本地文件系统平滑迁移到 MinIO；
-
 - 可以通过 hash 去重。
 
----
+#### Step 6：写入 PostgreSQL 的 `raw_file` 表
 
-### Step 6：写入 PostgreSQL 的 `raw_file` 表
-
-PostgreSQL 的 `raw_file` 表记录文件元数据。
-
-示例：
+PostgreSQL 的 `raw_file` 表记录文件元数据。示例：
 
 | 字段 | 示例值 |
-
 |---|---|
-
 | `raw_file_id` | 9001 |
-
 | `storage_backend` | minio |
-
 | `bucket` | listed-company-raw |
-
 | `object_key` | cninfo/2024/600519/annual/abc123.pdf |
-
 | `local_path` | /data/raw/cninfo/2024/600519/annual_report.pdf |
-
 | `source_url` | CNINFO PDF URL |
-
 | `content_hash` | abc123... |
-
 | `file_size` | 5.2MB |
-
 | `mime_type` | application/pdf |
-
 | `download_time` | 2026-06-30 |
-
 | `parse_status` | pending |
 
-这条记录的作用是：
+这条记录的作用是：告诉系统这个原始 PDF 在哪里、来自哪里、hash 是什么、解析状态如何。
 
-```text
+#### Step 7：写入 PostgreSQL 的 `document` 表
 
-告诉系统：这个原始 PDF 在哪里、来自哪里、hash 是什么、解析状态如何。
-
-```
-
----
-
-### Step 7：写入 PostgreSQL 的 `document` 表
-
-`document` 表记录“这是一份什么文档”。
-
-示例：
+`document` 表记录「这是一份什么文档」。示例：
 
 | 字段 | 示例值 |
-
 |---|---|
-
 | `document_id` | 101 |
-
 | `company_id` | 1 |
-
 | `source_id` | cninfo |
-
 | `document_type` | annual_report |
-
 | `title` | 贵州茅台 2024 年年度报告 |
-
 | `publish_time` | 2025-04-28 |
-
 | `report_year` | 2024 |
-
 | `source_url` | CNINFO URL |
-
 | `raw_file_id` | 9001 |
-
 | `content_hash` | abc123... |
-
 | `parse_status` | pending |
 
-这里最重要的连接是：
+这里最重要的连接是 `document.raw_file_id = raw_file.raw_file_id`，意思是：这份文档对应哪一个原始 PDF 文件。
+
+#### Step 8：解析 PDF
+
+解析器读取 MinIO 或本地文件系统里的 PDF，抽出文本、表格、页码、证据句、字段候选。例如抽到：
 
 ```text
-
-document.raw_file_id = raw_file.raw_file_id
-
+第 88 页：公司 2024 年研发投入为 2.3 亿元。
 ```
 
-意思是：
+#### Step 9：写入 PostgreSQL 的 `field_value` 表
 
-```text
-
-这份文档对应哪一个原始 PDF 文件。
-
-```
-
----
-
-### Step 8：解析 PDF
-
-解析器读取 MinIO 或本地文件系统里的 PDF，抽出：
-
-```text
-
-文本
-
-表格
-
-页码
-
-证据句
-
-字段候选
-
-```
-
-例如抽到：
-
-```text
-
-第 88 页：
-
-公司 2024 年研发投入为 2.3 亿元。
-
-```
-
----
-
-### Step 9：写入 PostgreSQL 的 `field_value` 表
-
-字段抽取结果进入 `field_value` 表。
-
-示例：
+字段抽取结果进入 `field_value` 表。示例：
 
 | 字段 | 示例值 |
-
 |---|---|
-
 | `field_value_id` | 5001 |
-
 | `company_id` | 1 |
-
 | `document_id` | 101 |
-
 | `field_key` | rnd_investment |
-
 | `field_label` | 研发投入 |
-
 | `value_raw` | 2.3 亿元 |
-
 | `value_normalized` | 230000000 |
-
 | `unit` | 元 |
-
 | `report_year` | 2024 |
-
 | `report_period` | FY |
-
 | `source_page` | 88 |
-
 | `evidence_text` | 公司 2024 年研发投入为 2.3 亿元。 |
-
 | `quality_status` | pending |
 
 这一步就是把 PDF 里的文字变成结构化字段。
 
----
+#### Step 10：写入 PostgreSQL 的 `quality_audit` 表
 
-### Step 10：写入 PostgreSQL 的 `quality_audit` 表
-
-字段抽出来后，还要经过质量审计。
-
-例如：
+字段抽出来后，还要经过质量审计。例如：
 
 | 字段 | 示例值 |
-
 |---|---|
-
 | `audit_id` | 7001 |
-
 | `target_type` | field_value |
-
 | `target_id` | 5001 |
-
 | `audit_method` | strict_audit |
-
 | `strict_label` | usable |
-
 | `proxy_plausible_score` | 0.96 |
-
 | `evidence` | 字段值与证据句一致 |
-
 | `created_at` | 2026-06-30 |
 
-这样以后系统可以知道：
+这样以后系统可以知道：这个字段不是随便抽出来的，它有证据，也有质量标签。
 
-```text
-
-这个字段不是随便抽出来的，它有证据，也有质量标签。
-
-```
-
----
-
-### Step 11：生成正式事件 `event`
+#### Step 11：生成正式事件 `event`
 
 发布年报本身可以成为一条事件：
 
 | 字段 | 示例值 |
-
 |---|---|
-
 | `event_id` | 8001 |
-
 | `company_id` | 1 |
-
 | `event_type` | document_published |
-
 | `event_time` | 2025-04-28 |
-
 | `detected_time` | 2026-06-30 |
-
 | `title` | 公司发布 2024 年年度报告 |
-
 | `summary` | 公司披露 2024 年年度报告，包含研发投入、收入结构、风险因素等信息。 |
-
 | `primary_document_id` | 101 |
-
 | `primary_raw_file_id` | 9001 |
-
 | `source_url` | CNINFO URL |
-
 | `dedupe_key` | 600519_document_published_20250428_abc123 |
-
 | `review_status` | reviewed |
 
-注意：
+> 时间线动态增加，不是一直增加字段，而是 `event` 表不断新增事件行。
 
-```text
-
-时间线动态增加，不是一直增加字段，而是 event 表不断新增事件行。
-
-```
-
----
-
-### Step 12：建立事件与文档 / 字段的关联
+#### Step 12：建立事件与文档 / 字段的关联
 
 事件不是孤立的，它要能追溯来源。
 
-#### `event_document_link`
+`event_document_link`：
 
 | event_id | document_id |
-
 |---|---|
-
 | 8001 | 101 |
 
-含义：
+含义：`event_id = 8001` 这条事件来自 `document_id = 101` 这份文档。
 
-```text
-
-event_id = 8001 这条事件来自 document_id = 101 这份文档。
-
-```
-
-#### `event_field_link`
+`event_field_link`：
 
 | event_id | field_value_id |
-
 |---|---|
-
 | 8001 | 5001 |
 
-含义：
+含义：这条事件也关联到研发投入这个字段。
 
-```text
-
-这条事件也关联到研发投入这个字段。
-
-```
-
----
-
-### Step 13：进入公司时间线
+#### Step 13：进入公司时间线
 
 最后，用户查看贵州茅台时间线时，可以查询：
 
 ```sql
-
 SELECT *
-
 FROM event
-
 WHERE company_id = 1
-
 ORDER BY event_time DESC;
-
 ```
 
-系统就能显示：
+系统就能显示「2025-04-28：公司发布 2024 年年度报告」。点开这条事件，可以继续追溯：
 
 ```text
-
-2025-04-28：公司发布 2024 年年度报告
-
-```
-
-点开这条事件，可以继续追溯：
-
-```text
-
 事件 → 文档 → 原始 PDF → 页码 → 证据句 → 字段值 → 审计结果
-
 ```
 
 这就是正式时间线和证据链。
 
----
+### 例子 B：官网新闻 / 互动问答如何进入时间线
 
-## 四、例子 B：官网新闻 / 互动问答如何进入时间线
+这个例子代表**结构不稳定的数据源**。官网新闻、投资者互动问答、新闻媒体、RPA 页面，字段往往不统一，所以更适合先进入 MongoDB。
 
-这个例子代表**结构不稳定的数据源**。  
+#### Step 1：采集页面
 
-官网新闻、投资者互动问答、新闻媒体、RPA 页面，字段往往不统一，所以更适合先进入 MongoDB。
-
----
-
-### Step 1：采集页面
-
-系统通过 Playwright 或 BrowserUser 打开公司官网 IR 页面，抓到：
+系统通过 Playwright 或 BrowserUser 打开公司官网投资者关系页面，抓到标题、发布时间、正文、附件链接、图片链接、页面区块等。不同网站字段可能不同，例如：
 
 ```text
-
-标题
-
-发布时间
-
-正文
-
-附件链接
-
-图片链接
-
-页面区块
-
+官网新闻页面可能有：title / publish_time / html_body / attachments / image_urls
+互动问答可能有：question / answer / question_time / reply_time
 ```
 
-不同网站字段可能不同。
+#### Step 2：写入 MongoDB 的 `raw_crawl_result`
 
-例如一个官网新闻页面可能有：
-
-```text
-
-title
-
-publish_time
-
-html_body
-
-attachments
-
-image_urls
-
-```
-
-互动问答可能有：
-
-```text
-
-question
-
-answer
-
-question_time
-
-reply_time
-
-```
-
----
-
-### Step 2：写入 MongoDB 的 `raw_crawl_result`
-
-原始抓取结果先进入 MongoDB。
-
-示例：
+原始抓取结果先进入 MongoDB。示例：
 
 ```json
-
 {
-
   "source_id": "company_ir",
-
   "source_type": "website",
-
   "connector_name": "company_ir_connector",
-
   "company_code": "300750",
-
   "company_name": "宁德时代",
-
   "title": "投资者关系活动记录表",
-
   "publish_time": "2025-06-20",
-
   "crawl_time": "2026-06-30T10:00:00",
-
   "source_url": "https://...",
-
   "content_hash": "def456...",
-
   "raw_file_id": "9002",
-
   "content_type": "html",
-
   "parse_status": "parsed",
-
   "quality_status": "pending",
-
   "extra": {
-
     "attachments": ["record.pdf"],
-
     "page_blocks": ["公司介绍", "问答记录"],
-
     "image_urls": ["https://.../image.png"]
-
   }
-
 }
-
 ```
 
-这里：
+这里固定字段用于关联、去重、查询，`extra` 用于保存不同网站自己的特殊字段。这就是 MongoDB 的价值：先接住字段不统一的数据，不因为 PostgreSQL 表还没设计好就丢信息。
 
-- 固定字段用于关联、去重、查询；
+#### Step 3：生成 `raw_event_candidate`
 
-- `extra` 用于保存不同网站自己的特殊字段。
-
-这就是 MongoDB 的价值：
-
-```text
-
-先接住字段不统一的数据，不因为 PostgreSQL 表还没设计好就丢信息。
-
-```
-
----
-
-### Step 3：生成 `raw_event_candidate`
-
-系统从页面内容里判断：
-
-```text
-
-这可能是一条业务变化事件。
-
-```
-
-于是写入 MongoDB 的 `raw_event_candidate`：
+系统从页面内容里判断「这可能是一条业务变化事件」，于是写入 MongoDB 的 `raw_event_candidate`：
 
 ```json
-
 {
-
   "company_code": "300750",
-
   "source_id": "company_ir",
-
   "source_type": "website",
-
   "candidate_type": "business_update",
-
   "candidate_time": "2025-06-20",
-
   "title": "公司提到海外业务推进",
-
   "summary": "公司在投资者交流中提到继续推进海外业务布局。",
-
   "source_url": "https://...",
-
   "raw_file_id": "9002",
-
   "evidence_text": "公司将继续推进全球化布局。",
-
   "confidence_score": 0.78,
-
   "normalize_status": "candidate",
-
   "extra": {
-
     "question": "公司海外业务进展如何？",
-
     "answer": "公司将继续推进全球化布局。",
-
     "reply_time": "2025-06-20"
-
   }
-
 }
-
 ```
 
 它现在还不是正式事件，只是候选事件。
 
----
+#### Step 4：标准化 / LLM / 人工审核
 
-### Step 4：标准化 / LLM / 人工审核
+系统检查这个候选事件重要吗、事件类型对吗、时间是否可靠、证据是否足够、是否和已有事件重复。状态流转为 `candidate → normalized → reviewed`。如果通过审核，就可以晋升到 PostgreSQL；如果不通过，就留在 MongoDB，不进入正式时间线。
 
-系统检查：
-
-```text
-
-这个候选事件重要吗？
-
-事件类型对吗？
-
-时间是否可靠？
-
-证据是否足够？
-
-是否和已有事件重复？
-
-```
-
-状态流转：
-
-```text
-
-candidate → normalized → reviewed
-
-```
-
-如果通过审核，就可以晋升到 PostgreSQL。  
-
-如果不通过，就留在 MongoDB，不进入正式时间线。
-
----
-
-### Step 5：晋升到 PostgreSQL 的 `event` 表
+#### Step 5：晋升到 PostgreSQL 的 `event` 表
 
 审核通过后，写入 PostgreSQL 的正式事件表：
 
 | 字段 | 示例值 |
-
 |---|---|
-
 | `event_id` | 8002 |
-
 | `company_id` | 2 |
-
 | `event_type` | business_update |
-
 | `event_time` | 2025-06-20 |
-
 | `detected_time` | 2026-06-30 |
-
 | `title` | 公司提到海外业务推进 |
-
 | `summary` | 公司在投资者交流中表示将继续推进海外业务布局。 |
-
 | `source_url` | 官网 URL |
-
 | `primary_raw_file_id` | 9002 |
-
 | `evidence_text` | 公司将继续推进全球化布局。 |
-
 | `dedupe_key` | 300750_business_update_20250620_def456 |
-
 | `review_status` | reviewed |
-
 | `extra_json` | {"question": "...", "answer": "..."} |
 
----
-
-### Step 6：回写 MongoDB，保留 lineage
+#### Step 6：回写 MongoDB，保留 lineage
 
 PostgreSQL 生成正式 `event_id = 8002` 后，系统回写 MongoDB：
 
 ```json
-
 {
-
   "_id": "...",
-
   "normalize_status": "promoted_to_postgres",
-
   "event_id": 8002
-
 }
-
 ```
 
 这样以后可以追溯：
 
 ```text
-
 正式事件 event_id = 8002
-
-  ↓
-
-来自 MongoDB 哪条 raw_event_candidate
-
-  ↓
-
-来自哪次 raw_crawl_result
-
-  ↓
-
-来自哪个 MinIO 原始文件
-
-  ↓
-
-来自哪个 source_url
-
+  ↓ 来自 MongoDB 哪条 raw_event_candidate
+  ↓ 来自哪次 raw_crawl_result
+  ↓ 来自哪个 MinIO 原始文件
+  ↓ 来自哪个 source_url
 ```
 
 这叫 lineage，也就是数据血缘。
 
----
+#### Step 7：进入公司时间线
 
-### Step 7：进入公司时间线
-
-现在用户查看宁德时代时间线时，可以看到：
-
-```text
-
-2025-06-20：公司提到海外业务推进
-
-```
-
-点开事件，可以追到：
-
-```text
-
-官网页面 / 互动问答原文
-
-MongoDB 原始抓取记录
-
-MinIO 页面快照
-
-PostgreSQL 正式 event
-
-证据句
-
-```
+现在用户查看宁德时代时间线时，可以看到「2025-06-20：公司提到海外业务推进」。点开事件，可以追到官网页面 / 互动问答原文、MongoDB 原始抓取记录、MinIO 页面快照、PostgreSQL 正式 event、证据句。
 
 ---
 
-## 五、MinIO 原始文件层设计
+## 四、MinIO 原始文件层设计
 
 ### 1. bucket 设计
 
@@ -949,7 +523,7 @@ attachment/{company_code}/{source_type}/{content_hash}.{ext}
 
 ---
 
-## 六、MongoDB 采集层 / 原始解析层 / 事件候选层设计
+## 五、MongoDB 采集层 / 原始解析层 / 事件候选层设计
 
 > 定位：`MongoDB` 负责**先接住**结构不稳定的数据，**不**负责正式时间线。固定核心字段保证可关联，`extra` 容纳各源差异。
 
@@ -987,7 +561,7 @@ attachment/{company_code}/{source_type}/{content_hash}.{ext}
 
 固定：`_id`、`company_code`、`source_id`、`source_type`、`candidate_type`、`candidate_time`、`title`、`source_url`、`raw_file_id`、`confidence_score`、`normalize_status`、`created_at`。
 进 `extra`：`summary`、`evidence_text` 及各类型差异字段。
-`normalize_status` 取值与第六节状态机一致（`candidate` → `normalized` → `reviewed` → `promoted_to_postgres` / `rejected`）。
+`normalize_status` 取值与状态流转表一致（`candidate` → `normalized` → `reviewed` → `promoted_to_postgres` / `rejected`）。
 
 ### 4. `source_validation_result`（数据源验证结果）
 
@@ -1002,13 +576,13 @@ attachment/{company_code}/{source_type}/{content_hash}.{ext}
 | 哪些进 `extra` | 各源差异、随时间易变、列表型明细进 `extra` |
 | 如何去重 | 以 `content_hash` 为去重键；同 hash 视为同一原件，多来源做映射不重复存原件 |
 | 如何与 MinIO 关联 | 通过 `raw_file_id` / `object_key` 指向 MinIO 原件 |
-| 如何与 PostgreSQL 关联 | 晋升后在 PG 行记录来源 `mongo_id`；Mongo 文档记回 `document_id` / `event_id`（见第六节） |
+| 如何与 PostgreSQL 关联 | 晋升后在 PG 行记录来源 `mongo_id`；Mongo 文档记回 `document_id` / `event_id`（见「MongoDB 与 PostgreSQL 如何连接」一节） |
 | 何时进 PostgreSQL | 经标准化 + 审核（`reviewed`）后才晋升为正式 `document` / `event` |
 | 哪些不进 PostgreSQL | 冗长原始 JSON、解析中间块、低置信度未审候选、验证明细——留在 Mongo，PG 只存正式结论与必要引用 |
 
 ---
 
-## 七、PostgreSQL 核心数据库层设计
+## 六、PostgreSQL 核心数据库层设计
 
 > 定位：**当前最优先验证的核心数据库方向**，负责正式、关系密集、需长期可信的数据。不是立即全量迁移，而是先设计目标 schema + 小样本试点。
 
@@ -1055,7 +629,7 @@ attachment/{company_code}/{source_type}/{content_hash}.{ext}
 
 ---
 
-## 八、MongoDB 与 PostgreSQL 如何连接
+## 七、MongoDB 与 PostgreSQL 如何连接
 
 | 问题 | 结论 |
 |---|---|
@@ -1091,7 +665,7 @@ flowchart LR
 
 ---
 
-## 九、正式时间线如何动态增加（重点问题）
+## 八、正式时间线如何动态增加（重点问题）
 
 问题：**「主要是考虑时间线的动态增加，而 MongoDB 可以动态增加字段，这个能力对这个有没有用？」**
 
@@ -1112,7 +686,7 @@ flowchart LR
 
 ---
 
-## 十、小样本试点路线
+## 九、小样本试点路线
 
 > 原则：先小样本验证，不直接建全量生产系统。每个试点都给「阶段 / 任务 / 产物 / 验证标准 / 风险」。
 
@@ -1154,7 +728,7 @@ flowchart LR
 
 ---
 
-## 九、推荐结论
+## 推荐结论
 
 | 问题 | 结论 |
 |---|---|
