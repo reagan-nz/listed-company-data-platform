@@ -115,6 +115,64 @@ flowchart TD
 
 ---
 
+## 二点五、用一个具体例子理解完整流程
+
+上面的流程图说明了系统分层，但为了更容易理解，可以用一份公告从进入系统到形成时间线的过程来看。
+
+> 提醒：下面是**设计方案的预期流程**，不是已经上线的系统。当前阶段只做设计与小样本试点，尚未部署 `MinIO` / `MongoDB` / `PostgreSQL`。
+
+### 例子 A：一份 CNINFO 年报 PDF 如何进入系统
+
+1. 系统发现一份 CNINFO 年报 PDF（来自巨潮资讯网的公开披露）。
+2. 把这份 PDF 下载下来。
+3. 对 PDF 计算 `sha256`，得到这份文件的 `content_hash`（相当于文件指纹）。
+4. 用 `content_hash` 拼出 `MinIO` 里的 `object_key`（文件存放路径）。
+5. PDF 本体存进 `MinIO` 的 bucket（大文件容器），数据库里不存 PDF 本体。
+6. `PostgreSQL` 的 `raw_file` 表记下这份文件：`bucket`、`object_key`、`source_url`、`content_hash`、`file_size`、`mime_type`、`parse_status`——也就是「文件在哪里、是什么、解析到什么程度」。
+7. `PostgreSQL` 的 `document` 表记下这是哪家公司、哪一年、什么文档类型（如 2024 年年报）。
+8. 解析这份 PDF，得到每个字段的 `page`（页码）、`evidence_sentence`（证据句）、`field_key`（字段名）、`value`（字段值）。
+9. 现有 SQLite 里的 `extracted_field` 可以平滑映射到 `PostgreSQL` 的 `field_value`，字段结果正式落库。
+10. `quality_audit` 表记下这些字段的审计结果，例如 `usable` / `partial` / `wrong`。
+11. 如果某个字段相比往年变化明显，可以据此生成一个 `event`（正式事件）。
+12. 这个 `event` 通过 `event_document_link` 关联来源文档、通过 `event_field_link` 关联具体字段变化，证据链完整。
+13. 最终这条事件进入该公司的时间线。
+
+### 例子 B：一条公司官网新闻 / 互动问答如何进入系统
+
+1. 这类数据源字段不稳定（不同网站、不同栏目结构都不一样），所以**先进入 `MongoDB`**，避免一上来就被迫改关系表、丢信息。
+2. 固定字段包括：`company_code`、`source_type`、`title`、`publish_time`、`source_url`、`content_hash`、`raw_file_id`——用于关联和去重。
+3. 不稳定字段进入 `extra`，例如 `question_answer`（互动问答内容）、`video_url`、`attachments`、`page_blocks`、`image_urls`。
+4. 如果判断它可能是一个事件，就先放进 `raw_event_candidate`（事件候选），还不算正式事件。
+5. 经过规则 / LLM / 人工审核后，才晋升为 `PostgreSQL` 的正式 `event`。
+6. 晋升后：`PostgreSQL` 记录 `event_id`，`MongoDB` 对应文档回写 `event_id`，两边互相指向，保留 lineage（数据血缘）。
+7. 没通过审核的候选**留在 `MongoDB`**，不进入正式时间线。
+
+### 关键对象怎么连接
+
+| 对象 | 存在哪里 | 作用 | 通过什么连接 |
+|---|---|---|---|
+| PDF / HTML / 图片本体 | `MinIO` | 原始证据 | `bucket` + `object_key` |
+| `raw_file` 元数据 | `PostgreSQL` | 记录文件在哪里 | `raw_file_id` + `content_hash` |
+| 原始采集 JSON | `MongoDB` | 接住不规则数据 | `source_id` + `content_hash` + `raw_file_id` |
+| 文档元数据 | `PostgreSQL` `document` | 说明是什么文档 | `document_id` + `company_id` + `raw_file_id` |
+| 字段值 | `PostgreSQL` `field_value` | 正式字段结果 | `field_value_id` + `document_id` |
+| 事件候选 | `MongoDB` `raw_event_candidate` | 还未确认的事件 | mongo `_id` + `source_id` |
+| 正式事件 | `PostgreSQL` `event` | 公司时间线 | `event_id` + `dedupe_key` |
+| 关联表 | `PostgreSQL` | 连接事件、文档、字段 | `event_document_link` / `event_field_link` |
+
+### 六个关键术语（一句话解释）
+
+- `sha256`：文件指纹，用来去重和校验。
+- `bucket`：`MinIO` 里的大文件容器。
+- `object_key`：`MinIO` 里的文件路径。
+- `raw_file_id`：数据库里标记一个原始文件的 ID。
+- `document_id`：数据库里标记一份文档的 ID。
+- `event_id`：数据库里标记一个正式事件的 ID。
+
+所以这套流程的重点不是把所有东西塞进一个数据库，而是让每一层做自己最适合的事：`MinIO` 保留原件，`MongoDB` 接住不规则采集结果，`PostgreSQL` 沉淀正式字段、事件、证据链和时间线。
+
+---
+
 ## 三、MinIO 原始文件层设计
 
 ### 1. bucket 设计
