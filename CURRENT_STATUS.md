@@ -1,6 +1,6 @@
 # 当前进展：从 2024 年报数据底座进入动态平台架构设计阶段
 
-_最后更新：2026-06-29_
+_最后更新：2026-06-30_
 
 > **本文件说明「现在具体在做什么」。** 产品大方向见 [ROADMAP.md](ROADMAP.md)；已完成成果见 [CHANGELOG.md](CHANGELOG.md)；详细计划见 [plans/](plans/)。
 
@@ -60,8 +60,9 @@ flowchart TD
 - 设计事件表模式，并划清它的边界（只记标准化重要变化）。
 - 设计数据源验证机制（候选 → 小样本验证 → 已验证）。
 - 设计分层采集策略（`HTTP` / `Playwright` / `BrowserUser`）。
+- 设计存储结构：`MinIO` 原始文件层 + `MongoDB` 采集层 + `PostgreSQL` 核心库（`PostgreSQL` 为当前最优先验证方向，非立即全量迁移）。
 
-详见 [plans/dynamic_data_platform_plan.md](plans/dynamic_data_platform_plan.md)。
+详见 [plans/dynamic_data_platform_plan.md](plans/dynamic_data_platform_plan.md) 与 [plans/storage_schema_design_plan.md](plans/storage_schema_design_plan.md)。
 
 ---
 
@@ -100,6 +101,7 @@ flowchart TD
 | 现在具体在做什么、下一步 | 本文件 |
 | 已经完成了什么 | [CHANGELOG.md](CHANGELOG.md) |
 | 当前阶段详细计划 | [plans/dynamic_data_platform_plan.md](plans/dynamic_data_platform_plan.md) |
+| 存储结构设计（MinIO / MongoDB / PostgreSQL） | [plans/storage_schema_design_plan.md](plans/storage_schema_design_plan.md) |
 | 2024 数据底座质量详情 | [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md) |
 | 评估方法与术语 | [docs/evaluation_method.md](docs/evaluation_method.md) |
 

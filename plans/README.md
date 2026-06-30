@@ -20,6 +20,7 @@
 | 文件 | 用途 |
 |---|---|
 | [dynamic_data_platform_plan.md](dynamic_data_platform_plan.md) | **当前**动态平台总体计划（架构方向 + 小范围试点准备） |
+| [storage_schema_design_plan.md](storage_schema_design_plan.md) | 存储结构设计：MinIO + MongoDB + PostgreSQL 三层分工与小样本试点 |
 
 ---
 

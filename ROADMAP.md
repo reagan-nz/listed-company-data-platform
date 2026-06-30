@@ -1,6 +1,6 @@
 # 产品大方向：从静态年报数据库到动态上市公司数据平台
 
-_最后更新：2026-06-29_
+_最后更新：2026-06-30_
 
 ---
 
@@ -74,7 +74,7 @@ flowchart LR
 - 新数据源怎么验证后再接入？
 - 采集分层怎么设计（`HTTP` / `Playwright` / `BrowserUser`）？
 
-详细计划见 [plans/dynamic_data_platform_plan.md](plans/dynamic_data_platform_plan.md)。
+详细计划见 [plans/dynamic_data_platform_plan.md](plans/dynamic_data_platform_plan.md)；存储结构（`MinIO` + `MongoDB` + `PostgreSQL` 三层分工）见 [plans/storage_schema_design_plan.md](plans/storage_schema_design_plan.md)。
 
 ---
 
