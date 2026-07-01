@@ -631,6 +631,179 @@ P0 栏目要从「候选」进入「已验证」，至少需要满足：
 - 判断是否需要 Playwright；
 - 暂不进入 MinIO / PostgreSQL 接入。
 
+### 8.7 P0 验证计划：个股 F10 / 公司资料
+
+> **Sub Issue 2.4：准备 CNINFO 个股 F10 / 公司资料的 P0 验证计划。** 本节在 8.5、8.6 验证计划基础上，设计个股 F10 / 公司资料 / 公司要览的小样本验证方案；**只做验证计划，不做真实验证、不写爬虫、不做数据库接入。**
+
+#### 8.7.1 验证目标
+
+个股 F10 / 公司资料 / 公司要览验证的目标，是判断 CNINFO 是否能稳定提供公司基础属性和公司资料属性，例如股票简称、交易所、板块、行业、上市状态、公司简介、主营业务摘要、注册地址、办公地址、官网、联系方式、董秘等。
+
+这些字段未来可能用于：
+
+- 补充 PostgreSQL `company` 基础表；
+- 形成未来候选 `company_profile`；
+- 支持公司画像页；
+- 支持用户按行业、板块、上市状态筛选公司；
+- 与年报字段和公告数据交叉验证。
+
+需要强调：
+
+- 本节只是**验证计划**；
+- **不代表** F10 / 公司资料已经完成采集；
+- **不代表**页面长期稳定可用；
+- **不做**真实抓取；
+- **不写**爬虫；
+- **不做** PostgreSQL / MongoDB / MinIO 接入。
+
+#### 8.7.2 样本设计
+
+| 项 | 设计 |
+|---|---|
+| 样本量 | 30–50 家公司 |
+| 样本覆盖 | 主板、创业板、科创板、北交所尽量都覆盖 |
+| 行业覆盖 | 制造业、信息技术、医药、消费、金融或类金融、能源/材料等尽量混合 |
+| 公司类型覆盖 | 正常上市公司、ST / 风险类公司、不同市值公司、上市时间较长和较新的公司 |
+| 字段覆盖 | 优先验证基础字段，再验证公司简介、联系方式、董秘等资料字段 |
+| 样本公司记录 | 记录 `company_code`、`company_name`、`exchange`、`board`、`industry`、`listing_status`、`sample_reason` |
+
+#### 8.7.3 目标字段
+
+| 字段 | 说明 | 建议去向 | 是否关键字段 |
+|---|---|---|---|
+| `company_code` | 股票代码 | PostgreSQL `company` | 是 |
+| `company_name` | 公司全称 | PostgreSQL `company` | 是 |
+| `stock_short_name` | 股票简称 | PostgreSQL `company` | 是 |
+| `exchange` | 交易所，例如 SSE / SZSE / BSE | PostgreSQL `company` | 是 |
+| `board` | 板块，例如主板 / 创业板 / 科创板 / 北交所 | PostgreSQL `company` | 是 |
+| `industry` | 行业分类 | PostgreSQL `company` 或未来候选 `company_profile` | 是 |
+| `listing_status` | 上市状态 | PostgreSQL `company` | 是 |
+| `is_st` | 是否 ST / *ST | PostgreSQL `company` 或风险事件辅助字段 | 部分关键 |
+| `company_profile` | 公司简介 | 未来候选 `company_profile` | 部分关键 |
+| `main_business_summary` | 主营业务摘要 | 未来候选 `company_profile`；可与年报字段交叉验证 | 部分关键 |
+| `registered_address` | 注册地址 | 未来候选 `company_profile` | 否 |
+| `office_address` | 办公地址 | 未来候选 `company_profile` | 否 |
+| `website` | 公司官网 | 未来候选 `company_profile` | 否 |
+| `contact_phone` | 联系电话 | 未来候选 `company_profile` | 否 |
+| `contact_email` | 联系邮箱 | 未来候选 `company_profile` | 否 |
+| `board_secretary` | 董秘 | 未来候选 `company_profile` / `management_profile` | 否 |
+| `source_url` | F10 / 公司资料来源链接 | 证据引用 | 是 |
+| `crawl_time` | 本次验证时间 | 验证记录 | 是 |
+| `failure_reason` | 失败原因 | 验证记录 | 是，失败样本必须记录 |
+
+#### 8.7.4 访问方式
+
+访问方式优先级如下：
+
+1. **HTTP / API 优先**  
+   如果 F10 / 公司资料可通过公开接口或静态请求获得，优先使用 HTTP。
+
+2. **Playwright 备用**  
+   如果页面依赖 JS 渲染、字段由前端动态加载或分页/标签切换复杂，再使用 Playwright。
+
+3. **BrowserUser 暂不作为第一选择**  
+   只有在普通 HTTP / Playwright 无法处理，且该字段确实有高价值时再考虑。
+
+4. **人工抽样对照**  
+   对于字段含义容易混淆的内容，例如行业、板块、主营业务摘要，可以人工抽查少量样本，判断字段语义是否正确。
+
+**不绕过**登录、验证码、付费、权限或强反爬。
+
+#### 8.7.5 成功标准
+
+| 维度 | 成功标准 |
+|---|---|
+| 公司识别 | `company_code`、`company_name`、`stock_short_name` 能匹配到同一家公司 |
+| 基础字段完整性 | `exchange`、`board`、`industry`、`listing_status` 等基础字段能稳定获得 |
+| 资料字段可用性 | `company_profile`、`main_business_summary`、`registered_address`、`office_address`、`website`、`contact_phone`、`contact_email`、`board_secretary` 等字段至少部分可获得，并记录缺失情况 |
+| 证据可追溯 | 每条公司资料至少有 `source_url` 或页面快照来源 |
+| 字段语义清楚 | 字段含义能被解释清楚，避免把指标、摘要、公告内容混成公司基础属性 |
+| 失败可解释 | 失败样本必须有 `failure_reason` |
+| 合规风险 | 不存在明显登录、验证码、付费、权限或高反爬问题 |
+| 后续可接入 | 如果结果稳定，后续可为 `company` / `company_profile` 字段映射提供依据 |
+
+具体阈值按字段类型决定，但必须记录 `success_count`、`failure_count`、`success_rate`；不要求 100% 成功。
+
+#### 8.7.6 失败原因分类
+
+| `failure_reason` | 说明 |
+|---|---|
+| `missing_company_code` | 股票代码缺失 |
+| `missing_company_name` | 公司名称缺失 |
+| `company_mapping_failed` | 公司代码、名称、orgId 无法对应 |
+| `f10_page_not_found` | F10 页面不存在 |
+| `company_profile_missing` | 公司简介缺失 |
+| `industry_missing` | 行业字段缺失 |
+| `board_missing` | 板块字段缺失 |
+| `listing_status_missing` | 上市状态缺失 |
+| `contact_info_missing` | 联系方式缺失 |
+| `board_secretary_missing` | 董秘字段缺失 |
+| `field_semantics_unclear` | 字段语义不清楚，无法判断是否可作为正式属性 |
+| `page_structure_changed` | 页面结构变化 |
+| `js_render_required` | 需要 JS 渲染 |
+| `rate_limited` | 请求频率限制 |
+| `captcha_or_login_required` | 出现验证码或登录要求 |
+| `network_timeout` | 网络超时 |
+| `unknown_error` | 未知错误，需要人工检查 |
+
+#### 8.7.7 字段分层规则
+
+F10 / 公司资料字段不能全部直接进入 `company` 表，应按字段稳定性和用途分层：
+
+| 字段层级 | 示例字段 | 后续建议 |
+|---|---|---|
+| 公司主索引字段 | `company_code`、`company_name`、`stock_short_name`、`exchange`、`board`、`listing_status` | 验证通过后可映射到 PostgreSQL `company` |
+| 公司画像字段 | `industry`、`company_profile`、`main_business_summary` | 验证后可进入 `company` 或未来候选 `company_profile`；需要和年报字段交叉验证 |
+| 联系方式字段 | `registered_address`、`office_address`、`website`、`contact_phone`、`contact_email` | 更适合未来候选 `company_profile`，不急于进入第一阶段核心 `company` 表 |
+| 治理辅助字段 | `board_secretary`、部分高管/董监高摘要 | 未来可进入 `company_profile` 或 `management_profile` 候选方向，不在当前阶段落地 |
+| 证据字段 | `source_url`、`crawl_time`、页面快照 | `source_url` 进入证据引用；页面快照未来可进 MinIO；当前阶段只做验证计划 |
+
+#### 8.7.8 验证结果记录格式
+
+F10 / 公司资料验证完成后，需要按 **8.1 验证记录模板** 记录结果。
+
+以下为 mock 示例，**不代表真实验证结果**：
+
+| 字段 | 示例值 |
+|---|---|
+| `source_section` | 个股 F10 / 公司资料 |
+| `test_date` | 2026-07-01 |
+| `sample_size` | mock: 40 |
+| `access_method` | mock: HTTP 优先，Playwright 备用 |
+| `target_fields` | `company_code`, `stock_short_name`, `exchange`, `board`, `industry`, `company_profile`, `website` |
+| `success_count` | mock: 34 |
+| `failure_count` | mock: 6 |
+| `success_rate` | mock: 85% |
+| `data_obtained` | mock: 股票简称、交易所、板块、行业、公司简介 |
+| `data_missing` | mock: 部分公司缺少联系方式或董秘字段 |
+| `failure_reasons` | mock: `js_render_required`, `contact_info_missing`, `field_semantics_unclear` |
+| `compliance_risk` | mock: 低 |
+| `evidence_available` | mock: 部分 |
+| `recommended_status` | mock: `testing` |
+| `recommendation` | mock: 扩大样本并人工抽查字段语义 |
+| `next_action` | mock: 准备公司资料字段映射建议 |
+
+> 这是 mock 示例，不代表真实验证结果。
+
+#### 8.7.9 与后续任务的关系
+
+**如果 F10 / 公司资料验证通过**，后续可以进入：
+
+- `company` 字段映射建议；
+- 未来候选 `company_profile` 字段设计；
+- 公司属性样例页；
+- F10 与年报字段交叉验证；
+- `docs/data_sources.md` 状态更新；
+- 后续 PostgreSQL / MinIO / MongoDB 接入建议。
+
+**如果验证失败或部分可用**，则：
+
+- 保持 `candidate` / `partial` 状态；
+- 记录失败原因；
+- 判断是否需要 Playwright；
+- 判断哪些字段只保留候选、不进入正式 `company`；
+- 暂不进入数据库接入。
+
 ---
 
 ## 9. 第一阶段优先级建议
