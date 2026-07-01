@@ -24,7 +24,35 @@ _最后更新：2026-06-30_
 2. **`MongoDB` 必须纳入三层设计**，但不一定第一阶段部署；它的重点是**采集层、原始解析层、事件候选层**，用来接住官网 / 新闻 / 互动问答等结构不稳定的新数据。
 3. **`MinIO` 是原始文件层方向**；现有按 `sha256` 缓存的本地文件可平滑迁移，先做小样本验证。
 
-下面是工程可落地部分：需求能力、数据流、三层各自的表 / collection 字段、连接与状态流转、动态时间线判断、四个小样本试点、推荐结论。
+下面是工程可落地部分：需求能力、数据流、三层各自的表 / collection 字段、连接与状态流转、动态时间线判断、五个小样本试点、推荐结论。
+
+---
+
+## 补充说明：每家公司在系统里的属性信息
+
+在本平台中，「一家公司」不是只对应一条公司名称记录，而是由多层信息共同组成，包括：
+
+- 公司基础属性；
+- 文档属性；
+- 年报结构化字段；
+- 动态事件属性；
+- 原始证据属性；
+- 质量审计属性；
+- 用户关注与推送相关属性；
+- 原始采集与候选信息。
+
+| 属性类别 | 示例字段 | 主要存储位置 | 作用 | 当前阶段状态 |
+|---|---|---|---|---|
+| 公司基础属性 | `company_code`、`company_name`、`exchange`、`board`、`industry_level_1`、`industry_level_2`、`province`、`city`、`is_financial`、`financial_subtype`、`listing_status`、`latest_report_year` | PostgreSQL `company` | 识别公司、筛选公司、关联文档 / 字段 / 事件 | 目标 schema 设计，小样本试点优先 |
+| 文档属性 | `document_type`、`title`、`publish_time`、`report_year`、`report_period`、`source_url`、`raw_file_id`、`content_hash`、`parse_status` | PostgreSQL `document` + `raw_file` | 管理年报、公告、官网新闻、互动问答等来源文档 | CNINFO 年报可从现有 SQLite 平滑映射；新数据源需验证 |
+| 年报结构化字段 | `main_business`、`management_discussion`、`industry_discussion`、`rnd_investment`、`revenue_by_region`、`revenue_by_segment`、`risk_factors`、`major_subsidiaries` | PostgreSQL `field_value` | 支持结构化查询、公司画像、未来 RAG 引用 | 2024 年报底座已有，迁移时映射到 PostgreSQL |
+| 质量审计属性 | `quality_status`、`strict_label`、`proxy_plausible_score`、`issue_type`、`audit_method`、`evidence` | PostgreSQL `quality_audit` | 判断字段是否可信，避免低质量字段直接进入用户端 | 已有 `usable` / `partial` / `wrong` / `not_found_missed` 等审计体系 |
+| 动态事件属性 | `event_type`、`event_time`、`detected_time`、`title`、`summary`、`importance_level`、`review_status`、`dedupe_key` | PostgreSQL `event` | 形成公司时间线，未来支持推送 | 第二阶段核心，先做小样本时间线试点 |
+| 原始证据属性 | `bucket`、`object_key`、`local_path`、`source_url`、`content_hash`、`source_page`、`evidence_text` | MinIO + PostgreSQL `raw_file` / `field_value` | 支持证据追溯，可以回到 PDF、网页快照、页码和证据句 | MinIO 先做 50–100 个文件小样本试点 |
+| 原始采集与候选属性 | `raw_crawl_result`、`raw_parse_result`、`raw_event_candidate`、`extra`、`confidence_score`、`normalize_status` | MongoDB | 接住官网、新闻、互动问答等结构不稳定的新数据源 | 先设计 collection，待新数据源试点时再部署 |
+| 用户关注与推送属性 | `user_id`、`watchlist`、`target_company`、`notification_status`、`pushed_at` | PostgreSQL `user_watchlist` / `notification` | 未来支持用户关注公司和智能推送 | 未来应用层能力，当前不优先实现 |
+
+因此，每家公司在系统中不是一个孤立对象，而是 `company` 作为主索引，向下连接 `document`、`field_value`、`event`、`raw_file` 和 `quality_audit`；MongoDB 中的候选数据只有经过标准化和审核后，才会晋升为 PostgreSQL 中的正式公司信息或事件。
 
 ---
 
@@ -607,6 +635,30 @@ attachment/{company_code}/{source_type}/{content_hash}.{ext}
 | `crawl_task` | 抓取任务 | `crawl_task_id` | `source_id`、`status`、`scheduled_time` | → `data_source` | 否 |
 | `crawl_result` | 抓取结果摘要 | `crawl_result_id` | `crawl_task_id`、`success`、`raw_file_id` | → `crawl_task` | 否 |
 
+### `company` 表字段示例
+
+下面是目标 schema 中公司基础属性的建议字段，**不代表第一阶段必须一次性全部补齐**。第一阶段可以先保留 `company_code`、`company_name`、`is_financial`、`financial_subtype` 等核心字段；行业、地区、上市状态等字段可以在小样本试点中逐步补充。
+
+| 字段 | 示例值 | 说明 | 第一阶段是否建议保留 |
+|---|---|---|---|
+| `company_id` | 1 | 系统内部主键 | 是 |
+| `company_code` | 300750 | 股票代码 | 是 |
+| `company_name` | 宁德时代 | 公司名称 / 简称 | 是 |
+| `exchange` | SZSE | 交易所，例如 SSE / SZSE / BSE | 建议保留 |
+| `board` | ChiNext | 板块，例如主板 / 创业板 / 科创板 / 北交所 | 建议保留 |
+| `industry_level_1` | 电力设备 | 一级行业 | 建议保留，但可后续补充 |
+| `industry_level_2` | 电池 | 二级行业 | 可后续补充 |
+| `province` | 福建省 | 注册地或主要地区 | 可后续补充 |
+| `city` | 宁德市 | 城市 | 可后续补充 |
+| `is_financial` | false | 是否金融公司 | 是 |
+| `financial_subtype` | null | 银行 / 券商 / 保险 / 其他金融；非金融公司为空 | 是 |
+| `listing_status` | listed | 上市状态 | 建议保留 |
+| `latest_report_year` | 2024 | 当前已有最新年报年份 | 建议保留 |
+| `created_at` | 2026-06-30 | 记录创建时间 | 是 |
+| `updated_at` | 2026-06-30 | 记录更新时间 | 是 |
+
+`company` 表不负责保存所有年报字段，也不直接保存 PDF 文件本体；它只作为公司主索引。年报字段进入 `field_value`，原始文件进入 MinIO，文件元数据进入 `raw_file`，动态变化进入 `event`。
+
 ### 设计说明
 
 - **为何适合 PostgreSQL**：这些表关系密集（公司↔文档↔字段↔事件↔证据↔用户），需要外键约束、事务一致性、稳定主键和按时间追加——正是关系库强项。
@@ -626,6 +678,88 @@ attachment/{company_code}/{source_type}/{content_hash}.{ext}
 | `evaluation_result`（`proxy_plausible`/`strict_audit_result`） | `quality_audit` |
 
 > 现有非金融核心指标 `usable` 9.43/11、自动合理性分数 10.67/11、`rnd_investment` 找到率 94.2% 等**结论不变**，迁移只是换存储载体，不重算指标。
+
+---
+
+## 示例：一家公司在平台中的完整数据形态
+
+以下以**宁德时代（示例数据）**说明：当一家公司进入平台后，各层属性如何组合。所有数值与事件均为**示例数据**，用于展示 schema 设计预期，不代表已上线系统或真实财务披露。
+
+### 1. 公司基础信息
+
+| 属性 | 示例值 |
+|---|---|
+| 股票代码 | 300750 |
+| 公司名称 | 宁德时代 |
+| 交易所 | SZSE |
+| 板块 | 创业板 |
+| 所属行业 | 电力设备 / 电池 |
+| 注册地 | 福建省宁德市 |
+| 是否金融公司 | 否 |
+| 当前最新年报 | 2024 年年度报告 |
+
+存储位置：PostgreSQL `company` 表。
+
+### 2. 年报结构化字段
+
+| 字段 | 示例值 | 来源层 | 证据 |
+|---|---|---|---|
+| 主营业务 | 示例：动力电池、储能电池等相关业务 | PostgreSQL `field_value` | 2024 年年度报告，页码和证据句 |
+| 研发投入 | 示例：X 亿元（示例数据） | PostgreSQL `field_value` | 年报研发投入相关页 |
+| 分产品收入 | 示例：动力电池 / 储能电池 / 其他业务收入结构（示例数据） | PostgreSQL `field_value` | 年报收入分部表格 |
+| 分地区收入 | 示例：中国大陆 / 海外地区收入结构（示例数据） | PostgreSQL `field_value` | 年报地区收入表格 |
+| 风险因素 | 示例：原材料价格波动、市场竞争、技术迭代等 | PostgreSQL `field_value` | 年报风险因素章节 |
+| 主要子公司 | 示例：子公司名称、业务、持股比例（示例数据） | PostgreSQL `field_value` | 年报附注或子公司章节 |
+
+以上字段来自 CNINFO 年报 PDF 抽取，属于**正式结构化数据**；质量标签见 `quality_audit`（如 `usable` / `partial` / `wrong`）。
+
+### 3. 原始证据与文件
+
+| 证据类型 | 示例 | 存储位置 |
+|---|---|---|
+| 2024 年年报 PDF | `cninfo/2024/300750/annual/{hash}.pdf` | MinIO `listed-company-raw` + PostgreSQL `raw_file` |
+| 官网投资者关系页面快照 | 页面 HTML / 截图 | MinIO `listed-company-snapshots` + MongoDB `raw_crawl_result` |
+| 附件 / 图片 / 截图 | 活动记录表 PDF、页面图片 | MinIO `listed-company-attachments` |
+| 页码和证据句 | 第 X 页：「……」（示例数据） | PostgreSQL `field_value`.`evidence_text` / `source_page` |
+| `source_url` 和 `content_hash` | CNINFO URL、`sha256` 指纹 | PostgreSQL `raw_file` / `document` |
+
+原始文件本体在 MinIO；数据库只存元数据与证据引用，不存 PDF 二进制。
+
+### 4. 动态事件时间线
+
+| 时间 | 事件类型 | 示例标题 | 来源 | 状态 |
+|---|---|---|---|---|
+| 2025-04-xx | `document_published` | 公司发布 2024 年年度报告 | CNINFO PDF | reviewed |
+| 2025-04-xx | `field_value_updated` | 披露 2024 年研发投入 | 年报字段抽取 | reviewed |
+| 2025-06-xx | `business_update` | 官网提到海外业务推进 | 官网新闻 / 投资者关系页面 | candidate 或 reviewed |
+| 2025-07-xx | `risk_update` | 风险因素出现新表述 | 公告 / 年报 / 官网 | reviewed |
+
+> 这些事件是**示例数据**，用于展示 `event` 表如何服务公司时间线，不代表已经完成全量事件生成。来自官网 / 新闻的事件需经 MongoDB 候选 → 审核后才晋升为正式 `event`。
+
+### 5. 用户端可以如何使用这些属性
+
+未来用户端（查询、RAG、推送）可按公司维度组合以下信息。**当前阶段尚未实现用户端，以下为设计预期**。
+
+用户可以查询：
+
+- 这家公司 2024 年主营业务是什么？
+- 这家公司最近发布了什么公告？
+- 研发投入有没有披露，证据来自哪一页？
+- 收入结构中有哪些地区或产品分类？
+- 最近有没有新的业务更新或风险变化？
+- 这个结论来自哪份 PDF / 哪个网页 / 哪句话？
+
+系统回答时应组合：
+
+- `company` 基础信息
+- `document` 来源文档
+- `field_value` 结构化字段
+- `quality_audit` 质量标签
+- `raw_file` 原始文件
+- `event` 时间线
+- `evidence_text` 证据句
+
+低质量字段（如 `partial` / `wrong`）应标注限制，不可当作高置信结论直接输出。
 
 ---
 
@@ -684,6 +818,21 @@ flowchart LR
 
 > 一句话：不是 `MongoDB` 无用，而是 `MongoDB` 应放在**正式时间线之前或作为补充层**；正式时间线由 `PostgreSQL` 沉淀。
 
+### 事件类型示例：哪些进入正式时间线，哪些不进入
+
+| 类型 | 示例 | 应进入 PostgreSQL `event` 吗 | 原因 |
+|---|---|---|---|
+| `document_published` | 公司发布 2024 年年度报告 | 是 | 正式文档发布，来源明确，可追溯 |
+| `field_value_changed` | 研发投入、收入结构、风险因素相比上一期发生变化 | 是，但需要规则判断 | 字段变化是时间线和推送的重要依据 |
+| `business_update` | 官网新闻提到海外业务推进 | 审核后进入 | 来自非年报数据源，需先验证来源和证据 |
+| `risk_update` | 年报新增原材料价格波动风险 | 是 | 风险变化对用户关注价值高 |
+| `management_change` | 董事、高管变更公告 | 是 | 标准化程度较高，适合时间线 |
+| `crawl_failed` | 官网页面抓取失败 | 否 | 这是抓取日志，不是公司事件，应进入 `crawl_result` 或日志层 |
+| `low_confidence_news` | 新闻传闻提到公司业务变化 | 否，先留在 MongoDB candidate | 证据不足，不能直接进入正式时间线 |
+| `duplicate_candidate` | 多来源重复报道同一公告 | 否，应通过 `dedupe_key` 合并 | 避免重复事件污染时间线 |
+
+> `event` 表只记录**标准化重要变化**，不替代原始文件层、字段表、抓取日志或 MongoDB 候选池。
+
 ---
 
 ## 九、小样本试点路线
@@ -725,6 +874,15 @@ flowchart LR
 | 产物 | 状态流转记录 + 双向血缘（`source_mongo_id` ↔ `event_id`） |
 | 验证标准 | 重复候选不产生重复事件、晋升可追溯、被拒候选有原因 |
 | 风险 | 误晋升/漏去重；先 LLM 初判 + 人工复核，`dedupe_key` 唯一约束 |
+
+### 试点 5：公司属性样例页 / 查询样例
+
+| 项 | 内容 |
+|---|---|
+| 任务 | 选 5–10 家公司，整理 `company` + `document` + `field_value` + `raw_file` + `quality_audit` + `event` 的组合样例 |
+| 产物 | 公司属性样例表、公司时间线样例、证据追溯样例、3–5 个查询 SQL 或伪查询 |
+| 验证标准 | 能从 `company` 查到文档、字段、质量标签、原始文件和事件；能回答「这家公司有哪些属性、这些属性来自哪里、证据是什么」 |
+| 风险 | 属性过多导致 schema 过重；第一阶段只保留高频、稳定、可验证字段，低频扩展字段先放 `extra_json` 或后续阶段 |
 
 ---
 
