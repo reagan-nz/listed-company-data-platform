@@ -101,19 +101,27 @@ CNINFO 是当前项目**第一优先级的官方披露数据源**。当前已使
 
 ### 验证记录格式
 
+每个 CNINFO 子栏目验证完成后，按统一模板记录结果（不做真实验证前，栏目保持「候选 / 待验证」）。`verified` 仅表示当前小样本通过，不代表长期稳定可用。
+
 | 字段 | 说明 |
 |---|---|
 | `source_section` | CNINFO 栏目标识 |
 | `test_date` | 验证日期 |
 | `sample_size` | 样本量 |
 | `access_method` | HTTP / Playwright / BrowserUser / 人工 |
+| `target_fields` | 计划验证的字段 |
 | `success_count` | 成功数 |
 | `failure_count` | 失败数 |
+| `success_rate` | 成功率 |
 | `data_obtained` | 本次样本验证可获取的数据 |
 | `data_missing` | 本次未获取到的数据 |
 | `failure_reasons` | 失败原因 |
-| `compliance_risk` | 合规风险 |
-| `recommendation` | 推荐优先级与结论 |
+| `compliance_risk` | 合规风险（低 / 中 / 高） |
+| `evidence_available` | 是否可保留 URL / PDF / 快照等证据 |
+| `recommended_status` | 建议状态：`candidate` / `testing` / `verified` / `partial` / `postponed` / `rejected` |
+| `next_action` | 下一步动作 |
+
+完整验证模板、状态定义与 mock 示例见 [plans/cninfo_data_source_value_inventory.md](../plans/cninfo_data_source_value_inventory.md) 第 8 节。
 
 ### 当前结论
 

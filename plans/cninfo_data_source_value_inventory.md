@@ -228,11 +228,17 @@ _最后更新：2026-07-01_
 
 ## 8. 数据源验证计划
 
+> **Sub Issue 2.1：设计 CNINFO 数据源验证记录模板。** Parent Issue 1 已完成栏目盘点、数据类型分类与第一阶段优先级；Parent Issue 2 进入 CNINFO 验证框架。本节只做**验证记录模板与状态定义**，不做真实验证、不写爬虫、不做数据库接入。
+
 > 未验证前只写「候选数据源」或「待验证栏目」，不要写「长期稳定可用」。
+
+### 候选验证对象清单（按优先级分批执行）
+
+下表包含后续可能验证的 CNINFO 子栏目，并不代表第一阶段全部执行；第一阶段仍以第 9.2 节定义的 P0 为准。
 
 | 验证对象 | 样本量 | 访问方式 | 需要验证的字段 | 成功标准 | 失败记录 |
 |---|---|---|---|---|---|
-| 最新公告列表 | 50–100 家 | HTTP 优先 | 标题、类型、时间、URL | 列表可稳定获取、字段完整 | 改版、限流、字段缺失 |
+| 最新公告列表 | 50–100 家 | HTTP 优先 | 标题、类型、时间、URL | 列表可获取、关键字段完整 | 改版、限流、字段缺失 |
 | 公告 PDF 下载 | 50–100 份 | HTTP | PDF 本体、hash、URL | 可下载、hash 一致、可解析 | 404、扫描件无文本层 |
 | 个股 F10 基础资料 | 30–50 家 | HTTP / Playwright | 简介、行业、板块、指标 | 关键字段可提取 | 动态渲染、结构不一 |
 | 公司要览 | 30–50 家 | HTTP / Playwright | 注册信息、主营摘要 | 关键字段可提取 | 页面结构差异 |
@@ -244,7 +250,81 @@ _最后更新：2026-07-01_
 | 公开信息 | 20–30 家 | HTTP / Playwright | 龙虎榜 / 异常交易 | 记录可提取 | 结构复杂、频繁改版 |
 | 互动易 | 20–30 家 | Playwright / BrowserUser | 问答对、时间 | 问答对可提取 | 反爬、分页复杂 |
 
-每个验证对象都需记录：样本量、访问方式（HTTP / Playwright / BrowserUser / 人工）、成功标准、失败原因，并遵守法律授权与平台规则，不假设绕过登录、付费、验证码、权限或反爬。
+每个验证对象都需按 **8.1 模板** 记录：样本量、访问方式、成功率、失败原因，并遵守法律授权与平台规则，不假设绕过登录、付费、验证码、权限或反爬。
+
+### 8.1 验证记录模板
+
+每个 CNINFO 子栏目在被标记为「已验证」之前，都必须先完成小样本验证，并按统一格式记录结果。验证记录**不是为了证明该栏目一定可用**，而是为了客观记录它在样本测试中的字段可得性、稳定性、失败原因和后续建议。
+
+| 字段 | 说明 | 示例 |
+|---|---|---|
+| `source_section` | CNINFO 子栏目名称 | 最新公告 / 个股 F10 / 公告 PDF |
+| `test_date` | 测试日期 | 2026-07-01 |
+| `sample_size` | 样本数量 | 50 家公司 |
+| `sample_companies` | 样本公司范围，需覆盖不同板块和行业 | 主板 / 创业板 / 科创板 / 北交所公司混合样本 |
+| `access_method` | 访问方式 | HTTP / Playwright / BrowserUser / 人工 |
+| `target_fields` | 计划验证的字段 | `announcement_title`, `publish_time`, `source_url`, `pdf_url` |
+| `success_count` | 成功获取关键字段的样本数量 | 45 |
+| `failure_count` | 失败样本数量 | 5 |
+| `success_rate` | 成功率 | 90% |
+| `data_obtained` | 实际成功获取到的字段 | 标题、发布时间、PDF URL |
+| `data_missing` | 缺失字段 | 部分公司缺少公告类型 |
+| `failure_reasons` | 失败原因 | 页面结构变化、字段缺失、PDF 404、动态渲染、分页异常 |
+| `compliance_risk` | 是否存在登录、验证码、付费、权限、反爬等风险 | 低 / 中 / 高 |
+| `evidence_available` | 是否能保留 `source_url`、PDF、HTML 快照、`content_hash` 等证据 | 是 / 部分 / 否 |
+| `recommended_status` | 验证后建议状态 | `candidate` / `testing` / `verified` / `partial` / `postponed` / `rejected` |
+| `recommendation` | 后续建议 | 进入 P0 小样本抓取 / 暂缓 / 需要 Playwright / 需要人工复核 |
+| `next_action` | 下一步动作 | 扩大样本 / 写抓取脚本 / 更新 `docs/data_sources.md` / 保持候选 |
+
+### 8.2 验证状态定义
+
+| 状态 | 含义 | 使用条件 |
+|---|---|---|
+| `candidate` | 候选数据源 | 已发现价值，但尚未完成小样本验证 |
+| `testing` | 正在验证 | 已选择样本并开始测试字段可得性 |
+| `verified` | 已通过当前小样本验证 | 关键字段成功率达到设定标准，且证据可追溯 |
+| `partial` | 部分可用 | 部分字段可稳定获取，但存在缺失字段或特定失败情况 |
+| `postponed` | 暂缓 | 价值存在，但当前阶段优先级低、成本高或范围外 |
+| `rejected` | 不建议继续 | 小样本验证失败率高、字段不可用、合规风险高或证据不可追溯 |
+
+> `verified` 只代表**当前小样本验证通过**，不代表长期稳定可用；后续仍需持续监控。
+
+### 8.3 验证通过标准
+
+P0 栏目要从「候选」进入「已验证」，至少需要满足：
+
+1. 样本量足够，例如 20–50 家公司（具体按栏目调整）；
+2. 关键字段成功率达到预设标准（**具体阈值按栏目决定，但必须记录成功率和失败原因**；不要求 100% 成功）；
+3. 每条数据可以保留 `source_url` 或原始文件证据；
+4. 失败样本有明确 `failure_reason`；
+5. 不存在明显登录、验证码、付费、权限或高反爬风险；
+6. 字段结构足够稳定，可以支持后续小样本脚本化；
+7. 结果已更新到 `docs/data_sources.md`。
+
+### 8.4 验证记录示例
+
+以下为「最新公告列表」的**记录格式 mock 示例**，不代表真实验证结果：
+
+| 字段 | 示例值 |
+|---|---|
+| `source_section` | 最新公告 |
+| `test_date` | 2026-07-01 |
+| `sample_size` | 50 |
+| `access_method` | HTTP 优先 |
+| `target_fields` | `company_code`, `announcement_title`, `publish_time`, `source_url`, `pdf_url` |
+| `success_count` | mock: 45 |
+| `failure_count` | mock: 5 |
+| `success_rate` | mock: 90% |
+| `data_obtained` | mock: 标题、发布时间、PDF URL |
+| `data_missing` | mock: 部分公告缺少类型 |
+| `failure_reasons` | mock: 分页异常、PDF URL 缺失 |
+| `compliance_risk` | mock: 低 |
+| `evidence_available` | mock: 是 |
+| `recommended_status` | mock: `testing` |
+| `recommendation` | mock: 继续扩大样本 |
+| `next_action` | mock: 准备最新公告 P0 小样本验证 |
+
+> 这是记录格式示例，不代表真实验证结果；当前所有 P0 栏目仍为候选 / 待验证状态。
 
 ---
 
