@@ -106,19 +106,36 @@ _最后更新：2026-07-01_
 
 ---
 
-## 4. 可补充的公司属性池
+## 4. CNINFO 数据类型分类：属性、文档、事件、证据与候选数据
 
-| 属性类别 | 示例属性 | 来源栏目 | 建议存储位置 | 优先级 | 备注 |
-|---|---|---|---|---|---|
-| 公司基础属性 | 股票代码、股票简称、交易所、板块、行业、上市状态、是否 ST | 个股 F10 / 公司资料 / 公司要览 | PostgreSQL `company` | P0 | 静态属性，变更频率低 |
-| 公司资料属性 | 公司简介、主营业务摘要、注册地址、办公地址、官网、联系电话、邮箱、董秘 | 个股 F10 / 公司资料 | PostgreSQL `company_profile` 或 `company` 扩展表 | P0/P1 | 低频更新 |
-| 治理属性 | 董事长、总经理、高管、董事会成员、股东大会信息、管理层变动 | F10 / 公司治理 / 公告 PDF | PostgreSQL `management_profile` + `event` | P1 | 变动生成事件 |
-| 股本股东属性 | 总股本、流通股本、限售股、前十大股东、控股股东、实际控制人、股东户数 | F10 / 年报 / 季报 / 股东信息 | PostgreSQL `share_structure` / `shareholder_snapshot` | P1 | 按报告期快照 |
-| 披露文档属性 | 公告标题、公告类型、发布时间、公告 URL、PDF hash、报告期、披露机构 | 最新公告 / 信息披露 / 公告搜索 | PostgreSQL `document` + `raw_file` | P0 | 文档流基础 |
-| 财报字段属性 | 主营业务、研发投入、收入结构、风险因素、主要子公司 | 年报 PDF / 半年报 / 季报 | PostgreSQL `field_value` | 已有年报基础，后续可扩展至多年份和多报告类型 | 复用现有抽取 |
-| 风险异常属性 | ST、退市风险、监管问询、处罚、诉讼、担保、重大风险提示 | 风险公告 / 监管类披露 / 临时公告 | PostgreSQL `event`；低置信度先进入 MongoDB `raw_event_candidate` | P1 | 需规则分类 |
-| 市场行为属性 | 融资融券、大宗交易、限售解禁、公开信息 / 异常交易 | 融资融券 / 大宗交易 / 限售解禁 / 公开信息 | PostgreSQL `market_event` 或 `market_indicator_snapshot`；结构不稳定先入 MongoDB | P2 | 范围需克制 |
-| 投资者互动与治理参与属性 | 互动易问答、网络投票、股东大会议案、预约披露日期 | 互动易 / 网络投票 / 预约披露 | MongoDB `raw_crawl_result` / `raw_event_candidate`；审核后可晋升到 PostgreSQL `event` | P1/P2 | 结构不稳定，先接住 |
+> **Sub Issue 1.2：将 CNINFO 数据分类为属性、文档、事件、证据和候选数据。** 在栏目盘点（第 3 节）基础上，本节按**平台用途**分类 CNINFO 可能提供的数据，判断其进入正式层、证据层还是候选层。本节只做分类研究，不涉及爬虫实现或数据库 schema 接入。
+
+| 数据类型 | 示例字段 | 来源栏目 | 平台用途 | 建议层级 | 优先级 | 当前状态 |
+|---|---|---|---|---|---|---|
+| 公司基础属性 | `company_code`、`stock_short_name`、`company_name`、`exchange`、`board`、`industry`、`listing_status`、`is_st` | 个股 F10 / 公司资料 / 公司要览 | 识别公司、筛选公司、建立 `company` 主索引 | PostgreSQL `company` | P0 | 候选 / 待验证 |
+| 公司资料属性 | `company_profile`、`main_business_summary`、`registered_address`、`office_address`、`website`、`contact_phone`、`contact_email`、`board_secretary` | 个股 F10 / 公司资料 | 补充公司画像和未来用户端公司资料页 | PostgreSQL `company_profile`；原始页面可进 MinIO / MongoDB | P0/P1 | 候选 / 待验证 |
+| 文档属性 | `announcement_title`、`announcement_type`、`publish_time`、`report_period`、`source_url`、`pdf_url`、`content_hash` | 最新公告 / 信息披露 / 公告搜索 / 年报 / 半年报 / 季报 | 管理公告、定期报告和来源文档 | PostgreSQL `document` + `raw_file`；PDF 原件进 MinIO | P0 | 年报已使用；其他公告 / 报告待验证 |
+| 财报字段属性 | `main_business`、`rnd_investment`、`revenue_by_region`、`revenue_by_segment`、`risk_factors`、`major_subsidiaries` | 年报 PDF / 后续半年报 / 季报 | 支持结构化查询、公司画像、证据引用 | PostgreSQL `field_value` + `quality_audit` | 年报已使用；半年报 / 季报扩展为 P1 | 2024 年报字段已使用；多年份 / 多报告类型待验证 |
+| 动态事件属性 | `event_type`、`event_time`、`title`、`summary`、`importance_level`、`review_status`、`dedupe_key` | 最新公告 / 风险公告 / 分红融资 / 公司治理 / 监管问询 | 形成公司时间线，未来支持推送 | PostgreSQL `event`；低置信候选先入 MongoDB `raw_event_candidate` | P1 | 候选 / 待验证 |
+| 风险异常属性 | `is_st`、`delisting_risk`、`regulatory_inquiry`、`penalty`、`litigation`、`guarantee_risk`、`abnormal_operation` | 风险公告 / 监管问询 / 处罚 / 诉讼 / 临时公告 | 风险识别、风险事件推送、公司风险画像 | PostgreSQL `event` + 未来候选 `risk_profile`；不确定内容先入 MongoDB candidate | P1 | 候选 / 待验证 |
+| 股本股东属性 | `total_share_capital`、`float_share_capital`、`restricted_shares`、`top_shareholders`、`controlling_shareholder`、`actual_controller`、`shareholder_count` | 股本结构 / 股东信息 / 年报 / 季报 / F10 | 股权结构分析、公司控制权画像 | 验证后可映射到 PostgreSQL 未来候选 `share_structure` / `shareholder_snapshot` | P1 | 候选 / 待验证 |
+| 公司治理属性 | `chairman`、`general_manager`、`executives`、`board_members`、`board_secretary`、`shareholder_meeting`、`management_change` | 公司治理 / F10 / 股东大会公告 / 临时公告 | 治理结构画像和治理事件时间线 | 验证后可映射到 PostgreSQL 未来候选 `management_profile` + `event` | P1 | 候选 / 待验证 |
+| 资本运作事件 | `dividend_plan`、`share_repurchase`、`private_placement`、`equity_incentive`、`major_asset_restructuring` | 分红融资 / 公告 PDF / 信息披露 | 资本运作事件识别和推送 | PostgreSQL `event`；公告 PDF 进 MinIO | P1 | 候选 / 待验证 |
+| 市场行为属性 | `margin_balance`、`margin_financing_change`、`block_trade_price`、`block_trade_volume`、`share_unlock_date`、`share_unlock_amount`、`abnormal_trading_reason` | 融资融券 / 大宗交易 / 限售解禁 / 公开信息 | 市场行为观察和辅助风险 / 交易事件 | 验证后可映射到 PostgreSQL 未来候选 `market_event` 或 `market_indicator_snapshot`；复杂数据先入 MongoDB | P2 | 候选 / 待验证 / 后续研究 |
+| 投资者互动属性 | `question`、`answer`、`question_time`、`reply_time`、`topic`、`interaction_summary` | 互动易 | 投资者关注点分析，可能生成候选业务 / 风险事件 | MongoDB `raw_crawl_result` / `raw_event_candidate`；审核后才可晋升 PostgreSQL `event` | P2 | 候选 / 待验证 |
+| 治理参与属性 | `voting_item`、`meeting_time`、`proposal_title`、`vote_result` | 网络投票 / 股东大会公告 | 治理参与记录和股东大会事件 | 验证后可映射到 PostgreSQL 未来候选 `governance_event` 或 `event`；原始页面进 MinIO / MongoDB | P2 | 候选 / 待验证 |
+| 原始证据 | `pdf_file`、`html_snapshot`、`source_url`、`content_hash`、`source_page`、`evidence_text`、`crawl_time`、`parse_status` | 所有 CNINFO 文档和页面 | 保证字段、事件和回答可以追溯来源 | MinIO + PostgreSQL `raw_file` / `document` / `field_value` | P0 | 年报证据已使用；其他来源待验证 |
+| 候选数据 | `raw_json`、`extracted_text`、`candidate_type`、`confidence_score`、`normalize_status`、`failure_reason` | 结构不稳定页面、互动易、复杂栏目、低置信事件 | 先保留原始信息，避免未审核内容直接进入正式库 | MongoDB `raw_crawl_result` / `raw_event_candidate` | P1/P2 | 候选 / 待验证 |
+
+### 4.1 分类小结
+
+1. **CNINFO 数据不能直接全部进入正式 PostgreSQL。** 只有经过验证、结构明确、来源清晰的数据才适合沉淀为正式属性、文档、字段或事件。
+2. **稳定、结构明确、可验证的数据**（如已验证的公告元数据、F10 基础字段、来源明确的正式事件）才进入 PostgreSQL 正式层。
+3. **PDF / HTML / 附件等原件**进入 MinIO，数据库只保留元数据与证据引用。
+4. **结构不稳定、低置信、待审核的数据**（如互动易问答、复杂栏目原始 JSON、低置信事件候选）先进入 MongoDB，审核通过后再晋升。
+5. 本分类结果将作为后续数据库接入的依据，但**当前阶段仍然不做数据库接入**，只做数据源价值研究与小样本验证规划。
+
+> 说明：原「可补充的公司属性池」已并入上表；按数据类型而非栏目罗列，便于判断每层存储职责。第 5–7 节的事件类型、证据类型、三层映射与本节分类一致，互为补充。
 
 ---
 
