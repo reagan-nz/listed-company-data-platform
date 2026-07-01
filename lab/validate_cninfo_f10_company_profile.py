@@ -91,8 +91,43 @@ FAILURE_REASONS = {
 BSE_OLD_PREFIX = "430"
 BSE_NEW_PREFIX = "920"
 
+# 北交所 430→920 + orgId 人工映射（小样本，非通用规则）
+BSE_MANUAL_MAPPING: Dict[str, Tuple[str, str, str]] = {
+    "430017": ("920017", "9900003482", "星昊医药"),
+    "430047": ("920047", "9900006121", "诺思兰德"),
+    "430090": ("920090", "9900020567", "同辉信息"),
+    "430139": ("920139", "9900024205", "华岭股份"),
+    "430198": ("920198", "9900024889", "微创光电"),
+    "430300": ("920300", "9900023934", "辰光医疗"),
+}
+
+# 科创板 688 orgId 人工映射（小样本，非通用规则；gshk0000+后三位已被推翻）
+STAR_MANUAL_MAPPING: Dict[str, Tuple[str, str, str]] = {
+    "688001": ("688001", "9900038969", "华兴源创"),
+    "688002": ("688002", "9900038939", "睿创微纳"),
+    "688003": ("688003", "gfbj0833231", "天准科技"),
+    "688004": ("688004", "gfbj0871038", "博汇科技"),
+    "688005": ("688005", "9900038937", "容百科技"),
+    "688006": ("688006", "9900037551", "杭可科技"),
+    "688007": ("688007", "9900038970", "光峰科技"),
+}
+
 CNINFO_SEARCH_URL = "https://www.cninfo.com.cn/new/information/topSearch/detailOfQuery"
 CNINFO_PROFILE_BASE = "https://www.cninfo.com.cn/new/disclosure/stock"
+ENTRY_MAPPING_CSV = os.path.join(OUT_DIR, "cninfo_f10_entry_mapping.csv")
+
+ENTRY_MAPPING_FIELDS = [
+    "company_code",
+    "company_name",
+    "exchange",
+    "board",
+    "cninfo_stock_code",
+    "cninfo_org_id",
+    "cninfo_profile_url",
+    "profile_url_rule",
+    "mapping_status",
+    "notes",
+]
 
 
 def ensure_dirs() -> None:
@@ -120,7 +155,18 @@ def map_bse_code_if_needed(code: str) -> str | None:
 
 def build_cninfo_profile_url(company_code: str, company_name: str | None = None) -> Tuple[str, str, str, str]:
     cc = company_code.strip()
-    name = (company_name or "").strip()
+
+    if cc in BSE_MANUAL_MAPPING:
+        stock_code, org_id, _ = BSE_MANUAL_MAPPING[cc]
+        rule = "manual_bse_430_to_920_orgid_mapping"
+        url = f"{CNINFO_PROFILE_BASE}?stockCode={stock_code}&orgId={org_id}#companyProfile"
+        return stock_code, org_id, url, rule
+
+    if cc in STAR_MANUAL_MAPPING:
+        stock_code, org_id, _ = STAR_MANUAL_MAPPING[cc]
+        rule = "manual_star_orgid_mapping"
+        url = f"{CNINFO_PROFILE_BASE}?stockCode={stock_code}&orgId={org_id}#companyProfile"
+        return stock_code, org_id, url, rule
 
     # 600 / 300
     if cc.startswith("600") or cc.startswith("300"):
@@ -130,20 +176,12 @@ def build_cninfo_profile_url(company_code: str, company_name: str | None = None)
         url = f"{CNINFO_PROFILE_BASE}?stockCode={stock_code}&orgId={org_id}#companyProfile"
         return stock_code, org_id, url, rule
 
-    # 688 科创板
+    # 688 科创板：不在人工映射表中则标记缺 orgId（不再使用 gshk0000+后三位）
     if cc.startswith("688"):
         stock_code = cc
-        org_id = "gshk0000" + cc[-3:]
-        rule = "manual_rule_688_gshk"
-        url = f"{CNINFO_PROFILE_BASE}?stockCode={stock_code}&orgId={org_id}#companyProfile"
-        return stock_code, org_id, url, rule
-
-    # 特例：北交所星昊医药
-    if cc == "430017" or ("星昊医药" in name):
-        stock_code = "920017"
-        org_id = "9900003482"
-        rule = "manual_rule_bse_430017_to_920017"
-        url = f"{CNINFO_PROFILE_BASE}?stockCode={stock_code}&orgId={org_id}#companyProfile"
+        org_id = "unknown"
+        rule = "star_orgid_required"
+        url = ""
         return stock_code, org_id, url, rule
 
     # 其他 430 暂不泛化
@@ -156,6 +194,59 @@ def build_cninfo_profile_url(company_code: str, company_name: str | None = None)
 
     # Default fallback
     return cc, "unknown", "", "needs_orgid_mapping"
+
+
+def build_entry_mapping_row(sample: Dict) -> Dict:
+    company_code = sample.get("company_code", "").strip()
+    company_name = sample.get("company_name", "").strip()
+    exchange = sample.get("exchange", "").strip()
+    board = sample.get("board", "").strip()
+
+    cninfo_stock_code, cninfo_org_id, cninfo_profile_url, profile_url_rule = build_cninfo_profile_url(
+        company_code, company_name
+    )
+
+    if cninfo_profile_url:
+        mapping_status = "mapped"
+        notes = ""
+        if profile_url_rule == "manual_bse_430_to_920_orgid_mapping":
+            notes = "manual BSE mapping from company name search"
+        elif profile_url_rule == "manual_star_orgid_mapping":
+            notes = "manual STAR mapping from company search"
+    elif profile_url_rule in ("bse_orgid_required", "star_orgid_required", "needs_orgid_mapping"):
+        mapping_status = "needs_mapping"
+        notes = "orgId or mapping needed"
+    else:
+        mapping_status = "needs_mapping"
+        notes = "orgId or mapping needed"
+
+    return {
+        "company_code": company_code,
+        "company_name": company_name,
+        "exchange": exchange,
+        "board": board,
+        "cninfo_stock_code": cninfo_stock_code,
+        "cninfo_org_id": cninfo_org_id,
+        "cninfo_profile_url": cninfo_profile_url,
+        "profile_url_rule": profile_url_rule,
+        "mapping_status": mapping_status,
+        "notes": notes,
+    }
+
+
+def write_entry_mapping_csv(samples: List[Dict]) -> None:
+    with open(ENTRY_MAPPING_CSV, "w", newline="", encoding="utf-8") as fh:
+        writer = csv.DictWriter(fh, fieldnames=ENTRY_MAPPING_FIELDS)
+        writer.writeheader()
+        for sample in samples:
+            writer.writerow(build_entry_mapping_row(sample))
+
+
+def regenerate_entry_mapping() -> None:
+    ensure_dirs()
+    samples = load_samples()
+    write_entry_mapping_csv(samples)
+    print(f"Wrote {len(samples)} rows -> {ENTRY_MAPPING_CSV}")
 
 
 def fetch_profile(query_code: str) -> Tuple[Dict, int | None, str | None]:
@@ -446,8 +537,23 @@ def write_summary(rows: List[Dict], failure_counter: Counter, mapped_success: in
         fh.write("\n")
 
         fh.write("## 北交所 / 代码映射观察\n")
+        bse_mapped = sum(
+            1 for r in rows if r.get("profile_url_rule") == "manual_bse_430_to_920_orgid_mapping"
+        )
+        fh.write(f"- 已人工补充 BSE 430→920/orgId 映射：{bse_mapped} 家（见 BSE_MANUAL_MAPPING，小样本专用）\n")
         fh.write(f"- 使用 430xxx -> 920xxx 映射成功的公司数：{mapped_success}\n")
-        fh.write("- 映射仅为小样本保守策略，不代表长期通用；如仍失败需人工复核。\n\n")
+        fh.write("- 430→920 stockCode 在 6 个北交所样本上成立；orgId 无简单公式，当前来自人工搜索。\n")
+        fh.write("- 映射仅为小样本保守策略，不代表长期通用；如仍失败需人工复核。\n")
+        fh.write("- 下一步：重新运行 profile page reachability；若页面可达，再纳入 Playwright 字段验证。\n\n")
+
+        fh.write("## 科创板 / orgId 映射观察\n")
+        star_mapped = sum(
+            1 for r in rows if r.get("profile_url_rule") == "manual_star_orgid_mapping"
+        )
+        fh.write(f"- 已人工补充 STAR 688 orgId 映射：{star_mapped} 家（见 STAR_MANUAL_MAPPING，小样本专用）\n")
+        fh.write("- 原规则 gshk0000+后三位已被 Playwright 小样本推翻，不再作为可靠构造方式。\n")
+        fh.write("- 688 orgId 可能是 99000... 或 gfbj...，无统一公式；须人工搜索或后续接口解析。\n")
+        fh.write("- 下一步：重新运行 reachability / static HTML / Playwright 验证。\n\n")
 
         fh.write("## recommended_status（小样本）\n")
         if success > 0:
@@ -488,4 +594,9 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "--entry-mapping-only":
+        regenerate_entry_mapping()
+    else:
+        main()

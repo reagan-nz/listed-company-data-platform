@@ -6,26 +6,25 @@
 
 ## 样本概况
 - entry mapping 总数：40
-- 成功：11
-- partial：13
-- failed：16
+- 成功：23
+- partial：7
+- failed：10
 
 ## 按规则类型统计
 - manual_rule_600_300_gssh0: total 17, success 10, partial 7, failed 0
 - needs_orgid_mapping: total 10, success 0, partial 0, failed 10
-- manual_rule_688_gshk: total 7, success 0, partial 6, failed 1
-- manual_rule_bse_430017_to_920017: total 1, success 1, partial 0, failed 0
-- bse_orgid_required: total 5, success 0, partial 0, failed 5
+- manual_star_orgid_mapping: total 7, success 7, partial 0, failed 0
+- manual_bse_430_to_920_orgid_mapping: total 6, success 6, partial 0, failed 0
 
 ## 可达性结果
-- HTTP 200：24/40
+- HTTP 200：30/40
 - 404：0
 - 500：0
-- timeout：1
-- 需要 JS 渲染（无关键词且无公司名）：14
-- 含公司资料关键词：11
+- timeout：0
+- 需要 JS 渲染（无关键词且无公司名）：7
+- 含公司资料关键词：23
 - 含公司名称：0
-- 缺 orgId/映射待补充：15
+- 缺 orgId/映射待补充：10
 
 ## 北交所 / 代码映射观察
 - 430/920 映射仅对 430017→920017 有样例，其余 430 需补 orgId 后再测；本轮未泛化。
