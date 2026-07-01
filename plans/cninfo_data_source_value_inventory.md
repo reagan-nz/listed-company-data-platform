@@ -458,6 +458,179 @@ P0 栏目要从「候选」进入「已验证」，至少需要满足：
 - 判断是否需要 Playwright；
 - 暂不进入数据库接入。
 
+### 8.6 P0 验证计划：公告 PDF 元数据
+
+> **Sub Issue 2.3：准备 CNINFO 公告 PDF 元数据的 P0 验证计划。** 本节在 8.5 最新公告列表验证计划基础上，设计公告 PDF 元数据的小样本验证方案；**只做验证计划，不做真实验证、不写爬虫、不做数据库接入。**
+
+#### 8.6.1 验证目标
+
+公告 PDF 元数据验证的目标，是在最新公告列表能提供 `pdf_url` / `source_url` 的基础上，进一步判断公告 PDF 是否能够稳定下载、识别、去重和追溯。
+
+它主要验证：
+
+- PDF 是否能通过公开链接访问；
+- PDF 是否能下载；
+- 是否能计算 `content_hash` / `sha256`；
+- 是否能记录 `file_size`、`mime_type`、`download_time`、`download_status`；
+- 是否能保留 `source_url` 与 `pdf_url`；
+- 是否能为后续 MinIO 原件层和 PostgreSQL `raw_file` / `document` 元数据提供依据。
+
+需要强调：
+
+- 本节只是**验证计划**；
+- **不代表**公告 PDF 下载已经完成；
+- **不代表** PDF 链接长期稳定可用；
+- **不做**真实下载；
+- **不写**爬虫；
+- **不做** MinIO / PostgreSQL / MongoDB 接入。
+
+#### 8.6.2 样本设计
+
+| 项 | 设计 |
+|---|---|
+| 样本量 | 50–100 份公告 PDF |
+| 样本来源 | 优先来自 8.5 最新公告列表验证中获得的 `pdf_url` / `source_url` |
+| 公告类型覆盖 | 定期报告、临时公告、风险提示、分红回购、公司治理、监管问询等尽量混合 |
+| 公司覆盖 | 尽量覆盖不同板块、行业和公告频率不同的公司 |
+| 文件类型覆盖 | 普通文本 PDF、扫描 PDF、带附件公告、可能较大的 PDF |
+| 时间范围 | 优先最近 3–6 个月公告；如可行，再抽取较早公告测试链接可用性 |
+| 样本记录 | 记录 `company_code`、`company_name`、`announcement_title`、`announcement_type`、`publish_time`、`source_url`、`pdf_url`、`sample_reason` |
+
+#### 8.6.3 目标字段
+
+| 字段 | 说明 | 是否关键字段 |
+|---|---|---|
+| `company_code` | 股票代码 | 是 |
+| `company_name` | 公司名称或证券简称 | 是 |
+| `announcement_title` | 公告标题 | 是 |
+| `announcement_type` | 公告类型 | 部分关键 |
+| `publish_time` | 公告发布时间 | 是 |
+| `source_url` | 公告来源链接或详情页链接 | 是 |
+| `pdf_url` | PDF 下载链接 | 是 |
+| `download_status` | 下载状态，例如 `success` / `failed` / `skipped` | 是 |
+| `http_status_code` | HTTP 状态码，例如 200 / 403 / 404 / 500 | 是 |
+| `content_hash` | PDF 文件 sha256，用于去重和一致性校验 | 是，下载成功时必须记录 |
+| `file_size` | PDF 文件大小 | 是，下载成功时必须记录 |
+| `mime_type` | 文件类型，例如 `application/pdf` | 是 |
+| `download_time` | 下载时间 | 是 |
+| `has_text_layer` | PDF 是否可能有文本层，后续解析时需要 | 否，本阶段可选 |
+| `failure_reason` | 失败原因 | 是，失败样本必须记录 |
+
+#### 8.6.4 访问方式
+
+访问方式优先级如下：
+
+1. **HTTP 直接下载优先**  
+   如果 `pdf_url` 是公开静态链接，优先使用 HTTP 下载，记录 `http_status_code`、`file_size`、`mime_type`、`content_hash`。
+
+2. **source_url 回退**  
+   如果 `pdf_url` 缺失或失效，可以回到 `source_url` / 公告详情页查找 PDF 链接。
+
+3. **Playwright 备用**  
+   如果 PDF 链接由前端动态生成或页面依赖 JS 渲染，再考虑 Playwright。
+
+4. **BrowserUser 暂不作为第一选择**  
+   除非普通 HTTP / Playwright 无法获取，且确实属于高价值 P0 验证。
+
+**不绕过**登录、验证码、付费、权限或强反爬。
+
+#### 8.6.5 成功标准
+
+| 维度 | 成功标准 |
+|---|---|
+| PDF 可访问 | 公开 `pdf_url` 能返回有效响应，例如 HTTP 200 |
+| 文件可识别 | `mime_type` 或文件头能确认是 PDF |
+| hash 可计算 | 下载成功的 PDF 能计算 sha256 / `content_hash` |
+| 文件元数据完整 | `file_size`、`download_time`、`download_status` 能记录 |
+| 证据可追溯 | 每份 PDF 都能关联 `source_url` / `pdf_url` / `announcement_title` / `publish_time` |
+| 失败可解释 | 失败样本必须记录 `failure_reason` 和 `http_status_code` |
+| 合规风险 | 不存在明显登录、验证码、付费、权限或高反爬问题 |
+| 后续可接入 | 如果结果稳定，后续可为 MinIO `object_key`、`raw_file` 元数据、`document` 关联提供依据 |
+
+具体阈值按栏目和样本决定，但必须记录 `success_count`、`failure_count`、`success_rate`；不要求 100% 成功。
+
+#### 8.6.6 失败原因分类
+
+| `failure_reason` | 说明 |
+|---|---|
+| `missing_pdf_url` | 缺少 PDF 链接 |
+| `invalid_pdf_url` | PDF 链接格式无效 |
+| `pdf_404` | PDF 不存在或链接失效 |
+| `pdf_403` | 访问被拒绝 |
+| `pdf_500` | 服务器错误 |
+| `not_pdf_content` | 返回内容不是 PDF |
+| `download_timeout` | 下载超时 |
+| `file_too_large` | 文件过大，超过验证阶段限制 |
+| `hash_failed` | hash 计算失败 |
+| `mime_type_missing` | 无法判断文件类型 |
+| `source_url_missing` | 缺少来源链接 |
+| `source_pdf_mismatch` | `source_url` 与 `pdf_url` 无法对应 |
+| `scan_pdf_no_text_layer` | 扫描件 PDF 无文本层，后续解析可能需要 OCR |
+| `rate_limited` | 请求频率限制 |
+| `captcha_or_login_required` | 出现验证码或登录要求 |
+| `unknown_error` | 未知错误，需要人工检查 |
+
+#### 8.6.7 content_hash / sha256 规则
+
+`content_hash` 建议使用 **sha256**。
+
+计算对象应为 **PDF 原始二进制内容**，而不是 URL、标题或解析文本。
+
+用途包括：
+
+- 文件去重；
+- 校验重复下载是否一致；
+- 作为 `raw_file` 记录的重要字段；
+- 后续生成 MinIO `object_key` 时作为辅助依据。
+
+> 本节只定义规则，**不实际计算 hash**。
+
+#### 8.6.8 验证结果记录格式
+
+公告 PDF 元数据验证完成后，需要按 **8.1 验证记录模板** 记录结果。
+
+以下为 mock 示例，**不代表真实验证结果**：
+
+| 字段 | 示例值 |
+|---|---|
+| `source_section` | 公告 PDF 元数据 |
+| `test_date` | 2026-07-01 |
+| `sample_size` | mock: 80 |
+| `access_method` | mock: HTTP 直接下载 |
+| `target_fields` | `company_code`, `announcement_title`, `pdf_url`, `http_status_code`, `content_hash`, `file_size`, `mime_type` |
+| `success_count` | mock: 72 |
+| `failure_count` | mock: 8 |
+| `success_rate` | mock: 90% |
+| `data_obtained` | mock: PDF URL、HTTP 状态码、文件大小、sha256 |
+| `data_missing` | mock: 部分公告缺少 PDF URL |
+| `failure_reasons` | mock: `pdf_404`, `download_timeout`, `not_pdf_content` |
+| `compliance_risk` | mock: 低 |
+| `evidence_available` | mock: 是 |
+| `recommended_status` | mock: `testing` |
+| `recommendation` | mock: 继续验证 object_key 规则和 raw_file 字段映射 |
+| `next_action` | mock: 准备 F10 / 公司资料验证计划 |
+
+> 这是 mock 示例，不代表真实验证结果。
+
+#### 8.6.9 与后续任务的关系
+
+**如果公告 PDF 元数据验证通过**，后续可以进入：
+
+- MinIO `object_key` 规则设计；
+- `raw_file` 元数据字段映射；
+- `document` 与 `raw_file` 关联规则；
+- 公告 PDF 正文解析验证；
+- `field_value` / `event` 的证据追溯设计；
+- `docs/data_sources.md` 状态更新。
+
+**如果验证失败或部分可用**，则：
+
+- 保持 `candidate` / `partial` 状态；
+- 记录失败原因；
+- 判断是否需要回到 `source_url` 查找 PDF；
+- 判断是否需要 Playwright；
+- 暂不进入 MinIO / PostgreSQL 接入。
+
 ---
 
 ## 9. 第一阶段优先级建议
