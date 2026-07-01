@@ -47,9 +47,10 @@
 
 ## 初次验证结论与后续排查
 - 本轮 F10 / 公司资料 HTTP 尝试未成功获取资料字段，整体视为 candidate / failed attempt。
-- 需人工检查 source_url 在浏览器能否打开，确认 /new/information/topSearch/detailOfQuery 是否为正确接口。
-- 若页面可访问但接口持续 500，下一步可考虑页面解析或 Playwright 备用（不使用 BrowserUser）。
-- 后续可尝试 company_name / stock_short_name 查询，或引入 orgId / cninfo_query_code 映射，而非仅用 company_code。
+- 旧接口 /new/information/topSearch/detailOfQuery 返回 500/timeout，不应视为有效 F10 入口。
+- 人工发现新的入口：/new/disclosure/stock?stockCode=...&orgId=...#companyProfile（600/300 用 gssh0+code，688 用 gshk0000+后三位，430017→920017/9900003482 为特例，其他 430 需单独映射）。
+- 需人工检查 source_url 或新入口在浏览器能否打开，确认 orgId/stockCode 组合是否正确；如果页面可访问但接口持续 500，下一步可考虑页面解析或 Playwright 备用（不使用 BrowserUser）。
+- 已开始整理 entry mapping（见 cninfo_f10_entry_mapping.csv / cninfo_f10_entry_discovery_notes.md）；后续应基于 stockCode+orgId+#companyProfile 入口再做第二轮 companyProfile 可达性验证。
 
 ## 合规与边界确认
 - 未绕过登录/验证码/付费/权限。

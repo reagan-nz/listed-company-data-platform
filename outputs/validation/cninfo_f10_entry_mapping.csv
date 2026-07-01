@@ -1,0 +1,41 @@
+company_code,company_name,exchange,board,cninfo_stock_code,cninfo_org_id,cninfo_profile_url,profile_url_rule,mapping_status,notes
+600000,浦发银行,SSE,主板,600000,gssh0600000,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600000&orgId=gssh0600000#companyProfile,manual_rule_600_300_gssh0,mapped,
+600004,白云机场,SSE,主板,600004,gssh0600004,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600004&orgId=gssh0600004#companyProfile,manual_rule_600_300_gssh0,mapped,
+600006,东风股份,SSE,主板,600006,gssh0600006,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600006&orgId=gssh0600006#companyProfile,manual_rule_600_300_gssh0,mapped,
+600007,中国国贸,SSE,主板,600007,gssh0600007,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600007&orgId=gssh0600007#companyProfile,manual_rule_600_300_gssh0,mapped,
+600008,首创环保,SSE,主板,600008,gssh0600008,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600008&orgId=gssh0600008#companyProfile,manual_rule_600_300_gssh0,mapped,
+600009,上海机场,SSE,主板,600009,gssh0600009,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600009&orgId=gssh0600009#companyProfile,manual_rule_600_300_gssh0,mapped,
+600010,包钢股份,SSE,主板,600010,gssh0600010,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600010&orgId=gssh0600010#companyProfile,manual_rule_600_300_gssh0,mapped,
+600011,华能国际,SSE,主板,600011,gssh0600011,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600011&orgId=gssh0600011#companyProfile,manual_rule_600_300_gssh0,mapped,
+600012,皖通高速,SSE,主板,600012,gssh0600012,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600012&orgId=gssh0600012#companyProfile,manual_rule_600_300_gssh0,mapped,
+600015,华夏银行,SSE,主板,600015,gssh0600015,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600015&orgId=gssh0600015#companyProfile,manual_rule_600_300_gssh0,mapped,
+000001,平安银行,SZSE,主板,000001,unknown,,needs_orgid_mapping,needs_mapping,orgId or mapping needed
+000002,万科A,SZSE,主板,000002,unknown,,needs_orgid_mapping,needs_mapping,orgId or mapping needed
+000004,国华退,SZSE,主板,000004,unknown,,needs_orgid_mapping,needs_mapping,orgId or mapping needed
+000006,深振业A,SZSE,主板,000006,unknown,,needs_orgid_mapping,needs_mapping,orgId or mapping needed
+000007,全新好,SZSE,主板,000007,unknown,,needs_orgid_mapping,needs_mapping,orgId or mapping needed
+000008,神州高铁,SZSE,主板,000008,unknown,,needs_orgid_mapping,needs_mapping,orgId or mapping needed
+000009,中国宝安,SZSE,主板,000009,unknown,,needs_orgid_mapping,needs_mapping,orgId or mapping needed
+000010,*ST美丽,SZSE,主板,000010,unknown,,needs_orgid_mapping,needs_mapping,orgId or mapping needed
+000011,深物业A,SZSE,主板,000011,unknown,,needs_orgid_mapping,needs_mapping,orgId or mapping needed
+000012,南玻A,SZSE,主板,000012,unknown,,needs_orgid_mapping,needs_mapping,orgId or mapping needed
+300001,特锐德,SZSE,创业板,300001,gssh0300001,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300001&orgId=gssh0300001#companyProfile,manual_rule_600_300_gssh0,mapped,
+300002,神州泰岳,SZSE,创业板,300002,gssh0300002,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300002&orgId=gssh0300002#companyProfile,manual_rule_600_300_gssh0,mapped,
+300003,乐普医疗,SZSE,创业板,300003,gssh0300003,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300003&orgId=gssh0300003#companyProfile,manual_rule_600_300_gssh0,mapped,
+300004,南风股份,SZSE,创业板,300004,gssh0300004,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300004&orgId=gssh0300004#companyProfile,manual_rule_600_300_gssh0,mapped,
+300005,探路者,SZSE,创业板,300005,gssh0300005,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300005&orgId=gssh0300005#companyProfile,manual_rule_600_300_gssh0,mapped,
+300006,莱美药业,SZSE,创业板,300006,gssh0300006,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300006&orgId=gssh0300006#companyProfile,manual_rule_600_300_gssh0,mapped,
+300007,汉威科技,SZSE,创业板,300007,gssh0300007,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300007&orgId=gssh0300007#companyProfile,manual_rule_600_300_gssh0,mapped,
+688001,华兴源创,SSE,科创板,688001,gshk0000001,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688001&orgId=gshk0000001#companyProfile,manual_rule_688_gshk,mapped,
+688002,睿创微纳,SSE,科创板,688002,gshk0000002,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688002&orgId=gshk0000002#companyProfile,manual_rule_688_gshk,mapped,
+688003,天准科技,SSE,科创板,688003,gshk0000003,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688003&orgId=gshk0000003#companyProfile,manual_rule_688_gshk,mapped,
+688004,博汇科技,SSE,科创板,688004,gshk0000004,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688004&orgId=gshk0000004#companyProfile,manual_rule_688_gshk,mapped,
+688005,容百科技,SSE,科创板,688005,gshk0000005,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688005&orgId=gshk0000005#companyProfile,manual_rule_688_gshk,mapped,
+688006,杭可科技,SSE,科创板,688006,gshk0000006,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688006&orgId=gshk0000006#companyProfile,manual_rule_688_gshk,mapped,
+688007,光峰科技,SSE,科创板,688007,gshk0000007,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688007&orgId=gshk0000007#companyProfile,manual_rule_688_gshk,mapped,
+430017,星昊医药,BSE,北交所,920017,9900003482,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=920017&orgId=9900003482#companyProfile,manual_rule_bse_430017_to_920017,mapped,
+430047,诺思兰德,BSE,北交所,430047,unknown,,bse_orgid_required,needs_mapping,orgId or mapping needed
+430090,同辉信息,BSE,北交所,430090,unknown,,bse_orgid_required,needs_mapping,orgId or mapping needed
+430139,华岭股份,BSE,北交所,430139,unknown,,bse_orgid_required,needs_mapping,orgId or mapping needed
+430198,微创光电,BSE,北交所,430198,unknown,,bse_orgid_required,needs_mapping,orgId or mapping needed
+430300,辰光医疗,BSE,北交所,430300,unknown,,bse_orgid_required,needs_mapping,orgId or mapping needed

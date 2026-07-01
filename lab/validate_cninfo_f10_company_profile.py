@@ -37,6 +37,10 @@ SLEEP_SECONDS = 0.5
 CSV_FIELDS = [
     "company_code",
     "company_name",
+    "cninfo_stock_code",
+    "cninfo_org_id",
+    "cninfo_profile_url",
+    "profile_url_rule",
     "cninfo_query_code",
     "stock_short_name",
     "exchange",
@@ -88,6 +92,7 @@ BSE_OLD_PREFIX = "430"
 BSE_NEW_PREFIX = "920"
 
 CNINFO_SEARCH_URL = "https://www.cninfo.com.cn/new/information/topSearch/detailOfQuery"
+CNINFO_PROFILE_BASE = "https://www.cninfo.com.cn/new/disclosure/stock"
 
 
 def ensure_dirs() -> None:
@@ -111,6 +116,46 @@ def map_bse_code_if_needed(code: str) -> str | None:
     if code.startswith(BSE_OLD_PREFIX) and len(code) >= 6:
         return BSE_NEW_PREFIX + code[len(BSE_OLD_PREFIX) :]
     return None
+
+
+def build_cninfo_profile_url(company_code: str, company_name: str | None = None) -> Tuple[str, str, str, str]:
+    cc = company_code.strip()
+    name = (company_name or "").strip()
+
+    # 600 / 300
+    if cc.startswith("600") or cc.startswith("300"):
+        stock_code = cc
+        org_id = "gssh0" + cc
+        rule = "manual_rule_600_300_gssh0"
+        url = f"{CNINFO_PROFILE_BASE}?stockCode={stock_code}&orgId={org_id}#companyProfile"
+        return stock_code, org_id, url, rule
+
+    # 688 科创板
+    if cc.startswith("688"):
+        stock_code = cc
+        org_id = "gshk0000" + cc[-3:]
+        rule = "manual_rule_688_gshk"
+        url = f"{CNINFO_PROFILE_BASE}?stockCode={stock_code}&orgId={org_id}#companyProfile"
+        return stock_code, org_id, url, rule
+
+    # 特例：北交所星昊医药
+    if cc == "430017" or ("星昊医药" in name):
+        stock_code = "920017"
+        org_id = "9900003482"
+        rule = "manual_rule_bse_430017_to_920017"
+        url = f"{CNINFO_PROFILE_BASE}?stockCode={stock_code}&orgId={org_id}#companyProfile"
+        return stock_code, org_id, url, rule
+
+    # 其他 430 暂不泛化
+    if cc.startswith("430"):
+        stock_code = cc
+        org_id = "unknown"
+        rule = "bse_orgid_required"
+        url = ""
+        return stock_code, org_id, url, rule
+
+    # Default fallback
+    return cc, "unknown", "", "needs_orgid_mapping"
 
 
 def fetch_profile(query_code: str) -> Tuple[Dict, int | None, str | None]:
@@ -151,9 +196,38 @@ def process_company(sample: Dict) -> Dict:
     access_method = "HTTP"
 
     if not company_code:
-        return base_row(company_code, company_name, cninfo_query_code, exchange, board, is_st, "missing_company_code", "failed", "", access_method, notes="company_code missing")
+        return base_row(
+            company_code,
+            company_name,
+            *build_cninfo_profile_url(company_code, company_name),
+            cninfo_query_code,
+            exchange,
+            board,
+            is_st,
+            "missing_company_code",
+            "failed",
+            "",
+            access_method,
+            notes="company_code missing",
+        )
     if not company_name:
-        return base_row(company_code, company_name, cninfo_query_code, exchange, board, is_st, "missing_company_name", "failed", "", access_method, notes="company_name missing")
+        return base_row(
+            company_code,
+            company_name,
+            *build_cninfo_profile_url(company_code, company_name),
+            cninfo_query_code,
+            exchange,
+            board,
+            is_st,
+            "missing_company_name",
+            "failed",
+            "",
+            access_method,
+            notes="company_name missing",
+        )
+
+    # Entry mapping (no network)
+    cninfo_stock_code, cninfo_org_id, cninfo_profile_url, profile_url_rule = build_cninfo_profile_url(company_code, company_name)
 
     rec, status, failure = fetch_profile(cninfo_query_code)
     retry_used = False
@@ -165,7 +239,23 @@ def process_company(sample: Dict) -> Dict:
             retry_used = True
 
     if failure:
-        return base_row(company_code, company_name, cninfo_query_code, exchange, board, is_st, failure, "failed", status, access_method, notes="retry with mapped code" if retry_used else "")
+        return base_row(
+            company_code,
+            company_name,
+            cninfo_stock_code,
+            cninfo_org_id,
+            cninfo_profile_url,
+            profile_url_rule,
+            cninfo_query_code,
+            exchange,
+            board,
+            is_st,
+            failure,
+            "failed",
+            status,
+            access_method,
+            notes="retry with mapped code" if retry_used else "",
+        )
 
     stock_short_name = pick_field(rec, ["zwjc", "shortname", "stock_short_name", "comShortName", "companyShortName"]) or company_name
     industry = pick_field(rec, ["sshy", "industry", "industryName"])
@@ -217,6 +307,10 @@ def process_company(sample: Dict) -> Dict:
     return {
         "company_code": company_code,
         "company_name": company_name,
+        "cninfo_stock_code": cninfo_stock_code,
+        "cninfo_org_id": cninfo_org_id,
+        "cninfo_profile_url": cninfo_profile_url,
+        "profile_url_rule": profile_url_rule,
         "cninfo_query_code": cninfo_query_code,
         "stock_short_name": stock_short_name or "",
         "exchange": exchange or "",
@@ -245,6 +339,10 @@ def process_company(sample: Dict) -> Dict:
 def base_row(
     company_code: str,
     company_name: str,
+    cninfo_stock_code: str,
+    cninfo_org_id: str,
+    cninfo_profile_url: str,
+    profile_url_rule: str,
     cninfo_query_code: str,
     exchange: str,
     board: str,
@@ -258,6 +356,10 @@ def base_row(
     return {
         "company_code": company_code,
         "company_name": company_name,
+        "cninfo_stock_code": cninfo_stock_code,
+        "cninfo_org_id": cninfo_org_id,
+        "cninfo_profile_url": cninfo_profile_url,
+        "profile_url_rule": profile_url_rule,
         "cninfo_query_code": cninfo_query_code,
         "stock_short_name": "",
         "exchange": exchange,
