@@ -326,6 +326,138 @@ P0 栏目要从「候选」进入「已验证」，至少需要满足：
 
 > 这是记录格式示例，不代表真实验证结果；当前所有 P0 栏目仍为候选 / 待验证状态。
 
+### 8.5 P0 验证计划：最新公告列表
+
+> **Sub Issue 2.2：准备 CNINFO 最新公告列表的 P0 验证计划。** 本节在 8.1 验证记录模板基础上，为第一个 P0 栏目设计小样本验证方案；**只做验证计划，不做真实验证、不写爬虫、不做数据库接入。**
+
+#### 8.5.1 验证目标
+
+最新公告列表是 CNINFO 第一阶段最重要的 P0 栏目之一。验证它的目标**不是立即全量抓取**，而是判断它是否能稳定提供公告标题、发布时间、公告链接、PDF 链接、关联公司等基础字段，从而支持后续 document 元数据、公告流和基础时间线。
+
+需要强调：
+
+- 本节只是**验证计划**；
+- **不代表**最新公告列表已经完成采集；
+- **不代表**该栏目长期稳定可用；
+- **不做**数据库接入；
+- **不写**爬虫实现。
+
+#### 8.5.2 样本设计
+
+| 项 | 设计 |
+|---|---|
+| 样本量 | 20–50 家公司 |
+| 样本覆盖 | 主板、创业板、科创板、北交所尽量都覆盖 |
+| 行业覆盖 | 制造业、信息技术、医药、消费、金融或类金融、能源/材料等尽量混合 |
+| 公司类型覆盖 | 正常上市公司、ST / 风险类公司、不同市值公司、公告频率较高和较低公司 |
+| 时间范围 | 优先验证最近 3–6 个月公告；如接口支持，再测试历史公告回溯 |
+| 样本公司记录 | 记录 `company_code`、`company_name`、`exchange`、`board`、`industry`、`sample_reason` |
+
+#### 8.5.3 目标字段
+
+| 字段 | 说明 | 是否关键字段 |
+|---|---|---|
+| `company_code` | 股票代码 | 是 |
+| `company_name` | 公司名称或证券简称 | 是 |
+| `announcement_title` | 公告标题 | 是 |
+| `announcement_type` | 公告类型，如年报、临时公告、风险提示等；如果 CNINFO 不直接给出，可后续通过标题规则推断 | 部分关键 |
+| `publish_time` | 公告发布时间 | 是 |
+| `source_url` | 公告详情页或来源链接 | 是 |
+| `pdf_url` | 公告 PDF 下载链接 | 是 |
+| `file_type` | PDF / HTML / attachment 等 | 否 |
+| `crawl_time` | 本次验证时间 | 是 |
+| `failure_reason` | 失败原因 | 是，失败样本必须记录 |
+
+#### 8.5.4 访问方式
+
+访问方式优先级如下：
+
+1. **HTTP / API 优先**  
+   如果公告列表可以通过公开接口或静态请求获得，优先使用 HTTP，因为更稳定、成本低、便于记录。
+
+2. **Playwright 作为备用**  
+   如果页面依赖 JS 渲染或分页复杂，再使用 Playwright。
+
+3. **BrowserUser 暂不作为第一选择**  
+   只有在页面强交互、普通 HTTP / Playwright 不够时再考虑。
+
+**不绕过**登录、验证码、付费、权限或强反爬。
+
+#### 8.5.5 成功标准
+
+| 维度 | 成功标准 |
+|---|---|
+| 字段完整性 | 关键字段 `company_code`、`announcement_title`、`publish_time`、`source_url` 或 `pdf_url` 能稳定获得 |
+| 证据可追溯 | 每条公告至少有 `source_url` 或 `pdf_url` |
+| 失败可解释 | 失败样本必须有 `failure_reason` |
+| 样本覆盖 | 样本覆盖不同板块和行业 |
+| 合规风险 | 不存在明显登录、验证码、付费、权限或高反爬问题 |
+| 可脚本化 | 如果字段结构相对稳定，可以进入下一步小脚本验证 |
+| docs 更新 | 验证完成后，需要更新 `docs/data_sources.md` 中 CNINFO 的对应状态 |
+
+具体成功率阈值根据测试结果确定，但必须记录 `success_count`、`failure_count`、`success_rate`；不要求 100% 成功。
+
+#### 8.5.6 失败原因分类
+
+| `failure_reason` | 说明 |
+|---|---|
+| `page_structure_changed` | 页面结构变化 |
+| `missing_company_mapping` | 公司代码 / orgId / 名称无法匹配 |
+| `missing_announcement_title` | 公告标题缺失 |
+| `missing_publish_time` | 发布时间缺失 |
+| `missing_pdf_url` | PDF 链接缺失 |
+| `pdf_404` | PDF 链接失效 |
+| `pagination_error` | 分页异常 |
+| `rate_limited` | 请求频率限制 |
+| `js_render_required` | 需要 JS 渲染 |
+| `captcha_or_login_required` | 出现验证码或登录要求 |
+| `network_timeout` | 网络超时 |
+| `unknown_error` | 未知错误，需要人工检查 |
+
+#### 8.5.7 验证结果记录格式
+
+最新公告列表验证完成后，需要按 **8.1 验证记录模板** 记录结果。
+
+以下为 mock 示例，**不代表真实验证结果**：
+
+| 字段 | 示例值 |
+|---|---|
+| `source_section` | 最新公告 |
+| `test_date` | 2026-07-01 |
+| `sample_size` | mock: 30 |
+| `access_method` | mock: HTTP 优先 |
+| `target_fields` | `company_code`, `announcement_title`, `publish_time`, `source_url`, `pdf_url` |
+| `success_count` | mock: 27 |
+| `failure_count` | mock: 3 |
+| `success_rate` | mock: 90% |
+| `data_obtained` | mock: 标题、发布时间、PDF URL |
+| `data_missing` | mock: 部分公告缺少公告类型 |
+| `failure_reasons` | mock: `missing_pdf_url`, `pagination_error` |
+| `compliance_risk` | mock: 低 |
+| `evidence_available` | mock: 是 |
+| `recommended_status` | mock: `testing` |
+| `recommendation` | mock: 扩大样本并准备小脚本验证 |
+| `next_action` | mock: 进入公告 PDF 元数据验证计划 |
+
+> 这是 mock 示例，不代表真实验证结果。
+
+#### 8.5.8 与后续任务的关系
+
+**如果最新公告列表验证通过**，后续可以进入：
+
+- 公告 PDF 元数据验证；
+- document 元数据字段设计；
+- `document_published` / `announcement_published` 事件规则；
+- `docs/data_sources.md` 状态更新；
+- 后续 PostgreSQL / MinIO / MongoDB 接入建议。
+
+**如果验证失败或部分可用**，则：
+
+- 保持 `candidate` / `partial` 状态；
+- 记录失败原因；
+- 判断是否需要 Playwright；
+- 暂不进入数据库接入。
+
 ---
 
 ## 9. 第一阶段优先级建议
