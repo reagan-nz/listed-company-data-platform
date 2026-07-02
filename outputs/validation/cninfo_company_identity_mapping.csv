@@ -1,0 +1,41 @@
+company_code,company_name,exchange,board,cninfo_stock_code,cninfo_org_id,cninfo_profile_url,cninfo_announcement_query_code,mapping_source,mapping_confidence,mapping_status,needs_manual_review,notes
+600000,浦发银行,SSE,主板,600000,gssh0600000,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600000&orgId=gssh0600000#companyProfile,600000,manual_rule,medium,mapped,no,empirical rule from P0 sample
+600004,白云机场,SSE,主板,600004,gssh0600004,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600004&orgId=gssh0600004#companyProfile,600004,manual_rule,medium,mapped,no,empirical rule from P0 sample
+600006,东风股份,SSE,主板,600006,gssh0600006,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600006&orgId=gssh0600006#companyProfile,600006,manual_rule,medium,mapped,no,empirical rule from P0 sample
+600007,中国国贸,SSE,主板,600007,gssh0600007,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600007&orgId=gssh0600007#companyProfile,600007,manual_rule,medium,mapped,no,empirical rule from P0 sample
+600008,首创环保,SSE,主板,600008,gssh0600008,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600008&orgId=gssh0600008#companyProfile,600008,manual_rule,medium,mapped,no,empirical rule from P0 sample
+600009,上海机场,SSE,主板,600009,gssh0600009,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600009&orgId=gssh0600009#companyProfile,600009,manual_rule,medium,mapped,no,empirical rule from P0 sample
+600010,包钢股份,SSE,主板,600010,gssh0600010,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600010&orgId=gssh0600010#companyProfile,600010,manual_rule,medium,mapped,no,empirical rule from P0 sample
+600011,华能国际,SSE,主板,600011,gssh0600011,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600011&orgId=gssh0600011#companyProfile,600011,manual_rule,medium,mapped,no,empirical rule from P0 sample
+600012,皖通高速,SSE,主板,600012,gssh0600012,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600012&orgId=gssh0600012#companyProfile,600012,manual_rule,medium,mapped,no,empirical rule from P0 sample
+600015,华夏银行,SSE,主板,600015,gssh0600015,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600015&orgId=gssh0600015#companyProfile,600015,manual_rule,medium,mapped,no,empirical rule from P0 sample
+000001,平安银行,SZSE,主板,,,,000001,unknown,low,needs_orgid_mapping,yes,orgId missing; needs mapping; do not fabricate
+000002,万科A,SZSE,主板,,,,000002,unknown,low,needs_orgid_mapping,yes,orgId missing; needs mapping; do not fabricate
+000004,国华退,SZSE,主板,,,,000004,unknown,low,needs_orgid_mapping,yes,orgId missing; needs mapping; do not fabricate
+000006,深振业A,SZSE,主板,,,,000006,unknown,low,needs_orgid_mapping,yes,orgId missing; needs mapping; do not fabricate
+000007,全新好,SZSE,主板,,,,000007,unknown,low,needs_orgid_mapping,yes,orgId missing; needs mapping; do not fabricate
+000008,神州高铁,SZSE,主板,,,,000008,unknown,low,needs_orgid_mapping,yes,orgId missing; needs mapping; do not fabricate
+000009,中国宝安,SZSE,主板,,,,000009,unknown,low,needs_orgid_mapping,yes,orgId missing; needs mapping; do not fabricate
+000010,*ST美丽,SZSE,主板,,,,000010,unknown,low,needs_orgid_mapping,yes,orgId missing; needs mapping; do not fabricate
+000011,深物业A,SZSE,主板,,,,000011,unknown,low,needs_orgid_mapping,yes,orgId missing; needs mapping; do not fabricate
+000012,南玻A,SZSE,主板,,,,000012,unknown,low,needs_orgid_mapping,yes,orgId missing; do not fabricate
+300001,特锐德,SZSE,创业板,300001,gssh0300001,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300001&orgId=gssh0300001#companyProfile,300001,manual_rule,medium,mapped,no,empirical rule from P0 sample
+300002,神州泰岳,SZSE,创业板,300002,gssh0300002,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300002&orgId=gssh0300002#companyProfile,300002,manual_rule,medium,mapped,no,empirical rule from P0 sample
+300003,乐普医疗,SZSE,创业板,300003,gssh0300003,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300003&orgId=gssh0300003#companyProfile,300003,manual_rule,medium,mapped,no,empirical rule from P0 sample
+300004,南风股份,SZSE,创业板,300004,gssh0300004,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300004&orgId=gssh0300004#companyProfile,300004,manual_rule,medium,mapped,no,empirical rule from P0 sample
+300005,探路者,SZSE,创业板,300005,gssh0300005,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300005&orgId=gssh0300005#companyProfile,300005,manual_rule,medium,mapped,no,empirical rule from P0 sample
+300006,莱美药业,SZSE,创业板,300006,gssh0300006,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300006&orgId=gssh0300006#companyProfile,300006,manual_rule,medium,mapped,no,empirical rule from P0 sample
+300007,汉威科技,SZSE,创业板,300007,gssh0300007,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300007&orgId=gssh0300007#companyProfile,300007,manual_rule,medium,mapped,no,empirical rule from P0 sample
+688001,华兴源创,SSE,科创板,688001,9900038969,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688001&orgId=9900038969#companyProfile,688001,manual_search,high,mapped,no,manual STAR mapping from company search; current sample only, not generalized
+688002,睿创微纳,SSE,科创板,688002,9900038939,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688002&orgId=9900038939#companyProfile,688002,manual_search,high,mapped,no,manual STAR mapping from company search; current sample only, not generalized
+688003,天准科技,SSE,科创板,688003,gfbj0833231,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688003&orgId=gfbj0833231#companyProfile,688003,manual_search,high,mapped,no,manual STAR mapping from company search; current sample only, not generalized
+688004,博汇科技,SSE,科创板,688004,gfbj0871038,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688004&OrgId=gfbj0871038#companyProfile,688004,manual_search,high,mapped,no,manual STAR mapping from company search; current sample only, not generalized
+688005,容百科技,SSE,科创板,688005,9900038937,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688005&orgId=9900038937#companyProfile,688005,manual_search,high,mapped,no,manual STAR mapping from company search; current sample only, not generalized
+688006,杭可科技,SSE,科创板,688006,9900037551,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688006&orgId=9900037551#companyProfile,688006,manual_search,high,mapped,no,manual STAR mapping from company search; current sample only, not generalized
+688007,光峰科技,SSE,科创板,688007,9900038970,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688007&orgId=9900038970#companyProfile,688007,manual_search,high,mapped,no,manual STAR mapping from company search; current sample only, not generalized
+430017,星昊医药,BSE,北交所,920017,9900003482,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=920017&orgId=9900003482#companyProfile,920017,manual_search,high,mapped,no,manual BSE mapping from company name search; current sample only, not generalized; announcement queries may differ
+430047,诺思兰德,BSE,北交所,920047,9900006121,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=920047&orgId=9900006121#companyProfile,920047,manual_search,high,mapped,no,manual BSE mapping from company name search; current sample only, not generalized; announcement queries may differ
+430090,同辉信息,BSE,北交所,920090,9900020567,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=920090&orgId=9900020567#companyProfile,920090,manual_search,high,mapped,no,manual BSE mapping from company name search; current sample only, not generalized; announcement queries may differ
+430139,华岭股份,BSE,北交所,920139,9900024205,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=920139&orgId=9900024205#companyProfile,920139,manual_search,high,mapped,no,manual BSE mapping from company name search; current sample only, not generalized; announcement queries may differ
+430198,微创光电,BSE,北交所,920198,9900024889,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=920198&orgId=9900024889#companyProfile,920198,manual_search,high,mapped,no,manual BSE mapping from company name search; current sample only, not generalized; announcement queries may differ
+430300,辰光医疗,BSE,北交所,920300,9900023934,https://www.cninfo.com.cn/new/disclosure/stock?stockCode=920300&orgId=9900023934#companyProfile,920300,manual_search,high,mapped,no,manual BSE mapping from company name search; current sample only, not generalized; announcement queries may differ

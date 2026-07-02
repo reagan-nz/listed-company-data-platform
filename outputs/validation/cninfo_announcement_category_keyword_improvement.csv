@@ -1,0 +1,15 @@
+category_key,category_name_cn,current_keywords,suggested_keywords,issue_type,reason,recommended_next_action,priority
+semi_annual_report,半年报,"半年度报告; 半年报","半年度报告摘要; 2025年半年度报告; 2024年半年度报告",report_category_parameter_needed,"可能需要报告期/类别参数，标题写法带年份",needs_category_parameter,high
+quarterly_report,季报,"第一季度报告; 第三季度报告; 季度报告","一季度报告; 三季度报告; 2025年第一季度报告; 2025年第三季度报告",keyword_mismatch,"季度/年份写法未覆盖，部分标题用数字序号",expand_keywords_and_rerun,medium
+performance_forecast,业绩预告,"业绩预告; 业绩预增; 业绩预减; 业绩快报","业绩快报; 经营预告; 业绩说明",low_frequency_event,"事件低频且标题多样，40 家样本命中率低",keep_as_candidate,low
+dividend_distribution,权益分派/分红,"权益分派; 利润分配; 分红; 派息","利润分配实施公告; 股权登记日; 现金分红; 分红实施",keyword_mismatch,"实施/登记日类标题未覆盖",expand_keywords_and_rerun,medium
+shareholder_meeting,股东大会,"股东大会; 股东会; 股东大会决议","年度股东大会; 临时股东大会; 股东大会通知",keyword_mismatch,"不同类型/通知类标题未覆盖",expand_keywords_and_rerun,medium
+board_meeting,董事会,"董事会决议; 董事会会议","第X届董事会; 董事会第X次会议; 董事会决议公告",keyword_mismatch,"标题常含届次/次数，需覆盖变体",expand_keywords_and_rerun,medium
+supervisory_board,监事会,"监事会决议; 监事会会议","第X届监事会; 监事会第X次会议; 监事会决议公告",keyword_mismatch,"标题常含届次/次数，当前未覆盖",expand_keywords_and_rerun,high
+regulatory_inquiry,监管问询/监管函,"问询函; 监管函; 关注函; 年报问询函","回复公告; 关于对问询函的回复; 关注函回复; 监管工作函",keyword_mismatch,"问询往往伴随“回复”类标题，需覆盖",expand_keywords_and_rerun,medium
+penalty_litigation,处罚/诉讼,"行政处罚; 处罚决定; 诉讼; 仲裁","重大诉讼; 累计诉讼; 行政监管措施; 行政处罚决定书",title_semantics_unclear,"处罚/诉讼口径多样，需细分语义",semantic_filter_later,medium
+share_repurchase,回购,"回购; 股份回购","回购进展公告; 回购实施进展; 回购完成; 回购计划",keyword_mismatch,"进展/完成类标题未覆盖",expand_keywords_and_rerun,medium
+private_placement,定增,"非公开发行; 向特定对象发行; 定增","配套募集资金; 非公开发行A股股票; 定增预案; 向特定对象发行A股股票",low_frequency_event,"事件低频，标题口径分散",keep_as_candidate,low
+major_asset_restructuring,重大资产重组,"重大资产重组; 资产重组; 购买资产","发行股份购买资产; 重大资产出售; 重组预案; 重组草案",low_frequency_event,"重组公告低频，需更长时间窗口",keep_as_candidate,low
+equity_incentive,股权激励,"股权激励; 限制性股票激励; 股票期权激励","限制性股票激励计划; 股票期权激励计划; 授予公告; 解除限售",keyword_mismatch,"授予/解除限售类标题未覆盖",expand_keywords_and_rerun,medium
+share_unlock,限售解禁,"限售股上市流通; 解除限售; 限售股份上市","上市流通提示性公告; 限售股解禁; 首次公开发行部分限售股上市流通; 股份解除限售",keyword_mismatch,"提示性公告/首次解禁等表述未覆盖",expand_keywords_and_rerun,high

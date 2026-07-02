@@ -1,0 +1,128 @@
+# CNINFO announcement retrieval strategies (Sub Issue 4)
+# Do not run network here; this file guides rule-based matching + optional LLM review.
+
+- category_key: semi_annual_report
+  category_name_cn: 半年报
+  retrieval_strategy: long_window_keyword
+  must_any: ["半年度报告", "半年报"]
+  optional_any: ["半年度报告摘要", "2025年半年度报告", "2024年半年度报告"]
+  exclude_any: []
+  llm_review_policy: low_confidence_only
+  notes: 报告类，可能需报告期参数；低频，建议拉长时间窗口
+
+- category_key: quarterly_report
+  category_name_cn: 季报
+  retrieval_strategy: long_window_keyword
+  must_any: ["第一季度报告", "第三季度报告", "季度报告"]
+  optional_any: ["一季度报告", "三季度报告", "2025年第一季度报告", "2025年第三季度报告"]
+  exclude_any: []
+  llm_review_policy: low_confidence_only
+  notes: 报告类，季度/年份写法多样，需补充变体
+
+- category_key: performance_forecast
+  category_name_cn: 业绩预告
+  retrieval_strategy: expanded_keyword
+  must_any: ["业绩预告", "业绩预增", "业绩预减", "业绩快报"]
+  optional_any: ["经营预告", "业绩说明", "业绩快报"]
+  exclude_any: []
+  llm_review_policy: low_confidence_only
+  notes: 事件低频，需更大样本
+
+- category_key: dividend_distribution
+  category_name_cn: 权益分派/分红
+  retrieval_strategy: expanded_keyword
+  must_any: ["权益分派", "利润分配", "分红", "派息"]
+  optional_any: ["利润分配实施公告", "股权登记日", "现金分红", "分红实施"]
+  exclude_any: []
+  llm_review_policy: low_confidence_only
+  notes: 成功率较高，补充实施/登记日类表述
+
+- category_key: shareholder_meeting
+  category_name_cn: 股东大会
+  retrieval_strategy: strict_keyword
+  must_any: ["股东大会", "股东会", "股东大会决议"]
+  optional_any: ["年度股东大会", "临时股东大会", "股东大会通知"]
+  exclude_any: []
+  llm_review_policy: low_confidence_only
+  notes: 高可用，主要覆盖通知/年度/临时变体
+
+- category_key: board_meeting
+  category_name_cn: 董事会
+  retrieval_strategy: expanded_keyword
+  must_any: ["董事会决议", "董事会会议"]
+  optional_any: ["第", "次会议", "届董事会", "董事会第", "董事会决议公告"]
+  exclude_any: []
+  llm_review_policy: low_confidence_only
+  notes: 常含届次/次数
+
+- category_key: supervisory_board
+  category_name_cn: 监事会
+  retrieval_strategy: expanded_keyword
+  must_any: ["监事会决议", "监事会会议"]
+  optional_any: ["第", "次会议", "届监事会", "监事会第", "监事会决议公告"]
+  exclude_any: []
+  llm_review_policy: low_confidence_only
+  notes: 常含届次/次数，P0 为 0
+
+- category_key: regulatory_inquiry
+  category_name_cn: 监管问询/监管函
+  retrieval_strategy: expanded_keyword
+  must_any: ["问询函", "监管函", "关注函", "年报问询函"]
+  optional_any: ["回复公告", "关于对问询函的回复", "关注函回复", "监管工作函"]
+  exclude_any: []
+  llm_review_policy: low_confidence_only
+  notes: 需覆盖回复类标题
+
+- category_key: penalty_litigation
+  category_name_cn: 处罚/诉讼
+  retrieval_strategy: semantic_later
+  must_any: ["行政处罚", "处罚决定", "诉讼", "仲裁"]
+  optional_any: ["重大诉讼", "累计诉讼", "行政监管措施", "行政处罚决定书"]
+  exclude_any: []
+  llm_review_policy: low_confidence_only
+  notes: 语义区分度高，适合低置信交给 LLM
+
+- category_key: share_repurchase
+  category_name_cn: 回购
+  retrieval_strategy: expanded_keyword
+  must_any: ["回购", "股份回购"]
+  optional_any: ["回购进展公告", "回购实施进展", "回购完成", "回购计划"]
+  exclude_any: []
+  llm_review_policy: low_confidence_only
+  notes: 需覆盖进展/完成表述
+
+- category_key: private_placement
+  category_name_cn: 定增
+  retrieval_strategy: long_window_keyword
+  must_any: ["非公开发行", "向特定对象发行", "定增"]
+  optional_any: ["配套募集资金", "非公开发行A股股票", "定增预案", "向特定对象发行A股股票"]
+  exclude_any: []
+  llm_review_policy: low_confidence_only
+  notes: 低频，标题多样，需更长时间窗
+
+- category_key: major_asset_restructuring
+  category_name_cn: 重大资产重组
+  retrieval_strategy: long_window_keyword
+  must_any: ["重大资产重组", "资产重组", "购买资产"]
+  optional_any: ["发行股份购买资产", "重大资产出售", "重组预案", "重组草案"]
+  exclude_any: []
+  llm_review_policy: low_confidence_only
+  notes: 低频，可能需更长时间窗口
+
+- category_key: equity_incentive
+  category_name_cn: 股权激励
+  retrieval_strategy: expanded_keyword
+  must_any: ["股权激励", "限制性股票激励", "股票期权激励"]
+  optional_any: ["限制性股票激励计划", "股票期权激励计划", "授予公告", "解除限售"]
+  exclude_any: []
+  llm_review_policy: low_confidence_only
+  notes: 需覆盖授予/解除限售
+
+- category_key: share_unlock
+  category_name_cn: 限售解禁
+  retrieval_strategy: long_window_keyword
+  must_any: ["限售股上市流通", "解除限售", "限售股份上市"]
+  optional_any: ["上市流通提示性公告", "限售股解禁", "首次公开发行部分限售股上市流通", "股份解除限售"]
+  exclude_any: []
+  llm_review_policy: low_confidence_only
+  notes: 提示性公告/首次解禁需覆盖
