@@ -20,7 +20,7 @@ _最后更新：2026-07-02_
 |---|---|---|---|---|
 | **Era A** | 通用多源采集框架（v0.1 设想） | **冻结·基本未使用** | 想从新闻/官网/专利/招投标/政策等"所有来源"采集，只搭了框架没真正跑起来 | `collectors/`、`main.py`、`config/sources.yaml`、`config/companies.yaml` |
 | **Era B** | 2024 全市场年报数据底座 | **冻结·已完成** | 从 CNINFO 年报 PDF 批量抽 11 个字段 + 质量审计，入 SQLite（6124 家）。已交付，不再改 | `lab/` 里的年报/全市场/审计脚本、`outputs/generalization/`、`outputs/db/` |
-| **Era C** | CNINFO 数据源能力研究 | **活跃·当前聚焦** | 盘点巨潮所有栏目能拿到什么 → 分类 → 先做"类年报"稳定抽取 → 再研究其他 | `lab/validate_cninfo_*.py`、`outputs/validation/`、`plans/cninfo_data_source_value_inventory.md` |
+| **Era C** | CNINFO 数据源能力研究 | **活跃·当前聚焦** | A–F 分层验证：先穷尽分类，再按层用统一口径验证（A 类 coverage → D 类表格 → B/C/E/F） | `lab/validate_cninfo_*.py`、`outputs/validation/`、`plans/cninfo_data_source_layered_inventory.md` |
 
 > 为什么感觉"偏"了：顶层文档（ROADMAP/CURRENT_STATUS）一度把重心写成"动态平台架构 + PostgreSQL/MinIO/MongoDB 三层存储设计"。那是**在数据源还没验证透之前就先设计数据库**，属于超前。当前把重心**拉回 Era C**：先回答"巨潮到底能稳定拿到什么"。存储架构设计（`plans/storage_schema_design_plan.md`、`plans/dynamic_data_platform_plan.md`）**暂缓**，留作未来参考。
 
@@ -49,15 +49,30 @@ _最后更新：2026-07-02_
 - `cninfo_announcement_retrieval_strategies.yaml` — 检索策略（must/optional/exclude 关键词）
 
 ### 2.3 活跃文档
-- `plans/cninfo_data_source_value_inventory.md` — **这条线的核心文档**：巨潮栏目盘点 + 数据类型分类（属性/文档/事件/证据/候选）+ P0/P1/P2 优先级 + 验证记录模板。你想要的"盘点→分类"其实已经在这里。
+- `plans/cninfo_data_source_layered_inventory.md` — **Era C 权威文档**：A–F 六层分类 + 每类分母/分子/成功指标 + Phase 推进顺序
+- `plans/cninfo_data_source_value_inventory.md` — 栏目细节、P0 验证模板、事件/证据类型（与分层表交叉引用，分类以分层表为准）
+- `plans/eraC_execution_plan.md` — Composer / 便宜模型执行清单
 - `plans/cninfo_p0_sample_company_selection.md` — P0 样本公司选取说明
 - `outputs/validation/` — 所有 CNINFO 验证的产物（CSV + summary.md），见第 4 节
 
-### 2.4 "类年报 vs 非类年报"的现成分类
-`plans/cninfo_data_source_value_inventory.md` 第 3–4 节已经做了分类。用你的话对齐一下：
+### 2.4 Era C 验证框架（A–F 分层，取代旧 P0/P1/P2 success rate）
 
-- **类年报（定期报告，路径最成熟，优先做）**：年报、半年报、季报 → 共同特征是"定期披露 + 标题模式稳定 + 有 PDF"，能复用同一套检索机制（`validate_cninfo_report_announcements.py` 已跑通）。
-- **非类年报（后续研究）**：最新公告流、个股 F10/公司资料（结构化字段）、风险/监管/分红/治理等事件公告、股本/股东/解禁等结构化表、互动易问答等。它们要么字段结构不稳定、要么需要事件分类规则、要么需要 Playwright。
+Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分层验证框架**，详见 [plans/cninfo_data_source_layered_inventory.md](plans/cninfo_data_source_layered_inventory.md)：
+
+| 层 | 类型 | 成功口径要点 |
+|---|---|---|
+| **A** | 类年报 PDF 文档流 | **per-company coverage%**（公司 × 期望报告期）；旧 `368/780` 行计数**不能**作最终结论 |
+| **B** | 公告 PDF 事件流 | **corpus 可得性** + **known-event benchmark**；禁止随机公司覆盖率 |
+| **C** | F10 / 公司资料表格 | **orgId mapping + 字段可得性%** |
+| **D** | 固定表格 / 市场行为 | **字段可得性% + 入口稳定性**（config 驱动，手动抓 endpoint） |
+| **E** | API / 商业服务 | **仅可达性三态**（公开 / 需登录 / 需权限） |
+| **F** | 问答 / 服务入口 | **暂缓**，仅文本线索 |
+
+### 2.5 旧「类年报 vs 非类年报」二分（仍适用，但归入 A 层）
+`plans/cninfo_data_source_layered_inventory.md` 将「类年报」明确为 **A 类**；其余为 B–F。简要对应：
+
+- **A 类（类年报）**：年报、半年报、一季报、三季报、IPO 招股书 → 定期披露 + 标题稳定 + PDF
+- **B–F（非类年报路径）**：事件公告流、F10 表格、固定表格资讯、API 服务、问答入口
 
 ---
 
@@ -107,10 +122,11 @@ _最后更新：2026-07-02_
 
 把文档分成两类，就不用为"更新不动的 md"焦虑了：
 
-- **活文档（需要手动维护，尽量少）**：只有 3 份——
+- **活文档（需要手动维护，尽量少）**：
   - `CURRENT_STATUS.md`（现在在做什么）
   - `PROJECT_MAP.md`（本文件，仓库地图）
-  - `plans/cninfo_data_source_value_inventory.md`（CNINFO 盘点主表）
+  - `plans/cninfo_data_source_layered_inventory.md`（**A–F 分层 + 验证口径权威**）
+  - `plans/eraC_execution_plan.md`（执行清单）
 - **快照 / 产物（不用手动更新）**：`outputs/**/*.md`、`outputs/**/*.csv` 都是**脚本跑出来的时点快照**，重跑脚本就重新生成，不是手写维护的。所以它们"更新不动"是正常的——它们记录的是"某次运行当时的结果"，不需要你去手动改。
   - 处理原则：**保留**（当历史记录），不用删。若担心误解，可在标题下加一句"本文件为 YYYY-MM-DD 某次运行的快照"。
 - **历史阶段计划**（`plans/v0.1`~`v0.6`、`full_market_2024_extraction_plan.md`、`storage_schema_design_plan.md`、`dynamic_data_platform_plan.md`）：都是**归档/暂缓**文档，保留即可，不需要持续更新。
@@ -122,7 +138,7 @@ _最后更新：2026-07-02_
 为了省钱、也为了让任何模型都能接手，约定几条：
 
 1. **开工前先读这份 `PROJECT_MAP.md` + `CURRENT_STATUS.md`**，就能定位在哪条线、该改哪些文件，不用满仓库搜。
-2. **当前只在 Era C 范围内改动**：`lab/validate_cninfo_*.py`、`config/cninfo_*.yaml`、`outputs/validation/`、`plans/cninfo_data_source_value_inventory.md`。
+2. **当前只在 Era C 范围内改动**：`lab/validate_cninfo_*.py`、`config/cninfo_*.yaml`、`outputs/validation/`、`plans/cninfo_data_source_layered_inventory.md`、`plans/eraC_execution_plan.md`。
 3. **不要动 Era A / Era B 的代码**（冻结）。确需复用年报抽取，从 `lab/extract_annual_report.py` + `lab/field_schema.py` 入手，且注意紧耦合 import。
 4. **网络与合规红线**（沿用既有约定）：不绕过登录/验证码/付费/权限；请求之间 sleep；不做大规模抓取；`recommended_status` 只用 `candidate`/`testing`/`partial`，**不写 `verified`**。
 5. **数据库红线**：当前阶段**不接** PostgreSQL/MinIO/MongoDB，验证结果只作为未来设计依据。
@@ -132,7 +148,7 @@ _最后更新：2026-07-02_
 
 ## 7. 一步步该怎么推进 Era C（建议路线）
 
-1. **把盘点表当成唯一事实来源**：所有 CNINFO 验证结论回填到 `plans/cninfo_data_source_value_inventory.md` 的状态列。
-2. **先把"类年报"做扎实**：`validate_cninfo_report_announcements.py` 已跑通年报/半年报/季报检索；下一步可扩展到业绩预告/业绩快报/招股书等同样"定期+标题稳定+PDF"的类型。
-3. **再逐个啃非类年报**：按盘点表 P0→P1→P2 顺序，每个栏目做小样本验证、记录成功率与失败原因。
-4. **每验证完一个栏目**：更新盘点表状态 + 在 `outputs/validation/` 留 summary，不做数据库接入。
+1. **以 A–F 分层表为权威**：见 [plans/cninfo_data_source_layered_inventory.md](plans/cninfo_data_source_layered_inventory.md)；验证结论回填各层状态。
+2. **Phase 1（下一步）**：重做 A 类 per-company coverage（`validate_cninfo_report_coverage.py`）；旧 report announcement summary 仅作阶段快照。
+3. **Phase 2 起**：D 类表格 → B 类 corpus → C 类 F10 → E/F 暂缓；**不要同时展开所有 Phase**。
+4. **每完成一个 Phase**：更新分层表状态 + `outputs/validation/` 留 summary；不做数据库接入。
