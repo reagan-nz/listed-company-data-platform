@@ -1,5 +1,7 @@
 # 上市公司数据平台（在建）
 
+> 🗺️ **第一次看这个仓库？先读 [PROJECT_MAP.md](PROJECT_MAP.md)**：它说明仓库里三代方向（通用采集框架 / 2024 年报底座 / CNINFO 能力研究）分别是什么、每个文件属于哪条线、当前聚焦哪里。当前聚焦见 [CURRENT_STATUS.md](CURRENT_STATUS.md)。
+
 ## 项目一句话介绍
 
 从 A 股公开年报 PDF 中批量抽取结构化字段、保留来源证据、运行质量审计，并正在把这份静态数据底座升级为**可持续更新、可证据追溯、可智能问答**的动态上市公司数据平台。
@@ -33,9 +35,9 @@ flowchart LR
 
 ## 当前正在做什么
 
-**动态平台架构设计阶段。** 当前不直接写代码或做全量迁移，而是先把方向想清楚：数据库路线、事件表边界、数据源验证机制、采集分层策略，然后做小范围试点。
+**CNINFO 数据源能力研究（类年报优先）。** 系统盘点巨潮能稳定拿到哪些数据：先把「类年报」（年报 / 半年报 / 季报）做扎实，再按优先级研究其他栏目。存储/平台架构设计当前**暂缓**，等数据源验证透再谈。
 
-详见 [CURRENT_STATUS.md](CURRENT_STATUS.md) 与 [plans/dynamic_data_platform_plan.md](plans/dynamic_data_platform_plan.md)。
+详见 [CURRENT_STATUS.md](CURRENT_STATUS.md) 与 [plans/cninfo_data_source_value_inventory.md](plans/cninfo_data_source_value_inventory.md)。
 
 ---
 
@@ -43,6 +45,7 @@ flowchart LR
 
 | 想了解 | 看这里 |
 |---|---|
+| 仓库整体结构、每个文件属于哪条线 | [PROJECT_MAP.md](PROJECT_MAP.md) |
 | 产品大方向、分几个阶段、现在在哪 | [ROADMAP.md](ROADMAP.md) |
 | 现在具体在做什么、下一步 | [CURRENT_STATUS.md](CURRENT_STATUS.md) |
 | 已经完成了什么 | [CHANGELOG.md](CHANGELOG.md) |

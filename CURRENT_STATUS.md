@@ -1,37 +1,33 @@
-# 当前进展：从 2024 年报数据底座进入动态平台架构设计阶段
+# 当前进展：CNINFO 数据源能力研究（类年报优先）
 
-_最后更新：2026-06-30_
+_最后更新：2026-07-02_
 
-> **本文件说明「现在具体在做什么」。** 产品大方向见 [ROADMAP.md](ROADMAP.md)；已完成成果见 [CHANGELOG.md](CHANGELOG.md)；详细计划见 [plans/](plans/)。
+> **本文件说明「现在具体在做什么」。** 仓库整体导航见 [PROJECT_MAP.md](PROJECT_MAP.md)；产品大方向见 [ROADMAP.md](ROADMAP.md)；已完成成果见 [CHANGELOG.md](CHANGELOG.md)。
 
 ---
 
 ## 当前阶段（一句话）
 
-2024 年报结构化数据底座已经完成；现在进入**动态平台架构设计阶段**，先把数据库路线、事件表边界、数据源验证、采集分层想清楚，再做小范围试点。
+系统盘点**巨潮资讯网（CNINFO）到底能稳定拿到哪些数据**：先把「类年报（定期报告：年报 / 半年报 / 季报）」这条最成熟的路径做扎实，再按优先级逐个研究其他数据。
 
 ---
 
-## 为什么现在不直接写代码
+## 为什么把方向收回到这里
 
-上一阶段交付的是一份**静态的 2024 年报数据库**。要升级成动态平台，涉及数据库选型、事件建模、新数据源接入、采集方式等多个方向。
+上一阶段的文档一度把重心放在「动态平台架构设计 + PostgreSQL / MinIO / MongoDB 三层存储」。但那是在**数据源本身还没验证透之前，就先去设计数据库**，属于超前，也让项目显得发散。
 
-如果现在直接动手写代码或做全量迁移，风险很高、返工成本大。所以当前阶段先做**架构设计 + 小范围试点准备**，把方向定清楚，再投入开发。
+所以现在**把轨道拉回到最前置、最该先回答的问题**：CNINFO 各栏目的数据，到底哪些能稳定、可追溯地拿到？拿不到的卡在哪？只有把这层摸清楚，后面的存储/事件/平台设计才有依据。
 
-当前阶段的工作逻辑可以理解为先定边界，再做小范围试点：
+工作逻辑：**盘点 → 分类 → 先啃类年报 → 再逐个研究其他栏目。**
 
 ```mermaid
 flowchart TD
-    A[已完成 2024 年报数据底座] --> B[进入动态平台架构设计]
-    B --> C[明确数据库路线]
-    B --> D[明确事件表边界]
-    B --> E[明确数据源验证机制]
-    B --> F[明确采集分层策略]
-    C --> G[小范围试点]
-    D --> G
-    E --> G
-    F --> G
-    G --> H[通过后再扩大开发范围]
+    A[盘点 CNINFO 能看到的所有栏目/数据] --> B[分类：类年报 vs 非类年报]
+    B --> C[类年报：年报/半年报/季报<br/>路径最成熟，优先做扎实]
+    B --> D[非类年报：公告流/F10/事件/结构化表<br/>按 P0→P1→P2 逐个小样本验证]
+    C --> E[每验证一项就回填盘点表 + 留 summary]
+    D --> E
+    E --> F[验证透之后，再谈存储/事件/平台设计]
 ```
 
 ---
@@ -40,29 +36,18 @@ flowchart TD
 
 | 项目 | 现状 |
 |---|---|
-| 数据来源 | 主要为 CNINFO 公开年报 PDF |
-| 数据集 | `full_market_2024`：6124 家全集，5707 家成功，417 家未找到公告，0 错误 |
-| 入库 | `SQLite` 约 62,890 条字段级记录 |
-| 抽取字段 | 主营业务、行业讨论、管理层讨论、`rnd_investment`、`revenue_by_region`、`revenue_by_segment`、风险因素、主要子公司等 |
-| 证据留存 | 尽量保留来源 PDF、页码、证据句、来源 URL |
-| 质量审计 | 自动合理性分数 + 严格质量审计；标签含 `usable` / `partial` / `wrong` / `not_found_missed` |
-| 非金融核心指标 | 严格审计 `usable` **9.43/11**；自动合理性分数 **10.67/11**；`rnd_investment` 找到率 **94.2%** |
-| 金融公司 | 已有银行 / 券商 / 保险 / 其他金融分类，但标签与子类型仍需人工复核 |
-
-当前系统是**数据底座 + 质量审计层**，不是完整 `RAG` 产品，也不是完整 `LLM Wiki` 产品，更不是动态平台。
+| 盘点主表 | [plans/cninfo_data_source_value_inventory.md](plans/cninfo_data_source_value_inventory.md)：CNINFO 栏目盘点 + 数据类型分类 + P0/P1/P2 优先级 + 验证记录模板 |
+| P0 小样本验证 | 最新公告、公告 PDF 元数据、个股 F10 已完成（Issue #81–#84），结论为部分可用（`testing / partial`） |
+| 类年报验证 | 年报 / 半年报 / 季报检索机制已跑通（`lab/validate_cninfo_report_announcements.py`），并能从标题解析 `report_period` |
+| 历史底座（冻结） | 2024 全市场年报抽取 + SQLite 入库已完成，作为背景保留，当前不再推进（详见 [PROJECT_MAP.md](PROJECT_MAP.md) Era B） |
 
 ---
 
 ## 当前正在做
 
-- 梳理「从静态数据库到动态平台」的整体架构方向。
-- 明确结构化核心数据库的路线判断（`SQLite` 原型 → 未来候选 `PostgreSQL`）。
-- 设计事件表模式，并划清它的边界（只记标准化重要变化）。
-- 设计数据源验证机制（候选 → 小样本验证 → 已验证）。
-- 设计分层采集策略（`HTTP` / `Playwright` / `BrowserUser`）。
-- 设计存储结构：`MinIO` 原始文件层 + `MongoDB` 采集层 + `PostgreSQL` 核心库（`PostgreSQL` 为当前最优先验证方向，非立即全量迁移）。
-
-详见 [plans/dynamic_data_platform_plan.md](plans/dynamic_data_platform_plan.md) 与 [plans/storage_schema_design_plan.md](plans/storage_schema_design_plan.md)。
+- 以 [plans/cninfo_data_source_value_inventory.md](plans/cninfo_data_source_value_inventory.md) 为**唯一事实来源**，把每个 CNINFO 栏目的验证结论回填到状态列。
+- 把「类年报」做扎实：年报 / 半年报 / 季报检索已通，字段可得性统计口径已修正（只计非空且非 `unknown`）。
+- 逐项记录字段可得性、成功率、失败原因，产物统一放 `outputs/validation/`。
 
 ---
 
@@ -70,26 +55,26 @@ flowchart TD
 
 | 步骤 | 内容 |
 |---|---|
-| 1 | 确认动态平台架构方案（数据库、事件表、采集分层） |
-| 2 | 设计 `PostgreSQL` 目标 schema，并做**小样本试点**（不全量迁移） |
-| 3 | 选 1–2 个候选数据源做小样本验证，形成验证记录 |
-| 4 | 在年报底座上跑通一个事件表最小示例 |
+| 1 | 类年报扩展：把同样「定期 + 标题稳定 + 有 PDF」的类型（如业绩预告 / 业绩快报）纳入同一检索机制验证 |
+| 2 | 非类年报逐项：按盘点表 P0 → P1 → P2，对公告流 / F10 / 风险 / 分红 / 股东等栏目做小样本验证 |
+| 3 | 每验证完一个栏目：更新盘点表状态 + 留 summary，明确 `candidate`/`testing`/`partial` |
+| 4 | 全部摸清后，再回头谈存储结构与事件表设计（当前暂缓） |
 
 ---
 
 ## 当前不做什么
 
-- **不**直接做 `SQLite` 到 `PostgreSQL` 的全量迁移（先设计 schema + 小样本试点）。
-- **不**直接开发完整 `RAG` / `LLM Wiki` 产品。
-- **不**对大量网站做大规模 RPA 抓取。
-- **不**在事件表里堆原始文件、所有字段值或抓取日志。
-- **不**声称未验证的数据源已可用。
+- **不**接 PostgreSQL / MinIO / MongoDB；验证结果只作为未来设计依据。
+- **不**继续推进「动态平台架构 / 三层存储」详细设计（[plans/storage_schema_design_plan.md](plans/storage_schema_design_plan.md)、[plans/dynamic_data_platform_plan.md](plans/dynamic_data_platform_plan.md) **暂缓**，保留作参考）。
+- **不**改动 Era A（通用采集框架）/ Era B（2024 年报底座）的代码。
+- **不**做大规模抓取；**不**绕过登录 / 验证码 / 付费 / 权限；请求之间 sleep。
+- **不**把未验证栏目写成「长期稳定可用」；`recommended_status` 不写 `verified`。
 
 ### 三条关键边界
 
-1. **`PostgreSQL` 仍在评估阶段，不是全量迁移。** 它是未来结构化核心数据库的候选，具备支持智能检索原型的技术基础，但具体效果需要小样本测试验证。
-2. **数据源清单要通过验证逐步建立。** 流程是「候选数据源 → 小样本验证 → 已验证数据源」，未验证不写「长期稳定可用」。
-3. **事件表只记录标准化重要变化。** 它服务于公司时间线与智能推送，不替代原始文件层、字段表和抓取日志。
+1. **先验证数据源，再设计数据库。** 存储/事件/平台设计在数据源验证透之前一律暂缓。
+2. **数据源逐项走「候选 → 小样本验证 → 部分可用/已验证」。** 未验证不写「长期稳定可用」。
+3. **当前只在 Era C 范围内改动**（见 [PROJECT_MAP.md](PROJECT_MAP.md)），不碰冻结的两代代码。
 
 ---
 
@@ -97,29 +82,21 @@ flowchart TD
 
 | 想了解 | 看这里 |
 |---|---|
-| 产品大方向、分几个阶段、现在在哪 | [ROADMAP.md](ROADMAP.md) |
+| 仓库整体结构、每个文件属于哪条线 | [PROJECT_MAP.md](PROJECT_MAP.md) |
 | 现在具体在做什么、下一步 | 本文件 |
+| CNINFO 栏目盘点与分类、优先级 | [plans/cninfo_data_source_value_inventory.md](plans/cninfo_data_source_value_inventory.md) |
+| CNINFO 验证的实际产物 | [outputs/validation/](outputs/validation/) |
+| 产品大方向、分几个阶段 | [ROADMAP.md](ROADMAP.md) |
 | 已经完成了什么 | [CHANGELOG.md](CHANGELOG.md) |
-| 当前阶段详细计划 | [plans/dynamic_data_platform_plan.md](plans/dynamic_data_platform_plan.md) |
-| 存储结构设计（MinIO / MongoDB / PostgreSQL） | [plans/storage_schema_design_plan.md](plans/storage_schema_design_plan.md) |
-| 2024 数据底座质量详情 | [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md) |
-| 评估方法与术语 | [docs/evaluation_method.md](docs/evaluation_method.md) |
-
----
-
-## GitHub Projects 看板入口
-
-Project board: [GitHub Projects 看板](https://github.com/users/reagan-nz/projects/1/views/1)
-
-看板用于展示 Todo / In Progress / Review / Done 的实时任务状态。
+| 2024 年报底座质量详情（历史，冻结） | [stage3_quality_followup_summary.md](outputs/generalization/full_market_2024/stage3_quality_followup_summary.md) |
 
 ---
 
 ## 本阶段完成标准
 
-- 动态平台架构方向有书面方案（数据库、事件表、数据源验证、采集分层都有明确边界）。
-- 小范围试点范围已明确，待老师确认后即可执行。
-- 不改动现有代码与数据，2024 数据底座与核心指标保持不变。
+- CNINFO 主要栏目（至少全部 P0 + 类年报）都有小样本验证记录：字段可得性、成功率、失败原因、`recommended_status`。
+- 盘点表 [cninfo_data_source_value_inventory.md](plans/cninfo_data_source_value_inventory.md) 状态列更新到最新。
+- 不改动冻结的两代代码，不接任何数据库。
 
 ---
 
@@ -127,30 +104,22 @@ Project board: [GitHub Projects 看板](https://github.com/users/reagan-nz/proje
 
 | 术语 | 含义 |
 |---|---|
-| `full_market_2024` | 2024 年全 A 股年报抽取运行 |
-| `run_name` | 运行名称，标识一次抽取 / 刷新批次 |
-| 严格质量审计 | 对已存字段做更严规则复核 |
-| 自动合理性分数 | 抽取时的结构合理性估计，通常高于严格审计结果 |
-| `usable` / `partial` / `wrong` | 审计标签：可用 / 部分可用 / 错误 |
-| `not_found_missed` | PDF 中应有披露但抽取结果为未找到 |
-| 事件表 | 记录公司标准化重要变化的表，用于时间线与推送 |
-| `PostgreSQL` | 未来结构化核心数据库候选，仍在评估，不立即迁移 |
-| `pgvector` | `PostgreSQL` 的向量检索扩展 |
-| `Playwright` | 浏览器自动化框架 |
-| `BrowserUser` | 浏览器智能体，用于结构不统一的复杂页面 |
-| `RAG` | 检索增强问答；尚未构建 |
-| `LLM Wiki` | 大模型知识页；尚未构建 |
-| CNINFO | 巨潮资讯网，法定信息披露来源 |
-| `SQLite` | 当前使用的轻量数据库原型 |
-
-指标详细解释见 [docs/evaluation_method.md](docs/evaluation_method.md)。
+| CNINFO | 巨潮资讯网，A 股法定信息披露来源 |
+| 类年报 / 定期报告 | 年报 / 半年报 / 季报等定期披露、标题模式稳定、带 PDF 的文档 |
+| P0 / P1 / P2 | 验证优先级（见盘点表第 9 节） |
+| `recommended_status` | 数据源验证结论：`candidate` / `testing` / `partial` / `verified`（当前不写 `verified`） |
+| `report_period` | 报告期，如 `2024`、`2025H1`、`2025Q1` |
+| Era A / B / C | 仓库三代方向（见 [PROJECT_MAP.md](PROJECT_MAP.md)）：通用采集框架 / 2024 年报底座 / CNINFO 能力研究 |
+| `full_market_2024` | 2024 年全 A 股年报抽取运行（Era B，冻结） |
+| `Playwright` | 浏览器自动化框架，用于 JS 渲染页面 |
+| `SQLite` / `PostgreSQL` / `MinIO` / `MongoDB` | 数据库/存储候选，当前均不接入 |
 
 ---
 
-## 附录：2024 数据底座关键数字
+## 附录：2024 数据底座关键数字（Era B 历史，冻结）
 
 <details>
-<summary>点击展开：full_market_2024 指标、板块分布、近期里程碑</summary>
+<summary>点击展开：full_market_2024 指标（历史记录，当前不再推进）</summary>
 
 ### 非金融公司（工业类 11 字段）
 
@@ -159,8 +128,6 @@ Project board: [GitHub Projects 看板](https://github.com/users/reagan-nz/proje
 | 严格审计 `usable`（核心指标） | 9.43 / 11 |
 | 自动合理性分数 | 10.67 / 11 |
 | `rnd_investment` 找到率 | 94.2% |
-| `revenue_by_region` 审计错误 | 38 |
-| `revenue_by_segment` 审计错误 | 19 |
 
 ### 抽取规模
 
@@ -172,25 +139,6 @@ Project board: [GitHub Projects 看板](https://github.com/users/reagan-nz/proje
 | 技术错误 | 0 |
 | `SQLite` 字段记录 | 62,890 |
 
-### 金融公司（单独核心指标，不与非金融混报）
-
-| 类型 | 严格审计 `usable` |
-|---|---:|
-| 银行 | 9.00 / 13 |
-| 券商 | 7.66 / 12 |
-| 保险 | 9.25 / 12（仅 2 家，仅供参考） |
-| 其他金融 | 5.75 / 8 |
-
-### 板块严格审计 `usable`（非金融）
-
-| 板块 | 指标 |
-|---|---:|
-| 北交所 bse | 8.82 |
-| 沪市主板 sse_main | 9.35 |
-| 深市主板 szse_main | 9.43 |
-| 科创板 star | 9.61 |
-| 创业板 chinext | 9.67 |
-
-> `#32c` 小范围写回未更新全局 9.43/11；全局核心指标需有意安排全量严格质量审计重跑后才变更。
+> 以上为历史底座数字，作为背景保留。当前阶段聚焦 CNINFO 数据源能力研究，不再更新这些指标。
 
 </details>
