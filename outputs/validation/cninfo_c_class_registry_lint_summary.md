@@ -28,8 +28,8 @@
 
 - **source_layer** = `company_profile`（R002）
 - **verified** 全部为 false（R003）
-- **recommended_status** 不超过 `testing`（R005；P1 backfill 后允许 candidate/testing）
-- **endpoint** 已回填 source 须有 `endpoint.url`（R013）
+- **recommended_status** 不超过 `testing`（R005；**6 testing / 4 candidate**）
+- **endpoint** 已回填：**6/10** source 有 `endpoint.url`（R006）；4 仍 null（P3 candidate）
 - **industry_profile** 无 endpoint 时应有 `derived_from_candidate`（R014）
 - **无 B/D source_id 混入**（R012）
 
@@ -45,9 +45,9 @@ _无 FAIL / WARN。_
 
 ## 7. 下一步
 
-1. C 类 known-company live validation（600000 / 300001 / 688001）。
-2. basic_profile field mapping 与 mapper 草案。
-3. P2 source DevTools probe（executive / share_capital / shareholders）。
+1. C 类 P2-A live validation（3 家 × 4 源，默认 dry-run）。
+2. P2-A mapper draft（executive / share_capital / shareholders）。
+3. P3 source DevTools probe（business_scope / contact / dividend_financing）。
 
 ## 附录
 

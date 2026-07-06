@@ -1,5 +1,5 @@
 # CNINFO C 类 Company Profile Source Candidates
-# Era C Phase 4 — P1 YAML backfill v1 (basic + security testing; industry derived).
+# Era C Phase 4 — P1 backfill v1 (basic + security) + P2-A backfill v1 (executive + share_capital + shareholders).
 # 不入库；不写 verified。
 #
 # 权威设计: plans/cninfo_c_class_f10_source_discovery_design.md
@@ -128,26 +128,83 @@ sources:
     source_layer: company_profile
     source_category: executive_profile
     profile_section: executive
-    recommended_status: candidate
+    recommended_status: testing
     verified: false
-    endpoint: null
+    endpoint:
+      url: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyExecutives"
+      method: "GET"
+      params_template:
+        scode: "{company_code}"
+      records_path: "data.records"
+      result_code_path: "data.resultCode"
+      headers_required_candidate:
+        - Referer
     page_url: null
     expected_fields:
       - person_name
       - position
       - term_start_candidate
       - term_end_candidate
+    sample_observation:
+      companies_tested:
+        - company_code: "600000"
+          company_name: "浦发银行"
+          result: "endpoint_found"
+          row_count: 19
+        - company_code: "300001"
+          company_name: "特锐德"
+          result: "endpoint_found"
+          row_count: 17
+        - company_code: "688001"
+          company_name: "华兴源创"
+          result: "endpoint_found"
+          row_count: 13
+      sample_result_summary: "3/3 endpoint_found in P2-A manual DevTools probe."
+    sample_fields:
+      - F002V
+      - F009V
+      - F010V
+      - F012V
+      - F017V
+      - F005N
+      - F012N
+      - SEQID
+      - F001V
+    candidate_field_mapping:
+      F002V: "executive_name"
+      F009V: "position_titles"
+      F010V: "gender"
+      F012V: "birth_year"
+      F017V: "education"
+      F005N: "shareholding_quantity_candidate"
+      F012N: "compensation_candidate"
+      SEQID: "row_sequence_id"
+      F001V: "person_id_candidate"
+    known_caveats:
+      - "3 known-company sample only; not full-market validation."
+      - "F005N and F012N field semantics and units remain candidate-level."
+      - "F017V can be null for some records."
+      - "Do not store Cookie/SID/Authorization headers."
     notes: >-
+      P2-A DevTools probe backfill v1. getCompanyExecutives endpoint.
       Board / management roster snapshot. Not management_change events (D-class).
-      Endpoint not yet probed.
+      verified=false; not full-market stable.
 
   - source_id: cninfo_share_capital_profile
     source_layer: company_profile
     source_category: share_capital_profile
     profile_section: share_capital
-    recommended_status: candidate
+    recommended_status: testing
     verified: false
-    endpoint: null
+    endpoint:
+      url: "https://www.cninfo.com.cn/data20/stockholderCapital/getStockStructure"
+      method: "GET"
+      params_template:
+        scode: "{company_code}"
+      records_path: "data.records"
+      result_code_path: "data.resultCode"
+      headers_required_candidate:
+        - Referer
     page_url: null
     expected_fields:
       - report_date
@@ -155,17 +212,64 @@ sources:
       - float_share_capital
       - restricted_share_capital
       - share_unit
+    sample_observation:
+      companies_tested:
+        - company_code: "600000"
+          company_name: "浦发银行"
+          result: "endpoint_found"
+          row_count: 5
+        - company_code: "300001"
+          company_name: "特锐德"
+          result: "endpoint_found"
+          row_count: 5
+        - company_code: "688001"
+          company_name: "华兴源创"
+          result: "endpoint_found"
+          row_count: 5
+      sample_result_summary: "3/3 endpoint_found in P2-A manual DevTools probe."
+    sample_fields:
+      - VARYDATE
+      - F002V
+      - F021N
+      - F022N
+      - F023N
+      - F024N
+      - F028N
+      - F003N
+    candidate_field_mapping:
+      VARYDATE: "change_date_or_report_date"
+      F002V: "change_reason_or_source"
+      F021N: "total_share_capital_candidate"
+      F022N: "circulating_share_capital_candidate"
+      F023N: "restricted_share_candidate"
+      F024N: "unrestricted_share_candidate"
+      F028N: "change_amount_candidate"
+      F003N: "total_capital_candidate"
+    known_caveats:
+      - "3 known-company sample only; not full-market validation."
+      - "FxxxN field semantics and units remain candidate-level."
+      - "Rows may represent both periodic report snapshots and capital change events."
+      - "Do not store Cookie/SID/Authorization headers."
     notes: >-
-      Share capital structure snapshot from F10. Endpoint not yet probed.
+      P2-A DevTools probe backfill v1. getStockStructure endpoint.
+      Share capital structure snapshot from F10. verified=false.
 
   - source_id: cninfo_top_shareholders_profile
     source_layer: company_profile
     source_category: shareholder_profile
     profile_section: shareholder
     shareholder_scope: top_shareholder
-    recommended_status: candidate
+    recommended_status: testing
     verified: false
-    endpoint: null
+    endpoint:
+      url: "https://www.cninfo.com.cn/data20/stockholderCapital/getTopTenStockholders"
+      method: "GET"
+      params_template:
+        scode: "{company_code}"
+      records_path: "data.records"
+      result_code_path: "data.resultCode"
+      headers_required_candidate:
+        - Referer
     page_url: null
     expected_fields:
       - shareholder_name
@@ -173,18 +277,65 @@ sources:
       - holding_ratio
       - rank
       - report_period
+    sample_observation:
+      companies_tested:
+        - company_code: "600000"
+          company_name: "浦发银行"
+          result: "endpoint_found"
+          row_count: 50
+        - company_code: "300001"
+          company_name: "特锐德"
+          result: "endpoint_found"
+          row_count: 50
+        - company_code: "688001"
+          company_name: "华兴源创"
+          result: "endpoint_found"
+          row_count: 50
+      sample_result_summary: >-
+        3/3 endpoint_found in P2-A manual DevTools probe; each response returned 50 rows.
+    sample_fields:
+      - F001D
+      - F002V
+      - F003N
+      - F004N
+      - F005N
+      - F006V
+      - F007V
+    candidate_field_mapping:
+      F001D: "report_date"
+      F002V: "shareholder_name"
+      F003N: "holding_amount_candidate"
+      F004N: "holding_ratio_percent_candidate"
+      F005N: "rank"
+      F006V: "share_type"
+      F007V: "change_status_or_change_amount_candidate"
+    known_caveats:
+      - "3 known-company sample only; not full-market validation."
+      - "Response appears to contain multiple reporting periods, usually 5 periods x 10 shareholders."
+      - "F003N unit remains candidate-level."
+      - "F007V may contain textual status such as 未变/新进 or numeric-looking change value."
+      - "Do not store Cookie/SID/Authorization headers."
     notes: >-
+      P2-A DevTools probe backfill v1. getTopTenStockholders endpoint.
       Top-10 shareholders snapshot. Not shareholder_data metric (D-class).
-      Endpoint not yet probed.
+      verified=false.
 
   - source_id: cninfo_top_float_shareholders_profile
     source_layer: company_profile
     source_category: shareholder_profile
     profile_section: shareholder
     shareholder_scope: top_float_shareholder
-    recommended_status: candidate
+    recommended_status: testing
     verified: false
-    endpoint: null
+    endpoint:
+      url: "https://www.cninfo.com.cn/data20/stockholderCapital/getTopTenCirculatingStockholders"
+      method: "GET"
+      params_template:
+        scode: "{company_code}"
+      records_path: "data.records"
+      result_code_path: "data.resultCode"
+      headers_required_candidate:
+        - Referer
     page_url: null
     expected_fields:
       - shareholder_name
@@ -192,8 +343,48 @@ sources:
       - holding_ratio
       - rank
       - report_period
+    sample_observation:
+      companies_tested:
+        - company_code: "600000"
+          company_name: "浦发银行"
+          result: "endpoint_found"
+          row_count: 50
+        - company_code: "300001"
+          company_name: "特锐德"
+          result: "endpoint_found"
+          row_count: 50
+        - company_code: "688001"
+          company_name: "华兴源创"
+          result: "endpoint_found"
+          row_count: 50
+      sample_result_summary: >-
+        3/3 endpoint_found in P2-A manual DevTools probe; each response returned 50 rows.
+    sample_fields:
+      - F001D
+      - F002V
+      - F003N
+      - F004N
+      - F005N
+      - F006V
+      - F007V
+    candidate_field_mapping:
+      F001D: "report_date"
+      F002V: "shareholder_name"
+      F003N: "holding_amount_candidate"
+      F004N: "holding_ratio_percent_candidate"
+      F005N: "rank"
+      F006V: "share_type"
+      F007V: "change_status_or_change_amount_candidate"
+    known_caveats:
+      - "3 known-company sample only; not full-market validation."
+      - "Response appears to contain multiple reporting periods, usually 5 periods x 10 shareholders."
+      - "Shape is close to top_shareholders_profile but represents circulating shareholders."
+      - "F003N unit remains candidate-level."
+      - "F007V may contain textual status such as 未变/新进 or numeric-looking change value."
+      - "Do not store Cookie/SID/Authorization headers."
     notes: >-
-      Top-10 float shareholders snapshot. Endpoint not yet probed.
+      P2-A DevTools probe backfill v1. getTopTenCirculatingStockholders endpoint.
+      Top-10 float shareholders snapshot. verified=false.
 
   - source_id: cninfo_dividend_financing_profile
     source_layer: company_profile

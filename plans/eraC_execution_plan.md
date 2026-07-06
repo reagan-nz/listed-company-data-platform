@@ -150,9 +150,10 @@ _最后更新：2026-07-05_
 41. ~~C 类 P2 executive_profile 人工 DevTools probe~~ → **3/3 endpoint_found**（§7l）
 42. ~~C 类 P2 share_capital + shareholders 人工 DevTools probe~~ → **P2-A 12/12 endpoint_found**（§7m）
 43. ~~C 类 P2-A YAML backfill decision 起草~~ → **已完成**（§7n）
-44. 应用 C-class P2-A YAML backfill v1 + registry lint
-45. 可选：probe 官方 category code（B 类）
-46. **暂不全量抓取、暂不入库**
+44. ~~C 类 P2-A YAML backfill v1 + registry lint~~ → **已完成**（§7o）
+45. C 类 P2-A live validation script（3 家 × 4 源，默认 dry-run）
+46. 可选：probe 官方 category code（B 类）
+47. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -920,11 +921,35 @@ _最后更新：2026-07-05_
 | `cninfo_top_shareholders_profile` | allow_yaml_backfill | testing |
 | `cninfo_top_float_shareholders_profile` | allow_yaml_backfill | testing |
 
-**本轮：** decision **仅文档**；**未修改** `cninfo_c_class_source_candidates.yaml`。
+**本轮：** decision **已执行** → [cninfo_c_class_source_candidates.yaml](../config/cninfo_c_class_source_candidates.yaml) P2-A backfill v1；registry lint **PASS**。
 
 **红线：** **无 verified**；**无 testing_stable_sample**；不入库。
 
-**下一步：** P2-A YAML backfill v1 → registry lint。
+**下一步：** P2-A YAML backfill v1 → ~~registry lint~~ → 见 §7o；P2-A live validation。
+
+---
+
+## 7o. Phase 4 C 类 P2-A YAML Backfill v1（2026-07-06）
+
+| 项 | 结果 |
+|----|------|
+| Candidate YAML | [cninfo_c_class_source_candidates.yaml](../config/cninfo_c_class_source_candidates.yaml) |
+| Backfilled sources | executive · share_capital · top_shareholders · top_float_shareholders |
+| `recommended_status` | **testing**（四源） |
+| `verified` | **false**（全部） |
+| Registry lint | **PASS**（14 rules · fail=0） |
+| Testing sources total | **6/10**（P1 basic + security + P2-A 四源） |
+
+| source_id | endpoint |
+|-----------|----------|
+| `cninfo_executive_profile` | `GET .../getCompanyExecutives?scode=` |
+| `cninfo_share_capital_profile` | `GET .../getStockStructure?scode=` |
+| `cninfo_top_shareholders_profile` | `GET .../getTopTenStockholders?scode=` |
+| `cninfo_top_float_shareholders_profile` | `GET .../getTopTenCirculatingStockholders?scode=` |
+
+**红线：** **无 verified**；**无 testing_stable_sample**；不入库；无 live request（本轮）。
+
+**下一步：** 扩展 `validate_cninfo_c_class_live_sources.py` 或 P2-A live validation v1（默认 `--dry-run`）。
 
 ---
 
@@ -942,7 +967,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **P2-A backfill decision 已起草**；下一步应用 P2-A YAML backfill v1 + lint。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **P2-A YAML backfill v1 完成** + lint PASS；下一步 P2-A live validation（dry-run 默认）。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

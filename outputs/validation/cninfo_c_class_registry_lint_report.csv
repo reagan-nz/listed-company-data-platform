@@ -1,5 +1,5 @@
 rule_id,severity,target,status,message,suggested_fix
 R011,INFO,schemas/c_class,PASS,All 6 schema files present,
-R006,INFO,registry,PASS,2/10 sources have endpoint populated; 8 still null,
-R005,INFO,registry,PASS,"recommended_status within phase cap (testing): candidate=8, testing=2",
+R006,INFO,registry,PASS,6/10 sources have endpoint populated; 4 still null,
+R005,INFO,registry,PASS,"recommended_status within phase cap (testing): candidate=4, testing=6",
 R001,INFO,registry,PASS,All 10 source_id values are unique,

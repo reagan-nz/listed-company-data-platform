@@ -168,7 +168,7 @@ P2 目标是发现 **高管 / 股本结构 / 十大股东 / 十大流通股东**
 | P2 checklist | [cninfo_c_class_p2_probe_checklist.md](cninfo_c_class_p2_probe_checklist.md) | **已创建** |
 | P2 probe records | [c_class_p2_probe_records.yaml](../fixtures/c_class/probe/records/c_class_p2_probe_records.yaml) | **12/12 `endpoint_found`**（P2-A complete） |
 
-**下一步：** 起草 **C-class P2-A YAML backfill decision**（executive + share_capital + shareholders）；~~尚未修改 candidate YAML~~ → decision 见 [cninfo_c_class_p2a_yaml_backfill_decision.md](cninfo_c_class_p2a_yaml_backfill_decision.md)；**YAML 待回填**。
+**下一步：** ~~decision 见 [cninfo_c_class_p2a_yaml_backfill_decision.md](cninfo_c_class_p2a_yaml_backfill_decision.md)；YAML 待回填~~ → **P2-A YAML backfill v1 完成**；下一步 P2-A live validation。
 
 ---
 
