@@ -172,8 +172,10 @@ _最后更新：2026-07-05_
 63. ~~shareholder / security 口径文档化~~ → **完成**（§7af）
 64. ~~200 live smoke~~ → **LIVE_PARTIAL**（§7ag）
 65. ~~BSE failure diagnosis~~ → **完成**（§7ag）
-66. BSE-920 targeted probe + 样本清洗 → **下一步**
-67. **暂不全量抓取、暂不入库**
+66. ~~universe split + sample cleaning~~ → **完成**（§7ah）
+67. non-BSE 1000-like 离线派生 → **下一步**
+68. BSE legacy targeted probe → **待启动**
+69. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -1237,6 +1239,30 @@ _最后更新：2026-07-05_
 
 **Gate — BSE：** **从主 scale gate 拆出**；legacy 83/87 标记 `legacy_code_incompatible`；需 **BSE targeted probe**（非 195 重跑）
 
+**下一步：** universe split **done**（§7ah）；non-BSE 1000-like 离线派生
+
+---
+
+## 7ah. Phase 4 C 类 Universe Split + Sample Cleaning（2026-07-06）
+
+| 项 | 内容 |
+|----|------|
+| 计划 | [cninfo_c_class_universe_split_and_sample_cleaning_plan.md](cninfo_c_class_universe_split_and_sample_cleaning_plan.md) |
+| 母本 | `eval_companies_c_class_smoke_200_active.yaml`（195） |
+
+| universe | 数量 | 派生文件 | 下一阶段 |
+|----------|------|----------|----------|
+| `non_bse_active` | **172** | `lab/eval_companies_c_class_smoke_195_non_bse_active.yaml` | 1000-like planning 主宇宙 |
+| `bse_920_active` | **12** | `lab/eval_companies_c_class_smoke_195_bse_920_active.yaml` | BSE 子 gate |
+| `bse_legacy_83_87_hold` | **8** | `lab/eval_companies_c_class_smoke_195_bse_legacy_hold.yaml` | HOLD · targeted probe |
+| `abnormal_review` | **3** | `lab/eval_companies_c_class_smoke_195_abnormal_review.yaml` | 不进入主 gate |
+
+**策略：** 主 gate **不再**混算 BSE legacy；**非 blind 1000**；non-BSE mainline 与 BSE legacy side-track **分离**
+
+**dividend_history backfill：** non-BSE **GO（决策）** · mixed **HOLD** · **不执行 YAML**
+
+**红线：** 无 live · 无 CNINFO · 无 verified · 无 DB
+
 ---
 
 ## 7af. Phase 4 C 类 200 Live 前口径 + Dry-Run Checkpoint（2026-07-06）
@@ -1374,7 +1400,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **195 live smoke LIVE_PARTIAL + BSE diagnosis**（§7ag）；下一步 **BSE-920 targeted probe / 样本清洗**（不全量重跑 live）。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **universe split 完成**（§7ah）；**non-BSE mainline** 可规划 1000-like；**BSE legacy** side-track HOLD。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

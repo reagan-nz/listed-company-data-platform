@@ -1,0 +1,96 @@
+version: c-class-universe-split-v1
+generated_at: '2026-07-06'
+parent_sample: lab/eval_companies_c_class_smoke_200_active.yaml
+universe_id: bse_legacy_83_87_hold
+description: BSE 83/87 旧代码层；legacy_code_incompatible；暂 HOLD，待 targeted probe
+company_count: 8
+strata:
+  bse: 8
+notes: 从 195 active live 样本派生；未联网补数据；不执行 live/YAML/DB
+companies:
+- stock_code: '832317'
+  short_name: 观典防务
+  company_name: 观典防务
+  exchange: BSE
+  orgid: gfbj0832317
+  board: bse
+  universe_bucket: bse_legacy_hold
+  main_pass_6: 0
+  main_fail_6: 6
+  hold_reason: legacy_code_incompatible; HTTP 500 / json 9240002 in 195 live
+- stock_code: '832491'
+  short_name: 奥迪威
+  company_name: 奥迪威
+  exchange: BSE
+  orgid: gfbj0832491
+  board: bse
+  universe_bucket: bse_legacy_hold
+  main_pass_6: 0
+  main_fail_6: 6
+  hold_reason: legacy_code_incompatible; HTTP 500 / json 9240002 in 195 live
+- stock_code: '832876'
+  short_name: 慧为智能
+  company_name: 慧为智能
+  exchange: BSE
+  orgid: gfbj0832876
+  board: bse
+  universe_bucket: bse_legacy_hold
+  main_pass_6: 0
+  main_fail_6: 6
+  hold_reason: legacy_code_incompatible; HTTP 500 / json 9240002 in 195 live
+- stock_code: '833266'
+  short_name: 生物谷
+  company_name: 生物谷
+  exchange: BSE
+  orgid: gfbj0833266
+  board: bse
+  universe_bucket: bse_legacy_hold
+  main_pass_6: 0
+  main_fail_6: 6
+  hold_reason: legacy_code_incompatible; HTTP 500 / json 9240002 in 195 live
+- stock_code: '835174'
+  short_name: 五新隧装
+  company_name: 五新隧装
+  exchange: BSE
+  orgid: gfbj0835174
+  board: bse
+  universe_bucket: bse_legacy_hold
+  main_pass_6: 0
+  main_fail_6: 6
+  hold_reason: legacy_code_incompatible; HTTP 500 / json 9240002 in 195 live
+- stock_code: '839680'
+  short_name: '*ST广道'
+  company_name: '*ST广道'
+  exchange: BSE
+  orgid: gfbj0839680
+  board: bse
+  universe_bucket: bse_legacy_hold
+  main_pass_6: 0
+  main_fail_6: 6
+  hold_reason: legacy_code_incompatible; HTTP 500 / json 9240002 in 195 live
+- stock_code: '839729'
+  short_name: 永顺生物
+  company_name: 永顺生物
+  exchange: BSE
+  orgid: gfbj0839729
+  board: bse
+  universe_bucket: bse_legacy_hold
+  main_pass_6: 0
+  main_fail_6: 6
+  hold_reason: legacy_code_incompatible; HTTP 500 / json 9240002 in 195 live
+  duplicate_of: '920729'
+  note: 同名永顺生物 legacy 代码；保留 920729 于 bse_920_active
+- stock_code: '870656'
+  short_name: 海昇药业
+  company_name: 海昇药业
+  exchange: BSE
+  orgid: gfbj0870656
+  board: bse
+  universe_bucket: bse_legacy_hold
+  main_pass_6: 0
+  main_fail_6: 6
+  hold_reason: legacy_code_incompatible; HTTP 500 / json 9240002 in 195 live
+hold_status: HOLD
+legacy_prefixes:
+- '83'
+- '87'

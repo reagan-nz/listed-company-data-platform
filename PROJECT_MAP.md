@@ -10,7 +10,7 @@ _最后更新：2026-07-06_
 
 ## 0. 一句话现状
 
-仓库里叠了**三代方向**的代码与文档。**当前聚焦：Era C Phase 4 C 类** — 195 live smoke **LIVE_PARTIAL**；**BSE 旧代码层（83/87）系统性 HTTP 500** 已诊断；下一步 **BSE targeted probe + 样本清洗**。前两代**已冻结**。
+仓库里叠了**三代方向**的代码与文档。**当前聚焦：Era C Phase 4 C 类** — 195 live + BSE diagnosis 完成；**universe split**（non-BSE 172 / BSE-920 12 / legacy hold 8）；下一阶段 **non-BSE 1000-like 离线派生**（非 blind 扩样）。前两代**已冻结**。
 
 ---
 
@@ -80,7 +80,7 @@ _最后更新：2026-07-06_
 | `build_cninfo_p0_sample_companies.py` | 生成 40 家 P0 样本公司清单 | 是 |
 | `build_cninfo_report_p1_identity_mapping.py` | P1 identity mapping（离线） | 是 |
 
-**C 类 smoke 样本（`lab/`）：** `eval_companies_200.yaml`（母本 200）· `eval_companies_c_class_smoke_30_active.yaml` · `eval_companies_c_class_smoke_200_active.yaml`（**active 195**）
+**C 类 smoke 样本（`lab/`）：** `eval_companies_200.yaml`（母本）· `eval_companies_c_class_smoke_200_active.yaml`（195）· **universe split：** `*_195_non_bse_active`（172）· `*_bse_920_active`（12）· `*_bse_legacy_hold`（8）· `*_abnormal_review`（3）
 
 ### 2.2 活跃配置（`config/`）
 - `cninfo_table_sources.yaml` — **Phase 2** 验证脚本驱动配置（12 source；10 stable + 2 candidate）
@@ -122,6 +122,7 @@ _最后更新：2026-07-06_
 - `plans/cninfo_c_class_p2b_probe_plan.md` — **Phase 4** P2-B DevTools probe 计划（dividend · contact · business_scope · industry）
 - `plans/cninfo_c_class_p2b_probe_checklist.md` — **Phase 4** P2-B 人工 probe 清单
 - `plans/cninfo_c_class_p2b_source_decision_table.md` — **Phase 4** P2-B 四源决策表（discovery closed · 无 YAML 执行）
+- `plans/cninfo_c_class_universe_split_and_sample_cleaning_plan.md` — **Phase 4** C 类 universe split + 1000-like 清洗规则
 - `plans/cninfo_c_class_scale_smoke_200_plan.md` — **Phase 4** C 类 200-company scale smoke 计划（active 过滤 · gate · 不直接跑 live）
 - `plans/cninfo_c_class_p1_yaml_backfill_decision.md` — P1 candidate YAML 回填 / 暂缓决策（**YAML 未改**）
 - `plans/cninfo_c_class_basic_profile_field_mapping_draft.md` — getCompanyIntroduction → basic profile 字段映射草案
@@ -249,5 +250,5 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 2. **Phase 2 已收口**；**Phase 3 D 类设计**见 [registry YAML](config/cninfo_d_class_source_registry_draft.yaml) / [schema validation summary](outputs/validation/cninfo_d_class_schema_validation_summary.md)。
 3. **Phase 3 B 类**见 [validation design](plans/cninfo_b_class_validation_design.md) / [category routing](plans/cninfo_b_class_category_routing_rules.md) / [categories YAML](config/cninfo_announcement_categories.yaml) / [document seed summary](outputs/validation/cninfo_b_class_document_seed_summary.md) / [B schema validation](outputs/validation/cninfo_b_class_document_schema_validation_summary.md)。
 4. **Phase 4 C 类**见 [registry lint](outputs/validation/cninfo_c_class_registry_lint_summary.md) / [fixture validation](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md) / [active 30 smoke summary](outputs/validation/cninfo_c_class_scale_smoke_30_active_summary.md) / [candidates YAML](config/cninfo_c_class_source_candidates.yaml)。
-5. **下一步**：**BSE-920 targeted probe** + 样本清洗（[BSE diagnosis](outputs/validation/cninfo_c_class_scale_smoke_200_bse_diagnosis.md) · [200 live summary](outputs/validation/cninfo_c_class_scale_smoke_200_active_summary.md)）；非 BSE **~97%** pass → 可规划 1000-like 样本（先清洗 ST 异常）；**不全量重跑 live**。
+5. **下一步**：**non-BSE 1000-like 离线派生**（[universe split plan](plans/cninfo_c_class_universe_split_and_sample_cleaning_plan.md) · 主宇宙 172 家）；BSE legacy **8 家 HOLD** + targeted probe；**非 blind 1000** · **无 live**。
 6. **每完成一个 Phase**：更新分层表状态 + `outputs/validation/` 留 summary；不做数据库接入。

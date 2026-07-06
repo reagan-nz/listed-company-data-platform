@@ -1,0 +1,41 @@
+version: c-class-universe-split-v1
+generated_at: '2026-07-06'
+parent_sample: lab/eval_companies_c_class_smoke_200_active.yaml
+universe_id: abnormal_review
+description: ST/异常样本；6/6 主源全失败；样本质量 review，不进入主 gate
+company_count: 3
+strata:
+  szse_main: 1
+  sse_main: 2
+notes: 从 195 active live 样本派生；未联网补数据；不执行 live/YAML/DB
+companies:
+- stock_code: '000405'
+  short_name: ST鑫光
+  company_name: ST鑫光
+  exchange: SZSE
+  orgid: gssz0000405
+  board: szse_main
+  universe_bucket: abnormal_review
+  main_pass_6: 0
+  main_fail_6: 6
+  review_reason: main sources 6/6 fail in 195 live; sample quality review
+- stock_code: '600065'
+  short_name: '*ST联谊'
+  company_name: '*ST联谊'
+  exchange: SSE
+  orgid: gssh0600065
+  board: sse_main
+  universe_bucket: abnormal_review
+  main_pass_6: 0
+  main_fail_6: 6
+  review_reason: main sources 6/6 fail in 195 live; sample quality review
+- stock_code: '600978'
+  short_name: '*ST宜生'
+  company_name: '*ST宜生'
+  exchange: SSE
+  orgid: gssh0600978
+  board: sse_main
+  universe_bucket: abnormal_review
+  main_pass_6: 0
+  main_fail_6: 6
+  review_reason: main sources 6/6 fail in 195 live; sample quality review

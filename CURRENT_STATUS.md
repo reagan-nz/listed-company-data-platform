@@ -8,7 +8,7 @@ _最后更新：2026-07-06_
 
 ## 当前阶段（一句话）
 
-**Era C Phase 1（A 类）已收口**。**Phase 2 D 类已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通。**Phase 4 C 类** **195 active live smoke 完成**（`LIVE_PARTIAL` · pass=1101 · fail=69 · blocked=4 · [summary](outputs/validation/cninfo_c_class_scale_smoke_200_active_summary.md)）；**BSE 系统性失败已诊断**（[BSE diagnosis](outputs/validation/cninfo_c_class_scale_smoke_200_bse_diagnosis.md) · 83/87 旧代码 HTTP 500 · 920 层稳定）；非 BSE 主判定 pass **~97%**；dividend backfill **non-BSE GO / mixed HOLD**（仅决策 · 不执行）；**无 verified**；**不入库**。
+**Era C Phase 1（A 类）已收口**。**Phase 2 D 类已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通。**Phase 4 C 类** **195 live smoke + BSE diagnosis 完成**；**universe split 已落地**（non-BSE **172** · BSE-920 **12** · legacy hold **8** · abnormal **3** · [split plan](plans/cninfo_c_class_universe_split_and_sample_cleaning_plan.md)）；下一阶段 **非 blind 1000**，主宇宙 **non-BSE mainline** 与 **BSE legacy side-track** 分离；dividend **non-BSE GO / mixed HOLD**（不执行 YAML）；**无 verified**；**不入库**。
 
 ---
 
@@ -202,8 +202,10 @@ flowchart TD
 | 62 | ~~shareholder empty_but_valid + security observe-only 口径~~ → **已文档化**（[200 plan](plans/cninfo_c_class_scale_smoke_200_plan.md) §6–§7 · §7af） |
 | 63 | ~~200 live smoke~~ → **LIVE_PARTIAL**（195 · [summary](outputs/validation/cninfo_c_class_scale_smoke_200_active_summary.md)） |
 | 64 | ~~BSE failure diagnosis~~ → **完成**（[diagnosis](outputs/validation/cninfo_c_class_scale_smoke_200_bse_diagnosis.md)） |
-| 65 | 下一步：**BSE-920 targeted probe + 样本清洗**（非全量重跑） |
-| 66 | **暂不全量抓取、暂不入库** |
+| 65 | ~~universe split + sample cleaning~~ → **完成**（[split plan](plans/cninfo_c_class_universe_split_and_sample_cleaning_plan.md)） |
+| 66 | 从 `eval_companies_1000` 离线派生 non-BSE ~1000 候选 → **下一步** |
+| 67 | BSE legacy targeted probe（8 家 hold）→ **待启动** |
+| 68 | **暂不全量抓取、暂不入库** |
 
 ---
 
@@ -225,7 +227,7 @@ flowchart TD
 |--------|--------|
 | **B 类 corpus** | [corpus design](plans/cninfo_b_class_corpus_design.md) · [live summary](outputs/validation/cninfo_b_class_corpus_retrieval_live_summary.md) |
 | **C 类 profile 设计** | [P1 backfill decision](plans/cninfo_c_class_p1_yaml_backfill_decision.md) · [P2-A backfill decision](plans/cninfo_c_class_p2a_yaml_backfill_decision.md) · [candidates YAML](config/cninfo_c_class_source_candidates.yaml)（**P1 + P2-A backfill v1**） · [lint summary](outputs/validation/cninfo_c_class_registry_lint_summary.md) |
-| **C 类 30/200 smoke** | [active 30 summary](outputs/validation/cninfo_c_class_scale_smoke_30_active_summary.md) · [200 live summary](outputs/validation/cninfo_c_class_scale_smoke_200_active_summary.md) · [BSE diagnosis](outputs/validation/cninfo_c_class_scale_smoke_200_bse_diagnosis.md) |
+| **Universe split** | [split plan](plans/cninfo_c_class_universe_split_and_sample_cleaning_plan.md) · non-BSE 172 · BSE-920 12 · legacy hold 8 · abnormal 3 |
 | **D 类 registry / schema 设计** | [registry](plans/cninfo_d_class_source_registry_design.md) · [YAML](config/cninfo_d_class_source_registry_draft.yaml) · [JSON Schema](schemas/d_class/) · [schema validation summary](outputs/validation/cninfo_d_class_schema_validation_summary.md) |
 | **Phase 2 总总结** | [cninfo_table_sources_phase2_current_final_summary.md](outputs/validation/cninfo_table_sources_phase2_current_final_summary.md) |
 | D 类 priority-1 分源 | [cninfo_table_sources_priority1_summary.md](outputs/validation/cninfo_table_sources_priority1_summary.md) |
