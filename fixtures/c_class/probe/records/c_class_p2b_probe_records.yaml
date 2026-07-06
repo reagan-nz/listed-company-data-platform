@@ -1,0 +1,336 @@
+# CNINFO C-class P2-B DevTools probe records
+# Era C Phase 4 — dividend_financing / contact / business_scope / industry (4 sources × 3 companies).
+# Initial state: 12/12 manual_probe_pending.
+#
+# Plan: plans/cninfo_c_class_p2b_probe_plan.md
+# Checklist: plans/cninfo_c_class_p2b_probe_checklist.md
+# Do NOT commit live response JSON with PII into Git.
+
+version: "draft-0.1"
+status: "p2b_probe_initialized"
+verified: false
+summary_notes: >-
+  P2-B manual DevTools probe initialized: cninfo_dividend_financing_profile 0/3,
+  cninfo_company_contact_profile 0/3, cninfo_company_business_scope 0/3,
+  cninfo_company_industry_profile 0/3 (12/12 manual_probe_pending). No CNINFO
+  request in initialization round. No YAML backfill. P1 + P2-A complete (6 testing
+  sources). Do not write verified.
+
+probe_scope:
+  sources:
+    - cninfo_dividend_financing_profile
+    - cninfo_company_contact_profile
+    - cninfo_company_business_scope
+    - cninfo_company_industry_profile
+  companies:
+    - company_code: "600000"
+      company_name: "浦发银行"
+      org_id: "gssh0600000"
+    - company_code: "300001"
+      company_name: "特锐德"
+      org_id: "9900008270"
+    - company_code: "688001"
+      company_name: "华兴源创"
+      org_id: "9900038969"
+
+probe_records:
+  # --- cninfo_dividend_financing_profile (P2-B1) ---
+  - probe_id: c_p2b_dividend_financing_600000
+    source_id: cninfo_dividend_financing_profile
+    company_code: "600000"
+    company_name: "浦发银行"
+    org_id: "gssh0600000"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600000&orgId=gssh0600000#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    result_code_path: null
+    sample_response_shape: null
+    sample_fields: []
+    candidate_field_mapping: {}
+    row_count: null
+    probe_status: manual_probe_pending
+    derived_from_candidate: null
+    blocked_or_empty: null
+    notes:
+      - "P2-B manual DevTools probe pending."
+      - "Do not write verified."
+      - "Do not store Cookie/SID/Authorization."
+
+  - probe_id: c_p2b_dividend_financing_300001
+    source_id: cninfo_dividend_financing_profile
+    company_code: "300001"
+    company_name: "特锐德"
+    org_id: "9900008270"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300001&orgId=9900008270#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    result_code_path: null
+    sample_response_shape: null
+    sample_fields: []
+    candidate_field_mapping: {}
+    row_count: null
+    probe_status: manual_probe_pending
+    derived_from_candidate: null
+    blocked_or_empty: null
+    notes:
+      - "P2-B manual DevTools probe pending."
+      - "Do not write verified."
+      - "Do not store Cookie/SID/Authorization."
+
+  - probe_id: c_p2b_dividend_financing_688001
+    source_id: cninfo_dividend_financing_profile
+    company_code: "688001"
+    company_name: "华兴源创"
+    org_id: "9900038969"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688001&orgId=9900038969#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    result_code_path: null
+    sample_response_shape: null
+    sample_fields: []
+    candidate_field_mapping: {}
+    row_count: null
+    probe_status: manual_probe_pending
+    derived_from_candidate: null
+    blocked_or_empty: null
+    notes:
+      - "P2-B manual DevTools probe pending."
+      - "Do not write verified."
+      - "Do not store Cookie/SID/Authorization."
+
+  # --- cninfo_company_contact_profile (P2-B2) ---
+  - probe_id: c_p2b_contact_600000
+    source_id: cninfo_company_contact_profile
+    company_code: "600000"
+    company_name: "浦发银行"
+    org_id: "gssh0600000"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600000&orgId=gssh0600000#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    result_code_path: null
+    sample_response_shape: null
+    sample_fields: []
+    candidate_field_mapping: {}
+    row_count: null
+    probe_status: manual_probe_pending
+    derived_from_candidate: null
+    blocked_or_empty: null
+    notes:
+      - "P2-B manual DevTools probe pending."
+      - "Do not write verified."
+      - "Do not store Cookie/SID/Authorization."
+      - "Check overlap with basic_profile contact fields before independent endpoint claim."
+
+  - probe_id: c_p2b_contact_300001
+    source_id: cninfo_company_contact_profile
+    company_code: "300001"
+    company_name: "特锐德"
+    org_id: "9900008270"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300001&orgId=9900008270#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    result_code_path: null
+    sample_response_shape: null
+    sample_fields: []
+    candidate_field_mapping: {}
+    row_count: null
+    probe_status: manual_probe_pending
+    derived_from_candidate: null
+    blocked_or_empty: null
+    notes:
+      - "P2-B manual DevTools probe pending."
+      - "Do not write verified."
+      - "Do not store Cookie/SID/Authorization."
+      - "Check overlap with basic_profile contact fields before independent endpoint claim."
+
+  - probe_id: c_p2b_contact_688001
+    source_id: cninfo_company_contact_profile
+    company_code: "688001"
+    company_name: "华兴源创"
+    org_id: "9900038969"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688001&orgId=9900038969#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    result_code_path: null
+    sample_response_shape: null
+    sample_fields: []
+    candidate_field_mapping: {}
+    row_count: null
+    probe_status: manual_probe_pending
+    derived_from_candidate: null
+    blocked_or_empty: null
+    notes:
+      - "P2-B manual DevTools probe pending."
+      - "Do not write verified."
+      - "Do not store Cookie/SID/Authorization."
+      - "Check overlap with basic_profile contact fields before independent endpoint claim."
+
+  # --- cninfo_company_business_scope (P2-B3) ---
+  - probe_id: c_p2b_business_scope_600000
+    source_id: cninfo_company_business_scope
+    company_code: "600000"
+    company_name: "浦发银行"
+    org_id: "gssh0600000"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600000&orgId=gssh0600000#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    result_code_path: null
+    sample_response_shape: null
+    sample_fields: []
+    candidate_field_mapping: {}
+    row_count: null
+    probe_status: manual_probe_pending
+    derived_from_candidate: null
+    blocked_or_empty: null
+    notes:
+      - "P2-B manual DevTools probe pending."
+      - "Do not write verified."
+      - "Do not store Cookie/SID/Authorization."
+      - "Check overlap with basic_profile business_scope fields before independent endpoint claim."
+
+  - probe_id: c_p2b_business_scope_300001
+    source_id: cninfo_company_business_scope
+    company_code: "300001"
+    company_name: "特锐德"
+    org_id: "9900008270"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300001&orgId=9900008270#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    result_code_path: null
+    sample_response_shape: null
+    sample_fields: []
+    candidate_field_mapping: {}
+    row_count: null
+    probe_status: manual_probe_pending
+    derived_from_candidate: null
+    blocked_or_empty: null
+    notes:
+      - "P2-B manual DevTools probe pending."
+      - "Do not write verified."
+      - "Do not store Cookie/SID/Authorization."
+      - "Check overlap with basic_profile business_scope fields before independent endpoint claim."
+
+  - probe_id: c_p2b_business_scope_688001
+    source_id: cninfo_company_business_scope
+    company_code: "688001"
+    company_name: "华兴源创"
+    org_id: "9900038969"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688001&orgId=9900038969#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    result_code_path: null
+    sample_response_shape: null
+    sample_fields: []
+    candidate_field_mapping: {}
+    row_count: null
+    probe_status: manual_probe_pending
+    derived_from_candidate: null
+    blocked_or_empty: null
+    notes:
+      - "P2-B manual DevTools probe pending."
+      - "Do not write verified."
+      - "Do not store Cookie/SID/Authorization."
+      - "Check overlap with basic_profile business_scope fields before independent endpoint claim."
+
+  # --- cninfo_company_industry_profile (P2-B4) ---
+  - probe_id: c_p2b_industry_600000
+    source_id: cninfo_company_industry_profile
+    company_code: "600000"
+    company_name: "浦发银行"
+    org_id: "gssh0600000"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600000&orgId=gssh0600000#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    result_code_path: null
+    sample_response_shape: null
+    sample_fields: []
+    candidate_field_mapping: {}
+    row_count: null
+    probe_status: manual_probe_pending
+    derived_from_candidate: null
+    blocked_or_empty: null
+    notes:
+      - "P2-B manual DevTools probe pending."
+      - "Do not write verified."
+      - "Do not store Cookie/SID/Authorization."
+      - "Default: keep derived_from basic_profile (F032V/MARKET/F044V) unless separate XHR found."
+
+  - probe_id: c_p2b_industry_300001
+    source_id: cninfo_company_industry_profile
+    company_code: "300001"
+    company_name: "特锐德"
+    org_id: "9900008270"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300001&orgId=9900008270#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    result_code_path: null
+    sample_response_shape: null
+    sample_fields: []
+    candidate_field_mapping: {}
+    row_count: null
+    probe_status: manual_probe_pending
+    derived_from_candidate: null
+    blocked_or_empty: null
+    notes:
+      - "P2-B manual DevTools probe pending."
+      - "Do not write verified."
+      - "Do not store Cookie/SID/Authorization."
+      - "Default: keep derived_from basic_profile (F032V/MARKET/F044V) unless separate XHR found."
+
+  - probe_id: c_p2b_industry_688001
+    source_id: cninfo_company_industry_profile
+    company_code: "688001"
+    company_name: "华兴源创"
+    org_id: "9900038969"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688001&orgId=9900038969#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    result_code_path: null
+    sample_response_shape: null
+    sample_fields: []
+    candidate_field_mapping: {}
+    row_count: null
+    probe_status: manual_probe_pending
+    derived_from_candidate: null
+    blocked_or_empty: null
+    notes:
+      - "P2-B manual DevTools probe pending."
+      - "Do not write verified."
+      - "Do not store Cookie/SID/Authorization."
+      - "Default: keep derived_from basic_profile (F032V/MARKET/F044V) unless separate XHR found."

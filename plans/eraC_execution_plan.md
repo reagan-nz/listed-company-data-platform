@@ -157,8 +157,9 @@ _最后更新：2026-07-05_
 48. ~~C 类 shareholder_profile mapper draft + fixture schema validation~~ → **已完成**（§7s）
 49. ~~C 类 P2-A mapper completion summary~~ → **已完成**（§7t）
 50. ~~C 类 status consolidation summary~~ → **已完成**（§7u）
-51. P2-B probe planning
-52. **暂不全量抓取、暂不入库**
+51. ~~C 类 P2-B probe plan + records 初始化~~ → **已完成**（§7v）
+52. P2-B manual DevTools probe
+53. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -1048,7 +1049,7 @@ _最后更新：2026-07-05_
 
 **红线：** 全部 `testing`；**无 verified**；**无 testing_stable_sample**；不入库。
 
-**下一步：** P2-B probe planning（见 §7u）。
+**下一步：** consolidation **done**（§7u）；P2-B initialized（§7v）；manual probe next。
 
 ---
 
@@ -1060,7 +1061,23 @@ _最后更新：2026-07-05_
 
 **Rollup:** **6 testing** · **4 candidate** · **0 verified** · **29 mapper fixtures 29/29 PASS**
 
-**下一步：** P2-B probe plan + records（dividend · contact · business_scope · industry re-check）。
+**下一步：** P2-B probe plan **initialized**（§7v）；manual DevTools probe next。
+
+---
+
+## 7v. Phase 4 C 类 P2-B Probe Plan Initialized（2026-07-06）
+
+| 文档 / 记录 | 内容 |
+|-------------|------|
+| [cninfo_c_class_p2b_probe_plan.md](cninfo_c_class_p2b_probe_plan.md) | P2-B scope · derived vs independent rules · completion criteria |
+| [cninfo_c_class_p2b_probe_checklist.md](cninfo_c_class_p2b_probe_checklist.md) | 人工 DevTools 清单 |
+| [c_class_p2b_probe_records.yaml](../fixtures/c_class/probe/records/c_class_p2b_probe_records.yaml) | **12** records · `manual_probe_pending` |
+
+**P2-B sources：** dividend_financing · contact · business_scope · industry recheck
+
+**红线：** 无 CNINFO 请求（初始化轮）· 无 YAML backfill · **无 verified** · 不入库
+
+**下一步：** manual DevTools probe `c_p2b_dividend_financing_600000` first.
 
 ---
 
@@ -1078,7 +1095,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **P1 + P2-A consolidated**（[status consolidation](cninfo_c_class_status_consolidation_summary.md) · 6 testing / 4 candidate · 29/29 mapper schema PASS）；下一步 P2-B probe planning。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **P2-B probe plan initialized**（12 `manual_probe_pending`）；下一步 manual DevTools probe `c_p2b_dividend_financing_600000`。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
