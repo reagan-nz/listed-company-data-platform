@@ -1,0 +1,7 @@
+fixture_index,company_code,person_name,source_id,validation_status,error_message,notes
+0,600000,张为忠,cninfo_executive_profile,pass,,mapper draft fixture; source_status=testing; not verified
+1,600000,谢伟,cninfo_executive_profile,pass,,mapper draft fixture; source_status=testing; not verified
+2,300001,于德翔,cninfo_executive_profile,pass,,mapper draft fixture; source_status=testing; not verified
+3,300001,康晓兵,cninfo_executive_profile,pass,,mapper draft fixture; source_status=testing; not verified
+4,688001,陈文源,cninfo_executive_profile,pass,,mapper draft fixture; source_status=testing; not verified
+5,688001,钱晓斌,cninfo_executive_profile,pass,,mapper draft fixture; source_status=testing; not verified

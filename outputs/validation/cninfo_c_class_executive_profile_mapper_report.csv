@@ -1,0 +1,7 @@
+company_code,company_name,executive_name,map_status,raw_fields_count,mapped_fields_count,raw_record_hash,notes
+600000,浦发银行,张为忠,mapped,9,3,67a12a320f8a625e4164706180e2bcfb28892a76f7bf579a5cd020536eecf513,Embedded getCompanyExecutives row; mapper draft fixture only; not verified.
+600000,浦发银行,谢伟,mapped,9,3,c1180254c5629f7c58c48bd2cfd2d47588356efe9b3e956ab832a1d18efb8864,Embedded getCompanyExecutives row; mapper draft fixture only; not verified.
+300001,特锐德,于德翔,mapped,9,3,65f9b7bd1ad6237295c84b4c3d42c83eb1304095543f93e11dc2d34db5001ace,Embedded getCompanyExecutives row; mapper draft fixture only; not verified.
+300001,特锐德,康晓兵,mapped,9,3,07bc86f0c4afa3f79836c73dd63978b2e4a1b9af131e20864400daedf8d992d8,Embedded getCompanyExecutives row; mapper draft fixture only; not verified.
+688001,华兴源创,陈文源,mapped,9,2,da34c7b04042cbb11404f6684ee1f36d77667d5c27b78fbfb2da87fdaf5c7a4e,Embedded getCompanyExecutives row; mapper draft fixture only; not verified.
+688001,华兴源创,钱晓斌,mapped,9,2,d2dada3651ec281c167bf8e26b69ae493cc2563348697bd8ca2feb2df5c23218,Embedded getCompanyExecutives row; mapper draft fixture only; not verified.

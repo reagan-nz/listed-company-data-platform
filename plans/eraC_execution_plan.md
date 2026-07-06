@@ -152,9 +152,10 @@ _最后更新：2026-07-05_
 43. ~~C 类 P2-A YAML backfill decision 起草~~ → **已完成**（§7n）
 44. ~~C 类 P2-A YAML backfill v1 + registry lint~~ → **已完成**（§7o）
 45. ~~C 类 P2-A live validation v1~~ → **LIVE_PASS**（§7p）
-46. P2-A mapper drafts（executive / share_capital / shareholders）
-47. 可选：probe 官方 category code（B 类）
-48. **暂不全量抓取、暂不入库**
+46. ~~C 类 executive_profile mapper draft + fixture schema validation~~ → **已完成**（§7q）
+47. share_capital / shareholder mapper draft
+48. 可选：probe 官方 category code（B 类）
+49. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -974,7 +975,25 @@ _最后更新：2026-07-05_
 
 **红线：** sources 仍 **testing**；**无 verified**；**无 testing_stable_sample**；不入库。
 
-**下一步：** P2-A mapper drafts。
+**下一步：** P2-A mapper drafts → executive **done**（§7q）；share_capital / shareholders next。
+
+---
+
+## 7q. Phase 4 C 类 Executive Profile Mapper Draft（2026-07-06）
+
+| 脚本 / 输出 | 内容 |
+|------|------|
+| [cninfo_c_class_mappers.py](../lab/cninfo_c_class_mappers.py) | `map_company_executive_profile()` — getCompanyExecutives row → `c_executive_profile` |
+| [seed_cninfo_c_class_executive_profile_fixtures.py](../lab/seed_cninfo_c_class_executive_profile_fixtures.py) | 内置 6 行（600000×2 · 300001×2 · 688001×2） |
+| [executive_profile_fixtures.jsonl](../fixtures/c_class/executive_profile/executive_profile_fixtures.jsonl) | **6** 条 mapped fixture |
+| [validate_cninfo_c_class_executive_profile_schema.py](../lab/validate_cninfo_c_class_executive_profile_schema.py) | schema 校验 |
+| [cninfo_c_class_executive_profile_schema_validation_summary.md](../outputs/validation/cninfo_c_class_executive_profile_schema_validation_summary.md) | **6/6 PASS** |
+
+**映射：** F002V→person_name, F009V→position, F010V→gender_candidate, F012V→birth_year_candidate, F017V→education_candidate；F005N/F012N/SEQID/F001V 留在 raw_record_json。
+
+**红线：** `source_status=testing`；**无 verified**；不入库；schema 未修改。
+
+**下一步：** share_capital_profile mapper draft。
 
 ---
 
@@ -992,7 +1011,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **P2-A live validation LIVE_PASS**（12/12）；下一步 P2-A mapper drafts。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **executive_profile mapper draft 完成**（6/6 schema PASS）；下一步 share_capital / shareholder mapper。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

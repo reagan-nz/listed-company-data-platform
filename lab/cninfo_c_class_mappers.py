@@ -6,6 +6,8 @@ c_company_basic_profile logical records.
 
 Maps marketOverview root object to c_company_security_profile logical records.
 
+Maps getCompanyExecutives single row to c_executive_profile logical records.
+
 No network, no database, no verified.
 """
 
@@ -18,6 +20,7 @@ from typing import Any, Dict, Optional
 
 DEFAULT_BASIC_SOURCE_ID = "cninfo_company_basic_profile"
 DEFAULT_SECURITY_SOURCE_ID = "cninfo_company_security_profile"
+DEFAULT_EXECUTIVE_SOURCE_ID = "cninfo_executive_profile"
 DEFAULT_SOURCE_STATUS = "testing"
 
 
@@ -33,6 +36,15 @@ def make_profile_id(source_id: str, company_code: str) -> str:
 
 def make_security_profile_id(source_id: str, company_code: str) -> str:
     return make_profile_id(source_id, company_code)
+
+
+def make_executive_profile_id(
+    source_id: str,
+    company_code: str,
+    row_key: str,
+) -> str:
+    key = f"{source_id}|{company_code}|{row_key}"
+    return hashlib.sha256(key.encode("utf-8")).hexdigest()[:32]
 
 
 def normalize_date(value: Any) -> Optional[str]:
@@ -239,6 +251,72 @@ def map_company_security_profile(
     return record
 
 
+def map_company_executive_profile(
+    raw_record: Dict[str, Any],
+    company_code: str,
+    company_name: str,
+    source_id: str = DEFAULT_EXECUTIVE_SOURCE_ID,
+    source_status: str = DEFAULT_SOURCE_STATUS,
+    org_id: Optional[str] = None,
+) -> Optional[Dict[str, Any]]:
+    """
+    Map getCompanyExecutives single row to c_executive_profile.
+
+    raw_record shape (one element of data.records):
+        F002V, F009V, F010V, F012V, F017V, F005N, F012N, SEQID, F001V
+
+    Returns None when person_name or position cannot be derived.
+    """
+    if not raw_record:
+        return None
+
+    person_name = _str_or_none(raw_record.get("F002V"))
+    position = _str_or_none(raw_record.get("F009V"))
+
+    if not person_name or not position:
+        return None
+
+    row_key = (
+        _str_or_none(raw_record.get("F001V"))
+        or _str_or_none(raw_record.get("SEQID"))
+        or person_name
+    )
+
+    record: Dict[str, Any] = {
+        "executive_profile_id": make_executive_profile_id(
+            source_id, company_code, row_key or person_name
+        ),
+        "source_id": source_id,
+        "company_code": company_code,
+        "company_name": company_name,
+        "person_name": person_name,
+        "position": position,
+        "raw_record_json": raw_record,
+        "raw_record_hash": compute_raw_record_hash(raw_record),
+        "source_status": source_status,
+        "field_confidence": "medium",
+    }
+
+    if org_id:
+        record["org_id"] = org_id
+
+    optional_fields = {
+        "gender_candidate": _str_or_none(raw_record.get("F010V")),
+        "birth_year_candidate": _str_or_none(raw_record.get("F012V")),
+        "education_candidate": _str_or_none(raw_record.get("F017V")),
+    }
+
+    for key, val in optional_fields.items():
+        if val is not None:
+            record[key] = val
+
+    # Fields without schema slots remain in raw_record_json only:
+    # F005N shareholding_quantity_candidate, F012N compensation_candidate,
+    # SEQID row_sequence_id, F001V person_id_candidate.
+
+    return record
+
+
 def count_mapped_standard_fields(record: Dict[str, Any]) -> int:
     """Count non-lineage schema fields with values."""
     skip = {
@@ -258,6 +336,20 @@ def count_mapped_security_profile_fields(record: Dict[str, Any]) -> int:
         "security_profile_id", "source_id", "company_code", "company_name",
         "raw_record_json", "raw_record_hash", "source_status",
         "field_confidence", "created_at",
+    }
+    return sum(
+        1 for k, v in record.items()
+        if k not in skip and v is not None and v != ""
+    )
+
+
+def count_mapped_executive_profile_fields(record: Dict[str, Any]) -> int:
+    """Count non-lineage schema fields with values for executive_profile."""
+    skip = {
+        "executive_profile_id", "source_id", "company_code", "company_name",
+        "person_name", "position",
+        "raw_record_json", "raw_record_hash", "source_status",
+        "field_confidence", "created_at", "org_id",
     }
     return sum(
         1 for k, v in record.items()
