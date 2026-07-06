@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/c_class/c_executive_profile.schema.json",
+  "title": "c_executive_profile",
+  "description": "CNINFO C-class executive / board roster profile logical record (design draft). One person per row.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "source_status": {
+      "type": "string",
+      "enum": [
+        "candidate",
+        "testing",
+        "testing_stable_sample",
+        "partial",
+        "blocked",
+        "deprecated"
+      ]
+    },
+    "field_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"]
+    }
+  },
+  "properties": {
+    "executive_profile_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "company_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "company_name": {
+      "type": ["string", "null"]
+    },
+    "org_id": {
+      "type": ["string", "null"]
+    },
+    "person_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "position": {
+      "type": "string",
+      "minLength": 1
+    },
+    "gender_candidate": {
+      "type": ["string", "null"]
+    },
+    "birth_year_candidate": {
+      "type": ["string", "null"]
+    },
+    "education_candidate": {
+      "type": ["string", "null"]
+    },
+    "term_start_candidate": {
+      "type": ["string", "null"],
+      "format": "date"
+    },
+    "term_end_candidate": {
+      "type": ["string", "null"],
+      "format": "date"
+    },
+    "raw_record_json": {
+      "type": "object"
+    },
+    "raw_record_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_status": {
+      "$ref": "#/definitions/source_status"
+    },
+    "field_confidence": {
+      "$ref": "#/definitions/field_confidence"
+    },
+    "created_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "executive_profile_id",
+    "source_id",
+    "company_code",
+    "person_name",
+    "position",
+    "raw_record_json",
+    "raw_record_hash"
+  ]
+}

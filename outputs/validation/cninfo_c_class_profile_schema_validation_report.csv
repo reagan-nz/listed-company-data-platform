@@ -1,0 +1,13 @@
+fixture_index,schema_name,record_type,company_code,source_id,validation_status,error_message,notes
+0,c_company_profile_snapshot.schema.json,company_profile_snapshot,600000,cninfo_company_basic_profile,pass,,offline fixture only; endpoint not probed; do not write verified
+1,c_company_basic_profile.schema.json,company_basic_profile,600000,cninfo_company_basic_profile,pass,,offline fixture only; endpoint not probed; do not write verified
+2,c_profile_raw_snapshot.schema.json,profile_raw_snapshot,600000,cninfo_company_basic_profile,pass,,offline fixture only; endpoint not probed; do not write verified
+3,c_company_profile_snapshot.schema.json,company_profile_snapshot,300001,cninfo_company_basic_profile,pass,,offline fixture only; endpoint not probed; do not write verified
+4,c_company_basic_profile.schema.json,company_basic_profile,300001,cninfo_company_basic_profile,pass,,offline fixture only; endpoint not probed; do not write verified
+5,c_profile_raw_snapshot.schema.json,profile_raw_snapshot,300001,cninfo_company_basic_profile,pass,,offline fixture only; endpoint not probed; do not write verified
+6,c_company_profile_snapshot.schema.json,company_profile_snapshot,688001,cninfo_company_basic_profile,pass,,offline fixture only; endpoint not probed; do not write verified
+7,c_company_basic_profile.schema.json,company_basic_profile,688001,cninfo_company_basic_profile,pass,,offline fixture only; endpoint not probed; do not write verified
+8,c_profile_raw_snapshot.schema.json,profile_raw_snapshot,688001,cninfo_company_basic_profile,pass,,offline fixture only; endpoint not probed; do not write verified
+9,c_executive_profile.schema.json,executive_profile,600000,cninfo_executive_profile,pass,,offline fixture only; endpoint not probed; do not write verified
+10,c_share_capital_profile.schema.json,share_capital_profile,600000,cninfo_share_capital_profile,pass,,offline fixture only; endpoint not probed; do not write verified
+11,c_shareholder_profile.schema.json,shareholder_profile,600000,cninfo_top_shareholders_profile,pass,,offline fixture only; endpoint not probed; do not write verified

@@ -1,0 +1,204 @@
+# CNINFO C 类 Company Profile Source Candidates
+# Era C Phase 4 design draft — company_profile layer
+# 设计草案；endpoint 未 probe；不入库；不写 verified。
+#
+# 权威设计: plans/cninfo_c_class_f10_source_discovery_design.md
+# 数据模型: plans/cninfo_c_class_profile_data_model_draft.md
+# 边界: plans/cninfo_c_vs_b_vs_d_boundary.md
+# 勿与 cninfo_b_class_source_registry_draft.yaml 或 cninfo_d_class_source_registry_draft.yaml 混用。
+
+version: "draft-0.1"
+status: design_only
+verified: false
+
+defaults:
+  source_site: cninfo.com.cn
+  source_layer: company_profile
+  discovery_method: f10_page_probe
+  recommended_status: candidate
+  verified: false
+  timeout_seconds: 10
+  sleep_seconds: 0.6
+  required_keys:
+    - company_code
+    - org_id
+
+sources:
+  - source_id: cninfo_company_basic_profile
+    source_layer: company_profile
+    source_category: basic_profile
+    profile_section: basic
+    recommended_status: candidate
+    verified: false
+    endpoint: null
+    page_url: null
+    expected_fields:
+      - company_name
+      - legal_name
+      - industry
+      - listed_board
+      - exchange
+      - listing_date
+      - registered_capital
+      - legal_representative
+      - registered_address
+      - office_address
+    notes: >-
+      Candidate C-class F10 basic profile tab. P0 script partial coverage exists
+      (validate_cninfo_f10_company_profile.py); endpoint not yet probed per-source.
+
+  - source_id: cninfo_company_industry_profile
+    source_layer: company_profile
+    source_category: industry_profile
+    profile_section: industry
+    recommended_status: candidate
+    verified: false
+    endpoint: null
+    page_url: null
+    expected_fields:
+      - industry
+      - industry_code_candidate
+      - listed_board
+    notes: >-
+      Industry / sector classification from F10. Endpoint not yet probed.
+
+  - source_id: cninfo_company_business_scope
+    source_layer: company_profile
+    source_category: business_scope
+    profile_section: business
+    recommended_status: candidate
+    verified: false
+    endpoint: null
+    page_url: null
+    expected_fields:
+      - main_business_summary
+      - business_scope
+      - company_profile_text
+    notes: >-
+      Business scope and company overview text. May overlap basic_profile;
+      cross-source consistency check required. Endpoint not yet probed.
+
+  - source_id: cninfo_executive_profile
+    source_layer: company_profile
+    source_category: executive_profile
+    profile_section: executive
+    recommended_status: candidate
+    verified: false
+    endpoint: null
+    page_url: null
+    expected_fields:
+      - person_name
+      - position
+      - term_start_candidate
+      - term_end_candidate
+    notes: >-
+      Board / management roster snapshot. Not management_change events (D-class).
+      Endpoint not yet probed.
+
+  - source_id: cninfo_share_capital_profile
+    source_layer: company_profile
+    source_category: share_capital_profile
+    profile_section: share_capital
+    recommended_status: candidate
+    verified: false
+    endpoint: null
+    page_url: null
+    expected_fields:
+      - report_date
+      - total_share_capital
+      - float_share_capital
+      - restricted_share_capital
+      - share_unit
+    notes: >-
+      Share capital structure snapshot from F10. Endpoint not yet probed.
+
+  - source_id: cninfo_top_shareholders_profile
+    source_layer: company_profile
+    source_category: shareholder_profile
+    profile_section: shareholder
+    shareholder_scope: top_shareholder
+    recommended_status: candidate
+    verified: false
+    endpoint: null
+    page_url: null
+    expected_fields:
+      - shareholder_name
+      - holding_shares
+      - holding_ratio
+      - rank
+      - report_period
+    notes: >-
+      Top-10 shareholders snapshot. Not shareholder_data metric (D-class).
+      Endpoint not yet probed.
+
+  - source_id: cninfo_top_float_shareholders_profile
+    source_layer: company_profile
+    source_category: shareholder_profile
+    profile_section: shareholder
+    shareholder_scope: top_float_shareholder
+    recommended_status: candidate
+    verified: false
+    endpoint: null
+    page_url: null
+    expected_fields:
+      - shareholder_name
+      - holding_shares
+      - holding_ratio
+      - rank
+      - report_period
+    notes: >-
+      Top-10 float shareholders snapshot. Endpoint not yet probed.
+
+  - source_id: cninfo_dividend_financing_profile
+    source_layer: company_profile
+    source_category: dividend_financing_profile
+    profile_section: dividend_financing
+    recommended_status: candidate
+    verified: false
+    endpoint: null
+    page_url: null
+    expected_fields:
+      - cumulative_dividend_candidate
+      - financing_summary_candidate
+      - last_dividend_date_candidate
+    notes: >-
+      Profile-level dividend / financing summary from F10. Not dividend event
+      timeline (B/D). Endpoint not yet probed.
+
+  - source_id: cninfo_company_contact_profile
+    source_layer: company_profile
+    source_category: contact_profile
+    profile_section: contact
+    recommended_status: candidate
+    verified: false
+    endpoint: null
+    page_url: null
+    expected_fields:
+      - contact_phone
+      - contact_fax
+      - contact_email
+      - company_website
+      - board_secretary
+      - registered_address
+      - office_address
+    notes: >-
+      Contact and address fields. May overlap basic_profile. Endpoint not yet probed.
+
+  - source_id: cninfo_company_security_profile
+    source_layer: company_profile
+    source_category: security_profile
+    profile_section: security
+    recommended_status: candidate
+    verified: false
+    endpoint: null
+    page_url: null
+    expected_fields:
+      - company_code
+      - stock_short_name
+      - exchange
+      - listed_board
+      - listing_date
+      - listing_status
+      - is_st_candidate
+    notes: >-
+      Security listing metadata from F10. Endpoint not yet probed.

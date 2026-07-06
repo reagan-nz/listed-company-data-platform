@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/c_class/c_share_capital_profile.schema.json",
+  "title": "c_share_capital_profile",
+  "description": "CNINFO C-class share capital structure snapshot logical record (design draft).",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "source_status": {
+      "type": "string",
+      "enum": [
+        "candidate",
+        "testing",
+        "testing_stable_sample",
+        "partial",
+        "blocked",
+        "deprecated"
+      ]
+    },
+    "field_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"]
+    }
+  },
+  "properties": {
+    "share_capital_profile_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "company_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "company_name": {
+      "type": ["string", "null"]
+    },
+    "org_id": {
+      "type": ["string", "null"]
+    },
+    "report_date": {
+      "type": ["string", "null"],
+      "format": "date"
+    },
+    "total_share_capital": {
+      "type": ["number", "null"]
+    },
+    "float_share_capital": {
+      "type": ["number", "null"]
+    },
+    "restricted_share_capital": {
+      "type": ["number", "null"]
+    },
+    "share_unit": {
+      "type": ["string", "null"]
+    },
+    "raw_record_json": {
+      "type": "object"
+    },
+    "raw_record_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_status": {
+      "$ref": "#/definitions/source_status"
+    },
+    "field_confidence": {
+      "$ref": "#/definitions/field_confidence"
+    },
+    "created_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "share_capital_profile_id",
+    "source_id",
+    "company_code",
+    "raw_record_json",
+    "raw_record_hash"
+  ]
+}

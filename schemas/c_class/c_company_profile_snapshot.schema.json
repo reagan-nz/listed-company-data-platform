@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/c_class/c_company_profile_snapshot.schema.json",
+  "title": "c_company_profile_snapshot",
+  "description": "CNINFO C-class company profile snapshot logical record (design draft). Not verified; not a DB migration.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "profile_section": {
+      "type": "string",
+      "enum": [
+        "basic_profile",
+        "industry_profile",
+        "business_scope",
+        "executive_profile",
+        "share_capital_profile",
+        "top_shareholders",
+        "top_float_shareholders",
+        "dividend_financing_profile",
+        "contact_profile",
+        "security_profile",
+        "other"
+      ]
+    },
+    "source_status": {
+      "type": "string",
+      "enum": [
+        "candidate",
+        "testing",
+        "testing_stable_sample",
+        "partial",
+        "blocked",
+        "deprecated"
+      ]
+    },
+    "field_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"]
+    }
+  },
+  "properties": {
+    "profile_snapshot_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Logical primary key for a profile snapshot row."
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "C-class source candidate id (e.g. cninfo_company_basic_profile)."
+    },
+    "company_code": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Security code."
+    },
+    "company_name": {
+      "type": ["string", "null"]
+    },
+    "org_id": {
+      "type": ["string", "null"],
+      "description": "CNINFO orgId from identity mapping."
+    },
+    "snapshot_date": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Page display date or collection date (ISO YYYY-MM-DD)."
+    },
+    "profile_section": {
+      "$ref": "#/definitions/profile_section"
+    },
+    "source_status": {
+      "$ref": "#/definitions/source_status"
+    },
+    "field_confidence": {
+      "$ref": "#/definitions/field_confidence"
+    },
+    "raw_record_json": {
+      "type": "object",
+      "description": "Source response or normalized profile payload for lineage."
+    },
+    "raw_record_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "notes": {
+      "type": ["string", "null"]
+    }
+  },
+  "required": [
+    "profile_snapshot_id",
+    "source_id",
+    "company_code",
+    "profile_section",
+    "raw_record_json",
+    "raw_record_hash"
+  ]
+}

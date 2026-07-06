@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/c_class/c_profile_raw_snapshot.schema.json",
+  "title": "c_profile_raw_snapshot",
+  "description": "CNINFO C-class fetch-level raw profile snapshot for lineage, probe audit, and schema drift replay.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "fetch_status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "empty_but_valid_response",
+        "http_error",
+        "parse_error",
+        "blocked",
+        "timeout",
+        "schema_changed",
+        "unknown_error",
+        "not_started"
+      ]
+    }
+  },
+  "properties": {
+    "raw_snapshot_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_category": {
+      "type": ["string", "null"],
+      "description": "Registry source_category (e.g. basic_profile, executive_profile)."
+    },
+    "company_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "company_name": {
+      "type": ["string", "null"]
+    },
+    "org_id": {
+      "type": ["string", "null"]
+    },
+    "endpoint": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "description": "Probed API endpoint; null before DevTools probe."
+    },
+    "page_url": {
+      "type": ["string", "null"],
+      "format": "uri"
+    },
+    "query_params": {
+      "type": ["object", "null"]
+    },
+    "records_path": {
+      "type": ["string", "null"],
+      "description": "JSON path to row array in response."
+    },
+    "raw_record_json": {
+      "type": "object",
+      "description": "Full parsed JSON payload or single record object."
+    },
+    "raw_record_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fetch_time": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "fetch_status": {
+      "$ref": "#/definitions/fetch_status"
+    },
+    "http_status": {
+      "type": ["integer", "null"]
+    },
+    "schema_version": {
+      "type": ["string", "null"],
+      "description": "e.g. draft-0.1 or JSON schema $id version tag."
+    },
+    "notes": {
+      "type": ["string", "null"]
+    }
+  },
+  "required": [
+    "raw_snapshot_id",
+    "source_id",
+    "company_code",
+    "raw_record_json",
+    "raw_record_hash",
+    "fetch_status"
+  ]
+}

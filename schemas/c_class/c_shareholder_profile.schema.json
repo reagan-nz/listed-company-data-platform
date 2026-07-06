@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/c_class/c_shareholder_profile.schema.json",
+  "title": "c_shareholder_profile",
+  "description": "CNINFO C-class top shareholder snapshot logical record (design draft). One shareholder per row.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "shareholder_scope": {
+      "type": "string",
+      "enum": ["top_shareholder", "top_float_shareholder"]
+    },
+    "source_status": {
+      "type": "string",
+      "enum": [
+        "candidate",
+        "testing",
+        "testing_stable_sample",
+        "partial",
+        "blocked",
+        "deprecated"
+      ]
+    },
+    "field_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"]
+    }
+  },
+  "properties": {
+    "shareholder_profile_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "company_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "company_name": {
+      "type": ["string", "null"]
+    },
+    "org_id": {
+      "type": ["string", "null"]
+    },
+    "report_period": {
+      "type": ["string", "null"]
+    },
+    "shareholder_name": {
+      "type": ["string", "null"]
+    },
+    "shareholder_type_candidate": {
+      "type": ["string", "null"]
+    },
+    "holding_shares": {
+      "type": ["number", "null"]
+    },
+    "holding_ratio": {
+      "type": ["number", "null"]
+    },
+    "rank": {
+      "type": ["integer", "null"]
+    },
+    "shareholder_scope": {
+      "$ref": "#/definitions/shareholder_scope"
+    },
+    "raw_record_json": {
+      "type": "object"
+    },
+    "raw_record_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_status": {
+      "$ref": "#/definitions/source_status"
+    },
+    "field_confidence": {
+      "$ref": "#/definitions/field_confidence"
+    },
+    "created_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "shareholder_profile_id",
+    "source_id",
+    "company_code",
+    "shareholder_scope",
+    "raw_record_json",
+    "raw_record_hash"
+  ]
+}

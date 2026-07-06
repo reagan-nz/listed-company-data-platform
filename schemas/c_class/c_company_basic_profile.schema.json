@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/c_class/c_company_basic_profile.schema.json",
+  "title": "c_company_basic_profile",
+  "description": "CNINFO C-class normalized basic company profile logical record (design draft).",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "source_status": {
+      "type": "string",
+      "enum": [
+        "candidate",
+        "testing",
+        "testing_stable_sample",
+        "partial",
+        "blocked",
+        "deprecated"
+      ]
+    },
+    "field_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"]
+    }
+  },
+  "properties": {
+    "profile_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "company_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "company_name": {
+      "type": ["string", "null"]
+    },
+    "org_id": {
+      "type": ["string", "null"]
+    },
+    "legal_name": {
+      "type": ["string", "null"]
+    },
+    "english_name": {
+      "type": ["string", "null"]
+    },
+    "industry": {
+      "type": ["string", "null"]
+    },
+    "listed_board": {
+      "type": ["string", "null"]
+    },
+    "exchange": {
+      "type": ["string", "null"]
+    },
+    "listing_date": {
+      "type": ["string", "null"],
+      "format": "date"
+    },
+    "registered_capital": {
+      "type": ["string", "null"],
+      "description": "Registered capital as displayed (may include unit text)."
+    },
+    "legal_representative": {
+      "type": ["string", "null"]
+    },
+    "company_website": {
+      "type": ["string", "null"]
+    },
+    "business_scope": {
+      "type": ["string", "null"]
+    },
+    "registered_address": {
+      "type": ["string", "null"]
+    },
+    "office_address": {
+      "type": ["string", "null"]
+    },
+    "raw_record_json": {
+      "type": "object"
+    },
+    "raw_record_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_status": {
+      "$ref": "#/definitions/source_status"
+    },
+    "field_confidence": {
+      "$ref": "#/definitions/field_confidence"
+    },
+    "created_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "profile_id",
+    "source_id",
+    "company_code",
+    "raw_record_json",
+    "raw_record_hash"
+  ]
+}
