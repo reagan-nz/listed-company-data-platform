@@ -177,7 +177,21 @@ MAINLINE:
 
 ---
 
-## 9. 参考
+## 9. 1000-like 离线派生路线（2026-07-06）
+
+母本 `lab/eval_companies_1000.yaml`（1020）→ 应用 §3 清洗规则 → `lab/eval_companies_c_class_smoke_1000_non_bse_candidate.yaml`（**889**）。
+
+| 项 | 值 |
+|----|-----|
+| dry-run | `validate_cninfo_c_class_scale_smoke.py --dry-run --sample-file ...1000_non_bse_candidate.yaml` |
+| 结果 | **DRY_RUN_ONLY** · planned live **6223** |
+| 报告 | [cninfo_c_class_smoke_1000_non_bse_dryrun_summary.md](../outputs/validation/cninfo_c_class_smoke_1000_non_bse_dryrun_summary.md) |
+
+与 195 universe split **同规则**；BSE 全量排除不进主 gate；live **待批准**。
+
+---
+
+## 10. 参考
 
 - [cninfo_c_class_scale_smoke_200_plan.md](cninfo_c_class_scale_smoke_200_plan.md)
 - [cninfo_c_class_scale_smoke_200_bse_diagnosis.md](../outputs/validation/cninfo_c_class_scale_smoke_200_bse_diagnosis.md)

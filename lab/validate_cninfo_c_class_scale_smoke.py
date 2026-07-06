@@ -51,6 +51,18 @@ DEFAULT_ACTIVE_200_CSV = os.path.join(
 DEFAULT_ACTIVE_200_MD = os.path.join(
     BASE_DIR, "outputs", "validation", "cninfo_c_class_scale_smoke_200_active_summary.md"
 )
+DEFAULT_1000_NON_BSE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_smoke_1000_non_bse_dryrun_report.csv",
+)
+DEFAULT_1000_NON_BSE_MD = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_smoke_1000_non_bse_dryrun_summary.md",
+)
 PREVIOUS_BASELINE_CSV = DEFAULT_CSV
 
 BASIC_URL = "https://www.cninfo.com.cn/data20/companyOverview/getCompanyIntroduction"
@@ -894,6 +906,8 @@ def _resolve_output_paths(sample_path: str, output_csv: Optional[str], output_md
     base = os.path.basename(sample_path)
     if output_csv and output_md:
         return output_csv, output_md
+    if "1000_non_bse" in base or "non_bse_candidate" in base:
+        return output_csv or DEFAULT_1000_NON_BSE_CSV, output_md or DEFAULT_1000_NON_BSE_MD
     if "smoke_200" in base or "200_active" in base:
         return output_csv or DEFAULT_ACTIVE_200_CSV, output_md or DEFAULT_ACTIVE_200_MD
     if "active" in base:
@@ -953,8 +967,13 @@ def write_summary_md(
     sample_base = os.path.basename(sample_path)
     is_active = "active" in sample_base
     is_200 = "smoke_200" in sample_base or "200_active" in sample_base
+    is_1000_non_bse = "1000_non_bse" in sample_base or "non_bse_candidate" in sample_base
 
-    if is_200:
+    if is_1000_non_bse:
+        title = (
+            f"CNINFO C Class {len(companies)}-Company Non-BSE 1000-like Dry-Run Summary"
+        )
+    elif is_200:
         title = (
             f"CNINFO C Class {len(companies)}-Company Scale Smoke Summary (Active-Only)"
         )

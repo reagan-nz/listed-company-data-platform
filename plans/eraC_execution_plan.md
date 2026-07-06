@@ -173,7 +173,9 @@ _最后更新：2026-07-05_
 64. ~~200 live smoke~~ → **LIVE_PARTIAL**（§7ag）
 65. ~~BSE failure diagnosis~~ → **完成**（§7ag）
 66. ~~universe split + sample cleaning~~ → **完成**（§7ah）
-67. non-BSE 1000-like 离线派生 → **下一步**
+67. ~~non-BSE 1000-like 离线派生 + dry-run~~ → **完成**（§7ai）
+68. non-BSE 1000-like **live** → **等待批准**
+69. BSE legacy targeted probe（8 家）→ **待启动**
 68. BSE legacy targeted probe → **待启动**
 69. **暂不全量抓取、暂不入库**
 
@@ -1239,7 +1241,40 @@ _最后更新：2026-07-05_
 
 **Gate — BSE：** **从主 scale gate 拆出**；legacy 83/87 标记 `legacy_code_incompatible`；需 **BSE targeted probe**（非 195 重跑）
 
-**下一步：** universe split **done**（§7ah）；non-BSE 1000-like 离线派生
+**下一步：** universe split **done**（§7ah）；non-BSE 1000-like 离线派生 **done**（§7ai）；**live 待批准**
+
+---
+
+## 7ai. Phase 4 C 类 Non-BSE 1000-like Candidate + Dry-Run（2026-07-06）
+
+| 项 | 内容 |
+|----|------|
+| 母本 | `lab/eval_companies_1000.yaml`（**1020**） |
+| 候选 | `lab/eval_companies_c_class_smoke_1000_non_bse_candidate.yaml`（**889**） |
+| 清洗规则 | 与 §7ah / [universe split plan](cninfo_c_class_universe_split_and_sample_cleaning_plan.md) 一致 |
+| dry-run | `python lab/validate_cninfo_c_class_scale_smoke.py --dry-run --sample-file lab/eval_companies_c_class_smoke_1000_non_bse_candidate.yaml` |
+| 结果 | **DRY_RUN_ONLY** · cases=**6223** skipped · **0 CNINFO** |
+| 报告 | [cninfo_c_class_smoke_1000_non_bse_dryrun_summary.md](../outputs/validation/cninfo_c_class_smoke_1000_non_bse_dryrun_summary.md) |
+
+| board | count |
+|-------|-------|
+| sse_main | 292 |
+| szse_main | 239 |
+| chinext | 233 |
+| star | 125 |
+
+| exclusion_reason | count |
+|------------------|-------|
+| board_bse | 106 |
+| name_suffix_tui | 15 |
+| name_delisted_cn | 7 |
+| abnormal_review_explicit | 3 |
+
+**Planned live:** 889 × 7 = **6223**（6 主判定 + security observe-only）；derived 三源无单独请求。
+
+**红线：** 本轮 **无 live** · **无 CNINFO** · **无 YAML backfill** · **无 DB** · **无 verified**
+
+**建议：** 等待人工批准后跑 non-BSE 1000-like `--live`
 
 ---
 
@@ -1400,7 +1435,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **universe split 完成**（§7ah）；**non-BSE mainline** 可规划 1000-like；**BSE legacy** side-track HOLD。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **non-BSE 1000-like candidate dry-run 完成**（§7ai · **889** 家）；**live 待批准**；**BSE legacy** side-track HOLD。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

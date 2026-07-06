@@ -8,7 +8,7 @@ _最后更新：2026-07-06_
 
 ## 当前阶段（一句话）
 
-**Era C Phase 1（A 类）已收口**。**Phase 2 D 类已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通。**Phase 4 C 类** **195 live smoke + BSE diagnosis 完成**；**universe split 已落地**（non-BSE **172** · BSE-920 **12** · legacy hold **8** · abnormal **3** · [split plan](plans/cninfo_c_class_universe_split_and_sample_cleaning_plan.md)）；下一阶段 **非 blind 1000**，主宇宙 **non-BSE mainline** 与 **BSE legacy side-track** 分离；dividend **non-BSE GO / mixed HOLD**（不执行 YAML）；**无 verified**；**不入库**。
+**Era C Phase 1（A 类）已收口**。**Phase 2 D 类已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通。**Phase 4 C 类** **195 live smoke + BSE diagnosis 完成**；**universe split 已落地**；**non-BSE 1000-like candidate 离线派生 + dry-run 完成**（**889** 家 · planned live **6223** · [dry-run summary](outputs/validation/cninfo_c_class_smoke_1000_non_bse_dryrun_summary.md)）；主宇宙 **non-BSE mainline**；BSE legacy **side-track HOLD**；dividend **non-BSE GO / mixed HOLD**（不执行 YAML）；**无 verified**；**不入库**。
 
 ---
 
@@ -91,6 +91,8 @@ _最后更新：2026-07-06_
 | **30 smoke（active）** | `lab/validate_cninfo_c_class_scale_smoke.py` · [active sample](lab/eval_companies_c_class_smoke_30_active.yaml) · [active summary](outputs/validation/cninfo_c_class_scale_smoke_30_active_summary.md)（**LIVE_PARTIAL** · pass=177 · blocked/429=0） |
 | **200 smoke 计划** | [cninfo_c_class_scale_smoke_200_plan.md](plans/cninfo_c_class_scale_smoke_200_plan.md)（计划 only · 不直接跑 live） |
 | **200 active 样本 + dry-run** | [eval_companies_c_class_smoke_200_active.yaml](lab/eval_companies_c_class_smoke_200_active.yaml)（**195** 家）· [dry-run summary](outputs/validation/cninfo_c_class_scale_smoke_200_active_summary.md) |
+| **1000-like non-BSE candidate + dry-run** | [eval_companies_c_class_smoke_1000_non_bse_candidate.yaml](lab/eval_companies_c_class_smoke_1000_non_bse_candidate.yaml)（**889** 家，母本 1020）· [dry-run summary](outputs/validation/cninfo_c_class_smoke_1000_non_bse_dryrun_summary.md)（**DRY_RUN_ONLY** · planned **6223**） |
+| **Universe split（195）** | [split plan](plans/cninfo_c_class_universe_split_and_sample_cleaning_plan.md) · non-BSE **172** · BSE-920 **12** · legacy **8** · abnormal **3** |
 | **30 smoke（含退市样本）** | [30 summary](outputs/validation/cninfo_c_class_scale_smoke_30_summary.md)（`LIVE_PARTIAL` · 退市拖累） |
 | **P2 DevTools probe** | [P2 plan](plans/cninfo_c_class_p2_probe_plan.md) · [P2 probe records](fixtures/c_class/probe/records/c_class_p2_probe_records.yaml)（**12/12**） · [P2-A backfill decision](plans/cninfo_c_class_p2a_yaml_backfill_decision.md) · [P2-A live validation](outputs/validation/cninfo_c_class_p2a_live_source_validation_summary.md)（**LIVE_PASS 12/12**） |
 | **Known-company fixtures** | [fixtures/c_class/known_company_profile_fixtures.jsonl](fixtures/c_class/known_company_profile_fixtures.jsonl)（**12** 条；600000 / 300001 / 688001） |
@@ -203,9 +205,10 @@ flowchart TD
 | 63 | ~~200 live smoke~~ → **LIVE_PARTIAL**（195 · [summary](outputs/validation/cninfo_c_class_scale_smoke_200_active_summary.md)） |
 | 64 | ~~BSE failure diagnosis~~ → **完成**（[diagnosis](outputs/validation/cninfo_c_class_scale_smoke_200_bse_diagnosis.md)） |
 | 65 | ~~universe split + sample cleaning~~ → **完成**（[split plan](plans/cninfo_c_class_universe_split_and_sample_cleaning_plan.md)） |
-| 66 | 从 `eval_companies_1000` 离线派生 non-BSE ~1000 候选 → **下一步** |
-| 67 | BSE legacy targeted probe（8 家 hold）→ **待启动** |
-| 68 | **暂不全量抓取、暂不入库** |
+| 66 | ~~从 `eval_companies_1000` 离线派生 non-BSE ~1000 候选 + dry-run~~ → **完成**（889 · [summary](outputs/validation/cninfo_c_class_smoke_1000_non_bse_dryrun_summary.md)） |
+| 67 | non-BSE 1000-like **live** → **等待人工批准**（planned 6223 requests） |
+| 68 | BSE legacy targeted probe（8 家 hold）→ **待启动** |
+| 69 | **暂不全量抓取、暂不入库** |
 
 ---
 
@@ -214,7 +217,8 @@ flowchart TD
 - **不写 verified** / full-market stable
 - **不接** PostgreSQL / MinIO / MongoDB
 - **不**同时大规模推进 Phase 3 与 Phase 2 扩源
-- **不跑** 200 `--live`（**等待人工明确批准**；dry-run checkpoint 已完成）
+- **不跑** 1000-like `--live`（**等待人工明确批准**；dry-run **DRY_RUN_ONLY** 已完成）
+- **不跑** 200 `--live`（195 live 已完成；后续扩样需单独批准）
 - **不执行** dividend YAML backfill（决策 GO 已记录，执行待 200 live 证据后）
 - **security_profile** 保持 **observe-only**（不绑定主 gate；见 [200 plan](plans/cninfo_c_class_scale_smoke_200_plan.md) §7）
 - **股东源** `empty_but_valid` 按 [200 plan](plans/cninfo_c_class_scale_smoke_200_plan.md) §6 解读（非 blocked/http_error/schema failure）

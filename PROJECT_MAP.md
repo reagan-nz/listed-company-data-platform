@@ -10,7 +10,7 @@ _最后更新：2026-07-06_
 
 ## 0. 一句话现状
 
-仓库里叠了**三代方向**的代码与文档。**当前聚焦：Era C Phase 4 C 类** — 195 live + BSE diagnosis 完成；**universe split**（non-BSE 172 / BSE-920 12 / legacy hold 8）；下一阶段 **non-BSE 1000-like 离线派生**（非 blind 扩样）。前两代**已冻结**。
+仓库里叠了**三代方向**的代码与文档。**当前聚焦：Era C Phase 4 C 类** — 195 live + BSE diagnosis 完成；**universe split**；**non-BSE 1000-like candidate dry-run 完成**（**889** 家 · planned live **6223** · **无 CNINFO**）。前两代**已冻结**。
 
 ---
 
@@ -80,7 +80,7 @@ _最后更新：2026-07-06_
 | `build_cninfo_p0_sample_companies.py` | 生成 40 家 P0 样本公司清单 | 是 |
 | `build_cninfo_report_p1_identity_mapping.py` | P1 identity mapping（离线） | 是 |
 
-**C 类 smoke 样本（`lab/`）：** `eval_companies_200.yaml`（母本）· `eval_companies_c_class_smoke_200_active.yaml`（195）· **universe split：** `*_195_non_bse_active`（172）· `*_bse_920_active`（12）· `*_bse_legacy_hold`（8）· `*_abnormal_review`（3）
+**C 类 smoke 样本（`lab/`）：** `eval_companies_200.yaml`（母本）· `eval_companies_c_class_smoke_200_active.yaml`（195）· **universe split（195）：** `*_195_non_bse_active`（172）· `*_bse_920_active`（12）· `*_bse_legacy_hold`（8）· `*_abnormal_review`（3）· **1000-like：** `eval_companies_1000.yaml`（1020）→ `eval_companies_c_class_smoke_1000_non_bse_candidate.yaml`（**889**）
 
 ### 2.2 活跃配置（`config/`）
 - `cninfo_table_sources.yaml` — **Phase 2** 验证脚本驱动配置（12 source；10 stable + 2 candidate）
@@ -250,5 +250,5 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 2. **Phase 2 已收口**；**Phase 3 D 类设计**见 [registry YAML](config/cninfo_d_class_source_registry_draft.yaml) / [schema validation summary](outputs/validation/cninfo_d_class_schema_validation_summary.md)。
 3. **Phase 3 B 类**见 [validation design](plans/cninfo_b_class_validation_design.md) / [category routing](plans/cninfo_b_class_category_routing_rules.md) / [categories YAML](config/cninfo_announcement_categories.yaml) / [document seed summary](outputs/validation/cninfo_b_class_document_seed_summary.md) / [B schema validation](outputs/validation/cninfo_b_class_document_schema_validation_summary.md)。
 4. **Phase 4 C 类**见 [registry lint](outputs/validation/cninfo_c_class_registry_lint_summary.md) / [fixture validation](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md) / [active 30 smoke summary](outputs/validation/cninfo_c_class_scale_smoke_30_active_summary.md) / [candidates YAML](config/cninfo_c_class_source_candidates.yaml)。
-5. **下一步**：**non-BSE 1000-like 离线派生**（[universe split plan](plans/cninfo_c_class_universe_split_and_sample_cleaning_plan.md) · 主宇宙 172 家）；BSE legacy **8 家 HOLD** + targeted probe；**非 blind 1000** · **无 live**。
+5. **下一步**：**non-BSE 1000-like live** → **等待批准**（[dry-run summary](outputs/validation/cninfo_c_class_smoke_1000_non_bse_dryrun_summary.md) · 889 家 · planned **6223**）；BSE legacy **8 家 HOLD** + targeted probe；**无 live / 无 DB / 无 YAML** 直至批准。
 6. **每完成一个 Phase**：更新分层表状态 + `outputs/validation/` 留 summary；不做数据库接入。
