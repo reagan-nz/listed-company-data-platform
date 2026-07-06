@@ -8,7 +8,7 @@ _最后更新：2026-07-06_
 
 ## 当前阶段（一句话）
 
-**Era C Phase 1（A 类）已收口**（P1 **749/796 = 94.10%**）。**Phase 2 D 类已收口**（10 源 `testing_stable_sample`）。**Phase 3 B 类** corpus + live metadata v1 已打通（5 ready · 5/5 pass）。**Phase 4 C 类** P1 mapper 完成；**P2-A YAML backfill v1 完成**（6 源 `testing` + endpoint）；registry lint **PASS**；**无 verified**；**不入库**。
+**Era C Phase 1（A 类）已收口**（P1 **749/796 = 94.10%**）。**Phase 2 D 类已收口**（10 源 `testing_stable_sample`）。**Phase 3 B 类** corpus + live metadata v1 已打通（5 ready · 5/5 pass）。**Phase 4 C 类** P1 mapper + P2-A YAML backfill 完成；**P2-A live validation v1 LIVE_PASS**（12/12）；**无 verified**；**不入库**。
 
 ---
 
@@ -82,7 +82,7 @@ _最后更新：2026-07-06_
 | **Live validation v1** | `lab/validate_cninfo_c_class_live_sources.py` · [summary](outputs/validation/cninfo_c_class_live_source_validation_summary.md)（**LIVE_PASS**） |
 | **Basic profile mapper** | `lab/cninfo_c_class_mappers.py` · `lab/seed_cninfo_c_class_basic_profile_fixtures.py` · [mapper summary](outputs/validation/cninfo_c_class_basic_profile_mapper_summary.md) · [schema validation](outputs/validation/cninfo_c_class_basic_profile_schema_validation_summary.md)（**2/2 PASS**） |
 | **Security profile mapper** | `map_company_security_profile()` · `lab/seed_cninfo_c_class_security_profile_fixtures.py` · [mapper summary](outputs/validation/cninfo_c_class_security_profile_mapper_summary.md) · [schema validation](outputs/validation/cninfo_c_class_security_profile_schema_validation_summary.md)（**3/3 PASS**） |
-| **P2 DevTools probe** | [P2 plan](plans/cninfo_c_class_p2_probe_plan.md) · [P2 probe records](fixtures/c_class/probe/records/c_class_p2_probe_records.yaml)（**12/12**） · [P2-A backfill decision](plans/cninfo_c_class_p2a_yaml_backfill_decision.md) · [registry lint](outputs/validation/cninfo_c_class_registry_lint_summary.md)（**PASS** after P2-A backfill） |
+| **P2 DevTools probe** | [P2 plan](plans/cninfo_c_class_p2_probe_plan.md) · [P2 probe records](fixtures/c_class/probe/records/c_class_p2_probe_records.yaml)（**12/12**） · [P2-A backfill decision](plans/cninfo_c_class_p2a_yaml_backfill_decision.md) · [P2-A live validation](outputs/validation/cninfo_c_class_p2a_live_source_validation_summary.md)（**LIVE_PASS 12/12**） |
 | **Known-company fixtures** | [fixtures/c_class/known_company_profile_fixtures.jsonl](fixtures/c_class/known_company_profile_fixtures.jsonl)（**12** 条；600000 / 300001 / 688001） |
 | **Schema validation** | `lab/validate_cninfo_c_class_profile_schema.py` · [summary](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md)（**12/12 PASS**） |
 | **DevTools probe plan** | [probe plan](plans/cninfo_c_class_devtools_probe_plan.md) · [checklist](plans/cninfo_c_class_probe_checklist.md) · [record template](fixtures/c_class/probe/c_class_probe_record_template.yaml) |
@@ -171,8 +171,9 @@ flowchart TD
 | 41 | ~~C 类 P2 share_capital + shareholders 人工 DevTools probe~~ → **已完成**（9/9 `endpoint_found`；P2-A **12/12**） |
 | 42 | ~~C 类 P2-A YAML backfill decision 起草~~ → **已完成** |
 | 43 | ~~C 类 P2-A YAML backfill v1 + registry lint~~ → **已完成**（6 源 `testing` · lint PASS） |
-| 44 | C 类 P2-A live validation script（3 家 × 4 源，默认 dry-run） |
-| 45 | **暂不全量抓取、暂不入库** |
+| 44 | ~~C 类 P2-A live validation v1~~ → **LIVE_PASS**（12/12） |
+| 45 | P2-A mapper drafts（executive / share_capital / shareholders） |
+| 46 | **暂不全量抓取、暂不入库** |
 
 ---
 

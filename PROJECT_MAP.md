@@ -63,6 +63,7 @@ _最后更新：2026-07-05_
 | `validate_cninfo_c_class_basic_profile_schema.py` | **Phase 4**：basic_profile fixture JSON Schema 校验 | 是 |
 | `validate_cninfo_c_class_security_profile_schema.py` | **Phase 4**：security_profile fixture JSON Schema 校验 | 是 |
 | `validate_cninfo_c_class_live_sources.py` | **Phase 4**：C 类 P1 basic/security live validation（`--dry-run` 默认） | 是 |
+| `validate_cninfo_c_class_p2a_live_sources.py` | **Phase 4**：C 类 P2-A executive/share_capital/shareholders live validation（`--dry-run` 默认） | 是 |
 | `lint_cninfo_c_class_registry.py` | **Phase 4**：C 类 candidate registry 离线 lint（无网络、无 DB） | 是 |
 | `validate_cninfo_c_class_profile_schema.py` | **Phase 4**：C 类 known-company profile fixture 离线 schema 校验 | 是 |
 | `validate_cninfo_f10_profile_page_reachability.py` | F10 页面可达性 | 是 |
@@ -233,5 +234,5 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 2. **Phase 2 已收口**；**Phase 3 D 类设计**见 [registry YAML](config/cninfo_d_class_source_registry_draft.yaml) / [schema validation summary](outputs/validation/cninfo_d_class_schema_validation_summary.md)。
 3. **Phase 3 B 类**见 [validation design](plans/cninfo_b_class_validation_design.md) / [category routing](plans/cninfo_b_class_category_routing_rules.md) / [categories YAML](config/cninfo_announcement_categories.yaml) / [document seed summary](outputs/validation/cninfo_b_class_document_seed_summary.md) / [B schema validation](outputs/validation/cninfo_b_class_document_schema_validation_summary.md)。
 4. **Phase 4 C 类**见 [registry lint](outputs/validation/cninfo_c_class_registry_lint_summary.md) / [fixture validation](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md) / [probe plan](plans/cninfo_c_class_devtools_probe_plan.md) / [P2 probe plan](plans/cninfo_c_class_p2_probe_plan.md) / [candidates YAML](config/cninfo_c_class_source_candidates.yaml)。
-5. **下一步**：C 类 P2-A live validation（3 家 × 4 源，默认 dry-run）；E/F 暂缓。
+5. **下一步**：P2-A mapper drafts（executive / share_capital / shareholders）；E/F 暂缓。
 6. **每完成一个 Phase**：更新分层表状态 + `outputs/validation/` 留 summary；不做数据库接入。

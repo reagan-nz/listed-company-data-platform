@@ -151,9 +151,10 @@ _最后更新：2026-07-05_
 42. ~~C 类 P2 share_capital + shareholders 人工 DevTools probe~~ → **P2-A 12/12 endpoint_found**（§7m）
 43. ~~C 类 P2-A YAML backfill decision 起草~~ → **已完成**（§7n）
 44. ~~C 类 P2-A YAML backfill v1 + registry lint~~ → **已完成**（§7o）
-45. C 类 P2-A live validation script（3 家 × 4 源，默认 dry-run）
-46. 可选：probe 官方 category code（B 类）
-47. **暂不全量抓取、暂不入库**
+45. ~~C 类 P2-A live validation v1~~ → **LIVE_PASS**（§7p）
+46. P2-A mapper drafts（executive / share_capital / shareholders）
+47. 可选：probe 官方 category code（B 类）
+48. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -949,7 +950,31 @@ _最后更新：2026-07-05_
 
 **红线：** **无 verified**；**无 testing_stable_sample**；不入库；无 live request（本轮）。
 
-**下一步：** 扩展 `validate_cninfo_c_class_live_sources.py` 或 P2-A live validation v1（默认 `--dry-run`）。
+**下一步：** ~~P2-A live validation~~ → 见 §7p；P2-A mapper drafts。
+
+---
+
+## 7p. Phase 4 C 类 P2-A Live Validation v1（2026-07-06）
+
+| 脚本 / 输出 | 内容 |
+|------|------|
+| [validate_cninfo_c_class_p2a_live_sources.py](../lab/validate_cninfo_c_class_p2a_live_sources.py) | 3 家 × 4 源 · 默认 `--dry-run` · `--live` 最多 12 请求 |
+| [cninfo_c_class_p2a_live_source_validation_summary.md](../outputs/validation/cninfo_c_class_p2a_live_source_validation_summary.md) | **LIVE_PASS 12/12** |
+
+| source_id | endpoint_found | case pass |
+|-----------|----------------|-----------|
+| `cninfo_executive_profile` | **3/3** | **3/3** |
+| `cninfo_share_capital_profile` | **3/3** | **3/3** |
+| `cninfo_top_shareholders_profile` | **3/3** | **3/3** |
+| `cninfo_top_float_shareholders_profile` | **3/3** | **3/3** |
+
+**Dry-run：** 12 skipped。**Live：** no blocked / schema_unexpected / http_error。
+
+**Shape note：** required field check uses **key presence** on `records[0]`; null values on optional/candidate fields (e.g. executive `F005N`) do not fail.
+
+**红线：** sources 仍 **testing**；**无 verified**；**无 testing_stable_sample**；不入库。
+
+**下一步：** P2-A mapper drafts。
 
 ---
 
@@ -967,7 +992,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **P2-A YAML backfill v1 完成** + lint PASS；下一步 P2-A live validation（dry-run 默认）。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **P2-A live validation LIVE_PASS**（12/12）；下一步 P2-A mapper drafts。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
