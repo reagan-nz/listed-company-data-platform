@@ -30,7 +30,7 @@ DEFAULT_SCHEMAS_DIR = os.path.join(BASE_DIR, "schemas", "c_class")
 DEFAULT_CSV = os.path.join(BASE_DIR, "outputs", "validation", "cninfo_c_class_registry_lint_report.csv")
 DEFAULT_MD = os.path.join(BASE_DIR, "outputs", "validation", "cninfo_c_class_registry_lint_summary.md")
 
-TOTAL_RULES = 12
+TOTAL_RULES = 14
 
 VALID_SOURCE_LAYERS = frozenset({"company_profile"})
 VALID_SOURCE_CATEGORIES = frozenset({
@@ -52,6 +52,9 @@ VALID_RECOMMENDED_STATUS = frozenset({
     "blocked",
     "deprecated",
 })
+# Era C Phase 4 P1 backfill: recommended_status may be testing; never above without approval.
+CURRENT_PHASE_MAX_STATUS = "testing"
+CURRENT_PHASE_ALLOWED_STATUS = frozenset({"candidate", "testing"})
 REQUIRED_SCHEMA_FILES = [
     "c_company_profile_snapshot.schema.json",
     "c_company_basic_profile.schema.json",
@@ -144,6 +147,21 @@ def _effective_required_keys(source: Dict[str, Any], defaults: Dict[str, Any]) -
     return list(keys) if isinstance(keys, list) else []
 
 
+def _endpoint_is_null(endpoint: Any) -> bool:
+    if endpoint is None or endpoint == "" or endpoint == "null":
+        return True
+    if isinstance(endpoint, dict):
+        url = endpoint.get("url")
+        return not url
+    return False
+
+
+def _endpoint_url(endpoint: Any) -> str:
+    if isinstance(endpoint, dict):
+        return str(endpoint.get("url") or "")
+    return ""
+
+
 def run_lint(registry_path: str, schemas_dir: str) -> List[Finding]:
     findings: List[Finding] = []
     registry = _load_yaml(registry_path)
@@ -190,6 +208,8 @@ def run_lint(registry_path: str, schemas_dir: str) -> List[Finding]:
 
     registry_ids: Set[str] = set()
     null_endpoints = 0
+    populated_endpoints = 0
+    status_counts: Dict[str, int] = {}
 
     for src in sources:
         sid = str(src.get("source_id") or "")
@@ -238,17 +258,18 @@ def run_lint(registry_path: str, schemas_dir: str) -> List[Finding]:
 
         # R004 / R005 recommended_status
         rec = src.get("recommended_status")
+        status_counts[str(rec)] = status_counts.get(str(rec), 0) + 1
         if rec not in VALID_RECOMMENDED_STATUS:
             findings.append(Finding(
                 "R004", "FAIL", sid, "FAIL",
                 f"Invalid recommended_status: {rec!r}",
                 f"Use one of {sorted(VALID_RECOMMENDED_STATUS)}",
             ))
-        elif rec != "candidate":
+        elif rec not in CURRENT_PHASE_ALLOWED_STATUS:
             findings.append(Finding(
                 "R005", "FAIL", sid, "FAIL",
-                f"Current phase expects recommended_status=candidate, got {rec!r}",
-                "Keep candidate until probe completes",
+                f"Current phase max recommended_status is {CURRENT_PHASE_MAX_STATUS!r}, got {rec!r}",
+                f"Use candidate or testing only",
             ))
 
         # R003 per source
@@ -292,20 +313,64 @@ def run_lint(registry_path: str, schemas_dir: str) -> List[Finding]:
                 "Add expected_fields list",
             ))
 
-        # R006 endpoint
-        if src.get("endpoint") in (None, "", "null"):
+        # R006 / R013 endpoint
+        endpoint = src.get("endpoint")
+        if _endpoint_is_null(endpoint):
             null_endpoints += 1
+            if rec == "testing":
+                findings.append(Finding(
+                    "R013", "FAIL", sid, "FAIL",
+                    "recommended_status=testing but endpoint.url is missing",
+                    "Add endpoint.url from probe records or revert to candidate",
+                ))
+        else:
+            populated_endpoints += 1
+            if not isinstance(endpoint, dict):
+                findings.append(Finding(
+                    "R013", "WARN", sid, "WARN",
+                    f"endpoint should be object with url; got {type(endpoint).__name__}",
+                    "Use endpoint: { url, method, params_template, records_path }",
+                ))
+            elif not endpoint.get("records_path"):
+                findings.append(Finding(
+                    "R013", "WARN", sid, "WARN",
+                    "endpoint missing records_path",
+                    "Add records_path from probe evidence",
+                ))
+
+        # R014 derived_from_candidate (industry without endpoint)
+        if sid == "cninfo_company_industry_profile":
+            derived = src.get("derived_from_candidate")
+            if _endpoint_is_null(endpoint) and not derived:
+                findings.append(Finding(
+                    "R014", "WARN", sid, "WARN",
+                    "industry_profile has null endpoint but no derived_from_candidate",
+                    "Add derived_from_candidate pointing to basic_profile",
+                ))
+            elif derived and not isinstance(derived, dict):
+                findings.append(Finding(
+                    "R014", "WARN", sid, "WARN",
+                    "derived_from_candidate should be an object",
+                    "Use { source_id, path, fields }",
+                ))
 
     if sources and null_endpoints == len(sources):
         findings.append(Finding(
             "R006", "INFO", "registry", "PASS",
             f"All {null_endpoints} sources have endpoint=null (expected pre-probe)",
         ))
+    elif populated_endpoints > 0:
+        findings.append(Finding(
+            "R006", "INFO", "registry", "PASS",
+            f"{populated_endpoints}/{len(sources)} sources have endpoint populated; "
+            f"{null_endpoints} still null",
+        ))
 
     if sources and not any(f.rule_id == "R005" and f.severity == "FAIL" for f in findings):
+        parts = ", ".join(f"{k}={v}" for k, v in sorted(status_counts.items()))
         findings.append(Finding(
             "R005", "INFO", "registry", "PASS",
-            f"All {len(sources)} sources are recommended_status=candidate",
+            f"recommended_status within phase cap ({CURRENT_PHASE_MAX_STATUS}): {parts}",
         ))
 
     if registry_ids and not any(f.rule_id == "R001" and f.severity == "FAIL" for f in findings):
@@ -379,8 +444,9 @@ def write_summary_md(
         "",
         "- **source_layer** = `company_profile`（R002）",
         "- **verified** 全部为 false（R003）",
-        "- **recommended_status** 当前阶段全部为 `candidate`（R005）",
-        "- **endpoint=null** 记 INFO，不 FAIL（R006）",
+        "- **recommended_status** 不超过 `testing`（R005；P1 backfill 后允许 candidate/testing）",
+        "- **endpoint** 已回填 source 须有 `endpoint.url`（R013）",
+        "- **industry_profile** 无 endpoint 时应有 `derived_from_candidate`（R014）",
         "- **无 B/D source_id 混入**（R012）",
         "",
         "## 5. 问题清单",
@@ -402,9 +468,9 @@ def write_summary_md(
         "",
         "## 7. 下一步",
         "",
-        "1. known-company fixture schema validation。",
-        "2. per-source DevTools probe。",
-        "3. 回填 endpoint / records_path。",
+        "1. C 类 known-company live validation（600000 / 300001 / 688001）。",
+        "2. basic_profile field mapping 与 mapper 草案。",
+        "3. P2 source DevTools probe（executive / share_capital / shareholders）。",
         "",
         "## 附录",
         "",
