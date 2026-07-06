@@ -161,8 +161,9 @@ _最后更新：2026-07-05_
 52. ~~C 类 P2-B dividend_financing manual probe~~ → **3/3 endpoint_found**（§7w）
 53. ~~C 类 P2-B contact_profile 600000 probe~~ → **derived**（§7x）
 54. ~~C 类 P2-B contact_profile 3/3 derived~~ → **已完成**（§7y）
-55. P2-B business_scope derived-vs-independent check
-56. **暂不全量抓取、暂不入库**
+55. ~~C 类 P2-B business_scope 3/3 derived~~ → **已完成**（§7z）
+56. P2-B industry_profile derived recheck
+57. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -1052,7 +1053,7 @@ _最后更新：2026-07-05_
 
 **红线：** 全部 `testing`；**无 verified**；**无 testing_stable_sample**；不入库。
 
-**下一步：** P2-B dividend **done**（§7w）；contact **3/3 derived**（§7y）；business_scope next。
+**下一步：** P2-B dividend **done**（§7w）；contact **3/3 derived**（§7y）；business_scope **3/3 derived**（§7z）；industry recheck next。
 
 ---
 
@@ -1064,7 +1065,7 @@ _最后更新：2026-07-05_
 
 **Rollup:** **6 testing** · **4 candidate** · **0 verified** · **29 mapper fixtures 29/29 PASS**
 
-**下一步：** P2-B dividend probe **done**（§7w）；contact **3/3 derived**（§7y）；business_scope next。
+**下一步：** P2-B dividend probe **done**（§7w）；contact **3/3 derived**（§7y）；business_scope **3/3 derived**（§7z）；industry recheck next。
 
 ---
 
@@ -1080,7 +1081,7 @@ _最后更新：2026-07-05_
 
 **红线：** 无 CNINFO 请求（初始化轮）· 无 YAML backfill · **无 verified** · 不入库
 
-**下一步：** dividend probe **done**（§7w）；contact **3/3 derived**（§7y）；business_scope next。
+**下一步：** dividend probe **done**（§7w）；contact **3/3 derived**（§7y）；business_scope **3/3 derived**（§7z）；industry recheck next。
 
 ---
 
@@ -1098,7 +1099,28 @@ _最后更新：2026-07-05_
 
 **红线：** 无 YAML backfill · **无 verified** · 不入库
 
-**下一步：** business_scope derived-vs-independent check（见 §7y）。
+**下一步：** business_scope **3/3 derived**（§7z）；industry recheck next。
+
+---
+
+**下一步：** industry derived recheck（见 §7z）。
+
+---
+
+## 7z. Phase 4 C 类 P2-B Business Scope Probe Complete（2026-07-06）
+
+| 项 | 结果 |
+|----|------|
+| source_id | `cninfo_company_business_scope` |
+| probe_status | **3/3** `derived_candidate_from_basic_profile` |
+| independent endpoint | **None observed**（600000 · 300001 · 688001） |
+| derived_from | `cninfo_company_basic_profile` · `getCompanyIntroduction` · `data.records[0].basicInformation[0]` |
+
+**Fields：** F015V → main_business · F016V → business_scope · F017V → company_history_or_introduction
+
+**红线：** 无 YAML backfill · source 仍 **candidate** · **无 verified** · 无 DB · 无 CNINFO 请求
+
+**下一步：** `c_p2b_industry_*` — industry derived recheck only.
 
 ---
 
@@ -1115,7 +1137,7 @@ _最后更新：2026-07-05_
 
 **红线：** 无 YAML backfill · source 仍 **candidate** · **无 verified** · 不入库
 
-**下一步：** `c_p2b_business_scope_600000` — business_scope derived vs independent.
+**下一步：** `c_p2b_industry_*` — industry derived recheck only.
 
 ---
 
@@ -1132,7 +1154,7 @@ _最后更新：2026-07-05_
 
 **红线：** 无 YAML backfill · **无 verified** · 不入库
 
-**下一步：** contact **3/3 derived**（§7y）；business_scope check next.
+**下一步：** contact **3/3 derived**（§7y）；business_scope **3/3 derived**（§7z）；industry recheck next.
 
 ---
 
@@ -1150,7 +1172,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **P2-B contact 3/3 derived**（无独立 endpoint）；下一步 business_scope derived-vs-independent check。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **P2-B business_scope 3/3 derived**（无独立 endpoint）；下一步 industry derived recheck。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

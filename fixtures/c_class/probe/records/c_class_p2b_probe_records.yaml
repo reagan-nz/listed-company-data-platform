@@ -7,14 +7,14 @@
 # Do NOT commit live response JSON with PII into Git.
 
 version: "draft-0.1"
-status: "p2b_contact_probe_complete"
+status: "p2b_business_scope_probe_complete"
 verified: false
 summary_notes: >-
   P2-B manual DevTools probe: cninfo_dividend_financing_profile 3/3 endpoint_found
-  (getCompanyHisDividend). cninfo_company_contact_profile 3/3
-  derived_candidate_from_basic_profile (no independent endpoint). cninfo_company_business_scope
-  0/3, cninfo_company_industry_profile 0/3 (6/12 manual_probe_pending). No YAML backfill.
-  No verified. Contact derived from basic_profile getCompanyIntroduction.basicInformation.
+  (getCompanyHisDividend). cninfo_company_contact_profile 3/3,
+  cninfo_company_business_scope 3/3 derived_candidate_from_basic_profile (no independent
+  endpoint). cninfo_company_industry_profile 0/3 (3/12 manual_probe_pending). No YAML
+  backfill. No verified. Derived sources use getCompanyIntroduction.basicInformation.
 
 probe_scope:
   sources:
@@ -322,7 +322,7 @@ probe_records:
       - "Do not store Cookie/SID/Authorization headers."
       - "Do not write verified."
 
-  # --- cninfo_company_business_scope (P2-B3) ---
+  # --- cninfo_company_business_scope (P2-B3) — 3/3 derived_candidate_from_basic_profile ---
   - probe_id: c_p2b_business_scope_600000
     source_id: cninfo_company_business_scope
     company_code: "600000"
@@ -336,17 +336,27 @@ probe_records:
     records_path: null
     result_code_path: null
     sample_response_shape: null
-    sample_fields: []
-    candidate_field_mapping: {}
+    sample_fields:
+      - main_business
+      - business_scope
+      - company_history_or_introduction
+    candidate_field_mapping:
+      F015V: "main_business"
+      F016V: "business_scope"
+      F017V: "company_history_or_introduction"
     row_count: null
-    probe_status: manual_probe_pending
-    derived_from_candidate: null
-    blocked_or_empty: null
+    probe_status: derived_candidate_from_basic_profile
+    derived_from_candidate:
+      source_id: "cninfo_company_basic_profile"
+      endpoint: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyIntroduction"
+      records_path: "data.records[0].basicInformation[0]"
+    blocked_or_empty: false
     notes:
-      - "P2-B manual DevTools probe pending."
+      - "No independent business_scope endpoint observed during manual DevTools check."
+      - "Business scope / main business / company introduction fields appear covered by getCompanyIntroduction.basicInformation."
+      - "Treat business_scope as derived candidate from cninfo_company_basic_profile for this company."
+      - "Do not store Cookie/SID/Authorization headers."
       - "Do not write verified."
-      - "Do not store Cookie/SID/Authorization."
-      - "Check overlap with basic_profile business_scope fields before independent endpoint claim."
 
   - probe_id: c_p2b_business_scope_300001
     source_id: cninfo_company_business_scope
@@ -361,17 +371,27 @@ probe_records:
     records_path: null
     result_code_path: null
     sample_response_shape: null
-    sample_fields: []
-    candidate_field_mapping: {}
+    sample_fields:
+      - main_business
+      - business_scope
+      - company_history_or_introduction
+    candidate_field_mapping:
+      F015V: "main_business"
+      F016V: "business_scope"
+      F017V: "company_history_or_introduction"
     row_count: null
-    probe_status: manual_probe_pending
-    derived_from_candidate: null
-    blocked_or_empty: null
+    probe_status: derived_candidate_from_basic_profile
+    derived_from_candidate:
+      source_id: "cninfo_company_basic_profile"
+      endpoint: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyIntroduction"
+      records_path: "data.records[0].basicInformation[0]"
+    blocked_or_empty: false
     notes:
-      - "P2-B manual DevTools probe pending."
+      - "No independent business_scope endpoint observed during manual DevTools check."
+      - "Business scope / main business / company introduction fields appear covered by getCompanyIntroduction.basicInformation."
+      - "Treat business_scope as derived candidate from cninfo_company_basic_profile for this company."
+      - "Do not store Cookie/SID/Authorization headers."
       - "Do not write verified."
-      - "Do not store Cookie/SID/Authorization."
-      - "Check overlap with basic_profile business_scope fields before independent endpoint claim."
 
   - probe_id: c_p2b_business_scope_688001
     source_id: cninfo_company_business_scope
@@ -386,17 +406,27 @@ probe_records:
     records_path: null
     result_code_path: null
     sample_response_shape: null
-    sample_fields: []
-    candidate_field_mapping: {}
+    sample_fields:
+      - main_business
+      - business_scope
+      - company_history_or_introduction
+    candidate_field_mapping:
+      F015V: "main_business"
+      F016V: "business_scope"
+      F017V: "company_history_or_introduction"
     row_count: null
-    probe_status: manual_probe_pending
-    derived_from_candidate: null
-    blocked_or_empty: null
+    probe_status: derived_candidate_from_basic_profile
+    derived_from_candidate:
+      source_id: "cninfo_company_basic_profile"
+      endpoint: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyIntroduction"
+      records_path: "data.records[0].basicInformation[0]"
+    blocked_or_empty: false
     notes:
-      - "P2-B manual DevTools probe pending."
+      - "No independent business_scope endpoint observed during manual DevTools check."
+      - "Business scope / main business / company introduction fields appear covered by getCompanyIntroduction.basicInformation."
+      - "Treat business_scope as derived candidate from cninfo_company_basic_profile for this company."
+      - "Do not store Cookie/SID/Authorization headers."
       - "Do not write verified."
-      - "Do not store Cookie/SID/Authorization."
-      - "Check overlap with basic_profile business_scope fields before independent endpoint claim."
 
   # --- cninfo_company_industry_profile (P2-B4) ---
   - probe_id: c_p2b_industry_600000

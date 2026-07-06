@@ -8,7 +8,7 @@ _最后更新：2026-07-06_
 
 ## 当前阶段（一句话）
 
-**Era C Phase 1（A 类）已收口**（P1 **749/796 = 94.10%**）。**Phase 2 D 类已收口**（10 源 `testing_stable_sample`）。**Phase 3 B 类** corpus + live metadata v1 已打通（5 ready · 5/5 pass）。**Phase 4 C 类** P2-B dividend **3/3** `endpoint_found`；contact **3/3** `derived_candidate_from_basic_profile`（无独立 endpoint）；**无 YAML backfill**；**无 verified**；**不入库**。
+**Era C Phase 1（A 类）已收口**（P1 **749/796 = 94.10%**）。**Phase 2 D 类已收口**（10 源 `testing_stable_sample`）。**Phase 3 B 类** corpus + live metadata v1 已打通（5 ready · 5/5 pass）。**Phase 4 C 类** P2-B dividend **3/3** `endpoint_found`；contact + business_scope **3/3 derived**（无独立 endpoint）；**无 YAML backfill**；**无 verified**；**不入库**。
 
 ---
 
@@ -87,7 +87,7 @@ _最后更新：2026-07-06_
 | **Shareholder profile mapper** | `map_company_shareholder_profile()` · `lab/seed_cninfo_c_class_shareholder_profile_fixtures.py` · [mapper summary](outputs/validation/cninfo_c_class_shareholder_profile_mapper_summary.md) · [schema validation](outputs/validation/cninfo_c_class_shareholder_profile_schema_validation_summary.md)（**12/12 PASS**） |
 | **P2-A mapper completion** | [cninfo_c_class_p2a_mapper_completion_summary.md](plans/cninfo_c_class_p2a_mapper_completion_summary.md) — P2-A 四源链路收口（testing / prototype） |
 | **C-class status consolidation** | [cninfo_c_class_status_consolidation_summary.md](plans/cninfo_c_class_status_consolidation_summary.md) — 10 源总表（**6 testing · 4 candidate**） |
-| **P2-B probe** | [P2-B plan](plans/cninfo_c_class_p2b_probe_plan.md) · [P2-B probe records](fixtures/c_class/probe/records/c_class_p2b_probe_records.yaml)（dividend **3/3** · contact **3/3 derived** · business/industry pending） |
+| **P2-B probe** | [P2-B plan](plans/cninfo_c_class_p2b_probe_plan.md) · [P2-B probe records](fixtures/c_class/probe/records/c_class_p2b_probe_records.yaml)（dividend **3/3** · contact/business **3/3 derived** · industry pending） |
 | **P2 DevTools probe** | [P2 plan](plans/cninfo_c_class_p2_probe_plan.md) · [P2 probe records](fixtures/c_class/probe/records/c_class_p2_probe_records.yaml)（**12/12**） · [P2-A backfill decision](plans/cninfo_c_class_p2a_yaml_backfill_decision.md) · [P2-A live validation](outputs/validation/cninfo_c_class_p2a_live_source_validation_summary.md)（**LIVE_PASS 12/12**） |
 | **Known-company fixtures** | [fixtures/c_class/known_company_profile_fixtures.jsonl](fixtures/c_class/known_company_profile_fixtures.jsonl)（**12** 条；600000 / 300001 / 688001） |
 | **Schema validation** | `lab/validate_cninfo_c_class_profile_schema.py` · [summary](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md)（**12/12 PASS**） |
@@ -186,9 +186,10 @@ flowchart TD
 | 50 | ~~C 类 P2-B probe plan + records 初始化~~ → **已完成** |
 | 51 | ~~C 类 P2-B dividend_financing manual probe~~ → **3/3 `endpoint_found`**（`getCompanyHisDividend`） |
 | 52 | ~~C 类 P2-B contact_profile 600000 probe~~ → **derived_candidate_from_basic_profile** |
-| 53 | ~~C 类 P2-B contact_profile 300001/688001 probe~~ → **3/3 derived** |
-| 54 | P2-B business_scope derived-vs-independent check |
-| 55 | **暂不全量抓取、暂不入库** |
+| 53 | ~~C 类 P2-B contact_profile 3/3 derived~~ → **已完成** |
+| 54 | ~~C 类 P2-B business_scope 3/3 derived~~ → **已完成** |
+| 55 | P2-B industry_profile derived recheck |
+| 56 | **暂不全量抓取、暂不入库** |
 
 ---
 
