@@ -1,0 +1,31 @@
+# CNINFO C-class DevTools probe record template
+# Era C Phase 4 — template only; NOT real probe evidence.
+# Do NOT commit live response JSON with PII into Git.
+#
+# Plan: plans/cninfo_c_class_devtools_probe_plan.md
+# Checklist: plans/cninfo_c_class_probe_checklist.md
+
+version: "draft-0.1"
+status: "template_only"
+verified: false
+
+probe_records:
+  - probe_id: C_PROBE_EXAMPLE
+    source_id: cninfo_company_basic_profile
+    company_code: "600000"
+    company_name: "浦发银行"
+    org_id: null
+    page_url: null
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    sample_response_shape: null
+    sample_fields: []
+    row_count: null
+    probe_status: needs_more_probe
+    blocked_or_empty: null
+    notes: >-
+      Template only. Do not treat as real probe evidence. Do not write verified.
+      Copy this block per probe session; fill fields per plans/cninfo_c_class_devtools_probe_plan.md §5.

@@ -1,0 +1,379 @@
+# CNINFO C-class P1 DevTools probe records
+# Era C Phase 4 — partial manual probe (basic 3/9 + security 3/9 filled; industry observed).
+# Do NOT commit live response JSON with PII into Git.
+#
+# Plan: plans/cninfo_c_class_devtools_probe_plan.md
+# Checklist: plans/cninfo_c_class_probe_checklist.md
+# Execution: plans/cninfo_c_class_p1_probe_execution_notes.md
+
+version: "draft-0.1"
+status: "manual_probe_pending"
+verified: false
+summary_notes: >-
+  cninfo_company_basic_profile: 2/3 endpoint_found, 1/3 empty_but_valid_response
+  via getCompanyIntroduction. cninfo_company_security_profile: 3/3 endpoint_found
+  via marketOverview. getHeadStripData: numeric annex observed for 3/3, semantics
+  pending. cninfo_company_industry_profile: no separate endpoint confirmed;
+  candidate derived fields observed in basicInformation. Candidate endpoint evidence
+  only; not verified.
+
+security_profile_annex:
+  endpoint_pattern: >-
+    GET https://www.cninfo.com.cn/data20/companyOverview/getHeadStripData?scode=<company_code>
+  records_path: "data.records[0]"
+  observed_for:
+    - "600000"
+    - "300001"
+    - "688001"
+  sample_fields:
+    - ENDDATE
+    - F005N
+    - F020N
+    - F021N
+    - F041N
+    - F081N
+    - F089N
+    - F102N
+    - F109N
+    - F111N
+    - F115N
+  notes: >-
+    Additional numeric head-strip endpoint observed: GET
+    https://www.cninfo.com.cn/data20/companyOverview/getHeadStripData?scode=<company_code>.
+    It returns data.records[0] with ENDDATE and FxxxN numeric fields for
+    600000/300001/688001. Field semantics are not confirmed; keep raw-first as
+    security_profile annex, do not normalize into share_capital_profile yet.
+    Do not write verified.
+
+probe_scope:
+  sources:
+    - cninfo_company_basic_profile
+    - cninfo_company_security_profile
+    - cninfo_company_industry_profile
+  companies:
+    - company_code: "600000"
+      company_name: "浦发银行"
+      org_id: "gssh0600000"
+    - company_code: "300001"
+      company_name: "特锐德"
+      org_id: "9900008270"
+    - company_code: "688001"
+      company_name: "华兴源创"
+      org_id: "9900038969"
+
+probe_records:
+  # --- cninfo_company_basic_profile ---
+  - probe_id: c_p1_basic_600000
+    source_id: cninfo_company_basic_profile
+    company_code: "600000"
+    company_name: "浦发银行"
+    org_id: "gssh0600000"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600000&orgId=gssh0600000#companyProfile"
+    request_url: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyIntroduction?scode=600000"
+    method: "GET"
+    params:
+      scode: "600000"
+    headers_required_candidate:
+      - Referer
+    records_path: "data.records[0]"
+    sample_response_shape: "object_with_empty_arrays"
+    sample_fields:
+      - basicInformation
+      - listingInformation
+    row_count: 1
+    probe_status: empty_but_valid_response
+    blocked_or_empty: "empty_arrays"
+    notes: >-
+      Manual DevTools probe. Endpoint returns 200 and records[0], but
+      basicInformation/listingInformation are empty for 600000. Other companies
+      show non-empty records. Do not write verified.
+
+  - probe_id: c_p1_basic_300001
+    source_id: cninfo_company_basic_profile
+    company_code: "300001"
+    company_name: "特锐德"
+    org_id: "9900008270"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300001&orgId=9900008270#companyProfile"
+    request_url: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyIntroduction?scode=300001"
+    method: "GET"
+    params:
+      scode: "300001"
+    headers_required_candidate:
+      - Referer
+    records_path: "data.records[0]"
+    sample_response_shape: "object_with_basicInformation_and_listingInformation"
+    sample_fields:
+      - basicInformation
+      - listingInformation
+      - basicInformation.ASECCODE
+      - basicInformation.ASECNAME
+      - basicInformation.ORGNAME
+      - basicInformation.F001V
+      - basicInformation.F003V
+      - basicInformation.F004V
+      - basicInformation.F005V
+      - basicInformation.F006D
+      - basicInformation.F006V
+      - basicInformation.F007N
+      - basicInformation.F010D
+      - basicInformation.F011V
+      - basicInformation.F012V
+      - basicInformation.F013V
+      - basicInformation.F014V
+      - basicInformation.F015V
+      - basicInformation.F016V
+      - basicInformation.F017V
+      - basicInformation.F018V
+      - basicInformation.F032V
+      - basicInformation.MARKET
+      - listingInformation.SECCODE
+      - listingInformation.F007N
+      - listingInformation.F028N
+      - listingInformation.F008N
+      - listingInformation.F047V
+    row_count: 1
+    probe_status: endpoint_found
+    blocked_or_empty: false
+    notes: >-
+      Manual DevTools probe. getCompanyIntroduction returns non-empty
+      basicInformation/listingInformation for 300001. Field semantics are
+      candidate-level and need UI/schema mapping review. Do not write verified.
+
+  - probe_id: c_p1_basic_688001
+    source_id: cninfo_company_basic_profile
+    company_code: "688001"
+    company_name: "华兴源创"
+    org_id: "9900038969"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688001&orgId=9900038969#companyProfile"
+    request_url: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyIntroduction?scode=688001"
+    method: "GET"
+    params:
+      scode: "688001"
+    headers_required_candidate:
+      - Referer
+    records_path: "data.records[0]"
+    sample_response_shape: "object_with_basicInformation_and_listingInformation"
+    sample_fields:
+      - basicInformation
+      - listingInformation
+      - basicInformation.ASECCODE
+      - basicInformation.ASECNAME
+      - basicInformation.ORGNAME
+      - basicInformation.F001V
+      - basicInformation.F003V
+      - basicInformation.F004V
+      - basicInformation.F005V
+      - basicInformation.F006D
+      - basicInformation.F006V
+      - basicInformation.F007N
+      - basicInformation.F010D
+      - basicInformation.F011V
+      - basicInformation.F012V
+      - basicInformation.F013V
+      - basicInformation.F014V
+      - basicInformation.F015V
+      - basicInformation.F016V
+      - basicInformation.F017V
+      - basicInformation.F018V
+      - basicInformation.F032V
+      - basicInformation.MARKET
+      - listingInformation.SECCODE
+      - listingInformation.F007N
+      - listingInformation.F028N
+      - listingInformation.F008N
+      - listingInformation.F047V
+    row_count: 1
+    probe_status: endpoint_found
+    blocked_or_empty: false
+    notes: >-
+      Manual DevTools probe. getCompanyIntroduction returns non-empty
+      basicInformation/listingInformation for 688001. Field semantics are
+      candidate-level and need UI/schema mapping review. Do not write verified.
+
+  # --- cninfo_company_security_profile ---
+  - probe_id: c_p1_security_600000
+    source_id: cninfo_company_security_profile
+    company_code: "600000"
+    company_name: "浦发银行"
+    org_id: "gssh0600000"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600000&orgId=gssh0600000#companyProfile"
+    request_url: "https://www.cninfo.com.cn/new/newInterface/marketOverview?secCode=600000&orgId=gssh0600000&secType=szshe"
+    method: "GET"
+    params:
+      secCode: "600000"
+      orgId: "gssh0600000"
+      secType: "szshe"
+    headers_required_candidate:
+      - Referer
+      - X-Requested-With
+    records_path: "$"
+    sample_response_shape: "object"
+    sample_fields:
+      - secCode
+      - secName
+      - secType
+      - tradingStatus
+      - age
+      - finance
+      - delisted
+      - sshk
+      - szhk
+    row_count: 1
+    probe_status: endpoint_found
+    blocked_or_empty: false
+    notes: >-
+      Manual DevTools probe. marketOverview returns security overview object for
+      600000. Field semantics are candidate-level; sshk/szhk meaning not fully
+      confirmed. See security_profile_annex for getHeadStripData numeric annex.
+      Do not write verified.
+
+  - probe_id: c_p1_security_300001
+    source_id: cninfo_company_security_profile
+    company_code: "300001"
+    company_name: "特锐德"
+    org_id: "9900008270"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300001&orgId=9900008270#companyProfile"
+    request_url: "https://www.cninfo.com.cn/new/newInterface/marketOverview?secCode=300001&orgId=9900008270&secType=szshe"
+    method: "GET"
+    params:
+      secCode: "300001"
+      orgId: "9900008270"
+      secType: "szshe"
+    headers_required_candidate:
+      - Referer
+      - X-Requested-With
+    records_path: "$"
+    sample_response_shape: "object"
+    sample_fields:
+      - secCode
+      - secName
+      - secType
+      - tradingStatus
+      - age
+      - finance
+      - delisted
+      - sshk
+      - szhk
+    row_count: 1
+    probe_status: endpoint_found
+    blocked_or_empty: false
+    notes: >-
+      Manual DevTools probe. marketOverview returns security overview object for
+      300001. Field semantics are candidate-level; sshk/szhk meaning not fully
+      confirmed. See security_profile_annex for getHeadStripData numeric annex.
+      Do not write verified.
+
+  - probe_id: c_p1_security_688001
+    source_id: cninfo_company_security_profile
+    company_code: "688001"
+    company_name: "华兴源创"
+    org_id: "9900038969"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688001&orgId=9900038969#companyProfile"
+    request_url: "https://www.cninfo.com.cn/new/newInterface/marketOverview?secCode=688001&orgId=9900038969&secType=szshe"
+    method: "GET"
+    params:
+      secCode: "688001"
+      orgId: "9900038969"
+      secType: "szshe"
+    headers_required_candidate:
+      - Referer
+      - X-Requested-With
+    records_path: "$"
+    sample_response_shape: "object"
+    sample_fields:
+      - secCode
+      - secName
+      - secType
+      - tradingStatus
+      - age
+      - finance
+      - delisted
+      - sshk
+      - szhk
+    row_count: 1
+    probe_status: endpoint_found
+    blocked_or_empty: false
+    notes: >-
+      Manual DevTools probe. marketOverview returns security overview object for
+      688001. Field semantics are candidate-level; sshk/szhk meaning not fully
+      confirmed. See security_profile_annex for getHeadStripData numeric annex.
+      Do not write verified.
+
+  # --- cninfo_company_industry_profile ---
+  - probe_id: c_p1_industry_600000
+    source_id: cninfo_company_industry_profile
+    company_code: "600000"
+    company_name: "浦发银行"
+    org_id: "gssh0600000"
+    page_url: null
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    sample_response_shape: null
+    sample_fields:
+      - basicInformation.F032V
+      - basicInformation.MARKET
+      - basicInformation.F044V
+    row_count: null
+    probe_status: needs_more_probe
+    blocked_or_empty: null
+    notes: >-
+      Industry-related fields were observed inside getCompanyIntroduction.basicInformation:
+      F032V appears to be industry name, MARKET appears to be market/board, F044V
+      appears to be index/plate labels. No separate industry_profile endpoint
+      confirmed yet. Candidate may be derived from cninfo_company_basic_profile.
+      Do not write verified.
+
+  - probe_id: c_p1_industry_300001
+    source_id: cninfo_company_industry_profile
+    company_code: "300001"
+    company_name: "特锐德"
+    org_id: "9900008270"
+    page_url: null
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    sample_response_shape: null
+    sample_fields:
+      - basicInformation.F032V
+      - basicInformation.MARKET
+      - basicInformation.F044V
+    row_count: null
+    probe_status: needs_more_probe
+    blocked_or_empty: null
+    notes: >-
+      Industry-related fields were observed inside getCompanyIntroduction.basicInformation:
+      F032V appears to be industry name, MARKET appears to be market/board, F044V
+      appears to be index/plate labels. No separate industry_profile endpoint
+      confirmed yet. Candidate may be derived from cninfo_company_basic_profile.
+      Do not write verified.
+
+  - probe_id: c_p1_industry_688001
+    source_id: cninfo_company_industry_profile
+    company_code: "688001"
+    company_name: "华兴源创"
+    org_id: "9900038969"
+    page_url: null
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    sample_response_shape: null
+    sample_fields:
+      - basicInformation.F032V
+      - basicInformation.MARKET
+      - basicInformation.F044V
+    row_count: null
+    probe_status: needs_more_probe
+    blocked_or_empty: null
+    notes: >-
+      Industry-related fields were observed inside getCompanyIntroduction.basicInformation:
+      F032V appears to be industry name, MARKET appears to be market/board, F044V
+      appears to be index/plate labels. No separate industry_profile endpoint
+      confirmed yet. Candidate may be derived from cninfo_company_basic_profile.
+      Do not write verified.
