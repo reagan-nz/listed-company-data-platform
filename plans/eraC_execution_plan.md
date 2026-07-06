@@ -156,8 +156,9 @@ _最后更新：2026-07-05_
 47. ~~C 类 share_capital_profile mapper draft + fixture schema validation~~ → **已完成**（§7r）
 48. ~~C 类 shareholder_profile mapper draft + fixture schema validation~~ → **已完成**（§7s）
 49. ~~C 类 P2-A mapper completion summary~~ → **已完成**（§7t）
-50. P2-B probe planning 或 C-class consolidation
-51. **暂不全量抓取、暂不入库**
+50. ~~C 类 status consolidation summary~~ → **已完成**（§7u）
+51. P2-B probe planning
+52. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -1033,7 +1034,7 @@ _最后更新：2026-07-05_
 
 **红线：** `source_status=testing`；**无 verified**；不入库；schema 未修改。
 
-**下一步：** P2-A mapper stage **closed**（§7t）；P2-B probe planning 或 C-class consolidation next。
+**下一步：** P2-A mapper stage **closed**（§7t）；consolidation **done**（§7u）；P2-B probe planning next。
 
 ---
 
@@ -1047,7 +1048,19 @@ _最后更新：2026-07-05_
 
 **红线：** 全部 `testing`；**无 verified**；**无 testing_stable_sample**；不入库。
 
-**下一步：** P2-B probe planning（dividend · contact · business_scope · industry）或 C-class consolidation。
+**下一步：** P2-B probe planning（见 §7u）。
+
+---
+
+## 7u. Phase 4 C 类 Status Consolidation Summary（2026-07-06）
+
+| 文档 | 内容 |
+|------|------|
+| [cninfo_c_class_status_consolidation_summary.md](cninfo_c_class_status_consolidation_summary.md) | C 类 10 源 P1 + P2-A 状态总表 |
+
+**Rollup:** **6 testing** · **4 candidate** · **0 verified** · **29 mapper fixtures 29/29 PASS**
+
+**下一步：** P2-B probe plan + records（dividend · contact · business_scope · industry re-check）。
 
 ---
 
@@ -1065,7 +1078,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **P2-A mapper stage closed**（[completion summary](cninfo_c_class_p2a_mapper_completion_summary.md) · 24/24 schema PASS）；下一步 P2-B probe planning 或 C-class consolidation。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **P1 + P2-A consolidated**（[status consolidation](cninfo_c_class_status_consolidation_summary.md) · 6 testing / 4 candidate · 29/29 mapper schema PASS）；下一步 P2-B probe planning。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

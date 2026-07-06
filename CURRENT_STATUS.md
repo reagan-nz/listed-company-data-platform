@@ -8,7 +8,7 @@ _最后更新：2026-07-06_
 
 ## 当前阶段（一句话）
 
-**Era C Phase 1（A 类）已收口**（P1 **749/796 = 94.10%**）。**Phase 2 D 类已收口**（10 源 `testing_stable_sample`）。**Phase 3 B 类** corpus + live metadata v1 已打通（5 ready · 5/5 pass）。**Phase 4 C 类** P2-A **mapper stage closed**（[completion summary](plans/cninfo_c_class_p2a_mapper_completion_summary.md) · 24 fixtures · **24/24 schema PASS**）；**testing only**；**无 verified**；**不入库**。
+**Era C Phase 1（A 类）已收口**（P1 **749/796 = 94.10%**）。**Phase 2 D 类已收口**（10 源 `testing_stable_sample`）。**Phase 3 B 类** corpus + live metadata v1 已打通（5 ready · 5/5 pass）。**Phase 4 C 类** P1 + P2-A 已汇总（[status consolidation](plans/cninfo_c_class_status_consolidation_summary.md) · **6 testing / 4 candidate** · 29 mapper fixtures **29/29 PASS**）；**无 verified**；**不入库**。
 
 ---
 
@@ -86,6 +86,7 @@ _最后更新：2026-07-06_
 | **Share capital profile mapper** | `map_company_share_capital_profile()` · `lab/seed_cninfo_c_class_share_capital_profile_fixtures.py` · [mapper summary](outputs/validation/cninfo_c_class_share_capital_profile_mapper_summary.md) · [schema validation](outputs/validation/cninfo_c_class_share_capital_profile_schema_validation_summary.md)（**6/6 PASS**） |
 | **Shareholder profile mapper** | `map_company_shareholder_profile()` · `lab/seed_cninfo_c_class_shareholder_profile_fixtures.py` · [mapper summary](outputs/validation/cninfo_c_class_shareholder_profile_mapper_summary.md) · [schema validation](outputs/validation/cninfo_c_class_shareholder_profile_schema_validation_summary.md)（**12/12 PASS**） |
 | **P2-A mapper completion** | [cninfo_c_class_p2a_mapper_completion_summary.md](plans/cninfo_c_class_p2a_mapper_completion_summary.md) — P2-A 四源链路收口（testing / prototype） |
+| **C-class status consolidation** | [cninfo_c_class_status_consolidation_summary.md](plans/cninfo_c_class_status_consolidation_summary.md) — 10 源总表（**6 testing · 4 candidate**） |
 | **P2 DevTools probe** | [P2 plan](plans/cninfo_c_class_p2_probe_plan.md) · [P2 probe records](fixtures/c_class/probe/records/c_class_p2_probe_records.yaml)（**12/12**） · [P2-A backfill decision](plans/cninfo_c_class_p2a_yaml_backfill_decision.md) · [P2-A live validation](outputs/validation/cninfo_c_class_p2a_live_source_validation_summary.md)（**LIVE_PASS 12/12**） |
 | **Known-company fixtures** | [fixtures/c_class/known_company_profile_fixtures.jsonl](fixtures/c_class/known_company_profile_fixtures.jsonl)（**12** 条；600000 / 300001 / 688001） |
 | **Schema validation** | `lab/validate_cninfo_c_class_profile_schema.py` · [summary](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md)（**12/12 PASS**） |
@@ -180,8 +181,9 @@ flowchart TD
 | 46 | ~~C 类 share_capital_profile mapper draft + fixture schema validation~~ → **已完成**（6 fixtures · 6/6 PASS） |
 | 47 | ~~C 类 shareholder_profile mapper draft + fixture schema validation~~ → **已完成**（12 fixtures · 12/12 PASS） |
 | 48 | ~~C 类 P2-A mapper completion summary~~ → **已完成** |
-| 49 | P2-B probe planning 或 C-class consolidation |
-| 50 | **暂不全量抓取、暂不入库** |
+| 49 | ~~C 类 status consolidation summary~~ → **已完成** |
+| 50 | P2-B probe planning |
+| 51 | **暂不全量抓取、暂不入库** |
 
 ---
 
