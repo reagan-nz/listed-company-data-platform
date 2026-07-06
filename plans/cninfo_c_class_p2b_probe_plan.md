@@ -26,7 +26,7 @@ P2-B aims to resolve the remaining C-class **candidate** sources after P1 and P2
 
 | source_id | priority | expected_page_area | expected_data_shape | initial_strategy | status |
 |-----------|----------|-------------------|---------------------|------------------|--------|
-| `cninfo_dividend_financing_profile` | P2-B1 | 分红融资 / 分红配股 / 融资分红 | list records or grouped object | independent_endpoint_probe | manual_probe_pending |
+| `cninfo_dividend_financing_profile` | P2-B1 | 分红融资 / 历史分红 | list records | independent_endpoint_probe | **3/3 endpoint_found** |
 | `cninfo_company_contact_profile` | P2-B2 | 公司资料 / 联系方式 / 基本资料 | object or derived fields | derived_vs_independent_decision | manual_probe_pending |
 | `cninfo_company_business_scope` | P2-B3 | 公司简介 / 经营范围 / 主营业务 | object or derived fields | derived_vs_independent_decision | manual_probe_pending |
 | `cninfo_company_industry_profile` | P2-B4 | 所属行业 / 板块 / 概念 | object or derived fields | derived_recheck_only | manual_probe_pending |
@@ -49,6 +49,30 @@ P2-B aims to resolve the remaining C-class **candidate** sources after P1 and P2
 | `cninfo_company_industry_profile` | No separate endpoint in P1; `derived_from` `cninfo_company_basic_profile` via F032V / MARKET / F044V |
 | `cninfo_company_contact_profile` | Contact-like fields may exist in `getCompanyIntroduction.basicInformation` |
 | `cninfo_company_business_scope` | `business_scope` / company intro text may exist in `basic_profile` mapped or raw fields |
+
+### 2.3 `cninfo_dividend_financing_profile` 当前观察摘要（2026-07-06）
+
+- **P2-B probe：** `cninfo_dividend_financing_profile` **3/3 `endpoint_found`**（600000 / 300001 / 688001）
+- **Endpoint candidate：** `GET https://www.cninfo.com.cn/data20/companyOverview/getCompanyHisDividend?scode={company_code}`
+- **records_path：** `data.records`
+- **result_code_path：** `data.resultCode`（期望 `"200"`）
+- **params：** `scode={company_code}`
+- **共享行级字段：** F001V, F007V, F018D, F020D, F023D
+- **candidate_field_mapping：** F001V→report_period, F007V→dividend_plan_text, F018D→record_date_candidate, F020D→ex_right_dividend_date_candidate, F023D→dividend_payment_date_candidate
+- **row_count：** 600000 → **25**；300001 → **16**；688001 → **6**
+- **无 blocked / login / captcha** 观察
+- **无 schema_unexpected** 观察
+- **YAML backfill：** 尚未回填 `cninfo_c_class_source_candidates.yaml`（需单独 backfill decision）
+- **无 verified**；**无 testing_stable_sample**
+
+**Known caveats:**
+
+- This endpoint currently covers **historical dividend records** from `getCompanyHisDividend` only.
+- Broader financing / allotment / rights issue coverage is **not confirmed** by this endpoint.
+- F023D can be null in older records.
+- Dividend plan (F007V) remains a text field; should not be over-parsed at this stage.
+- 3 known-company sample only; not full-market validation.
+- Do not store Cookie / SID / Authorization headers.
 
 ---
 
@@ -146,4 +170,6 @@ After probe complete: draft **P2-B YAML backfill decision**（单独文档）→
 
 ## 9. Next step
 
-**Manual DevTools probe:** `c_p2b_dividend_financing_600000` (`cninfo_dividend_financing_profile` · 浦发银行) first.
+**Completed:** `cninfo_dividend_financing_profile` **3/3** `endpoint_found`（historical dividend · `getCompanyHisDividend`）。
+
+**Next:** `c_p2b_contact_600000` — `cninfo_company_contact_profile` derived vs independent decision; **or** draft P2-B dividend YAML backfill decision（单独批准，本轮未执行）。

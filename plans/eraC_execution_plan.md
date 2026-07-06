@@ -158,8 +158,9 @@ _最后更新：2026-07-05_
 49. ~~C 类 P2-A mapper completion summary~~ → **已完成**（§7t）
 50. ~~C 类 status consolidation summary~~ → **已完成**（§7u）
 51. ~~C 类 P2-B probe plan + records 初始化~~ → **已完成**（§7v）
-52. P2-B manual DevTools probe
-53. **暂不全量抓取、暂不入库**
+52. ~~C 类 P2-B dividend_financing manual probe~~ → **3/3 endpoint_found**（§7w）
+53. P2-B contact_profile probe 或 dividend YAML backfill decision
+54. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -1049,7 +1050,7 @@ _最后更新：2026-07-05_
 
 **红线：** 全部 `testing`；**无 verified**；**无 testing_stable_sample**；不入库。
 
-**下一步：** consolidation **done**（§7u）；P2-B initialized（§7v）；manual probe next。
+**下一步：** P2-B dividend **done**（§7w）；contact probe 或 dividend backfill decision next。
 
 ---
 
@@ -1061,7 +1062,7 @@ _最后更新：2026-07-05_
 
 **Rollup:** **6 testing** · **4 candidate** · **0 verified** · **29 mapper fixtures 29/29 PASS**
 
-**下一步：** P2-B probe plan **initialized**（§7v）；manual DevTools probe next。
+**下一步：** P2-B dividend probe **done**（§7w）；contact / backfill decision next。
 
 ---
 
@@ -1077,7 +1078,25 @@ _最后更新：2026-07-05_
 
 **红线：** 无 CNINFO 请求（初始化轮）· 无 YAML backfill · **无 verified** · 不入库
 
-**下一步：** manual DevTools probe `c_p2b_dividend_financing_600000` first.
+**下一步：** dividend probe **done**（§7w）；contact probe 或 backfill decision next。
+
+---
+
+## 7w. Phase 4 C 类 P2-B Dividend Financing Probe Complete（2026-07-06）
+
+| 项 | 结果 |
+|----|------|
+| source_id | `cninfo_dividend_financing_profile` |
+| probe_status | **3/3** `endpoint_found` |
+| Endpoint | `GET .../getCompanyHisDividend?scode=` |
+| records_path | `data.records` |
+| row_count | 600000 **25** · 300001 **16** · 688001 **6** |
+
+**Caveat：** historical dividend records only; broader financing/allotment **not confirmed**.
+
+**红线：** 无 YAML backfill · **无 verified** · 不入库
+
+**下一步：** `c_p2b_contact_600000` 或 P2-B dividend YAML backfill decision.
 
 ---
 
@@ -1095,7 +1114,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **P2-B probe plan initialized**（12 `manual_probe_pending`）；下一步 manual DevTools probe `c_p2b_dividend_financing_600000`。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **P2-B dividend_financing 3/3 endpoint_found**（`getCompanyHisDividend` · historical dividend only）；下一步 contact probe 或 dividend YAML backfill decision。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

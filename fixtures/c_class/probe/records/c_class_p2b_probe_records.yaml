@@ -7,14 +7,14 @@
 # Do NOT commit live response JSON with PII into Git.
 
 version: "draft-0.1"
-status: "p2b_probe_initialized"
+status: "p2b_dividend_probe_complete"
 verified: false
 summary_notes: >-
-  P2-B manual DevTools probe initialized: cninfo_dividend_financing_profile 0/3,
-  cninfo_company_contact_profile 0/3, cninfo_company_business_scope 0/3,
-  cninfo_company_industry_profile 0/3 (12/12 manual_probe_pending). No CNINFO
-  request in initialization round. No YAML backfill. P1 + P2-A complete (6 testing
-  sources). Do not write verified.
+  P2-B manual DevTools probe: cninfo_dividend_financing_profile 3/3 endpoint_found
+  (getCompanyHisDividend historical dividend). cninfo_company_contact_profile 0/3,
+  cninfo_company_business_scope 0/3, cninfo_company_industry_profile 0/3
+  (9/12 manual_probe_pending). No YAML backfill. No verified. P1 + P2-A complete
+  (6 testing sources). Historical dividend only; broader financing/allotment not confirmed.
 
 probe_scope:
   sources:
@@ -34,30 +34,56 @@ probe_scope:
       org_id: "9900038969"
 
 probe_records:
-  # --- cninfo_dividend_financing_profile (P2-B1) ---
+  # --- cninfo_dividend_financing_profile (P2-B1) — 3/3 endpoint_found ---
   - probe_id: c_p2b_dividend_financing_600000
     source_id: cninfo_dividend_financing_profile
     company_code: "600000"
     company_name: "浦发银行"
     org_id: "gssh0600000"
     page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600000&orgId=gssh0600000#companyProfile"
-    request_url: null
-    method: null
-    params: {}
-    headers_required_candidate: []
-    records_path: null
-    result_code_path: null
-    sample_response_shape: null
-    sample_fields: []
-    candidate_field_mapping: {}
-    row_count: null
-    probe_status: manual_probe_pending
+    request_url: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyHisDividend"
+    method: "GET"
+    params:
+      scode: "{company_code}"
+    headers_required_candidate:
+      - Referer
+    records_path: "data.records"
+    result_code_path: "data.resultCode"
+    sample_response_shape:
+      path: "/companyOverview/getCompanyHisDividend"
+      code: 200
+      data:
+        total: 25
+        count: 25
+        resultCode: "200"
+        resultMsg: "success"
+        records: "list[25]"
+        indexRecords: null
+    sample_fields:
+      - F001V
+      - F007V
+      - F018D
+      - F020D
+      - F023D
+    candidate_field_mapping:
+      F001V: "report_period"
+      F007V: "dividend_plan_text"
+      F018D: "record_date_candidate"
+      F020D: "ex_right_dividend_date_candidate"
+      F023D: "dividend_payment_date_candidate"
+    row_count: 25
+    probe_status: endpoint_found
     derived_from_candidate: null
-    blocked_or_empty: null
+    blocked_or_empty: false
     notes:
-      - "P2-B manual DevTools probe pending."
+      - "Observed from 历史分红 tab."
+      - "HTTP 200 with code=200 and data.resultCode=200."
+      - "data.records returned 25 historical dividend records for 600000."
+      - "Sample first record: F001V=2024年报, F007V=10派4.1元(含税), F018D=2025-07-15, F020D=2025-07-16, F023D=2025-07-16."
+      - "This endpoint covers historical dividend records; broader financing/allotment coverage is not confirmed."
+      - "F023D can be null in older records."
+      - "Cookie/SID/Authorization headers must not be stored."
       - "Do not write verified."
-      - "Do not store Cookie/SID/Authorization."
 
   - probe_id: c_p2b_dividend_financing_300001
     source_id: cninfo_dividend_financing_profile
@@ -65,23 +91,49 @@ probe_records:
     company_name: "特锐德"
     org_id: "9900008270"
     page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300001&orgId=9900008270#companyProfile"
-    request_url: null
-    method: null
-    params: {}
-    headers_required_candidate: []
-    records_path: null
-    result_code_path: null
-    sample_response_shape: null
-    sample_fields: []
-    candidate_field_mapping: {}
-    row_count: null
-    probe_status: manual_probe_pending
+    request_url: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyHisDividend"
+    method: "GET"
+    params:
+      scode: "{company_code}"
+    headers_required_candidate:
+      - Referer
+    records_path: "data.records"
+    result_code_path: "data.resultCode"
+    sample_response_shape:
+      path: "/companyOverview/getCompanyHisDividend"
+      code: 200
+      data:
+        total: 16
+        count: 16
+        resultCode: "200"
+        resultMsg: "success"
+        records: "list[16]"
+        indexRecords: null
+    sample_fields:
+      - F001V
+      - F007V
+      - F018D
+      - F020D
+      - F023D
+    candidate_field_mapping:
+      F001V: "report_period"
+      F007V: "dividend_plan_text"
+      F018D: "record_date_candidate"
+      F020D: "ex_right_dividend_date_candidate"
+      F023D: "dividend_payment_date_candidate"
+    row_count: 16
+    probe_status: endpoint_found
     derived_from_candidate: null
-    blocked_or_empty: null
+    blocked_or_empty: false
     notes:
-      - "P2-B manual DevTools probe pending."
+      - "Observed from 历史分红 tab."
+      - "HTTP 200 with code=200 and data.resultCode=200."
+      - "data.records returned 16 historical dividend records for 300001."
+      - "Sample first record: F001V=2025年报, F007V=10派2元(含税), F018D=2026-05-26, F020D=2026-05-27, F023D=2026-05-27."
+      - "This endpoint covers historical dividend records; broader financing/allotment coverage is not confirmed."
+      - "F023D can be null in older records."
+      - "Cookie/SID/Authorization headers must not be stored."
       - "Do not write verified."
-      - "Do not store Cookie/SID/Authorization."
 
   - probe_id: c_p2b_dividend_financing_688001
     source_id: cninfo_dividend_financing_profile
@@ -89,23 +141,49 @@ probe_records:
     company_name: "华兴源创"
     org_id: "9900038969"
     page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688001&orgId=9900038969#companyProfile"
-    request_url: null
-    method: null
-    params: {}
-    headers_required_candidate: []
-    records_path: null
-    result_code_path: null
-    sample_response_shape: null
-    sample_fields: []
-    candidate_field_mapping: {}
-    row_count: null
-    probe_status: manual_probe_pending
+    request_url: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyHisDividend"
+    method: "GET"
+    params:
+      scode: "{company_code}"
+    headers_required_candidate:
+      - Referer
+    records_path: "data.records"
+    result_code_path: "data.resultCode"
+    sample_response_shape:
+      path: "/companyOverview/getCompanyHisDividend"
+      code: 200
+      data:
+        total: 6
+        count: 6
+        resultCode: "200"
+        resultMsg: "success"
+        records: "list[6]"
+        indexRecords: null
+    sample_fields:
+      - F001V
+      - F007V
+      - F018D
+      - F020D
+      - F023D
+    candidate_field_mapping:
+      F001V: "report_period"
+      F007V: "dividend_plan_text"
+      F018D: "record_date_candidate"
+      F020D: "ex_right_dividend_date_candidate"
+      F023D: "dividend_payment_date_candidate"
+    row_count: 6
+    probe_status: endpoint_found
     derived_from_candidate: null
-    blocked_or_empty: null
+    blocked_or_empty: false
     notes:
-      - "P2-B manual DevTools probe pending."
+      - "Observed from 历史分红 tab."
+      - "HTTP 200 with code=200 and data.resultCode=200."
+      - "data.records returned 6 historical dividend records for 688001."
+      - "Sample first record: F001V=2025年报, F007V=10派0.52元(含税), F018D=2026-07-08, F020D=2026-07-09, F023D=2026-07-09."
+      - "This endpoint covers historical dividend records; broader financing/allotment coverage is not confirmed."
+      - "F023D can be null in older records."
+      - "Cookie/SID/Authorization headers must not be stored."
       - "Do not write verified."
-      - "Do not store Cookie/SID/Authorization."
 
   # --- cninfo_company_contact_profile (P2-B2) ---
   - probe_id: c_p2b_contact_600000
