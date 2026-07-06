@@ -27,9 +27,9 @@ P2 目标是发现 **高管 / 股本结构 / 十大股东 / 十大流通股东**
 | source_id | priority | expected_page_area | expected_data_shape | status |
 |-----------|----------|-------------------|---------------------|--------|
 | `cninfo_executive_profile` | P2-A | 高管 / 董监高 | list records | **3/3 endpoint_found** |
-| `cninfo_share_capital_profile` | P2-A | 股本结构 / 股本变动 | object or list | manual_probe_pending |
-| `cninfo_top_shareholders_profile` | P2-A | 十大股东 | list records | manual_probe_pending |
-| `cninfo_top_float_shareholders_profile` | P2-A | 十大流通股东 | list records | manual_probe_pending |
+| `cninfo_share_capital_profile` | P2-A | 股本结构 / 股本变动 | object or list | **3/3 endpoint_found** |
+| `cninfo_top_shareholders_profile` | P2-A | 十大股东 | list records | **3/3 endpoint_found** |
+| `cninfo_top_float_shareholders_profile` | P2-A | 十大流通股东 | list records | **3/3 endpoint_found** |
 
 ### 2.1 暂缓（不在 P2 本轮）
 
@@ -64,6 +64,35 @@ P2 目标是发现 **高管 / 股本结构 / 十大股东 / 十大流通股东**
 - **YAML backfill：** 尚未回填 `cninfo_c_class_source_candidates.yaml`（需单独 backfill decision）
 - **无 verified**；**无 testing_stable_sample**
 
+### 2.4 P2-A 当前观察摘要（2026-07-06）
+
+| source_id | endpoint_found | Endpoint candidate |
+|-----------|----------------|-------------------|
+| `cninfo_executive_profile` | **3/3** | `GET /data20/companyOverview/getCompanyExecutives?scode={company_code}` |
+| `cninfo_share_capital_profile` | **3/3** | `GET /data20/stockholderCapital/getStockStructure?scode={company_code}` |
+| `cninfo_top_shareholders_profile` | **3/3** | `GET /data20/stockholderCapital/getTopTenStockholders?scode={company_code}` |
+| `cninfo_top_float_shareholders_profile` | **3/3** | `GET /data20/stockholderCapital/getTopTenCirculatingStockholders?scode={company_code}` |
+
+**合计：** P2-A manual probe **12/12 `endpoint_found`**（4 sources × 3 known companies）。
+
+**共享约定：**
+- **records_path：** `data.records`（all P2-A sources）
+- **result_code_path：** `data.resultCode`（期望 `"200"`）
+- **params：** `scode={company_code}`
+- **无 blocked / login / captcha** 观察
+- **无 schema_unexpected** 观察
+- **无 YAML backfill**（本轮）；**无 verified**；**无 testing_stable_sample**
+
+**share_capital 字段：** VARYDATE, F002V, F021N, F022N, F023N, F024N, F028N, F003N（FxxxN 单位 candidate-level）
+
+**shareholders 字段（top + float 同形）：** F001D, F002V, F003N, F004N, F005N, F006V, F007V；通常 5 报告期 × 10 股东 = **50 rows**
+
+**row_count 摘要：**
+- executive：19 / 17 / 13
+- share_capital：**5 / 5 / 5**
+- top_shareholders：**50 / 50 / 50**
+- top_float_shareholders：**50 / 50 / 50**
+
 ---
 
 ## 3. Known companies
@@ -76,7 +105,7 @@ P2 目标是发现 **高管 / 股本结构 / 十大股东 / 十大流通股东**
 | `300001` | 特锐德 | `9900008270` | 创业板 |
 | `688001` | 华兴源创 | `9900038969` | 科创板 |
 
-**矩阵：** 4 sources × 3 companies = **12** probe records（初始 `manual_probe_pending`）。
+**矩阵：** 4 sources × 3 companies = **12** probe records（**12/12 `endpoint_found`**）。
 
 **建议 probe 顺序：** `cninfo_executive_profile` @ `600000` 优先 → 同 source 扩至 300001 / 688001 → 再切 `share_capital` → `top_shareholders` → `top_float_shareholders`。
 
@@ -137,9 +166,9 @@ P2 目标是发现 **高管 / 股本结构 / 十大股东 / 十大流通股东**
 |------|------|----------|
 | P2 probe plan | 本文件 | **已创建** |
 | P2 checklist | [cninfo_c_class_p2_probe_checklist.md](cninfo_c_class_p2_probe_checklist.md) | **已创建** |
-| P2 probe records | [c_class_p2_probe_records.yaml](../fixtures/c_class/probe/records/c_class_p2_probe_records.yaml) | executive **3/3 endpoint_found**；其余 9 条 pending |
+| P2 probe records | [c_class_p2_probe_records.yaml](../fixtures/c_class/probe/records/c_class_p2_probe_records.yaml) | **12/12 `endpoint_found`**（P2-A complete） |
 
-**下一步：** executive probe **完成**；起草 executive YAML backfill decision，或继续 probe `cninfo_share_capital_profile` @ 600000。
+**下一步：** 起草 **C-class P2-A YAML backfill decision**（executive + share_capital + shareholders）；尚未修改 candidate YAML。
 
 ---
 

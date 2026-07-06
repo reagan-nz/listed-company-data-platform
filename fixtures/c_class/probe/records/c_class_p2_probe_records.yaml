@@ -1,20 +1,20 @@
 # CNINFO C-class P2 DevTools probe records
 # Era C Phase 4 — executive / share_capital / shareholders (4 sources × 3 companies).
-# Initial state: executive 3/3 endpoint_found; share_capital + shareholders still manual_probe_pending.
+# P2-A complete: 12/12 endpoint_found (4 sources × 3 companies).
 #
 # Plan: plans/cninfo_c_class_p2_probe_plan.md
 # Checklist: plans/cninfo_c_class_p2_probe_checklist.md
 # Do NOT commit live response JSON with PII into Git.
 
 version: "draft-0.1"
-status: "partial_probe"
+status: "p2a_probe_complete"
 verified: false
 summary_notes: >-
-  cninfo_executive_profile: 3/3 endpoint_found via getCompanyExecutives
-  (GET /data20/companyOverview/getCompanyExecutives?scode=). share_capital and
-  shareholders sources remain manual_probe_pending. P1 basic + security mapper
-  complete; industry_profile remains candidate + derived_from basic. No YAML
-  backfill yet. Do not write verified.
+  P2-A manual DevTools probe complete: cninfo_executive_profile 3/3,
+  cninfo_share_capital_profile 3/3, cninfo_top_shareholders_profile 3/3,
+  cninfo_top_float_shareholders_profile 3/3 (12/12 endpoint_found). No blocked,
+  login, captcha, or schema_unexpected observed. No YAML backfill yet. P1 basic
+  + security mapper complete. Do not write verified.
 
 deferred_sources:
   - cninfo_dividend_financing_profile
@@ -209,19 +209,52 @@ probe_records:
     company_name: "浦发银行"
     org_id: "gssh0600000"
     page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600000&orgId=gssh0600000#companyProfile"
-    request_url: null
-    method: null
-    params: {}
-    headers_required_candidate: []
-    records_path: null
-    sample_response_shape: null
-    sample_fields: []
-    row_count: null
-    probe_status: manual_probe_pending
-    blocked_or_empty: null
-    notes: >-
-      P2 manual DevTools probe pending. Target F10 tab: 股本结构/股本变动. Expected
-      object or list with total_share_capital, float_share_capital. Do not write verified.
+    request_url: "https://www.cninfo.com.cn/data20/stockholderCapital/getStockStructure"
+    method: "GET"
+    params:
+      scode: "{company_code}"
+    headers_required_candidate:
+      - Referer
+    records_path: "data.records"
+    result_code_path: "data.resultCode"
+    sample_response_shape:
+      path: "/stockholderCapital/getStockStructure"
+      code: 200
+      data:
+        total: 5
+        count: 5
+        resultCode: "200"
+        resultMsg: "success"
+        records: "list[5]"
+        indexRecords: null
+    sample_fields:
+      - VARYDATE
+      - F002V
+      - F021N
+      - F022N
+      - F023N
+      - F024N
+      - F028N
+      - F003N
+    candidate_field_mapping:
+      VARYDATE: "change_date_or_report_date"
+      F002V: "change_reason_or_source"
+      F021N: "total_share_capital_candidate"
+      F022N: "circulating_share_capital_candidate"
+      F023N: "restricted_share_candidate"
+      F024N: "unrestricted_share_candidate"
+      F028N: "change_amount_candidate"
+      F003N: "total_capital_candidate"
+    row_count: 5
+    probe_status: endpoint_found
+    blocked_or_empty: false
+    notes:
+      - "HTTP 200 with code=200 and data.resultCode=200."
+      - "data.records returned 5 share structure records for 600000."
+      - "Sample first record observed VARYDATE=2025-12-31, F002V=定期报告."
+      - "FxxxN field units require later confirmation."
+      - "Keep all numeric semantics candidate-level."
+      - "Cookie/SID/Authorization headers were observed in browser but must not be stored."
 
   - probe_id: c_p2_share_capital_300001
     source_id: cninfo_share_capital_profile
@@ -229,18 +262,52 @@ probe_records:
     company_name: "特锐德"
     org_id: "9900008270"
     page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300001&orgId=9900008270#companyProfile"
-    request_url: null
-    method: null
-    params: {}
-    headers_required_candidate: []
-    records_path: null
-    sample_response_shape: null
-    sample_fields: []
-    row_count: null
-    probe_status: manual_probe_pending
-    blocked_or_empty: null
-    notes: >-
-      P2 manual DevTools probe pending. Target F10 tab: 股本结构/股本变动. Do not write verified.
+    request_url: "https://www.cninfo.com.cn/data20/stockholderCapital/getStockStructure"
+    method: "GET"
+    params:
+      scode: "{company_code}"
+    headers_required_candidate:
+      - Referer
+    records_path: "data.records"
+    result_code_path: "data.resultCode"
+    sample_response_shape:
+      path: "/stockholderCapital/getStockStructure"
+      code: 200
+      data:
+        total: 5
+        count: 5
+        resultCode: "200"
+        resultMsg: "success"
+        records: "list[5]"
+        indexRecords: null
+    sample_fields:
+      - VARYDATE
+      - F002V
+      - F021N
+      - F022N
+      - F023N
+      - F024N
+      - F028N
+      - F003N
+    candidate_field_mapping:
+      VARYDATE: "change_date_or_report_date"
+      F002V: "change_reason_or_source"
+      F021N: "total_share_capital_candidate"
+      F022N: "circulating_share_capital_candidate"
+      F023N: "restricted_share_candidate"
+      F024N: "unrestricted_share_candidate"
+      F028N: "change_amount_candidate"
+      F003N: "total_capital_candidate"
+    row_count: 5
+    probe_status: endpoint_found
+    blocked_or_empty: false
+    notes:
+      - "HTTP 200 with code=200 and data.resultCode=200."
+      - "data.records returned 5 share structure records for 300001."
+      - "Sample first record observed VARYDATE=2026-06-03, F002V=股份回购,股权激励."
+      - "FxxxN field units require later confirmation."
+      - "Keep all numeric semantics candidate-level."
+      - "Cookie/SID/Authorization headers were observed in browser but must not be stored."
 
   - probe_id: c_p2_share_capital_688001
     source_id: cninfo_share_capital_profile
@@ -248,18 +315,52 @@ probe_records:
     company_name: "华兴源创"
     org_id: "9900038969"
     page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688001&orgId=9900038969#companyProfile"
-    request_url: null
-    method: null
-    params: {}
-    headers_required_candidate: []
-    records_path: null
-    sample_response_shape: null
-    sample_fields: []
-    row_count: null
-    probe_status: manual_probe_pending
-    blocked_or_empty: null
-    notes: >-
-      P2 manual DevTools probe pending. Target F10 tab: 股本结构/股本变动. Do not write verified.
+    request_url: "https://www.cninfo.com.cn/data20/stockholderCapital/getStockStructure"
+    method: "GET"
+    params:
+      scode: "{company_code}"
+    headers_required_candidate:
+      - Referer
+    records_path: "data.records"
+    result_code_path: "data.resultCode"
+    sample_response_shape:
+      path: "/stockholderCapital/getStockStructure"
+      code: 200
+      data:
+        total: 5
+        count: 5
+        resultCode: "200"
+        resultMsg: "success"
+        records: "list[5]"
+        indexRecords: null
+    sample_fields:
+      - VARYDATE
+      - F002V
+      - F021N
+      - F022N
+      - F023N
+      - F024N
+      - F028N
+      - F003N
+    candidate_field_mapping:
+      VARYDATE: "change_date_or_report_date"
+      F002V: "change_reason_or_source"
+      F021N: "total_share_capital_candidate"
+      F022N: "circulating_share_capital_candidate"
+      F023N: "restricted_share_candidate"
+      F024N: "unrestricted_share_candidate"
+      F028N: "change_amount_candidate"
+      F003N: "total_capital_candidate"
+    row_count: 5
+    probe_status: endpoint_found
+    blocked_or_empty: false
+    notes:
+      - "HTTP 200 with code=200 and data.resultCode=200."
+      - "data.records returned 5 share structure records for 688001."
+      - "Sample first record observed VARYDATE=2026-05-18, F002V=可转债转股."
+      - "FxxxN field units require later confirmation."
+      - "Keep all numeric semantics candidate-level."
+      - "Cookie/SID/Authorization headers were observed in browser but must not be stored."
 
   # --- cninfo_top_shareholders_profile ---
   - probe_id: c_p2_top_shareholders_600000
@@ -268,19 +369,51 @@ probe_records:
     company_name: "浦发银行"
     org_id: "gssh0600000"
     page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600000&orgId=gssh0600000#companyProfile"
-    request_url: null
-    method: null
-    params: {}
-    headers_required_candidate: []
-    records_path: null
-    sample_response_shape: null
-    sample_fields: []
-    row_count: null
-    probe_status: manual_probe_pending
-    blocked_or_empty: null
-    notes: >-
-      P2 manual DevTools probe pending. Target F10 tab: 十大股东. Expected list
-      records with shareholder_name, holding_shares, holding_ratio, rank. Do not write verified.
+    request_url: "https://www.cninfo.com.cn/data20/stockholderCapital/getTopTenStockholders"
+    method: "GET"
+    params:
+      scode: "{company_code}"
+    headers_required_candidate:
+      - Referer
+    records_path: "data.records"
+    result_code_path: "data.resultCode"
+    sample_response_shape:
+      path: "/stockholderCapital/getTopTenStockholders"
+      code: 200
+      data:
+        total: 50
+        count: 50
+        resultCode: "200"
+        resultMsg: "success"
+        records: "list[50]"
+        indexRecords: null
+    sample_fields:
+      - F001D
+      - F002V
+      - F003N
+      - F004N
+      - F005N
+      - F006V
+      - F007V
+    candidate_field_mapping:
+      F001D: "report_date"
+      F002V: "shareholder_name"
+      F003N: "holding_amount_candidate"
+      F004N: "holding_ratio_percent_candidate"
+      F005N: "rank"
+      F006V: "share_type"
+      F007V: "change_status_or_change_amount_candidate"
+    row_count: 50
+    probe_status: endpoint_found
+    blocked_or_empty: false
+    notes:
+      - "HTTP 200 with code=200 and data.resultCode=200."
+      - "data.records returned 50 shareholder records for 600000."
+      - "Response returns multiple reporting periods, usually 5 periods × 10 holders = 50 rows."
+      - "Sample first record observed F001D=2026-03-31, rank=1, shareholder=上海国际集团有限公司."
+      - "F003N unit requires later confirmation."
+      - "F007V may contain textual status such as 未变/新进 or numeric-looking change value; keep candidate-level."
+      - "Cookie/SID/Authorization headers were observed in browser but must not be stored."
 
   - probe_id: c_p2_top_shareholders_300001
     source_id: cninfo_top_shareholders_profile
@@ -288,18 +421,51 @@ probe_records:
     company_name: "特锐德"
     org_id: "9900008270"
     page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300001&orgId=9900008270#companyProfile"
-    request_url: null
-    method: null
-    params: {}
-    headers_required_candidate: []
-    records_path: null
-    sample_response_shape: null
-    sample_fields: []
-    row_count: null
-    probe_status: manual_probe_pending
-    blocked_or_empty: null
-    notes: >-
-      P2 manual DevTools probe pending. Target F10 tab: 十大股东. Do not write verified.
+    request_url: "https://www.cninfo.com.cn/data20/stockholderCapital/getTopTenStockholders"
+    method: "GET"
+    params:
+      scode: "{company_code}"
+    headers_required_candidate:
+      - Referer
+    records_path: "data.records"
+    result_code_path: "data.resultCode"
+    sample_response_shape:
+      path: "/stockholderCapital/getTopTenStockholders"
+      code: 200
+      data:
+        total: 50
+        count: 50
+        resultCode: "200"
+        resultMsg: "success"
+        records: "list[50]"
+        indexRecords: null
+    sample_fields:
+      - F001D
+      - F002V
+      - F003N
+      - F004N
+      - F005N
+      - F006V
+      - F007V
+    candidate_field_mapping:
+      F001D: "report_date"
+      F002V: "shareholder_name"
+      F003N: "holding_amount_candidate"
+      F004N: "holding_ratio_percent_candidate"
+      F005N: "rank"
+      F006V: "share_type"
+      F007V: "change_status_or_change_amount_candidate"
+    row_count: 50
+    probe_status: endpoint_found
+    blocked_or_empty: false
+    notes:
+      - "HTTP 200 with code=200 and data.resultCode=200."
+      - "data.records returned 50 shareholder records for 300001."
+      - "Response returns multiple reporting periods, usually 5 periods × 10 holders = 50 rows."
+      - "Sample first record observed F001D=2026-03-31, rank=1, shareholder=青岛德锐投资有限公司."
+      - "F003N unit requires later confirmation."
+      - "F007V may contain textual status such as 未变/新进 or numeric-looking change value; keep candidate-level."
+      - "Cookie/SID/Authorization headers were observed in browser but must not be stored."
 
   - probe_id: c_p2_top_shareholders_688001
     source_id: cninfo_top_shareholders_profile
@@ -307,18 +473,51 @@ probe_records:
     company_name: "华兴源创"
     org_id: "9900038969"
     page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688001&orgId=9900038969#companyProfile"
-    request_url: null
-    method: null
-    params: {}
-    headers_required_candidate: []
-    records_path: null
-    sample_response_shape: null
-    sample_fields: []
-    row_count: null
-    probe_status: manual_probe_pending
-    blocked_or_empty: null
-    notes: >-
-      P2 manual DevTools probe pending. Target F10 tab: 十大股东. Do not write verified.
+    request_url: "https://www.cninfo.com.cn/data20/stockholderCapital/getTopTenStockholders"
+    method: "GET"
+    params:
+      scode: "{company_code}"
+    headers_required_candidate:
+      - Referer
+    records_path: "data.records"
+    result_code_path: "data.resultCode"
+    sample_response_shape:
+      path: "/stockholderCapital/getTopTenStockholders"
+      code: 200
+      data:
+        total: 50
+        count: 50
+        resultCode: "200"
+        resultMsg: "success"
+        records: "list[50]"
+        indexRecords: null
+    sample_fields:
+      - F001D
+      - F002V
+      - F003N
+      - F004N
+      - F005N
+      - F006V
+      - F007V
+    candidate_field_mapping:
+      F001D: "report_date"
+      F002V: "shareholder_name"
+      F003N: "holding_amount_candidate"
+      F004N: "holding_ratio_percent_candidate"
+      F005N: "rank"
+      F006V: "share_type"
+      F007V: "change_status_or_change_amount_candidate"
+    row_count: 50
+    probe_status: endpoint_found
+    blocked_or_empty: false
+    notes:
+      - "HTTP 200 with code=200 and data.resultCode=200."
+      - "data.records returned 50 shareholder records for 688001."
+      - "Response returns multiple reporting periods, usually 5 periods × 10 holders = 50 rows."
+      - "Sample first record observed F001D=2026-03-31, rank=1, shareholder=苏州源华创兴投资管理有限公司."
+      - "F003N unit requires later confirmation."
+      - "F007V may contain textual status such as 未变/新进 or numeric-looking change value; keep candidate-level."
+      - "Cookie/SID/Authorization headers were observed in browser but must not be stored."
 
   # --- cninfo_top_float_shareholders_profile ---
   - probe_id: c_p2_top_float_shareholders_600000
@@ -327,19 +526,52 @@ probe_records:
     company_name: "浦发银行"
     org_id: "gssh0600000"
     page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600000&orgId=gssh0600000#companyProfile"
-    request_url: null
-    method: null
-    params: {}
-    headers_required_candidate: []
-    records_path: null
-    sample_response_shape: null
-    sample_fields: []
-    row_count: null
-    probe_status: manual_probe_pending
-    blocked_or_empty: null
-    notes: >-
-      P2 manual DevTools probe pending. Target F10 tab: 十大流通股东. Expected list
-      records; shareholder_scope top_float_shareholder. Do not write verified.
+    request_url: "https://www.cninfo.com.cn/data20/stockholderCapital/getTopTenCirculatingStockholders"
+    method: "GET"
+    params:
+      scode: "{company_code}"
+    headers_required_candidate:
+      - Referer
+    records_path: "data.records"
+    result_code_path: "data.resultCode"
+    sample_response_shape:
+      path: "/stockholderCapital/getTopTenCirculatingStockholders"
+      code: 200
+      data:
+        total: 50
+        count: 50
+        resultCode: "200"
+        resultMsg: "success"
+        records: "list[50]"
+        indexRecords: null
+    sample_fields:
+      - F001D
+      - F002V
+      - F003N
+      - F004N
+      - F005N
+      - F006V
+      - F007V
+    candidate_field_mapping:
+      F001D: "report_date"
+      F002V: "shareholder_name"
+      F003N: "holding_amount_candidate"
+      F004N: "holding_ratio_percent_candidate"
+      F005N: "rank"
+      F006V: "share_type"
+      F007V: "change_status_or_change_amount_candidate"
+    row_count: 50
+    probe_status: endpoint_found
+    blocked_or_empty: false
+    notes:
+      - "HTTP 200 with code=200 and data.resultCode=200."
+      - "data.records returned 50 float shareholder records for 600000."
+      - "Response returns multiple reporting periods, usually 5 periods × 10 holders = 50 rows."
+      - "Shape is very close to getTopTenStockholders."
+      - "Sample first record observed F001D=2026-03-31, rank=1, shareholder=上海国际集团有限公司."
+      - "F003N unit requires later confirmation."
+      - "F007V may contain textual status such as 未变/新进 or numeric-looking change value; keep candidate-level."
+      - "Cookie/SID/Authorization headers were observed in browser but must not be stored."
 
   - probe_id: c_p2_top_float_shareholders_300001
     source_id: cninfo_top_float_shareholders_profile
@@ -347,18 +579,52 @@ probe_records:
     company_name: "特锐德"
     org_id: "9900008270"
     page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300001&orgId=9900008270#companyProfile"
-    request_url: null
-    method: null
-    params: {}
-    headers_required_candidate: []
-    records_path: null
-    sample_response_shape: null
-    sample_fields: []
-    row_count: null
-    probe_status: manual_probe_pending
-    blocked_or_empty: null
-    notes: >-
-      P2 manual DevTools probe pending. Target F10 tab: 十大流通股东. Do not write verified.
+    request_url: "https://www.cninfo.com.cn/data20/stockholderCapital/getTopTenCirculatingStockholders"
+    method: "GET"
+    params:
+      scode: "{company_code}"
+    headers_required_candidate:
+      - Referer
+    records_path: "data.records"
+    result_code_path: "data.resultCode"
+    sample_response_shape:
+      path: "/stockholderCapital/getTopTenCirculatingStockholders"
+      code: 200
+      data:
+        total: 50
+        count: 50
+        resultCode: "200"
+        resultMsg: "success"
+        records: "list[50]"
+        indexRecords: null
+    sample_fields:
+      - F001D
+      - F002V
+      - F003N
+      - F004N
+      - F005N
+      - F006V
+      - F007V
+    candidate_field_mapping:
+      F001D: "report_date"
+      F002V: "shareholder_name"
+      F003N: "holding_amount_candidate"
+      F004N: "holding_ratio_percent_candidate"
+      F005N: "rank"
+      F006V: "share_type"
+      F007V: "change_status_or_change_amount_candidate"
+    row_count: 50
+    probe_status: endpoint_found
+    blocked_or_empty: false
+    notes:
+      - "HTTP 200 with code=200 and data.resultCode=200."
+      - "data.records returned 50 float shareholder records for 300001."
+      - "Response returns multiple reporting periods, usually 5 periods × 10 holders = 50 rows."
+      - "Shape is very close to getTopTenStockholders."
+      - "Sample first record observed F001D=2026-03-31, rank=1, shareholder=青岛德锐投资有限公司."
+      - "F003N unit requires later confirmation."
+      - "F007V may contain textual status such as 未变/新进 or numeric-looking change value; keep candidate-level."
+      - "Cookie/SID/Authorization headers were observed in browser but must not be stored."
 
   - probe_id: c_p2_top_float_shareholders_688001
     source_id: cninfo_top_float_shareholders_profile
@@ -366,15 +632,49 @@ probe_records:
     company_name: "华兴源创"
     org_id: "9900038969"
     page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688001&orgId=9900038969#companyProfile"
-    request_url: null
-    method: null
-    params: {}
-    headers_required_candidate: []
-    records_path: null
-    sample_response_shape: null
-    sample_fields: []
-    row_count: null
-    probe_status: manual_probe_pending
-    blocked_or_empty: null
-    notes: >-
-      P2 manual DevTools probe pending. Target F10 tab: 十大流通股东. Do not write verified.
+    request_url: "https://www.cninfo.com.cn/data20/stockholderCapital/getTopTenCirculatingStockholders"
+    method: "GET"
+    params:
+      scode: "{company_code}"
+    headers_required_candidate:
+      - Referer
+    records_path: "data.records"
+    result_code_path: "data.resultCode"
+    sample_response_shape:
+      path: "/stockholderCapital/getTopTenCirculatingStockholders"
+      code: 200
+      data:
+        total: 50
+        count: 50
+        resultCode: "200"
+        resultMsg: "success"
+        records: "list[50]"
+        indexRecords: null
+    sample_fields:
+      - F001D
+      - F002V
+      - F003N
+      - F004N
+      - F005N
+      - F006V
+      - F007V
+    candidate_field_mapping:
+      F001D: "report_date"
+      F002V: "shareholder_name"
+      F003N: "holding_amount_candidate"
+      F004N: "holding_ratio_percent_candidate"
+      F005N: "rank"
+      F006V: "share_type"
+      F007V: "change_status_or_change_amount_candidate"
+    row_count: 50
+    probe_status: endpoint_found
+    blocked_or_empty: false
+    notes:
+      - "HTTP 200 with code=200 and data.resultCode=200."
+      - "data.records returned 50 float shareholder records for 688001."
+      - "Response returns multiple reporting periods, usually 5 periods × 10 holders = 50 rows."
+      - "Shape is very close to getTopTenStockholders."
+      - "Sample first record observed F001D=2026-03-31, rank=1, shareholder=苏州源华创兴投资管理有限公司."
+      - "F003N unit requires later confirmation."
+      - "F007V may contain textual status such as 未变/新进 or numeric-looking change value; keep candidate-level."
+      - "Cookie/SID/Authorization headers were observed in browser but must not be stored."

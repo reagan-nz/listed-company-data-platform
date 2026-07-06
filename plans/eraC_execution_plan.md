@@ -148,9 +148,10 @@ _最后更新：2026-07-05_
 39. ~~C 类 security_profile mapper draft + fixture schema validation~~ → **已完成**（§7j）
 40. ~~C 类 P2 DevTools probe plan + records 初始化~~ → **已完成**（§7k）
 41. ~~C 类 P2 executive_profile 人工 DevTools probe~~ → **3/3 endpoint_found**（§7l）
-42. executive_profile YAML backfill decision 或继续 P2 probe `share_capital_profile`
-43. 可选：probe 官方 category code（B 类）
-44. **暂不全量抓取、暂不入库**
+42. ~~C 类 P2 share_capital + shareholders 人工 DevTools probe~~ → **P2-A 12/12 endpoint_found**（§7m）
+43. 起草 C-class P2-A YAML backfill decision
+44. 可选：probe 官方 category code（B 类）
+45. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -886,6 +887,23 @@ _最后更新：2026-07-05_
 
 ---
 
+## 7m. Phase 4 C 类 P2-A Probe Complete（2026-07-06）
+
+| source_id | endpoint_found | Endpoint | row_count (600000/300001/688001) |
+|-----------|----------------|----------|----------------------------------|
+| `cninfo_executive_profile` | **3/3** | `GET .../getCompanyExecutives?scode=` | 19 / 17 / 13 |
+| `cninfo_share_capital_profile` | **3/3** | `GET .../getStockStructure?scode=` | 5 / 5 / 5 |
+| `cninfo_top_shareholders_profile` | **3/3** | `GET .../getTopTenStockholders?scode=` | 50 / 50 / 50 |
+| `cninfo_top_float_shareholders_profile` | **3/3** | `GET .../getTopTenCirculatingStockholders?scode=` | 50 / 50 / 50 |
+
+**合计：** **12/12 `endpoint_found`**。records_path 均为 `data.records`。无 blocked / login / captcha / schema_unexpected。
+
+**红线：** **无 verified**；**无 testing_stable_sample**；**无 candidate YAML backfill**（本轮）；不入库。
+
+**下一步：** 起草 [cninfo_c_class_p2_yaml_backfill_decision.md](cninfo_c_class_p2_yaml_backfill_decision.md)（待创建）。
+
+---
+
 ## 7e. Phase 4 — E / F（C probe 后再做）
 
 - **E**：可达性三态脚本（公开 / 需登录 / 需权限），不采数据。
@@ -900,7 +918,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **P2 executive_profile probe 完成**（3/3 endpoint_found）；下一步 YAML backfill decision 或 probe share_capital。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **P2-A manual probe 完成**（12/12 endpoint_found）；下一步 P2-A YAML backfill decision。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
