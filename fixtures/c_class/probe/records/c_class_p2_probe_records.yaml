@@ -1,0 +1,276 @@
+# CNINFO C-class P2 DevTools probe records
+# Era C Phase 4 — executive / share_capital / shareholders (4 sources × 3 companies).
+# Initial state: manual_probe_pending. No CNINFO requests in this initialization round.
+#
+# Plan: plans/cninfo_c_class_p2_probe_plan.md
+# Checklist: plans/cninfo_c_class_p2_probe_checklist.md
+# Do NOT commit live response JSON with PII into Git.
+
+version: "draft-0.1"
+status: "manual_probe_pending"
+verified: false
+summary_notes: >-
+  P2 probe initialized for cninfo_executive_profile, cninfo_share_capital_profile,
+  cninfo_top_shareholders_profile, cninfo_top_float_shareholders_profile.
+  12 records pending manual DevTools probe. P1 basic + security mapper complete;
+  industry_profile remains candidate + derived_from basic. Do not write verified.
+
+deferred_sources:
+  - cninfo_dividend_financing_profile
+  - cninfo_company_contact_profile
+  - cninfo_company_business_scope
+  - getHeadStripData_annex_mapping
+
+probe_scope:
+  sources:
+    - cninfo_executive_profile
+    - cninfo_share_capital_profile
+    - cninfo_top_shareholders_profile
+    - cninfo_top_float_shareholders_profile
+  companies:
+    - company_code: "600000"
+      company_name: "浦发银行"
+      org_id: "gssh0600000"
+    - company_code: "300001"
+      company_name: "特锐德"
+      org_id: "9900008270"
+    - company_code: "688001"
+      company_name: "华兴源创"
+      org_id: "9900038969"
+
+probe_records:
+  # --- cninfo_executive_profile ---
+  - probe_id: c_p2_executive_600000
+    source_id: cninfo_executive_profile
+    company_code: "600000"
+    company_name: "浦发银行"
+    org_id: "gssh0600000"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600000&orgId=gssh0600000#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    sample_response_shape: null
+    sample_fields: []
+    row_count: null
+    probe_status: manual_probe_pending
+    blocked_or_empty: null
+    notes: >-
+      P2 manual DevTools probe pending. Target F10 tab: 高管/董监高. Expected list
+      records with person_name, position. Do not write verified.
+
+  - probe_id: c_p2_executive_300001
+    source_id: cninfo_executive_profile
+    company_code: "300001"
+    company_name: "特锐德"
+    org_id: "9900008270"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300001&orgId=9900008270#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    sample_response_shape: null
+    sample_fields: []
+    row_count: null
+    probe_status: manual_probe_pending
+    blocked_or_empty: null
+    notes: >-
+      P2 manual DevTools probe pending. Target F10 tab: 高管/董监高. Do not write verified.
+
+  - probe_id: c_p2_executive_688001
+    source_id: cninfo_executive_profile
+    company_code: "688001"
+    company_name: "华兴源创"
+    org_id: "9900038969"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688001&orgId=9900038969#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    sample_response_shape: null
+    sample_fields: []
+    row_count: null
+    probe_status: manual_probe_pending
+    blocked_or_empty: null
+    notes: >-
+      P2 manual DevTools probe pending. Target F10 tab: 高管/董监高. Do not write verified.
+
+  # --- cninfo_share_capital_profile ---
+  - probe_id: c_p2_share_capital_600000
+    source_id: cninfo_share_capital_profile
+    company_code: "600000"
+    company_name: "浦发银行"
+    org_id: "gssh0600000"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600000&orgId=gssh0600000#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    sample_response_shape: null
+    sample_fields: []
+    row_count: null
+    probe_status: manual_probe_pending
+    blocked_or_empty: null
+    notes: >-
+      P2 manual DevTools probe pending. Target F10 tab: 股本结构/股本变动. Expected
+      object or list with total_share_capital, float_share_capital. Do not write verified.
+
+  - probe_id: c_p2_share_capital_300001
+    source_id: cninfo_share_capital_profile
+    company_code: "300001"
+    company_name: "特锐德"
+    org_id: "9900008270"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300001&orgId=9900008270#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    sample_response_shape: null
+    sample_fields: []
+    row_count: null
+    probe_status: manual_probe_pending
+    blocked_or_empty: null
+    notes: >-
+      P2 manual DevTools probe pending. Target F10 tab: 股本结构/股本变动. Do not write verified.
+
+  - probe_id: c_p2_share_capital_688001
+    source_id: cninfo_share_capital_profile
+    company_code: "688001"
+    company_name: "华兴源创"
+    org_id: "9900038969"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688001&orgId=9900038969#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    sample_response_shape: null
+    sample_fields: []
+    row_count: null
+    probe_status: manual_probe_pending
+    blocked_or_empty: null
+    notes: >-
+      P2 manual DevTools probe pending. Target F10 tab: 股本结构/股本变动. Do not write verified.
+
+  # --- cninfo_top_shareholders_profile ---
+  - probe_id: c_p2_top_shareholders_600000
+    source_id: cninfo_top_shareholders_profile
+    company_code: "600000"
+    company_name: "浦发银行"
+    org_id: "gssh0600000"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600000&orgId=gssh0600000#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    sample_response_shape: null
+    sample_fields: []
+    row_count: null
+    probe_status: manual_probe_pending
+    blocked_or_empty: null
+    notes: >-
+      P2 manual DevTools probe pending. Target F10 tab: 十大股东. Expected list
+      records with shareholder_name, holding_shares, holding_ratio, rank. Do not write verified.
+
+  - probe_id: c_p2_top_shareholders_300001
+    source_id: cninfo_top_shareholders_profile
+    company_code: "300001"
+    company_name: "特锐德"
+    org_id: "9900008270"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300001&orgId=9900008270#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    sample_response_shape: null
+    sample_fields: []
+    row_count: null
+    probe_status: manual_probe_pending
+    blocked_or_empty: null
+    notes: >-
+      P2 manual DevTools probe pending. Target F10 tab: 十大股东. Do not write verified.
+
+  - probe_id: c_p2_top_shareholders_688001
+    source_id: cninfo_top_shareholders_profile
+    company_code: "688001"
+    company_name: "华兴源创"
+    org_id: "9900038969"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688001&orgId=9900038969#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    sample_response_shape: null
+    sample_fields: []
+    row_count: null
+    probe_status: manual_probe_pending
+    blocked_or_empty: null
+    notes: >-
+      P2 manual DevTools probe pending. Target F10 tab: 十大股东. Do not write verified.
+
+  # --- cninfo_top_float_shareholders_profile ---
+  - probe_id: c_p2_top_float_shareholders_600000
+    source_id: cninfo_top_float_shareholders_profile
+    company_code: "600000"
+    company_name: "浦发银行"
+    org_id: "gssh0600000"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600000&orgId=gssh0600000#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    sample_response_shape: null
+    sample_fields: []
+    row_count: null
+    probe_status: manual_probe_pending
+    blocked_or_empty: null
+    notes: >-
+      P2 manual DevTools probe pending. Target F10 tab: 十大流通股东. Expected list
+      records; shareholder_scope top_float_shareholder. Do not write verified.
+
+  - probe_id: c_p2_top_float_shareholders_300001
+    source_id: cninfo_top_float_shareholders_profile
+    company_code: "300001"
+    company_name: "特锐德"
+    org_id: "9900008270"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300001&orgId=9900008270#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    sample_response_shape: null
+    sample_fields: []
+    row_count: null
+    probe_status: manual_probe_pending
+    blocked_or_empty: null
+    notes: >-
+      P2 manual DevTools probe pending. Target F10 tab: 十大流通股东. Do not write verified.
+
+  - probe_id: c_p2_top_float_shareholders_688001
+    source_id: cninfo_top_float_shareholders_profile
+    company_code: "688001"
+    company_name: "华兴源创"
+    org_id: "9900038969"
+    page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688001&orgId=9900038969#companyProfile"
+    request_url: null
+    method: null
+    params: {}
+    headers_required_candidate: []
+    records_path: null
+    sample_response_shape: null
+    sample_fields: []
+    row_count: null
+    probe_status: manual_probe_pending
+    blocked_or_empty: null
+    notes: >-
+      P2 manual DevTools probe pending. Target F10 tab: 十大流通股东. Do not write verified.

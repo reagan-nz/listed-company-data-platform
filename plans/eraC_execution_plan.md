@@ -146,9 +146,10 @@ _最后更新：2026-07-05_
 37. ~~C 类 live validation v1 + 600000 预期对齐~~ → **LIVE_PASS**（§7h）
 38. ~~C 类 basic_profile mapper draft + fixture schema validation~~ → **已完成**（§7i）
 39. ~~C 类 security_profile mapper draft + fixture schema validation~~ → **已完成**（§7j）
-40. map getHeadStripData annex 或 P2 DevTools probe
-41. 可选：probe 官方 category code（B 类）
-42. **暂不全量抓取、暂不入库**
+40. ~~C 类 P2 DevTools probe plan + records 初始化~~ → **已完成**（§7k）
+41. 人工 DevTools probe P2：`cninfo_executive_profile` @ 600000 首发
+42. 可选：probe 官方 category code（B 类）
+43. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -844,6 +845,26 @@ _最后更新：2026-07-05_
 
 ---
 
+## 7k. Phase 4 C 类 P2 DevTools Probe Plan Initialized（2026-07-06）
+
+| 文档 / 产出 | 内容 |
+|------|------|
+| [cninfo_c_class_p2_probe_plan.md](cninfo_c_class_p2_probe_plan.md) | P2 scope：executive / share_capital / top_shareholders / top_float_shareholders |
+| [cninfo_c_class_p2_probe_checklist.md](cninfo_c_class_p2_probe_checklist.md) | 人工 probe 前/中/后检查；YAML backfill 准入条件 |
+| [c_class_p2_probe_records.yaml](../fixtures/c_class/probe/records/c_class_p2_probe_records.yaml) | **12** 条（4 source × 3 company），全部 `manual_probe_pending` |
+
+**P2 优先 source：** `cninfo_executive_profile`、`cninfo_share_capital_profile`、`cninfo_top_shareholders_profile`、`cninfo_top_float_shareholders_profile`。
+
+**暂缓：** dividend_financing、contact、business_scope、getHeadStripData annex。
+
+**Known companies：** 600000 / 300001 / 688001（与 P1 相同）。
+
+**红线：** 本轮 **0** CNINFO 请求；**无 verified**；**无 testing_stable_sample**；不入库；不修改 candidate YAML。
+
+**下一步：** 人工 DevTools probe **`c_p2_executive_600000`**（高管/董监高 tab）→ 填写 probe record → 按 checklist 判定 status。
+
+---
+
 ## 7e. Phase 4 — E / F（C probe 后再做）
 
 - **E**：可达性三态脚本（公开 / 需登录 / 需权限），不采数据。
@@ -858,7 +879,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **basic + security profile mapper draft 完成**（2/2 + 3/3 schema PASS）；下一步 getHeadStripData annex 或 P2 probe。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **P1 mapper 完成** + **P2 probe plan 已初始化**（12 pending）；下一步人工 probe `cninfo_executive_profile` @ 600000。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
