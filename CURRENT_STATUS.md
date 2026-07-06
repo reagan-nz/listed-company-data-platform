@@ -1,6 +1,6 @@
-# 当前进展：CNINFO 数据源 A–F 分层验证（Phase 0 已完成）
+# 当前进展：CNINFO 数据源 A–F 分层验证（Phase 1 已收口 · Phase 2 已收口）
 
-_最后更新：2026-07-02_
+_最后更新：2026-07-05_
 
 > **本文件说明「现在具体在做什么」。** 仓库整体导航见 [PROJECT_MAP.md](PROJECT_MAP.md)；**A–F 分层与验证口径权威文档**见 [plans/cninfo_data_source_layered_inventory.md](plans/cninfo_data_source_layered_inventory.md)；产品大方向见 [ROADMAP.md](ROADMAP.md)。
 
@@ -8,104 +8,181 @@ _最后更新：2026-07-02_
 
 ## 当前阶段（一句话）
 
-Era C 已建立 **CNINFO 数据源 A–F 分层框架与统一验证口径**（Phase 0 完成）。**下一步：Phase 1 — 用 per-company coverage 口径重做 A 类（类年报）验证**，确认年报/半年报/季报到底稳不稳。
+**Era C Phase 1（A 类）已收口**（P1 **749/796 = 94.10%**）。**Phase 2 D 类已收口**（10 源 `testing_stable_sample`）。**Phase 3 B 类** corpus + live metadata v1 已打通（5 ready · 5/5 pass）。**Phase 4 C 类** P1 DevTools probe **已完成**（basic 2/3 + security 3/3）；probe review + YAML 回填**决策文档**已起草；**candidate YAML 尚未回填**。
 
 ---
 
-## 为什么从「success rate」改为「A–F 分层 + 分层口径」
+## Phase 1 A 类收口摘要
 
-旧验证把不同形态的数据（定期报告、事件公告、F10 表格、市场行为表格）混在同一个 success rate 里衡量。例如 [cninfo_report_announcement_validation_summary.md](outputs/validation/cninfo_report_announcement_validation_summary.md) 的 `success 368/780` 按 **(公司 × report_type × query_strategy)** 计行，**无法回答「这家公司这份报告找没找到」**。
+| 项 | 结果 |
+|----|------|
+| P1 effective coverage | **749/796 = 94.10%** |
+| 二轮 audit found pass | **97.5%** |
+| **recommended_status** | **testing / usable candidate** |
+| 完整总结 | [cninfo_report_phase1_final_summary.md](outputs/validation/cninfo_report_phase1_final_summary.md) |
+| Later improvement | BSE residual — 不阻塞 Phase 2 |
 
-新框架见 [plans/cninfo_data_source_layered_inventory.md](plans/cninfo_data_source_layered_inventory.md)：
+---
 
-- **A 类**：per-company **coverage%**（公司 × 期望报告期）
-- **B 类**：**corpus** + **known-event benchmark**（禁止随机公司覆盖率）
-- **C 类**：orgId + **字段可得性%**
-- **D 类**：**字段可得性%** + 入口稳定性
-- **E 类**：仅可达性 / 权限三态
-- **F 类**：暂缓，文本线索
+## Phase 3 D 类设计（已收口）
+
+| 项 | 状态 |
+|----|------|
+| Source Registry 设计 | [cninfo_d_class_source_registry_design.md](plans/cninfo_d_class_source_registry_design.md) |
+| Schema Draft | [cninfo_d_class_schema_draft.md](plans/cninfo_d_class_schema_draft.md) |
+| Ingestion Status Model | [cninfo_d_class_ingestion_status_model.md](plans/cninfo_d_class_ingestion_status_model.md) |
+| **Source → Schema 映射审查** | [cninfo_d_class_source_to_schema_mapping_review.md](plans/cninfo_d_class_source_to_schema_mapping_review.md) |
+| **Registry YAML draft** | [config/cninfo_d_class_source_registry_draft.yaml](config/cninfo_d_class_source_registry_draft.yaml) · [notes](plans/cninfo_d_class_source_registry_draft_notes.md) |
+| **JSON Schema draft** | [schemas/d_class/](schemas/d_class/) · [notes](plans/cninfo_d_class_json_schema_draft_notes.md) |
+| **Registry lint 设计** | [cninfo_d_class_registry_lint_design.md](plans/cninfo_d_class_registry_lint_design.md) · 脚本草案 `lab/lint_cninfo_d_class_registry.py`（23 规则 R001–R023） |
+| **Schema validation plan** | [cninfo_d_class_schema_validation_plan.md](plans/cninfo_d_class_schema_validation_plan.md) |
+| **Fixtures + mapper + validation v1** | `fixtures/d_class/`（11）· `lab/cninfo_d_class_mappers.py` · `lab/validate_cninfo_d_class_schema.py` · [summary](outputs/validation/cninfo_d_class_schema_validation_summary.md) |
+| 性质 | **设计草案**；不入库、不写 migration、不写 verified |
+
+---
+
+## Phase 3 B 类 Corpus 设计（进行中）
+
+| 项 | 状态 |
+|----|------|
+| **Corpus 设计** | [cninfo_b_class_corpus_design.md](plans/cninfo_b_class_corpus_design.md) |
+| **Document Model** | [cninfo_b_class_document_model_draft.md](plans/cninfo_b_class_document_model_draft.md) |
+| **B vs D 边界** | [cninfo_b_vs_d_class_boundary.md](plans/cninfo_b_vs_d_class_boundary.md) |
+| **Source Registry 设计** | [cninfo_b_class_source_registry_design.md](plans/cninfo_b_class_source_registry_design.md) |
+| **Registry YAML draft** | [config/cninfo_b_class_source_registry_draft.yaml](config/cninfo_b_class_source_registry_draft.yaml) · [notes](plans/cninfo_b_class_source_registry_draft_notes.md) |
+| **Validation 设计** | [cninfo_b_class_validation_design.md](plans/cninfo_b_class_validation_design.md) |
+| **Category routing** | [cninfo_b_class_category_routing_rules.md](plans/cninfo_b_class_category_routing_rules.md) · [cninfo_announcement_categories.yaml](config/cninfo_announcement_categories.yaml) |
+| **Routing validation** | `lab/validate_cninfo_b_class_category_routing.py` · [routing summary](outputs/validation/cninfo_b_class_category_routing_summary.md)（16 benchmark PASS） |
+| **Document seed** | `lab/seed_cninfo_b_class_document_fixtures.py` · [fixtures](fixtures/b_class/document/periodic_report_document_fixtures.jsonl)（20 条 metadata）· [seed summary](outputs/validation/cninfo_b_class_document_seed_summary.md) |
+| **JSON Schema** | [schemas/b_class/](schemas/b_class/)（8 逻辑表 draft-07）· [notes](plans/cninfo_b_class_json_schema_draft_notes.md) |
+| **Schema validation** | `lab/validate_cninfo_b_class_document_schema.py` · [summary](outputs/validation/cninfo_b_class_document_schema_validation_summary.md)（20/20 PASS） |
+| **Raw file seed** | `lab/seed_cninfo_b_class_raw_file_fixtures.py` · [fixtures](fixtures/b_class/raw_file/periodic_report_raw_file_fixtures.jsonl)（20 条） |
+| **Raw file validation** | `lab/validate_cninfo_b_class_raw_file_schema.py` · [summary](outputs/validation/cninfo_b_class_raw_file_schema_validation_summary.md)（20/20 PASS） |
+| **Parser / chunker plan** | [parser plan](plans/cninfo_b_class_parser_chunker_plan.md) · [chunking](plans/cninfo_b_class_chunking_strategy.md) · [parse quality](plans/cninfo_b_class_parse_quality_model.md) |
+| **Non-periodic seed** | `lab/seed_cninfo_b_class_non_periodic_document_fixtures.py` · [fixtures](fixtures/b_class/document/non_periodic_document_fixtures.jsonl)（13 条）· [summary](outputs/validation/cninfo_b_class_non_periodic_document_schema_validation_summary.md) |
+| **Parse run dry-run** | `lab/seed_cninfo_b_class_parse_run_dry_run_fixtures.py` · [fixtures](fixtures/b_class/parse_run/document_parse_run_dry_run_fixtures.jsonl)（33 条）· [summary](outputs/validation/cninfo_b_class_parse_run_schema_validation_summary.md) |
+| **Registry lint** | `lab/lint_cninfo_b_class_registry.py` · [design](plans/cninfo_b_class_registry_lint_design.md) · [summary](outputs/validation/cninfo_b_class_registry_lint_summary.md)（23 rules PASS） |
+| **Retrieval validation 设计** | [corpus design](plans/cninfo_b_class_corpus_retrieval_validation_design.md) · [dry-run summary](outputs/validation/cninfo_b_class_corpus_retrieval_dry_run_summary.md) · [live summary](outputs/validation/cninfo_b_class_corpus_retrieval_live_summary.md) · [intake template](plans/cninfo_b_class_ready_case_intake_template.md) · [review checklist](plans/cninfo_b_class_ready_case_review_checklist.md) |
+| **Retrieval ready + live v1** | **5** ready（4 known-document + 1 guard）；live **5/5 pass**（`LIVE_PASS`）；`query_executed=5` |
+| **Guard audit** | `periodic_guard_002` **ready**；2025-03-27~2025-04-02；29 条摘要未误入 `periodic_report` |
+| 性质 | 仅 metadata retrieval；**PDF 未下载/解析**；**未写 verified**；18 条 placeholder 未请求 |
+
+---
+
+## Phase 4 C 类 F10 / Company Profile（设计启动）
+
+| 项 | 状态 |
+|----|------|
+| **Source discovery 设计** | [cninfo_c_class_f10_source_discovery_design.md](plans/cninfo_c_class_f10_source_discovery_design.md) |
+| **Profile data model** | [cninfo_c_class_profile_data_model_draft.md](plans/cninfo_c_class_profile_data_model_draft.md) |
+| **C / B / D 边界** | [cninfo_c_vs_b_vs_d_boundary.md](plans/cninfo_c_vs_b_vs_d_boundary.md) |
+| **Candidate YAML** | [config/cninfo_c_class_source_candidates.yaml](config/cninfo_c_class_source_candidates.yaml)（**10** 候选源，`candidate`，endpoint 未 probe） |
+| **JSON Schema** | [schemas/c_class/](schemas/c_class/)（**6** 逻辑表 draft-07）· [notes](plans/cninfo_c_class_json_schema_draft_notes.md) |
+| **Registry lint** | [design](plans/cninfo_c_class_registry_lint_design.md) · `lab/lint_cninfo_c_class_registry.py` · [summary](outputs/validation/cninfo_c_class_registry_lint_summary.md)（**12 rules PASS**） |
+| **Known-company fixtures** | [fixtures/c_class/known_company_profile_fixtures.jsonl](fixtures/c_class/known_company_profile_fixtures.jsonl)（**12** 条；600000 / 300001 / 688001） |
+| **Schema validation** | `lab/validate_cninfo_c_class_profile_schema.py` · [summary](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md)（**12/12 PASS**） |
+| **DevTools probe plan** | [probe plan](plans/cninfo_c_class_devtools_probe_plan.md) · [checklist](plans/cninfo_c_class_probe_checklist.md) · [record template](fixtures/c_class/probe/c_class_probe_record_template.yaml) |
+| **P1 probe records** | [c_class_p1_probe_records.yaml](fixtures/c_class/probe/records/c_class_p1_probe_records.yaml)（**9** 条 · basic+security 已填 · industry observed）· [P1 execution notes](plans/cninfo_c_class_p1_probe_execution_notes.md) |
+| **P1 probe review** | [probe review](plans/cninfo_c_class_p1_probe_review.md) · [YAML backfill decision](plans/cninfo_c_class_p1_yaml_backfill_decision.md) · [field mapping draft](plans/cninfo_c_class_basic_profile_field_mapping_draft.md) |
+| **既有 P0 参考** | `lab/validate_cninfo_f10_company_profile.py`（本阶段不扩跑） |
+| 性质 | **设计草案 + offline validation**；不入库、不写 migration、不写 verified、不做全市场 F10 抓取 |
+
+---
+
+## Phase 2 D 类（已收口）
+
+| 项 | 状态 |
+|----|------|
+| **已验证 source** | **10**（P1 五 + P2 五） |
+| **testing_stable_sample** | **10** |
+| **blocked** | **0** |
+| **schema_changed** | **0** |
+| **verified** | **0** |
+| **candidate 待探测** | **2**（ipo_query、szse_calendar） |
+| **Phase 2 总总结** | [cninfo_table_sources_phase2_current_final_summary.md](outputs/validation/cninfo_table_sources_phase2_current_final_summary.md) |
+| Priority-1 分源 | [cninfo_table_sources_priority1_summary.md](outputs/validation/cninfo_table_sources_priority1_summary.md) |
+| Priority-2 分源 | [cninfo_table_sources_priority2_current_summary.md](outputs/validation/cninfo_table_sources_priority2_current_summary.md) |
+| P1 稳定性 | [cninfo_table_sources_multidate_stability_summary.md](outputs/validation/cninfo_table_sources_multidate_stability_summary.md) |
+| P2 稳定性 | [cninfo_table_sources_priority2_stability_summary.md](outputs/validation/cninfo_table_sources_priority2_stability_summary.md) |
+| 配置 / 脚本 | [config/cninfo_table_sources.yaml](config/cninfo_table_sources.yaml)、`lab/validate_cninfo_table_sources*.py` |
 
 ```mermaid
 flowchart TD
-    P0[Phase0: A-F分层表与口径<br/>已完成] --> P1[Phase1: A类coverage重算<br/>下一步]
-    P1 --> P2[Phase2: D类固定表格]
-    P2 --> P3[Phase3: B类corpus与category码]
-    P3 --> P4[Phase4: C类F10 / E可达性 / F暂缓]
+    P0[Phase0: A-F分层表<br/>已完成] --> P1[Phase1: A类coverage<br/>已收口]
+    P1 --> P2[Phase2: D类10源<br/>testing_stable_sample]
+    P2 --> P3d[Phase3: D类registry/schema<br/>设计草案]
+    P3d --> P3lint[Phase3: registry lint<br/>PASS 10源]
+    P3lint --> P3val[Phase3: fixture schema validation<br/>PASS 11 fixtures]
+    P3val --> P3b[Phase3: B类corpus设计<br/>草案]
+    P3b --> P3bval[Phase3: B类validation+routing设计<br/>已完成]
+    P3bval --> P3broute[Phase3: offline routing验证<br/>PASS 16 benchmarks]
 ```
 
 ---
 
-## 现在已有（基础）
-
-| 项目 | 现状 |
-|---|---|
-| **A–F 分层权威文档** | [plans/cninfo_data_source_layered_inventory.md](plans/cninfo_data_source_layered_inventory.md)（Phase 0，已完成） |
-| 栏目细节与 P0 模板 | [plans/cninfo_data_source_value_inventory.md](plans/cninfo_data_source_value_inventory.md)（交叉引用，分类以分层表为准） |
-| 执行清单 | [plans/eraC_execution_plan.md](plans/eraC_execution_plan.md) |
-| P0 小样本（旧口径） | 最新公告、PDF 元数据、F10：`testing / partial` |
-| 类年报检索（旧口径） | `validate_cninfo_report_announcements.py` 已跑；**保留为阶段快照，不能作最终 coverage 结论** |
-| 历史底座（冻结） | 2024 全市场年报抽取（Era B） |
-
----
-
-## 当前正在做
-
-- **Phase 0 已完成**：固化 A–F 分层表与每类分母/分子/成功指标。
-- **尚未开始 Phase 1**：待新建 `validate_cninfo_report_coverage.py` 并重算 A 类 coverage。
-
----
-
-## 下一步（Phase 1）
+## 下一步
 
 | 步骤 | 内容 |
-|---|---|
-| 1 | 新建 `lab/validate_cninfo_report_coverage.py`：分母 = mapped 公司 × 期望报告期；分子 = 命中且 PDF + 报告期正确；输出 **coverage%** |
-| 2 | 本地手动跑脚本（关 VPN），生成 `outputs/validation/cninfo_report_coverage_validation{.csv,_summary.md}` |
-| 3 | 用 coverage% 判定 A 类是否真正稳定；回填 [分层表](plans/cninfo_data_source_layered_inventory.md) A 类状态 |
-| 4 | **不要同时展开** Phase 2（D 类）及以后 |
-
-> **旧快照说明：** [cninfo_report_announcement_validation_summary.md](outputs/validation/cninfo_report_announcement_validation_summary.md) 保留为历史运行记录，其中的 `368/780` **不代表** per-company coverage，**不能**作为「A 类已跑通」的最终依据。
+|------|------|
+| 1 | ~~Phase 2 十源验证 + 稳定性~~ → **已收口** |
+| 2 | ~~D 类 registry / schema / status model 设计草案~~ → **已完成** |
+| 3 | ~~Source → Schema 映射审查~~ → **已完成** |
+| 4 | ~~Registry YAML draft（10 源）~~ → **已完成** |
+| 5 | ~~JSON Schema draft（10 逻辑表）~~ → **已完成** |
+| 6 | ~~registry lint / schema validation plan 设计~~ → **已完成**（lint PASS） |
+| 7 | ~~fixtures + mapper + schema validation v1~~ → **已完成**（11 fixture PASS） |
+| 8 | ~~B 类 corpus / document model / B-D 边界设计~~ → **已完成** |
+| 9 | ~~B 类 document_corpus source registry~~ → **已完成**（4 source YAML draft） |
+| 10 | ~~B 类 validation 口径 + category routing 配置~~ → **已完成** |
+| 11 | ~~B 类 offline title routing 脚本 + benchmark~~ → **已完成**（16/16 PASS） |
+| 12 | ~~Phase 1 found → B 类 document metadata fixtures~~ → **已完成**（20 条） |
+| 13 | ~~B 类 JSON Schema + document fixture validation~~ → **已完成**（20/20 PASS） |
+| 14 | ~~B 类 raw_file fixture seed + schema validation~~ → **已完成**（20/20 PASS） |
+| 15 | ~~B 类 parser / chunker / parse quality 设计~~ → **已完成** |
+| 16 | ~~B 类 non-periodic document fixture seed~~ → **已完成**（13 条，schema 13/13 PASS） |
+| 17 | ~~B 类 parse_run dry-run fixture + schema validation~~ → **已完成**（33/33 PASS） |
+| 18 | ~~B 类 registry lint~~ → **已完成**（23 rules PASS） |
+| 19 | ~~B 类 corpus retrieval validation 小样本设计~~ → **已完成**（design_only fixtures） |
+| 20 | ~~B 类 retrieval ready-case 机制 + selector~~ → **已完成**（21 placeholder，ready=0） |
+| 21 | ~~B 类 ready-case intake 模板 + 审核 checklist~~ → **已完成** |
+| 22 | ~~B 类 corpus retrieval 脚本骨架（dry-run）~~ → **已完成**（NO_READY_CASES） |
+| 23 | ~~第一批真实 known-document 草稿填入 placeholder case（3 条）~~ → **已完成** |
+| 24 | ~~人工 checklist review → 3 条改 `case_status: ready` → selector → dry-run 复跑~~ → **已完成** |
+| 25 | ~~B 类 corpus retrieval live metadata v1（3 ready case）~~ → **已完成** |
+| 26 | ~~补第 4 条 ready（board_resolution）+ periodic_guard 草稿~~ → **已完成** |
+| 27 | ~~periodic_guard_002 补 date 窗 → ready → guard live audit~~ → **已完成**（5/5 LIVE_PASS） |
+| 28 | ~~C 类 F10 / company profile source discovery 设计草案~~ → **已完成** |
+| 29 | ~~C 类 company profile JSON Schema draft（6 schema）~~ → **已完成** |
+| 30 | ~~C 类 registry lint + known-company fixture schema validation~~ → **已完成**（12 rules PASS · 12/12 fixture PASS） |
+| 31 | ~~C 类 DevTools probe plan + checklist + record template~~ → **已完成** |
+| 32 | ~~C 类 P1 probe record 文件（3×3 矩阵）~~ → **已完成**（9 条 pending，未实际 probe） |
+| 33 | 人工 DevTools probe P1（basic → security → industry）→ 填写 probe records | **已完成**（basic 2/3 + security 3/3） |
+| 34 | ~~C 类 P1 probe review + YAML 回填决策文档~~ → **已完成**（YAML **未**回填） |
+| 35 | 审查后回填 candidate YAML `endpoint`（basic + security；最多 `testing`） |
+| 36 | 建立 C 类 known-company live validation（3 家） |
+| 37 | **暂不全量抓取、暂不入库** |
 
 ---
 
 ## 当前不做什么
 
-- **不**同时推进 Phase 2–4（D/B/C/E/F）。
-- **不**接 PostgreSQL / MinIO / MongoDB。
-- **不**继续用旧 P0/P1/P2 单一 success rate 作为主判断标准。
-- **不**改动 Era A / Era B 代码；`recommended_status` 不写 `verified`。
+- **不写 verified** / full-market stable
+- **不接** PostgreSQL / MinIO / MongoDB
+- **不**同时大规模推进 Phase 3 与 Phase 2 扩源
 
 ---
 
 ## 老师可以看哪里
 
 | 想了解 | 看这里 |
-|---|---|
-| A–F 分层与验证口径 | [plans/cninfo_data_source_layered_inventory.md](plans/cninfo_data_source_layered_inventory.md) |
-| 仓库地图、文件归属 | [PROJECT_MAP.md](PROJECT_MAP.md) |
-| Composer 执行清单 | [plans/eraC_execution_plan.md](plans/eraC_execution_plan.md) |
-| 验证产物（含阶段快照） | [outputs/validation/](outputs/validation/) |
-| B 类机制总结 | [cninfo_announcement_acquisition_mechanism_summary.md](outputs/validation/cninfo_announcement_acquisition_mechanism_summary.md) |
-
----
-
-## 术语表
-
-| 术语 | 含义 |
-|---|---|
-| A–F 分层 | CNINFO 数据源六层分类（见分层表） |
-| coverage% | A 类指标：命中期望报告数 / 期望报告总数 |
-| corpus | B 类：按 category 在时间窗内拉取的公告语料 |
-| known-event benchmark | B 类低频事件：只对已知发生过事件的公司验证 |
-| 阶段快照 | 某次脚本运行的 summary，非最终口径结论 |
-
----
-
-## 附录：2024 数据底座（Era B，冻结）
-
-<details>
-<summary>点击展开：full_market_2024 关键数字（历史记录）</summary>
-
-非金融核心指标严格审计 `usable` **9.43/11**；公司全集 6124，成功抽取 5707。当前阶段聚焦 CNINFO A–F 分层验证，不再更新这些指标。
-
-</details>
+|--------|--------|
+| **B 类 corpus** | [corpus design](plans/cninfo_b_class_corpus_design.md) · [live summary](outputs/validation/cninfo_b_class_corpus_retrieval_live_summary.md) |
+| **C 类 profile 设计** | [probe review](plans/cninfo_c_class_p1_probe_review.md) · [backfill decision](plans/cninfo_c_class_p1_yaml_backfill_decision.md) · [field mapping](plans/cninfo_c_class_basic_profile_field_mapping_draft.md) · [P1 probe records](fixtures/c_class/probe/records/c_class_p1_probe_records.yaml) · [probe plan](plans/cninfo_c_class_devtools_probe_plan.md) · [lint summary](outputs/validation/cninfo_c_class_registry_lint_summary.md) · [candidates YAML](config/cninfo_c_class_source_candidates.yaml)（**endpoint 未回填**） |
+| **D 类 registry / schema 设计** | [registry](plans/cninfo_d_class_source_registry_design.md) · [YAML](config/cninfo_d_class_source_registry_draft.yaml) · [JSON Schema](schemas/d_class/) · [schema validation summary](outputs/validation/cninfo_d_class_schema_validation_summary.md) |
+| **Phase 2 总总结** | [cninfo_table_sources_phase2_current_final_summary.md](outputs/validation/cninfo_table_sources_phase2_current_final_summary.md) |
+| D 类 priority-1 分源 | [cninfo_table_sources_priority1_summary.md](outputs/validation/cninfo_table_sources_priority1_summary.md) |
+| D 类 priority-2 分源 | [cninfo_table_sources_priority2_current_summary.md](outputs/validation/cninfo_table_sources_priority2_current_summary.md) |
+| 多日期 / 多参数稳定性 | [multidate](outputs/validation/cninfo_table_sources_multidate_stability_summary.md) / [priority2_stability](outputs/validation/cninfo_table_sources_priority2_stability_summary.md) |
+| Phase 1 最终总结 | [cninfo_report_phase1_final_summary.md](outputs/validation/cninfo_report_phase1_final_summary.md) |
+| A–F 分层 | [plans/cninfo_data_source_layered_inventory.md](plans/cninfo_data_source_layered_inventory.md) |
+| 仓库地图 | [PROJECT_MAP.md](PROJECT_MAP.md) |

@@ -1,6 +1,6 @@
 # 仓库地图（PROJECT_MAP）
 
-_最后更新：2026-07-02_
+_最后更新：2026-07-05_
 
 > **这份文件是"仓库导航图"。** 目的很直接：让任何人（包括你自己、以及便宜/换代的 AI 模型）打开仓库后，**不用逐个文件猜用途**，就能知道「现在聚焦什么、哪个文件属于哪条线、哪个能删/能停/要留」。
 >
@@ -10,7 +10,7 @@ _最后更新：2026-07-02_
 
 ## 0. 一句话现状
 
-仓库里叠了**三代方向**的代码与文档。**当前唯一聚焦的是第三代：系统盘点巨潮（CNINFO）能稳定拿到哪些数据，先把"类年报（定期报告）"这条最成熟的路径做扎实，再研究其他数据。** 前两代（通用多源采集框架、2024 全市场年报数据底座）**已冻结**——保留、可参考、但当前不再推进，也**不要删**（磁盘不紧张，删了反而丢背景）。
+仓库里叠了**三代方向**的代码与文档。**当前聚焦：Era C Phase 3** — D 类设计已收口；**B 类 corpus 设计草案**进行中。前两代**已冻结**。
 
 ---
 
@@ -20,7 +20,7 @@ _最后更新：2026-07-02_
 |---|---|---|---|---|
 | **Era A** | 通用多源采集框架（v0.1 设想） | **冻结·基本未使用** | 想从新闻/官网/专利/招投标/政策等"所有来源"采集，只搭了框架没真正跑起来 | `collectors/`、`main.py`、`config/sources.yaml`、`config/companies.yaml` |
 | **Era B** | 2024 全市场年报数据底座 | **冻结·已完成** | 从 CNINFO 年报 PDF 批量抽 11 个字段 + 质量审计，入 SQLite（6124 家）。已交付，不再改 | `lab/` 里的年报/全市场/审计脚本、`outputs/generalization/`、`outputs/db/` |
-| **Era C** | CNINFO 数据源能力研究 | **活跃·当前聚焦** | A–F 分层验证：先穷尽分类，再按层用统一口径验证（A 类 coverage → D 类表格 → B/C/E/F） | `lab/validate_cninfo_*.py`、`outputs/validation/`、`plans/cninfo_data_source_layered_inventory.md` |
+| **Era C** | CNINFO 数据源能力研究 | **活跃·Phase 3 B 类** | D 类十源 + schema validation；B 类 corpus 设计 | `cninfo_b_class_corpus_design.md` |
 
 > 为什么感觉"偏"了：顶层文档（ROADMAP/CURRENT_STATUS）一度把重心写成"动态平台架构 + PostgreSQL/MinIO/MongoDB 三层存储设计"。那是**在数据源还没验证透之前就先设计数据库**，属于超前。当前把重心**拉回 Era C**：先回答"巨潮到底能稳定拿到什么"。存储架构设计（`plans/storage_schema_design_plan.md`、`plans/dynamic_data_platform_plan.md`）**暂缓**，留作未来参考。
 
@@ -33,27 +33,100 @@ _最后更新：2026-07-02_
 ### 2.1 活跃脚本（`lab/`）
 | 文件 | 用途 | 是否独立可跑 |
 |---|---|---|
-| `validate_cninfo_report_announcements.py` | **当前主力**：验证年报/半年报/季报（"类年报"定期报告）能否稳定检索到，解析 `report_period`。支持 `--summary-only` 只重生成摘要 | 是（独立，不依赖 Era B） |
-| `validate_cninfo_announcement_categories.py` | 验证 14 类公告的可检索性 | 是 |
+| `validate_cninfo_report_coverage.py` | **Phase 1 主力（已收口）**：A 类 per-company coverage% | 是 |
+| `validate_cninfo_table_sources.py` | **Phase 2 主力**：D 类固定表格入口探测（config 驱动） | 是 |
+| `validate_cninfo_table_sources_multidate.py` | Phase 2：priority-1 多日期稳定性复测 | 是 |
+| `validate_cninfo_table_sources_priority2_stability.py` | Phase 2：priority-2 多参数稳定性复测 | 是 |
+| `lint_cninfo_d_class_registry.py` | **Phase 3**：registry YAML 离线 lint（无网络、无 DB） | 是 |
+| `cninfo_d_class_mappers.py` | **Phase 3**：raw → 逻辑 record mapper 草案 | 是 |
+| `validate_cninfo_d_class_schema.py` | **Phase 3**：fixture JSON Schema 离线校验 | 是 |
+| `validate_cninfo_report_announcements.py` | 旧 A 类策略探测（deprecated 参考） | 是 |
+| `validate_cninfo_b_class_category_routing.py` | **Phase 3**：B 类离线 title routing 验证（无网络） | 是 |
+| `seed_cninfo_b_class_document_fixtures.py` | **Phase 3**：Phase 1 found → B 类 document metadata fixture（无网络、无 PDF） | 是 |
+| `validate_cninfo_b_class_document_schema.py` | **Phase 3**：B 类 document JSONL fixture 离线 schema 校验 | 是 |
+| `seed_cninfo_b_class_raw_file_fixtures.py` | **Phase 3**：document → raw_file metadata fixture（无网络、无 PDF） | 是 |
+| `validate_cninfo_b_class_raw_file_schema.py` | **Phase 3**：B 类 raw_file JSONL fixture 离线 schema 校验 | 是 |
+| `seed_cninfo_b_class_non_periodic_document_fixtures.py` | **Phase 3**：benchmark → non-periodic document metadata（无网络） | 是 |
+| `validate_cninfo_b_class_non_periodic_document_schema.py` | **Phase 3**：non-periodic document fixture schema 校验 + summary | 是 |
+| `seed_cninfo_b_class_parse_run_dry_run_fixtures.py` | **Phase 3**：document → parse_run dry-run fixture（无 PDF 解析） | 是 |
+| `validate_cninfo_b_class_parse_run_schema.py` | **Phase 3**：parse_run dry-run schema 校验 + summary | 是 |
+| `lint_cninfo_b_class_registry.py` | **Phase 3**：B 类 registry/category/schema/fixture 离线 lint | 是 |
+| `select_cninfo_b_class_retrieval_ready_cases.py` | **Phase 3**：retrieval ready-case 筛选（无 CNINFO 请求） | 是 |
+| `validate_cninfo_b_class_corpus_retrieval.py` | **Phase 3**：dry-run + `--live-metadata`（known-document + `periodic_guard_*` guard audit） | 是 |
+| `validate_cninfo_announcement_categories.py` | 旧版 14 类公告验证（**待迁移**至新 YAML） | 是 |
 | `validate_cninfo_latest_announcements.py` | 验证"最新公告列表"栏目 | 是 |
 | `validate_cninfo_pdf_metadata.py` | 验证公告 PDF 元数据（URL/hash 规则，不下载正文） | 是 |
 | `validate_cninfo_f10_company_profile.py` | 验证个股 F10 公司资料字段 | 是 |
+| `lint_cninfo_c_class_registry.py` | **Phase 4**：C 类 candidate registry 离线 lint（无网络、无 DB） | 是 |
+| `validate_cninfo_c_class_profile_schema.py` | **Phase 4**：C 类 known-company profile fixture 离线 schema 校验 | 是 |
 | `validate_cninfo_f10_profile_page_reachability.py` | F10 页面可达性 | 是 |
 | `validate_cninfo_f10_static_html_fields.py` | F10 静态 HTML 字段 | 是 |
 | `validate_cninfo_f10_playwright_profile_fields.py` | F10 Playwright 渲染字段 | 是 |
 | `test_cninfo_announcement_retrieval_rules.py` | 检索规则回放测试 | 是 |
 | `build_cninfo_p0_sample_companies.py` | 生成 40 家 P0 样本公司清单 | 是 |
+| `build_cninfo_report_p1_identity_mapping.py` | P1 identity mapping（离线） | 是 |
 
 ### 2.2 活跃配置（`config/`）
-- `cninfo_announcement_categories.yaml` — 14 类公告定义
+- `cninfo_table_sources.yaml` — **Phase 2** 验证脚本驱动配置（12 source；10 stable + 2 candidate）
+- `schemas/d_class/` — **Phase 3** 10 个逻辑表 JSON Schema draft（draft-07）
+- `schemas/c_class/` — **Phase 4** 6 个 C 类 company profile JSON Schema draft（draft-07）
+- `schemas/b_class/` — **Phase 3** 8 个 B 类 document corpus JSON Schema draft（draft-07）
+- `fixtures/d_class/` — **Phase 3** 11 个 raw record fixture（Phase 2 文档摘录）
+- `fixtures/b_class/known_documents/` — B 类 known-document title routing benchmark（16 条）
+- `fixtures/b_class/document/` — periodic（20 条）+ non-periodic（13 条）document metadata JSONL
+- `fixtures/b_class/raw_file/` — periodic raw_file（20 条）；non-periodic 空文件（无 pdf_url）
+- `fixtures/b_class/parse_run/` — parse_run dry-run（33 条；`not_started` / `skipped`）
+- `fixtures/b_class/retrieval_validation/` — corpus retrieval benchmark（**5 ready** + 16 placeholder）+ example-only 参考
+- `fixtures/c_class/` — known-company offline fixtures（**12** 条 JSONL）+ probe 模板 + **P1 probe records**（`probe/records/c_class_p1_probe_records.yaml`，**9** 条 `manual_probe_pending`）
+- `config/cninfo_c_class_source_candidates.yaml` — **Phase 4** C 类 company_profile 候选源草案（10 source，`candidate`，endpoint 未 probe）
+- `config/cninfo_b_class_source_registry_draft.yaml` — Phase 3 B 类 document_corpus registry 草案（4 source）
+- `config/cninfo_d_class_source_registry_draft.yaml` — Phase 3 D 类 registry YAML 草案
+- `cninfo_announcement_categories.yaml` — **Phase 3 B 类** document corpus category routing 草案（4 路由组 + legacy 映射）
 - `cninfo_announcement_retrieval_strategies.yaml` — 检索策略（must/optional/exclude 关键词）
 
 ### 2.3 活跃文档
 - `plans/cninfo_data_source_layered_inventory.md` — **Era C 权威文档**：A–F 六层分类 + 每类分母/分子/成功指标 + Phase 推进顺序
 - `plans/cninfo_data_source_value_inventory.md` — 栏目细节、P0 验证模板、事件/证据类型（与分层表交叉引用，分类以分层表为准）
+- `plans/cninfo_d_class_source_registry_design.md` — **Phase 3** D 类 source registry 设计草案
+- `plans/cninfo_d_class_schema_draft.md` — D 类逻辑 schema 草案（10 逻辑表含 d_event_party_detail）
+- `plans/cninfo_d_class_ingestion_status_model.md` — source/fetch/field/stability 状态模型
+- `plans/cninfo_d_class_source_to_schema_mapping_review.md` — 逐 source 映射审查与缺口清单
+- `plans/cninfo_d_class_source_registry_draft_notes.md` — registry YAML draft 说明
+- `plans/cninfo_d_class_json_schema_draft_notes.md` — JSON Schema draft 说明
+- `plans/cninfo_c_class_json_schema_draft_notes.md` — C 类 JSON Schema 草案说明
+- `plans/cninfo_c_class_registry_lint_design.md` — C 类 registry lint 规则（R001–R012）
+- `plans/cninfo_c_class_devtools_probe_plan.md` — **Phase 4** C 类 F10 DevTools endpoint discovery 计划（P1–P3 优先级）
+- `plans/cninfo_c_class_probe_checklist.md` — C 类人工 probe 前 / DevTools / 回填前检查清单
+- `plans/cninfo_c_class_p1_probe_execution_notes.md` — **Phase 4** P1 三源 × 三公司 DevTools probe 执行说明
+- `plans/cninfo_c_class_p1_probe_review.md` — P1 probe 结果审查（basic / security / industry / annex）
+- `plans/cninfo_c_class_p1_yaml_backfill_decision.md` — P1 candidate YAML 回填 / 暂缓决策（**YAML 未改**）
+- `plans/cninfo_c_class_basic_profile_field_mapping_draft.md` — getCompanyIntroduction → basic profile 字段映射草案
+- `plans/cninfo_c_class_f10_source_discovery_design.md` — **Phase 4** C 类 F10 / company profile source discovery 设计草案
+- `plans/cninfo_c_class_profile_data_model_draft.md` — C 类 profile snapshot 逻辑数据模型
+- `plans/cninfo_c_vs_b_vs_d_boundary.md` — C 类与 B / D 类边界
+- `plans/cninfo_b_class_corpus_design.md` — **Phase 3** B 类 document corpus 设计草案
+- `plans/cninfo_b_class_document_model_draft.md` — B 类 document / chunk / citation 逻辑模型
+- `plans/cninfo_b_class_source_registry_design.md` — B 类 document_corpus source registry 设计
+- `plans/cninfo_b_class_validation_design.md` — B 类 corpus validation 口径（expected-period / known-document / category-sample）
+- `plans/cninfo_b_class_category_routing_rules.md` — B 类 title → source 路由规则
+- `plans/cninfo_b_class_json_schema_draft_notes.md` — B 类 JSON Schema 草案说明
+- `plans/cninfo_b_class_parser_chunker_plan.md` — **Phase 3** B 类 parse → section → chunk → citation 流水线设计
+- `plans/cninfo_b_class_chunking_strategy.md` — B 类 RAG chunk 切分策略草案
+- `plans/cninfo_b_class_parse_quality_model.md` — B 类解析质量维度与 flags 模型
+- `plans/cninfo_b_class_registry_lint_design.md` — B 类 registry lint 规则（R001–R023）
+- `plans/cninfo_b_class_corpus_retrieval_validation_design.md` — **Phase 3** B 类 corpus retrieval 验证设计（known-document + category-sample）
+- `plans/cninfo_b_class_retrieval_validation_next_steps.md` — live validation 前置条件与原则
+- `plans/cninfo_b_class_retrieval_ready_case_rules.md` — ready-case 字段规则与 case_status 定义
+- `plans/cninfo_b_class_ready_case_intake_template.md` — 人工补 ready case 填写模板
+- `plans/cninfo_b_class_ready_case_review_checklist.md` — ready case 审核清单
+- `plans/cninfo_b_class_corpus_retrieval_script_skeleton_notes.md` — corpus retrieval 脚本骨架说明（dry-run only）
+- `plans/cninfo_b_class_source_registry_draft_notes.md` — B 类 registry YAML 说明
+- `plans/cninfo_b_vs_d_class_boundary.md` — B 类 corpus 与 D 类 fixed-table 边界
+- `plans/cninfo_d_class_registry_lint_design.md` — registry YAML 离线 lint 规则（R001–R023）
+- `plans/cninfo_d_class_schema_validation_plan.md` — fixture / mapper / schema 校验路线图
 - `plans/eraC_execution_plan.md` — Composer / 便宜模型执行清单
 - `plans/cninfo_p0_sample_company_selection.md` — P0 样本公司选取说明
-- `outputs/validation/` — 所有 CNINFO 验证的产物（CSV + summary.md），见第 4 节
+- `outputs/validation/` — …；**Phase 2 总总结**见 [cninfo_table_sources_phase2_current_final_summary.md](outputs/validation/cninfo_table_sources_phase2_current_final_summary.md)；P1/P2 分源见 priority1/priority2 summary
 
 ### 2.4 Era C 验证框架（A–F 分层，取代旧 P0/P1/P2 success rate）
 
@@ -148,7 +221,9 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 
 ## 7. 一步步该怎么推进 Era C（建议路线）
 
-1. **以 A–F 分层表为权威**：见 [plans/cninfo_data_source_layered_inventory.md](plans/cninfo_data_source_layered_inventory.md)；验证结论回填各层状态。
-2. **Phase 1（下一步）**：重做 A 类 per-company coverage（`validate_cninfo_report_coverage.py`）；旧 report announcement summary 仅作阶段快照。
-3. **Phase 2 起**：D 类表格 → B 类 corpus → C 类 F10 → E/F 暂缓；**不要同时展开所有 Phase**。
-4. **每完成一个 Phase**：更新分层表状态 + `outputs/validation/` 留 summary；不做数据库接入。
+1. **Phase 1 已收口**：A 类见 [cninfo_report_phase1_final_summary.md](outputs/validation/cninfo_report_phase1_final_summary.md)（**testing/usable candidate**，不写 verified）。
+2. **Phase 2 已收口**；**Phase 3 D 类设计**见 [registry YAML](config/cninfo_d_class_source_registry_draft.yaml) / [schema validation summary](outputs/validation/cninfo_d_class_schema_validation_summary.md)。
+3. **Phase 3 B 类**见 [validation design](plans/cninfo_b_class_validation_design.md) / [category routing](plans/cninfo_b_class_category_routing_rules.md) / [categories YAML](config/cninfo_announcement_categories.yaml) / [document seed summary](outputs/validation/cninfo_b_class_document_seed_summary.md) / [B schema validation](outputs/validation/cninfo_b_class_document_schema_validation_summary.md)。
+4. **Phase 4 C 类**见 [registry lint](outputs/validation/cninfo_c_class_registry_lint_summary.md) / [fixture validation](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md) / [probe plan](plans/cninfo_c_class_devtools_probe_plan.md) / [probe checklist](plans/cninfo_c_class_probe_checklist.md) / [candidates YAML](config/cninfo_c_class_source_candidates.yaml)。
+5. **下一步**：审查 [backfill decision](plans/cninfo_c_class_p1_yaml_backfill_decision.md) → 人工回填 basic/security endpoint → live validation 3 家；E/F 暂缓。
+6. **每完成一个 Phase**：更新分层表状态 + `outputs/validation/` 留 summary；不做数据库接入。
