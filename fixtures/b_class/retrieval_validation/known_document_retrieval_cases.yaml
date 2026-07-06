@@ -1,0 +1,197 @@
+# CNINFO B 类 Known-Document Retrieval Cases — Design Draft
+# status: design_only — 不请求 CNINFO；不下载 PDF；不写 verified。
+# 权威设计: plans/cninfo_b_class_corpus_retrieval_validation_design.md
+#
+# 说明:
+# - case_status: placeholder | ready | retired（live validation 仅跑 ready）
+# - company_code / date_* 为 null 表示 placeholder，须在 live validation 前替换为真实 known document。
+# - 不捏造具体真实公司与真实披露日期。
+
+version: "draft-0.1"
+status: design_only
+verified: false
+
+cases:
+  # --- inquiry_reply × 3 ---
+  - case_id: inquiry_known_001
+    case_status: placeholder
+    source_id: cninfo_inquiry_reply_pdf
+    company_code: null
+    company_name: null
+    title_pattern: "问询函回复"
+    expected_document_type: inquiry_reply
+    date_start: null
+    date_end: null
+    expected_route_to: cninfo_inquiry_reply_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      Placeholder case; replace with real CNINFO known document (company_code,
+      narrow date window, exact title substring) before live validation.
+
+  - case_id: inquiry_known_002
+    case_status: placeholder
+    source_id: cninfo_inquiry_reply_pdf
+    company_code: null
+    company_name: null
+    title_pattern: "回复的公告"
+    expected_document_type: inquiry_reply
+    date_start: null
+    date_end: null
+    expected_route_to: cninfo_inquiry_reply_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      Placeholder; title pattern from routing benchmark inquiry_002. Must not
+      route to annual_report. Replace with real sample before live run.
+
+  - case_id: inquiry_known_003
+    case_status: ready
+    source_id: cninfo_inquiry_reply_pdf
+    company_code: "300165"
+    company_name: "天瑞仪器"
+    title_pattern: "关于深圳证券交易所年报问询函回复的公告"
+    expected_document_type: inquiry_reply
+    date_start: "2024-05-24"
+    date_end: "2024-05-30"
+    expected_route_to: cninfo_inquiry_reply_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      Real CNINFO/static.cninfo sample candidate: 天瑞仪器 300165, annual-report
+      inquiry reply announcement. Keep placeholder until manual checklist review;
+      do not mark ready; do not write verified.
+
+  # --- regulatory_inquiry × 3 ---
+  - case_id: regulatory_known_001
+    case_status: placeholder
+    source_id: cninfo_inquiry_reply_pdf
+    company_code: null
+    company_name: null
+    title_pattern: "问询函"
+    expected_document_type: regulatory_inquiry
+    date_start: null
+    date_end: null
+    expected_route_to: cninfo_inquiry_reply_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      Placeholder regulatory inquiry (交易所/监管问询函原文). Replace with real
+      company + date window; must NOT classify as periodic report.
+
+  - case_id: regulatory_known_002
+    case_status: ready
+    source_id: cninfo_inquiry_reply_pdf
+    company_code: "002499"
+    company_name: "*ST科林"
+    title_pattern: "关于收到深圳证券交易所关注函的公告"
+    expected_document_type: regulatory_inquiry
+    date_start: "2023-01-30"
+    date_end: "2023-02-03"
+    expected_route_to: cninfo_inquiry_reply_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      Real CNINFO/static.cninfo sample candidate: *ST科林 002499, received SZSE
+      concern letter announcement. Keep placeholder until manual checklist review;
+      do not mark ready; do not write verified.
+
+  - case_id: regulatory_known_003
+    case_status: placeholder
+    source_id: cninfo_inquiry_reply_pdf
+    company_code: null
+    company_name: null
+    title_pattern: "监管问询函"
+    expected_document_type: regulatory_inquiry
+    date_start: null
+    date_end: null
+    expected_route_to: cninfo_inquiry_reply_pdf
+    expected_pdf_url_available: true
+    notes: Placeholder; replace before live validation. No fabricated company or date.
+
+  # --- meeting_notice × 2 ---
+  - case_id: meeting_known_001
+    case_status: ready
+    source_id: cninfo_meeting_notice_pdf
+    company_code: "002480"
+    company_name: "新筑股份"
+    title_pattern: "关于举办2024年度业绩说明会的公告"
+    expected_document_type: meeting_notice
+    date_start: "2025-05-08"
+    date_end: "2025-05-10"
+    expected_route_to: cninfo_meeting_notice_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      Real CNINFO/static.cninfo sample candidate: 新筑股份 002480, 2024 annual
+      performance briefing notice. Keep placeholder until manual checklist review;
+      do not mark ready; do not write verified.
+
+  - case_id: meeting_known_002
+    case_status: placeholder
+    source_id: cninfo_meeting_notice_pdf
+    company_code: null
+    company_name: null
+    title_pattern: "关于召开投资者说明会的公告"
+    expected_document_type: meeting_notice
+    date_start: null
+    date_end: null
+    expected_route_to: cninfo_meeting_notice_pdf
+    expected_pdf_url_available: true
+    notes: Placeholder from benchmark meeting_003. Real company/date TBD.
+
+  # --- investor_relations_activity × 2 ---
+  - case_id: ir_activity_known_001
+    case_status: placeholder
+    source_id: cninfo_meeting_notice_pdf
+    company_code: null
+    company_name: null
+    title_pattern: "投资者关系活动记录表"
+    expected_document_type: investor_relations_activity
+    date_start: null
+    date_end: null
+    expected_route_to: cninfo_meeting_notice_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      Placeholder; benchmark meeting_002. Replace with real IR activity record
+      before live validation.
+
+  - case_id: ir_activity_known_002
+    case_status: placeholder
+    source_id: cninfo_meeting_notice_pdf
+    company_code: null
+    company_name: null
+    title_pattern: "投资者交流活动"
+    expected_document_type: investor_relations_activity
+    date_start: null
+    date_end: null
+    expected_route_to: cninfo_meeting_notice_pdf
+    expected_pdf_url_available: true
+    notes: Placeholder title pattern; not a fabricated real event. Live sample TBD.
+
+  # --- board_resolution × 1 ---
+  - case_id: board_resolution_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000581"
+    company_name: "威孚高科"
+    title_pattern: "董事会决议公告"
+    expected_document_type: board_resolution
+    date_start: "2025-04-17"
+    date_end: "2025-04-19"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      Real CNINFO sample: 威孚高科 000581, 2025-04-17 董事会决议公告 (CNINFO title;
+      longer session-specific title not returned by search). Checklist reviewed;
+      routes to cninfo_general_announcement_pdf. Do not write verified.
+
+  # --- shareholder_meeting_material × 1 ---
+  - case_id: shareholder_meeting_known_001
+    case_status: placeholder
+    source_id: cninfo_general_announcement_pdf
+    company_code: null
+    company_name: null
+    title_pattern: "股东大会通知"
+    expected_document_type: shareholder_meeting_material
+    date_start: null
+    date_end: null
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      Placeholder; routing may use general_announcement not meeting_notice for
+      股东大会通知 without 说明会. Confirm route on live sample. Replace before run.

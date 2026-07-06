@@ -1,0 +1,58 @@
+# CNINFO B 类 Retrieval Ready Case Summary
+
+_生成时间：2026-07-05（ready-case selector；不请求 CNINFO）_
+
+## 1. 目的
+
+筛选 `case_status: ready` 且字段完备的 retrieval validation case。
+**不是** live retrieval validation；不下载 PDF；不写 verified。
+
+## 2. 输入
+
+| 来源 | 路径 |
+|------|------|
+| Known-document cases | `fixtures/b_class/retrieval_validation/known_document_retrieval_cases.yaml` |
+| Category-sample cases | `fixtures/b_class/retrieval_validation/category_sample_cases.yaml` |
+| 规则 | `plans/cninfo_b_class_retrieval_ready_case_rules.md` |
+| 脚本 | `lab/select_cninfo_b_class_retrieval_ready_cases.py` |
+
+## 3. 总体结果
+
+| 指标 | 数值 |
+|------|------|
+| total_cases | **21** |
+| placeholder | **16** |
+| ready | **5** |
+| retired | **0** |
+| invalid_ready | **0** |
+| result | **PASS** |
+
+## 4. Ready case 明细
+
+- `inquiry_known_003` (known_document) → `cninfo_inquiry_reply_pdf`
+- `regulatory_known_002` (known_document) → `cninfo_inquiry_reply_pdf`
+- `meeting_known_001` (known_document) → `cninfo_meeting_notice_pdf`
+- `board_resolution_known_001` (known_document) → `cninfo_general_announcement_pdf`
+- `periodic_guard_002` (category_sample) → `cninfo_general_announcement_pdf`
+
+## 5. Invalid ready 明细
+
+_无 invalid_ready case。_
+
+## 6. 质量边界
+
+- Ready-case selector **不是** retrieval validation。
+- **不代表** CNINFO coverage%。
+- **不下载** PDF；**不写 verified**。
+- 未来 live 脚本 **只** 应对 `ready_status=ready` 的 case 发起请求。
+
+## 7. 下一步
+
+1. 人工补 3–5 条真实 known-document case（company_code + date window + title）。
+2. 将审核通过的 case 的 `case_status` 改为 `ready`。
+3. 再跑 selector 确认 `invalid_ready=0`。
+4. 实现 `validate_cninfo_b_class_corpus_retrieval.py` 仅消费 ready cases。
+
+## 附录
+
+详见 [cninfo_b_class_retrieval_ready_case_report.csv](cninfo_b_class_retrieval_ready_case_report.csv)。

@@ -1,0 +1,84 @@
+# CNINFO B 类 Ready Case Examples — DO NOT RUN
+# status: example_only
+# 本文件仅供结构参考；不参与 selector / live validation。
+# 所有 case_status 为 example_only 或 placeholder；禁止改为 ready。
+# 不请求 CNINFO；不下载 PDF；不写 verified。
+#
+# 填写真实 case 请使用：
+# - plans/cninfo_b_class_ready_case_intake_template.md
+# - plans/cninfo_b_class_ready_case_review_checklist.md
+# 并写入 known_document_retrieval_cases.yaml / category_sample_cases.yaml
+
+version: "draft-0.1"
+status: example_only
+verified: false
+
+examples:
+  # --- known-document 示例结构 × 2 ---
+  - case_id: EXAMPLE_known_inquiry_001
+    case_status: example_only
+    source_id: cninfo_inquiry_reply_pdf
+    company_code: "COMPANY_CODE_PLACEHOLDER"
+    company_name: "COMPANY_NAME_PLACEHOLDER"
+    title_pattern: "TITLE_KEYWORD_PLACEHOLDER_问询函回复"
+    expected_document_type: inquiry_reply
+    date_start: "YYYY-MM-DD"
+    date_end: "YYYY-MM-DD"
+    expected_route_to: cninfo_inquiry_reply_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      EXAMPLE ONLY; DO NOT RUN. Replace placeholders with real company_code,
+      company_name, title substring, and narrow date window after manual CNINFO
+      review. Then move to known_document_retrieval_cases.yaml and set
+      case_status: ready only after checklist approval.
+
+  - case_id: EXAMPLE_known_meeting_001
+    case_status: example_only
+    source_id: cninfo_meeting_notice_pdf
+    company_code: "COMPANY_CODE_PLACEHOLDER"
+    company_name: "COMPANY_NAME_PLACEHOLDER"
+    title_pattern: "TITLE_KEYWORD_PLACEHOLDER_业绩说明会"
+    expected_document_type: meeting_notice
+    date_start: "YYYY-MM-DD"
+    date_end: "YYYY-MM-DD"
+    expected_route_to: cninfo_meeting_notice_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      EXAMPLE ONLY; DO NOT RUN. Not a real case. Phase 1 periodic exclusions
+      are POSITIVE for 说明会 here. Do not copy into production YAML as-is.
+
+  # --- category-sample 示例结构 × 2 ---
+  - case_id: EXAMPLE_category_general_001
+    case_status: example_only
+    source_id: cninfo_general_announcement_pdf
+    source_category: announcement_pdf
+    title_pattern: "CATEGORY_KEYWORD_PLACEHOLDER_董事会决议"
+    date_start: "YYYY-MM-DD"
+    date_end: "YYYY-MM-DD"
+    expected_min_results: 1
+    expected_document_types:
+      - board_resolution
+      - announcement
+    false_positive_guard_patterns:
+      - 年度报告
+      - 半年度报告
+    notes: >-
+      EXAMPLE ONLY; DO NOT RUN. Category-sample structure reference only.
+      Use 1-7 day window with defined sample company pool in real case.
+
+  - case_id: EXAMPLE_category_guard_001
+    case_status: example_only
+    source_id: cninfo_general_announcement_pdf
+    source_category: announcement_pdf
+    title_pattern: "CATEGORY_KEYWORD_PLACEHOLDER_年度报告摘要"
+    date_start: "YYYY-MM-DD"
+    date_end: "YYYY-MM-DD"
+    expected_min_results: 0
+    expected_document_types:
+      - announcement
+    false_positive_guard_patterns:
+      - 年度报告全文
+      - 半年度报告全文
+    notes: >-
+      EXAMPLE ONLY; DO NOT RUN. False-positive guard case structure.
+      Must NOT route to cninfo_periodic_report_pdf. expected_min_results may be 0.

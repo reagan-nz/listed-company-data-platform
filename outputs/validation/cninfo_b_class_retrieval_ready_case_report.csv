@@ -1,0 +1,22 @@
+case_id,case_type,case_status,source_id,ready_status,missing_fields,notes
+inquiry_known_001,known_document,placeholder,cninfo_inquiry_reply_pdf,placeholder,,"Placeholder case; replace with real CNINFO known document (company_code, narrow date window, exact title substring) before live validation."
+inquiry_known_002,known_document,placeholder,cninfo_inquiry_reply_pdf,placeholder,,Placeholder; title pattern from routing benchmark inquiry_002. Must not route to annual_report. Replace with real sample before live run.
+inquiry_known_003,known_document,ready,cninfo_inquiry_reply_pdf,ready,,"Real CNINFO/static.cninfo sample candidate: 天瑞仪器 300165, annual-report inquiry reply announcement. Keep placeholder until manual checklist review; do not mark ready; do not write verified."
+regulatory_known_001,known_document,placeholder,cninfo_inquiry_reply_pdf,placeholder,,Placeholder regulatory inquiry (交易所/监管问询函原文). Replace with real company + date window; must NOT classify as periodic report.
+regulatory_known_002,known_document,ready,cninfo_inquiry_reply_pdf,ready,,"Real CNINFO/static.cninfo sample candidate: *ST科林 002499, received SZSE concern letter announcement. Keep placeholder until manual checklist review; do not mark ready; do not write verified."
+regulatory_known_003,known_document,placeholder,cninfo_inquiry_reply_pdf,placeholder,,Placeholder; replace before live validation. No fabricated company or date.
+meeting_known_001,known_document,ready,cninfo_meeting_notice_pdf,ready,,"Real CNINFO/static.cninfo sample candidate: 新筑股份 002480, 2024 annual performance briefing notice. Keep placeholder until manual checklist review; do not mark ready; do not write verified."
+meeting_known_002,known_document,placeholder,cninfo_meeting_notice_pdf,placeholder,,Placeholder from benchmark meeting_003. Real company/date TBD.
+ir_activity_known_001,known_document,placeholder,cninfo_meeting_notice_pdf,placeholder,,Placeholder; benchmark meeting_002. Replace with real IR activity record before live validation.
+ir_activity_known_002,known_document,placeholder,cninfo_meeting_notice_pdf,placeholder,,Placeholder title pattern; not a fabricated real event. Live sample TBD.
+board_resolution_known_001,known_document,ready,cninfo_general_announcement_pdf,ready,,"Real CNINFO sample: 威孚高科 000581, 2025-04-17 董事会决议公告 (CNINFO title; longer session-specific title not returned by search). Checklist reviewed; routes to cninfo_general_announcement_pdf. Do not write ve"
+shareholder_meeting_known_001,known_document,placeholder,cninfo_general_announcement_pdf,placeholder,,Placeholder; routing may use general_announcement not meeting_notice for 股东大会通知 without 说明会. Confirm route on live sample. Replace before run.
+general_sample_001,category_sample,placeholder,cninfo_general_announcement_pdf,placeholder,,Design-only category sample; requires real date window and sample companies before live validation.
+general_sample_002,category_sample,placeholder,cninfo_general_announcement_pdf,placeholder,,Placeholder dividend-related announcement sample. Real date window TBD.
+general_sample_003,category_sample,placeholder,cninfo_general_announcement_pdf,placeholder,,Design-only; share repurchase announcement corpus probe. No live dates yet.
+inquiry_sample_001,category_sample,placeholder,cninfo_inquiry_reply_pdf,placeholder,,Category-sample for inquiry corpus non-empty rate. Replace date window before live validation; do not use random success rate as pass criteria.
+inquiry_sample_002,category_sample,placeholder,cninfo_inquiry_reply_pdf,placeholder,,Design-only reply-announcement sample. Real window TBD.
+meeting_sample_001,category_sample,placeholder,cninfo_meeting_notice_pdf,placeholder,,IR/meeting corpus sample. Phase 1 periodic exclusions are POSITIVE here. Requires real date window before live run.
+meeting_sample_002,category_sample,placeholder,cninfo_meeting_notice_pdf,placeholder,,Design-only; may route to general_announcement per routing rules. Audit classification on live sample.
+periodic_guard_001,category_sample,placeholder,cninfo_general_announcement_pdf,placeholder,,Guard case: delayed disclosure titles must NOT route to cninfo_periodic_report_pdf. expected_min_results=0 allows empty if no matches in window; classification audit primary.
+periodic_guard_002,category_sample,ready,cninfo_general_announcement_pdf,ready,,False-positive guard: 年度报告摘要 must NOT route to cninfo_periodic_report_pdf. Date window from Phase 1 announcement validation (late-Mar 2025 summary season). Checklist reviewed; do not write verified.

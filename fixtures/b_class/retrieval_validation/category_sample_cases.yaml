@@ -1,0 +1,168 @@
+# CNINFO B 类 Category-Sample Retrieval Cases — Design Draft
+# status: design_only — 不请求 CNINFO；不下载 PDF；不写 verified。
+# case_status: placeholder | ready | retired（live validation 仅跑 ready）
+# 权威设计: plans/cninfo_b_class_corpus_retrieval_validation_design.md
+
+version: "draft-0.1"
+status: design_only
+verified: false
+
+cases:
+  # --- general announcement × 3 ---
+  - case_id: general_sample_001
+    case_status: placeholder
+    source_id: cninfo_general_announcement_pdf
+    source_category: announcement_pdf
+    title_pattern: "董事会决议公告"
+    date_start: null
+    date_end: null
+    expected_min_results: 1
+    expected_document_types:
+      - board_resolution
+      - announcement
+    false_positive_guard_patterns:
+      - 年度报告
+      - 半年度报告
+      - 第一季度报告
+      - 第三季度报告
+    notes: >-
+      Design-only category sample; requires real date window and sample companies
+      before live validation.
+
+  - case_id: general_sample_002
+    case_status: placeholder
+    source_id: cninfo_general_announcement_pdf
+    source_category: announcement_pdf
+    title_pattern: "权益分派"
+    date_start: null
+    date_end: null
+    expected_min_results: 1
+    expected_document_types:
+      - announcement
+    false_positive_guard_patterns:
+      - 年度报告
+      - 摘要
+    notes: Placeholder dividend-related announcement sample. Real date window TBD.
+
+  - case_id: general_sample_003
+    case_status: placeholder
+    source_id: cninfo_general_announcement_pdf
+    source_category: announcement_pdf
+    title_pattern: "回购"
+    date_start: null
+    date_end: null
+    expected_min_results: 1
+    expected_document_types:
+      - announcement
+    false_positive_guard_patterns:
+      - 年度报告
+    notes: Design-only; share repurchase announcement corpus probe. No live dates yet.
+
+  # --- inquiry reply category sample × 2 ---
+  - case_id: inquiry_sample_001
+    case_status: placeholder
+    source_id: cninfo_inquiry_reply_pdf
+    source_category: inquiry_reply_pdf
+    title_pattern: "问询函"
+    date_start: null
+    date_end: null
+    expected_min_results: 1
+    expected_document_types:
+      - regulatory_inquiry
+      - inquiry_reply
+    false_positive_guard_patterns:
+      - 年度报告
+      - 半年度报告
+    notes: >-
+      Category-sample for inquiry corpus non-empty rate. Replace date window
+      before live validation; do not use random success rate as pass criteria.
+
+  - case_id: inquiry_sample_002
+    case_status: placeholder
+    source_id: cninfo_inquiry_reply_pdf
+    source_category: inquiry_reply_pdf
+    title_pattern: "回复公告"
+    date_start: null
+    date_end: null
+    expected_min_results: 1
+    expected_document_types:
+      - inquiry_reply
+    false_positive_guard_patterns:
+      - 年度报告全文
+    notes: Design-only reply-announcement sample. Real window TBD.
+
+  # --- meeting notice category sample × 2 ---
+  - case_id: meeting_sample_001
+    case_status: placeholder
+    source_id: cninfo_meeting_notice_pdf
+    source_category: meeting_notice_pdf
+    title_pattern: "说明会"
+    date_start: null
+    date_end: null
+    expected_min_results: 1
+    expected_document_types:
+      - meeting_notice
+      - investor_relations_activity
+    false_positive_guard_patterns:
+      - 年度报告
+      - 第一季度报告
+    notes: >-
+      IR/meeting corpus sample. Phase 1 periodic exclusions are POSITIVE here.
+      Requires real date window before live run.
+
+  - case_id: meeting_sample_002
+    case_status: placeholder
+    source_id: cninfo_meeting_notice_pdf
+    source_category: meeting_notice_pdf
+    title_pattern: "股东大会通知"
+    date_start: null
+    date_end: null
+    expected_min_results: 1
+    expected_document_types:
+      - shareholder_meeting_material
+      - meeting_notice
+      - announcement
+    false_positive_guard_patterns:
+      - 年度报告
+    notes: >-
+      Design-only; may route to general_announcement per routing rules. Audit
+      classification on live sample.
+
+  # --- periodic false positive guard × 2 ---
+  - case_id: periodic_guard_001
+    case_status: placeholder
+    source_id: cninfo_general_announcement_pdf
+    source_category: announcement_pdf
+    title_pattern: "延期披露"
+    date_start: null
+    date_end: null
+    expected_min_results: 0
+    expected_document_types:
+      - announcement
+    false_positive_guard_patterns:
+      - 年度报告
+      - 半年度报告
+    notes: >-
+      Guard case: delayed disclosure titles must NOT route to cninfo_periodic_report_pdf.
+      expected_min_results=0 allows empty if no matches in window; classification audit primary.
+
+  - case_id: periodic_guard_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    source_category: announcement_pdf
+    title_pattern: "年度报告摘要"
+    date_start: "2025-03-27"
+    date_end: "2025-04-02"
+    expected_min_results: 0
+    expected_document_types:
+      - announcement
+    false_positive_guard_patterns:
+      - 年度报告
+      - 年度报告全文
+      - 半年度报告
+      - 第一季度报告
+      - 第三季度报告
+    notes: >-
+      False-positive guard: 年度报告摘要 must NOT route to cninfo_periodic_report_pdf.
+      Date window from Phase 1 announcement validation (late-Mar 2025 summary season).
+      Checklist reviewed; do not write verified.

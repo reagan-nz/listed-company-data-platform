@@ -1,0 +1,125 @@
+# CNINFO B 类 Known-Document Benchmark — Offline Title Routing Fixtures
+# 不代表真实 CNINFO retrieval coverage；不请求 CNINFO；不写 verified。
+
+version: "draft-0.1"
+status: offline_fixture
+verified: false
+
+documents:
+  - benchmark_id: inquiry_001
+    company_code: null
+    company_name: null
+    title: "关于对某公司年报的问询函"
+    expected_route_to: cninfo_inquiry_reply_pdf
+    expected_document_type: regulatory_inquiry
+    expected_classification: inquiry_reply
+    benchmark_group: inquiry_reply
+    notes: "离线标题路由样例，不代表真实 CNINFO 文档"
+
+  - benchmark_id: inquiry_002
+    title: "关于深圳证券交易所年报问询函回复的公告"
+    expected_route_to: cninfo_inquiry_reply_pdf
+    expected_document_type: inquiry_reply
+    expected_classification: inquiry_reply
+    benchmark_group: inquiry_reply
+    notes: "问询函回复不得路由到 annual_report"
+
+  - benchmark_id: inquiry_003
+    title: "深圳证券交易所关注函"
+    expected_route_to: cninfo_inquiry_reply_pdf
+    expected_document_type: regulatory_inquiry
+    expected_classification: inquiry_reply
+    benchmark_group: inquiry_reply
+
+  - benchmark_id: meeting_001
+    title: "2024年度业绩说明会公告"
+    expected_route_to: cninfo_meeting_notice_pdf
+    expected_document_type: meeting_notice
+    expected_classification: meeting_notice
+    benchmark_group: meeting_notice
+
+  - benchmark_id: meeting_002
+    title: "投资者关系活动记录表"
+    expected_route_to: cninfo_meeting_notice_pdf
+    expected_document_type: investor_relations_activity
+    expected_classification: meeting_notice
+    benchmark_group: meeting_notice
+
+  - benchmark_id: meeting_003
+    title: "关于召开投资者说明会的公告"
+    expected_route_to: cninfo_meeting_notice_pdf
+    expected_document_type: meeting_notice
+    expected_classification: meeting_notice
+    benchmark_group: meeting_notice
+
+  - benchmark_id: periodic_001
+    title: "平安银行股份有限公司2024年年度报告"
+    expected_route_to: cninfo_periodic_report_pdf
+    expected_document_type: annual_report
+    expected_classification: periodic_report
+    benchmark_group: periodic_report
+
+  - benchmark_id: periodic_002
+    title: "某某公司2024年半年度报告"
+    expected_route_to: cninfo_periodic_report_pdf
+    expected_document_type: semi_annual_report
+    expected_classification: periodic_report
+    benchmark_group: periodic_report
+
+  - benchmark_id: periodic_003
+    title: "某某公司2024年第一季度报告全文"
+    expected_route_to: cninfo_periodic_report_pdf
+    expected_document_type: quarterly_report_q1
+    expected_classification: periodic_report
+    benchmark_group: periodic_report
+
+  - benchmark_id: periodic_false_positive_001
+    title: "关于延期披露2024年年度报告的公告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: excluded_from_periodic_but_routed
+    benchmark_group: false_positive_guard
+    notes: "含年度报告但应被 periodic exclusion 拦截"
+
+  - benchmark_id: periodic_false_positive_002
+    title: "2024年年度报告摘要"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: excluded_from_periodic_but_routed
+    benchmark_group: false_positive_guard
+
+  - benchmark_id: periodic_false_positive_003
+    title: "关于2024年年度报告的补充公告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: excluded_from_periodic_but_routed
+    benchmark_group: false_positive_guard
+    notes: "含报告字样但非定期报告全文"
+
+  - benchmark_id: periodic_false_positive_004
+    title: "2024年第三季度报告摘要"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: excluded_from_periodic_but_routed
+    benchmark_group: false_positive_guard
+
+  - benchmark_id: general_001
+    title: "董事会决议公告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: board_resolution
+    expected_classification: general_announcement
+    benchmark_group: general_announcement
+
+  - benchmark_id: general_002
+    title: "股东大会通知公告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: shareholder_meeting_material
+    expected_classification: general_announcement
+    benchmark_group: general_announcement
+
+  - benchmark_id: general_003
+    title: "关于权益分派的公告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: general_announcement
+    benchmark_group: general_announcement
