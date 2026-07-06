@@ -1,0 +1,4 @@
+fixture_index,company_code,source_id,validation_status,error_message,notes
+0,600000,cninfo_company_security_profile,pass,,mapper draft fixture; source_status=testing; not verified
+1,300001,cninfo_company_security_profile,pass,,mapper draft fixture; source_status=testing; not verified
+2,688001,cninfo_company_security_profile,pass,,mapper draft fixture; source_status=testing; not verified

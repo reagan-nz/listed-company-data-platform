@@ -57,9 +57,11 @@ _最后更新：2026-07-05_
 | `validate_cninfo_latest_announcements.py` | 验证"最新公告列表"栏目 | 是 |
 | `validate_cninfo_pdf_metadata.py` | 验证公告 PDF 元数据（URL/hash 规则，不下载正文） | 是 |
 | `validate_cninfo_f10_company_profile.py` | 验证个股 F10 公司资料字段 | 是 |
-| `cninfo_c_class_mappers.py` | **Phase 4**：C 类 getCompanyIntroduction → basic_profile mapper 草案 | 是 |
+| `cninfo_c_class_mappers.py` | **Phase 4**：C 类 basic_profile + security_profile mapper 草案 | 是 |
 | `seed_cninfo_c_class_basic_profile_fixtures.py` | **Phase 4**：内置样本 → basic_profile fixture JSONL（无网络） | 是 |
+| `seed_cninfo_c_class_security_profile_fixtures.py` | **Phase 4**：内置 marketOverview 样本 → security_profile fixture JSONL（无网络） | 是 |
 | `validate_cninfo_c_class_basic_profile_schema.py` | **Phase 4**：basic_profile fixture JSON Schema 校验 | 是 |
+| `validate_cninfo_c_class_security_profile_schema.py` | **Phase 4**：security_profile fixture JSON Schema 校验 | 是 |
 | `validate_cninfo_c_class_live_sources.py` | **Phase 4**：C 类 P1 basic/security live validation（`--dry-run` 默认） | 是 |
 | `lint_cninfo_c_class_registry.py` | **Phase 4**：C 类 candidate registry 离线 lint（无网络、无 DB） | 是 |
 | `validate_cninfo_c_class_profile_schema.py` | **Phase 4**：C 类 known-company profile fixture 离线 schema 校验 | 是 |
@@ -73,7 +75,7 @@ _最后更新：2026-07-05_
 ### 2.2 活跃配置（`config/`）
 - `cninfo_table_sources.yaml` — **Phase 2** 验证脚本驱动配置（12 source；10 stable + 2 candidate）
 - `schemas/d_class/` — **Phase 3** 10 个逻辑表 JSON Schema draft（draft-07）
-- `schemas/c_class/` — **Phase 4** 6 个 C 类 company profile JSON Schema draft（draft-07）
+- `schemas/c_class/` — **Phase 4** 7 个 C 类 company profile JSON Schema draft（draft-07，含 `c_company_security_profile`）
 - `schemas/b_class/` — **Phase 3** 8 个 B 类 document corpus JSON Schema draft（draft-07）
 - `fixtures/d_class/` — **Phase 3** 11 个 raw record fixture（Phase 2 文档摘录）
 - `fixtures/b_class/known_documents/` — B 类 known-document title routing benchmark（16 条）
@@ -81,7 +83,7 @@ _最后更新：2026-07-05_
 - `fixtures/b_class/raw_file/` — periodic raw_file（20 条）；non-periodic 空文件（无 pdf_url）
 - `fixtures/b_class/parse_run/` — parse_run dry-run（33 条；`not_started` / `skipped`）
 - `fixtures/b_class/retrieval_validation/` — corpus retrieval benchmark（**5 ready** + 16 placeholder）+ example-only 参考
-- `fixtures/c_class/` — known-company fixtures（12 条）+ probe records + **basic_profile** mapper fixtures（2 条）
+- `fixtures/c_class/` — known-company fixtures（12 条）+ probe records + **basic_profile** mapper fixtures（2 条）+ **security_profile** mapper fixtures（3 条）
 - `config/cninfo_c_class_source_candidates.yaml` — **Phase 4** C 类 company_profile 候选源（**P1 backfill v1**：basic + security `testing` + endpoint；industry `derived_from`）
 - `config/cninfo_b_class_source_registry_draft.yaml` — Phase 3 B 类 document_corpus registry 草案（4 source）
 - `config/cninfo_d_class_source_registry_draft.yaml` — Phase 3 D 类 registry YAML 草案
@@ -229,5 +231,5 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 2. **Phase 2 已收口**；**Phase 3 D 类设计**见 [registry YAML](config/cninfo_d_class_source_registry_draft.yaml) / [schema validation summary](outputs/validation/cninfo_d_class_schema_validation_summary.md)。
 3. **Phase 3 B 类**见 [validation design](plans/cninfo_b_class_validation_design.md) / [category routing](plans/cninfo_b_class_category_routing_rules.md) / [categories YAML](config/cninfo_announcement_categories.yaml) / [document seed summary](outputs/validation/cninfo_b_class_document_seed_summary.md) / [B schema validation](outputs/validation/cninfo_b_class_document_schema_validation_summary.md)。
 4. **Phase 4 C 类**见 [registry lint](outputs/validation/cninfo_c_class_registry_lint_summary.md) / [fixture validation](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md) / [probe plan](plans/cninfo_c_class_devtools_probe_plan.md) / [probe checklist](plans/cninfo_c_class_probe_checklist.md) / [candidates YAML](config/cninfo_c_class_source_candidates.yaml)。
-5. **下一步**：security_profile mapper 或 P2 probe；E/F 暂缓。
+5. **下一步**：getHeadStripData annex 映射或 P2 probe；E/F 暂缓。
 6. **每完成一个 Phase**：更新分层表状态 + `outputs/validation/` 留 summary；不做数据库接入。

@@ -4,6 +4,8 @@ CNINFO C-class profile mappers (Era C Phase 4 draft).
 Maps getCompanyIntroduction basicInformation/listingInformation to
 c_company_basic_profile logical records.
 
+Maps marketOverview root object to c_company_security_profile logical records.
+
 No network, no database, no verified.
 """
 
@@ -15,6 +17,7 @@ import re
 from typing import Any, Dict, Optional
 
 DEFAULT_BASIC_SOURCE_ID = "cninfo_company_basic_profile"
+DEFAULT_SECURITY_SOURCE_ID = "cninfo_company_security_profile"
 DEFAULT_SOURCE_STATUS = "testing"
 
 
@@ -26,6 +29,10 @@ def compute_raw_record_hash(raw_record: Dict[str, Any]) -> str:
 def make_profile_id(source_id: str, company_code: str) -> str:
     key = f"{source_id}|{company_code}"
     return hashlib.sha256(key.encode("utf-8")).hexdigest()[:32]
+
+
+def make_security_profile_id(source_id: str, company_code: str) -> str:
+    return make_profile_id(source_id, company_code)
 
 
 def normalize_date(value: Any) -> Optional[str]:
@@ -58,6 +65,33 @@ def _exchange_from_market(market: Optional[str]) -> Optional[str]:
         return "SSE"
     if "北京" in m or "北交所" in m:
         return "BSE"
+    return None
+
+
+def _exchange_from_company_code(company_code: str) -> Optional[str]:
+    code = company_code.strip()
+    if not code:
+        return None
+    if code.startswith(("600", "601", "603", "605", "688", "689")):
+        return "SSE"
+    if code.startswith(("000", "001", "002", "003", "300", "301")):
+        return "SZSE"
+    if code.startswith(("430", "831", "832", "833", "834", "835", "836", "837", "838", "839")):
+        return "BSE"
+    return None
+
+
+def _bool_or_none(value: Any) -> Optional[bool]:
+    if value is None:
+        return None
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        s = value.strip().lower()
+        if s in {"true", "1", "yes"}:
+            return True
+        if s in {"false", "0", "no"}:
+            return False
     return None
 
 
@@ -146,12 +180,84 @@ def map_company_basic_profile(
     return record
 
 
+def map_company_security_profile(
+    raw_record: Dict[str, Any],
+    company_code: str,
+    company_name: str,
+    source_id: str = DEFAULT_SECURITY_SOURCE_ID,
+    source_status: str = DEFAULT_SOURCE_STATUS,
+) -> Optional[Dict[str, Any]]:
+    """
+    Map marketOverview root object to c_company_security_profile.
+
+    raw_record shape (root object):
+        secCode, secName, secType, tradingStatus, age, finance,
+        delisted, sshk, szhk
+
+    Returns None when raw_record has no usable secCode and no other keys.
+    """
+    if not raw_record:
+        return None
+
+    mapped_code = _str_or_none(raw_record.get("secCode")) or company_code
+    mapped_name = _str_or_none(raw_record.get("secName")) or company_name
+
+    if not mapped_code and not raw_record:
+        return None
+
+    record: Dict[str, Any] = {
+        "security_profile_id": make_security_profile_id(source_id, mapped_code),
+        "source_id": source_id,
+        "company_code": mapped_code,
+        "company_name": mapped_name,
+        "raw_record_json": raw_record,
+        "raw_record_hash": compute_raw_record_hash(raw_record),
+        "source_status": source_status,
+        "field_confidence": "medium",
+    }
+
+    optional_fields: Dict[str, Any] = {
+        "stock_short_name": _str_or_none(raw_record.get("secName")),
+        "security_code": _str_or_none(raw_record.get("secCode")),
+        "security_type_code": _str_or_none(raw_record.get("secType")),
+        "trading_status_code": _str_or_none(raw_record.get("tradingStatus")),
+        "listing_age_years_candidate": _str_or_none(raw_record.get("age")),
+        "is_finance_related_candidate": _bool_or_none(raw_record.get("finance")),
+        "is_delisted": _bool_or_none(raw_record.get("delisted")),
+        "shanghai_hong_kong_connect_candidate": _bool_or_none(raw_record.get("sshk")),
+        "shenzhen_hong_kong_connect_candidate": _bool_or_none(raw_record.get("szhk")),
+        "exchange": _exchange_from_company_code(mapped_code),
+    }
+
+    for key, val in optional_fields.items():
+        if val is not None:
+            record[key] = val
+
+    # Fields without schema slots or unconfirmed semantics remain in raw_record_json:
+    # listed_board, listing_date, listing_status, is_st_candidate (YAML expected_fields).
+
+    return record
+
+
 def count_mapped_standard_fields(record: Dict[str, Any]) -> int:
     """Count non-lineage schema fields with values."""
     skip = {
         "profile_id", "source_id", "company_code", "company_name",
         "raw_record_json", "raw_record_hash", "source_status",
         "field_confidence", "created_at", "org_id",
+    }
+    return sum(
+        1 for k, v in record.items()
+        if k not in skip and v is not None and v != ""
+    )
+
+
+def count_mapped_security_profile_fields(record: Dict[str, Any]) -> int:
+    """Count non-lineage schema fields with values for security_profile."""
+    skip = {
+        "security_profile_id", "source_id", "company_code", "company_name",
+        "raw_record_json", "raw_record_hash", "source_status",
+        "field_confidence", "created_at",
     }
     return sum(
         1 for k, v in record.items()

@@ -1,0 +1,4 @@
+company_code,company_name,map_status,raw_fields_count,mapped_fields_count,raw_record_hash,notes
+600000,浦发银行,mapped,9,10,0a792e5c1cc2f40906641b0a493cca32bf8e82f900ac690087f073815add59d7,Embedded marketOverview sample; mapper draft fixture only; not verified.
+300001,特锐德,mapped,9,10,bca674f8d90d4a7a80ba971031de3ead726172e1200758366ceeeb3759b35f5f,Embedded marketOverview sample; mapper draft fixture only; not verified.
+688001,华兴源创,mapped,9,10,d67cd558ea4fb2b6e86a6d5b0033f4d8526d3cc36a104fa7a17e95da978ddc23,Embedded marketOverview sample; mapper draft fixture only; not verified.

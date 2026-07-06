@@ -145,9 +145,10 @@ _最后更新：2026-07-05_
 36. ~~C 类 P1 YAML backfill v1 + registry lint~~ → **已完成**（§7g）
 37. ~~C 类 live validation v1 + 600000 预期对齐~~ → **LIVE_PASS**（§7h）
 38. ~~C 类 basic_profile mapper draft + fixture schema validation~~ → **已完成**（§7i）
-39. security_profile mapper 草案 或 P2 DevTools probe
-40. 可选：probe 官方 category code（B 类）
-41. **暂不全量抓取、暂不入库**
+39. ~~C 类 security_profile mapper draft + fixture schema validation~~ → **已完成**（§7j）
+40. map getHeadStripData annex 或 P2 DevTools probe
+41. 可选：probe 官方 category code（B 类）
+42. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -798,7 +799,7 @@ _最后更新：2026-07-05_
 
 **红线：** sources 仍 **testing**；**无 verified**；**无 testing_stable_sample**；不入库；仅 3 家样本。
 
-**下一步：** security_profile mapper 或 P2 probe。
+**下一步：** ~~security_profile mapper~~ → 见 §7j；或 P2 probe。
 
 ---
 
@@ -817,7 +818,29 @@ _最后更新：2026-07-05_
 
 **红线：** `source_status=testing`；**无 verified**；不入库；未修改 schema。
 
-**下一步：** security_profile mapper；P2 DevTools probe。
+**下一步：** ~~security_profile mapper~~ → 见 §7j。
+
+---
+
+## 7j. Phase 4 C 类 Security Profile Mapper Draft（2026-07-06）
+
+| 脚本 / 输出 | 内容 |
+|------|------|
+| [cninfo_c_class_mappers.py](../lab/cninfo_c_class_mappers.py) | `map_company_security_profile()` — marketOverview → `c_company_security_profile` |
+| [c_company_security_profile.schema.json](../schemas/c_class/c_company_security_profile.schema.json) | **新增** security profile 逻辑 schema（draft-07） |
+| [seed_cninfo_c_class_security_profile_fixtures.py](../lab/seed_cninfo_c_class_security_profile_fixtures.py) | 内置 600000 / 300001 / 688001 marketOverview raw → JSONL |
+| [security_profile_fixtures.jsonl](../fixtures/c_class/security_profile/security_profile_fixtures.jsonl) | **3** 条 mapped fixture |
+| [validate_cninfo_c_class_security_profile_schema.py](../lab/validate_cninfo_c_class_security_profile_schema.py) | schema 校验 |
+| [cninfo_c_class_security_profile_mapper_summary.md](../outputs/validation/cninfo_c_class_security_profile_mapper_summary.md) | mapper 汇总 |
+| [cninfo_c_class_security_profile_schema_validation_summary.md](../outputs/validation/cninfo_c_class_security_profile_schema_validation_summary.md) | **3/3 PASS** |
+
+**样本：** 600000 浦发银行、300001 特锐德、688001 华兴源创（embedded marketOverview root；9 字段）。
+
+**字段：** secCode/secName/secType/tradingStatus/age/finance/delisted/sshk/szhk → schema 对应列；`exchange` 由 company_code 前缀推断（candidate）。
+
+**红线：** `source_status=testing`；**无 verified**；不入库；未升级 `testing_stable_sample`；新增 schema 为最小 lineage + marketOverview 字段闭包。
+
+**下一步：** getHeadStripData annex 映射；P2 DevTools probe。
 
 ---
 
@@ -835,7 +858,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **basic_profile mapper draft 完成**（2/2 schema PASS）；下一步 security mapper 或 P2 probe。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **basic + security profile mapper draft 完成**（2/2 + 3/3 schema PASS）；下一步 getHeadStripData annex 或 P2 probe。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

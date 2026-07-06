@@ -1,0 +1,123 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/c_class/c_company_security_profile.schema.json",
+  "title": "c_company_security_profile",
+  "description": "CNINFO C-class normalized security profile from marketOverview (design draft). Not verified; not a DB migration.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "source_status": {
+      "type": "string",
+      "enum": [
+        "candidate",
+        "testing",
+        "testing_stable_sample",
+        "partial",
+        "blocked",
+        "deprecated"
+      ]
+    },
+    "field_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"]
+    }
+  },
+  "properties": {
+    "security_profile_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Logical primary key for a security profile row."
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "company_code": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Security code (mapped from secCode)."
+    },
+    "company_name": {
+      "type": ["string", "null"],
+      "description": "Display name (mapped from secName)."
+    },
+    "stock_short_name": {
+      "type": ["string", "null"],
+      "description": "Short name candidate (mapped from secName)."
+    },
+    "security_code": {
+      "type": ["string", "null"],
+      "description": "Raw secCode echo; may equal company_code."
+    },
+    "exchange": {
+      "type": ["string", "null"],
+      "description": "Exchange code candidate (inferred from company_code prefix when absent in raw)."
+    },
+    "listed_board": {
+      "type": ["string", "null"]
+    },
+    "listing_date": {
+      "type": ["string", "null"],
+      "format": "date"
+    },
+    "listing_status": {
+      "type": ["string", "null"],
+      "description": "Listing status display candidate; not derived in mapper v1."
+    },
+    "is_st_candidate": {
+      "type": ["boolean", "null"]
+    },
+    "security_type_code": {
+      "type": ["string", "null"],
+      "description": "Raw secType code (semantics not confirmed)."
+    },
+    "trading_status_code": {
+      "type": ["string", "null"],
+      "description": "Raw tradingStatus code (semantics not confirmed)."
+    },
+    "listing_age_years_candidate": {
+      "type": ["string", "null"],
+      "description": "Listing age as returned by marketOverview age field."
+    },
+    "is_finance_related_candidate": {
+      "type": ["boolean", "null"],
+      "description": "Raw finance flag; semantics candidate-level."
+    },
+    "is_delisted": {
+      "type": ["boolean", "null"]
+    },
+    "shanghai_hong_kong_connect_candidate": {
+      "type": ["boolean", "null"],
+      "description": "Raw sshk flag; semantics candidate-level."
+    },
+    "shenzhen_hong_kong_connect_candidate": {
+      "type": ["boolean", "null"],
+      "description": "Raw szhk flag; semantics candidate-level."
+    },
+    "raw_record_json": {
+      "type": "object",
+      "description": "marketOverview root object for lineage."
+    },
+    "raw_record_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_status": {
+      "$ref": "#/definitions/source_status"
+    },
+    "field_confidence": {
+      "$ref": "#/definitions/field_confidence"
+    },
+    "created_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "security_profile_id",
+    "source_id",
+    "company_code",
+    "raw_record_json",
+    "raw_record_hash"
+  ]
+}
