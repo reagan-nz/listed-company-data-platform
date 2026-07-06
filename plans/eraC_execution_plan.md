@@ -153,7 +153,8 @@ _最后更新：2026-07-05_
 44. ~~C 类 P2-A YAML backfill v1 + registry lint~~ → **已完成**（§7o）
 45. ~~C 类 P2-A live validation v1~~ → **LIVE_PASS**（§7p）
 46. ~~C 类 executive_profile mapper draft + fixture schema validation~~ → **已完成**（§7q）
-47. share_capital / shareholder mapper draft
+47. ~~C 类 share_capital_profile mapper draft + fixture schema validation~~ → **已完成**（§7r）
+48. shareholder_profile mapper draft（top + float）
 48. 可选：probe 官方 category code（B 类）
 49. **暂不全量抓取、暂不入库**
 
@@ -975,7 +976,7 @@ _最后更新：2026-07-05_
 
 **红线：** sources 仍 **testing**；**无 verified**；**无 testing_stable_sample**；不入库。
 
-**下一步：** P2-A mapper drafts → executive **done**（§7q）；share_capital / shareholders next。
+**下一步：** P2-A mapper drafts → executive **done**（§7q）；share_capital **done**（§7r）；shareholders next。
 
 ---
 
@@ -993,7 +994,25 @@ _最后更新：2026-07-05_
 
 **红线：** `source_status=testing`；**无 verified**；不入库；schema 未修改。
 
-**下一步：** share_capital_profile mapper draft。
+**下一步：** share_capital_profile **done**（§7r）；shareholder_profile mapper draft next。
+
+---
+
+## 7r. Phase 4 C 类 Share Capital Profile Mapper Draft（2026-07-06）
+
+| 脚本 / 输出 | 内容 |
+|------|------|
+| [cninfo_c_class_mappers.py](../lab/cninfo_c_class_mappers.py) | `map_company_share_capital_profile()` — getStockStructure row → `c_share_capital_profile` |
+| [seed_cninfo_c_class_share_capital_profile_fixtures.py](../lab/seed_cninfo_c_class_share_capital_profile_fixtures.py) | 内置 6 行（600000×2 · 300001×2 · 688001×2） |
+| [share_capital_profile_fixtures.jsonl](../fixtures/c_class/share_capital_profile/share_capital_profile_fixtures.jsonl) | **6** 条 mapped fixture |
+| [validate_cninfo_c_class_share_capital_profile_schema.py](../lab/validate_cninfo_c_class_share_capital_profile_schema.py) | schema 校验 |
+| [cninfo_c_class_share_capital_profile_schema_validation_summary.md](../outputs/validation/cninfo_c_class_share_capital_profile_schema_validation_summary.md) | **6/6 PASS** |
+
+**映射：** VARYDATE→report_date, F021N→total_share_capital, F022N→float_share_capital, F023N→restricted_share_capital；F002V/F024N/F028N/F003N 留在 raw_record_json。
+
+**红线：** `source_status=testing`；**无 verified**；不入库；schema 未修改。
+
+**下一步：** shareholder_profile mapper draft（top_shareholders + top_float_shareholders）。
 
 ---
 
@@ -1011,7 +1030,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **executive_profile mapper draft 完成**（6/6 schema PASS）；下一步 share_capital / shareholder mapper。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **share_capital_profile mapper draft 完成**（6/6 schema PASS）；下一步 shareholder_profile mapper（top + float）。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

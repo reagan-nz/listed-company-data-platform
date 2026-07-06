@@ -1,0 +1,7 @@
+company_code,company_name,vary_date,map_status,raw_fields_count,mapped_fields_count,raw_record_hash,notes
+600000,浦发银行,2025-12-31,mapped,8,3,4fddb06e07f9f95335bcff35568d879535943b10c09f33daa15eb4ca0830e860,Embedded getStockStructure row; mapper draft fixture only; not verified.
+600000,浦发银行,2025-10-27,mapped,8,3,baea3fe77fd16282a289e284bcc53c6558fba4581417fbab331db79bb9037956,Embedded getStockStructure row; mapper draft fixture only; not verified.
+300001,特锐德,2026-06-03,mapped,8,3,0d891addee8a4936a2db061bd3644e82c979f0debec436eab6a32ada6dcf72bf,Embedded getStockStructure row; mapper draft fixture only; not verified.
+300001,特锐德,2025-12-31,mapped,8,3,2828a45be26691766136743f9c0889f3374f344d19ad1ac2e2c73c913bb74d90,Embedded getStockStructure row; mapper draft fixture only; not verified.
+688001,华兴源创,2026-05-18,mapped,8,3,4dbc735be2bf088edc8110b00b8d787877408762d0bbbe4a12dde923d973272e,Embedded getStockStructure row; mapper draft fixture only; not verified.
+688001,华兴源创,2025-12-31,mapped,8,3,89297b7d86d3e59f387df4eeb50f6b9732a70affe90587bb600b64dc27d3ba50,Embedded getStockStructure row; mapper draft fixture only; not verified.

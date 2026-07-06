@@ -1,0 +1,7 @@
+fixture_index,company_code,report_date,source_id,validation_status,error_message,notes
+0,600000,2025-12-31,cninfo_share_capital_profile,pass,,mapper draft fixture; source_status=testing; not verified
+1,600000,2025-10-27,cninfo_share_capital_profile,pass,,mapper draft fixture; source_status=testing; not verified
+2,300001,2026-06-03,cninfo_share_capital_profile,pass,,mapper draft fixture; source_status=testing; not verified
+3,300001,2025-12-31,cninfo_share_capital_profile,pass,,mapper draft fixture; source_status=testing; not verified
+4,688001,2026-05-18,cninfo_share_capital_profile,pass,,mapper draft fixture; source_status=testing; not verified
+5,688001,2025-12-31,cninfo_share_capital_profile,pass,,mapper draft fixture; source_status=testing; not verified

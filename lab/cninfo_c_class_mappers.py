@@ -8,6 +8,8 @@ Maps marketOverview root object to c_company_security_profile logical records.
 
 Maps getCompanyExecutives single row to c_executive_profile logical records.
 
+Maps getStockStructure single row to c_share_capital_profile logical records.
+
 No network, no database, no verified.
 """
 
@@ -21,6 +23,7 @@ from typing import Any, Dict, Optional
 DEFAULT_BASIC_SOURCE_ID = "cninfo_company_basic_profile"
 DEFAULT_SECURITY_SOURCE_ID = "cninfo_company_security_profile"
 DEFAULT_EXECUTIVE_SOURCE_ID = "cninfo_executive_profile"
+DEFAULT_SHARE_CAPITAL_SOURCE_ID = "cninfo_share_capital_profile"
 DEFAULT_SOURCE_STATUS = "testing"
 
 
@@ -38,7 +41,25 @@ def make_security_profile_id(source_id: str, company_code: str) -> str:
     return make_profile_id(source_id, company_code)
 
 
+def _num_or_none(value: Any) -> Optional[float]:
+    if value is None or value == "":
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
 def make_executive_profile_id(
+    source_id: str,
+    company_code: str,
+    row_key: str,
+) -> str:
+    key = f"{source_id}|{company_code}|{row_key}"
+    return hashlib.sha256(key.encode("utf-8")).hexdigest()[:32]
+
+
+def make_share_capital_profile_id(
     source_id: str,
     company_code: str,
     row_key: str,
@@ -317,6 +338,63 @@ def map_company_executive_profile(
     return record
 
 
+def map_company_share_capital_profile(
+    raw_record: Dict[str, Any],
+    company_code: str,
+    company_name: str,
+    source_id: str = DEFAULT_SHARE_CAPITAL_SOURCE_ID,
+    source_status: str = DEFAULT_SOURCE_STATUS,
+    org_id: Optional[str] = None,
+) -> Optional[Dict[str, Any]]:
+    """
+    Map getStockStructure single row to c_share_capital_profile.
+
+    raw_record shape (one element of data.records):
+        VARYDATE, F002V, F021N, F022N, F023N, F024N, F028N, F003N
+
+    Returns None when raw_record is empty.
+    """
+    if not raw_record:
+        return None
+
+    vary_date = normalize_date(raw_record.get("VARYDATE"))
+    change_reason = _str_or_none(raw_record.get("F002V"))
+    row_key = f"{vary_date or 'unknown'}|{change_reason or 'unknown'}"
+
+    record: Dict[str, Any] = {
+        "share_capital_profile_id": make_share_capital_profile_id(
+            source_id, company_code, row_key
+        ),
+        "source_id": source_id,
+        "company_code": company_code,
+        "company_name": company_name,
+        "raw_record_json": raw_record,
+        "raw_record_hash": compute_raw_record_hash(raw_record),
+        "source_status": source_status,
+        "field_confidence": "medium",
+    }
+
+    if org_id:
+        record["org_id"] = org_id
+
+    optional_fields: Dict[str, Any] = {
+        "report_date": vary_date,
+        "total_share_capital": _num_or_none(raw_record.get("F021N")),
+        "float_share_capital": _num_or_none(raw_record.get("F022N")),
+        "restricted_share_capital": _num_or_none(raw_record.get("F023N")),
+    }
+
+    for key, val in optional_fields.items():
+        if val is not None:
+            record[key] = val
+
+    # Fields without schema slots remain in raw_record_json only:
+    # F002V change_reason_or_source, F024N unrestricted_share_candidate,
+    # F028N change_amount_candidate, F003N total_capital_candidate.
+
+    return record
+
+
 def count_mapped_standard_fields(record: Dict[str, Any]) -> int:
     """Count non-lineage schema fields with values."""
     skip = {
@@ -348,6 +426,19 @@ def count_mapped_executive_profile_fields(record: Dict[str, Any]) -> int:
     skip = {
         "executive_profile_id", "source_id", "company_code", "company_name",
         "person_name", "position",
+        "raw_record_json", "raw_record_hash", "source_status",
+        "field_confidence", "created_at", "org_id",
+    }
+    return sum(
+        1 for k, v in record.items()
+        if k not in skip and v is not None and v != ""
+    )
+
+
+def count_mapped_share_capital_profile_fields(record: Dict[str, Any]) -> int:
+    """Count non-lineage schema fields with values for share_capital_profile."""
+    skip = {
+        "share_capital_profile_id", "source_id", "company_code", "company_name",
         "raw_record_json", "raw_record_hash", "source_status",
         "field_confidence", "created_at", "org_id",
     }
