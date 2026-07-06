@@ -8,7 +8,7 @@ _最后更新：2026-07-06_
 
 ## 当前阶段（一句话）
 
-**Era C Phase 1（A 类）已收口**（P1 **749/796 = 94.10%**）。**Phase 2 D 类已收口**（10 源 `testing_stable_sample`）。**Phase 3 B 类** corpus + live metadata v1 已打通（5 ready · 5/5 pass）。**Phase 4 C 类** P1 mapper（basic + security）**完成**；**P2 DevTools probe 计划已初始化**（12 条 `manual_probe_pending`）；sources 仍 **testing** / **candidate**；**无 verified**；**不入库**。
+**Era C Phase 1（A 类）已收口**（P1 **749/796 = 94.10%**）。**Phase 2 D 类已收口**（10 源 `testing_stable_sample`）。**Phase 3 B 类** corpus + live metadata v1 已打通（5 ready · 5/5 pass）。**Phase 4 C 类** P1 mapper 完成；**P2 executive_profile 人工 probe 3/3 `endpoint_found`**；其余 P2 source 仍 pending；**无 YAML backfill**；sources 仍 **testing** / **candidate**；**无 verified**；**不入库**。
 
 ---
 
@@ -82,7 +82,7 @@ _最后更新：2026-07-06_
 | **Live validation v1** | `lab/validate_cninfo_c_class_live_sources.py` · [summary](outputs/validation/cninfo_c_class_live_source_validation_summary.md)（**LIVE_PASS**） |
 | **Basic profile mapper** | `lab/cninfo_c_class_mappers.py` · `lab/seed_cninfo_c_class_basic_profile_fixtures.py` · [mapper summary](outputs/validation/cninfo_c_class_basic_profile_mapper_summary.md) · [schema validation](outputs/validation/cninfo_c_class_basic_profile_schema_validation_summary.md)（**2/2 PASS**） |
 | **Security profile mapper** | `map_company_security_profile()` · `lab/seed_cninfo_c_class_security_profile_fixtures.py` · [mapper summary](outputs/validation/cninfo_c_class_security_profile_mapper_summary.md) · [schema validation](outputs/validation/cninfo_c_class_security_profile_schema_validation_summary.md)（**3/3 PASS**） |
-| **P2 DevTools probe** | [P2 plan](plans/cninfo_c_class_p2_probe_plan.md) · [P2 checklist](plans/cninfo_c_class_p2_probe_checklist.md) · [P2 probe records](fixtures/c_class/probe/records/c_class_p2_probe_records.yaml)（**12** 条 `manual_probe_pending`） |
+| **P2 DevTools probe** | [P2 plan](plans/cninfo_c_class_p2_probe_plan.md) · [P2 checklist](plans/cninfo_c_class_p2_probe_checklist.md) · [P2 probe records](fixtures/c_class/probe/records/c_class_p2_probe_records.yaml)（executive **3/3 endpoint_found**；share_capital + shareholders **9 pending**） |
 | **Known-company fixtures** | [fixtures/c_class/known_company_profile_fixtures.jsonl](fixtures/c_class/known_company_profile_fixtures.jsonl)（**12** 条；600000 / 300001 / 688001） |
 | **Schema validation** | `lab/validate_cninfo_c_class_profile_schema.py` · [summary](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md)（**12/12 PASS**） |
 | **DevTools probe plan** | [probe plan](plans/cninfo_c_class_devtools_probe_plan.md) · [checklist](plans/cninfo_c_class_probe_checklist.md) · [record template](fixtures/c_class/probe/c_class_probe_record_template.yaml) |
@@ -167,8 +167,9 @@ flowchart TD
 | 37 | ~~C 类 basic_profile mapper draft + fixture schema validation~~ → **已完成**（2 fixtures · 2/2 PASS） |
 | 38 | ~~C 类 security_profile mapper draft + fixture schema validation~~ → **已完成**（3 fixtures · 3/3 PASS） |
 | 39 | ~~C 类 P2 DevTools probe plan + records 初始化~~ → **已完成**（12 条 pending） |
-| 40 | 人工 DevTools probe P2：`cninfo_executive_profile` @ **600000** 首发 |
-| 41 | **暂不全量抓取、暂不入库** |
+| 40 | ~~C 类 P2 executive_profile 人工 DevTools probe~~ → **已完成**（3/3 `endpoint_found`） |
+| 41 | executive_profile YAML backfill decision 或继续 P2 probe `share_capital_profile` |
+| 42 | **暂不全量抓取、暂不入库** |
 
 ---
 

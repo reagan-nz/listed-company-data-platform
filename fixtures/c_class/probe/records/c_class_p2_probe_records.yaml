@@ -1,19 +1,20 @@
 # CNINFO C-class P2 DevTools probe records
 # Era C Phase 4 — executive / share_capital / shareholders (4 sources × 3 companies).
-# Initial state: manual_probe_pending. No CNINFO requests in this initialization round.
+# Initial state: executive 3/3 endpoint_found; share_capital + shareholders still manual_probe_pending.
 #
 # Plan: plans/cninfo_c_class_p2_probe_plan.md
 # Checklist: plans/cninfo_c_class_p2_probe_checklist.md
 # Do NOT commit live response JSON with PII into Git.
 
 version: "draft-0.1"
-status: "manual_probe_pending"
+status: "partial_probe"
 verified: false
 summary_notes: >-
-  P2 probe initialized for cninfo_executive_profile, cninfo_share_capital_profile,
-  cninfo_top_shareholders_profile, cninfo_top_float_shareholders_profile.
-  12 records pending manual DevTools probe. P1 basic + security mapper complete;
-  industry_profile remains candidate + derived_from basic. Do not write verified.
+  cninfo_executive_profile: 3/3 endpoint_found via getCompanyExecutives
+  (GET /data20/companyOverview/getCompanyExecutives?scode=). share_capital and
+  shareholders sources remain manual_probe_pending. P1 basic + security mapper
+  complete; industry_profile remains candidate + derived_from basic. No YAML
+  backfill yet. Do not write verified.
 
 deferred_sources:
   - cninfo_dividend_financing_profile
@@ -46,19 +47,52 @@ probe_records:
     company_name: "浦发银行"
     org_id: "gssh0600000"
     page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=600000&orgId=gssh0600000#companyProfile"
-    request_url: null
-    method: null
-    params: {}
-    headers_required_candidate: []
-    records_path: null
-    sample_response_shape: null
-    sample_fields: []
-    row_count: null
-    probe_status: manual_probe_pending
-    blocked_or_empty: null
-    notes: >-
-      P2 manual DevTools probe pending. Target F10 tab: 高管/董监高. Expected list
-      records with person_name, position. Do not write verified.
+    request_url: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyExecutives"
+    method: "GET"
+    params:
+      scode: "{company_code}"
+    headers_required_candidate:
+      - Referer
+    records_path: "data.records"
+    result_code_path: "data.resultCode"
+    sample_response_shape:
+      path: "/companyOverview/getCompanyExecutives"
+      code: 200
+      data:
+        total: 19
+        count: 19
+        resultCode: "200"
+        resultMsg: "success"
+        records: "list[19]"
+        indexRecords: null
+    sample_fields:
+      - F002V
+      - F010V
+      - F012V
+      - F017V
+      - F009V
+      - F005N
+      - F012N
+      - SEQID
+      - F001V
+    candidate_field_mapping:
+      F002V: "executive_name"
+      F010V: "gender"
+      F012V: "birth_year"
+      F017V: "education"
+      F009V: "position_titles"
+      F005N: "shareholding_quantity_candidate"
+      F012N: "compensation_candidate"
+      SEQID: "row_sequence_id"
+      F001V: "person_id_candidate"
+    row_count: 19
+    probe_status: endpoint_found
+    blocked_or_empty: false
+    notes:
+      - "HTTP 200 with code=200 and data.resultCode=200."
+      - "data.records returned 19 executive records for 600000."
+      - "F005N and F012N semantics are candidate-level; units require later confirmation."
+      - "Cookie/SID/Authorization headers were observed in browser but must not be stored."
 
   - probe_id: c_p2_executive_300001
     source_id: cninfo_executive_profile
@@ -66,18 +100,53 @@ probe_records:
     company_name: "特锐德"
     org_id: "9900008270"
     page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=300001&orgId=9900008270#companyProfile"
-    request_url: null
-    method: null
-    params: {}
-    headers_required_candidate: []
-    records_path: null
-    sample_response_shape: null
-    sample_fields: []
-    row_count: null
-    probe_status: manual_probe_pending
-    blocked_or_empty: null
-    notes: >-
-      P2 manual DevTools probe pending. Target F10 tab: 高管/董监高. Do not write verified.
+    request_url: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyExecutives"
+    method: "GET"
+    params:
+      scode: "{company_code}"
+    headers_required_candidate:
+      - Referer
+    records_path: "data.records"
+    result_code_path: "data.resultCode"
+    sample_response_shape:
+      path: "/companyOverview/getCompanyExecutives"
+      code: 200
+      data:
+        total: 17
+        count: 17
+        resultCode: "200"
+        resultMsg: "success"
+        records: "list[17]"
+        indexRecords: null
+    sample_fields:
+      - F002V
+      - F010V
+      - F012V
+      - F017V
+      - F009V
+      - F005N
+      - F012N
+      - SEQID
+      - F001V
+    candidate_field_mapping:
+      F002V: "executive_name"
+      F010V: "gender"
+      F012V: "birth_year"
+      F017V: "education"
+      F009V: "position_titles"
+      F005N: "shareholding_quantity_candidate"
+      F012N: "compensation_candidate"
+      SEQID: "row_sequence_id"
+      F001V: "person_id_candidate"
+    row_count: 17
+    probe_status: endpoint_found
+    blocked_or_empty: false
+    notes:
+      - "HTTP 200 with code=200 and data.resultCode=200."
+      - "data.records returned 17 executive records for 300001."
+      - "Sample records include F002V/F010V/F012V/F017V/F009V/F005N/F012N/SEQID/F001V."
+      - "F005N and F012N semantics are candidate-level; units require later confirmation."
+      - "Cookie/SID/Authorization headers were observed in browser but must not be stored."
 
   - probe_id: c_p2_executive_688001
     source_id: cninfo_executive_profile
@@ -85,18 +154,53 @@ probe_records:
     company_name: "华兴源创"
     org_id: "9900038969"
     page_url: "https://www.cninfo.com.cn/new/disclosure/stock?stockCode=688001&orgId=9900038969#companyProfile"
-    request_url: null
-    method: null
-    params: {}
-    headers_required_candidate: []
-    records_path: null
-    sample_response_shape: null
-    sample_fields: []
-    row_count: null
-    probe_status: manual_probe_pending
-    blocked_or_empty: null
-    notes: >-
-      P2 manual DevTools probe pending. Target F10 tab: 高管/董监高. Do not write verified.
+    request_url: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyExecutives"
+    method: "GET"
+    params:
+      scode: "{company_code}"
+    headers_required_candidate:
+      - Referer
+    records_path: "data.records"
+    result_code_path: "data.resultCode"
+    sample_response_shape:
+      path: "/companyOverview/getCompanyExecutives"
+      code: 200
+      data:
+        total: 13
+        count: 13
+        resultCode: "200"
+        resultMsg: "success"
+        records: "list[13]"
+        indexRecords: null
+    sample_fields:
+      - F002V
+      - F010V
+      - F012V
+      - F017V
+      - F009V
+      - F005N
+      - F012N
+      - SEQID
+      - F001V
+    candidate_field_mapping:
+      F002V: "executive_name"
+      F010V: "gender"
+      F012V: "birth_year"
+      F017V: "education"
+      F009V: "position_titles"
+      F005N: "shareholding_quantity_candidate"
+      F012N: "compensation_candidate"
+      SEQID: "row_sequence_id"
+      F001V: "person_id_candidate"
+    row_count: 13
+    probe_status: endpoint_found
+    blocked_or_empty: false
+    notes:
+      - "HTTP 200 with code=200 and data.resultCode=200."
+      - "data.records returned 13 executive records for 688001."
+      - "F017V can be null for some records, so education should be nullable."
+      - "F005N and F012N semantics are candidate-level; units require later confirmation."
+      - "Cookie/SID/Authorization headers were observed in browser but must not be stored."
 
   # --- cninfo_share_capital_profile ---
   - probe_id: c_p2_share_capital_600000

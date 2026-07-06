@@ -147,9 +147,10 @@ _最后更新：2026-07-05_
 38. ~~C 类 basic_profile mapper draft + fixture schema validation~~ → **已完成**（§7i）
 39. ~~C 类 security_profile mapper draft + fixture schema validation~~ → **已完成**（§7j）
 40. ~~C 类 P2 DevTools probe plan + records 初始化~~ → **已完成**（§7k）
-41. 人工 DevTools probe P2：`cninfo_executive_profile` @ 600000 首发
-42. 可选：probe 官方 category code（B 类）
-43. **暂不全量抓取、暂不入库**
+41. ~~C 类 P2 executive_profile 人工 DevTools probe~~ → **3/3 endpoint_found**（§7l）
+42. executive_profile YAML backfill decision 或继续 P2 probe `share_capital_profile`
+43. 可选：probe 官方 category code（B 类）
+44. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -861,7 +862,27 @@ _最后更新：2026-07-05_
 
 **红线：** 本轮 **0** CNINFO 请求；**无 verified**；**无 testing_stable_sample**；不入库；不修改 candidate YAML。
 
-**下一步：** 人工 DevTools probe **`c_p2_executive_600000`**（高管/董监高 tab）→ 填写 probe record → 按 checklist 判定 status。
+**下一步：** ~~人工 DevTools probe `c_p2_executive_600000`~~ → 见 §7l。
+
+---
+
+## 7l. Phase 4 C 类 P2 Executive Profile Probe（2026-07-06）
+
+| 项 | 结果 |
+|----|------|
+| Source | `cninfo_executive_profile` |
+| Probe matrix | 600000 / 300001 / 688001 |
+| probe_status | **3/3 `endpoint_found`** |
+| Endpoint | `GET https://www.cninfo.com.cn/data20/companyOverview/getCompanyExecutives?scode={company_code}` |
+| records_path | `data.records` |
+| row_count | 19 / 17 / 13 |
+| Probe records | [c_class_p2_probe_records.yaml](../fixtures/c_class/probe/records/c_class_p2_probe_records.yaml) |
+
+**共享字段：** F002V, F010V, F012V, F017V, F009V, F005N, F012N, SEQID, F001V（见 probe record `candidate_field_mapping`）。
+
+**红线：** **无 verified**；**无 testing_stable_sample**；**无 candidate YAML backfill**（本轮）；不入库；未保存 Cookie/SID/Authorization。
+
+**下一步：** 起草 executive_profile YAML backfill decision；或继续 P2 probe `cninfo_share_capital_profile`。
 
 ---
 
@@ -879,7 +900,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **P1 mapper 完成** + **P2 probe plan 已初始化**（12 pending）；下一步人工 probe `cninfo_executive_profile` @ 600000。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **P2 executive_profile probe 完成**（3/3 endpoint_found）；下一步 YAML backfill decision 或 probe share_capital。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

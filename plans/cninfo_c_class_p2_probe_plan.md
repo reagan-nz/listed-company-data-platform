@@ -26,7 +26,7 @@ P2 目标是发现 **高管 / 股本结构 / 十大股东 / 十大流通股东**
 
 | source_id | priority | expected_page_area | expected_data_shape | status |
 |-----------|----------|-------------------|---------------------|--------|
-| `cninfo_executive_profile` | P2-A | 高管 / 董监高 | list records | manual_probe_pending |
+| `cninfo_executive_profile` | P2-A | 高管 / 董监高 | list records | **3/3 endpoint_found** |
 | `cninfo_share_capital_profile` | P2-A | 股本结构 / 股本变动 | object or list | manual_probe_pending |
 | `cninfo_top_shareholders_profile` | P2-A | 十大股东 | list records | manual_probe_pending |
 | `cninfo_top_float_shareholders_profile` | P2-A | 十大流通股东 | list records | manual_probe_pending |
@@ -50,6 +50,19 @@ P2 目标是发现 **高管 / 股本结构 / 十大股东 / 十大流通股东**
 | `cninfo_top_float_shareholders_profile` | 同上（`shareholder_scope: top_float_shareholder`） |
 
 对应 JSON Schema：`c_executive_profile`、`c_share_capital_profile`、`c_shareholder_profile`（[schemas/c_class/](../schemas/c_class/)）。
+
+### 2.3 `cninfo_executive_profile` 当前观察摘要（2026-07-06）
+
+- **P2 probe：** `cninfo_executive_profile` **3/3 `endpoint_found`**（600000 / 300001 / 688001）。
+- **Endpoint candidate：** `GET https://www.cninfo.com.cn/data20/companyOverview/getCompanyExecutives?scode={company_code}`
+- **records_path：** `data.records`
+- **result_code_path：** `data.resultCode`（期望 `"200"`）
+- **共享行级字段：** `F002V`, `F010V`, `F012V`, `F017V`, `F009V`, `F005N`, `F012N`, `SEQID`, `F001V`
+- **row_count：** 600000 → 19；300001 → 17；688001 → 13
+- **candidate_field_mapping：** `F002V`→executive_name, `F009V`→position_titles, `F010V`→gender, `F012V`→birth_year, `F017V`→education（nullable）, `F005N`/`F012N`→quantity/compensation candidate
+- **F005N / F012N** 语义仍为 candidate-level；单位待 UI 对照确认
+- **YAML backfill：** 尚未回填 `cninfo_c_class_source_candidates.yaml`（需单独 backfill decision）
+- **无 verified**；**无 testing_stable_sample**
 
 ---
 
@@ -124,9 +137,9 @@ P2 目标是发现 **高管 / 股本结构 / 十大股东 / 十大流通股东**
 |------|------|----------|
 | P2 probe plan | 本文件 | **已创建** |
 | P2 checklist | [cninfo_c_class_p2_probe_checklist.md](cninfo_c_class_p2_probe_checklist.md) | **已创建** |
-| P2 probe records | [c_class_p2_probe_records.yaml](../fixtures/c_class/probe/records/c_class_p2_probe_records.yaml) | **12 条 `manual_probe_pending`** |
+| P2 probe records | [c_class_p2_probe_records.yaml](../fixtures/c_class/probe/records/c_class_p2_probe_records.yaml) | executive **3/3 endpoint_found**；其余 9 条 pending |
 
-**下一步：** 人工 DevTools probe **`cninfo_executive_profile` @ `600000`**（`c_p2_executive_600000`）→ 填写 record → 按 checklist 判定 status → 同 source 扩样本。
+**下一步：** executive probe **完成**；起草 executive YAML backfill decision，或继续 probe `cninfo_share_capital_profile` @ 600000。
 
 ---
 
