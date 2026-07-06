@@ -155,8 +155,9 @@ _最后更新：2026-07-05_
 46. ~~C 类 executive_profile mapper draft + fixture schema validation~~ → **已完成**（§7q）
 47. ~~C 类 share_capital_profile mapper draft + fixture schema validation~~ → **已完成**（§7r）
 48. ~~C 类 shareholder_profile mapper draft + fixture schema validation~~ → **已完成**（§7s）
-49. P2-A mapper summary / P2-B probe
-49. **暂不全量抓取、暂不入库**
+49. ~~C 类 P2-A mapper completion summary~~ → **已完成**（§7t）
+50. P2-B probe planning 或 C-class consolidation
+51. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -976,7 +977,7 @@ _最后更新：2026-07-05_
 
 **红线：** sources 仍 **testing**；**无 verified**；**无 testing_stable_sample**；不入库。
 
-**下一步：** P2-A mapper drafts 全部完成（§7q–§7s）；P2-A mapper summary / P2-B probe next。
+**下一步：** P2-A mapper drafts 全部完成（§7q–§7s）；completion summary **done**（§7t）。
 
 ---
 
@@ -1012,7 +1013,7 @@ _最后更新：2026-07-05_
 
 **红线：** `source_status=testing`；**无 verified**；不入库；schema 未修改。
 
-**下一步：** shareholder_profile **done**（§7s）；P2-A mapper summary / P2-B probe next。
+**下一步：** shareholder_profile **done**（§7s）；P2-A completion summary **done**（§7t）。
 
 ---
 
@@ -1032,7 +1033,21 @@ _最后更新：2026-07-05_
 
 **红线：** `source_status=testing`；**无 verified**；不入库；schema 未修改。
 
-**下一步：** P2-A mapper summary / P2-B probe。
+**下一步：** P2-A mapper stage **closed**（§7t）；P2-B probe planning 或 C-class consolidation next。
+
+---
+
+## 7t. Phase 4 C 类 P2-A Mapper Completion Summary（2026-07-06）
+
+| 文档 | 内容 |
+|------|------|
+| [cninfo_c_class_p2a_mapper_completion_summary.md](cninfo_c_class_p2a_mapper_completion_summary.md) | P2-A 四源完整链路收口汇总 |
+
+**覆盖：** executive 6/6 · share_capital 6/6 · shareholder 12/12 schema PASS；live validation 12/12 LIVE_PASS。
+
+**红线：** 全部 `testing`；**无 verified**；**无 testing_stable_sample**；不入库。
+
+**下一步：** P2-B probe planning（dividend · contact · business_scope · industry）或 C-class consolidation。
 
 ---
 
@@ -1050,7 +1065,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **P2-A mapper draft 全部完成**（executive 6/6 · share_capital 6/6 · shareholder 12/12 schema PASS）；下一步 P2-A mapper summary / P2-B probe。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **P2-A mapper stage closed**（[completion summary](cninfo_c_class_p2a_mapper_completion_summary.md) · 24/24 schema PASS）；下一步 P2-B probe planning 或 C-class consolidation。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
