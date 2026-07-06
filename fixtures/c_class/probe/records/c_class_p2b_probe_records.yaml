@@ -7,14 +7,14 @@
 # Do NOT commit live response JSON with PII into Git.
 
 version: "draft-0.1"
-status: "p2b_dividend_probe_complete"
+status: "p2b_contact_probe_complete"
 verified: false
 summary_notes: >-
   P2-B manual DevTools probe: cninfo_dividend_financing_profile 3/3 endpoint_found
-  (getCompanyHisDividend historical dividend). cninfo_company_contact_profile 0/3,
-  cninfo_company_business_scope 0/3, cninfo_company_industry_profile 0/3
-  (9/12 manual_probe_pending). No YAML backfill. No verified. P1 + P2-A complete
-  (6 testing sources). Historical dividend only; broader financing/allotment not confirmed.
+  (getCompanyHisDividend). cninfo_company_contact_profile 3/3
+  derived_candidate_from_basic_profile (no independent endpoint). cninfo_company_business_scope
+  0/3, cninfo_company_industry_profile 0/3 (6/12 manual_probe_pending). No YAML backfill.
+  No verified. Contact derived from basic_profile getCompanyIntroduction.basicInformation.
 
 probe_scope:
   sources:
@@ -199,17 +199,38 @@ probe_records:
     records_path: null
     result_code_path: null
     sample_response_shape: null
-    sample_fields: []
-    candidate_field_mapping: {}
+    sample_fields:
+      - registered_address
+      - office_address
+      - postal_code
+      - website
+      - email
+      - phone
+      - fax
+      - board_secretary_candidate
+    candidate_field_mapping:
+      F004V: "registered_address"
+      F005V: "office_address"
+      F006V: "postal_code"
+      F011V: "website"
+      F012V: "email"
+      F013V: "phone"
+      F014V: "fax"
+      F018V: "board_secretary_candidate"
     row_count: null
-    probe_status: manual_probe_pending
-    derived_from_candidate: null
-    blocked_or_empty: null
+    probe_status: derived_candidate_from_basic_profile
+    derived_from_candidate:
+      source_id: "cninfo_company_basic_profile"
+      endpoint: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyIntroduction"
+      records_path: "data.records[0].basicInformation[0]"
+    blocked_or_empty: false
     notes:
-      - "P2-B manual DevTools probe pending."
+      - "No independent contact endpoint observed for 600000 during manual DevTools probe."
+      - "Contact fields are displayed inside 公司介绍 / 公司概况 and appear covered by getCompanyIntroduction.basicInformation."
+      - "Observed UI labels include 注册地址, 办公地址, 联系电话, 传真, 官方网站, 电子邮箱, 邮政编码, 公司董秘."
+      - "Treat contact_profile as derived candidate from cninfo_company_basic_profile for this company."
+      - "Do not store Cookie/SID/Authorization headers."
       - "Do not write verified."
-      - "Do not store Cookie/SID/Authorization."
-      - "Check overlap with basic_profile contact fields before independent endpoint claim."
 
   - probe_id: c_p2b_contact_300001
     source_id: cninfo_company_contact_profile
@@ -224,17 +245,37 @@ probe_records:
     records_path: null
     result_code_path: null
     sample_response_shape: null
-    sample_fields: []
-    candidate_field_mapping: {}
+    sample_fields:
+      - registered_address
+      - office_address
+      - postal_code
+      - website
+      - email
+      - phone
+      - fax
+      - board_secretary_candidate
+    candidate_field_mapping:
+      F004V: "registered_address"
+      F005V: "office_address"
+      F006V: "postal_code"
+      F011V: "website"
+      F012V: "email"
+      F013V: "phone"
+      F014V: "fax"
+      F018V: "board_secretary_candidate"
     row_count: null
-    probe_status: manual_probe_pending
-    derived_from_candidate: null
-    blocked_or_empty: null
+    probe_status: derived_candidate_from_basic_profile
+    derived_from_candidate:
+      source_id: "cninfo_company_basic_profile"
+      endpoint: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyIntroduction"
+      records_path: "data.records[0].basicInformation[0]"
+    blocked_or_empty: false
     notes:
-      - "P2-B manual DevTools probe pending."
+      - "No independent contact endpoint observed for 300001 during manual DevTools probe."
+      - "Contact fields are displayed inside 公司介绍 / 公司概况 and appear covered by getCompanyIntroduction.basicInformation."
+      - "Treat contact_profile as derived candidate from cninfo_company_basic_profile for this company."
+      - "Do not store Cookie/SID/Authorization headers."
       - "Do not write verified."
-      - "Do not store Cookie/SID/Authorization."
-      - "Check overlap with basic_profile contact fields before independent endpoint claim."
 
   - probe_id: c_p2b_contact_688001
     source_id: cninfo_company_contact_profile
@@ -249,17 +290,37 @@ probe_records:
     records_path: null
     result_code_path: null
     sample_response_shape: null
-    sample_fields: []
-    candidate_field_mapping: {}
+    sample_fields:
+      - registered_address
+      - office_address
+      - postal_code
+      - website
+      - email
+      - phone
+      - fax
+      - board_secretary_candidate
+    candidate_field_mapping:
+      F004V: "registered_address"
+      F005V: "office_address"
+      F006V: "postal_code"
+      F011V: "website"
+      F012V: "email"
+      F013V: "phone"
+      F014V: "fax"
+      F018V: "board_secretary_candidate"
     row_count: null
-    probe_status: manual_probe_pending
-    derived_from_candidate: null
-    blocked_or_empty: null
+    probe_status: derived_candidate_from_basic_profile
+    derived_from_candidate:
+      source_id: "cninfo_company_basic_profile"
+      endpoint: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyIntroduction"
+      records_path: "data.records[0].basicInformation[0]"
+    blocked_or_empty: false
     notes:
-      - "P2-B manual DevTools probe pending."
+      - "No independent contact endpoint observed for 688001 during manual DevTools probe."
+      - "Contact fields are displayed inside 公司介绍 / 公司概况 and appear covered by getCompanyIntroduction.basicInformation."
+      - "Treat contact_profile as derived candidate from cninfo_company_basic_profile for this company."
+      - "Do not store Cookie/SID/Authorization headers."
       - "Do not write verified."
-      - "Do not store Cookie/SID/Authorization."
-      - "Check overlap with basic_profile contact fields before independent endpoint claim."
 
   # --- cninfo_company_business_scope (P2-B3) ---
   - probe_id: c_p2b_business_scope_600000

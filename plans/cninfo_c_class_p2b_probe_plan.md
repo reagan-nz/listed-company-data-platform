@@ -27,7 +27,7 @@ P2-B aims to resolve the remaining C-class **candidate** sources after P1 and P2
 | source_id | priority | expected_page_area | expected_data_shape | initial_strategy | status |
 |-----------|----------|-------------------|---------------------|------------------|--------|
 | `cninfo_dividend_financing_profile` | P2-B1 | 分红融资 / 历史分红 | list records | independent_endpoint_probe | **3/3 endpoint_found** |
-| `cninfo_company_contact_profile` | P2-B2 | 公司资料 / 联系方式 / 基本资料 | object or derived fields | derived_vs_independent_decision | manual_probe_pending |
+| `cninfo_company_contact_profile` | P2-B2 | 公司资料 / 联系方式 / 基本资料 | object or derived fields | derived_vs_independent_decision | **3/3** `derived_candidate_from_basic_profile` |
 | `cninfo_company_business_scope` | P2-B3 | 公司简介 / 经营范围 / 主营业务 | object or derived fields | derived_vs_independent_decision | manual_probe_pending |
 | `cninfo_company_industry_profile` | P2-B4 | 所属行业 / 板块 / 概念 | object or derived fields | derived_recheck_only | manual_probe_pending |
 
@@ -73,6 +73,25 @@ P2-B aims to resolve the remaining C-class **candidate** sources after P1 and P2
 - Dividend plan (F007V) remains a text field; should not be over-parsed at this stage.
 - 3 known-company sample only; not full-market validation.
 - Do not store Cookie / SID / Authorization headers.
+
+### 2.4 `cninfo_company_contact_profile` 当前观察摘要（2026-07-06）
+
+- **Manual checks completed** for 600000 / 300001 / 688001
+- **No independent contact endpoint** observed in **3/3** checks
+- Contact fields appear in **公司介绍 / 公司概况** and are covered by `cninfo_company_basic_profile` via `getCompanyIntroduction.basicInformation`
+- **Source-level probe result:** **3/3** `derived_candidate_from_basic_profile`
+- **derived path：** `data.records[0].basicInformation[0]`
+- **Candidate fields（basicInformation）：**
+  - F004V → registered_address
+  - F005V → office_address
+  - F006V → postal_code
+  - F011V → website
+  - F012V → email
+  - F013V → phone
+  - F014V → fax
+  - F018V → board_secretary_candidate
+- **无 YAML backfill**；source 仍为 **candidate** until derived-source decision is drafted
+- **无 verified**
 
 ---
 
@@ -170,6 +189,6 @@ After probe complete: draft **P2-B YAML backfill decision**（单独文档）→
 
 ## 9. Next step
 
-**Completed:** `cninfo_dividend_financing_profile` **3/3** `endpoint_found`（historical dividend · `getCompanyHisDividend`）。
+**Completed:** `cninfo_dividend_financing_profile` **3/3** `endpoint_found`；`cninfo_company_contact_profile` **3/3** `derived_candidate_from_basic_profile`.
 
-**Next:** `c_p2b_contact_600000` — `cninfo_company_contact_profile` derived vs independent decision; **or** draft P2-B dividend YAML backfill decision（单独批准，本轮未执行）。
+**Next:** `c_p2b_business_scope_600000` — business_scope derived vs independent check; **or** draft P2-B derived-source / dividend YAML backfill decision（单独批准，本轮未执行）。
