@@ -170,8 +170,10 @@ _最后更新：2026-07-05_
 61. 扩至 200 家 → **CONDITIONAL YES**（§7ad · [200 plan](cninfo_c_class_scale_smoke_200_plan.md)）
 62. ~~active 200 样本派生 + dry-run checkpoint~~ → **PASS**（§7ae）
 63. ~~shareholder / security 口径文档化~~ → **完成**（§7af）
-64. 200 live smoke → **等待人工明确批准**
-65. **暂不全量抓取、暂不入库**
+64. ~~200 live smoke~~ → **LIVE_PARTIAL**（§7ag）
+65. ~~BSE failure diagnosis~~ → **完成**（§7ag）
+66. BSE-920 targeted probe + 样本清洗 → **下一步**
+67. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -1210,9 +1212,30 @@ _最后更新：2026-07-05_
 
 **Gate — enter_200：** **CONDITIONAL YES** — dry-run checkpoint **PASS**（§7ae）；口径 **done**（§7af）；**200 live 等待人工明确批准**。
 
-**红线：** 无 verified · 无 testing_stable_sample · 无 DB · 无 YAML backfill · **本轮不跑 live**
+**红线：** 无 verified · 无 testing_stable_sample · 无 DB · 无 YAML backfill
 
-**下一步：** **等待人工批准** 后执行 `validate_cninfo_c_class_scale_smoke.py --live --sample-file lab/eval_companies_c_class_smoke_200_active.yaml`。
+**下一步：** BSE-920 targeted probe · 样本清洗（839729 重复等）· 非 BSE 1000-like planning — **不全量重跑**
+
+---
+
+## 7ag. Phase 4 C 类 195 Active Live + BSE Diagnosis（2026-07-06）
+
+| 项 | 结果 |
+|----|------|
+| live | **LIVE_PARTIAL** — 195 cos · 1365 cases · pass=1101 · fail=69 · blocked=4 · 429=0 |
+| summary | [cninfo_c_class_scale_smoke_200_active_summary.md](../outputs/validation/cninfo_c_class_scale_smoke_200_active_summary.md) |
+| failure cases | [cninfo_c_class_scale_smoke_200_failure_cases.csv](../outputs/validation/cninfo_c_class_scale_smoke_200_failure_cases.csv) |
+| BSE diagnosis | [cninfo_c_class_scale_smoke_200_bse_diagnosis.md](../outputs/validation/cninfo_c_class_scale_smoke_200_bse_diagnosis.md) |
+
+**非 BSE（175 家）：** 主判定 pass **~97%** · chinext 100% · 失败主要为 3 家 ST/异常 + 臻宝科技股东 empty
+
+**BSE（20 家）：** 主判定 pass **59%** — **83/87 前缀 8 家 6/6 HTTP 500（9240002）**；**92 前缀 11/12 全过**；920186 仅 top_float empty
+
+**样本问题：** `839729`/`920729` 永顺生物同 orgid 重复
+
+**Gate — dividend backfill：** non-BSE **GO（决策）** · mixed universe **HOLD** · **不执行**
+
+**Gate — BSE：** **从主 scale gate 拆出**；legacy 83/87 标记 `legacy_code_incompatible`；需 **BSE targeted probe**（非 195 重跑）
 
 ---
 
@@ -1351,7 +1374,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **200 dry-run checkpoint PASS + 口径文档化**（§7ae · §7af）；**200 live 等待人工明确批准**（不自动跑 `--live`）。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **195 live smoke LIVE_PARTIAL + BSE diagnosis**（§7ag）；下一步 **BSE-920 targeted probe / 样本清洗**（不全量重跑 live）。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
