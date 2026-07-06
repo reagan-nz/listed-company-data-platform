@@ -1,0 +1,226 @@
+[coverage] start P1 | companies=200 mapped=199 expected_rows≈796
+[coverage] done 430017 星昊医药 | company_rows 4/4 found | cumulative found=4 not_found=0 skipped=0 | elapsed=28s
+[coverage] done 430685 新芝生物 | company_rows 4/4 found | cumulative found=8 not_found=0 skipped=0 | elapsed=52s
+[coverage] done 831087 秋乐种业 | company_rows 4/4 found | cumulative found=12 not_found=0 skipped=0 | elapsed=1m 15s
+[coverage] done 831689 克莱特 | company_rows 4/4 found | cumulative found=16 not_found=0 skipped=0 | elapsed=1m 37s
+[coverage] done 832171 志晟信息 | company_rows 4/4 found | cumulative found=20 not_found=0 skipped=0 | elapsed=2m 0s
+[coverage] unknown_error | company=832786 report_type=semi_annual_report strategy=keyword_with_year | SSLError: HTTPSConnectionPool(host='www.cninfo.com.cn', port=443): Max retries exceeded with url: /new/hisAnnouncement/query (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)')))
+[coverage] done 832786 骑士乳业 | company_rows 4/4 found | cumulative found=24 not_found=0 skipped=0 | elapsed=2m 11s
+[coverage] done 833427 华维设计 | company_rows 4/4 found | cumulative found=28 not_found=0 skipped=0 | elapsed=2m 15s
+[coverage] done 833914 远航精密 | company_rows 4/4 found | cumulative found=32 not_found=0 skipped=0 | elapsed=2m 21s
+[coverage] done 834765 美之高 | company_rows 4/4 found | cumulative found=36 not_found=0 skipped=0 | elapsed=2m 26s
+[coverage] done 835670 数字人 | company_rows 4/4 found | cumulative found=40 not_found=0 skipped=0 | elapsed=2m 32s
+[coverage] progress 10/199 mapped companies | current 835670 数字人 | rows found=40 not_found=0 skipped=0 | elapsed=2m 32s eta=48m 5s
+[coverage] done 836414 欧普泰 | company_rows 4/4 found | cumulative found=44 not_found=0 skipped=0 | elapsed=2m 38s
+[coverage] done 836942 恒立钻具 | company_rows 4/4 found | cumulative found=48 not_found=0 skipped=0 | elapsed=2m 44s
+[coverage] done 837821 则成电子 | company_rows 4/4 found | cumulative found=52 not_found=0 skipped=0 | elapsed=2m 50s
+[coverage] done 839167 同享科技 | company_rows 4/4 found | cumulative found=56 not_found=0 skipped=0 | elapsed=2m 56s
+[coverage] done 870436 大地电气 | company_rows 4/4 found | cumulative found=60 not_found=0 skipped=0 | elapsed=3m 1s
+[coverage] done 871753 天纺标 | company_rows 4/4 found | cumulative found=64 not_found=0 skipped=0 | elapsed=3m 5s
+[coverage] done 873122 中纺标 | company_rows 4/4 found | cumulative found=68 not_found=0 skipped=0 | elapsed=3m 11s
+[coverage] done 873690 捷众科技 | company_rows 4/4 found | cumulative found=72 not_found=0 skipped=0 | elapsed=3m 17s
+[coverage] done 920008 成电光信 | company_rows 2/4 found | cumulative found=74 not_found=2 skipped=0 | elapsed=4m 19s
+[coverage] done 920026 卓兆点胶 | company_rows 4/4 found | cumulative found=78 not_found=2 skipped=0 | elapsed=4m 23s
+[coverage] progress 20/199 mapped companies | current 920026 卓兆点胶 | rows found=78 not_found=2 skipped=0 | elapsed=4m 23s eta=39m 19s
+[coverage] done 920056 能之光 | company_rows 0/4 found | cumulative found=78 not_found=6 skipped=0 | elapsed=6m 12s
+[coverage] done 920080 奥美森 | company_rows 0/4 found | cumulative found=78 not_found=10 skipped=0 | elapsed=8m 0s
+[coverage] done 920106 林泰新材 | company_rows 2/4 found | cumulative found=80 not_found=12 skipped=0 | elapsed=8m 57s
+[coverage] done 920128 胜业电气 | company_rows 1/4 found | cumulative found=81 not_found=15 skipped=0 | elapsed=10m 36s
+[coverage] done 920166 海圣医疗 | company_rows 0/4 found | cumulative found=81 not_found=19 skipped=0 | elapsed=12m 21s
+[coverage] done 920185 贝特瑞 | company_rows 4/4 found | cumulative found=85 not_found=19 skipped=0 | elapsed=12m 25s
+[coverage] done 920208 青矩技术 | company_rows 4/4 found | cumulative found=89 not_found=19 skipped=0 | elapsed=12m 29s
+[coverage] done 920245 威博液压 | company_rows 4/4 found | cumulative found=93 not_found=19 skipped=0 | elapsed=12m 33s
+[coverage] done 920278 鹿得医疗 | company_rows 4/4 found | cumulative found=97 not_found=19 skipped=0 | elapsed=12m 37s
+[coverage] done 920371 欧福蛋业 | company_rows 4/4 found | cumulative found=101 not_found=19 skipped=0 | elapsed=12m 41s
+[coverage] progress 30/199 mapped companies | current 920371 欧福蛋业 | rows found=101 not_found=19 skipped=0 | elapsed=12m 41s eta=1h 11m 29s
+[coverage] done 920418 苏轴股份 | company_rows 4/4 found | cumulative found=105 not_found=19 skipped=0 | elapsed=12m 45s
+[coverage] done 920475 三友科技 | company_rows 4/4 found | cumulative found=109 not_found=19 skipped=0 | elapsed=12m 49s
+[coverage] done 920526 凯华材料 | company_rows 4/4 found | cumulative found=113 not_found=19 skipped=0 | elapsed=12m 53s
+[coverage] done 920580 科创新材 | company_rows 4/4 found | cumulative found=117 not_found=19 skipped=0 | elapsed=12m 57s
+[coverage] done 920663 明阳科技 | company_rows 4/4 found | cumulative found=121 not_found=19 skipped=0 | elapsed=13m 1s
+[coverage] done 920706 铁拓机械 | company_rows 4/4 found | cumulative found=125 not_found=19 skipped=0 | elapsed=13m 5s
+[coverage] done 920779 武汉蓝电 | company_rows 4/4 found | cumulative found=129 not_found=19 skipped=0 | elapsed=13m 10s
+[coverage] done 920826 盖世食品 | company_rows 4/4 found | cumulative found=133 not_found=19 skipped=0 | elapsed=13m 14s
+[coverage] done 920879 基康技术 | company_rows 4/4 found | cumulative found=137 not_found=19 skipped=0 | elapsed=13m 18s
+[coverage] done 920946 森萱医药 | company_rows 4/4 found | cumulative found=141 not_found=19 skipped=0 | elapsed=13m 23s
+[coverage] progress 40/199 mapped companies | current 920946 森萱医药 | rows found=141 not_found=19 skipped=0 | elapsed=13m 23s eta=53m 12s
+[coverage] done 300001 特锐德 | company_rows 4/4 found | cumulative found=145 not_found=19 skipped=0 | elapsed=13m 28s
+[coverage] done 300041 回天新材 | company_rows 4/4 found | cumulative found=149 not_found=19 skipped=0 | elapsed=13m 32s
+[coverage] done 300080 易成新能 | company_rows 4/4 found | cumulative found=153 not_found=19 skipped=0 | elapsed=13m 33s
+[coverage] done 300124 汇川技术 | company_rows 4/4 found | cumulative found=157 not_found=19 skipped=0 | elapsed=13m 38s
+[coverage] done 300162 雷曼光电 | company_rows 4/4 found | cumulative found=161 not_found=19 skipped=0 | elapsed=13m 43s
+[coverage] done 300200 高盟新材 | company_rows 4/4 found | cumulative found=165 not_found=19 skipped=0 | elapsed=13m 45s
+[coverage] done 300241 瑞丰光电 | company_rows 4/4 found | cumulative found=169 not_found=19 skipped=0 | elapsed=13m 46s
+[coverage] done 300278 华昌达 | company_rows 4/4 found | cumulative found=173 not_found=19 skipped=0 | elapsed=13m 47s
+[coverage] done 300320 海达股份 | company_rows 4/4 found | cumulative found=177 not_found=19 skipped=0 | elapsed=13m 48s
+[coverage] done 300364 中文在线 | company_rows 4/4 found | cumulative found=181 not_found=19 skipped=0 | elapsed=13m 53s
+[coverage] progress 50/199 mapped companies | current 300364 中文在线 | rows found=181 not_found=19 skipped=0 | elapsed=13m 53s eta=41m 24s
+[coverage] done 300406 九强生物 | company_rows 4/4 found | cumulative found=185 not_found=19 skipped=0 | elapsed=13m 57s
+[coverage] done 300443 金雷股份 | company_rows 4/4 found | cumulative found=189 not_found=19 skipped=0 | elapsed=14m 1s
+[coverage] done 300481 濮阳惠成 | company_rows 4/4 found | cumulative found=193 not_found=19 skipped=0 | elapsed=14m 6s
+[coverage] done 300516 久之洋 | company_rows 4/4 found | cumulative found=197 not_found=19 skipped=0 | elapsed=14m 10s
+[coverage] done 300554 三超新材 | company_rows 4/4 found | cumulative found=201 not_found=19 skipped=0 | elapsed=14m 11s
+[coverage] done 300590 移为通信 | company_rows 4/4 found | cumulative found=205 not_found=19 skipped=0 | elapsed=14m 15s
+[coverage] done 300625 三雄极光 | company_rows 4/4 found | cumulative found=209 not_found=19 skipped=0 | elapsed=14m 16s
+[coverage] done 300661 圣邦股份 | company_rows 4/4 found | cumulative found=213 not_found=19 skipped=0 | elapsed=14m 17s
+[coverage] done 300695 兆丰股份 | company_rows 4/4 found | cumulative found=217 not_found=19 skipped=0 | elapsed=14m 17s
+[coverage] done 300732 设研院 | company_rows 4/4 found | cumulative found=221 not_found=19 skipped=0 | elapsed=14m 18s
+[coverage] progress 60/199 mapped companies | current 300732 设研院 | rows found=221 not_found=19 skipped=0 | elapsed=14m 18s eta=33m 9s
+[coverage] done 300771 智莱科技 | company_rows 4/4 found | cumulative found=225 not_found=19 skipped=0 | elapsed=14m 22s
+[coverage] done 300807 天迈科技 | company_rows 4/4 found | cumulative found=229 not_found=19 skipped=0 | elapsed=14m 26s
+[coverage] done 300842 帝科股份 | company_rows 4/4 found | cumulative found=233 not_found=19 skipped=0 | elapsed=14m 27s
+[coverage] done 300877 金春股份 | company_rows 4/4 found | cumulative found=237 not_found=19 skipped=0 | elapsed=14m 28s
+[coverage] done 300911 亿田智能 | company_rows 4/4 found | cumulative found=241 not_found=19 skipped=0 | elapsed=14m 32s
+[coverage] done 300949 奥雅股份 | company_rows 4/4 found | cumulative found=245 not_found=19 skipped=0 | elapsed=14m 36s
+[coverage] done 300985 致远新能 | company_rows 4/4 found | cumulative found=249 not_found=19 skipped=0 | elapsed=14m 40s
+[coverage] done 301020 密封科技 | company_rows 4/4 found | cumulative found=253 not_found=19 skipped=0 | elapsed=14m 45s
+[coverage] done 301058 中粮科工 | company_rows 4/4 found | cumulative found=257 not_found=19 skipped=0 | elapsed=14m 46s
+[coverage] done 301096 百诚医药 | company_rows 4/4 found | cumulative found=261 not_found=19 skipped=0 | elapsed=14m 49s
+[coverage] progress 70/199 mapped companies | current 301096 百诚医药 | rows found=261 not_found=19 skipped=0 | elapsed=14m 49s eta=27m 20s
+[coverage] done 301133 金钟股份 | company_rows 4/4 found | cumulative found=265 not_found=19 skipped=0 | elapsed=14m 53s
+[coverage] done 301179 泽宇智能 | company_rows 4/4 found | cumulative found=269 not_found=19 skipped=0 | elapsed=14m 54s
+[coverage] done 301217 铜冠铜箔 | company_rows 4/4 found | cumulative found=273 not_found=19 skipped=0 | elapsed=14m 58s
+[coverage] done 301263 泰恩康 | company_rows 4/4 found | cumulative found=277 not_found=19 skipped=0 | elapsed=15m 2s
+[coverage] done 301302 华如科技 | company_rows 4/4 found | cumulative found=281 not_found=19 skipped=0 | elapsed=15m 5s
+[coverage] done 301339 通行宝 | company_rows 4/4 found | cumulative found=285 not_found=19 skipped=0 | elapsed=15m 9s
+[coverage] done 301389 隆扬电子 | company_rows 4/4 found | cumulative found=289 not_found=19 skipped=0 | elapsed=15m 13s
+[coverage] done 301500 飞南资源 | company_rows 4/4 found | cumulative found=293 not_found=19 skipped=0 | elapsed=15m 17s
+[coverage] done 301556 托普云农 | company_rows 2/4 found | cumulative found=295 not_found=21 skipped=0 | elapsed=15m 45s
+[coverage] done 301606 绿联科技 | company_rows 3/4 found | cumulative found=298 not_found=22 skipped=0 | elapsed=16m 21s
+[coverage] progress 80/199 mapped companies | current 301606 绿联科技 | rows found=298 not_found=22 skipped=0 | elapsed=16m 21s eta=24m 20s
+[coverage] done 600000 浦发银行 | company_rows 4/4 found | cumulative found=302 not_found=22 skipped=0 | elapsed=16m 22s
+[coverage] done 600057 厦门象屿 | company_rows 4/4 found | cumulative found=306 not_found=22 skipped=0 | elapsed=16m 23s
+[coverage] done 600117 西宁特钢 | company_rows 4/4 found | cumulative found=310 not_found=22 skipped=0 | elapsed=16m 23s
+[coverage] done 600176 中国巨石 | company_rows 4/4 found | cumulative found=314 not_found=22 skipped=0 | elapsed=16m 24s
+[coverage] done 600232 金鹰股份 | company_rows 4/4 found | cumulative found=318 not_found=22 skipped=0 | elapsed=16m 25s
+[coverage] done 600292 电投水电 | company_rows 4/4 found | cumulative found=322 not_found=22 skipped=0 | elapsed=16m 26s
+[coverage] done 600348 华阳股份 | company_rows 4/4 found | cumulative found=326 not_found=22 skipped=0 | elapsed=16m 26s
+[coverage] done 600403 大有能源 | company_rows 4/4 found | cumulative found=330 not_found=22 skipped=0 | elapsed=16m 27s
+[coverage] done 600480 凌云股份 | company_rows 4/4 found | cumulative found=334 not_found=22 skipped=0 | elapsed=16m 28s
+[coverage] done 600530 交大昂立 | company_rows 4/4 found | cumulative found=338 not_found=22 skipped=0 | elapsed=16m 29s
+[coverage] progress 90/199 mapped companies | current 600530 交大昂立 | rows found=338 not_found=22 skipped=0 | elapsed=16m 29s eta=19m 57s
+[coverage] done 600586 金晶科技 | company_rows 4/4 found | cumulative found=342 not_found=22 skipped=0 | elapsed=16m 29s
+[coverage] done 600633 浙数文化 | company_rows 4/4 found | cumulative found=346 not_found=22 skipped=0 | elapsed=16m 30s
+[coverage] done 600688 上海石化 | company_rows 4/4 found | cumulative found=350 not_found=22 skipped=0 | elapsed=16m 31s
+[coverage] done 600738 丽尚国潮 | company_rows 4/4 found | cumulative found=354 not_found=22 skipped=0 | elapsed=16m 32s
+[coverage] done 600790 轻纺城 | company_rows 4/4 found | cumulative found=358 not_found=22 skipped=0 | elapsed=16m 33s
+[coverage] done 600840 新湖创业 | company_rows 0/4 found | cumulative found=358 not_found=26 skipped=0 | elapsed=17m 4s
+[coverage] done 600885 宏发股份 | company_rows 4/4 found | cumulative found=362 not_found=26 skipped=0 | elapsed=17m 5s
+[coverage] done 600969 郴电国际 | company_rows 4/4 found | cumulative found=366 not_found=26 skipped=0 | elapsed=17m 6s
+[coverage] done 601019 山东出版 | company_rows 4/4 found | cumulative found=370 not_found=26 skipped=0 | elapsed=17m 6s
+[coverage] done 601139 深圳燃气 | company_rows 4/4 found | cumulative found=374 not_found=26 skipped=0 | elapsed=17m 7s
+[coverage] progress 100/199 mapped companies | current 601139 深圳燃气 | rows found=374 not_found=26 skipped=0 | elapsed=17m 7s eta=16m 57s
+[coverage] done 601330 绿色动力 | company_rows 4/4 found | cumulative found=378 not_found=26 skipped=0 | elapsed=17m 8s
+[coverage] done 601619 嘉泽新能 | company_rows 4/4 found | cumulative found=382 not_found=26 skipped=0 | elapsed=17m 10s
+[coverage] done 601865 福莱特 | company_rows 4/4 found | cumulative found=386 not_found=26 skipped=0 | elapsed=17m 11s
+[coverage] done 601992 金隅集团 | company_rows 4/4 found | cumulative found=390 not_found=26 skipped=0 | elapsed=17m 11s
+[coverage] done 603041 美思德 | company_rows 4/4 found | cumulative found=394 not_found=26 skipped=0 | elapsed=17m 12s
+[coverage] done 603089 正裕工业 | company_rows 4/4 found | cumulative found=398 not_found=26 skipped=0 | elapsed=17m 13s
+[coverage] done 603136 天目湖 | company_rows 4/4 found | cumulative found=402 not_found=26 skipped=0 | elapsed=17m 14s
+[coverage] done 603194 中力股份 | company_rows 1/4 found | cumulative found=403 not_found=29 skipped=0 | elapsed=17m 43s
+[coverage] done 603239 浙江仙通 | company_rows 4/4 found | cumulative found=407 not_found=29 skipped=0 | elapsed=17m 45s
+[coverage] done 603303 得邦照明 | company_rows 4/4 found | cumulative found=411 not_found=29 skipped=0 | elapsed=17m 45s
+[coverage] progress 110/199 mapped companies | current 603303 得邦照明 | rows found=411 not_found=29 skipped=0 | elapsed=17m 45s eta=14m 22s
+[coverage] done 603353 和顺石油 | company_rows 4/4 found | cumulative found=415 not_found=29 skipped=0 | elapsed=17m 46s
+[coverage] done 603439 三力制药 | company_rows 4/4 found | cumulative found=419 not_found=29 skipped=0 | elapsed=17m 47s
+[coverage] done 603578 三星新材 | company_rows 4/4 found | cumulative found=423 not_found=29 skipped=0 | elapsed=17m 48s
+[coverage] done 603657 春光科技 | company_rows 4/4 found | cumulative found=427 not_found=29 skipped=0 | elapsed=17m 48s
+[coverage] done 603716 塞力医疗 | company_rows 4/4 found | cumulative found=431 not_found=29 skipped=0 | elapsed=17m 49s
+[coverage] done 603815 交建股份 | company_rows 4/4 found | cumulative found=435 not_found=29 skipped=0 | elapsed=17m 50s
+[coverage] done 603898 好莱客 | company_rows 4/4 found | cumulative found=439 not_found=29 skipped=0 | elapsed=17m 51s
+[coverage] done 603982 泉峰汽车 | company_rows 4/4 found | cumulative found=443 not_found=29 skipped=0 | elapsed=17m 51s
+[coverage] done 605090 九丰能源 | company_rows 4/4 found | cumulative found=447 not_found=29 skipped=0 | elapsed=17m 52s
+[coverage] done 605277 新亚电子 | company_rows 4/4 found | cumulative found=451 not_found=29 skipped=0 | elapsed=17m 53s
+[coverage] progress 120/199 mapped companies | current 605277 新亚电子 | rows found=451 not_found=29 skipped=0 | elapsed=17m 53s eta=11m 46s
+[coverage] done 688001 华兴源创 | company_rows 4/4 found | cumulative found=455 not_found=29 skipped=0 | elapsed=17m 53s
+[coverage] done 688016 心脉医疗 | company_rows 4/4 found | cumulative found=459 not_found=29 skipped=0 | elapsed=17m 54s
+[coverage] done 688035 德邦科技 | company_rows 4/4 found | cumulative found=463 not_found=29 skipped=0 | elapsed=17m 55s
+[coverage] done 688056 莱伯泰科 | company_rows 4/4 found | cumulative found=467 not_found=29 skipped=0 | elapsed=17m 56s
+[coverage] done 688073 毕得医药 | company_rows 4/4 found | cumulative found=471 not_found=29 skipped=0 | elapsed=17m 56s
+[coverage] done 688091 上海谊众 | company_rows 4/4 found | cumulative found=475 not_found=29 skipped=0 | elapsed=17m 57s
+[coverage] done 688108 赛诺医疗 | company_rows 4/4 found | cumulative found=479 not_found=29 skipped=0 | elapsed=17m 58s
+[coverage] done 688123 聚辰股份 | company_rows 4/4 found | cumulative found=483 not_found=29 skipped=0 | elapsed=17m 59s
+[coverage] done 688141 杰华特 | company_rows 4/4 found | cumulative found=487 not_found=29 skipped=0 | elapsed=17m 59s
+[coverage] done 688161 威高骨科 | company_rows 4/4 found | cumulative found=491 not_found=29 skipped=0 | elapsed=18m 0s
+[coverage] progress 130/199 mapped companies | current 688161 威高骨科 | rows found=491 not_found=29 skipped=0 | elapsed=18m 0s eta=9m 33s
+[coverage] done 688178 万德斯 | company_rows 4/4 found | cumulative found=495 not_found=29 skipped=0 | elapsed=18m 1s
+[coverage] done 688196 卓越新能 | company_rows 4/4 found | cumulative found=499 not_found=29 skipped=0 | elapsed=18m 2s
+[coverage] done 688213 思特威 | company_rows 4/4 found | cumulative found=503 not_found=29 skipped=0 | elapsed=18m 3s
+[coverage] done 688230 芯导科技 | company_rows 4/4 found | cumulative found=507 not_found=29 skipped=0 | elapsed=18m 4s
+[coverage] done 688251 井松智能 | company_rows 4/4 found | cumulative found=511 not_found=29 skipped=0 | elapsed=18m 4s
+[coverage] done 688269 凯立新材 | company_rows 4/4 found | cumulative found=515 not_found=29 skipped=0 | elapsed=18m 5s
+[coverage] done 688288 鸿泉技术 | company_rows 4/4 found | cumulative found=519 not_found=29 skipped=0 | elapsed=18m 6s
+[coverage] done 688305 科德数控 | company_rows 4/4 found | cumulative found=523 not_found=29 skipped=0 | elapsed=18m 7s
+[coverage] done 688320 禾川科技 | company_rows 4/4 found | cumulative found=527 not_found=29 skipped=0 | elapsed=18m 7s
+[coverage] done 688336 三生国健 | company_rows 4/4 found | cumulative found=531 not_found=29 skipped=0 | elapsed=18m 8s
+[coverage] progress 140/199 mapped companies | current 688336 三生国健 | rows found=531 not_found=29 skipped=0 | elapsed=18m 8s eta=7m 38s
+[coverage] done 688357 建龙微纳 | company_rows 4/4 found | cumulative found=535 not_found=29 skipped=0 | elapsed=18m 9s
+[coverage] done 688372 伟测科技 | company_rows 4/4 found | cumulative found=539 not_found=29 skipped=0 | elapsed=18m 10s
+[coverage] done 688389 普门科技 | company_rows 4/4 found | cumulative found=543 not_found=29 skipped=0 | elapsed=18m 11s
+[coverage] done 688411 海博思创 | company_rows 1/4 found | cumulative found=544 not_found=32 skipped=0 | elapsed=18m 40s
+[coverage] done 688449 联芸科技 | company_rows 1/4 found | cumulative found=545 not_found=35 skipped=0 | elapsed=19m 9s
+[coverage] done 688485 九州一轨 | company_rows 4/4 found | cumulative found=549 not_found=35 skipped=0 | elapsed=19m 9s
+[coverage] done 688510 航亚科技 | company_rows 4/4 found | cumulative found=553 not_found=35 skipped=0 | elapsed=19m 11s
+[coverage] done 688528 秦川物联 | company_rows 4/4 found | cumulative found=557 not_found=35 skipped=0 | elapsed=19m 11s
+[coverage] done 688552 航天南湖 | company_rows 4/4 found | cumulative found=561 not_found=35 skipped=0 | elapsed=19m 12s
+[coverage] done 688570 天玛智控 | company_rows 4/4 found | cumulative found=565 not_found=35 skipped=0 | elapsed=19m 13s
+[coverage] progress 150/199 mapped companies | current 688570 天玛智控 | rows found=565 not_found=35 skipped=0 | elapsed=19m 13s eta=6m 16s
+[coverage] done 688588 凌志软件 | company_rows 4/4 found | cumulative found=569 not_found=35 skipped=0 | elapsed=19m 14s
+[coverage] done 688605 先锋精科 | company_rows 1/4 found | cumulative found=570 not_found=38 skipped=0 | elapsed=19m 48s
+[coverage] done 688621 阳光诺和 | company_rows 4/4 found | cumulative found=574 not_found=38 skipped=0 | elapsed=19m 52s
+[coverage] done 688651 盛邦安全 | company_rows 4/4 found | cumulative found=578 not_found=38 skipped=0 | elapsed=19m 52s
+[coverage] done 688669 聚石化学 | company_rows 4/4 found | cumulative found=582 not_found=38 skipped=0 | elapsed=19m 53s
+[coverage] done 688689 银河微电 | company_rows 4/4 found | cumulative found=586 not_found=38 skipped=0 | elapsed=19m 54s
+[coverage] done 688709 成都华微 | company_rows 4/4 found | cumulative found=590 not_found=38 skipped=0 | elapsed=19m 56s
+[coverage] done 688733 壹石通 | company_rows 4/4 found | cumulative found=594 not_found=38 skipped=0 | elapsed=19m 59s
+[coverage] network_timeout | company=688777 report_type=quarterly_report_q1 strategy=keyword_with_year | HTTP request timed out (8s)
+[coverage] done 688777 中控技术 | company_rows 4/4 found | cumulative found=598 not_found=38 skipped=0 | elapsed=20m 8s
+[coverage] done 688798 艾为电子 | company_rows 4/4 found | cumulative found=602 not_found=38 skipped=0 | elapsed=20m 9s
+[coverage] progress 160/199 mapped companies | current 688798 艾为电子 | rows found=602 not_found=38 skipped=0 | elapsed=20m 9s eta=4m 54s
+[coverage] done 000001 平安银行 | company_rows 0/4 found | cumulative found=602 not_found=38 skipped=4 | elapsed=20m 9s
+[coverage] done 000050 深天马A | company_rows 4/4 found | cumulative found=606 not_found=38 skipped=4 | elapsed=20m 13s
+[coverage] done 000408 藏格矿业 | company_rows 4/4 found | cumulative found=610 not_found=38 skipped=4 | elapsed=20m 17s
+[coverage] done 000522 白云山A | company_rows 0/4 found | cumulative found=610 not_found=42 skipped=4 | elapsed=21m 13s
+[coverage] done 000560 我爱我家 | company_rows 4/4 found | cumulative found=614 not_found=42 skipped=4 | elapsed=21m 17s
+[coverage] done 000612 焦作万方 | company_rows 4/4 found | cumulative found=618 not_found=42 skipped=4 | elapsed=21m 22s
+[coverage] done 000686 东北证券 | company_rows 4/4 found | cumulative found=622 not_found=42 skipped=4 | elapsed=21m 26s
+[coverage] done 000737 北方铜业 | company_rows 4/4 found | cumulative found=626 not_found=42 skipped=4 | elapsed=21m 31s
+[coverage] done 000801 四川九洲 | company_rows 4/4 found | cumulative found=630 not_found=42 skipped=4 | elapsed=21m 36s
+[coverage] done 000876 新希望 | company_rows 4/4 found | cumulative found=634 not_found=42 skipped=4 | elapsed=21m 41s
+[coverage] done 000925 众合科技 | company_rows 4/4 found | cumulative found=638 not_found=42 skipped=4 | elapsed=21m 46s
+[coverage] progress 170/199 mapped companies | current 000925 众合科技 | rows found=638 not_found=42 skipped=4 | elapsed=21m 46s eta=3m 42s
+[coverage] done 000980 众泰汽车 | company_rows 4/4 found | cumulative found=642 not_found=42 skipped=4 | elapsed=21m 51s
+[coverage] done 001226 拓山重工 | company_rows 4/4 found | cumulative found=646 not_found=42 skipped=4 | elapsed=21m 55s
+[coverage] done 001296 长江材料 | company_rows 4/4 found | cumulative found=650 not_found=42 skipped=4 | elapsed=21m 59s
+[coverage] done 001365 天海电子 | company_rows 0/4 found | cumulative found=650 not_found=46 skipped=4 | elapsed=22m 54s
+[coverage] done 002011 盾安环境 | company_rows 4/4 found | cumulative found=654 not_found=46 skipped=4 | elapsed=22m 58s
+[coverage] done 002049 紫光国微 | company_rows 4/4 found | cumulative found=658 not_found=46 skipped=4 | elapsed=23m 3s
+[coverage] done 002091 江苏国泰 | company_rows 4/4 found | cumulative found=662 not_found=46 skipped=4 | elapsed=23m 5s
+[coverage] done 002132 恒星科技 | company_rows 4/4 found | cumulative found=666 not_found=46 skipped=4 | elapsed=23m 10s
+[coverage] done 002171 楚江新材 | company_rows 4/4 found | cumulative found=670 not_found=46 skipped=4 | elapsed=23m 14s
+[coverage] done 002213 大为股份 | company_rows 4/4 found | cumulative found=674 not_found=46 skipped=4 | elapsed=23m 19s
+[coverage] progress 180/199 mapped companies | current 002213 大为股份 | rows found=674 not_found=46 skipped=4 | elapsed=23m 19s eta=2m 27s
+[coverage] done 002255 海陆重工 | company_rows 4/4 found | cumulative found=678 not_found=46 skipped=4 | elapsed=23m 23s
+[coverage] done 002295 精艺股份 | company_rows 4/4 found | cumulative found=682 not_found=46 skipped=4 | elapsed=23m 27s
+[coverage] done 002337 赛象科技 | company_rows 4/4 found | cumulative found=686 not_found=46 skipped=4 | elapsed=23m 31s
+[coverage] done 002376 新北洋 | company_rows 4/4 found | cumulative found=690 not_found=46 skipped=4 | elapsed=23m 35s
+[coverage] done 002413 雷科防务 | company_rows 4/4 found | cumulative found=694 not_found=46 skipped=4 | elapsed=23m 39s
+[coverage] done 002456 欧菲光 | company_rows 4/4 found | cumulative found=698 not_found=46 skipped=4 | elapsed=23m 43s
+[coverage] done 002495 佳隆股份 | company_rows 4/4 found | cumulative found=702 not_found=46 skipped=4 | elapsed=23m 47s
+[coverage] done 002541 鸿路钢构 | company_rows 4/4 found | cumulative found=706 not_found=46 skipped=4 | elapsed=23m 51s
+[coverage] done 002580 圣阳股份 | company_rows 4/4 found | cumulative found=710 not_found=46 skipped=4 | elapsed=23m 56s
+[coverage] done 002626 金达威 | company_rows 4/4 found | cumulative found=714 not_found=46 skipped=4 | elapsed=24m 0s
+[coverage] progress 190/199 mapped companies | current 002626 金达威 | rows found=714 not_found=46 skipped=4 | elapsed=24m 0s eta=1m 8s
+[coverage] done 002668 TCL智家 | company_rows 4/4 found | cumulative found=718 not_found=46 skipped=4 | elapsed=24m 5s
+[coverage] done 002712 思美传媒 | company_rows 4/4 found | cumulative found=722 not_found=46 skipped=4 | elapsed=24m 9s
+[coverage] done 002758 浙农股份 | company_rows 4/4 found | cumulative found=726 not_found=46 skipped=4 | elapsed=24m 13s
+[coverage] done 002801 微光股份 | company_rows 4/4 found | cumulative found=730 not_found=46 skipped=4 | elapsed=24m 17s
+[coverage] done 002843 泰嘉股份 | company_rows 4/4 found | cumulative found=734 not_found=46 skipped=4 | elapsed=24m 21s
+[coverage] done 002885 京泉华 | company_rows 4/4 found | cumulative found=738 not_found=46 skipped=4 | elapsed=24m 25s
+[coverage] done 002926 华西证券 | company_rows 4/4 found | cumulative found=742 not_found=46 skipped=4 | elapsed=24m 29s
+[coverage] done 002967 广电计量 | company_rows 4/4 found | cumulative found=746 not_found=46 skipped=4 | elapsed=24m 33s
+[coverage] done 003006 百亚股份 | company_rows 4/4 found | cumulative found=750 not_found=46 skipped=4 | elapsed=24m 37s
+Wrote 800 rows -> /Users/zhao/Desktop/97/实操/数据收集测试/listed_company_data_collector/outputs/validation/cninfo_report_p1_coverage_validation.csv
+Summary -> /Users/zhao/Desktop/97/实操/数据收集测试/listed_company_data_collector/outputs/validation/cninfo_report_p1_coverage_validation_summary.md
+Diagnostics -> /Users/zhao/Desktop/97/实操/数据收集测试/listed_company_data_collector/outputs/validation/cninfo_report_p1_coverage_parameter_diagnostics.md
+[coverage] finished | rows found=750 not_found=46 skipped=4 | elapsed=24m 37s
