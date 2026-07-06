@@ -29,7 +29,7 @@ P2-B aims to resolve the remaining C-class **candidate** sources after P1 and P2
 | `cninfo_dividend_financing_profile` | P2-B1 | 分红融资 / 历史分红 | list records | independent_endpoint_probe | **3/3 endpoint_found** |
 | `cninfo_company_contact_profile` | P2-B2 | 公司资料 / 联系方式 / 基本资料 | object or derived fields | derived_vs_independent_decision | **3/3** `derived_candidate_from_basic_profile` |
 | `cninfo_company_business_scope` | P2-B3 | 公司简介 / 经营范围 / 主营业务 | object or derived fields | derived_vs_independent_decision | **3/3** `derived_candidate_from_basic_profile` |
-| `cninfo_company_industry_profile` | P2-B4 | 所属行业 / 板块 / 概念 | object or derived fields | derived_recheck_only | manual_probe_pending |
+| `cninfo_company_industry_profile` | P2-B4 | 所属行业 / 板块 / 概念 | object or derived fields | derived_recheck_only | **3/3** `derived_candidate_from_basic_profile` |
 
 ### 2.1 Candidate `expected_fields`（probe 对照）
 
@@ -106,6 +106,32 @@ P2-B aims to resolve the remaining C-class **candidate** sources after P1 and P2
   - F017V → company_history_or_introduction
 - **无 YAML backfill**；source 仍为 **candidate** until derived-source decision is drafted
 - **无 verified** · **无 DB** · **无 CNINFO 请求**（本轮仅文档更新）
+
+### 2.6 `cninfo_company_industry_profile` 当前观察摘要（2026-07-06）
+
+- **Derived recheck completed** for 600000 / 300001 / 688001
+- **No independent industry endpoint** observed in **3/3** checks
+- Industry / market / listing-board 类字段由 `getCompanyIntroduction.basicInformation` 覆盖
+- **Source-level probe result:** **3/3** `derived_candidate_from_basic_profile`
+- **derived path：** `data.records[0].basicInformation[0]`
+- **Candidate fields（basicInformation）：**
+  - F032V → industry_candidate
+  - MARKET → market_candidate
+  - F044V → listing_board_or_industry_candidate
+- **Caveat：** 仅覆盖公司概况页 industry-like 字段，**不是**完整外部行业分类体系
+- **无 YAML backfill**；source 仍为 **candidate**
+- **无 verified**
+
+### 2.7 P2-B source-level rollup（2026-07-06）
+
+| source_id | 3-company result |
+|-----------|------------------|
+| `cninfo_dividend_financing_profile` | **3/3** `endpoint_found`（historical dividend only） |
+| `cninfo_company_contact_profile` | **3/3** `derived_candidate_from_basic_profile` |
+| `cninfo_company_business_scope` | **3/3** `derived_candidate_from_basic_profile` |
+| `cninfo_company_industry_profile` | **3/3** `derived_candidate_from_basic_profile` |
+
+**P2-B manual probe matrix：** **12/12** complete. **无 YAML backfill**（本轮）。
 
 ---
 
@@ -203,6 +229,13 @@ After probe complete: draft **P2-B YAML backfill decision**（单独文档）→
 
 ## 9. Next step
 
-**Completed:** dividend **3/3** `endpoint_found`；contact **3/3** derived；business_scope **3/3** `derived_candidate_from_basic_profile`.
+**P2-B probe complete（12/12）：**
 
-**Next:** `c_p2b_industry_*` — industry derived recheck only; **or** draft P2-B derived-source / dividend YAML backfill decision（单独批准，本轮未执行）。
+| source | result |
+|--------|--------|
+| dividend_financing | 3/3 `endpoint_found` |
+| contact | 3/3 derived |
+| business_scope | 3/3 derived |
+| industry | 3/3 derived |
+
+**Next:** Draft **P2-B source decision table** / YAML backfill decision（dividend → `testing`；derived sources → document `derived_from` only；**单独批准，本轮未执行**）。

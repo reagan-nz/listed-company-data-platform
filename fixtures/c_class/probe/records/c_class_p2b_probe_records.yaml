@@ -7,14 +7,14 @@
 # Do NOT commit live response JSON with PII into Git.
 
 version: "draft-0.1"
-status: "p2b_business_scope_probe_complete"
+status: "p2b_probe_complete"
 verified: false
 summary_notes: >-
-  P2-B manual DevTools probe: cninfo_dividend_financing_profile 3/3 endpoint_found
-  (getCompanyHisDividend). cninfo_company_contact_profile 3/3,
-  cninfo_company_business_scope 3/3 derived_candidate_from_basic_profile (no independent
-  endpoint). cninfo_company_industry_profile 0/3 (3/12 manual_probe_pending). No YAML
-  backfill. No verified. Derived sources use getCompanyIntroduction.basicInformation.
+  P2-B manual DevTools probe complete (12/12): cninfo_dividend_financing_profile 3/3
+  endpoint_found (getCompanyHisDividend). cninfo_company_contact_profile 3/3,
+  cninfo_company_business_scope 3/3, cninfo_company_industry_profile 3/3
+  derived_candidate_from_basic_profile. No independent endpoint for contact/business/industry.
+  No YAML backfill. No verified. Next: P2-B source decision table.
 
 probe_scope:
   sources:
@@ -428,7 +428,7 @@ probe_records:
       - "Do not store Cookie/SID/Authorization headers."
       - "Do not write verified."
 
-  # --- cninfo_company_industry_profile (P2-B4) ---
+  # --- cninfo_company_industry_profile (P2-B4) — 3/3 derived_candidate_from_basic_profile ---
   - probe_id: c_p2b_industry_600000
     source_id: cninfo_company_industry_profile
     company_code: "600000"
@@ -442,17 +442,29 @@ probe_records:
     records_path: null
     result_code_path: null
     sample_response_shape: null
-    sample_fields: []
-    candidate_field_mapping: {}
+    sample_fields:
+      - industry_candidate
+      - market_candidate
+      - listing_board_or_industry_candidate
+    candidate_field_mapping:
+      F032V: "industry_candidate"
+      MARKET: "market_candidate"
+      F044V: "listing_board_or_industry_candidate"
     row_count: null
-    probe_status: manual_probe_pending
-    derived_from_candidate: null
-    blocked_or_empty: null
+    probe_status: derived_candidate_from_basic_profile
+    derived_from_candidate:
+      source_id: "cninfo_company_basic_profile"
+      endpoint: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyIntroduction"
+      records_path: "data.records[0].basicInformation[0]"
+    blocked_or_empty: false
     notes:
-      - "P2-B manual DevTools probe pending."
+      - "No independent industry endpoint observed during manual DevTools check."
+      - "Industry / market / board fields appear covered by getCompanyIntroduction.basicInformation."
+      - "This only covers company overview industry-like fields, not a full external industry classification system."
       - "Do not write verified."
+      - "Do not backfill YAML."
+      - "Do not request CNINFO."
       - "Do not store Cookie/SID/Authorization."
-      - "Default: keep derived_from basic_profile (F032V/MARKET/F044V) unless separate XHR found."
 
   - probe_id: c_p2b_industry_300001
     source_id: cninfo_company_industry_profile
@@ -467,17 +479,29 @@ probe_records:
     records_path: null
     result_code_path: null
     sample_response_shape: null
-    sample_fields: []
-    candidate_field_mapping: {}
+    sample_fields:
+      - industry_candidate
+      - market_candidate
+      - listing_board_or_industry_candidate
+    candidate_field_mapping:
+      F032V: "industry_candidate"
+      MARKET: "market_candidate"
+      F044V: "listing_board_or_industry_candidate"
     row_count: null
-    probe_status: manual_probe_pending
-    derived_from_candidate: null
-    blocked_or_empty: null
+    probe_status: derived_candidate_from_basic_profile
+    derived_from_candidate:
+      source_id: "cninfo_company_basic_profile"
+      endpoint: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyIntroduction"
+      records_path: "data.records[0].basicInformation[0]"
+    blocked_or_empty: false
     notes:
-      - "P2-B manual DevTools probe pending."
+      - "No independent industry endpoint observed during manual DevTools check."
+      - "Industry / market / board fields appear covered by getCompanyIntroduction.basicInformation."
+      - "This only covers company overview industry-like fields, not a full external industry classification system."
       - "Do not write verified."
+      - "Do not backfill YAML."
+      - "Do not request CNINFO."
       - "Do not store Cookie/SID/Authorization."
-      - "Default: keep derived_from basic_profile (F032V/MARKET/F044V) unless separate XHR found."
 
   - probe_id: c_p2b_industry_688001
     source_id: cninfo_company_industry_profile
@@ -492,14 +516,26 @@ probe_records:
     records_path: null
     result_code_path: null
     sample_response_shape: null
-    sample_fields: []
-    candidate_field_mapping: {}
+    sample_fields:
+      - industry_candidate
+      - market_candidate
+      - listing_board_or_industry_candidate
+    candidate_field_mapping:
+      F032V: "industry_candidate"
+      MARKET: "market_candidate"
+      F044V: "listing_board_or_industry_candidate"
     row_count: null
-    probe_status: manual_probe_pending
-    derived_from_candidate: null
-    blocked_or_empty: null
+    probe_status: derived_candidate_from_basic_profile
+    derived_from_candidate:
+      source_id: "cninfo_company_basic_profile"
+      endpoint: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyIntroduction"
+      records_path: "data.records[0].basicInformation[0]"
+    blocked_or_empty: false
     notes:
-      - "P2-B manual DevTools probe pending."
+      - "No independent industry endpoint observed during manual DevTools check."
+      - "Industry / market / board fields appear covered by getCompanyIntroduction.basicInformation."
+      - "This only covers company overview industry-like fields, not a full external industry classification system."
       - "Do not write verified."
+      - "Do not backfill YAML."
+      - "Do not request CNINFO."
       - "Do not store Cookie/SID/Authorization."
-      - "Default: keep derived_from basic_profile (F032V/MARKET/F044V) unless separate XHR found."

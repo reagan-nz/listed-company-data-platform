@@ -162,8 +162,9 @@ _最后更新：2026-07-05_
 53. ~~C 类 P2-B contact_profile 600000 probe~~ → **derived**（§7x）
 54. ~~C 类 P2-B contact_profile 3/3 derived~~ → **已完成**（§7y）
 55. ~~C 类 P2-B business_scope 3/3 derived~~ → **已完成**（§7z）
-56. P2-B industry_profile derived recheck
-57. **暂不全量抓取、暂不入库**
+56. ~~C 类 P2-B industry_profile derived recheck~~ → **3/3 derived**（§7aa）
+57. P2-B source decision table / YAML backfill decision
+58. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -1053,7 +1054,7 @@ _最后更新：2026-07-05_
 
 **红线：** 全部 `testing`；**无 verified**；**无 testing_stable_sample**；不入库。
 
-**下一步：** P2-B dividend **done**（§7w）；contact **3/3 derived**（§7y）；business_scope **3/3 derived**（§7z）；industry recheck next。
+**下一步：** P2-B dividend **done**（§7w）；contact/business/industry **3/3 derived**（§7y–§7aa）；source decision table next。
 
 ---
 
@@ -1065,7 +1066,7 @@ _最后更新：2026-07-05_
 
 **Rollup:** **6 testing** · **4 candidate** · **0 verified** · **29 mapper fixtures 29/29 PASS**
 
-**下一步：** P2-B dividend probe **done**（§7w）；contact **3/3 derived**（§7y）；business_scope **3/3 derived**（§7z）；industry recheck next。
+**下一步：** P2-B probe **12/12 complete**（§7aa）；source decision table next。
 
 ---
 
@@ -1077,11 +1078,11 @@ _最后更新：2026-07-05_
 | [cninfo_c_class_p2b_probe_checklist.md](cninfo_c_class_p2b_probe_checklist.md) | 人工 DevTools 清单 |
 | [c_class_p2b_probe_records.yaml](../fixtures/c_class/probe/records/c_class_p2b_probe_records.yaml) | **12** records · `manual_probe_pending` |
 
-**P2-B sources：** dividend_financing · contact · business_scope · industry recheck
+**P2-B sources：** dividend_financing · contact · business_scope · industry — **12/12 complete**
 
 **红线：** 无 CNINFO 请求（初始化轮）· 无 YAML backfill · **无 verified** · 不入库
 
-**下一步：** dividend probe **done**（§7w）；contact **3/3 derived**（§7y）；business_scope **3/3 derived**（§7z）；industry recheck next。
+**下一步：** P2-B probe **12/12 complete**（§7aa）；source decision table next。
 
 ---
 
@@ -1099,11 +1100,36 @@ _最后更新：2026-07-05_
 
 **红线：** 无 YAML backfill · **无 verified** · 不入库
 
-**下一步：** business_scope **3/3 derived**（§7z）；industry recheck next。
+**下一步：** P2-B probe **12/12 complete**（§7aa）；source decision table next。
 
 ---
 
-**下一步：** industry derived recheck（见 §7z）。
+**下一步：** P2-B probe **12/12 complete**（§7aa）；source decision table next。
+
+---
+
+**下一步：** industry **3/3 derived**（§7aa）；P2-B source decision table next。
+
+---
+
+## 7aa. Phase 4 C 类 P2-B Industry Profile Derived Recheck Complete（2026-07-06）
+
+| 项 | 结果 |
+|----|------|
+| source_id | `cninfo_company_industry_profile` |
+| probe_status | **3/3** `derived_candidate_from_basic_profile` |
+| independent endpoint | **None observed**（600000 · 300001 · 688001） |
+| derived_from | `cninfo_company_basic_profile` · `getCompanyIntroduction` · `data.records[0].basicInformation[0]` |
+
+**Fields：** F032V → industry_candidate · MARKET → market_candidate · F044V → listing_board_or_industry_candidate
+
+**Caveat：** 仅公司概况 industry-like 字段；**不是**完整外部行业分类体系
+
+**P2-B rollup：** **12/12** probe complete（1 endpoint source + 3 derived sources）
+
+**红线：** 无 YAML backfill · **无 verified** · 无 DB
+
+**下一步：** P2-B source decision table / dividend YAML backfill decision.
 
 ---
 
@@ -1120,7 +1146,7 @@ _最后更新：2026-07-05_
 
 **红线：** 无 YAML backfill · source 仍 **candidate** · **无 verified** · 无 DB · 无 CNINFO 请求
 
-**下一步：** `c_p2b_industry_*` — industry derived recheck only.
+**下一步：** P2-B probe **12/12 complete**（§7aa）；source decision table next。
 
 ---
 
@@ -1137,7 +1163,7 @@ _最后更新：2026-07-05_
 
 **红线：** 无 YAML backfill · source 仍 **candidate** · **无 verified** · 不入库
 
-**下一步：** `c_p2b_industry_*` — industry derived recheck only.
+**下一步：** P2-B probe **12/12 complete**（§7aa）；source decision table next。
 
 ---
 
@@ -1154,7 +1180,7 @@ _最后更新：2026-07-05_
 
 **红线：** 无 YAML backfill · **无 verified** · 不入库
 
-**下一步：** contact **3/3 derived**（§7y）；business_scope **3/3 derived**（§7z）；industry recheck next.
+**下一步：** P2-B probe **12/12 complete**（§7aa）；source decision table next.
 
 ---
 
@@ -1172,7 +1198,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **P2-B business_scope 3/3 derived**（无独立 endpoint）；下一步 industry derived recheck。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **P2-B manual probe 12/12 complete**；下一步 P2-B source decision table / YAML backfill decision。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
