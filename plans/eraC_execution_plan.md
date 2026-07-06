@@ -163,8 +163,15 @@ _最后更新：2026-07-05_
 54. ~~C 类 P2-B contact_profile 3/3 derived~~ → **已完成**（§7y）
 55. ~~C 类 P2-B business_scope 3/3 derived~~ → **已完成**（§7z）
 56. ~~C 类 P2-B industry_profile derived recheck~~ → **3/3 derived**（§7aa）
-57. P2-B source decision table / YAML backfill decision
-58. **暂不全量抓取、暂不入库**
+57. ~~C 类 P2-B source decision table~~ → **已完成**（§7ab）
+58. ~~30-company smoke（含退市）~~ → **LIVE_PARTIAL**（§7ac）
+59. ~~30-company smoke（active-only）~~ → **完成**（§7ad · [active summary](../outputs/validation/cninfo_c_class_scale_smoke_30_active_summary.md)）
+60. dividend_history YAML backfill → **GO（仅决策 · 暂不执行）**（§7ad）
+61. 扩至 200 家 → **CONDITIONAL YES**（§7ad · [200 plan](cninfo_c_class_scale_smoke_200_plan.md)）
+62. ~~active 200 样本派生 + dry-run checkpoint~~ → **PASS**（§7ae）
+63. ~~shareholder / security 口径文档化~~ → **完成**（§7af）
+64. 200 live smoke → **等待人工明确批准**
+65. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -1054,7 +1061,7 @@ _最后更新：2026-07-05_
 
 **红线：** 全部 `testing`；**无 verified**；**无 testing_stable_sample**；不入库。
 
-**下一步：** P2-B dividend **done**（§7w）；contact/business/industry **3/3 derived**（§7y–§7aa）；source decision table next。
+**下一步：** P2-B decision table **done**（§7ab）；30-company smoke test next。
 
 ---
 
@@ -1066,7 +1073,7 @@ _最后更新：2026-07-05_
 
 **Rollup:** **6 testing** · **4 candidate** · **0 verified** · **29 mapper fixtures 29/29 PASS**
 
-**下一步：** P2-B probe **12/12 complete**（§7aa）；source decision table next。
+**下一步：** P2-B decision table **done**（§7ab）；30-company smoke test next。
 
 ---
 
@@ -1082,7 +1089,7 @@ _最后更新：2026-07-05_
 
 **红线：** 无 CNINFO 请求（初始化轮）· 无 YAML backfill · **无 verified** · 不入库
 
-**下一步：** P2-B probe **12/12 complete**（§7aa）；source decision table next。
+**下一步：** P2-B decision table **done**（§7ab）；30-company smoke test next。
 
 ---
 
@@ -1100,15 +1107,161 @@ _最后更新：2026-07-05_
 
 **红线：** 无 YAML backfill · **无 verified** · 不入库
 
-**下一步：** P2-B probe **12/12 complete**（§7aa）；source decision table next。
+**下一步：** P2-B decision table **done**（§7ab）；30-company smoke test next。
 
 ---
 
-**下一步：** P2-B probe **12/12 complete**（§7aa）；source decision table next。
+**下一步：** P2-B decision table **done**（§7ab）；30-company smoke test next。
 
 ---
 
-**下一步：** industry **3/3 derived**（§7aa）；P2-B source decision table next。
+**下一步：** P2-B decision table **done**（§7ab）；30-company smoke test next。
+
+---
+
+**下一步：** P2-B source decision table **done**（§7ab）；30-company smoke test next。
+
+---
+
+## 7ab. Phase 4 C 类 P2-B Source Decision Table（2026-07-06）
+
+| 文档 | 内容 |
+|------|------|
+| [cninfo_c_class_p2b_source_decision_table.md](cninfo_c_class_p2b_source_decision_table.md) | P2-B 四源阶段性决策表 |
+
+**Rollup:**
+
+| source | decision_type | next action |
+|--------|---------------|-------------|
+| `cninfo_dividend_financing_profile` | `direct_endpoint_candidate` | allow_yaml_backfill_decision → 30-company smoke test |
+| `cninfo_company_contact_profile` | `derived_candidate_from_basic_profile` | no_separate_fetch |
+| `cninfo_company_business_scope` | `derived_candidate_from_basic_profile` | no_separate_fetch |
+| `cninfo_company_industry_profile` | `derived_candidate_from_basic_profile` | no_separate_fetch |
+
+**P2-B probe discovery：** **closed & frozen** for this stage（**不再新增端点探测 / 不再新增 consolidation·completion 类 summary 文档**）。
+
+**红线：** 无 YAML 执行 · **无 verified** · 无 DB
+
+**下一步：** 30-company scalability smoke test — especially `basic_profile` + historical dividend (`getCompanyHisDividend`).
+
+---
+
+## 7ac. Phase 4 C 类 30-Company Scale Smoke Test（2026-07-06）
+
+| 项 | 内容 |
+|----|------|
+| 脚本 | `lab/validate_cninfo_c_class_scale_smoke.py` |
+| 样本 | `lab/eval_companies_c_class_smoke_30.yaml`（从 `eval_companies_200` 派生 · 30 家分层） |
+| 主判定 source | basic · dividend · P2-A 四源（executive / share_capital / top_shareholders / top_float） |
+| 观察维度 | security（`secType=szshe` 跨板块风险单列） |
+| derived 三源 | contact / business_scope / industry — 仅随 basic `basicInformation` fill_rate 统计，不单独请求 |
+| 指标升级 | fill_rate · non_empty_rate · reachability% · 板块分组 · valid-empty（dividend）· blocked/429 |
+| 输出 | [cninfo_c_class_scale_smoke_30_report.csv](../outputs/validation/cninfo_c_class_scale_smoke_30_report.csv) · [summary](../outputs/validation/cninfo_c_class_scale_smoke_30_summary.md) |
+
+**Live 结果（2026-07-06）：** `LIVE_PARTIAL` — 210 cases · pass=159 · fail=21 · blocked/429=0
+
+| source | reachability | non_empty% | valid_empty | 备注 |
+|--------|--------------|------------|-------------|------|
+| basic | 27/30 (90%) | 90% | — | 关键字段 fill_rate 100%（endpoint_found 子集） |
+| dividend | 27/30 (90%) | 83.3% | 2 | valid-empty 语义正常 |
+| P2-A 四源 | 83–90% | 83–90% | — | 3 家退市 HTTP 500 拖累 |
+| security（观察） | 30/30 (100%) | — | — | 不绑定主判定 |
+
+**失败归因：**
+- **3 家退市标的**（600647 退市同达 · 600002 齐鲁退市 · 002473 圣莱退）→ HTTP 500 / `9240002`，占 fail 18/21
+- **3 例 empty_but_valid**（688797 臻宝科技 top 股东 · 920186 中科仪 top 流通股东）→ 新股/数据空，非 blocked
+
+**derived fill_rate（basic 子集）：** contact 8 字段 100%；business_scope F017V 88.9%；industry F044V 92.6%
+
+**Gate — dividend YAML backfill：** **NO-GO**（reachability 90% < 95%；error 10% 因退市样本；建议剔除退市后复测，backfill 时窄化命名为 `dividend_history`）
+
+**Gate — 扩至 200 家：** **CONDITIONAL**（活跃上市子集表现良好；需：①样本剔除退市 ②明确 empty 股东西源口径 ③security secType 跨板块映射待修后再扩）
+
+**红线：** 无 verified · 无 testing_stable_sample · 无 DB · dividend YAML backfill **暂缓**
+
+---
+
+## 7ad. Phase 4 C 类 Active-Only 30 Live Smoke Complete（2026-07-06）
+
+| 项 | 内容 |
+|----|------|
+| 确认方式 | 输出文件完整性（`cninfo_c_class_scale_smoke_30_active_report.csv` · 210 live cases · 30×7 · 210/210 http_status） |
+| 样本 | [eval_companies_c_class_smoke_30_active.yaml](../lab/eval_companies_c_class_smoke_30_active.yaml)（剔除 600647 / 600002 / 002473） |
+| 输出 | [active report](../outputs/validation/cninfo_c_class_scale_smoke_30_active_report.csv) · [active summary](../outputs/validation/cninfo_c_class_scale_smoke_30_active_summary.md) |
+| 200 计划 | [cninfo_c_class_scale_smoke_200_plan.md](cninfo_c_class_scale_smoke_200_plan.md) |
+
+**Live 结果：** `LIVE_PARTIAL`（主判定语义）— pass=177 · observe_pass=30 · fail=3 · **blocked/429=0**
+
+| source | reachability | 备注 |
+|--------|--------------|------|
+| basic_profile | **100%** | non_empty 100% · 关键字段 fill_rate 100% |
+| dividend | **100%** | valid_empty=2 · 日期类 fill_rate 85.7% |
+| executive | **100%** | |
+| share_capital | **100%** | |
+| top_shareholders | 96.7% | 1× empty_but_valid（688797） |
+| top_float | 93.3% | 2× empty_but_valid（688797 · 920186） |
+| security（观察） | 100% | observe-only · 不绑定主判定 |
+
+**derived（经 basic fill_rate，无单独请求）：** contact 8 字段 100% · business_scope F015V/F016V 100% · industry F032V/MARKET 100%
+
+**3 fail 均为股东源 `empty_but_valid_response`（HTTP 200），非 network/schema failure。**
+
+**Gate — dividend_history YAML backfill：** **GO（仅决策）** — reachability 100% · valid_empty 可解释；**caveat：historical dividend only**；窄化命名 `dividend_history`；**本轮不执行 backfill**。
+
+**Gate — enter_200：** **CONDITIONAL YES** — dry-run checkpoint **PASS**（§7ae）；口径 **done**（§7af）；**200 live 等待人工明确批准**。
+
+**红线：** 无 verified · 无 testing_stable_sample · 无 DB · 无 YAML backfill · **本轮不跑 live**
+
+**下一步：** **等待人工批准** 后执行 `validate_cninfo_c_class_scale_smoke.py --live --sample-file lab/eval_companies_c_class_smoke_200_active.yaml`。
+
+---
+
+## 7af. Phase 4 C 类 200 Live 前口径 + Dry-Run Checkpoint（2026-07-06）
+
+| 项 | 状态 |
+|----|------|
+| 权威文档 | [cninfo_c_class_scale_smoke_200_plan.md](cninfo_c_class_scale_smoke_200_plan.md) §0 · §6 · §7 |
+| dry-run checkpoint | **PASS** — 195 companies · 1365 cases · `DRY_RUN_ONLY` · **0 CNINFO 请求** |
+| planned live | **1365** requests |
+
+### Shareholder `empty_but_valid` policy（摘要）
+
+适用：`cninfo_top_shareholders_profile` · `cninfo_top_float_shareholders_profile`。
+
+当 HTTP 200 · code=200 · `data.resultCode=200` · `data.records` 为 list 且 **length=0** → `retrieval_status: empty_but_valid_response`。
+
+- 不计 blocked / http_error / schema_unexpected；不直接代表 endpoint 不可用
+- 单独统计；按 board（及可选 company_age）观察集中度
+- 主 gate：**区分 endpoint_reachable 与 non_empty**
+- review 阈值：全样本 **>15%** · 单板块 **>30%** → board-specific review
+
+### `security_profile` observe-only policy（摘要）
+
+- 200 live **仍请求** marketOverview（观察）
+- **不绑定**主 go/no-go（`secType=szshe` 跨板块未充分验证）
+- summary **单独展示**；`observe_pass` 不计入主判定 pass/fail
+
+### 红线
+
+无 verified · 无 testing_stable_sample · 无 DB · 无 YAML backfill · **不跑 live 直至人工批准**
+
+---
+
+## 7ae. Phase 4 C 类 Active 200 Sample + Dry-Run（2026-07-06）
+
+| 项 | 内容 |
+|----|------|
+| 母本 | `lab/eval_companies_200.yaml`（200 家） |
+| 派生样本 | [eval_companies_c_class_smoke_200_active.yaml](../lab/eval_companies_c_class_smoke_200_active.yaml) |
+| active 数量 | **195**（剔除 5 家，未联网补样本） |
+| dry-run | [summary](../outputs/validation/cninfo_c_class_scale_smoke_200_active_summary.md) · **DRY_RUN_ONLY** · 1365 cases · 无 CNINFO 请求 |
+| planned live | **1365** = 195 × 7 sources |
+
+**剔除（5）：** 600896 退市海医 · 600002 齐鲁退市 · 600647 退市同达 · 002473 圣莱退 · 000760 斯太退
+
+**板块（active）：** sse_main 57 · szse_main 48 · chinext 45 · star 25 · bse 20
+
+**红线：** 本轮 **无 live** · 无 YAML backfill · 无 verified · 无 DB
 
 ---
 
@@ -1129,7 +1282,7 @@ _最后更新：2026-07-05_
 
 **红线：** 无 YAML backfill · **无 verified** · 无 DB
 
-**下一步：** P2-B source decision table / dividend YAML backfill decision.
+**下一步：** P2-B decision table **done**（§7ab）；30-company smoke test next。
 
 ---
 
@@ -1146,7 +1299,7 @@ _最后更新：2026-07-05_
 
 **红线：** 无 YAML backfill · source 仍 **candidate** · **无 verified** · 无 DB · 无 CNINFO 请求
 
-**下一步：** P2-B probe **12/12 complete**（§7aa）；source decision table next。
+**下一步：** P2-B decision table **done**（§7ab）；30-company smoke test next。
 
 ---
 
@@ -1163,7 +1316,7 @@ _最后更新：2026-07-05_
 
 **红线：** 无 YAML backfill · source 仍 **candidate** · **无 verified** · 不入库
 
-**下一步：** P2-B probe **12/12 complete**（§7aa）；source decision table next。
+**下一步：** P2-B decision table **done**（§7ab）；30-company smoke test next。
 
 ---
 
@@ -1180,7 +1333,7 @@ _最后更新：2026-07-05_
 
 **红线：** 无 YAML backfill · **无 verified** · 不入库
 
-**下一步：** P2-B probe **12/12 complete**（§7aa）；source decision table next.
+**下一步：** P2-B decision table **done**（§7ab）；30-company smoke test next.
 
 ---
 
@@ -1198,7 +1351,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **P2-B manual probe 12/12 complete**；下一步 P2-B source decision table / YAML backfill decision。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **200 dry-run checkpoint PASS + 口径文档化**（§7ae · §7af）；**200 live 等待人工明确批准**（不自动跑 `--live`）。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

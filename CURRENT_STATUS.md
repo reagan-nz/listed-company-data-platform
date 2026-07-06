@@ -8,7 +8,7 @@ _最后更新：2026-07-06_
 
 ## 当前阶段（一句话）
 
-**Era C Phase 1（A 类）已收口**（P1 **749/796 = 94.10%**）。**Phase 2 D 类已收口**（10 源 `testing_stable_sample`）。**Phase 3 B 类** corpus + live metadata v1 已打通（5 ready · 5/5 pass）。**Phase 4 C 类** P2-B manual probe **12/12 complete**（dividend 3/3 endpoint · contact/business/industry 3/3 derived）；**无 YAML backfill**；**无 verified**；**不入库**。
+**Era C Phase 1（A 类）已收口**（P1 **749/796 = 94.10%**）。**Phase 2 D 类已收口**（10 源 `testing_stable_sample`）。**Phase 3 B 类** corpus + live metadata v1 已打通（5 ready · 5/5 pass）。**Phase 4 C 类** active-only **30 live smoke 完成**（§7ad）；**200 active dry-run checkpoint PASS**（195 家 · 1365 cases · 无 CNINFO 请求 · [summary](outputs/validation/cninfo_c_class_scale_smoke_200_active_summary.md)）；**shareholder empty_but_valid + security observe-only 口径已文档化**（[200 plan](plans/cninfo_c_class_scale_smoke_200_plan.md) §6–§7）；**200 live 等待人工明确批准**；dividend_history backfill **GO（暂不执行）**；**无 verified**；**不入库**。
 
 ---
 
@@ -87,7 +87,11 @@ _最后更新：2026-07-06_
 | **Shareholder profile mapper** | `map_company_shareholder_profile()` · `lab/seed_cninfo_c_class_shareholder_profile_fixtures.py` · [mapper summary](outputs/validation/cninfo_c_class_shareholder_profile_mapper_summary.md) · [schema validation](outputs/validation/cninfo_c_class_shareholder_profile_schema_validation_summary.md)（**12/12 PASS**） |
 | **P2-A mapper completion** | [cninfo_c_class_p2a_mapper_completion_summary.md](plans/cninfo_c_class_p2a_mapper_completion_summary.md) — P2-A 四源链路收口（testing / prototype） |
 | **C-class status consolidation** | [cninfo_c_class_status_consolidation_summary.md](plans/cninfo_c_class_status_consolidation_summary.md) — 10 源总表（**6 testing · 4 candidate**） |
-| **P2-B probe** | [P2-B plan](plans/cninfo_c_class_p2b_probe_plan.md) · [P2-B probe records](fixtures/c_class/probe/records/c_class_p2b_probe_records.yaml)（**12/12 complete** · dividend endpoint · 3 derived sources） |
+| **P2-B probe** | [P2-B plan](plans/cninfo_c_class_p2b_probe_plan.md) · [probe records](fixtures/c_class/probe/records/c_class_p2b_probe_records.yaml) · [source decision table](plans/cninfo_c_class_p2b_source_decision_table.md)（discovery **closed**） |
+| **30 smoke（active）** | `lab/validate_cninfo_c_class_scale_smoke.py` · [active sample](lab/eval_companies_c_class_smoke_30_active.yaml) · [active summary](outputs/validation/cninfo_c_class_scale_smoke_30_active_summary.md)（**LIVE_PARTIAL** · pass=177 · blocked/429=0） |
+| **200 smoke 计划** | [cninfo_c_class_scale_smoke_200_plan.md](plans/cninfo_c_class_scale_smoke_200_plan.md)（计划 only · 不直接跑 live） |
+| **200 active 样本 + dry-run** | [eval_companies_c_class_smoke_200_active.yaml](lab/eval_companies_c_class_smoke_200_active.yaml)（**195** 家）· [dry-run summary](outputs/validation/cninfo_c_class_scale_smoke_200_active_summary.md) |
+| **30 smoke（含退市样本）** | [30 summary](outputs/validation/cninfo_c_class_scale_smoke_30_summary.md)（`LIVE_PARTIAL` · 退市拖累） |
 | **P2 DevTools probe** | [P2 plan](plans/cninfo_c_class_p2_probe_plan.md) · [P2 probe records](fixtures/c_class/probe/records/c_class_p2_probe_records.yaml)（**12/12**） · [P2-A backfill decision](plans/cninfo_c_class_p2a_yaml_backfill_decision.md) · [P2-A live validation](outputs/validation/cninfo_c_class_p2a_live_source_validation_summary.md)（**LIVE_PASS 12/12**） |
 | **Known-company fixtures** | [fixtures/c_class/known_company_profile_fixtures.jsonl](fixtures/c_class/known_company_profile_fixtures.jsonl)（**12** 条；600000 / 300001 / 688001） |
 | **Schema validation** | `lab/validate_cninfo_c_class_profile_schema.py` · [summary](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md)（**12/12 PASS**） |
@@ -189,8 +193,15 @@ flowchart TD
 | 53 | ~~C 类 P2-B contact_profile 3/3 derived~~ → **已完成** |
 | 54 | ~~C 类 P2-B business_scope 3/3 derived~~ → **已完成** |
 | 55 | ~~C 类 P2-B industry_profile derived recheck~~ → **3/3 derived** |
-| 56 | P2-B source decision table / YAML backfill decision |
-| 57 | **暂不全量抓取、暂不入库** |
+| 56 | ~~C 类 P2-B source decision table~~ → **已完成** |
+| 57 | ~~C 类 30-company smoke（含退市样本）~~ → **LIVE_PARTIAL**（[summary](outputs/validation/cninfo_c_class_scale_smoke_30_summary.md) · 退市拖累） |
+| 58 | ~~C 类 30-company smoke（active-only）~~ → **完成**（[active summary](outputs/validation/cninfo_c_class_scale_smoke_30_active_summary.md)） |
+| 59 | dividend_history YAML backfill → **GO（仅决策）** · caveat historical dividend only · **暂不执行** |
+| 60 | 扩至 200 家 → **CONDITIONAL YES** · [200 plan](plans/cninfo_c_class_scale_smoke_200_plan.md) |
+| 61 | ~~active 200 样本派生 + dry-run checkpoint~~ → **PASS**（195 · 1365 skipped · [summary](outputs/validation/cninfo_c_class_scale_smoke_200_active_summary.md)） |
+| 62 | ~~shareholder empty_but_valid + security observe-only 口径~~ → **已文档化**（[200 plan](plans/cninfo_c_class_scale_smoke_200_plan.md) §6–§7 · §7af） |
+| 63 | 200 live smoke → **等待人工明确批准**（planned **1365** requests · **本轮不跑 live**） |
+| 64 | **暂不全量抓取、暂不入库** |
 
 ---
 
@@ -199,6 +210,10 @@ flowchart TD
 - **不写 verified** / full-market stable
 - **不接** PostgreSQL / MinIO / MongoDB
 - **不**同时大规模推进 Phase 3 与 Phase 2 扩源
+- **不跑** 200 `--live`（**等待人工明确批准**；dry-run checkpoint 已完成）
+- **不执行** dividend YAML backfill（决策 GO 已记录，执行待 200 live 证据后）
+- **security_profile** 保持 **observe-only**（不绑定主 gate；见 [200 plan](plans/cninfo_c_class_scale_smoke_200_plan.md) §7）
+- **股东源** `empty_but_valid` 按 [200 plan](plans/cninfo_c_class_scale_smoke_200_plan.md) §6 解读（非 blocked/http_error/schema failure）
 
 ---
 
@@ -208,6 +223,7 @@ flowchart TD
 |--------|--------|
 | **B 类 corpus** | [corpus design](plans/cninfo_b_class_corpus_design.md) · [live summary](outputs/validation/cninfo_b_class_corpus_retrieval_live_summary.md) |
 | **C 类 profile 设计** | [P1 backfill decision](plans/cninfo_c_class_p1_yaml_backfill_decision.md) · [P2-A backfill decision](plans/cninfo_c_class_p2a_yaml_backfill_decision.md) · [candidates YAML](config/cninfo_c_class_source_candidates.yaml)（**P1 + P2-A backfill v1**） · [lint summary](outputs/validation/cninfo_c_class_registry_lint_summary.md) |
+| **C 类 30 smoke（active）** | [active summary](outputs/validation/cninfo_c_class_scale_smoke_30_active_summary.md) · [200 plan](plans/cninfo_c_class_scale_smoke_200_plan.md) |
 | **D 类 registry / schema 设计** | [registry](plans/cninfo_d_class_source_registry_design.md) · [YAML](config/cninfo_d_class_source_registry_draft.yaml) · [JSON Schema](schemas/d_class/) · [schema validation summary](outputs/validation/cninfo_d_class_schema_validation_summary.md) |
 | **Phase 2 总总结** | [cninfo_table_sources_phase2_current_final_summary.md](outputs/validation/cninfo_table_sources_phase2_current_final_summary.md) |
 | D 类 priority-1 分源 | [cninfo_table_sources_priority1_summary.md](outputs/validation/cninfo_table_sources_priority1_summary.md) |

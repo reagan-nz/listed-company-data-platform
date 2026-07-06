@@ -1,6 +1,6 @@
 # 仓库地图（PROJECT_MAP）
 
-_最后更新：2026-07-05_
+_最后更新：2026-07-06_
 
 > **这份文件是"仓库导航图"。** 目的很直接：让任何人（包括你自己、以及便宜/换代的 AI 模型）打开仓库后，**不用逐个文件猜用途**，就能知道「现在聚焦什么、哪个文件属于哪条线、哪个能删/能停/要留」。
 >
@@ -10,7 +10,7 @@ _最后更新：2026-07-05_
 
 ## 0. 一句话现状
 
-仓库里叠了**三代方向**的代码与文档。**当前聚焦：Era C Phase 3** — D 类设计已收口；**B 类 corpus 设计草案**进行中。前两代**已冻结**。
+仓库里叠了**三代方向**的代码与文档。**当前聚焦：Era C Phase 4 C 类** — 200 active dry-run checkpoint **PASS**；shareholder/security 口径已文档化；**200 live 等待人工明确批准**。前两代**已冻结**。
 
 ---
 
@@ -64,6 +64,7 @@ _最后更新：2026-07-05_
 | `validate_cninfo_c_class_security_profile_schema.py` | **Phase 4**：security_profile fixture JSON Schema 校验 | 是 |
 | `validate_cninfo_c_class_live_sources.py` | **Phase 4**：C 类 P1 basic/security live validation（`--dry-run` 默认） | 是 |
 | `validate_cninfo_c_class_p2a_live_sources.py` | **Phase 4**：C 类 P2-A live validation（`--dry-run` 默认） | 是 |
+| `validate_cninfo_c_class_scale_smoke.py` | **Phase 4**：C 类 30/200 scale smoke（fill_rate · `--sample-file` · `--dry-run` 默认） | 是 |
 | `seed_cninfo_c_class_executive_profile_fixtures.py` | **Phase 4**：内置 getCompanyExecutives 行 → executive_profile fixture JSONL（无网络） | 是 |
 | `validate_cninfo_c_class_executive_profile_schema.py` | **Phase 4**：executive_profile fixture JSON Schema 校验 | 是 |
 | `seed_cninfo_c_class_share_capital_profile_fixtures.py` | **Phase 4**：内置 getStockStructure 行 → share_capital_profile fixture JSONL（无网络） | 是 |
@@ -78,6 +79,8 @@ _最后更新：2026-07-05_
 | `test_cninfo_announcement_retrieval_rules.py` | 检索规则回放测试 | 是 |
 | `build_cninfo_p0_sample_companies.py` | 生成 40 家 P0 样本公司清单 | 是 |
 | `build_cninfo_report_p1_identity_mapping.py` | P1 identity mapping（离线） | 是 |
+
+**C 类 smoke 样本（`lab/`）：** `eval_companies_200.yaml`（母本 200）· `eval_companies_c_class_smoke_30_active.yaml` · `eval_companies_c_class_smoke_200_active.yaml`（**active 195**）
 
 ### 2.2 活跃配置（`config/`）
 - `cninfo_table_sources.yaml` — **Phase 2** 验证脚本驱动配置（12 source；10 stable + 2 candidate）
@@ -118,6 +121,8 @@ _最后更新：2026-07-05_
 - `plans/cninfo_c_class_status_consolidation_summary.md` — **Phase 4** C 类 10 源状态总表（P1 + P2-A · 6 testing / 4 candidate）
 - `plans/cninfo_c_class_p2b_probe_plan.md` — **Phase 4** P2-B DevTools probe 计划（dividend · contact · business_scope · industry）
 - `plans/cninfo_c_class_p2b_probe_checklist.md` — **Phase 4** P2-B 人工 probe 清单
+- `plans/cninfo_c_class_p2b_source_decision_table.md` — **Phase 4** P2-B 四源决策表（discovery closed · 无 YAML 执行）
+- `plans/cninfo_c_class_scale_smoke_200_plan.md` — **Phase 4** C 类 200-company scale smoke 计划（active 过滤 · gate · 不直接跑 live）
 - `plans/cninfo_c_class_p1_yaml_backfill_decision.md` — P1 candidate YAML 回填 / 暂缓决策（**YAML 未改**）
 - `plans/cninfo_c_class_basic_profile_field_mapping_draft.md` — getCompanyIntroduction → basic profile 字段映射草案
 - `plans/cninfo_c_class_f10_source_discovery_design.md` — **Phase 4** C 类 F10 / company profile source discovery 设计草案
@@ -243,6 +248,6 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 1. **Phase 1 已收口**：A 类见 [cninfo_report_phase1_final_summary.md](outputs/validation/cninfo_report_phase1_final_summary.md)（**testing/usable candidate**，不写 verified）。
 2. **Phase 2 已收口**；**Phase 3 D 类设计**见 [registry YAML](config/cninfo_d_class_source_registry_draft.yaml) / [schema validation summary](outputs/validation/cninfo_d_class_schema_validation_summary.md)。
 3. **Phase 3 B 类**见 [validation design](plans/cninfo_b_class_validation_design.md) / [category routing](plans/cninfo_b_class_category_routing_rules.md) / [categories YAML](config/cninfo_announcement_categories.yaml) / [document seed summary](outputs/validation/cninfo_b_class_document_seed_summary.md) / [B schema validation](outputs/validation/cninfo_b_class_document_schema_validation_summary.md)。
-4. **Phase 4 C 类**见 [registry lint](outputs/validation/cninfo_c_class_registry_lint_summary.md) / [fixture validation](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md) / [probe plan](plans/cninfo_c_class_devtools_probe_plan.md) / [P2 probe plan](plans/cninfo_c_class_p2_probe_plan.md) / [candidates YAML](config/cninfo_c_class_source_candidates.yaml)。
-5. **下一步**：P2-B source decision table / YAML backfill decision；P2-B probe **12/12** 见 [P2-B plan](plans/cninfo_c_class_p2b_probe_plan.md) §2.7。
+4. **Phase 4 C 类**见 [registry lint](outputs/validation/cninfo_c_class_registry_lint_summary.md) / [fixture validation](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md) / [active 30 smoke summary](outputs/validation/cninfo_c_class_scale_smoke_30_active_summary.md) / [candidates YAML](config/cninfo_c_class_source_candidates.yaml)。
+5. **下一步**：**200 live 等待人工明确批准**（[200 plan](plans/cninfo_c_class_scale_smoke_200_plan.md) §0 · §6–§7 · [dry-run summary](outputs/validation/cninfo_c_class_scale_smoke_200_active_summary.md) · planned **1365** requests · **本轮不跑 live**）。
 6. **每完成一个 Phase**：更新分层表状态 + `outputs/validation/` 留 summary；不做数据库接入。
