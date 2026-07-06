@@ -1,0 +1,13 @@
+fixture_index,company_code,shareholder_scope,source_id,report_period,rank,shareholder_name,validation_status,error_message,notes
+0,600000,top_shareholder,cninfo_top_shareholders_profile,2026-03-31,1,上海国际集团有限公司,pass,,mapper draft fixture; source_status=testing; not verified
+1,600000,top_shareholder,cninfo_top_shareholders_profile,2026-03-31,2,中国移动通信集团广东有限公司,pass,,mapper draft fixture; source_status=testing; not verified
+2,600000,top_float_shareholder,cninfo_top_float_shareholders_profile,2026-03-31,1,上海国际集团有限公司,pass,,mapper draft fixture; source_status=testing; not verified
+3,600000,top_float_shareholder,cninfo_top_float_shareholders_profile,2026-03-31,2,中国移动通信集团广东有限公司,pass,,mapper draft fixture; source_status=testing; not verified
+4,300001,top_shareholder,cninfo_top_shareholders_profile,2026-03-31,1,青岛德锐投资有限公司,pass,,mapper draft fixture; source_status=testing; not verified
+5,300001,top_shareholder,cninfo_top_shareholders_profile,2026-03-31,2,香港中央结算有限公司,pass,,mapper draft fixture; source_status=testing; not verified
+6,300001,top_float_shareholder,cninfo_top_float_shareholders_profile,2026-03-31,1,青岛德锐投资有限公司,pass,,mapper draft fixture; source_status=testing; not verified
+7,300001,top_float_shareholder,cninfo_top_float_shareholders_profile,2026-03-31,2,香港中央结算有限公司,pass,,mapper draft fixture; source_status=testing; not verified
+8,688001,top_shareholder,cninfo_top_shareholders_profile,2026-03-31,1,苏州源华创兴投资管理有限公司,pass,,mapper draft fixture; source_status=testing; not verified
+9,688001,top_shareholder,cninfo_top_shareholders_profile,2026-03-31,2,陈文源,pass,,mapper draft fixture; source_status=testing; not verified
+10,688001,top_float_shareholder,cninfo_top_float_shareholders_profile,2026-03-31,1,苏州源华创兴投资管理有限公司,pass,,mapper draft fixture; source_status=testing; not verified
+11,688001,top_float_shareholder,cninfo_top_float_shareholders_profile,2026-03-31,2,陈文源,pass,,mapper draft fixture; source_status=testing; not verified

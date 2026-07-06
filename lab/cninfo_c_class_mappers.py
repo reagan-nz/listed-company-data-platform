@@ -10,6 +10,9 @@ Maps getCompanyExecutives single row to c_executive_profile logical records.
 
 Maps getStockStructure single row to c_share_capital_profile logical records.
 
+Maps getTopTenStockholders / getTopTenCirculatingStockholders single row to
+c_shareholder_profile logical records.
+
 No network, no database, no verified.
 """
 
@@ -24,7 +27,12 @@ DEFAULT_BASIC_SOURCE_ID = "cninfo_company_basic_profile"
 DEFAULT_SECURITY_SOURCE_ID = "cninfo_company_security_profile"
 DEFAULT_EXECUTIVE_SOURCE_ID = "cninfo_executive_profile"
 DEFAULT_SHARE_CAPITAL_SOURCE_ID = "cninfo_share_capital_profile"
+DEFAULT_TOP_SHAREHOLDERS_SOURCE_ID = "cninfo_top_shareholders_profile"
+DEFAULT_TOP_FLOAT_SHAREHOLDERS_SOURCE_ID = "cninfo_top_float_shareholders_profile"
 DEFAULT_SOURCE_STATUS = "testing"
+
+SHAREHOLDER_SCOPE_TOP = "top_shareholder"
+SHAREHOLDER_SCOPE_TOP_FLOAT = "top_float_shareholder"
 
 
 def compute_raw_record_hash(raw_record: Dict[str, Any]) -> str:
@@ -50,6 +58,15 @@ def _num_or_none(value: Any) -> Optional[float]:
         return None
 
 
+def _int_or_none(value: Any) -> Optional[int]:
+    if value is None or value == "":
+        return None
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
 def make_executive_profile_id(
     source_id: str,
     company_code: str,
@@ -60,6 +77,15 @@ def make_executive_profile_id(
 
 
 def make_share_capital_profile_id(
+    source_id: str,
+    company_code: str,
+    row_key: str,
+) -> str:
+    key = f"{source_id}|{company_code}|{row_key}"
+    return hashlib.sha256(key.encode("utf-8")).hexdigest()[:32]
+
+
+def make_shareholder_profile_id(
     source_id: str,
     company_code: str,
     row_key: str,
@@ -395,6 +421,71 @@ def map_company_share_capital_profile(
     return record
 
 
+def map_company_shareholder_profile(
+    raw_record: Dict[str, Any],
+    company_code: str,
+    company_name: str,
+    source_id: str,
+    source_status: str = DEFAULT_SOURCE_STATUS,
+    shareholder_scope: str = SHAREHOLDER_SCOPE_TOP,
+    org_id: Optional[str] = None,
+) -> Optional[Dict[str, Any]]:
+    """
+    Map getTopTenStockholders / getTopTenCirculatingStockholders row to c_shareholder_profile.
+
+    raw_record shape (one element of data.records):
+        F001D, F002V, F003N, F004N, F005N, F006V, F007V
+
+    shareholder_scope: top_shareholder | top_float_shareholder (schema enum).
+    Returns None when raw_record is empty.
+    """
+    if not raw_record:
+        return None
+
+    report_period = normalize_date(raw_record.get("F001D"))
+    shareholder_name = _str_or_none(raw_record.get("F002V"))
+    rank = _int_or_none(raw_record.get("F005N"))
+    row_key = (
+        f"{report_period or 'unknown'}|{rank if rank is not None else 'unknown'}"
+        f"|{shareholder_name or 'unknown'}"
+    )
+
+    record: Dict[str, Any] = {
+        "shareholder_profile_id": make_shareholder_profile_id(
+            source_id, company_code, row_key
+        ),
+        "source_id": source_id,
+        "company_code": company_code,
+        "company_name": company_name,
+        "shareholder_scope": shareholder_scope,
+        "raw_record_json": raw_record,
+        "raw_record_hash": compute_raw_record_hash(raw_record),
+        "source_status": source_status,
+        "field_confidence": "medium",
+    }
+
+    if org_id:
+        record["org_id"] = org_id
+
+    optional_fields: Dict[str, Any] = {
+        "report_period": report_period,
+        "shareholder_name": shareholder_name,
+        "holding_shares": _num_or_none(raw_record.get("F003N")),
+        "holding_ratio": _num_or_none(raw_record.get("F004N")),
+        "rank": rank,
+        "shareholder_type_candidate": _str_or_none(raw_record.get("F006V")),
+    }
+
+    for key, val in optional_fields.items():
+        if val is not None:
+            record[key] = val
+
+    # Fields without schema slots remain in raw_record_json only:
+    # F007V change_status_or_change_amount_candidate.
+
+    return record
+
+
 def count_mapped_standard_fields(record: Dict[str, Any]) -> int:
     """Count non-lineage schema fields with values."""
     skip = {
@@ -439,6 +530,20 @@ def count_mapped_share_capital_profile_fields(record: Dict[str, Any]) -> int:
     """Count non-lineage schema fields with values for share_capital_profile."""
     skip = {
         "share_capital_profile_id", "source_id", "company_code", "company_name",
+        "raw_record_json", "raw_record_hash", "source_status",
+        "field_confidence", "created_at", "org_id",
+    }
+    return sum(
+        1 for k, v in record.items()
+        if k not in skip and v is not None and v != ""
+    )
+
+
+def count_mapped_shareholder_profile_fields(record: Dict[str, Any]) -> int:
+    """Count non-lineage schema fields with values for shareholder_profile."""
+    skip = {
+        "shareholder_profile_id", "source_id", "company_code", "company_name",
+        "shareholder_scope",
         "raw_record_json", "raw_record_hash", "source_status",
         "field_confidence", "created_at", "org_id",
     }

@@ -154,8 +154,8 @@ _最后更新：2026-07-05_
 45. ~~C 类 P2-A live validation v1~~ → **LIVE_PASS**（§7p）
 46. ~~C 类 executive_profile mapper draft + fixture schema validation~~ → **已完成**（§7q）
 47. ~~C 类 share_capital_profile mapper draft + fixture schema validation~~ → **已完成**（§7r）
-48. shareholder_profile mapper draft（top + float）
-48. 可选：probe 官方 category code（B 类）
+48. ~~C 类 shareholder_profile mapper draft + fixture schema validation~~ → **已完成**（§7s）
+49. P2-A mapper summary / P2-B probe
 49. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
@@ -976,7 +976,7 @@ _最后更新：2026-07-05_
 
 **红线：** sources 仍 **testing**；**无 verified**；**无 testing_stable_sample**；不入库。
 
-**下一步：** P2-A mapper drafts → executive **done**（§7q）；share_capital **done**（§7r）；shareholders next。
+**下一步：** P2-A mapper drafts 全部完成（§7q–§7s）；P2-A mapper summary / P2-B probe next。
 
 ---
 
@@ -1012,7 +1012,27 @@ _最后更新：2026-07-05_
 
 **红线：** `source_status=testing`；**无 verified**；不入库；schema 未修改。
 
-**下一步：** shareholder_profile mapper draft（top_shareholders + top_float_shareholders）。
+**下一步：** shareholder_profile **done**（§7s）；P2-A mapper summary / P2-B probe next。
+
+---
+
+## 7s. Phase 4 C 类 Shareholder Profile Mapper Draft（2026-07-06）
+
+| 脚本 / 输出 | 内容 |
+|------|------|
+| [cninfo_c_class_mappers.py](../lab/cninfo_c_class_mappers.py) | `map_company_shareholder_profile()` — getTopTenStockholders / getTopTenCirculatingStockholders row → `c_shareholder_profile` |
+| [seed_cninfo_c_class_shareholder_profile_fixtures.py](../lab/seed_cninfo_c_class_shareholder_profile_fixtures.py) | 内置 12 行（600000/300001/688001 × top_shareholder×2 + top_float_shareholder×2） |
+| [shareholder_profile_fixtures.jsonl](../fixtures/c_class/shareholder_profile/shareholder_profile_fixtures.jsonl) | **12** 条 mapped fixture |
+| [validate_cninfo_c_class_shareholder_profile_schema.py](../lab/validate_cninfo_c_class_shareholder_profile_schema.py) | schema 校验 |
+| [cninfo_c_class_shareholder_profile_schema_validation_summary.md](../outputs/validation/cninfo_c_class_shareholder_profile_schema_validation_summary.md) | **12/12 PASS** |
+
+**映射：** F001D→report_period, F002V→shareholder_name, F003N→holding_shares, F004N→holding_ratio, F005N→rank, F006V→shareholder_type_candidate；F007V 留在 raw_record_json。
+
+**shareholder_scope：** `top_shareholder`（cninfo_top_shareholders_profile）· `top_float_shareholder`（cninfo_top_float_shareholders_profile）
+
+**红线：** `source_status=testing`；**无 verified**；不入库；schema 未修改。
+
+**下一步：** P2-A mapper summary / P2-B probe。
 
 ---
 
@@ -1030,7 +1050,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **share_capital_profile mapper draft 完成**（6/6 schema PASS）；下一步 shareholder_profile mapper（top + float）。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **P2-A mapper draft 全部完成**（executive 6/6 · share_capital 6/6 · shareholder 12/12 schema PASS）；下一步 P2-A mapper summary / P2-B probe。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
