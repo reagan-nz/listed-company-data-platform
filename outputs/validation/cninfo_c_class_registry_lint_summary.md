@@ -17,7 +17,7 @@
 
 | 指标 | 数值 |
 |------|------|
-| total_rules | **12** |
+| total_rules | **14** |
 | sources | **10** |
 | fail | **0** |
 | warn | **0** |
@@ -28,8 +28,9 @@
 
 - **source_layer** = `company_profile`（R002）
 - **verified** 全部为 false（R003）
-- **recommended_status** 当前阶段全部为 `candidate`（R005）
-- **endpoint=null** 记 INFO，不 FAIL（R006）
+- **recommended_status** 不超过 `testing`（R005；P1 backfill 后允许 candidate/testing）
+- **endpoint** 已回填 source 须有 `endpoint.url`（R013）
+- **industry_profile** 无 endpoint 时应有 `derived_from_candidate`（R014）
 - **无 B/D source_id 混入**（R012）
 
 ## 5. 问题清单
@@ -44,9 +45,9 @@ _无 FAIL / WARN。_
 
 ## 7. 下一步
 
-1. known-company fixture schema validation。
-2. per-source DevTools probe。
-3. 回填 endpoint / records_path。
+1. C 类 known-company live validation（600000 / 300001 / 688001）。
+2. basic_profile field mapping 与 mapper 草案。
+3. P2 source DevTools probe（executive / share_capital / shareholders）。
 
 ## 附录
 

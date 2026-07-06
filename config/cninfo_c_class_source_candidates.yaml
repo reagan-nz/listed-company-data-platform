@@ -1,6 +1,6 @@
 # CNINFO C 类 Company Profile Source Candidates
-# Era C Phase 4 design draft — company_profile layer
-# 设计草案；endpoint 未 probe；不入库；不写 verified。
+# Era C Phase 4 — P1 YAML backfill v1 (basic + security testing; industry derived).
+# 不入库；不写 verified。
 #
 # 权威设计: plans/cninfo_c_class_f10_source_discovery_design.md
 # 数据模型: plans/cninfo_c_class_profile_data_model_draft.md
@@ -28,9 +28,19 @@ sources:
     source_layer: company_profile
     source_category: basic_profile
     profile_section: basic
-    recommended_status: candidate
+    recommended_status: testing
     verified: false
-    endpoint: null
+    endpoint:
+      url: "https://www.cninfo.com.cn/data20/companyOverview/getCompanyIntroduction"
+      method: "GET"
+      params_template:
+        scode: "{company_code}"
+      records_path: "data.records[0]"
+      sub_records:
+        basic_information_path: "data.records[0].basicInformation[0]"
+        listing_information_path: "data.records[0].listingInformation[0]"
+      headers_required_candidate:
+        - Referer
     page_url: null
     expected_fields:
       - company_name
@@ -43,9 +53,30 @@ sources:
       - legal_representative
       - registered_address
       - office_address
+    sample_observation:
+      companies_tested:
+        - company_code: "600000"
+          company_name: "浦发银行"
+          result: "endpoint_found"
+        - company_code: "300001"
+          company_name: "特锐德"
+          result: "endpoint_found"
+        - company_code: "688001"
+          company_name: "华兴源创"
+          result: "endpoint_found"
+      sample_result_summary: >-
+        3/3 endpoint_found in live validation v1; earlier manual DevTools probe
+        observed 600000 empty_but_valid_response.
+    known_caveats:
+      - "Earlier manual DevTools probe observed 600000 returning HTTP 200 with empty basicInformation/listingInformation arrays."
+      - "Later live validation v1 returned non-empty basicInformation/listingInformation for 600000."
+      - "This suggests possible cache/context/timing differences; keep small-sample testing status only."
+      - "Field semantics are candidate-level and require validation script confirmation."
+      - "Some fields may remain raw-only until schema mapping is finalized."
     notes: >-
-      Candidate C-class F10 basic profile tab. P0 script partial coverage exists
-      (validate_cninfo_f10_company_profile.py); endpoint not yet probed per-source.
+      P1 DevTools probe backfill v1. getCompanyIntroduction endpoint.
+      See plans/cninfo_c_class_basic_profile_field_mapping_draft.md.
+      verified=false; not full-market stable.
 
   - source_id: cninfo_company_industry_profile
     source_layer: company_profile
@@ -55,12 +86,27 @@ sources:
     verified: false
     endpoint: null
     page_url: null
+    derived_from_candidate:
+      source_id: "cninfo_company_basic_profile"
+      path: "data.records[0].basicInformation[0]"
+      fields:
+        - raw_field: "F032V"
+          candidate_meaning: "industry_name"
+        - raw_field: "MARKET"
+          candidate_meaning: "market_or_board"
+        - raw_field: "F044V"
+          candidate_meaning: "index_or_plate_labels"
     expected_fields:
       - industry
       - industry_code_candidate
       - listed_board
+    known_caveats:
+      - "No separate industry_profile endpoint found in P1 probe."
+      - "Industry profile may be derived from basic_profile fields."
+      - "Keep as candidate until live validation confirms derived mapping."
     notes: >-
-      Industry / sector classification from F10. Endpoint not yet probed.
+      Industry / sector classification. No independent endpoint in P1 probe;
+      derived_from cninfo_company_basic_profile. Endpoint not probed separately.
 
   - source_id: cninfo_company_business_scope
     source_layer: company_profile
@@ -188,9 +234,19 @@ sources:
     source_layer: company_profile
     source_category: security_profile
     profile_section: security
-    recommended_status: candidate
+    recommended_status: testing
     verified: false
-    endpoint: null
+    endpoint:
+      url: "https://www.cninfo.com.cn/new/newInterface/marketOverview"
+      method: "GET"
+      params_template:
+        secCode: "{company_code}"
+        orgId: "{org_id}"
+        secType: "szshe"
+      records_path: "$"
+      headers_required_candidate:
+        - Referer
+        - X-Requested-With
     page_url: null
     expected_fields:
       - company_code
@@ -200,5 +256,59 @@ sources:
       - listing_date
       - listing_status
       - is_st_candidate
+    sample_observation:
+      companies_tested:
+        - company_code: "600000"
+          company_name: "浦发银行"
+          result: "endpoint_found"
+        - company_code: "300001"
+          company_name: "特锐德"
+          result: "endpoint_found"
+        - company_code: "688001"
+          company_name: "华兴源创"
+          result: "endpoint_found"
+      sample_result_summary: "3/3 endpoint_found"
+    sample_fields:
+      - secCode
+      - secName
+      - secType
+      - tradingStatus
+      - age
+      - finance
+      - delisted
+      - sshk
+      - szhk
+    annex_endpoints:
+      - annex_id: "numeric_head_strip"
+        url: "https://www.cninfo.com.cn/data20/companyOverview/getHeadStripData"
+        method: "GET"
+        params_template:
+          scode: "{company_code}"
+        records_path: "data.records[0]"
+        observed_for:
+          - "600000"
+          - "300001"
+          - "688001"
+        sample_fields:
+          - ENDDATE
+          - F005N
+          - F020N
+          - F021N
+          - F041N
+          - F081N
+          - F089N
+          - F102N
+          - F109N
+          - F111N
+          - F115N
+        known_caveats:
+          - "FxxxN field semantics are not confirmed."
+          - "Keep raw-first; do not normalize into share_capital_profile yet."
+    known_caveats:
+      - "secType=szshe worked for the three P1 samples but needs broader board validation."
+      - "sshk/szhk semantics are candidate-level."
+      - "This endpoint is security overview, not full company profile."
     notes: >-
-      Security listing metadata from F10. Endpoint not yet probed.
+      P1 DevTools probe backfill v1. marketOverview primary endpoint;
+      getHeadStripData recorded as annex_endpoints only (not independent source).
+      verified=false.

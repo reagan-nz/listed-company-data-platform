@@ -33,13 +33,14 @@ sub_records:
   basic_information_path: "data.records[0].basicInformation[0]"
   listing_information_path: "data.records[0].listingInformation[0]"
 known_caveats:
-  - "600000 returned empty basicInformation/listingInformation"
+  - "Earlier manual DevTools probe observed 600000 empty basicInformation/listingInformation"
+  - "Live validation v1: 3/3 endpoint_found including 600000"
   - "field semantics candidate-level; see basic_profile_field_mapping_draft"
 recommended_status: testing
 verified: false
 ```
 
-**依据：** 2/3 `endpoint_found` + 1/3 `empty_but_valid_response`；endpoint 结构稳定。
+**依据：** live validation v1 **3/3** `endpoint_found`；早期 DevTools 曾 600000 empty（历史 caveat）；endpoint 结构稳定。
 
 ---
 
@@ -129,7 +130,7 @@ verified: false
 1. **人工更新** `config/cninfo_c_class_source_candidates.yaml`（basic + security 两项）。
 2. **重跑** `lab/lint_cninfo_c_class_registry.py`；确认 endpoint 非 null 后 lint 行为符合预期。
 3. **建立** C 类 known-company **live validation script**（config 驱动，仅 3 家公司）。
-4. **验证** 600000 empty 态、300001/688001 非空态、marketOverview 字段稳定性。
+4. **验证** live validation v1：3/3 basic + 3/3 security `endpoint_found`。
 5. **可选：** 用 live 样本更新 offline fixtures / field mapping draft。
 6. **不入库**；**不写 verified**；**不扩全市场**。
 
@@ -139,7 +140,7 @@ verified: false
 
 | source_id | 回填 endpoint | recommended_status（回填后） | 备注 |
 |-----------|---------------|------------------------------|------|
-| `cninfo_company_basic_profile` | **是** | `testing` | 600000 empty caveat |
+| `cninfo_company_basic_profile` | **是** | `testing` | 600000 historical empty caveat |
 | `cninfo_company_security_profile` | **是** | `testing` | secType / sshk/szhk caveat |
 | `cninfo_company_industry_profile` | **否** | `candidate` | derived_from basic |
 | `getHeadStripData` | **否** | — | security annex only |

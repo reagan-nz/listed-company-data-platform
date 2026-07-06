@@ -1,6 +1,6 @@
 # 当前进展：CNINFO 数据源 A–F 分层验证（Phase 1 已收口 · Phase 2 已收口）
 
-_最后更新：2026-07-05_
+_最后更新：2026-07-06_
 
 > **本文件说明「现在具体在做什么」。** 仓库整体导航见 [PROJECT_MAP.md](PROJECT_MAP.md)；**A–F 分层与验证口径权威文档**见 [plans/cninfo_data_source_layered_inventory.md](plans/cninfo_data_source_layered_inventory.md)；产品大方向见 [ROADMAP.md](ROADMAP.md)。
 
@@ -8,7 +8,7 @@ _最后更新：2026-07-05_
 
 ## 当前阶段（一句话）
 
-**Era C Phase 1（A 类）已收口**（P1 **749/796 = 94.10%**）。**Phase 2 D 类已收口**（10 源 `testing_stable_sample`）。**Phase 3 B 类** corpus + live metadata v1 已打通（5 ready · 5/5 pass）。**Phase 4 C 类** P1 DevTools probe **已完成**（basic 2/3 + security 3/3）；probe review + YAML 回填**决策文档**已起草；**candidate YAML 尚未回填**。
+**Era C Phase 1（A 类）已收口**（P1 **749/796 = 94.10%**）。**Phase 2 D 类已收口**（10 源 `testing_stable_sample`）。**Phase 3 B 类** corpus + live metadata v1 已打通（5 ready · 5/5 pass）。**Phase 4 C 类** P1 live validation v1 **LIVE_PASS**（basic + security 各 **3/3**；600000 预期已与 live 对齐，历史 empty caveat 保留）；sources 仍 **testing**，**无 verified**。
 
 ---
 
@@ -76,9 +76,10 @@ _最后更新：2026-07-05_
 | **Source discovery 设计** | [cninfo_c_class_f10_source_discovery_design.md](plans/cninfo_c_class_f10_source_discovery_design.md) |
 | **Profile data model** | [cninfo_c_class_profile_data_model_draft.md](plans/cninfo_c_class_profile_data_model_draft.md) |
 | **C / B / D 边界** | [cninfo_c_vs_b_vs_d_boundary.md](plans/cninfo_c_vs_b_vs_d_boundary.md) |
-| **Candidate YAML** | [config/cninfo_c_class_source_candidates.yaml](config/cninfo_c_class_source_candidates.yaml)（**10** 候选源，`candidate`，endpoint 未 probe） |
+| **Candidate YAML** | [config/cninfo_c_class_source_candidates.yaml](config/cninfo_c_class_source_candidates.yaml)（**P1 backfill v1**：basic + security `testing`；8 源仍 `candidate`） |
 | **JSON Schema** | [schemas/c_class/](schemas/c_class/)（**6** 逻辑表 draft-07）· [notes](plans/cninfo_c_class_json_schema_draft_notes.md) |
-| **Registry lint** | [design](plans/cninfo_c_class_registry_lint_design.md) · `lab/lint_cninfo_c_class_registry.py` · [summary](outputs/validation/cninfo_c_class_registry_lint_summary.md)（**12 rules PASS**） |
+| **Registry lint** | [design](plans/cninfo_c_class_registry_lint_design.md) · `lab/lint_cninfo_c_class_registry.py` · [summary](outputs/validation/cninfo_c_class_registry_lint_summary.md)（**14 rules PASS**） |
+| **Live validation v1** | `lab/validate_cninfo_c_class_live_sources.py` · [summary](outputs/validation/cninfo_c_class_live_source_validation_summary.md)（**LIVE_PASS** · basic **3/3** · security **3/3**） |
 | **Known-company fixtures** | [fixtures/c_class/known_company_profile_fixtures.jsonl](fixtures/c_class/known_company_profile_fixtures.jsonl)（**12** 条；600000 / 300001 / 688001） |
 | **Schema validation** | `lab/validate_cninfo_c_class_profile_schema.py` · [summary](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md)（**12/12 PASS**） |
 | **DevTools probe plan** | [probe plan](plans/cninfo_c_class_devtools_probe_plan.md) · [checklist](plans/cninfo_c_class_probe_checklist.md) · [record template](fixtures/c_class/probe/c_class_probe_record_template.yaml) |
@@ -157,10 +158,12 @@ flowchart TD
 | 31 | ~~C 类 DevTools probe plan + checklist + record template~~ → **已完成** |
 | 32 | ~~C 类 P1 probe record 文件（3×3 矩阵）~~ → **已完成**（9 条 pending，未实际 probe） |
 | 33 | 人工 DevTools probe P1（basic → security → industry）→ 填写 probe records | **已完成**（basic 2/3 + security 3/3） |
-| 34 | ~~C 类 P1 probe review + YAML 回填决策文档~~ → **已完成**（YAML **未**回填） |
-| 35 | 审查后回填 candidate YAML `endpoint`（basic + security；最多 `testing`） |
-| 36 | 建立 C 类 known-company live validation（3 家） |
-| 37 | **暂不全量抓取、暂不入库** |
+| 34 | ~~C 类 P1 probe review + YAML 回填决策文档~~ → **已完成** |
+| 35 | ~~C 类 P1 YAML backfill v1（basic + security）~~ → **已完成**；lint PASS |
+| 36 | ~~建立 C 类 known-company live validation v1~~ → **LIVE_PASS**（600000 预期已对齐） |
+| 37 | 实施 basic_profile mapper 草案 |
+| 38 | P2 source DevTools probe（executive / share_capital / shareholders） |
+| 39 | **暂不全量抓取、暂不入库** |
 
 ---
 
@@ -177,7 +180,7 @@ flowchart TD
 | 想了解 | 看这里 |
 |--------|--------|
 | **B 类 corpus** | [corpus design](plans/cninfo_b_class_corpus_design.md) · [live summary](outputs/validation/cninfo_b_class_corpus_retrieval_live_summary.md) |
-| **C 类 profile 设计** | [probe review](plans/cninfo_c_class_p1_probe_review.md) · [backfill decision](plans/cninfo_c_class_p1_yaml_backfill_decision.md) · [field mapping](plans/cninfo_c_class_basic_profile_field_mapping_draft.md) · [P1 probe records](fixtures/c_class/probe/records/c_class_p1_probe_records.yaml) · [probe plan](plans/cninfo_c_class_devtools_probe_plan.md) · [lint summary](outputs/validation/cninfo_c_class_registry_lint_summary.md) · [candidates YAML](config/cninfo_c_class_source_candidates.yaml)（**endpoint 未回填**） |
+| **C 类 profile 设计** | [backfill decision](plans/cninfo_c_class_p1_yaml_backfill_decision.md) · [field mapping](plans/cninfo_c_class_basic_profile_field_mapping_draft.md) · [P1 probe records](fixtures/c_class/probe/records/c_class_p1_probe_records.yaml) · [lint summary](outputs/validation/cninfo_c_class_registry_lint_summary.md) · [candidates YAML](config/cninfo_c_class_source_candidates.yaml)（**P1 backfill v1**） |
 | **D 类 registry / schema 设计** | [registry](plans/cninfo_d_class_source_registry_design.md) · [YAML](config/cninfo_d_class_source_registry_draft.yaml) · [JSON Schema](schemas/d_class/) · [schema validation summary](outputs/validation/cninfo_d_class_schema_validation_summary.md) |
 | **Phase 2 总总结** | [cninfo_table_sources_phase2_current_final_summary.md](outputs/validation/cninfo_table_sources_phase2_current_final_summary.md) |
 | D 类 priority-1 分源 | [cninfo_table_sources_priority1_summary.md](outputs/validation/cninfo_table_sources_priority1_summary.md) |

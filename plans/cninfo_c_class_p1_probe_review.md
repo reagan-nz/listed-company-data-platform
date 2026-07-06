@@ -42,7 +42,7 @@ _最后更新：2026-07-06_
 
 | source_id | endpoint_found | empty_but_valid | needs_more_probe | conclusion |
 |-----------|----------------|-----------------|------------------|------------|
-| `cninfo_company_basic_profile` | **2** | **1** | **0** | 可回填 candidate endpoint；标注 600000 空数组 caveat |
+| `cninfo_company_basic_profile` | **3** | **0** | **0** | 可回填 candidate endpoint；live v1 3/3 endpoint_found；600000 曾 empty（历史 caveat） |
 | `cninfo_company_security_profile` | **3** | **0** | **0** | 可回填 marketOverview 主 endpoint |
 | `cninfo_company_industry_profile` | **0** | **0** | **3** | 无独立 endpoint；建议 derived_from basic_profile |
 
@@ -78,14 +78,14 @@ GET https://www.cninfo.com.cn/data20/companyOverview/getCompanyIntroduction?scod
 |--------------|--------------|------|
 | `300001` | `endpoint_found` | basicInformation / listingInformation 非空 |
 | `688001` | `endpoint_found` | basicInformation / listingInformation 非空 |
-| `600000` | `empty_but_valid_response` | HTTP 200，`records[0]` 存在，但 basicInformation / listingInformation 为空数组 |
+| `600000` | `endpoint_found`（live v1） | 曾 DevTools `empty_but_valid_response`；见 probe `historical_observations` |
 
 ### 结论
 
-- **300001 / 688001** 非空，endpoint 行为可解释。
-- **600000** 返回 empty arrays，属 **合法空态**，非 blocked。
+- **live validation v1：3/3** `endpoint_found`（含 600000）。
+- **600000** 早期 DevTools 曾 empty arrays（**历史 caveat**）；现以 `endpoint_found` 为当前预期。
 - **endpoint 可作为 candidate endpoint** 写入 YAML（见回填决策文档）。
-- 回填时必须标注 caveat：**部分公司可能 `empty_but_valid_response`**。
+- 保留 caveat：**API 可能出现间歇性 `empty_but_valid_response` / `resultCode=90001`**（小样本 testing 阶段需复跑确认）。
 - 字段语义为 candidate-level，见 [basic profile field mapping draft](cninfo_c_class_basic_profile_field_mapping_draft.md)。
 
 ---

@@ -40,7 +40,7 @@ _最后更新：2026-07-05_
 | **2d** | D 类：registry YAML draft（10 源） | **草案完成** | [cninfo_d_class_source_registry_draft.yaml](../config/cninfo_d_class_source_registry_draft.yaml) |
 | **2e** | D 类：JSON Schema draft（10 逻辑表） | **草案完成** | [schemas/d_class/](../schemas/d_class/) |
 | **3** | B 类：corpus + live metadata v1 | **已打通** | [B live summary](../outputs/validation/cninfo_b_class_corpus_retrieval_live_summary.md) |
-| **4** | C 类 F10 / company profile 设计 | **P1 probe review 完成** | [probe review](cninfo_c_class_p1_probe_review.md) · [backfill decision](cninfo_c_class_p1_yaml_backfill_decision.md) |
+| **4** | C 类 F10 / company profile 设计 | **live validation v1** | [live summary](../outputs/validation/cninfo_c_class_live_source_validation_summary.md) |
 | **4b** | E 类可达性三态；F 类暂缓 | 待 C probe 后 | reachability summary |
 
 ---
@@ -141,11 +141,13 @@ _最后更新：2026-07-05_
 32. ~~C 类 DevTools probe plan + checklist + record template~~ → **已完成**（§7c）
 33. ~~C 类 P1 probe record 文件（3 source × 3 company）~~ → **已完成**（§7d）
 34. 人工 DevTools probe P1 → 填写 probe records → **已完成**（basic 2/3 + security 3/3）
-35. ~~C 类 P1 probe review + YAML 回填决策 + field mapping draft~~ → **已完成**（§7f；YAML **未**回填）
-36. 审查后回填 candidate YAML endpoint（basic + security；最多 `testing`）
-37. 建立 C 类 known-company live validation（3 家）
-38. 可选：probe 官方 category code（B 类）
-39. **暂不全量抓取、暂不入库**
+35. ~~C 类 P1 probe review + YAML 回填决策 + field mapping draft~~ → **已完成**（§7f）
+36. ~~C 类 P1 YAML backfill v1 + registry lint~~ → **已完成**（§7g）
+37. ~~C 类 live validation v1 + 600000 预期对齐~~ → **LIVE_PASS**（§7h）
+38. basic_profile mapper 草案
+39. P2 source DevTools probe（executive / share_capital / shareholders）
+40. 可选：probe 官方 category code（B 类）
+41. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -649,7 +651,7 @@ _最后更新：2026-07-05_
 
 **红线：** 不入库 · 不写 migration · 不写 verified · 不做全市场 F10 抓取 · 不下载/解析 PDF。
 
-**下一步：** 见 §7f — 审查回填决策 → 人工回填 YAML（basic + security）→ live validation。
+**下一步：** 见 §7g — live validation（600000 / 300001 / 688001）→ mapper 草案。
 
 ---
 
@@ -748,9 +750,55 @@ _最后更新：2026-07-05_
 | `cninfo_company_industry_profile` | **暂缓**；`derived_from` basic |
 | `getHeadStripData` | **不回填**独立 source |
 
-**性质：** 决策草案；**candidate YAML 尚未修改**；`verified: false`。
+**性质：** 决策草案；~~candidate YAML 尚未修改~~ → **P1 backfill v1 已完成**（§7g）。
 
-**下一步：** checklist §4 → 人工回填 YAML → lint → live validation（3 家）。
+**下一步：** C 类 live validation script（3 家 known company）。
+
+---
+
+## 7g. Phase 4 C 类 P1 YAML Backfill v1（2026-07-06）
+
+| 变更 | 内容 |
+|------|------|
+| [cninfo_c_class_source_candidates.yaml](../config/cninfo_c_class_source_candidates.yaml) | P1 endpoint 回填 |
+| [cninfo_c_class_registry_lint_summary.md](../outputs/validation/cninfo_c_class_registry_lint_summary.md) | lint 复跑 **PASS**（14 rules） |
+
+**回填摘要：**
+
+| source_id | recommended_status | endpoint | 备注 |
+|-----------|-------------------|----------|------|
+| `cninfo_company_basic_profile` | **testing** | getCompanyIntroduction | 2/3 found + 1 empty |
+| `cninfo_company_security_profile` | **testing** | marketOverview + `annex_endpoints` getHeadStripData | 3/3 found |
+| `cninfo_company_industry_profile` | **candidate** | null | `derived_from_candidate` → basic |
+| 其余 7 源 | **candidate** | null | 未变 |
+
+**红线遵守：** `verified: false` 全库；无 `testing_stable_sample`；getHeadStripData **仅** annex，非独立 source；不入库。
+
+**Lint：** `lab/lint_cninfo_c_class_registry.py` 扩展 R005/R006/R013/R014；**fail=0**。
+
+**下一步：** basic_profile mapper 草案；复核 600000 empty 态变化。
+
+---
+
+## 7h. Phase 4 C 类 Live Source Validation v1（2026-07-06）
+
+| 脚本 / 输出 | 内容 |
+|------|------|
+| [validate_cninfo_c_class_live_sources.py](../lab/validate_cninfo_c_class_live_sources.py) | `--dry-run` 默认；`--live` 验证 basic + security（3 家 × 2 源 = 6 请求） |
+| [cninfo_c_class_live_source_validation_summary.md](../outputs/validation/cninfo_c_class_live_source_validation_summary.md) | 汇总 |
+
+**Live 结果（2026-07-06，预期对齐后复跑）：**
+
+| source | case pass | retrieval |
+|--------|-----------|-----------|
+| `cninfo_company_security_profile` | **3/3** | 3/3 endpoint_found |
+| `cninfo_company_basic_profile` | **3/3** | 3/3 endpoint_found |
+
+**结果：** **LIVE_PASS**（6/6 cases）。600000 `expected_basic_result` 已从 `empty_but_valid_response` 调整为 `endpoint_found`；DevTools 空态保留于 probe `historical_observations` 与 YAML `known_caveats`。无 blocked / schema_unexpected。
+
+**红线：** sources 仍 **testing**；**无 verified**；**无 testing_stable_sample**；不入库；仅 3 家样本。
+
+**下一步：** basic_profile mapper 草案。
 
 ---
 
@@ -768,7 +816,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **P1 probe review + YAML 回填决策已完成**；candidate YAML **尚未回填**。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **live validation v1 LIVE_PASS**（basic + security 3/3）；下一步 **mapper 草案**。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

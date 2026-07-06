@@ -10,8 +10,9 @@ version: "draft-0.1"
 status: "manual_probe_pending"
 verified: false
 summary_notes: >-
-  cninfo_company_basic_profile: 2/3 endpoint_found, 1/3 empty_but_valid_response
-  via getCompanyIntroduction. cninfo_company_security_profile: 3/3 endpoint_found
+  cninfo_company_basic_profile: 3/3 endpoint_found in live validation v1;
+  earlier manual DevTools probe observed 600000 empty_but_valid_response
+  (historical caveat). cninfo_company_security_profile: 3/3 endpoint_found
   via marketOverview. getHeadStripData: numeric annex observed for 3/3, semantics
   pending. cninfo_company_industry_profile: no separate endpoint confirmed;
   candidate derived fields observed in basicInformation. Candidate endpoint evidence
@@ -76,17 +77,28 @@ probe_records:
     headers_required_candidate:
       - Referer
     records_path: "data.records[0]"
-    sample_response_shape: "object_with_empty_arrays"
+    sample_response_shape: "object_with_basicInformation_and_listingInformation"
     sample_fields:
       - basicInformation
       - listingInformation
     row_count: 1
-    probe_status: empty_but_valid_response
-    blocked_or_empty: "empty_arrays"
+    probe_status: endpoint_found
+    blocked_or_empty: false
+    historical_observations:
+      - observed_status: empty_but_valid_response
+        source: manual_devtools_probe
+        notes: >-
+          Initial DevTools probe returned HTTP 200 with empty
+          basicInformation/listingInformation.
+      - observed_status: endpoint_found
+        source: live_validation_v1
+        notes: >-
+          Live validation returned non-empty basicInformation/listingInformation.
     notes: >-
-      Manual DevTools probe. Endpoint returns 200 and records[0], but
-      basicInformation/listingInformation are empty for 600000. Other companies
-      show non-empty records. Do not write verified.
+      Earlier manual DevTools probe observed empty arrays; later live validation
+      returned non-empty basicInformation/listingInformation. Current expected
+      behavior is endpoint_found, but empty_but_valid_response remains a historical
+      caveat. Do not write verified.
 
   - probe_id: c_p1_basic_300001
     source_id: cninfo_company_basic_profile
