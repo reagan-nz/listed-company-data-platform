@@ -40,7 +40,7 @@ _最后更新：2026-07-05_
 | **2d** | D 类：registry YAML draft（10 源） | **草案完成** | [cninfo_d_class_source_registry_draft.yaml](../config/cninfo_d_class_source_registry_draft.yaml) |
 | **2e** | D 类：JSON Schema draft（10 逻辑表） | **草案完成** | [schemas/d_class/](../schemas/d_class/) |
 | **3** | B 类：corpus + live metadata v1 | **已打通** | [B live summary](../outputs/validation/cninfo_b_class_corpus_retrieval_live_summary.md) |
-| **4** | C 类 F10 / company profile 设计 | **live validation v1** | [live summary](../outputs/validation/cninfo_c_class_live_source_validation_summary.md) |
+| **4** | C 类 F10 / company profile 设计 | **basic_profile mapper** | [mapper summary](../outputs/validation/cninfo_c_class_basic_profile_mapper_summary.md) |
 | **4b** | E 类可达性三态；F 类暂缓 | 待 C probe 后 | reachability summary |
 
 ---
@@ -144,8 +144,8 @@ _最后更新：2026-07-05_
 35. ~~C 类 P1 probe review + YAML 回填决策 + field mapping draft~~ → **已完成**（§7f）
 36. ~~C 类 P1 YAML backfill v1 + registry lint~~ → **已完成**（§7g）
 37. ~~C 类 live validation v1 + 600000 预期对齐~~ → **LIVE_PASS**（§7h）
-38. basic_profile mapper 草案
-39. P2 source DevTools probe（executive / share_capital / shareholders）
+38. ~~C 类 basic_profile mapper draft + fixture schema validation~~ → **已完成**（§7i）
+39. security_profile mapper 草案 或 P2 DevTools probe
 40. 可选：probe 官方 category code（B 类）
 41. **暂不全量抓取、暂不入库**
 
@@ -798,7 +798,26 @@ _最后更新：2026-07-05_
 
 **红线：** sources 仍 **testing**；**无 verified**；**无 testing_stable_sample**；不入库；仅 3 家样本。
 
-**下一步：** basic_profile mapper 草案。
+**下一步：** security_profile mapper 或 P2 probe。
+
+---
+
+## 7i. Phase 4 C 类 Basic Profile Mapper Draft（2026-07-06）
+
+| 脚本 / 输出 | 内容 |
+|------|------|
+| [cninfo_c_class_mappers.py](../lab/cninfo_c_class_mappers.py) | `map_company_basic_profile()` — getCompanyIntroduction → `c_company_basic_profile` |
+| [seed_cninfo_c_class_basic_profile_fixtures.py](../lab/seed_cninfo_c_class_basic_profile_fixtures.py) | 内置 300001 / 688001 简化 raw → JSONL |
+| [basic_profile_fixtures.jsonl](../fixtures/c_class/basic_profile/basic_profile_fixtures.jsonl) | **2** 条 mapped fixture |
+| [validate_cninfo_c_class_basic_profile_schema.py](../lab/validate_cninfo_c_class_basic_profile_schema.py) | schema 校验 |
+| [cninfo_c_class_basic_profile_mapper_summary.md](../outputs/validation/cninfo_c_class_basic_profile_mapper_summary.md) | mapper 汇总 |
+| [cninfo_c_class_basic_profile_schema_validation_summary.md](../outputs/validation/cninfo_c_class_basic_profile_schema_validation_summary.md) | **2/2 PASS** |
+
+**样本：** 300001 特锐德、688001 华兴源创（非空 embedded raw）；600000 无完整 raw body，未纳入 fixture。
+
+**红线：** `source_status=testing`；**无 verified**；不入库；未修改 schema。
+
+**下一步：** security_profile mapper；P2 DevTools probe。
 
 ---
 
@@ -816,7 +835,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **live validation v1 LIVE_PASS**（basic + security 3/3）；下一步 **mapper 草案**。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **basic_profile mapper draft 完成**（2/2 schema PASS）；下一步 security mapper 或 P2 probe。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
