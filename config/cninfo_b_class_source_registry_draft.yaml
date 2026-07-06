@@ -1,0 +1,354 @@
+# CNINFO B 类 Source Registry YAML Draft
+# 设计草案 — document_corpus layer；非生产配置；不入库；不写 verified。
+# 权威设计：plans/cninfo_b_class_source_registry_design.md
+# 说明文档：plans/cninfo_b_class_source_registry_draft_notes.md
+# 边界：plans/cninfo_b_vs_d_class_boundary.md
+# 勿与 config/cninfo_d_class_source_registry_draft.yaml 混用。
+
+version: "draft-0.1"
+status: design_only
+generated_from:
+  - outputs/validation/cninfo_report_phase1_final_summary.md
+  - plans/cninfo_b_class_corpus_design.md
+  - plans/cninfo_b_class_document_model_draft.md
+  - plans/cninfo_b_vs_d_class_boundary.md
+  - lab/validate_cninfo_report_coverage.py
+
+defaults:
+  source_site: cninfo.com.cn
+  source_layer: document_corpus
+  discovery_method: cninfo_announcement_search
+  query_endpoint: https://www.cninfo.com.cn/new/hisAnnouncement/query
+  query_method: POST
+  params_location: json
+  timeout_seconds: 10
+  sleep_seconds: 0.6
+  headers_profile: cninfo_ajax
+  url_field: adjunctUrl
+  title_field: announcementTitle
+  announcement_date_field: announcementTime
+  document_id_field: announcementId
+  org_id_field: orgId
+  company_code_field: secCode
+  company_name_field: secName
+
+retrieval_status_values:
+  - found
+  - not_found
+  - title_excluded
+  - period_mismatch
+  - empty_response
+  - network_error
+
+classification_status_values:
+  - not_classified
+  - rule_classified
+  - low_confidence
+  - misroute_candidate
+
+parse_status_values:
+  - not_started
+  - parsed_text
+  - parsed_partial
+  - parse_failed
+  - skipped
+
+chunk_status_values:
+  - not_started
+  - chunked
+  - chunk_failed
+
+embedding_status_values:
+  - not_started
+  - embedded
+  - embedding_failed
+  - skipped
+
+# Phase 1 official report title exclusions (validate_cninfo_report_coverage.py)
+# Used by cninfo_periodic_report_pdf; same phrases may be POSITIVE in other B sources.
+phase1_report_title_exclusions_shared:
+  - 披露提示性公告
+  - 提示性公告
+  - 业绩说明会
+  - 投资者说明会
+  - 监管问询函
+  - 预告公告
+  - 说明会
+  - 交流会
+  - 问询函
+  - 回复公告
+  - 关于披露
+  - 关于延期披露
+  - 延期披露
+  - 摘要
+  - 解读
+
+sources:
+  - source_id: cninfo_periodic_report_pdf
+    source_name: 巨潮定期报告 PDF
+    source_layer: document_corpus
+    source_category: periodic_report_pdf
+    source_site: cninfo.com.cn
+    discovery_method: cninfo_announcement_search
+    query_endpoint: https://www.cninfo.com.cn/new/hisAnnouncement/query
+    page_url: https://www.cninfo.com.cn/new/commonUrl?url=disclosure/list/notice
+    params_template:
+      stock: "<company_code>,<org_id>"
+      column: "<sse|szse|bj>"
+      plate: ""
+      category: ""
+      seDate: "<start>~<end>"
+      searchkey: "<keyword>"
+      pageNum: 1
+      pageSize: 30
+      tabName: fulltext
+    document_type_candidates:
+      - annual_report
+      - semi_annual_report
+      - quarterly_report_q1
+      - quarterly_report_q3
+    title_positive_patterns:
+      annual_report:
+        - 年度报告
+        - 年报
+      semi_annual_report:
+        - 半年度报告
+        - 半年报
+      quarterly_report_q1:
+        - 第一季度报告
+        - 一季度报告
+        - 第一季度报告全文
+        - 一季度报告全文
+      quarterly_report_q3:
+        - 第三季度报告
+        - 三季度报告
+        - 第三季度报告全文
+        - 三季度报告全文
+    title_exclusion_patterns:
+      - 披露提示性公告
+      - 提示性公告
+      - 业绩说明会
+      - 投资者说明会
+      - 监管问询函
+      - 预告公告
+      - 说明会
+      - 交流会
+      - 问询函
+      - 回复公告
+      - 关于披露
+      - 关于延期披露
+      - 延期披露
+      - 摘要
+      - 解读
+    period_required: true
+    company_required: true
+    org_id_required: true
+    url_field: adjunctUrl
+    title_field: announcementTitle
+    announcement_date_field: announcementTime
+    document_id_field: announcementId
+    retrieval_status_values:
+      - found
+      - not_found
+      - title_excluded
+      - period_mismatch
+      - empty_response
+      - network_error
+    parse_status_values:
+      - not_started
+      - skipped
+    chunk_status_values:
+      - not_started
+      - skipped
+    embedding_status_values:
+      - not_started
+      - skipped
+    status:
+      recommended_status: testing_stable_sample
+      verified: false
+      blocked: false
+      stability_status: phase1_p1_effective_coverage_94_10_pct
+    validation:
+      expected_period_coverage:
+        found: 749
+        expected: 796
+        pct: 94.10
+      report_types:
+        - annual_report
+        - semi_annual_report
+        - quarterly_report_q1
+        - quarterly_report_q3
+      validation_method: company_x_report_type_x_expected_period
+    validation_artifacts:
+      - outputs/validation/cninfo_report_phase1_final_summary.md
+      - outputs/validation/cninfo_report_p1_coverage_validation.csv
+      - outputs/validation/cninfo_report_p1_coverage_validation_summary.md
+      - lab/validate_cninfo_report_coverage.py
+    notes: >-
+      Inherits Phase 1 A-class hisAnnouncement/query retrieval. Effective found requires
+      pdf_url, period match, title_positive match, and NOT title_exclusion. Does NOT download
+      or parse PDF. org_id required per exchange rules (see Phase 1 identity mapping).
+      Quarterly category fallback documented in validate_cninfo_report_coverage.py.
+
+  - source_id: cninfo_general_announcement_pdf
+    source_name: 巨潮普通公告 PDF
+    source_layer: document_corpus
+    source_category: announcement_pdf
+    source_site: cninfo.com.cn
+    discovery_method: cninfo_announcement_search
+    query_endpoint: https://www.cninfo.com.cn/new/hisAnnouncement/query
+    page_url: null
+    params_template:
+      stock: "<company_code>,<org_id>"
+      column: "<sse|szse|bj>"
+      category: "<cninfo_category_code_or_empty>"
+      seDate: "<start>~<end>"
+      searchkey: ""
+      pageNum: 1
+      pageSize: 30
+      tabName: fulltext
+    document_type_candidates:
+      - announcement
+      - board_resolution
+      - shareholder_meeting_material
+      - other
+    title_positive_patterns: []
+    title_exclusion_patterns: []
+    period_required: false
+    company_required: true
+    org_id_required: true
+    url_field: adjunctUrl
+    title_field: announcementTitle
+    announcement_date_field: announcementTime
+    document_id_field: announcementId
+    retrieval_status_values:
+      - found
+      - not_found
+      - empty_response
+      - network_error
+    parse_status_values:
+      - not_started
+      - skipped
+    chunk_status_values:
+      - not_started
+      - skipped
+    embedding_status_values:
+      - not_started
+      - skipped
+    status:
+      recommended_status: candidate
+      verified: false
+      blocked: false
+    validation:
+      validation_method: category_corpus_coverage_pending
+      notes: Use corpus non-empty rate + field availability; NOT random-company success rate alone
+    validation_artifacts: []
+    notes: >-
+      Broad announcement PDF corpus. Titles excluded from periodic_report_pdf may be
+      re-routed here with document_type != annual_report. Official CNINFO category codes
+      to be aligned with cninfo_announcement_categories.yaml in next step. Not yet validated.
+
+  - source_id: cninfo_inquiry_reply_pdf
+    source_name: 巨潮问询函及回复 PDF
+    source_layer: document_corpus
+    source_category: inquiry_reply_pdf
+    source_site: cninfo.com.cn
+    discovery_method: cninfo_announcement_search
+    query_endpoint: null
+    page_url: null
+    params_template: {}
+    document_type_candidates:
+      - inquiry_reply
+      - regulatory_inquiry
+    title_positive_patterns:
+      inquiry_reply:
+        - 问询函
+        - 回复公告
+        - 监管问询函
+        - 关注函
+        - 回复函
+    title_exclusion_patterns: []
+    period_required: false
+    company_required: true
+    org_id_required: true
+    url_field: adjunctUrl
+    title_field: announcementTitle
+    announcement_date_field: announcementTime
+    document_id_field: announcementId
+    retrieval_status_values:
+      - found
+      - not_found
+      - empty_response
+    parse_status_values:
+      - not_started
+      - skipped
+    chunk_status_values:
+      - not_started
+      - skipped
+    embedding_status_values:
+      - not_started
+      - skipped
+    status:
+      recommended_status: candidate
+      verified: false
+      blocked: false
+    validation:
+      validation_method: known_document_benchmark_pending
+    validation_artifacts: []
+    notes: >-
+      MUST NOT be classified as annual_report or quarterly_report. Phase 1 periodic
+      exclusion patterns for 问询函/回复公告 are POSITIVE here. query_endpoint expected
+      same as hisAnnouncement/query but not independently validated; left null until
+      category/title probe completes.
+
+  - source_id: cninfo_meeting_notice_pdf
+    source_name: 巨潮说明会/会议通知 PDF
+    source_layer: document_corpus
+    source_category: meeting_notice_pdf
+    source_site: cninfo.com.cn
+    discovery_method: cninfo_announcement_search
+    query_endpoint: null
+    page_url: null
+    params_template: {}
+    document_type_candidates:
+      - meeting_notice
+      - investor_relations_activity
+    title_positive_patterns:
+      meeting_notice:
+        - 业绩说明会
+        - 投资者说明会
+        - 说明会
+        - 交流会
+        - 股东大会通知
+        - 董事会会议通知
+    title_exclusion_patterns: []
+    period_required: false
+    company_required: true
+    org_id_required: true
+    url_field: adjunctUrl
+    title_field: announcementTitle
+    announcement_date_field: announcementTime
+    document_id_field: announcementId
+    retrieval_status_values:
+      - found
+      - not_found
+      - empty_response
+    parse_status_values:
+      - not_started
+      - skipped
+    chunk_status_values:
+      - not_started
+      - skipped
+    embedding_status_values:
+      - not_started
+      - skipped
+    status:
+      recommended_status: candidate
+      verified: false
+      blocked: false
+    validation:
+      validation_method: known_document_benchmark_pending
+    validation_artifacts: []
+    notes: >-
+      Meeting / IR activity corpus. Phase 1 periodic exclusions for 说明会/业绩说明会 are
+      POSITIVE here. Not a substitute for periodic reports. Endpoint TBD; null until validated.

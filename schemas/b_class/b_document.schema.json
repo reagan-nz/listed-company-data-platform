@@ -1,0 +1,151 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/b_class/b_document.schema.json",
+  "title": "b_document",
+  "description": "CNINFO B-class document corpus logical record (design draft). Metadata layer for periodic reports and announcements. Not verified; not a DB migration.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "document_type": {
+      "type": "string",
+      "enum": [
+        "annual_report",
+        "semi_annual_report",
+        "quarterly_report_q1",
+        "quarterly_report_q3",
+        "announcement",
+        "inquiry_reply",
+        "regulatory_inquiry",
+        "meeting_notice",
+        "investor_relations_activity",
+        "board_resolution",
+        "shareholder_meeting_material",
+        "other"
+      ]
+    },
+    "retrieval_status": {
+      "type": "string",
+      "enum": [
+        "found",
+        "not_found",
+        "title_excluded",
+        "period_mismatch",
+        "empty_response",
+        "network_error",
+        "skipped_missing_pdf_url",
+        "skipped_missing_required_field"
+      ]
+    },
+    "classification_status": {
+      "type": "string",
+      "enum": [
+        "classified_correctly",
+        "misclassified",
+        "ambiguous",
+        "title_excluded_from_periodic_but_routed",
+        "not_found",
+        "unknown"
+      ]
+    },
+    "classification_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"]
+    },
+    "source_confidence": {
+      "type": "string",
+      "enum": [
+        "candidate",
+        "testing",
+        "testing_stable_sample",
+        "partial",
+        "blocked",
+        "deprecated"
+      ]
+    }
+  },
+  "properties": {
+    "document_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Logical primary key."
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "B-class source registry source_id (e.g. cninfo_periodic_report_pdf)."
+    },
+    "company_code": {
+      "type": ["string", "null"],
+      "description": "Security code; null for offline title-only fixtures."
+    },
+    "company_name": {
+      "type": ["string", "null"]
+    },
+    "org_id": {
+      "type": ["string", "null"],
+      "description": "CNINFO orgId."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Announcement or report title."
+    },
+    "document_type": {
+      "$ref": "#/definitions/document_type"
+    },
+    "report_period": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Normalized report period end date for periodic reports."
+    },
+    "announcement_date": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Disclosure date."
+    },
+    "pdf_url": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "description": "CNINFO static PDF URL; null for offline title-only fixtures."
+    },
+    "retrieval_status": {
+      "$ref": "#/definitions/retrieval_status"
+    },
+    "classification_status": {
+      "$ref": "#/definitions/classification_status"
+    },
+    "classification_confidence": {
+      "$ref": "#/definitions/classification_confidence"
+    },
+    "source_confidence": {
+      "$ref": "#/definitions/source_confidence"
+    },
+    "raw_metadata_json": {
+      "type": "object",
+      "description": "Lineage snapshot (e.g. Phase 1 row or CNINFO announcement object)."
+    },
+    "created_from": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Provenance tag (e.g. phase1_report_retrieval)."
+    },
+    "created_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Record creation timestamp; optional for offline seed fixtures."
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "document_id",
+    "source_id",
+    "title",
+    "document_type",
+    "retrieval_status",
+    "classification_status",
+    "raw_metadata_json",
+    "created_from"
+  ]
+}

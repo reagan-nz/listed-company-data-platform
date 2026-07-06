@@ -1,243 +1,190 @@
-# CNINFO announcement category configuration (Sub Issue 2)
-# Purpose: unify validation config for CNINFO announcement/document-derived categories.
-# Scope: config only; no network calls; no validation run.
+# CNINFO B 类 Document Corpus — Announcement Category Routing Draft
+# Era C Phase 3 — design_only; 不入库; 不写 verified.
+# 权威设计: plans/cninfo_b_class_category_routing_rules.md
+# 验证口径: plans/cninfo_b_class_validation_design.md
+# B 类 registry: config/cninfo_b_class_source_registry_draft.yaml
+#
+# 说明:
+# - 本文件为 B 类 document corpus 的 title/category 路由配置草案。
+# - 未声称 CNINFO 官方 category 码已完整确认；category_code 均为 null 待 probe。
+# - 取代 Sub Issue 2 的 14 类 event-candidate 列表格式；旧键见 legacy_category_key_map。
+# - validate_cninfo_announcement_categories.py 需按本结构改造后方能运行（尚未改造）。
 
-- category_key: semi_annual_report
-  category_name_cn: 半年报
-  priority: P1
-  data_type: document
-  keywords:
-    - 半年度报告
-    - 半年报
-  expected_fields:
-    - announcement_title
-    - publish_time
-    - report_period
-    - pdf_url
-    - source_url
-  suggested_storage_layer: PostgreSQL document + raw_file; MinIO PDF evidence
-  validation_goal: 验证半年报公告能否稳定获取标题/发布时间/报告期/PDF链接
-  notes: P1 栏目；依赖公告列表查询；需配合 company identity mapping 的 stockCode/orgId
+version: "draft-0.1"
+status: design_only
+verified: false
 
-- category_key: quarterly_report
-  category_name_cn: 季报
-  priority: P1
-  data_type: document
-  keywords:
-    - 第一季度报告
-    - 第三季度报告
-    - 季度报告
-  expected_fields:
-    - announcement_title
-    - publish_time
-    - report_period
-    - pdf_url
-    - source_url
-  suggested_storage_layer: PostgreSQL document + raw_file; MinIO PDF evidence
-  validation_goal: 验证季报公告的标题/发布时间/报告期/PDF链接可得性
-  notes: P1 栏目；依赖公告列表；需与年报字段口径对齐
+defaults:
+  category_code: null
+  cninfo_tab: fulltext
+  validation_status: design_only
 
-- category_key: performance_forecast
-  category_name_cn: 业绩预告
-  priority: P1
-  data_type: event_candidate
-  keywords:
-    - 业绩预告
-    - 业绩预增
-    - 业绩预减
-    - 业绩快报
-  expected_fields:
-    - announcement_title
-    - publish_time
-    - source_url
-    - pdf_url
-  suggested_storage_layer: PostgreSQL event candidate; MongoDB raw_event_candidate
-  validation_goal: 验证可否识别业绩预告类公告，输出标题/时间/链接
-  notes: P1 栏目；事件归类需后续规则细化
+categories:
+  periodic_report:
+    category_name_cn: 定期报告全文
+    category_code: null
+    cninfo_category_code_candidates: []
+    document_types:
+      - annual_report
+      - semi_annual_report
+      - quarterly_report_q1
+      - quarterly_report_q3
+    positive_patterns:
+      annual_report:
+        - 年度报告
+        - 年报
+      semi_annual_report:
+        - 半年度报告
+        - 半年报
+      quarterly_report_q1:
+        - 第一季度报告
+        - 一季度报告
+        - 第一季度报告全文
+        - 一季度报告全文
+      quarterly_report_q3:
+        - 第三季度报告
+        - 三季度报告
+        - 第三季度报告全文
+        - 三季度报告全文
+    exclusion_patterns:
+      - 摘要
+      - 问询函
+      - 回复公告
+      - 说明会
+      - 业绩说明会
+      - 投资者说明会
+      - 提示性公告
+      - 披露提示性公告
+      - 预告公告
+      - 延期披露
+      - 关于延期披露
+      - 关于披露
+      - 解读
+      - 交流会
+      - 监管问询函
+    route_to:
+      source_id: cninfo_periodic_report_pdf
+      source_layer: document_corpus
+    validation_method: expected_period
+    registry_status: testing_stable_sample
+    notes: >-
+      Inherits Phase 1 A-class retrieval (749/796 effective coverage). Requires
+      period match + positive pattern + NOT exclusion. Official CNINFO category
+      codes for quarterly reports (e.g. category_yjdbg_szsh) not locked in this draft.
 
-- category_key: dividend_distribution
-  category_name_cn: 权益分派/分红
-  priority: P1
-  data_type: event_candidate
-  keywords:
-    - 权益分派
-    - 利润分配
-    - 分红
-    - 派息
-  expected_fields:
-    - announcement_title
-    - publish_time
-    - source_url
-    - pdf_url
-  suggested_storage_layer: PostgreSQL event candidate; MongoDB raw_event_candidate
-  validation_goal: 验证分红/派息公告可识别并保留证据链接
-  notes: P1 栏目；后续需解析分红方案细节
+  inquiry_reply:
+    category_name_cn: 问询函及回复
+    category_code: null
+    cninfo_category_code_candidates: []
+    document_types:
+      - inquiry_reply
+      - regulatory_inquiry
+    positive_patterns:
+      - 问询函
+      - 回复公告
+      - 监管问询函
+      - 关注函
+      - 回复函
+      - 年报问询函
+    exclusion_patterns: []
+    route_to:
+      source_id: cninfo_inquiry_reply_pdf
+      source_layer: document_corpus
+    validation_method: known_document
+    registry_status: candidate
+    notes: >-
+      MUST NOT route to periodic_report. Phase 1 periodic exclusions are POSITIVE here.
+      Not yet independently validated.
 
-- category_key: shareholder_meeting
-  category_name_cn: 股东大会
-  priority: P1
-  data_type: governance_event_candidate
-  keywords:
-    - 股东大会
-    - 股东会
-    - 股东大会决议
-  expected_fields:
-    - announcement_title
-    - publish_time
-    - source_url
-    - pdf_url
-  suggested_storage_layer: PostgreSQL event candidate; MongoDB raw_event_candidate
-  validation_goal: 验证股东大会类公告可识别并保留证据
-  notes: P1 栏目；后续可关联治理事件时间线
+  meeting_notice:
+    category_name_cn: 说明会及会议通知
+    category_code: null
+    cninfo_category_code_candidates: []
+    document_types:
+      - meeting_notice
+      - investor_relations_activity
+    positive_patterns:
+      - 说明会
+      - 业绩说明会
+      - 投资者说明会
+      - 投资者关系活动记录表
+      - 交流会
+      - 股东大会通知
+      - 董事会会议通知
+    exclusion_patterns: []
+    route_to:
+      source_id: cninfo_meeting_notice_pdf
+      source_layer: document_corpus
+    validation_method: known_document
+    registry_status: candidate
+    notes: >-
+      IR / meeting corpus. Not a substitute for periodic reports. Not yet validated.
 
-- category_key: board_meeting
-  category_name_cn: 董事会
-  priority: P1
-  data_type: governance_event_candidate
-  keywords:
-    - 董事会决议
-    - 董事会会议
-  expected_fields:
-    - announcement_title
-    - publish_time
-    - source_url
-    - pdf_url
-  suggested_storage_layer: PostgreSQL event candidate; MongoDB raw_event_candidate
-  validation_goal: 验证董事会公告可识别并保留证据
-  notes: P1 栏目；后续可关联治理结构变更
+  general_announcement:
+    category_name_cn: 普通公告 PDF
+    category_code: null
+    cninfo_category_code_candidates: []
+    document_types:
+      - announcement
+      - board_resolution
+      - shareholder_meeting_material
+      - other
+    positive_patterns:
+      - 公告
+      - 决议
+      - 股东大会
+      - 董事会
+      - 监事会
+      - 权益分派
+      - 利润分配
+      - 回购
+      - 业绩预告
+    exclusion_patterns: []
+    route_to:
+      source_id: cninfo_general_announcement_pdf
+      source_layer: document_corpus
+    validation_method: category_sample
+    registry_status: candidate
+    notes: >-
+      Broad fallback corpus. Titles excluded from periodic_report may land here with
+      re-classified document_type. Use category-sample validation, NOT random success rate.
 
-- category_key: supervisory_board
-  category_name_cn: 监事会
-  priority: P1
-  data_type: governance_event_candidate
-  keywords:
-    - 监事会决议
-    - 监事会会议
-  expected_fields:
-    - announcement_title
-    - publish_time
-    - source_url
-    - pdf_url
-  suggested_storage_layer: PostgreSQL event candidate; MongoDB raw_event_candidate
-  validation_goal: 验证监事会公告可识别并保留证据
-  notes: P1 栏目；与董事会/股东大会并行验证
+# 延期披露 / 摘要等：从 periodic 排除后的候选路由（非独立 source，归入 general 或 future disclosure_related）
+excluded_from_periodic_routing:
+  delayed_disclosure:
+    positive_patterns:
+      - 延期披露
+      - 关于延期披露
+    suggested_document_types:
+      - announcement
+    route_to:
+      source_id: cninfo_general_announcement_pdf
+    notes: Phase 1 periodic exclusion; retain in corpus as disclosure-related announcement.
 
-- category_key: regulatory_inquiry
-  category_name_cn: 监管问询/监管函
-  priority: P1
-  data_type: risk_event_candidate
-  keywords:
-    - 问询函
-    - 监管函
-    - 关注函
-    - 年报问询函
-  expected_fields:
-    - announcement_title
-    - publish_time
-    - source_url
-    - pdf_url
-  suggested_storage_layer: PostgreSQL event candidate; MongoDB raw_event_candidate
-  validation_goal: 验证监管问询类公告可识别，便于风险事件归档
-  notes: P1 栏目；需保留原文证据
+  report_summary:
+    positive_patterns:
+      - 摘要
+      - 解读
+    suggested_document_types:
+      - announcement
+      - other
+    route_to:
+      source_id: cninfo_general_announcement_pdf
+    notes: Not periodic report full text; do not use for RAG report corpus primary source.
 
-- category_key: penalty_litigation
-  category_name_cn: 处罚/诉讼
-  priority: P1
-  data_type: risk_event_candidate
-  keywords:
-    - 行政处罚
-    - 处罚决定
-    - 诉讼
-    - 仲裁
-  expected_fields:
-    - announcement_title
-    - publish_time
-    - source_url
-    - pdf_url
-  suggested_storage_layer: PostgreSQL event candidate; MongoDB raw_event_candidate
-  validation_goal: 验证处罚/诉讼公告可识别，支持风险归类
-  notes: P1 栏目；需后续细分处罚/诉讼类型
-
-- category_key: share_repurchase
-  category_name_cn: 回购
-  priority: P1
-  data_type: capital_event_candidate
-  keywords:
-    - 回购
-    - 股份回购
-  expected_fields:
-    - announcement_title
-    - publish_time
-    - source_url
-    - pdf_url
-  suggested_storage_layer: PostgreSQL event candidate; MongoDB raw_event_candidate
-  validation_goal: 验证回购公告可识别，支撑资本运作事件线索
-  notes: P1 栏目；后续需解析回购规模与进度
-
-- category_key: private_placement
-  category_name_cn: 定增
-  priority: P1
-  data_type: capital_event_candidate
-  keywords:
-    - 非公开发行
-    - 向特定对象发行
-    - 定增
-  expected_fields:
-    - announcement_title
-    - publish_time
-    - source_url
-    - pdf_url
-  suggested_storage_layer: PostgreSQL event candidate; MongoDB raw_event_candidate
-  validation_goal: 验证定增公告可识别，形成资本运作候选事件
-  notes: P1 栏目；需后续解析发行规模与用途
-
-- category_key: major_asset_restructuring
-  category_name_cn: 重大资产重组
-  priority: P1
-  data_type: capital_event_candidate
-  keywords:
-    - 重大资产重组
-    - 资产重组
-    - 购买资产
-  expected_fields:
-    - announcement_title
-    - publish_time
-    - source_url
-    - pdf_url
-  suggested_storage_layer: PostgreSQL event candidate; MongoDB raw_event_candidate
-  validation_goal: 验证重组公告可识别，形成资本运作候选事件
-  notes: P1 栏目；需后续解析交易对价与进度
-
-- category_key: equity_incentive
-  category_name_cn: 股权激励
-  priority: P1
-  data_type: governance_event_candidate
-  keywords:
-    - 股权激励
-    - 限制性股票激励
-    - 股票期权激励
-  expected_fields:
-    - announcement_title
-    - publish_time
-    - source_url
-    - pdf_url
-  suggested_storage_layer: PostgreSQL event candidate; MongoDB raw_event_candidate
-  validation_goal: 验证股权激励公告可识别，形成治理事件候选
-  notes: P1 栏目；需后续解析授予数量/价格
-
-- category_key: share_unlock
-  category_name_cn: 限售解禁
-  priority: P1/P2
-  data_type: market_event_candidate
-  keywords:
-    - 限售股上市流通
-    - 解除限售
-    - 限售股份上市
-  expected_fields:
-    - announcement_title
-    - publish_time
-    - source_url
-    - pdf_url
-  suggested_storage_layer: PostgreSQL event candidate; MongoDB raw_event_candidate
-  validation_goal: 验证解禁公告可识别，后续可解析解禁日期与数量
-  notes: P1/P2 交界；需结合股本结构口径
+# Sub Issue 2 旧 category_key → 新 routing 映射（供脚本迁移参考，非运行时路由）
+legacy_category_key_map:
+  semi_annual_report: periodic_report
+  quarterly_report: periodic_report
+  performance_forecast: general_announcement
+  dividend_distribution: general_announcement
+  shareholder_meeting: general_announcement
+  board_meeting: general_announcement
+  supervisory_board: general_announcement
+  regulatory_inquiry: inquiry_reply
+  penalty_litigation: general_announcement
+  share_repurchase: general_announcement
+  private_placement: general_announcement
+  major_asset_restructuring: general_announcement
+  equity_incentive: general_announcement
+  share_unlock: general_announcement

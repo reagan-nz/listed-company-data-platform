@@ -1,0 +1,21 @@
+fixture_index,document_id,source_id,document_type,company_code,title,validation_status,error_message,notes
+0,3cf45af7cdc9eef19fb065df08a9021b,cninfo_periodic_report_pdf,annual_report,000050,2024年年度报告,pass,,metadata fixture; PDF not downloaded
+1,9dd8ea409cd6cc73ba58e543358bbc38,cninfo_periodic_report_pdf,annual_report,000408,2024年年度报告,pass,,metadata fixture; PDF not downloaded
+2,4f05e7759eb8bff2744b804e53cde3ff,cninfo_periodic_report_pdf,annual_report,000560,2024年年度报告,pass,,metadata fixture; PDF not downloaded
+3,f0df078e36e53d8cb4e84a292d7fcb9c,cninfo_periodic_report_pdf,annual_report,000612,2024年年度报告,pass,,metadata fixture; PDF not downloaded
+4,50c94ddd6f4bbeea5271c1506f1b37b5,cninfo_periodic_report_pdf,annual_report,000686,2024年年度报告,pass,,metadata fixture; PDF not downloaded
+5,ac91c07618854a0342570eada97aa1bd,cninfo_periodic_report_pdf,semi_annual_report,000050,2024年半年度报告,pass,,metadata fixture; PDF not downloaded
+6,d3501eba15fe8bdbdea796a1cdd4a8f9,cninfo_periodic_report_pdf,semi_annual_report,000408,2024年半年度报告,pass,,metadata fixture; PDF not downloaded
+7,db3c789ba68a510c309b122250400eb7,cninfo_periodic_report_pdf,semi_annual_report,000560,2024年半年度报告,pass,,metadata fixture; PDF not downloaded
+8,d61386da7a1afe41a73467002ad8d9f2,cninfo_periodic_report_pdf,semi_annual_report,000612,2024年半年度报告,pass,,metadata fixture; PDF not downloaded
+9,b68e380c1e4c15aed7a6c30559852f65,cninfo_periodic_report_pdf,semi_annual_report,000686,2024年半年度报告,pass,,metadata fixture; PDF not downloaded
+10,91bebed3330d3fd8664856cdc0e7af34,cninfo_periodic_report_pdf,quarterly_report_q1,000050,2024年一季度报告,pass,,metadata fixture; PDF not downloaded
+11,b687eb74c0cfd1b0ed5b129a3050803b,cninfo_periodic_report_pdf,quarterly_report_q1,000408,2024年一季度报告,pass,,metadata fixture; PDF not downloaded
+12,9bc53616754415cbe3eb89d908589ebd,cninfo_periodic_report_pdf,quarterly_report_q1,000560,2024年一季度报告,pass,,metadata fixture; PDF not downloaded
+13,7c0445df588961ee8bef17f2d07d2d33,cninfo_periodic_report_pdf,quarterly_report_q1,000612,2024年一季度报告,pass,,metadata fixture; PDF not downloaded
+14,8ac460676812f0113399f5c0a2e0c78f,cninfo_periodic_report_pdf,quarterly_report_q1,000686,2024年一季度报告,pass,,metadata fixture; PDF not downloaded
+15,fa949cf8216df04401ac51f4d91ed1a4,cninfo_periodic_report_pdf,quarterly_report_q3,000050,2024年三季度报告,pass,,metadata fixture; PDF not downloaded
+16,f62b750b95d3208678a1d6bde2861d2d,cninfo_periodic_report_pdf,quarterly_report_q3,000408,2024年三季度报告,pass,,metadata fixture; PDF not downloaded
+17,e09271a07c942d82992ecd11a032d00a,cninfo_periodic_report_pdf,quarterly_report_q3,000560,2024年三季度报告,pass,,metadata fixture; PDF not downloaded
+18,c09ea080408ca4229a9c0a798d1426be,cninfo_periodic_report_pdf,quarterly_report_q3,000612,2024年三季度报告,pass,,metadata fixture; PDF not downloaded
+19,9e8bcc9b621bd97a6f150b3a3d92e958,cninfo_periodic_report_pdf,quarterly_report_q3,000686,2024年三季度报告,pass,,metadata fixture; PDF not downloaded

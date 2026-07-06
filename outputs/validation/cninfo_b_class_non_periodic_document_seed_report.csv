@@ -1,0 +1,17 @@
+seed_id,benchmark_id,source_id,title,document_type,retrieval_status,classification_status,pdf_url_available,seed_status,notes
+inquiry_001,inquiry_001,cninfo_inquiry_reply_pdf,关于对某公司年报的问询函,regulatory_inquiry,found,classified_correctly,no,seeded,offline title fixture only; no CNINFO request; no PDF URL; not real retrieval coverage
+inquiry_002,inquiry_002,cninfo_inquiry_reply_pdf,关于深圳证券交易所年报问询函回复的公告,inquiry_reply,found,classified_correctly,no,seeded,offline title fixture only; no CNINFO request; no PDF URL; not real retrieval coverage
+inquiry_003,inquiry_003,cninfo_inquiry_reply_pdf,深圳证券交易所关注函,regulatory_inquiry,found,classified_correctly,no,seeded,offline title fixture only; no CNINFO request; no PDF URL; not real retrieval coverage
+meeting_001,meeting_001,cninfo_meeting_notice_pdf,2024年度业绩说明会公告,meeting_notice,found,classified_correctly,no,seeded,offline title fixture only; no CNINFO request; no PDF URL; not real retrieval coverage
+meeting_002,meeting_002,cninfo_meeting_notice_pdf,投资者关系活动记录表,investor_relations_activity,found,classified_correctly,no,seeded,offline title fixture only; no CNINFO request; no PDF URL; not real retrieval coverage
+meeting_003,meeting_003,cninfo_meeting_notice_pdf,关于召开投资者说明会的公告,meeting_notice,found,classified_correctly,no,seeded,offline title fixture only; no CNINFO request; no PDF URL; not real retrieval coverage
+periodic_001,periodic_001,cninfo_periodic_report_pdf,平安银行股份有限公司2024年年度报告,annual_report,,,no,skipped_periodic,periodic benchmark (annual_report)
+periodic_002,periodic_002,cninfo_periodic_report_pdf,某某公司2024年半年度报告,semi_annual_report,,,no,skipped_periodic,periodic benchmark (semi_annual_report)
+periodic_003,periodic_003,cninfo_periodic_report_pdf,某某公司2024年第一季度报告全文,quarterly_report_q1,,,no,skipped_periodic,periodic benchmark (quarterly_report_q1)
+periodic_false_positive_001,periodic_false_positive_001,cninfo_general_announcement_pdf,关于延期披露2024年年度报告的公告,announcement,found,classified_correctly,no,seeded,offline title fixture only; no CNINFO request; no PDF URL; not real retrieval coverage
+periodic_false_positive_002,periodic_false_positive_002,cninfo_general_announcement_pdf,2024年年度报告摘要,announcement,found,classified_correctly,no,seeded,offline title fixture only; no CNINFO request; no PDF URL; not real retrieval coverage
+periodic_false_positive_003,periodic_false_positive_003,cninfo_general_announcement_pdf,关于2024年年度报告的补充公告,announcement,found,classified_correctly,no,seeded,offline title fixture only; no CNINFO request; no PDF URL; not real retrieval coverage
+periodic_false_positive_004,periodic_false_positive_004,cninfo_general_announcement_pdf,2024年第三季度报告摘要,announcement,found,classified_correctly,no,seeded,offline title fixture only; no CNINFO request; no PDF URL; not real retrieval coverage
+general_001,general_001,cninfo_general_announcement_pdf,董事会决议公告,board_resolution,found,classified_correctly,no,seeded,offline title fixture only; no CNINFO request; no PDF URL; not real retrieval coverage
+general_002,general_002,cninfo_general_announcement_pdf,股东大会通知公告,shareholder_meeting_material,found,classified_correctly,no,seeded,offline title fixture only; no CNINFO request; no PDF URL; not real retrieval coverage
+general_003,general_003,cninfo_general_announcement_pdf,关于权益分派的公告,announcement,found,classified_correctly,no,seeded,offline title fixture only; no CNINFO request; no PDF URL; not real retrieval coverage

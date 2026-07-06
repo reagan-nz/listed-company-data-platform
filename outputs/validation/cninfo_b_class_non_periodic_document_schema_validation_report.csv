@@ -1,0 +1,14 @@
+fixture_index,document_id,benchmark_id,source_id,document_type,title,validation_status,error_message,notes
+0,4020270c3015215256eb51b5554d2bb8,inquiry_001,cninfo_inquiry_reply_pdf,regulatory_inquiry,关于对某公司年报的问询函,pass,,offline title fixture; no pdf_url
+1,3f7cfdf27aa51536725e5d72f36b7fcb,inquiry_002,cninfo_inquiry_reply_pdf,inquiry_reply,关于深圳证券交易所年报问询函回复的公告,pass,,offline title fixture; no pdf_url
+2,032ca0a8b276c77a076199724ac79529,inquiry_003,cninfo_inquiry_reply_pdf,regulatory_inquiry,深圳证券交易所关注函,pass,,offline title fixture; no pdf_url
+3,5c2bd31e4c3a4adcd3c025ad340df472,meeting_001,cninfo_meeting_notice_pdf,meeting_notice,2024年度业绩说明会公告,pass,,offline title fixture; no pdf_url
+4,899f222420eb2b0e0ecc062cb090ae5f,meeting_002,cninfo_meeting_notice_pdf,investor_relations_activity,投资者关系活动记录表,pass,,offline title fixture; no pdf_url
+5,1f59164a5d1989c18c02e78548b60545,meeting_003,cninfo_meeting_notice_pdf,meeting_notice,关于召开投资者说明会的公告,pass,,offline title fixture; no pdf_url
+6,c6fb4486a919a48ce13974a37862dacc,periodic_false_positive_001,cninfo_general_announcement_pdf,announcement,关于延期披露2024年年度报告的公告,pass,,offline title fixture; no pdf_url
+7,7c993efd9072e4cc37d97636225b0654,periodic_false_positive_002,cninfo_general_announcement_pdf,announcement,2024年年度报告摘要,pass,,offline title fixture; no pdf_url
+8,d4ce2e7616e9678896aff289e873fc05,periodic_false_positive_003,cninfo_general_announcement_pdf,announcement,关于2024年年度报告的补充公告,pass,,offline title fixture; no pdf_url
+9,5705d33ec947643ea169f31117c27d7d,periodic_false_positive_004,cninfo_general_announcement_pdf,announcement,2024年第三季度报告摘要,pass,,offline title fixture; no pdf_url
+10,0d887180fbf82c7285e700b0a1f3cbed,general_001,cninfo_general_announcement_pdf,board_resolution,董事会决议公告,pass,,offline title fixture; no pdf_url
+11,a26073bf5de9859f4e2f3eaa5cc51137,general_002,cninfo_general_announcement_pdf,shareholder_meeting_material,股东大会通知公告,pass,,offline title fixture; no pdf_url
+12,b52b638deef6adf364c71d57a6b6998e,general_003,cninfo_general_announcement_pdf,announcement,关于权益分派的公告,pass,,offline title fixture; no pdf_url

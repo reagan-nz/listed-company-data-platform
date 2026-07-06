@@ -1,0 +1,34 @@
+parse_run_id,document_id,document_group,raw_file_available,parse_status,seed_status,notes
+parse_run_3cf45af7cdc9eef19fb065df08a9021b,3cf45af7cdc9eef19fb065df08a9021b,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_9dd8ea409cd6cc73ba58e543358bbc38,9dd8ea409cd6cc73ba58e543358bbc38,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_4f05e7759eb8bff2744b804e53cde3ff,4f05e7759eb8bff2744b804e53cde3ff,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_f0df078e36e53d8cb4e84a292d7fcb9c,f0df078e36e53d8cb4e84a292d7fcb9c,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_50c94ddd6f4bbeea5271c1506f1b37b5,50c94ddd6f4bbeea5271c1506f1b37b5,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_ac91c07618854a0342570eada97aa1bd,ac91c07618854a0342570eada97aa1bd,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_d3501eba15fe8bdbdea796a1cdd4a8f9,d3501eba15fe8bdbdea796a1cdd4a8f9,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_db3c789ba68a510c309b122250400eb7,db3c789ba68a510c309b122250400eb7,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_d61386da7a1afe41a73467002ad8d9f2,d61386da7a1afe41a73467002ad8d9f2,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_b68e380c1e4c15aed7a6c30559852f65,b68e380c1e4c15aed7a6c30559852f65,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_91bebed3330d3fd8664856cdc0e7af34,91bebed3330d3fd8664856cdc0e7af34,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_b687eb74c0cfd1b0ed5b129a3050803b,b687eb74c0cfd1b0ed5b129a3050803b,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_9bc53616754415cbe3eb89d908589ebd,9bc53616754415cbe3eb89d908589ebd,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_7c0445df588961ee8bef17f2d07d2d33,7c0445df588961ee8bef17f2d07d2d33,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_8ac460676812f0113399f5c0a2e0c78f,8ac460676812f0113399f5c0a2e0c78f,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_fa949cf8216df04401ac51f4d91ed1a4,fa949cf8216df04401ac51f4d91ed1a4,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_f62b750b95d3208678a1d6bde2861d2d,f62b750b95d3208678a1d6bde2861d2d,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_e09271a07c942d82992ecd11a032d00a,e09271a07c942d82992ecd11a032d00a,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_c09ea080408ca4229a9c0a798d1426be,c09ea080408ca4229a9c0a798d1426be,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_9e8bcc9b621bd97a6f150b3a3d92e958,9e8bcc9b621bd97a6f150b3a3d92e958,periodic,yes,not_started,seeded,raw file metadata exists; PDF not downloaded; parser not started
+parse_run_4020270c3015215256eb51b5554d2bb8,4020270c3015215256eb51b5554d2bb8,non_periodic,no,skipped,seeded,title-only offline fixture; no pdf_url; parse skipped
+parse_run_3f7cfdf27aa51536725e5d72f36b7fcb,3f7cfdf27aa51536725e5d72f36b7fcb,non_periodic,no,skipped,seeded,title-only offline fixture; no pdf_url; parse skipped
+parse_run_032ca0a8b276c77a076199724ac79529,032ca0a8b276c77a076199724ac79529,non_periodic,no,skipped,seeded,title-only offline fixture; no pdf_url; parse skipped
+parse_run_5c2bd31e4c3a4adcd3c025ad340df472,5c2bd31e4c3a4adcd3c025ad340df472,non_periodic,no,skipped,seeded,title-only offline fixture; no pdf_url; parse skipped
+parse_run_899f222420eb2b0e0ecc062cb090ae5f,899f222420eb2b0e0ecc062cb090ae5f,non_periodic,no,skipped,seeded,title-only offline fixture; no pdf_url; parse skipped
+parse_run_1f59164a5d1989c18c02e78548b60545,1f59164a5d1989c18c02e78548b60545,non_periodic,no,skipped,seeded,title-only offline fixture; no pdf_url; parse skipped
+parse_run_c6fb4486a919a48ce13974a37862dacc,c6fb4486a919a48ce13974a37862dacc,non_periodic,no,skipped,seeded,title-only offline fixture; no pdf_url; parse skipped
+parse_run_7c993efd9072e4cc37d97636225b0654,7c993efd9072e4cc37d97636225b0654,non_periodic,no,skipped,seeded,title-only offline fixture; no pdf_url; parse skipped
+parse_run_d4ce2e7616e9678896aff289e873fc05,d4ce2e7616e9678896aff289e873fc05,non_periodic,no,skipped,seeded,title-only offline fixture; no pdf_url; parse skipped
+parse_run_5705d33ec947643ea169f31117c27d7d,5705d33ec947643ea169f31117c27d7d,non_periodic,no,skipped,seeded,title-only offline fixture; no pdf_url; parse skipped
+parse_run_0d887180fbf82c7285e700b0a1f3cbed,0d887180fbf82c7285e700b0a1f3cbed,non_periodic,no,skipped,seeded,title-only offline fixture; no pdf_url; parse skipped
+parse_run_a26073bf5de9859f4e2f3eaa5cc51137,a26073bf5de9859f4e2f3eaa5cc51137,non_periodic,no,skipped,seeded,title-only offline fixture; no pdf_url; parse skipped
+parse_run_b52b638deef6adf364c71d57a6b6998e,b52b638deef6adf364c71d57a6b6998e,non_periodic,no,skipped,seeded,title-only offline fixture; no pdf_url; parse skipped

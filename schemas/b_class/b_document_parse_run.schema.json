@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/b_class/b_document_parse_run.schema.json",
+  "title": "b_document_parse_run",
+  "description": "CNINFO B-class document parse run audit record (design draft). Not verified; not a DB migration.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "parse_status": {
+      "type": "string",
+      "enum": [
+        "not_started",
+        "parsed_text",
+        "parsed_partial",
+        "parse_failed",
+        "skipped"
+      ]
+    }
+  },
+  "properties": {
+    "parse_run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "document_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "raw_file_id": {
+      "type": ["string", "null"],
+      "description": "Associated b_raw_file; null when no pdf_url."
+    },
+    "parser_name": {
+      "type": "string"
+    },
+    "parser_version": {
+      "type": "string"
+    },
+    "parse_status": {
+      "$ref": "#/definitions/parse_status"
+    },
+    "page_count": {
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "text_length": {
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "error_message": {
+      "type": ["string", "null"]
+    },
+    "created_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "created_from": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Provenance tag (e.g. b_class_parse_run_dry_run_seed)."
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": ["parse_run_id", "document_id", "parse_status"]
+}

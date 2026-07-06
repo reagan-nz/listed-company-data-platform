@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/b_class/b_document_section.schema.json",
+  "title": "b_document_section",
+  "description": "CNINFO B-class parsed document section (design draft). Not verified; not a DB migration.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "parse_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"]
+    }
+  },
+  "properties": {
+    "section_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "document_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "section_title": {
+      "type": "string"
+    },
+    "section_path": {
+      "type": "string",
+      "description": "Hierarchical path, e.g. 3/3.1/3.1.2."
+    },
+    "page_start": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "page_end": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "section_type": {
+      "type": "string",
+      "description": "e.g. toc, mda, financial_statement, governance, other."
+    },
+    "parse_confidence": {
+      "$ref": "#/definitions/parse_confidence"
+    }
+  },
+  "required": ["section_id", "document_id"]
+}

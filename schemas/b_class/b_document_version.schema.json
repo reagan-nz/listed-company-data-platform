@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/b_class/b_document_version.schema.json",
+  "title": "b_document_version",
+  "description": "CNINFO B-class document version for revisions and corrections (design draft). Not verified; not a DB migration.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "document_version_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "document_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version_no": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pdf_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "announcement_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "is_current": {
+      "type": "boolean"
+    },
+    "change_reason": {
+      "type": "string",
+      "description": "e.g. correction, supplemental disclosure."
+    },
+    "raw_metadata_json": {
+      "type": "object"
+    }
+  },
+  "required": ["document_version_id", "document_id", "version_no", "title"]
+}

@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/b_class/b_raw_file.schema.json",
+  "title": "b_raw_file",
+  "description": "CNINFO B-class physical or logical file layer (design draft). Not verified; not a DB migration.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "download_status": {
+      "type": "string",
+      "enum": ["not_started", "downloaded", "failed", "skipped"]
+    }
+  },
+  "properties": {
+    "raw_file_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Logical primary key."
+    },
+    "document_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Parent b_document.document_id."
+    },
+    "source_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Original URL (typically CNINFO pdf_url)."
+    },
+    "download_status": {
+      "$ref": "#/definitions/download_status"
+    },
+    "sha256_candidate": {
+      "type": ["string", "null"],
+      "description": "File hash after download; null until downloaded."
+    },
+    "mime_type": {
+      "type": "string",
+      "description": "e.g. application/pdf."
+    },
+    "file_size_candidate": {
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "storage_uri_candidate": {
+      "type": ["string", "null"],
+      "description": "Object storage URI; null until downloaded."
+    },
+    "fetch_time": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Download timestamp; null until downloaded."
+    },
+    "created_from": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Provenance tag (e.g. b_document_fixture_seed)."
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": ["raw_file_id", "source_url", "download_status"]
+}

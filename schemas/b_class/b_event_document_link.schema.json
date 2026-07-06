@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/b_class/b_event_document_link.schema.json",
+  "title": "b_event_document_link",
+  "description": "CNINFO B-class linkage between D-class event and B-class document (design draft). Not verified; not a DB migration.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "link_type": {
+      "type": "string",
+      "enum": [
+        "source_announcement",
+        "same_company_same_date",
+        "title_match",
+        "manual_link",
+        "inferred_link"
+      ]
+    },
+    "link_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"]
+    }
+  },
+  "properties": {
+    "event_document_link_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "D-class d_company_event.event_id."
+    },
+    "document_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "link_type": {
+      "$ref": "#/definitions/link_type"
+    },
+    "link_confidence": {
+      "$ref": "#/definitions/link_confidence"
+    },
+    "evidence_note": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": ["event_document_link_id", "event_id", "document_id", "link_type"]
+}

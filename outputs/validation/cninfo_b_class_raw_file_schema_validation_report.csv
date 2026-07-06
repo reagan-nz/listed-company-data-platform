@@ -1,0 +1,21 @@
+fixture_index,raw_file_id,document_id,source_url_available,download_status,validation_status,error_message,notes
+0,raw_file_3cf45af7cdc9eef19fb065df08a9021b,3cf45af7cdc9eef19fb065df08a9021b,yes,not_started,pass,,metadata only; PDF not downloaded
+1,raw_file_9dd8ea409cd6cc73ba58e543358bbc38,9dd8ea409cd6cc73ba58e543358bbc38,yes,not_started,pass,,metadata only; PDF not downloaded
+2,raw_file_4f05e7759eb8bff2744b804e53cde3ff,4f05e7759eb8bff2744b804e53cde3ff,yes,not_started,pass,,metadata only; PDF not downloaded
+3,raw_file_f0df078e36e53d8cb4e84a292d7fcb9c,f0df078e36e53d8cb4e84a292d7fcb9c,yes,not_started,pass,,metadata only; PDF not downloaded
+4,raw_file_50c94ddd6f4bbeea5271c1506f1b37b5,50c94ddd6f4bbeea5271c1506f1b37b5,yes,not_started,pass,,metadata only; PDF not downloaded
+5,raw_file_ac91c07618854a0342570eada97aa1bd,ac91c07618854a0342570eada97aa1bd,yes,not_started,pass,,metadata only; PDF not downloaded
+6,raw_file_d3501eba15fe8bdbdea796a1cdd4a8f9,d3501eba15fe8bdbdea796a1cdd4a8f9,yes,not_started,pass,,metadata only; PDF not downloaded
+7,raw_file_db3c789ba68a510c309b122250400eb7,db3c789ba68a510c309b122250400eb7,yes,not_started,pass,,metadata only; PDF not downloaded
+8,raw_file_d61386da7a1afe41a73467002ad8d9f2,d61386da7a1afe41a73467002ad8d9f2,yes,not_started,pass,,metadata only; PDF not downloaded
+9,raw_file_b68e380c1e4c15aed7a6c30559852f65,b68e380c1e4c15aed7a6c30559852f65,yes,not_started,pass,,metadata only; PDF not downloaded
+10,raw_file_91bebed3330d3fd8664856cdc0e7af34,91bebed3330d3fd8664856cdc0e7af34,yes,not_started,pass,,metadata only; PDF not downloaded
+11,raw_file_b687eb74c0cfd1b0ed5b129a3050803b,b687eb74c0cfd1b0ed5b129a3050803b,yes,not_started,pass,,metadata only; PDF not downloaded
+12,raw_file_9bc53616754415cbe3eb89d908589ebd,9bc53616754415cbe3eb89d908589ebd,yes,not_started,pass,,metadata only; PDF not downloaded
+13,raw_file_7c0445df588961ee8bef17f2d07d2d33,7c0445df588961ee8bef17f2d07d2d33,yes,not_started,pass,,metadata only; PDF not downloaded
+14,raw_file_8ac460676812f0113399f5c0a2e0c78f,8ac460676812f0113399f5c0a2e0c78f,yes,not_started,pass,,metadata only; PDF not downloaded
+15,raw_file_fa949cf8216df04401ac51f4d91ed1a4,fa949cf8216df04401ac51f4d91ed1a4,yes,not_started,pass,,metadata only; PDF not downloaded
+16,raw_file_f62b750b95d3208678a1d6bde2861d2d,f62b750b95d3208678a1d6bde2861d2d,yes,not_started,pass,,metadata only; PDF not downloaded
+17,raw_file_e09271a07c942d82992ecd11a032d00a,e09271a07c942d82992ecd11a032d00a,yes,not_started,pass,,metadata only; PDF not downloaded
+18,raw_file_c09ea080408ca4229a9c0a798d1426be,c09ea080408ca4229a9c0a798d1426be,yes,not_started,pass,,metadata only; PDF not downloaded
+19,raw_file_9e8bcc9b621bd97a6f150b3a3d92e958,9e8bcc9b621bd97a6f150b3a3d92e958,yes,not_started,pass,,metadata only; PDF not downloaded
