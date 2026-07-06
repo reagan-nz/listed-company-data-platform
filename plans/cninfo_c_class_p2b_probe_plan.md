@@ -238,4 +238,4 @@ After probe complete: draft **P2-B YAML backfill decision**（单独文档）→
 | business_scope | 3/3 derived |
 | industry | 3/3 derived |
 
-**Next:** Draft **P2-B source decision table** / YAML backfill decision（dividend → `testing`；derived sources → document `derived_from` only；**单独批准，本轮未执行**）。
+**Next:** Draft **P2-B source decision table** — **done** ([cninfo_c_class_p2b_source_decision_table.md](cninfo_c_class_p2b_source_decision_table.md)). Next: 30-company smoke test; optional dividend YAML backfill decision（单独批准）.
