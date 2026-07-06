@@ -1,0 +1,23 @@
+{
+  "source_id": "equity_pledge",
+  "query_mode": "tdate_daily",
+  "query_params": {
+    "tdate": "2026-07-02"
+  },
+  "records_path": "data.records",
+  "request_url": "https://www.cninfo.com.cn/data20/equityPledge/list?tdate=2026-07-02",
+  "expected_logical_table": "d_company_event",
+  "provenance": "outputs/validation/cninfo_table_field_semantics_priority2.csv field structure",
+  "raw_record": {
+    "SECCODE": "000001",
+    "SECNAME": "平安银行",
+    "DECLAREDATE": "2026-07-02",
+    "F001V": "张三",
+    "F003V": "某银行股份有限公司",
+    "F006N": 1500.0,
+    "F007N": 0.75,
+    "F012N": 0,
+    "F018N": 12.5,
+    "F008V": "质押用于融资"
+  }
+}

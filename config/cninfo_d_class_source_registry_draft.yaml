@@ -1,0 +1,871 @@
+# CNINFO D 类 Source Registry YAML Draft
+# 设计草案 — 非生产配置；不入库；不写 verified。
+# 权威设计：plans/cninfo_d_class_source_registry_design.md
+# 映射审查：plans/cninfo_d_class_source_to_schema_mapping_review.md
+# 说明文档：plans/cninfo_d_class_source_registry_draft_notes.md
+
+version: "draft-0.1"
+status: design_only
+generated_from:
+  - outputs/validation/cninfo_table_sources_phase2_current_final_summary.md
+  - plans/cninfo_d_class_source_to_schema_mapping_review.md
+  - config/cninfo_table_sources.yaml
+  - outputs/validation/cninfo_table_field_semantics_ui_check_summary.md
+  - outputs/validation/cninfo_table_field_semantics_priority2.md
+
+defaults:
+  method: POST
+  timeout_seconds: 10
+  sleep_seconds: 0.6
+  headers_profile: cninfo_ajax
+
+sources:
+  - source_id: disclosure_schedule
+    source_name: 预约披露 / 定期报告预约披露
+    source_layer: disclosure_schedule
+    source_category: report_schedule
+    target_logical_table: d_disclosure_schedule
+    company_code_available: true
+    api:
+      url: https://www.cninfo.com.cn/new/information/getPrbookInfo
+      method: POST
+      params_location: form
+      default_params:
+        sectionTime: "2025-12-31"
+        firstTime: ""
+        lastTime: ""
+        market: szsh
+        stockCode: ""
+        orderClos: ""
+        isDesc: ""
+        pagesize: 20
+        pagenum: 1
+      page_url: https://www.cninfo.com.cn/new/commonUrl?url=disclosure/list/notice
+      records_path: prbookinfos
+    supported_modes:
+      - mode_id: section_time_paged
+        description: 按报告期 sectionTime 分页查询
+        params:
+          sectionTime: "<YYYY-MM-DD>"
+          market: szsh
+          pagesize: 20
+          pagenum: 1
+    status:
+      recommended_status: testing_stable_sample
+      verified: false
+      blocked: false
+      schema_changed: false
+    fields:
+      confirmed:
+        - raw: seccode
+          standard: company_code
+        - raw: secname
+          standard: company_name
+        - raw: orgId
+          standard: org_id
+        - raw: f001d_0102
+          standard: report_period
+        - raw: f002d_0102
+          standard: first_scheduled_disclosure_date
+        - raw: f003d_0102
+          standard: first_changed_disclosure_date
+        - raw: f004d_0102
+          standard: second_changed_disclosure_date
+        - raw: f005d_0102
+          standard: third_changed_disclosure_date
+        - raw: f006d_0102
+          standard: actual_disclosure_date
+      candidate: []
+      raw_only:
+        - raw: latest_time
+          standard: latest_update_time
+          reason: not_visible_on_ui; samples often null
+      not_visible_on_ui:
+        - latest_time
+      uncertain: []
+    mapping:
+      event_type: null
+      event_subtype_mode: null
+      standard_fields:
+        company_code: seccode
+        company_name: secname
+        org_id: orgId
+        report_period: f001d_0102
+        first_scheduled_date: f002d_0102
+        first_changed_date: f003d_0102
+        second_changed_date: f004d_0102
+        third_changed_date: f005d_0102
+        actual_disclosure_date: f006d_0102
+      raw_record_required: true
+      mapping_confidence: high
+    validation:
+      sample_rows: 20
+      observed_total_rows: 5493
+      stability_cases: 2
+      empty_but_valid_cases: 0
+      artifacts:
+        - outputs/validation/cninfo_table_sources_multidate_stability.csv
+        - outputs/validation/cninfo_table_field_semantics_ui_check_summary.md
+    notes: >-
+      Schedule/disclosure source; records_path=prbookinfos (not data.records).
+      org_id bridges to Phase 1 A-class report PDF timeline. latest_time not standardized.
+
+  - source_id: restricted_shares_unlock
+    source_name: 限售解禁 / 解除限售
+    source_layer: company_event
+    source_category: share_unlock
+    target_logical_table: d_company_event
+    company_code_available: true
+    api:
+      url: https://www.cninfo.com.cn/data20/liftBan/detail
+      method: POST
+      params_location: query
+      default_params:
+        tdate: "2026-06-08"
+      page_url: https://www.cninfo.com.cn/new/commonUrl?url=data/restricted-shares
+      records_path: data.records
+    supported_modes:
+      - mode_id: tdate_daily
+        description: 按解禁日 tdate 查询
+        params:
+          tdate: "<YYYY-MM-DD>"
+    status:
+      recommended_status: testing_stable_sample
+      verified: false
+      blocked: false
+      schema_changed: false
+    fields:
+      confirmed:
+        - raw: SECCODE
+          standard: company_code
+        - raw: SECNAME
+          standard: company_name
+        - raw: DECLAREDATE
+          standard: announcement_date
+        - raw: F003D
+          standard: actual_unlock_date
+        - raw: F004N
+          standard: actual_unlock_shares
+        - raw: F005N
+          standard: actual_unlock_ratio_percent
+        - raw: F008N
+          standard: actual_tradable_shares
+      candidate: []
+      raw_only: []
+      not_visible_on_ui: []
+      uncertain: []
+    mapping:
+      event_type: restricted_shares_unlock
+      event_subtype_mode: null
+      standard_fields:
+        company_code: SECCODE
+        company_name: SECNAME
+        announcement_date: DECLAREDATE
+        event_date: F003D
+        primary_amount: F004N
+        primary_ratio: F005N
+        secondary_amount: F008N
+      raw_record_required: true
+      mapping_confidence: high
+    validation:
+      sample_rows: 6
+      stability_cases: 3
+      empty_but_valid_cases: 0
+      artifacts:
+        - outputs/validation/cninfo_table_sources_multidate_stability.csv
+        - outputs/validation/cninfo_table_field_semantics_ui_check_summary.md
+    notes: Share unlock event; date param tdate.
+
+  - source_id: block_trade
+    source_name: 大宗交易
+    source_layer: company_event
+    source_category: block_trade
+    target_logical_table: d_company_event
+    optional_target_logical_table: d_company_metric_daily
+    company_code_available: true
+    api:
+      url: https://www.cninfo.com.cn/data20/ints/statistics
+      method: POST
+      params_location: query
+      default_params:
+        tdate: "2026-07-03"
+      page_url: https://www.cninfo.com.cn/new/commonUrl?url=data/dzjy
+      records_path: data.records
+    supported_modes:
+      - mode_id: tdate_daily
+        description: 按交易日 tdate 查询
+        params:
+          tdate: "<YYYY-MM-DD>"
+    status:
+      recommended_status: testing_stable_sample
+      verified: false
+      blocked: false
+      schema_changed: false
+    fields:
+      confirmed:
+        - raw: SECCODE
+          standard: company_code
+        - raw: SECNAME
+          standard: company_name
+        - raw: TRADEDATE
+          standard: trade_date
+        - raw: F001N
+          standard: block_trade_count
+        - raw: F002N
+          standard: trade_volume_10k_shares
+        - raw: F003N
+          standard: trade_amount_10k_yuan
+        - raw: F004N
+          standard: average_trade_price_yuan_per_share
+      candidate: []
+      raw_only: []
+      not_visible_on_ui: []
+      uncertain: []
+    mapping:
+      event_type: block_trade
+      event_subtype_mode: null
+      standard_fields:
+        company_code: SECCODE
+        company_name: SECNAME
+        event_date: TRADEDATE
+        block_trade_count: F001N
+        trade_volume_10k_shares: F002N
+        trade_amount_10k_yuan: F003N
+        primary_price: F004N
+      optional_metric_mapping: true
+      raw_record_required: true
+      mapping_confidence: high
+    validation:
+      sample_rows: 60
+      stability_cases: 3
+      empty_but_valid_cases: 1
+      empty_but_valid_notes: tdate=2026-07-03 returned records=0
+      artifacts:
+        - outputs/validation/cninfo_table_sources_multidate_stability.csv
+        - outputs/validation/cninfo_table_field_semantics_ui_check_summary.md
+    notes: >-
+      Primary target d_company_event; optional ETL to d_company_metric_daily for time-series.
+      Empty trading day is empty_but_valid_response.
+
+  - source_id: margin_trading
+    source_name: 融资融券
+    source_layer: company_metric_daily
+    source_category: margin_trading
+    target_logical_table: d_company_metric_daily
+    company_code_available: true
+    api:
+      url: https://www.cninfo.com.cn/data20/marginTrading/detailList
+      method: POST
+      params_location: none
+      default_params: {}
+      page_url: https://www.cninfo.com.cn/new/commonUrl?url=data/rzrq-zjlx
+      records_path: data.records
+    supported_modes:
+      - mode_id: detailList_default
+        description: 主 source — detailList 默认 POST，不显式传 date
+        role: primary
+        params: {}
+      - mode_id: market_summary
+        description: 附属观察 — marginTrading/market?tdate= 市场汇总，不作主 source
+        role: auxiliary_observation_only
+        url: https://www.cninfo.com.cn/data20/marginTrading/market
+        params:
+          tdate: "<YYYY-MM-DD>"
+        notes: Stability retest HTTP 500; different units (亿元) vs detailList
+    status:
+      recommended_status: testing_stable_sample
+      verified: false
+      blocked: false
+      schema_changed: false
+    fields:
+      confirmed:
+        - raw: TRADEDATE
+          standard: trade_date
+        - raw: SECCODE
+          standard: company_code
+        - raw: SECNAME
+          standard: company_name
+        - raw: F001N
+          standard: financing_balance_yuan
+        - raw: F002N
+          standard: financing_buy_amount_yuan
+        - raw: F004N
+          standard: securities_lending_balance_shares
+        - raw: F006N
+          standard: securities_lending_sell_volume_shares
+        - raw: F009N
+          standard: margin_trading_balance_yuan
+      candidate: []
+      raw_only:
+        - raw: F003N
+          reason: not_visible_on_ui; samples often null
+        - raw: F007N
+          reason: not_visible_on_ui; samples often null
+        - raw: F010V
+          reason: not_visible_on_ui; market name internal
+        - raw: F011V
+          reason: not_visible_on_ui; board code internal
+        - raw: F012V
+          reason: not_visible_on_ui; stock type internal
+        - raw: MEMO
+          reason: pending UI confirmation; samples often empty
+      not_visible_on_ui:
+        - F003N
+        - F007N
+        - F010V
+        - F011V
+        - F012V
+        - MEMO
+      uncertain:
+        - raw: F008N
+          standard: securities_lending_balance_amount_candidate
+          reason: F001N+F008N≈F009N arithmetic check pending
+    mapping:
+      event_type: null
+      event_subtype_mode: null
+      metric_names:
+        - financing_balance_yuan
+        - financing_buy_amount_yuan
+        - securities_lending_balance_shares
+        - securities_lending_sell_volume_shares
+        - margin_trading_balance_yuan
+      standard_fields:
+        trade_date: TRADEDATE
+        company_code: SECCODE
+        company_name: SECNAME
+      raw_record_required: true
+      mapping_confidence: medium
+    validation:
+      sample_rows: 4374
+      stability_cases: 2
+      empty_but_valid_cases: 0
+      artifacts:
+        - outputs/validation/cninfo_table_sources_multidate_stability.csv
+        - outputs/validation/cninfo_table_field_semantics_ui_check_summary.md
+    notes: >-
+      Metric-only source (not company_event). detailList is primary; no explicit date param.
+      market summary is auxiliary observation only — do not use as main source.
+
+  - source_id: abnormal_trading
+    source_name: 公开信息 / 异常交易
+    source_layer: company_event
+    source_category: abnormal_trading
+    target_logical_table: d_company_event
+    optional_target_logical_table: d_event_party_detail
+    company_code_available: true
+    api:
+      url: https://www.cninfo.com.cn/data/statis/getMarketStatisticsData
+      method: POST
+      params_location: query
+      default_params:
+        sdate: "2026-07-03"
+        edate: "2026-07-03"
+        platecode: ""
+        orderby: ""
+        page: 1
+        rows: 30
+      page_url: https://www.cninfo.com.cn/new/commonUrl?url=data/public-information
+      records_path: marketList
+    supported_modes:
+      - mode_id: single_day_paged
+        description: 单日 sdate=edate，首页 rows=30
+        params:
+          sdate: "<YYYY-MM-DD>"
+          edate: "<YYYY-MM-DD>"
+          page: 1
+          rows: 30
+    status:
+      recommended_status: testing_stable_sample
+      verified: false
+      blocked: false
+      schema_changed: false
+    fields:
+      confirmed:
+        - raw: secCode
+          standard: company_code
+        - raw: secName
+          standard: company_name
+        - raw: tradeTime
+          standard: trade_date
+        - raw: type
+          standard: public_information_reason
+        - raw: detail
+          standard: broker_branch_trading_detail
+        - raw: detail.buyOrgName
+          standard: buy_broker_branch_name
+        - raw: detail.buyOrgBuyTotal
+          standard: buy_side_buy_amount_yuan
+        - raw: detail.buyOrgSellTotal
+          standard: buy_side_sell_amount_yuan
+        - raw: detail.sellOrgName
+          standard: sell_broker_branch_name
+        - raw: detail.sellOrgBuyTotal
+          standard: sell_side_buy_amount_yuan
+        - raw: detail.sellOrgSellTotal
+          standard: sell_side_sell_amount_yuan
+      candidate: []
+      raw_only:
+        - raw: buyTotal
+          reason: not_visible_on_ui; top-level aggregate
+        - raw: sellTotal
+          reason: not_visible_on_ui
+        - raw: buyPercent
+          reason: not_visible_on_ui
+        - raw: sellPercent
+          reason: not_visible_on_ui
+        - raw: detail[]
+          reason: nested array; future d_event_party_detail; keep in raw_record_json
+      not_visible_on_ui:
+        - buyTotal
+        - sellTotal
+        - buyPercent
+        - sellPercent
+      uncertain: []
+    mapping:
+      event_type: abnormal_trading
+      event_subtype_mode: type_code
+      standard_fields:
+        company_code: secCode
+        company_name: secName
+        event_date: tradeTime
+        event_subtype: type
+      party_detail_future_table: d_event_party_detail
+      raw_record_required: true
+      mapping_confidence: medium
+    validation:
+      sample_rows: 30
+      observed_total_rows: 151
+      stability_cases: 3
+      empty_but_valid_cases: 0
+      artifacts:
+        - outputs/validation/cninfo_table_sources_multidate_stability.csv
+        - outputs/validation/cninfo_table_field_semantics_ui_check_summary.md
+    notes: >-
+      records_path=marketList. detail[] nested broker rows — do not flatten into main event columns;
+      preserve raw_record_json; future d_event_party_detail.
+
+  - source_id: equity_pledge
+    source_name: 股权质押
+    source_layer: company_event
+    source_category: equity_pledge
+    target_logical_table: d_company_event
+    company_code_available: true
+    api:
+      url: https://www.cninfo.com.cn/data20/equityPledge/list
+      method: POST
+      params_location: query
+      default_params:
+        tdate: "2026-07-03"
+      page_url: https://www.cninfo.com.cn/new/commonUrl?url=data/person-stock-data-tables
+      records_path: data.records
+    supported_modes:
+      - mode_id: tdate_daily
+        description: 按公告日 tdate 查询
+        params:
+          tdate: "<YYYY-MM-DD>"
+    status:
+      recommended_status: testing_stable_sample
+      verified: false
+      blocked: false
+      schema_changed: false
+    fields:
+      confirmed:
+        - raw: SECCODE
+          standard: company_code
+        - raw: SECNAME
+          standard: company_name
+        - raw: DECLAREDATE
+          standard: announcement_date
+        - raw: F001V
+          standard: pledgor
+        - raw: F003V
+          standard: pledgee
+        - raw: F006N
+          standard: pledged_shares_10k_shares
+        - raw: F007N
+          standard: pledge_ratio_to_total_share_capital_percent
+        - raw: F012N
+          standard: released_pledge_shares_10k_shares
+        - raw: F018N
+          standard: cumulative_pledge_ratio_percent
+      candidate: []
+      raw_only:
+        - raw: F008V
+          standard: pledge_description_text
+          reason: internal_text; not_visible_on_ui
+      not_visible_on_ui:
+        - F008V
+      uncertain: []
+    mapping:
+      event_type: equity_pledge
+      event_subtype_mode: null
+      standard_fields:
+        company_code: SECCODE
+        company_name: SECNAME
+        announcement_date: DECLAREDATE
+        actor_name: F001V
+        counterparty_name: F003V
+        primary_amount: F006N
+        primary_ratio: F007N
+        released_pledge_shares_10k_shares: F012N
+        cumulative_pledge_ratio_percent: F018N
+      raw_record_required: true
+      mapping_confidence: high
+    validation:
+      sample_rows: 17
+      stability_cases: 3
+      empty_but_valid_cases: 1
+      empty_but_valid_notes: tdate=2026-07-03 returned records=0
+      artifacts:
+        - outputs/validation/cninfo_table_sources_priority2_stability.csv
+        - outputs/validation/cninfo_table_field_semantics_priority2.csv
+    notes: F008V pledge description text — raw_only internal_text.
+
+  - source_id: shareholder_change
+    source_name: 股东增减持
+    source_layer: company_event
+    source_category: shareholder_change
+    target_logical_table: d_company_event
+    company_code_available: true
+    api:
+      url: https://www.cninfo.com.cn/data20/shareholeder/detail
+      method: POST
+      params_location: query
+      default_params:
+        type: inc
+        tdate: "2026-07-03"
+      page_url: https://www.cninfo.com.cn/new/commonUrl?url=data/person-stock-data-tables
+      records_path: data.records
+    supported_modes:
+      - mode_id: type_inc
+        description: share increase — type=inc
+        params:
+          type: inc
+          tdate: "<YYYY-MM-DD>"
+        event_subtype: increase
+      - mode_id: type_desc
+        description: share decrease — type=desc (NOT type=dec)
+        params:
+          type: desc
+        event_subtype: decrease
+      - mode_id: type_desc_with_tdate
+        description: share decrease with optional tdate
+        params:
+          type: desc
+          tdate: "<YYYY-MM-DD>"
+        event_subtype: decrease
+    status:
+      recommended_status: testing_stable_sample
+      verified: false
+      blocked: false
+      schema_changed: false
+    fields:
+      confirmed:
+        - raw: DECLAREDATE
+          standard: announcement_date
+        - raw: SECCODE
+          standard: company_code
+        - raw: SECNAME
+          standard: company_name
+        - raw: VARYDATE
+          standard: share_change_date
+        - raw: F002V
+          standard: shareholder_name
+        - raw: F004N
+          standard: share_change_amount
+        - raw: F005N
+          standard: share_change_ratio_percent
+        - raw: F007V
+          standard: share_change_price
+      candidate: []
+      raw_only: []
+      not_visible_on_ui: []
+      uncertain: []
+    mapping:
+      event_type: shareholder_change
+      event_subtype_mode: query_param_type
+      event_subtype_values:
+        inc: increase
+        desc: decrease
+      standard_fields:
+        company_code: SECCODE
+        company_name: SECNAME
+        announcement_date: DECLAREDATE
+        event_date: VARYDATE
+        actor_name: F002V
+        primary_amount: F004N
+        primary_ratio: F005N
+        primary_price: F007V
+      raw_record_required: true
+      mapping_confidence: high
+    validation:
+      sample_rows: 3
+      stability_cases: 3
+      empty_but_valid_cases: 0
+      artifacts:
+        - outputs/validation/cninfo_table_sources_priority2_stability.csv
+        - outputs/validation/cninfo_table_field_semantics_priority2.csv
+    notes: >-
+      Endpoint path /shareholeder/detail (spelling shareholeder). type=desc not type=dec.
+      inc and desc share same 8-field structure; UI labels differ.
+
+  - source_id: executive_shareholding
+    source_name: 高管持股
+    source_layer: company_event
+    source_category: executive_shareholding
+    target_logical_table: d_company_event
+    company_code_available: true
+    api:
+      url: https://www.cninfo.com.cn/data20/leader/detail
+      method: POST
+      params_location: query
+      default_params:
+        timeMark: oneMonth
+        varyType: b
+      page_url: https://www.cninfo.com.cn/new/commonUrl?url=data/person-stock-data-tables
+      records_path: data.records
+    supported_modes:
+      - mode_id: oneMonth_varyType_b
+        description: 默认 — oneMonth + varyType=b (UI 增持筛选)
+        params:
+          timeMark: oneMonth
+          varyType: b
+        stability_tested: true
+      - mode_id: threeMonth_varyType_b
+        description: threeMonth + varyType=b
+        params:
+          timeMark: threeMonth
+          varyType: b
+        stability_tested: true
+      - mode_id: oneMonth_varyType_s
+        description: oneMonth + varyType=s
+        params:
+          timeMark: oneMonth
+          varyType: s
+        stability_tested: true
+        varyType_semantics: pending_ui_confirmation
+      - mode_id: other_timeMark_varyType
+        description: 其他 timeMark / varyType 组合
+        params: {}
+        status: pending_confirmation
+    status:
+      recommended_status: testing_stable_sample
+      verified: false
+      blocked: false
+      schema_changed: false
+    fields:
+      confirmed:
+        - raw: SECCODE
+          standard: company_code
+        - raw: SECNAME
+          standard: company_name
+        - raw: ENDDATE
+          standard: shareholding_change_date
+        - raw: HUMANNAME
+          standard: executive_name
+        - raw: F001V
+          standard: share_change_person
+        - raw: F002V
+          standard: executive_position
+        - raw: F003V
+          standard: relationship_to_executive
+        - raw: F006N
+          standard: changed_shares
+        - raw: F008N
+          standard: average_transaction_price
+        - raw: F010V
+          standard: change_reason
+      candidate: []
+      raw_only:
+        - raw: DECLAREDATE
+          reason: not_visible_on_ui
+        - raw: F004N
+          reason: not_visible_on_ui; pre-change shares often empty
+        - raw: F007N
+          reason: not_visible_on_ui
+        - raw: F009N
+          reason: not_visible_on_ui; post-change shares often empty
+        - raw: F011V
+          reason: not_visible_on_ui; information source candidate
+      not_visible_on_ui:
+        - DECLAREDATE
+        - F004N
+        - F007N
+        - F009N
+        - F011V
+      uncertain:
+        - raw: F005N
+          standard: transaction_amount_candidate
+          reason: may relate to transaction amount; UI has no column
+    mapping:
+      event_type: executive_shareholding_change
+      event_subtype_mode: query_params_timeMark_varyType
+      standard_fields:
+        company_code: SECCODE
+        company_name: SECNAME
+        event_date: ENDDATE
+        executive_name: HUMANNAME
+        actor_name: F001V
+        executive_position: F002V
+        relationship_to_executive: F003V
+        primary_amount: F006N
+        primary_price: F008N
+        change_reason: F010V
+      raw_record_required: true
+      mapping_confidence: medium
+    validation:
+      sample_rows: 842
+      stability_cases: 3
+      empty_but_valid_cases: 0
+      artifacts:
+        - outputs/validation/cninfo_table_sources_priority2_stability.csv
+        - outputs/validation/cninfo_table_field_semantics_priority2.csv
+    notes: >-
+      Generic d_company_event columns insufficient for executive_name/position/relationship —
+      must keep raw_record_json. Summary tab not this source (future executive_shareholding_summary).
+
+  - source_id: shareholder_data
+    source_name: 股东数据
+    source_layer: company_metric_periodic
+    source_category: shareholder_structure
+    target_logical_table: d_company_metric_periodic
+    company_code_available: true
+    api:
+      url: https://www.cninfo.com.cn/data20/shareholeder/data
+      method: POST
+      params_location: query
+      default_params:
+        rdate: "20260331"
+      page_url: https://www.cninfo.com.cn/new/commonUrl?url=data/person-stock-data-tables
+      records_path: data.records
+    supported_modes:
+      - mode_id: rdate_report_period
+        description: 按报告期末 rdate=YYYYMMDD 全市场截面
+        params:
+          rdate: "<YYYYMMDD>"
+    status:
+      recommended_status: testing_stable_sample
+      verified: false
+      blocked: false
+      schema_changed: false
+    fields:
+      confirmed:
+        - raw: SECCODE
+          standard: company_code
+        - raw: SECNAME
+          standard: company_name
+        - raw: ENDDATE
+          standard: shareholder_report_date
+        - raw: F001N
+          standard: current_shareholder_count
+        - raw: F002N
+          standard: previous_shareholder_count
+        - raw: F003N
+          standard: shareholder_count_change_percent
+        - raw: F004N
+          standard: current_avg_shares_per_holder
+        - raw: F005N
+          standard: previous_avg_shares_per_holder
+        - raw: F006N
+          standard: avg_shares_per_holder_change_percent
+      candidate: []
+      raw_only: []
+      not_visible_on_ui: []
+      uncertain: []
+    mapping:
+      event_type: null
+      event_subtype_mode: null
+      metric_names:
+        - current_shareholder_count
+        - previous_shareholder_count
+        - shareholder_count_change_percent
+        - current_avg_shares_per_holder
+        - previous_avg_shares_per_holder
+        - avg_shares_per_holder_change_percent
+      standard_fields:
+        company_code: SECCODE
+        company_name: SECNAME
+        report_period: ENDDATE
+      raw_record_required: true
+      mapping_confidence: high
+    validation:
+      sample_rows: 5255
+      stability_cases: 3
+      empty_but_valid_cases: 0
+      artifacts:
+        - outputs/validation/cninfo_table_sources_priority2_stability.csv
+        - outputs/validation/cninfo_table_field_semantics_priority2.csv
+    notes: >-
+      Periodic shareholder structure; endpoint /shareholeder/data. One raw row → multiple metric rows.
+
+  - source_id: fund_industry_allocation
+    source_name: 基金行业配置
+    source_layer: industry_aggregate
+    source_category: fund_industry_allocation
+    target_logical_table: d_industry_aggregate
+    company_code_available: false
+    api:
+      url: https://www.cninfo.com.cn/data20/fund/industry
+      method: POST
+      params_location: none
+      default_params: {}
+      page_url: https://www.cninfo.com.cn/new/commonUrl?url=data/person-stock-data-tables
+      records_path: data.records
+    supported_modes:
+      - mode_id: default
+        description: 默认 POST，无 query params
+        params: {}
+      - mode_id: rdate
+        description: 可选 rdate=YYYYMMDD
+        params:
+          rdate: "<YYYYMMDD>"
+    status:
+      recommended_status: testing_stable_sample
+      verified: false
+      blocked: false
+      schema_changed: false
+    fields:
+      confirmed:
+        - raw: F001V
+          standard: industry_code
+        - raw: F002V
+          standard: industry_name
+        - raw: ENDDATE
+          standard: report_period
+        - raw: F003N
+          standard: fund_coverage_count
+        - raw: F004N
+          standard: industry_scale_100m_yuan
+        - raw: F005N
+          standard: net_asset_ratio_percent
+      candidate: []
+      raw_only: []
+      not_visible_on_ui: []
+      uncertain: []
+    mapping:
+      event_type: null
+      event_subtype_mode: null
+      metric_names:
+        - fund_coverage_count
+        - industry_scale_100m_yuan
+        - net_asset_ratio_percent
+      standard_fields:
+        industry_code: F001V
+        industry_name: F002V
+        report_period: ENDDATE
+      exclude_from_schemas:
+        - d_company_event
+        - d_company_metric_periodic
+      raw_record_required: true
+      mapping_confidence: high
+    validation:
+      sample_rows: 19
+      stability_cases: 3
+      empty_but_valid_cases: 1
+      empty_but_valid_notes: rdate=20251231 returned records=0
+      artifacts:
+        - outputs/validation/cninfo_table_sources_priority2_stability.csv
+        - outputs/validation/cninfo_table_field_semantics_priority2.csv
+    notes: >-
+      Industry-level aggregate — NOT company-level. No SECCODE. Do not enter company event schema.
+      company_code_available=false.

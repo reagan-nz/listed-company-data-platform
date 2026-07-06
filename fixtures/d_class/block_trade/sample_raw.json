@@ -1,0 +1,20 @@
+{
+  "source_id": "block_trade",
+  "query_mode": "tdate_daily",
+  "query_params": {
+    "tdate": "2026-07-03"
+  },
+  "records_path": "data.records",
+  "request_url": "https://www.cninfo.com.cn/data20/ints/statistics?tdate=2026-07-03",
+  "expected_logical_table": "d_company_event",
+  "provenance": "outputs/validation/cninfo_table_field_semantics_priority1.csv (600519 sample)",
+  "raw_record": {
+    "SECCODE": "600519",
+    "SECNAME": "贵州茅台",
+    "TRADEDATE": "2026-07-03",
+    "F001N": 1,
+    "F002N": 0.5,
+    "F003N": 547.5,
+    "F004N": 1095.0
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "source_id": "executive_shareholding",
+  "query_mode": "oneMonth_varyType_b",
+  "query_params": {
+    "timeMark": "oneMonth",
+    "varyType": "b"
+  },
+  "records_path": "data.records",
+  "request_url": "https://www.cninfo.com.cn/data20/leader/detail?timeMark=oneMonth&varyType=b",
+  "expected_logical_table": "d_company_event",
+  "provenance": "outputs/validation/cninfo_table_field_semantics_priority2.csv detail_varyType_b",
+  "raw_record": {
+    "SECCODE": "000002",
+    "SECNAME": "万科A",
+    "ENDDATE": "2026-06-15",
+    "DECLAREDATE": "2026-06-18",
+    "HUMANNAME": "示例高管",
+    "F001V": "示例高管",
+    "F002V": "董事长",
+    "F003V": "本人",
+    "F004N": null,
+    "F005N": 141.46,
+    "F006N": 10000,
+    "F007N": null,
+    "F008N": 14.146,
+    "F009N": null,
+    "F010V": "二级市场买卖",
+    "F011V": "临时公告"
+  }
+}

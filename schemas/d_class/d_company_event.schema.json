@@ -1,0 +1,127 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/d_class/d_company_event.schema.json",
+  "title": "d_company_event",
+  "description": "CNINFO D-class company-level discrete event record (design draft). Applies to: restricted_shares_unlock, block_trade, abnormal_trading, equity_pledge, shareholder_change, executive_shareholding. Not verified; not a DB migration.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "source_status": {
+      "type": "string",
+      "enum": [
+        "candidate",
+        "testing",
+        "testing_stable_sample",
+        "testing_partial",
+        "blocked",
+        "deprecated"
+      ]
+    },
+    "field_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"]
+    }
+  },
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Logical primary key (e.g. hash of source_id, query_mode, company_code, event_date, raw keys)."
+    },
+    "source_id": {
+      "type": "string",
+      "description": "Registry source_id."
+    },
+    "query_mode": {
+      "type": "string",
+      "description": "Optional mode id (e.g. type_inc, oneMonth_varyType_b)."
+    },
+    "company_code": {
+      "type": "string",
+      "description": "SECCODE / secCode. Required for all six current event sources."
+    },
+    "company_name": {
+      "type": "string"
+    },
+    "event_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Primary event date (VARYDATE, TRADEDATE, ENDDATE, F003D, etc.)."
+    },
+    "announcement_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "event_type": {
+      "type": "string",
+      "description": "Source category level type (e.g. equity_pledge, shareholder_change)."
+    },
+    "event_subtype": {
+      "type": "string",
+      "description": "Mode-specific subtype (e.g. increase, decrease, public_information_reason code)."
+    },
+    "actor_name": {
+      "type": "string",
+      "description": "Shareholder, pledgor, share_change_person, etc."
+    },
+    "counterparty_name": {
+      "type": "string",
+      "description": "Pledgee or counterparty when applicable."
+    },
+    "primary_amount": {
+      "type": "number",
+      "description": "Normalized primary quantity/amount when mapped; unit in primary_amount_unit."
+    },
+    "primary_amount_unit": {
+      "type": "string",
+      "description": "e.g. shares, 10k_shares, yuan, 10k_yuan."
+    },
+    "primary_ratio": {
+      "type": "number"
+    },
+    "primary_ratio_unit": {
+      "type": "string",
+      "description": "e.g. percent."
+    },
+    "primary_price": {
+      "type": "number"
+    },
+    "primary_price_unit": {
+      "type": "string",
+      "description": "e.g. yuan_per_share."
+    },
+    "raw_record_json": {
+      "type": "object",
+      "description": "Full original CNINFO record object; must be preserved."
+    },
+    "raw_record_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "query_params": {
+      "type": "object",
+      "description": "Actual request parameters including supported_modes."
+    },
+    "fetch_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_status": {
+      "$ref": "#/definitions/source_status"
+    },
+    "field_confidence": {
+      "$ref": "#/definitions/field_confidence"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "event_id",
+    "source_id",
+    "company_code",
+    "event_type",
+    "raw_record_json",
+    "raw_record_hash"
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/d_class/d_disclosure_schedule.schema.json",
+  "title": "d_disclosure_schedule",
+  "description": "CNINFO D-class periodic report disclosure schedule. Primary: disclosure_schedule.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "source_status": {
+      "type": "string",
+      "enum": [
+        "candidate",
+        "testing",
+        "testing_stable_sample",
+        "testing_partial",
+        "blocked",
+        "deprecated"
+      ]
+    },
+    "field_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"]
+    }
+  },
+  "properties": {
+    "schedule_id": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "company_code": {
+      "type": "string"
+    },
+    "company_name": {
+      "type": "string"
+    },
+    "org_id": {
+      "type": "string",
+      "description": "CNINFO orgId; bridges to Phase 1 A-class PDF."
+    },
+    "report_period": {
+      "type": "string",
+      "format": "date"
+    },
+    "first_scheduled_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "first_changed_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "second_changed_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "third_changed_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "actual_disclosure_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "latest_time_candidate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "From latest_time; not UI confirmed — optional only."
+    },
+    "raw_record_json": {
+      "type": "object"
+    },
+    "raw_record_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "query_params": {
+      "type": "object"
+    },
+    "fetch_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_status": {
+      "$ref": "#/definitions/source_status"
+    },
+    "field_confidence": {
+      "$ref": "#/definitions/field_confidence"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "schedule_id",
+    "source_id",
+    "company_code",
+    "raw_record_json",
+    "raw_record_hash"
+  ]
+}

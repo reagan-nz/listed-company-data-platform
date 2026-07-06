@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/d_class/d_event_party_detail.schema.json",
+  "title": "d_event_party_detail",
+  "description": "CNINFO D-class event party / broker detail row. Primary use: abnormal_trading detail[] expansion. Design-only; not implemented in ETL yet.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "party_role": {
+      "type": "string",
+      "enum": ["buy_side", "sell_side", "unknown"]
+    },
+    "source_status": {
+      "type": "string",
+      "enum": [
+        "candidate",
+        "testing",
+        "testing_stable_sample",
+        "testing_partial",
+        "blocked",
+        "deprecated"
+      ]
+    },
+    "field_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"]
+    }
+  },
+  "properties": {
+    "party_detail_id": {
+      "type": "string"
+    },
+    "event_id": {
+      "type": "string",
+      "description": "FK to parent d_company_event.event_id."
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "company_code": {
+      "type": "string"
+    },
+    "party_role": {
+      "$ref": "#/definitions/party_role"
+    },
+    "broker_name": {
+      "type": "string"
+    },
+    "buy_amount": {
+      "type": "number"
+    },
+    "sell_amount": {
+      "type": "number"
+    },
+    "amount_unit": {
+      "type": "string",
+      "description": "e.g. yuan."
+    },
+    "raw_record_json": {
+      "type": "object",
+      "description": "Single detail[] element object."
+    },
+    "raw_record_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "query_params": {
+      "type": "object"
+    },
+    "fetch_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_status": {
+      "$ref": "#/definitions/source_status"
+    },
+    "field_confidence": {
+      "$ref": "#/definitions/field_confidence"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "party_detail_id",
+    "event_id",
+    "source_id",
+    "raw_record_json",
+    "raw_record_hash"
+  ]
+}

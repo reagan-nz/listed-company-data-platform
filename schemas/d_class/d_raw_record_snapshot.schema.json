@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/d_class/d_raw_record_snapshot.schema.json",
+  "title": "d_raw_record_snapshot",
+  "description": "CNINFO D-class fetch-level raw JSON snapshot for lineage and schema drift replay.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "fetch_status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "empty_but_valid_response",
+        "http_error",
+        "parse_error",
+        "blocked",
+        "timeout",
+        "schema_changed",
+        "unknown_error"
+      ]
+    },
+    "source_status": {
+      "type": "string",
+      "enum": [
+        "candidate",
+        "testing",
+        "testing_stable_sample",
+        "testing_partial",
+        "blocked",
+        "deprecated"
+      ]
+    },
+    "field_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"]
+    }
+  },
+  "properties": {
+    "snapshot_id": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "query_mode": {
+      "type": "string"
+    },
+    "query_params": {
+      "type": "object"
+    },
+    "request_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "records_path": {
+      "type": "string"
+    },
+    "raw_record_json": {
+      "type": "object",
+      "description": "Full parsed JSON payload or single record object."
+    },
+    "raw_record_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fetch_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "fetch_status": {
+      "$ref": "#/definitions/fetch_status"
+    },
+    "http_status": {
+      "type": "integer"
+    },
+    "source_status": {
+      "$ref": "#/definitions/source_status"
+    },
+    "field_confidence": {
+      "$ref": "#/definitions/field_confidence"
+    },
+    "schema_version": {
+      "type": "string",
+      "description": "e.g. draft-0.1 or JSON schema $id version tag."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "snapshot_id",
+    "source_id",
+    "raw_record_json",
+    "raw_record_hash",
+    "fetch_time",
+    "fetch_status"
+  ]
+}

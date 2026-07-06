@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/d_class/d_source_validation_run.schema.json",
+  "title": "d_source_validation_run",
+  "description": "CNINFO D-class single validation or stability test case run record.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "source_status": {
+      "type": "string",
+      "enum": [
+        "candidate",
+        "testing",
+        "testing_stable_sample",
+        "testing_partial",
+        "blocked",
+        "deprecated"
+      ]
+    },
+    "fetch_status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "empty_but_valid_response",
+        "http_error",
+        "parse_error",
+        "blocked",
+        "timeout",
+        "schema_changed",
+        "unknown_error"
+      ]
+    },
+    "field_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"]
+    }
+  },
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "description": "Logical id for this validation run row."
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "test_case_id": {
+      "type": "string"
+    },
+    "request_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "http_status": {
+      "type": "integer"
+    },
+    "fetch_status": {
+      "$ref": "#/definitions/fetch_status"
+    },
+    "records_path": {
+      "type": "string"
+    },
+    "sample_rows": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "field_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "raw_record_json": {
+      "type": "object",
+      "description": "Optional first record or response excerpt for audit."
+    },
+    "raw_record_hash": {
+      "type": "string"
+    },
+    "query_params": {
+      "type": "object"
+    },
+    "fetch_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_status": {
+      "$ref": "#/definitions/source_status",
+      "description": "recommended_status_after_stability snapshot."
+    },
+    "field_confidence": {
+      "$ref": "#/definitions/field_confidence"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_id",
+    "source_id",
+    "fetch_status",
+    "query_params",
+    "fetch_time"
+  ]
+}

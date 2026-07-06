@@ -1,0 +1,22 @@
+{
+  "source_id": "shareholder_change",
+  "query_mode": "type_inc",
+  "query_params": {
+    "type": "inc",
+    "tdate": "2026-07-03"
+  },
+  "records_path": "data.records",
+  "request_url": "https://www.cninfo.com.cn/data20/shareholeder/detail?type=inc&tdate=2026-07-03",
+  "expected_logical_table": "d_company_event",
+  "provenance": "outputs/validation/cninfo_table_field_semantics_priority2.csv inc mode",
+  "raw_record": {
+    "DECLAREDATE": "2026-07-01",
+    "SECCODE": "300750",
+    "SECNAME": "宁德时代",
+    "VARYDATE": "2026-07-03",
+    "F002V": "某某投资有限公司",
+    "F004N": 500000,
+    "F005N": 0.02,
+    "F007V": 30.53
+  }
+}

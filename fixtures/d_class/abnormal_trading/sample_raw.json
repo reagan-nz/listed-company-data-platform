@@ -1,0 +1,34 @@
+{
+  "source_id": "abnormal_trading",
+  "query_mode": "single_day_paged",
+  "query_params": {
+    "sdate": "2026-07-03",
+    "edate": "2026-07-03",
+    "page": 1,
+    "rows": 30
+  },
+  "records_path": "marketList",
+  "request_url": "https://www.cninfo.com.cn/data/statis/getMarketStatisticsData",
+  "expected_logical_table": "d_company_event",
+  "provenance": "outputs/validation/cninfo_table_field_semantics_priority1.csv (000004 国华退 sample)",
+  "raw_record": {
+    "secCode": "000004",
+    "secName": "国华退",
+    "tradeTime": "2026-07-03",
+    "type": "退市整理期",
+    "buyTotal": null,
+    "sellTotal": null,
+    "buyPercent": null,
+    "sellPercent": null,
+    "detail": [
+      {
+        "buyOrgName": "华泰证券股份有限公司深圳益田路荣超商务中心证券营业部",
+        "buyOrgBuyTotal": "557,829.99",
+        "buyOrgSellTotal": "0.00",
+        "sellOrgName": "中信证券股份有限公司上海浦东新区花木证券营业部",
+        "sellOrgBuyTotal": "0.00",
+        "sellOrgSellTotal": "557,829.99"
+      }
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+source_id,source_name,raw_field,standard_field_candidate,data_type_candidate,example_value,field_role,semantic_confidence,needs_confirmation,confirmation_method,notes
+disclosure_schedule,预约披露 / 定期报告预约披露,seccode,company_code,string,000001,company_identifier,high,no,field_name_obvious,证券代码；与 CNINFO 通用 seccode 命名一致
+disclosure_schedule,预约披露 / 定期报告预约披露,secname,company_name,string,平安银行,company_name,high,no,field_name_obvious,公司简称
+disclosure_schedule,预约披露 / 定期报告预约披露,orgId,cninfo_org_id,string,gssz0000001,company_identifier,high,no,field_name_obvious,CNINFO 内部 orgId；可用于与 A 类/F10 映射联动
+disclosure_schedule,预约披露 / 定期报告预约披露,f001d_0102,report_period_section_date,date,2025-12-31,date,high,yes,page_label_needed,疑似报告期 / sectionTime 对应日期；与请求参数 sectionTime 一致
+disclosure_schedule,预约披露 / 定期报告预约披露,f002d_0102,scheduled_disclosure_date,date,2026-03-21,date,medium,yes,page_label_needed,疑似首次/预约披露日期；与 f006d 可能相同或为首版预约日
+disclosure_schedule,预约披露 / 定期报告预约披露,f003d_0102,disclosure_change_date_candidate,date,(empty),date,low,yes,page_label_needed,变更日期相关字段候选；样本常为空
+disclosure_schedule,预约披露 / 定期报告预约披露,f004d_0102,disclosure_change_date_candidate,date,(empty),date,low,yes,page_label_needed,变更日期相关字段候选；样本常为空
+disclosure_schedule,预约披露 / 定期报告预约披露,f005d_0102,disclosure_change_date_candidate,date,(empty),date,low,yes,page_label_needed,变更日期相关字段候选；样本常为空
+disclosure_schedule,预约披露 / 定期报告预约披露,f006d_0102,current_or_final_disclosure_date,date,2026-03-21,date,medium,yes,page_label_needed,疑似当前/最终预约披露日期；与 f002d 关系待 UI 表头确认
+disclosure_schedule,预约披露 / 定期报告预约披露,latest_time,latest_update_time,datetime,null,date,medium,yes,official_doc_needed,最新更新时间；样本多为 null
+restricted_shares_unlock,限售解禁 / 解除限售,SECCODE,company_code,string,300992,company_identifier,high,no,field_name_obvious,证券代码
+restricted_shares_unlock,限售解禁 / 解除限售,SECNAME,company_name,string,泰福泵业,company_name,high,no,field_name_obvious,公司简称
+restricted_shares_unlock,限售解禁 / 解除限售,DECLAREDATE,announcement_date,date,2026-06-03,date,medium,yes,page_label_needed,疑似公告/披露日期；与解禁日 F003D 可能不同
+restricted_shares_unlock,限售解禁 / 解除限售,F003D,unlock_date,date,2026-06-08,date,high,yes,page_label_needed,疑似解禁/上市流通日期；与查询 tdate 一致
+restricted_shares_unlock,限售解禁 / 解除限售,F004N,unlock_shares,number,592000,amount,medium,yes,page_label_needed,疑似解禁股份数量（股）；单位待表头确认
+restricted_shares_unlock,限售解禁 / 解除限售,F005N,unlock_ratio,ratio,0.6209,ratio,medium,yes,page_label_needed,疑似解禁占总股本比例；小数比例
+restricted_shares_unlock,限售解禁 / 解除限售,F008N,actual_tradable_or_unlock_shares,number,592000,amount,medium,yes,page_label_needed,疑似实际可流通/本次解禁数量；与 F004N 样本相同，语义区分待确认
+block_trade,大宗交易,SECCODE,company_code,string,600519,company_identifier,high,no,field_name_obvious,证券代码
+block_trade,大宗交易,SECNAME,company_name,string,贵州茅台,company_name,high,no,field_name_obvious,公司简称
+block_trade,大宗交易,TRADEDATE,trade_date,date,2026-07-03,date,high,no,field_name_obvious,交易日期
+block_trade,大宗交易,F001N,block_trade_count,number,1,count,medium,yes,page_label_needed,疑似大宗交易笔数/成交次数
+block_trade,大宗交易,F002N,trade_volume,number,0.5,amount,medium,yes,arithmetic_check,疑似成交量；单位待确认（万股/手？）
+block_trade,大宗交易,F003N,trade_amount,number,547.5,amount,medium,yes,arithmetic_check,疑似成交金额；单位待确认
+block_trade,大宗交易,F004N,average_trade_price,number,1095.0,amount,medium,yes,arithmetic_check,疑似成交均价；样本 600519: F003N/F002N=1095≈F004N，支持算术校验
+margin_trading,融资融券,TRADEDATE,trade_date,date,2026-07-02,date,high,no,field_name_obvious,交易日期
+margin_trading,融资融券,SECCODE,company_code,string,000001,company_identifier,high,no,field_name_obvious,证券代码
+margin_trading,融资融券,SECNAME,company_name,string,平安银行,company_name,high,no,field_name_obvious,公司简称
+margin_trading,融资融券,F001N,financing_balance_candidate,number,5327610410.0,amount,medium,yes,page_label_needed,疑似融资余额；与交易所融资融券口径待对照
+margin_trading,融资融券,F002N,financing_buy_amount_candidate,number,95032872.0,amount,medium,yes,page_label_needed,疑似融资买入额或融资相关发生额
+margin_trading,融资融券,F003N,securities_lending_sell_amount_or_volume_candidate,number,null,amount,low,yes,page_label_needed,融券相关字段；样本常为空，语义不确定
+margin_trading,融资融券,F004N,securities_lending_balance_or_volume_candidate,number,1697500.0,amount,low,yes,page_label_needed,疑似融券余量/余额；与 F003N 区分待确认
+margin_trading,融资融券,F006N,securities_lending_related_candidate,number,53400,amount,low,yes,page_label_needed,融券/担保品相关数值候选
+margin_trading,融资融券,F007N,securities_lending_related_candidate,number,null,amount,low,yes,page_label_needed,融券相关；样本常为空
+margin_trading,融资融券,F008N,securities_lending_related_candidate,number,17450300.0,amount,low,yes,page_label_needed,融券/卖出相关数值候选
+margin_trading,融资融券,F009N,margin_trading_balance_candidate,number,5345060710.0,amount,medium,yes,page_label_needed,疑似融资融券余额合计；可能与 F001N+F004N 等组合关系待验证
+margin_trading,融资融券,F010V,market_name,string,深圳,market_code,high,no,field_name_obvious,市场名称，如深圳/上海
+margin_trading,融资融券,F011V,market_or_board_code,string,001001,market_code,medium,yes,page_label_needed,疑似市场/板块内部代码
+margin_trading,融资融券,F012V,stock_type,string,A股,category,high,no,field_name_obvious,股票类型，如 A股
+margin_trading,融资融券,MEMO,memo,string,null,unknown,high,yes,official_doc_needed,备注；样本多为 null
+abnormal_trading,公开信息 / 异常交易,secCode,company_code,string,000004,company_identifier,high,no,field_name_obvious,证券代码（camelCase）
+abnormal_trading,公开信息 / 异常交易,secName,company_name,string,国华退,company_name,high,no,field_name_obvious,公司简称
+abnormal_trading,公开信息 / 异常交易,tradeTime,trade_date,date,2026-07-03,date,high,no,field_name_obvious,交易/公开信息日期
+abnormal_trading,公开信息 / 异常交易,type,abnormal_type,string,退市整理期,category,high,yes,page_label_needed,异常交易/公开信息类型分类
+abnormal_trading,公开信息 / 异常交易,buyTotal,buy_total,number,null,amount,medium,yes,page_label_needed,买入总额；样本可能为空
+abnormal_trading,公开信息 / 异常交易,sellTotal,sell_total,number,null,amount,medium,yes,page_label_needed,卖出总额；样本可能为空
+abnormal_trading,公开信息 / 异常交易,buyPercent,buy_percent,ratio,null,ratio,medium,yes,page_label_needed,买入占比；样本可能为空
+abnormal_trading,公开信息 / 异常交易,sellPercent,sell_percent,ratio,null,ratio,medium,yes,page_label_needed,卖出占比；样本可能为空
+abnormal_trading,公开信息 / 异常交易,detail,broker_detail,array,"[{buyOrgName,...}]",nested_detail,high,yes,manual_ui_check_needed,嵌套营业部买卖明细；子字段见 MD §3.5

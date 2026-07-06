@@ -1,0 +1,17 @@
+{
+  "source_id": "fund_industry_allocation",
+  "query_mode": "default",
+  "query_params": {},
+  "records_path": "data.records",
+  "request_url": "https://www.cninfo.com.cn/data20/fund/industry",
+  "expected_logical_table": "d_industry_aggregate",
+  "provenance": "outputs/validation/cninfo_table_field_semantics_priority2.csv industry aggregate",
+  "raw_record": {
+    "F001V": "C26",
+    "F002V": "化学原料和化学制品制造业",
+    "ENDDATE": "2026-03-31",
+    "F003N": 245,
+    "F004N": 1234.56,
+    "F005N": 8.5
+  }
+}

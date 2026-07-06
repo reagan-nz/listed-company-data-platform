@@ -1,0 +1,20 @@
+{
+  "source_id": "restricted_shares_unlock",
+  "query_mode": "tdate_daily",
+  "query_params": {
+    "tdate": "2026-06-08"
+  },
+  "records_path": "data.records",
+  "request_url": "https://www.cninfo.com.cn/data20/liftBan/detail?tdate=2026-06-08",
+  "expected_logical_table": "d_company_event",
+  "provenance": "outputs/validation/cninfo_table_field_semantics_priority1.csv",
+  "raw_record": {
+    "SECCODE": "300992",
+    "SECNAME": "泰福泵业",
+    "DECLAREDATE": "2026-06-03",
+    "F003D": "2026-06-08",
+    "F004N": 592000,
+    "F005N": 0.6209,
+    "F008N": 592000
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "source_id": "shareholder_data",
+  "query_mode": "rdate_report_period",
+  "query_params": {
+    "rdate": "20260331"
+  },
+  "records_path": "data.records",
+  "request_url": "https://www.cninfo.com.cn/data20/shareholeder/data?rdate=20260331",
+  "expected_logical_table": "d_company_metric_periodic",
+  "provenance": "outputs/validation/cninfo_table_field_semantics_priority2.csv rdate_20260331",
+  "raw_record": {
+    "SECCODE": "000001",
+    "SECNAME": "平安银行",
+    "ENDDATE": "2026-03-31",
+    "F001N": 450000,
+    "F002N": 460000,
+    "F003N": -2.17,
+    "F004N": 15000,
+    "F005N": 14800,
+    "F006N": 1.35
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/d_class/d_field_semantics.schema.json",
+  "title": "d_field_semantics",
+  "description": "CNINFO D-class raw_field to standard_field semantic mapping row.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "field_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"]
+    },
+    "confirmation_status": {
+      "type": "string",
+      "enum": [
+        "ui_confirmed",
+        "candidate",
+        "not_visible_on_ui",
+        "uncertain",
+        "internal_text"
+      ]
+    },
+    "field_role": {
+      "type": "string",
+      "enum": [
+        "identifier",
+        "date",
+        "amount",
+        "ratio",
+        "text",
+        "category",
+        "nested",
+        "unknown"
+      ]
+    }
+  },
+  "properties": {
+    "source_id": {
+      "type": "string"
+    },
+    "query_mode": {
+      "type": "string",
+      "description": "Empty string or mode id (inc, desc, oneMonth_varyType_b, etc.)."
+    },
+    "raw_field": {
+      "type": "string"
+    },
+    "standard_field": {
+      "type": "string"
+    },
+    "ui_label": {
+      "type": "string"
+    },
+    "field_role": {
+      "$ref": "#/definitions/field_role"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "confidence": {
+      "$ref": "#/definitions/field_confidence"
+    },
+    "confirmation_status": {
+      "$ref": "#/definitions/confirmation_status"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "raw_record_json": {
+      "type": "object",
+      "description": "Optional sample record fragment for lineage; not required for semantics rows."
+    },
+    "raw_record_hash": {
+      "type": "string"
+    },
+    "query_params": {
+      "type": "object"
+    },
+    "fetch_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_status": {
+      "type": "string",
+      "enum": [
+        "candidate",
+        "testing",
+        "testing_stable_sample",
+        "testing_partial",
+        "blocked",
+        "deprecated"
+      ]
+    },
+    "field_confidence": {
+      "$ref": "#/definitions/field_confidence",
+      "description": "Alias of confidence when embedded in business records; here mirrors confidence."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": ["source_id", "raw_field", "confirmation_status"]
+}

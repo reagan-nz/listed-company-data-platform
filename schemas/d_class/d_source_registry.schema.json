@@ -1,0 +1,176 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/d_class/d_source_registry.schema.json",
+  "title": "d_source_registry",
+  "description": "Single CNINFO D-class source registry entry. Aligns with one element of config/cninfo_d_class_source_registry_draft.yaml sources[]. Design-only.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "source_layer": {
+      "type": "string",
+      "enum": [
+        "company_event",
+        "company_metric_daily",
+        "company_metric_periodic",
+        "disclosure_schedule",
+        "industry_aggregate"
+      ]
+    },
+    "source_status": {
+      "type": "string",
+      "enum": [
+        "candidate",
+        "testing",
+        "testing_stable_sample",
+        "testing_partial",
+        "blocked",
+        "deprecated"
+      ]
+    },
+    "field_mapping_entry": {
+      "type": "object",
+      "properties": {
+        "raw": { "type": "string" },
+        "standard": { "type": "string" },
+        "reason": { "type": "string" }
+      },
+      "required": ["raw"]
+    },
+    "supported_mode": {
+      "type": "object",
+      "properties": {
+        "mode_id": { "type": "string" },
+        "description": { "type": "string" },
+        "params": { "type": "object" },
+        "role": {
+          "type": "string",
+          "enum": ["primary", "auxiliary_observation_only"]
+        },
+        "event_subtype": { "type": "string" },
+        "stability_tested": { "type": "boolean" },
+        "status": { "type": "string" }
+      },
+      "required": ["mode_id"]
+    }
+  },
+  "properties": {
+    "source_id": { "type": "string" },
+    "source_name": { "type": "string" },
+    "source_layer": { "$ref": "#/definitions/source_layer" },
+    "source_category": { "type": "string" },
+    "target_logical_table": { "type": "string" },
+    "optional_target_logical_table": { "type": "string" },
+    "company_code_available": { "type": "boolean" },
+    "api": {
+      "type": "object",
+      "properties": {
+        "url": { "type": "string", "format": "uri" },
+        "method": { "type": "string", "enum": ["GET", "POST"] },
+        "params_location": {
+          "type": "string",
+          "enum": ["none", "query", "form"]
+        },
+        "default_params": { "type": "object" },
+        "page_url": { "type": "string", "format": "uri" },
+        "records_path": { "type": "string" }
+      },
+      "required": ["url", "method", "records_path"]
+    },
+    "supported_modes": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/supported_mode" }
+    },
+    "status": {
+      "type": "object",
+      "properties": {
+        "recommended_status": { "$ref": "#/definitions/source_status" },
+        "verified": { "type": "boolean", "const": false },
+        "blocked": { "type": "boolean" },
+        "schema_changed": { "type": "boolean" }
+      },
+      "required": ["recommended_status", "verified"]
+    },
+    "fields": {
+      "type": "object",
+      "properties": {
+        "confirmed": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/field_mapping_entry" }
+        },
+        "candidate": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/field_mapping_entry" }
+        },
+        "raw_only": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/field_mapping_entry" }
+        },
+        "not_visible_on_ui": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "uncertain": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/field_mapping_entry" }
+        }
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "properties": {
+        "event_type": { "type": ["string", "null"] },
+        "event_subtype_mode": { "type": ["string", "null"] },
+        "standard_fields": { "type": "object" },
+        "metric_names": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "raw_record_required": { "type": "boolean" },
+        "mapping_confidence": {
+          "type": "string",
+          "enum": ["high", "medium", "low"]
+        },
+        "exclude_from_schemas": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["raw_record_required"]
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "sample_rows": { "type": "integer", "minimum": 0 },
+        "stability_cases": { "type": "integer", "minimum": 0 },
+        "empty_but_valid_cases": { "type": "integer", "minimum": 0 },
+        "artifacts": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "notes": { "type": "string" },
+    "raw_record_json": {
+      "type": "object",
+      "description": "Optional exemplar record; registry rows typically omit."
+    },
+    "raw_record_hash": { "type": "string" },
+    "query_params": { "type": "object" },
+    "fetch_time": { "type": "string", "format": "date-time" },
+    "source_status": { "$ref": "#/definitions/source_status" },
+    "field_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"]
+    },
+    "created_at": { "type": "string", "format": "date-time" }
+  },
+  "required": [
+    "source_id",
+    "source_name",
+    "source_layer",
+    "target_logical_table",
+    "api",
+    "status",
+    "mapping"
+  ]
+}

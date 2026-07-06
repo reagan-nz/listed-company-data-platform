@@ -1,0 +1,34 @@
+fixture_path,source_id,query_mode,target_schema,record_kind,record_index,result,error_count,errors,notes
+fixtures/d_class/abnormal_trading/sample_raw.json,abnormal_trading,single_day_paged,d_company_event,logical,0,PASS,0,,detail[] → d_event_party_detail deferred; main event validated only
+fixtures/d_class/abnormal_trading/sample_raw.json,abnormal_trading,single_day_paged,d_raw_record_snapshot,snapshot,0,PASS,0,,
+fixtures/d_class/block_trade/sample_raw.json,block_trade,tdate_daily,d_company_event,logical,0,PASS,0,,optional d_company_metric_daily ETL not implemented in v1
+fixtures/d_class/block_trade/sample_raw.json,block_trade,tdate_daily,d_raw_record_snapshot,snapshot,0,PASS,0,,
+fixtures/d_class/disclosure_schedule/sample_raw.json,disclosure_schedule,section_time_paged,d_disclosure_schedule,logical,0,PASS,0,,
+fixtures/d_class/disclosure_schedule/sample_raw.json,disclosure_schedule,section_time_paged,d_raw_record_snapshot,snapshot,0,PASS,0,,
+fixtures/d_class/equity_pledge/sample_raw.json,equity_pledge,tdate_daily,d_company_event,logical,0,PASS,0,,
+fixtures/d_class/equity_pledge/sample_raw.json,equity_pledge,tdate_daily,d_raw_record_snapshot,snapshot,0,PASS,0,,
+fixtures/d_class/executive_shareholding/sample_raw.json,executive_shareholding,oneMonth_varyType_b,d_company_event,logical,0,PASS,0,,
+fixtures/d_class/executive_shareholding/sample_raw.json,executive_shareholding,oneMonth_varyType_b,d_raw_record_snapshot,snapshot,0,PASS,0,,
+fixtures/d_class/fund_industry_allocation/sample_raw.json,fund_industry_allocation,default,d_industry_aggregate,logical,0,PASS,0,,validates all 3 confirmed metric rows per raw record
+fixtures/d_class/fund_industry_allocation/sample_raw.json,fund_industry_allocation,default,d_industry_aggregate,logical,1,PASS,0,,validates all 3 confirmed metric rows per raw record
+fixtures/d_class/fund_industry_allocation/sample_raw.json,fund_industry_allocation,default,d_industry_aggregate,logical,2,PASS,0,,validates all 3 confirmed metric rows per raw record
+fixtures/d_class/fund_industry_allocation/sample_raw.json,fund_industry_allocation,default,d_raw_record_snapshot,snapshot,0,PASS,0,,
+fixtures/d_class/margin_trading/sample_raw.json,margin_trading,detailList_default,d_company_metric_daily,logical,0,PASS,0,,validates all 5 confirmed metric rows per raw record
+fixtures/d_class/margin_trading/sample_raw.json,margin_trading,detailList_default,d_company_metric_daily,logical,1,PASS,0,,validates all 5 confirmed metric rows per raw record
+fixtures/d_class/margin_trading/sample_raw.json,margin_trading,detailList_default,d_company_metric_daily,logical,2,PASS,0,,validates all 5 confirmed metric rows per raw record
+fixtures/d_class/margin_trading/sample_raw.json,margin_trading,detailList_default,d_company_metric_daily,logical,3,PASS,0,,validates all 5 confirmed metric rows per raw record
+fixtures/d_class/margin_trading/sample_raw.json,margin_trading,detailList_default,d_company_metric_daily,logical,4,PASS,0,,validates all 5 confirmed metric rows per raw record
+fixtures/d_class/margin_trading/sample_raw.json,margin_trading,detailList_default,d_raw_record_snapshot,snapshot,0,PASS,0,,
+fixtures/d_class/restricted_shares_unlock/sample_raw.json,restricted_shares_unlock,tdate_daily,d_company_event,logical,0,PASS,0,,
+fixtures/d_class/restricted_shares_unlock/sample_raw.json,restricted_shares_unlock,tdate_daily,d_raw_record_snapshot,snapshot,0,PASS,0,,
+fixtures/d_class/shareholder_change_desc/sample_raw.json,shareholder_change,type_desc,d_company_event,logical,0,PASS,0,,
+fixtures/d_class/shareholder_change_desc/sample_raw.json,shareholder_change,type_desc,d_raw_record_snapshot,snapshot,0,PASS,0,,
+fixtures/d_class/shareholder_change_inc/sample_raw.json,shareholder_change,type_inc,d_company_event,logical,0,PASS,0,,
+fixtures/d_class/shareholder_change_inc/sample_raw.json,shareholder_change,type_inc,d_raw_record_snapshot,snapshot,0,PASS,0,,
+fixtures/d_class/shareholder_data/sample_raw.json,shareholder_data,rdate_report_period,d_company_metric_periodic,logical,0,PASS,0,,validates all 6 confirmed metric rows per raw record
+fixtures/d_class/shareholder_data/sample_raw.json,shareholder_data,rdate_report_period,d_company_metric_periodic,logical,1,PASS,0,,validates all 6 confirmed metric rows per raw record
+fixtures/d_class/shareholder_data/sample_raw.json,shareholder_data,rdate_report_period,d_company_metric_periodic,logical,2,PASS,0,,validates all 6 confirmed metric rows per raw record
+fixtures/d_class/shareholder_data/sample_raw.json,shareholder_data,rdate_report_period,d_company_metric_periodic,logical,3,PASS,0,,validates all 6 confirmed metric rows per raw record
+fixtures/d_class/shareholder_data/sample_raw.json,shareholder_data,rdate_report_period,d_company_metric_periodic,logical,4,PASS,0,,validates all 6 confirmed metric rows per raw record
+fixtures/d_class/shareholder_data/sample_raw.json,shareholder_data,rdate_report_period,d_company_metric_periodic,logical,5,PASS,0,,validates all 6 confirmed metric rows per raw record
+fixtures/d_class/shareholder_data/sample_raw.json,shareholder_data,rdate_report_period,d_raw_record_snapshot,snapshot,0,PASS,0,,

@@ -1,0 +1,21 @@
+{
+  "source_id": "shareholder_change",
+  "query_mode": "type_desc",
+  "query_params": {
+    "type": "desc"
+  },
+  "records_path": "data.records",
+  "request_url": "https://www.cninfo.com.cn/data20/shareholeder/detail?type=desc",
+  "expected_logical_table": "d_company_event",
+  "provenance": "outputs/validation/cninfo_table_field_semantics_priority2.csv desc mode",
+  "raw_record": {
+    "DECLAREDATE": "2026-06-28",
+    "SECCODE": "002594",
+    "SECNAME": "比亚迪",
+    "VARYDATE": "2026-07-02",
+    "F002V": "某某股东",
+    "F004N": 200000,
+    "F005N": 0.01,
+    "F007V": null
+  }
+}

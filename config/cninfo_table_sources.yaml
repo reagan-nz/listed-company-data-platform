@@ -1,0 +1,513 @@
+# CNINFO D 类固定表格 / 市场行为数据源配置（Era C Phase 2）
+# 权威分层：plans/cninfo_data_source_layered_inventory.md §7
+# 验证脚本：lab/validate_cninfo_table_sources.py
+#
+# api_url 仅填写经 DevTools / 文档确认后的公开接口；未知则 null，不猜测。
+# recommended_status 初始值：unknown / candidate；不写 verified。
+
+version: 1
+layer: D
+category: fixed_table
+
+defaults:
+  method: POST
+  timeout_seconds: 10
+  sleep_seconds: 0.6
+  sample_page_size: 10
+  headers_profile: cninfo_ajax
+
+sources:
+  - source_id: disclosure_schedule
+    source_name: 预约披露 / 定期报告预约披露
+    category: fixed_table
+    priority: 1
+    page_url: "https://www.cninfo.com.cn/new/commonUrl?url=disclosure/list/notice"
+    api_url: "https://www.cninfo.com.cn/new/information/getPrbookInfo"
+    method: POST
+    params_template:
+      sectionTime: "2025-12-31"
+      firstTime: ""
+      lastTime: ""
+      market: "szsh"
+      stockCode: ""
+      orderClos: ""
+      isDesc: ""
+      pagesize: 20
+      pagenum: 1
+    expected_response_type: json
+    expected_fields:
+      - seccode
+      - secname
+      - orgId
+      - f001d_0102
+      - f002d_0102
+      - f003d_0102
+      - f004d_0102
+      - f005d_0102
+      - f006d_0102
+      - latest_time
+    key_dimensions:
+      - company_code
+      - company_name
+      - org_id
+      - report_period
+      - scheduled_disclosure_date
+      - revised_disclosure_date
+    sample_strategy: "page 1 only, pagesize 20"
+    notes: >-
+      Public JSON endpoint discovered via DevTools.
+      Request uses application/x-www-form-urlencoded form data.
+      f001d_0102 appears to be report period / section date.
+      f002d_0102 and f006d_0102 appear to be scheduled/current disclosure dates.
+      f003d_0102/f004d_0102/f005d_0102 appear to be change-date related fields;
+      exact semantics need confirmation.
+      totalRows in observed response was 5493.
+      Do not treat field semantics as fully verified.
+    recommended_status: testing
+
+  - source_id: margin_trading
+    source_name: 融资融券
+    category: fixed_table
+    priority: 1
+    page_url: "https://www.cninfo.com.cn/new/commonUrl?url=data/rzrq-zjlx"
+    api_url: "https://www.cninfo.com.cn/data20/marginTrading/detailList"
+    method: POST
+    params_location: none
+    params_template: {}
+    expected_response_type: json
+    expected_fields:
+      - TRADEDATE
+      - SECCODE
+      - SECNAME
+      - F001N
+      - F002N
+      - F003N
+      - F004N
+      - F006N
+      - F007N
+      - F008N
+      - F009N
+      - F010V
+      - F011V
+      - F012V
+      - MEMO
+    key_dimensions:
+      - trade_date
+      - company_code
+      - company_name
+      - financing_balance
+      - financing_buy_amount
+      - securities_lending_balance
+      - securities_lending_volume
+      - margin_trading_balance
+      - market
+      - stock_type
+    sample_strategy: "detailList default request only, no pagination, no date loop"
+    notes: >-
+      Public JSON endpoint discovered via DevTools.
+      detailList returns company-level margin trading records.
+      Observed total was 4374 records.
+      Request currently uses POST with empty body and no query params.
+      Field semantics F001N/F002N/F003N/F004N/F006N/F007N/F008N/F009N need confirmation.
+      F010V/F011V/F012V appear to be market / board / stock type fields.
+      market endpoint also exists at
+      https://www.cninfo.com.cn/data20/marginTrading/market?tdate=2026-07-02,
+      but it is market-level summary and is not used as the main company-level source in this task.
+      Do not treat field semantics as fully verified.
+    recommended_status: testing
+
+  - source_id: block_trade
+    source_name: 大宗交易
+    category: fixed_table
+    priority: 1
+    page_url: "https://www.cninfo.com.cn/new/commonUrl?url=data/dzjy"
+    api_url: "https://www.cninfo.com.cn/data20/ints/statistics"
+    method: POST
+    params_location: query
+    params_template:
+      tdate: "2026-07-03"
+    expected_response_type: json
+    expected_fields:
+      - SECCODE
+      - SECNAME
+      - TRADEDATE
+      - F001N
+      - F002N
+      - F003N
+      - F004N
+    key_dimensions:
+      - company_code
+      - company_name
+      - trade_date
+      - block_trade_count
+      - trade_volume
+      - trade_amount
+      - average_trade_price
+    sample_strategy: "single date only, tdate=2026-07-03"
+    notes: >-
+      Public JSON endpoint discovered via DevTools.
+      Request uses POST with query parameter tdate and empty body.
+      Referrer page url=data/dzjy indicates block trade page.
+      F001N appears to be trade count.
+      F002N appears to be trade volume.
+      F003N appears to be trade amount.
+      F004N appears to be average trade price.
+      Exact unit semantics need confirmation.
+      Observed total was 60 for tdate=2026-07-03.
+      Do not treat field semantics as fully verified.
+    recommended_status: testing
+
+  - source_id: restricted_shares_unlock
+    source_name: 限售解禁 / 解除限售
+    category: fixed_table
+    priority: 1
+    page_url: "https://www.cninfo.com.cn/new/commonUrl?url=data/restricted-shares"
+    api_url: "https://www.cninfo.com.cn/data20/liftBan/detail"
+    method: POST
+    params_location: query
+    params_template:
+      tdate: "2026-06-08"
+    expected_response_type: json
+    expected_fields:
+      - SECCODE
+      - SECNAME
+      - DECLAREDATE
+      - F003D
+      - F004N
+      - F005N
+      - F008N
+    key_dimensions:
+      - company_code
+      - company_name
+      - declaration_date
+      - unlock_date
+      - unlock_shares
+      - unlock_ratio
+      - tradable_shares
+    sample_strategy: "single date only, tdate=2026-06-08"
+    notes: >-
+      Public JSON endpoint discovered via DevTools.
+      Request uses POST with query parameter tdate and empty body.
+      F003D appears to be unlock/listing date.
+      F004N appears to be unlock shares.
+      F005N appears to be unlock ratio.
+      F008N appears to be actual tradable / unlocked shares, exact semantics need confirmation.
+      Observed total was 6 for tdate=2026-06-08.
+      Do not treat field semantics as fully verified.
+    recommended_status: testing
+
+  - source_id: abnormal_trading
+    source_name: 公开信息 / 异常交易
+    category: fixed_table
+    priority: 1
+    page_url: "https://www.cninfo.com.cn/new/commonUrl?url=data/public-information"
+    api_url: "https://www.cninfo.com.cn/data/statis/getMarketStatisticsData"
+    method: POST
+    params_location: query
+    params_template:
+      sdate: "2026-07-03"
+      edate: "2026-07-03"
+      platecode: ""
+      orderby: ""
+      page: 1
+      rows: 30
+    expected_response_type: json
+    expected_fields:
+      - secCode
+      - secName
+      - tradeTime
+      - type
+      - buyTotal
+      - sellTotal
+      - buyPercent
+      - sellPercent
+      - detail
+    key_dimensions:
+      - company_code
+      - company_name
+      - trade_date
+      - abnormal_type
+      - buy_total
+      - sell_total
+      - buy_percent
+      - sell_percent
+      - broker_detail
+    sample_strategy: "single day only, page 1, rows 30"
+    notes: >-
+      Public JSON endpoint discovered via DevTools.
+      Referrer page url=data/public-information indicates public information / abnormal trading page.
+      Request uses POST with query parameters and empty body.
+      marketList returns company-level abnormal trading / public information records.
+      detail contains nested broker branch buy/sell fields.
+      Observed total was 151 and totalPage was 6 for 2026-07-03.
+      Field semantics and nested detail structure need confirmation.
+      Do not treat field semantics as fully verified.
+    recommended_status: testing
+
+  - source_id: szse_calendar
+    source_name: 深市日历
+    category: fixed_table
+    priority: 2
+    page_url: "https://www.cninfo.com.cn/new/commonUrl?url=disclosure/szse-calendar"
+    api_url: null
+    method: POST
+    params_template: {}
+    expected_response_type: json
+    expected_fields:
+      - company_code
+      - company_name
+      - event_type
+      - event_date
+      - description
+    key_dimensions:
+      - company_code
+      - event_date
+      - event_type
+    sample_strategy: "按月份或公司代码小样本；待确认参数"
+    notes: "CNINFO 导航：资讯 → 深市日历；日历聚合页，api_url 待 DevTools"
+    recommended_status: unknown
+
+  - source_id: equity_pledge
+    source_name: 股权质押
+    category: fixed_table
+    priority: 2
+    page_url: "https://www.cninfo.com.cn/new/commonUrl?url=data/person-stock-data-tables"
+    api_url: "https://www.cninfo.com.cn/data20/equityPledge/list"
+    method: POST
+    params_location: query
+    params_template:
+      tdate: "2026-07-03"
+    expected_response_type: json
+    expected_fields:
+      - SECCODE
+      - SECNAME
+      - DECLAREDATE
+      - F001V
+      - F003V
+      - F006N
+      - F007N
+      - F012N
+      - F008V
+      - F018N
+    key_dimensions:
+      - company_code
+      - company_name
+      - announcement_date
+      - pledgor
+      - pledgee
+      - pledged_shares_candidate
+      - pledge_ratio_candidate
+      - pledge_description
+      - holding_ratio_or_total_pledge_ratio_candidate
+    sample_strategy: "single date only, no pagination, no date loop"
+    notes: >-
+      Public JSON endpoint discovered via DevTools.
+      Referrer page is url=data/person-stock-data-tables, tab 股权质押.
+      Request uses POST with query parameter tdate and empty body.
+      data.records returns company-level equity pledge records.
+      Observed total was 17 for tdate=2026-07-03.
+      F006N unit likely needs confirmation; sample suggests it may be 万股.
+      F007N / F012N / F018N semantics need UI table header confirmation.
+      Do not treat field semantics as fully verified.
+    recommended_status: testing
+
+  - source_id: shareholder_change
+    source_name: 股东增减持
+    category: fixed_table
+    priority: 2
+    page_url: "https://www.cninfo.com.cn/new/commonUrl?url=data/person-stock-data-tables"
+    api_url: "https://www.cninfo.com.cn/data20/shareholeder/detail"
+    method: POST
+    params_location: query
+    params_template:
+      type: "inc"
+      tdate: "2026-07-03"
+    expected_response_type: json
+    expected_fields:
+      - DECLAREDATE
+      - SECCODE
+      - SECNAME
+      - VARYDATE
+      - F002V
+      - F004N
+      - F005N
+      - F007V
+    key_dimensions:
+      - announcement_date
+      - company_code
+      - company_name
+      - change_date
+      - shareholder_name
+      - share_change_amount_candidate
+      - share_change_ratio_candidate
+      - change_price_candidate
+    sample_strategy: "dual mode: type=inc (default params_template with tdate) or type=desc; single request each; no pagination"
+    notes: >-
+      Public JSON endpoint discovered via DevTools.
+      Endpoint path is /shareholeder/detail; spelling is shareholeder in observed request.
+      Referrer page is url=data/person-stock-data-tables, tab 股东增减持.
+      shareholder_change supports two modes:
+      type=inc: share increase detail (observed with tdate=2026-07-03, total=3).
+      type=desc: share decrease detail (observed HTTP 200, total=16, count=16; tdate may be null).
+      inc and desc share the same raw field structure (8 fields).
+      Do not use type=dec; observed parameter is type=desc.
+      Request uses POST with query parameters and empty body.
+      data.records returns company-level shareholder change records.
+      Field semantics confirmed via UI for both inc and desc modes.
+      Do not treat field semantics as fully verified. Do not write verified.
+    recommended_status: testing
+
+  - source_id: executive_shareholding
+    source_name: 高管持股
+    category: fixed_table
+    priority: 2
+    page_url: "https://www.cninfo.com.cn/new/commonUrl?url=data/person-stock-data-tables"
+    api_url: "https://www.cninfo.com.cn/data20/leader/detail"
+    method: POST
+    params_location: query
+    params_template:
+      timeMark: "oneMonth"
+      varyType: "b"
+    expected_response_type: json
+    expected_fields:
+      - SECCODE
+      - SECNAME
+      - ENDDATE
+      - DECLAREDATE
+      - HUMANNAME
+      - F001V
+      - F002V
+      - F003V
+      - F004N
+      - F005N
+      - F006N
+      - F007N
+      - F008N
+      - F009N
+      - F010V
+      - F011V
+    key_dimensions:
+      - company_code
+      - company_name
+      - change_date_candidate
+      - announcement_date
+      - executive_name
+      - position
+      - relationship
+      - change_amount_candidate
+      - change_shares_candidate
+      - change_ratio_candidate
+      - transaction_price_candidate
+      - transaction_method
+      - announcement_type_candidate
+    sample_strategy: "single request only, timeMark=oneMonth, varyType=b, no pagination, no date loop"
+    notes: >-
+      Public JSON endpoint discovered via DevTools.
+      Referrer page is url=data/person-stock-data-tables, tab 高管持股.
+      Request uses POST with query parameters timeMark=oneMonth and varyType=b.
+      data.records returns company-level executive shareholding change records.
+      Observed total was 842.
+      Field semantics F004N-F009N need UI table header confirmation.
+      varyType semantics need later confirmation.
+      Do not treat field semantics as fully verified.
+    recommended_status: testing
+
+  - source_id: fund_industry_allocation
+    source_name: 基金行业配置
+    category: fixed_table
+    priority: 2
+    page_url: "https://www.cninfo.com.cn/new/commonUrl?url=data/person-stock-data-tables"
+    api_url: "https://www.cninfo.com.cn/data20/fund/industry"
+    method: POST
+    params_location: none
+    params_template: {}
+    expected_response_type: json
+    expected_fields:
+      - F001V
+      - F002V
+      - ENDDATE
+      - F003N
+      - F004N
+      - F005N
+    key_dimensions:
+      - industry_code
+      - industry_name
+      - report_period
+      - fund_coverage_count
+      - industry_scale_100m_yuan
+      - net_asset_ratio_percent
+    sample_strategy: "single request only, no pagination, no date loop"
+    notes: >-
+      Public JSON endpoint discovered via DevTools.
+      This is an industry-level aggregate table, not a company-level event source.
+      data.records returns fund industry allocation rows.
+      Observed total was 19.
+      UI table header confirmed all 6 fields.
+      Do not write verified.
+    recommended_status: testing
+
+  - source_id: shareholder_data
+    source_name: 股东数据
+    category: fixed_table
+    priority: 2
+    page_url: "https://www.cninfo.com.cn/new/commonUrl?url=data/person-stock-data-tables"
+    api_url: "https://www.cninfo.com.cn/data20/shareholeder/data"
+    method: POST
+    params_location: query
+    params_template:
+      rdate: "20260331"
+    expected_response_type: json
+    expected_fields:
+      - SECCODE
+      - SECNAME
+      - ENDDATE
+      - F001N
+      - F002N
+      - F003N
+      - F004N
+      - F005N
+      - F006N
+    key_dimensions:
+      - company_code
+      - company_name
+      - shareholder_report_date
+      - current_shareholder_count
+      - previous_shareholder_count
+      - shareholder_count_change_percent
+      - current_avg_shares_per_holder
+      - previous_avg_shares_per_holder
+      - avg_shares_per_holder_change_percent
+    sample_strategy: "single report date only, rdate=20260331, no pagination, no date loop"
+    notes: >-
+      Public JSON endpoint discovered via DevTools.
+      Endpoint path is /shareholeder/data; spelling is shareholeder in observed request.
+      data.records returns company-level shareholder data.
+      Observed total was 5255 for rdate=20260331.
+      UI table header confirmed all 9 fields.
+      This is company-level periodic shareholder structure data.
+      Do not write verified.
+    recommended_status: testing
+
+  - source_id: ipo_query
+    source_name: IPO 查询
+    category: fixed_table
+    priority: 2
+    page_url: "https://www.cninfo.com.cn/new/commonUrl?url=disclosure/ipo"
+    api_url: null
+    method: POST
+    params_template: {}
+    expected_response_type: json
+    expected_fields:
+      - company_code
+      - company_name
+      - ipo_stage
+      - listing_board
+      - application_date
+      - approval_date
+      - issue_price
+    key_dimensions:
+      - company_code
+      - ipo_stage
+    sample_strategy: "IPO 在审 / 已上市列表首页；pageSize=10"
+    notes: "CNINFO 导航：数据 → IPO 查询；与 A 类招股书 known-event 可联动；api_url 待 DevTools"
+    recommended_status: unknown

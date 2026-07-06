@@ -1,0 +1,61 @@
+source_id,source_name,query_mode,raw_field,standard_field_candidate,semantic_confidence_before,needs_confirmation,ui_label_observed,confirmation_status,semantic_confidence_after,confirmed_standard_field,manual_notes
+equity_pledge,股权质押,,SECCODE,company_code,high,yes,股票代码,confirmed,high,company_code,UI 表头显示为股票代码。
+equity_pledge,股权质押,,SECNAME,company_name,high,yes,股票简称,confirmed,high,company_name,UI 表头显示为股票简称。
+equity_pledge,股权质押,,DECLAREDATE,announcement_date,medium,yes,公告日期,confirmed,high,announcement_date,UI 表头显示为公告日期。
+equity_pledge,股权质押,,F018N,holding_ratio_or_total_pledge_ratio_candidate,low,yes,累计质押率(%),confirmed,high,cumulative_pledge_ratio_percent,UI 表头显示为累计质押率(%)。
+equity_pledge,股权质押,,F001V,pledgor,medium,yes,出质人,confirmed,high,pledgor,UI 表头显示为出质人。
+equity_pledge,股权质押,,F003V,pledgee,medium,yes,质权人,confirmed,high,pledgee,UI 表头显示为质权人。
+equity_pledge,股权质押,,F006N,pledged_shares_candidate,medium,yes,质押数量(万股),confirmed,high,pledged_shares_10k_shares,UI 表头显示为质押数量(万股)。
+equity_pledge,股权质押,,F007N,pledge_ratio_candidate,medium,yes,占总股本比例(%),confirmed,high,pledge_ratio_to_total_share_capital_percent,UI 表头显示为占总股本比例(%)。
+equity_pledge,股权质押,,F012N,unknown_field_candidate,low,yes,质押解除数量(万股),confirmed,high,released_pledge_shares_10k_shares,UI 表头显示为质押解除数量(万股)。
+equity_pledge,股权质押,,F008V,pledge_description,medium,yes,,not_visible_on_ui,medium,pledge_description_text,接口返回质押说明文本，但当前 UI 表格未显示为独立表头字段。
+shareholder_change,股东增减持,inc,(type param),change_direction_inc,high,yes,增持明细,type_param_confirmed,high,share_increase,type=inc 增持明细；默认 params_template 含 tdate=2026-07-03。
+shareholder_change,股东增减持,inc,DECLAREDATE,announcement_date,medium,yes,公告日期,confirmed,high,announcement_date,UI 表头显示为公告日期。
+shareholder_change,股东增减持,inc,SECCODE,company_code,high,yes,证券代码,confirmed,high,company_code,UI 表头显示为证券代码。
+shareholder_change,股东增减持,inc,SECNAME,company_name,high,yes,证券简称,confirmed,high,company_name,UI 表头显示为证券简称。
+shareholder_change,股东增减持,inc,VARYDATE,change_date,high,yes,增持日期,confirmed,high,share_increase_date,UI 表头显示为增持日期。
+shareholder_change,股东增减持,inc,F002V,shareholder_name,medium,yes,股东名称,confirmed,high,shareholder_name,UI 表头显示为股东名称。
+shareholder_change,股东增减持,inc,F004N,share_change_amount_candidate,medium,yes,增持数量(股),confirmed,high,increased_shares,UI 表头显示为增持数量(股)。
+shareholder_change,股东增减持,inc,F005N,share_change_ratio_candidate,medium,yes,增持比例(%),confirmed,high,increase_ratio_percent,UI 表头显示为增持比例(%)。
+shareholder_change,股东增减持,inc,F007V,change_price_candidate,medium,yes,增持价格,confirmed,high,increase_price,UI 表头显示为增持价格；样本值 1.27 / 30.53 与价格字段形态一致。
+shareholder_change,股东增减持,desc,(type param),change_direction_desc,high,yes,减持明细,type_param_confirmed,high,share_decrease,type=desc 减持明细；DevTools 请求未显式带 tdate（tdate=null）；observed total=16。
+shareholder_change,股东增减持,desc,DECLAREDATE,announcement_date,medium,yes,公告日期,confirmed,high,announcement_date,UI 表头显示为公告日期。
+shareholder_change,股东增减持,desc,SECCODE,company_code,high,yes,证券代码,confirmed,high,company_code,UI 表头显示为证券代码。
+shareholder_change,股东增减持,desc,SECNAME,company_name,high,yes,证券简称,confirmed,high,company_name,UI 表头显示为证券简称。
+shareholder_change,股东增减持,desc,VARYDATE,change_date,high,yes,减持日期,confirmed,high,share_decrease_date,UI 表头显示为减持日期。
+shareholder_change,股东增减持,desc,F002V,shareholder_name,medium,yes,股东名称,confirmed,high,shareholder_name,UI 表头显示为股东名称。
+shareholder_change,股东增减持,desc,F004N,share_change_amount_candidate,medium,yes,减持数量(股),confirmed,high,decreased_shares,UI 表头显示为减持数量(股)。
+shareholder_change,股东增减持,desc,F005N,share_change_ratio_candidate,medium,yes,减持比例(%),confirmed,high,decrease_ratio_percent,UI 表头显示为减持比例(%)。
+shareholder_change,股东增减持,desc,F007V,change_price_candidate,medium,yes,减持价格,confirmed,high,decrease_price,UI 表头显示为减持价格；样本值可能为空、单一价格或价格区间。
+executive_shareholding,高管持股,detail_varyType_b,(params),varyType_b_increase_filter,medium,yes,增持,type_param_confirmed,high,varyType_b,varyType=b 当前对应 UI「增持」筛选项；timeMark=oneMonth；后续可测试其他 varyType。
+executive_shareholding,高管持股,detail_varyType_b,SECCODE,company_code,high,yes,证券代码,confirmed,high,company_code,UI 表头显示为证券代码。
+executive_shareholding,高管持股,detail_varyType_b,SECNAME,company_name,high,yes,证券简称,confirmed,high,company_name,UI 表头显示为证券简称。
+executive_shareholding,高管持股,detail_varyType_b,ENDDATE,change_date_candidate,medium,yes,变动日期,confirmed,high,shareholding_change_date,UI 表头显示为变动日期。
+executive_shareholding,高管持股,detail_varyType_b,DECLAREDATE,announcement_date,medium,yes,,not_visible_on_ui,medium,announcement_date,接口返回公告日期，但当前高管持股变动明细 UI 表头未显示该列；语义较明确但仍保留为非 UI confirmed 字段。
+executive_shareholding,高管持股,detail_varyType_b,HUMANNAME,executive_name,high,yes,董监高姓名,confirmed,high,executive_name,UI 表头显示为董监高姓名。
+executive_shareholding,高管持股,detail_varyType_b,F001V,share_change_person_candidate,medium,yes,股份变动人,confirmed,high,share_change_person,UI 表头显示为股份变动人；样本中常与 HUMANNAME 相同，但语义不同，应保留为股份变动人。
+executive_shareholding,高管持股,detail_varyType_b,F002V,position,medium,yes,职务,confirmed,high,executive_position,UI 表头显示为职务。
+executive_shareholding,高管持股,detail_varyType_b,F003V,relationship,medium,yes,变动人与董监高的关系,confirmed,high,relationship_to_executive,UI 表头显示为变动人与董监高的关系。
+executive_shareholding,高管持股,detail_varyType_b,F004N,shares_before_change_candidate,low,yes,,not_visible_on_ui,low,,当前 UI 明细表头未显示该字段；样本中多为空，暂不确认。
+executive_shareholding,高管持股,detail_varyType_b,F005N,transaction_amount_candidate,medium,yes,,uncertain,medium,transaction_amount_candidate,当前 UI 明细表头未显示该字段；样本值如 141.46，可能与成交金额或变动金额有关，但不能直接确认。
+executive_shareholding,高管持股,detail_varyType_b,F006N,change_shares_candidate,medium,yes,变动数量,confirmed,high,changed_shares,UI 表头显示为变动数量。
+executive_shareholding,高管持股,detail_varyType_b,F007N,change_ratio_candidate,low,yes,,not_visible_on_ui,low,,当前 UI 明细表头未显示该字段；需要进一步确认。
+executive_shareholding,高管持股,detail_varyType_b,F008N,average_transaction_price_candidate,medium,yes,成交均价,confirmed,high,average_transaction_price,UI 表头显示为成交均价。
+executive_shareholding,高管持股,detail_varyType_b,F009N,shares_after_change_candidate,low,yes,,not_visible_on_ui,low,,当前 UI 明细表头未显示该字段；样本中多为空，暂不确认。
+executive_shareholding,高管持股,detail_varyType_b,F010V,transaction_method,medium,yes,变动原因,confirmed,high,change_reason,UI 表头显示为变动原因。
+executive_shareholding,高管持股,detail_varyType_b,F011V,information_source_candidate,medium,yes,,not_visible_on_ui,medium,information_source_or_announcement_type_candidate,接口值如「临时公告」，但当前 UI 明细表头未显示；暂作为公告来源/类型候选字段。
+fund_industry_allocation,基金行业配置,,F001V,industry_code,high,yes,行业编码,confirmed,high,industry_code,UI 表头显示为行业编码；industry-level aggregate，非 company-level source。
+fund_industry_allocation,基金行业配置,,F002V,industry_name,high,yes,所属行业名称,confirmed,high,industry_name,UI 表头显示为所属行业名称。
+fund_industry_allocation,基金行业配置,,ENDDATE,report_period,high,yes,报告期,confirmed,high,report_period,UI 表头显示为报告期。
+fund_industry_allocation,基金行业配置,,F003N,fund_coverage_count,medium,yes,基金覆盖家数(只),confirmed,high,fund_coverage_count,UI 表头显示为基金覆盖家数(只)。
+fund_industry_allocation,基金行业配置,,F004N,industry_scale_100m_yuan,medium,yes,行业规模(亿元),confirmed,high,industry_scale_100m_yuan,UI 表头显示为行业规模(亿元)。
+fund_industry_allocation,基金行业配置,,F005N,net_asset_ratio_percent,medium,yes,占净资产比例(%),confirmed,high,net_asset_ratio_percent,UI 表头显示为占净资产比例(%)。
+shareholder_data,股东数据,rdate_20260331,SECCODE,company_code,high,yes,股票代码,confirmed,high,company_code,UI 表头显示为股票代码；rdate=20260331 单报告期小样本。
+shareholder_data,股东数据,rdate_20260331,SECNAME,company_name,high,yes,股票简称,confirmed,high,company_name,UI 表头显示为股票简称。
+shareholder_data,股东数据,rdate_20260331,ENDDATE,shareholder_report_date,high,yes,变动日期,confirmed,high,shareholder_report_date,UI 表头显示为变动日期/报告期末。
+shareholder_data,股东数据,rdate_20260331,F001N,current_shareholder_count,medium,yes,本期股东人数,confirmed,high,current_shareholder_count,UI 表头显示为本期股东人数。
+shareholder_data,股东数据,rdate_20260331,F002N,previous_shareholder_count,medium,yes,上期股东人数,confirmed,high,previous_shareholder_count,UI 表头显示为上期股东人数。
+shareholder_data,股东数据,rdate_20260331,F003N,shareholder_count_change_percent,medium,yes,股东人数增幅(%),confirmed,high,shareholder_count_change_percent,UI 表头显示为股东人数增幅(%)。
+shareholder_data,股东数据,rdate_20260331,F004N,current_avg_shares_per_holder,medium,yes,本期人均持股数量(股),confirmed,high,current_avg_shares_per_holder,UI 表头显示为本期人均持股数量(股)。
+shareholder_data,股东数据,rdate_20260331,F005N,previous_avg_shares_per_holder,medium,yes,上期人均持股数量(股),confirmed,high,previous_avg_shares_per_holder,UI 表头显示为上期人均持股数量(股)。
+shareholder_data,股东数据,rdate_20260331,F006N,avg_shares_per_holder_change_percent,medium,yes,人均持股数量增幅(%),confirmed,high,avg_shares_per_holder_change_percent,UI 表头显示为人均持股数量增幅(%)。

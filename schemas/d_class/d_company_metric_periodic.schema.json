@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-c.local/schemas/d_class/d_company_metric_periodic.schema.json",
+  "title": "d_company_metric_periodic",
+  "description": "CNINFO D-class company x report_period metric row. Primary: shareholder_data.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "source_status": {
+      "type": "string",
+      "enum": [
+        "candidate",
+        "testing",
+        "testing_stable_sample",
+        "testing_partial",
+        "blocked",
+        "deprecated"
+      ]
+    },
+    "field_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low", "unknown"]
+    }
+  },
+  "properties": {
+    "metric_id": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "company_code": {
+      "type": "string"
+    },
+    "company_name": {
+      "type": "string"
+    },
+    "report_period": {
+      "type": "string",
+      "format": "date",
+      "description": "Report period end date (ENDDATE / rdate)."
+    },
+    "metric_name": {
+      "type": "string"
+    },
+    "metric_value": {
+      "type": "number"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "raw_field": {
+      "type": "string"
+    },
+    "raw_record_json": {
+      "type": "object"
+    },
+    "raw_record_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "query_params": {
+      "type": "object"
+    },
+    "fetch_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_status": {
+      "$ref": "#/definitions/source_status"
+    },
+    "field_confidence": {
+      "$ref": "#/definitions/field_confidence"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "metric_id",
+    "source_id",
+    "company_code",
+    "report_period",
+    "metric_name",
+    "metric_value",
+    "raw_record_json",
+    "raw_record_hash"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "source_id": "margin_trading",
+  "query_mode": "detailList_default",
+  "query_params": {},
+  "records_path": "data.records",
+  "request_url": "https://www.cninfo.com.cn/data20/marginTrading/detailList",
+  "expected_logical_table": "d_company_metric_daily",
+  "provenance": "outputs/validation/cninfo_table_field_semantics_priority1.csv (000001 sample)",
+  "raw_record": {
+    "TRADEDATE": "2026-07-02",
+    "SECCODE": "000001",
+    "SECNAME": "平安银行",
+    "F001N": 5327610410.0,
+    "F002N": 95032872.0,
+    "F003N": null,
+    "F004N": 1697500.0,
+    "F006N": 53400.0,
+    "F007N": null,
+    "F008N": 17450300.0,
+    "F009N": 5345060710.0,
+    "F010V": "深圳",
+    "F011V": "001001",
+    "F012V": "A股",
+    "MEMO": null
+  }
+}
