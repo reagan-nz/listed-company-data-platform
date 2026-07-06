@@ -106,7 +106,7 @@ _最后更新：2026-07-05_
 - `plans/cninfo_c_class_p1_probe_execution_notes.md` — **Phase 4** P1 三源 × 三公司 DevTools probe 执行说明
 - `plans/cninfo_c_class_p1_probe_review.md` — P1 probe 结果审查（basic / security / industry / annex）
 - `plans/cninfo_c_class_p2_probe_plan.md` — **Phase 4** P2 DevTools probe 计划（executive / share_capital / shareholders）
-- `plans/cninfo_c_class_p2_probe_checklist.md` — P2 人工 probe 检查清单
+- `plans/cninfo_c_class_p2a_yaml_backfill_decision.md` — **Phase 4** P2-A YAML 回填决策（4 source · `testing` only · decision only）
 - `plans/cninfo_c_class_p1_yaml_backfill_decision.md` — P1 candidate YAML 回填 / 暂缓决策（**YAML 未改**）
 - `plans/cninfo_c_class_basic_profile_field_mapping_draft.md` — getCompanyIntroduction → basic profile 字段映射草案
 - `plans/cninfo_c_class_f10_source_discovery_design.md` — **Phase 4** C 类 F10 / company profile source discovery 设计草案
@@ -233,5 +233,5 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 2. **Phase 2 已收口**；**Phase 3 D 类设计**见 [registry YAML](config/cninfo_d_class_source_registry_draft.yaml) / [schema validation summary](outputs/validation/cninfo_d_class_schema_validation_summary.md)。
 3. **Phase 3 B 类**见 [validation design](plans/cninfo_b_class_validation_design.md) / [category routing](plans/cninfo_b_class_category_routing_rules.md) / [categories YAML](config/cninfo_announcement_categories.yaml) / [document seed summary](outputs/validation/cninfo_b_class_document_seed_summary.md) / [B schema validation](outputs/validation/cninfo_b_class_document_schema_validation_summary.md)。
 4. **Phase 4 C 类**见 [registry lint](outputs/validation/cninfo_c_class_registry_lint_summary.md) / [fixture validation](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md) / [probe plan](plans/cninfo_c_class_devtools_probe_plan.md) / [P2 probe plan](plans/cninfo_c_class_p2_probe_plan.md) / [candidates YAML](config/cninfo_c_class_source_candidates.yaml)。
-5. **下一步**：起草 C-class P2-A YAML backfill decision；E/F 暂缓。
+5. **下一步**：应用 C-class P2-A YAML backfill v1 + registry lint；E/F 暂缓。
 6. **每完成一个 Phase**：更新分层表状态 + `outputs/validation/` 留 summary；不做数据库接入。

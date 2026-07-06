@@ -149,9 +149,10 @@ _最后更新：2026-07-05_
 40. ~~C 类 P2 DevTools probe plan + records 初始化~~ → **已完成**（§7k）
 41. ~~C 类 P2 executive_profile 人工 DevTools probe~~ → **3/3 endpoint_found**（§7l）
 42. ~~C 类 P2 share_capital + shareholders 人工 DevTools probe~~ → **P2-A 12/12 endpoint_found**（§7m）
-43. 起草 C-class P2-A YAML backfill decision
-44. 可选：probe 官方 category code（B 类）
-45. **暂不全量抓取、暂不入库**
+43. ~~C 类 P2-A YAML backfill decision 起草~~ → **已完成**（§7n）
+44. 应用 C-class P2-A YAML backfill v1 + registry lint
+45. 可选：probe 官方 category code（B 类）
+46. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -900,7 +901,30 @@ _最后更新：2026-07-05_
 
 **红线：** **无 verified**；**无 testing_stable_sample**；**无 candidate YAML backfill**（本轮）；不入库。
 
-**下一步：** 起草 [cninfo_c_class_p2_yaml_backfill_decision.md](cninfo_c_class_p2_yaml_backfill_decision.md)（待创建）。
+**下一步：** ~~起草 P2-A YAML backfill decision~~ → 见 §7n；应用 P2-A YAML backfill v1。
+
+---
+
+## 7n. Phase 4 C 类 P2-A YAML Backfill Decision（2026-07-06）
+
+| 文档 | 内容 |
+|------|------|
+| [cninfo_c_class_p2a_yaml_backfill_decision.md](cninfo_c_class_p2a_yaml_backfill_decision.md) | P2-A 四源 YAML 回填决策 |
+
+**决策：** 四个 P2-A source **允许**后续 YAML backfill → `recommended_status: testing`，`verified: false`。
+
+| source_id | decision | max_status |
+|-----------|----------|------------|
+| `cninfo_executive_profile` | allow_yaml_backfill | testing |
+| `cninfo_share_capital_profile` | allow_yaml_backfill | testing |
+| `cninfo_top_shareholders_profile` | allow_yaml_backfill | testing |
+| `cninfo_top_float_shareholders_profile` | allow_yaml_backfill | testing |
+
+**本轮：** decision **仅文档**；**未修改** `cninfo_c_class_source_candidates.yaml`。
+
+**红线：** **无 verified**；**无 testing_stable_sample**；不入库。
+
+**下一步：** P2-A YAML backfill v1 → registry lint。
 
 ---
 
@@ -918,7 +942,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **P2-A manual probe 完成**（12/12 endpoint_found）；下一步 P2-A YAML backfill decision。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **P2-A backfill decision 已起草**；下一步应用 P2-A YAML backfill v1 + lint。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
