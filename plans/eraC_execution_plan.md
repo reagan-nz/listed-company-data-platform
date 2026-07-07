@@ -195,10 +195,19 @@ _最后更新：2026-07-05_
 86. ~~26 家 all6 hold 标注~~ → **完成**（§7aw）
 87. ~~partial-fail targeted retry live~~ → **LIVE_PARTIAL**（§7ax）
 88. ~~post-retry decision~~ → **完成**（§7ax）
-89. C-class harvest planning → **下一步**（保留 26 hold + share_capital caveat）
-90. dividend_history YAML → **GO（决策 only）** · **不执行**
-91. BSE legacy targeted probe（8 家）→ **待启动**
-92. **暂不全量抓取、暂不入库**
+89. ~~C-class field inventory~~ → **完成**（§7ay）
+90. ~~C-class harvest planning~~ → **完成**（§7az）
+91. ~~harvest runner dry-run~~ → **PASS**（§7ba）
+92. ~~dividend_history mapper spec~~ → **完成**（§7bb）
+93. ~~dividend_history mapper 代码~~ → **完成**（§7bc · fixture 5/5）
+94. ~~harvest runner dry-run validation~~ → **PASS**（§7bd）
+95. ~~harvest live runner smoke~~ → **PASS**（§7be · limit=10）
+96. ~~863 full harvest approval plan~~ → **完成**（§7bf）
+97. ~~harvest runner 安全控制~~ → **完成**（§7bg · safety test 5/5）
+98. 863 full harvest 执行 → **PENDING_APPROVAL**（`full_harvest_gate`）
+99. dividend_history YAML registry → **GO（decision only）** · **不执行 backfill**
+100. BSE legacy targeted probe（8 家）→ **待启动**
+101. **暂不全量 harvest live、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -1518,7 +1527,229 @@ _最后更新：2026-07-05_
 
 **preflight：** 无 BSE · 无 abnormal_review · 无退市名；**000765/001267** duplicate orgid 共存（监测项）
 
-**下一步：** ~~partial-fail live~~ → **完成**（§7ax）；**C-class harvest planning**。
+**下一步：** ~~harvest runner 安全控制~~ → **完成**（§7bg）；**full_harvest_gate = PENDING_APPROVAL**。
+
+---
+
+## 7bg. Phase 4 C 类 Harvest Runner 安全控制（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| runner | `lab/harvest_cninfo_c_class.py` |
+| 测试 | `lab/test_cninfo_c_class_harvest_runner_safety.py` · **5/5 PASS** |
+| 报告 | [harvest_runner_safety_test_summary.md](../outputs/validation/cninfo_c_class_harvest_runner_safety_test_summary.md) |
+| run_status | `outputs/harvest/cninfo_c_class/quality/run_status.json` |
+
+### 新增参数
+
+| 参数 | 说明 |
+|------|------|
+| `--approve-full-harvest` | 863 full harvest 显式人工批准（无 `--limit` 时必需） |
+| `--resume` | 续跑框架：跳过 `harvest_status=complete` 公司 |
+| `--limit N` | smoke 模式（保留，无需 approve） |
+
+### 安全机制
+
+- `--live` 无 `--limit` 且无 `--approve-full-harvest` → `FULL_HARVEST_APPROVAL_REQUIRED` · exit≠0
+- `pre_live_harvest_validation`：company_count · hold_overlap · approve · output dir · run_status
+- `resume_skip_count` / `resume_pending_count` 输出
+
+### Gate
+
+| Gate | 状态 |
+|------|------|
+| harvest_smoke_gate | **PASS** |
+| safety_controls | **PASS**（5/5） |
+| full_harvest_gate | **PENDING_APPROVAL** |
+
+---
+
+## 7bf. Phase 4 C 类 Full Harvest 863 Approval Plan（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| 计划 | [cninfo_c_class_full_harvest_863_execution_plan.md](cninfo_c_class_full_harvest_863_execution_plan.md) |
+| universe | **863**（889 − 26 hold） |
+| planned HTTP | **6041**（863 × 7） |
+| smoke 前置 | **PASS**（§7be） |
+
+### Gate 状态
+
+| Gate | 状态 |
+|------|------|
+| harvest_smoke_gate | **PASS** |
+| full_harvest_gate | **PENDING_APPROVAL** |
+
+### 结论摘要
+
+- 执行计划已冻结：scope · command · output · safety · failure · resume · completion
+- runner `--limit` 安全锁仍在；批准后解除或加 `--approve-full-harvest`
+- **resume 逻辑规划完成 · 代码待批准后实现**
+- **本轮不执行 full harvest** · **no verified** · **no DB**
+
+---
+
+## 7be. Phase 4 C 类 Harvest Live Runner Smoke（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| runner | `lab/harvest_cninfo_c_class.py` · `--live --limit 10` |
+| sample | `lab/eval_companies_c_class_harvest_863_non_bse.yaml`（取前 **10** 家） |
+| smoke 报告 | [harvest_smoke_summary.md](../outputs/validation/cninfo_c_class_harvest_smoke_summary.md) |
+| smoke CSV | [harvest_smoke_report.csv](../outputs/validation/cninfo_c_class_harvest_smoke_report.csv) |
+| 产物 | `outputs/harvest/cninfo_c_class/{raw,normalized,quality}/` |
+
+### 验收结果
+
+| check | result |
+|-------|--------|
+| companies | **10** |
+| HTTP requests | **70** |
+| success | **100** |
+| empty_but_valid | **2** |
+| blocked / http_error | **0** / **0** |
+| raw files | **70** |
+| normalized files | **100** |
+| dividend_history 解析 | **10/10 PASS** |
+| quality summary | **PASS** |
+| **harvest_smoke_gate** | **PASS** |
+
+### 结论摘要
+
+- live runner 已实现（复用 throttle backoff · orgId fallback · empty_but_valid · mappers）
+- **无 --limit 禁止 live**（防 863 误跑）
+- **863 full harvest 未执行**
+- **下一步：smoke 评审 → 人工批准 → 863 full harvest**
+- **no verified** · **no DB** · **no MinIO**
+
+---
+
+## 7bd. Phase 4 C 类 Harvest Runner Dry-Run Validation（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| runner | `lab/harvest_cninfo_c_class.py` |
+| sample | `lab/eval_companies_c_class_harvest_863_non_bse.yaml`（**863**） |
+| validation | [harvest_dryrun_validation_summary.md](../outputs/validation/cninfo_c_class_harvest_dryrun_validation_summary.md) |
+| matrix CSV | [harvest_dryrun_report.csv](../outputs/validation/cninfo_c_class_harvest_dryrun_report.csv) |
+
+### 验收结果
+
+| check | result |
+|-------|--------|
+| preflight | **PASS** — company_count=**863** · hold_overlap=**0** · planned_http_cases=**6041** |
+| source_matrix | **PASS** — direct **6** · derived **3** · observe **1** |
+| mapper_wiring | **PASS** — basic · executive · share_capital · shareholder(top+float) · dividend_history |
+| output_paths | **PASS** — raw / normalized / quality planned（无真实写入） |
+| CNINFO requests | **0** |
+| raw writes | **0** |
+| normalized writes | **0** |
+
+### 结论摘要
+
+- mapper 接入后完整 dry-run 流程 **PASS**
+- **harvest_dryrun_validation_gate = PASS**
+- **下一步：人工批准 → harvest live**
+- **无 CNINFO** · **无 harvest 执行** · **no verified**
+
+---
+
+## 7bc. Phase 4 C 类 dividend_history Mapper 代码实现（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| mapper | `lab/cninfo_c_class_mappers.py` · `map_dividend_history()` · `parse_dividend_f007v()` |
+| harvest 入口 | `lab/harvest_cninfo_c_class.py`（import `map_dividend_history`） |
+| 配置 | [cninfo_dividend_history_mapper.yaml](../config/cninfo_dividend_history_mapper.yaml) |
+| fixture test | `lab/test_cninfo_c_class_dividend_history_mapper.py` · **5/5 PASS** |
+| 报告 | [dividend_history_mapper_test_summary.md](../outputs/validation/cninfo_c_class_dividend_history_mapper_test_summary.md) |
+| fixtures | `fixtures/c_class/dividend_history/dividend_history_mapper_fixtures.json` |
+
+### 结论摘要
+
+- raw F001V/F007V/F018D/F020D/F023D → normalized **9** normalized_core 字段已映射
+- F007V 解析器支持：纯现金 · 现金+送股 · 现金+转增 · 空记录 · 不可解析文本
+- `dividend_parse_status`：`parsed` / `partial` / `needs_review` / `empty_but_valid`
+- harvest dry-run 复跑 **PASS**（863 · CNINFO=0）
+- **下一步：harvest runner dry-run 验收 → 人工批准 → harvest live**
+- **无 CNINFO** · **无 harvest 执行** · **no verified**
+
+---
+
+## 7bb. Phase 4 C 类 dividend_history Mapper（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| 配置 | [cninfo_dividend_history_mapper.yaml](../config/cninfo_dividend_history_mapper.yaml) |
+| 文档 | [cninfo_c_class_dividend_history_mapping.md](cninfo_c_class_dividend_history_mapping.md) |
+| logical_name | **dividend_history**（≠ financing） |
+| normalized_core | **9** · review_later **8** · raw_only **4** |
+
+### 结论摘要
+
+- raw F001V/F007V/F018D/F020D/F023D → normalized 映射 **已冻结**
+- **harvest live 字段阻塞已解除**
+- ~~`map_dividend_history()` 代码实现~~ → **完成**（§7bc）
+- harvest live 仍 **待人工批准**
+- **无 CNINFO** · **无 harvest 执行** · **no verified**
+
+---
+
+## 7ba. Phase 4 C 类 Harvest Runner Dry-Run（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| runner | `lab/harvest_cninfo_c_class.py` |
+| sample | `lab/eval_companies_c_class_harvest_863_non_bse.yaml`（**863**） |
+| dry-run | **DRY_RUN_ONLY** · matrix **8630** · HTTP planned **6041** |
+| 报告 | [harvest_dryrun_summary.md](../outputs/validation/cninfo_c_class_harvest_dryrun_summary.md) |
+
+### 结论摘要
+
+- preflight **PASS**（863 · hold overlap=0）
+- **CNINFO requests = 0** · raw/normalized writes = 0
+- direct **6** · derived **3** · observe **1**
+- **harvest_dryrun_gate = PASS** · **live pending approval**
+
+---
+
+## 7az. Phase 4 C 类 Harvest Plan（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| 计划 | [cninfo_c_class_harvest_plan.md](cninfo_c_class_harvest_plan.md) |
+| universe | **863** = 889 non-BSE − **26** all6 hold |
+| 输出三层 | raw · normalized · quality |
+| planned live cases | **6041**（863 × 7） |
+| 未来 runner | `lab/harvest_cninfo_c_class.py`（**未实现**） |
+
+### 结论摘要
+
+- **planning only** — 不请求 CNINFO · 不 harvest live · 不入库
+- direct **6** + derived **3** + observe **1**
+- field mapping：normalized_core **64** · review_later **31** · raw_only **25**
+- **live gate = PENDING_RUNNER_DRYRUN**
+- **下一步：** harvest runner dry-run → 人工批准 → harvest live
+
+---
+
+## 7ay. Phase 4 C 类 Field Inventory（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| 文档 | [cninfo_c_class_field_inventory.md](cninfo_c_class_field_inventory.md) |
+| CSV | [cninfo_c_class_field_inventory.csv](../outputs/validation/cninfo_c_class_field_inventory.csv) |
+| 字段总数 | **120** |
+| normalized_core | **64** (`include=yes`) |
+| review_later | **31** (`include=review`) |
+| raw_only | **25** (`include=no`) |
+
+### 结论摘要
+
+- **不是** discovery / harvest / live；为 raw + normalized harvest **准备字段清单**
+- **10** source 分节（basic · 3 derived · executive · share_capital · 2 shareholder · dividend_history · security observe）
+- caveat：share_capital **source_partial** · executive **caveat** · top_float **source_partial** · security **observe-only** · dividend **≠ financing**
+- **harvest planning 允许启动**；**harvest live 未启动**
 
 ---
 
@@ -1753,7 +1984,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **889 post-retry decision 完成**（§7ax）；**C-class harvest planning** 下一步；**26 all6 hold** 保留；**BSE legacy** HOLD。
+当前 Phase：C 类 **Harvest Runner 安全控制完成**（§7bg）；**full_harvest_gate = PENDING_APPROVAL**；**BSE legacy** HOLD。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

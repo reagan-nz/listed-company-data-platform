@@ -8,7 +8,7 @@ _最后更新：2026-07-07_
 
 ## 当前阶段（一句话）
 
-**Era C Phase 1（A 类）已收口**。**Phase 2 D 类已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通。**Phase 4 C 类** **889 partial-fail targeted retry live 已完成**（41 · 287 · pass=237 fail=9 · **LIVE_PARTIAL**）；[post-retry decision](plans/cninfo_c_class_889_post_retry_decision.md)：**harvest 可进入 planning**（保留 26 all6 hold + share_capital caveat）；**26 家 all6 hold** 继续 hold_no_retry；**889 不重跑**；dividend_history YAML **GO（决策 only）**；**无 verified**；**不入库**。
+**Era C Phase 1（A 类）已收口**。**Phase 2 D 类已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通。**Phase 4 C 类** **Harvest Runner 安全控制已就绪**（`--approve-full-harvest` · `--resume` 框架 · 5/5 safety tests）；**full_harvest_gate = PENDING_APPROVAL**；**无 verified**；**不入库**。
 
 ---
 
@@ -224,10 +224,19 @@ flowchart TD
 | 79 | ~~26 家 all6 hold 子集标注~~ → **完成**（`eval_companies_c_class_889_rerun_all6_hold.yaml`） |
 | 80 | ~~partial-fail targeted retry live~~ → **LIVE_PARTIAL**（[live summary](outputs/validation/cninfo_c_class_889_rerun_partial_fail_retry_live_summary.md) · pass=237 fail=9） |
 | 81 | ~~post-retry decision~~ → **完成**（[decision](plans/cninfo_c_class_889_post_retry_decision.md)） |
-| 82 | C-class harvest planning → **下一步**（保留 26 hold + share_capital caveat） |
-| 83 | dividend_history YAML backfill → **GO（决策 only）** · **不执行** |
-| 84 | BSE legacy targeted probe（8 家 hold）→ **待启动** |
-| 85 | **暂不全量抓取、暂不入库**
+| 82 | ~~C-class field inventory~~ → **完成**（[inventory](plans/cninfo_c_class_field_inventory.md) · **120** 字段） |
+| 83 | ~~C-class harvest planning~~ → **完成**（[harvest plan](plans/cninfo_c_class_harvest_plan.md) · 863 家） |
+| 84 | ~~harvest runner dry-run~~ → **PASS**（[summary](outputs/validation/cninfo_c_class_harvest_dryrun_summary.md) · 863 · 6041） |
+| 85 | ~~dividend_history mapper spec~~ → **完成**（[mapping](plans/cninfo_c_class_dividend_history_mapping.md) · normalized_core=9） |
+| 86 | ~~dividend_history mapper 代码~~ → **完成**（`lab/cninfo_c_class_mappers.py` · fixture test **5/5 PASS** · [summary](outputs/validation/cninfo_c_class_dividend_history_mapper_test_summary.md)） |
+| 87 | ~~harvest runner dry-run validation~~ → **PASS**（[validation summary](outputs/validation/cninfo_c_class_harvest_dryrun_validation_summary.md) · mapper 6/6 connected · CNINFO=0） |
+| 88 | ~~harvest live runner smoke~~ → **PASS**（10 家 · [smoke summary](outputs/validation/cninfo_c_class_harvest_smoke_summary.md)） |
+| 89 | ~~863 full harvest approval plan~~ → **完成**（[execution plan](plans/cninfo_c_class_full_harvest_863_execution_plan.md)） |
+| 90 | ~~harvest runner 安全控制~~ → **完成**（`--approve-full-harvest` · `--resume` · [safety test](outputs/validation/cninfo_c_class_harvest_runner_safety_test_summary.md) **5/5**） |
+| 91 | 863 full harvest 执行 → **PENDING_APPROVAL**（`full_harvest_gate`） |
+| 92 | dividend_history YAML backfill → **GO（决策 only）** · **不执行** |
+| 93 | BSE legacy targeted probe（8 家 hold）→ **待启动** |
+| 94 | **暂不全量 harvest live、暂不入库**
 
 ---
 
@@ -236,7 +245,7 @@ flowchart TD
 - **不写 verified** / full-market stable
 - **不接** PostgreSQL / MinIO / MongoDB
 - **不**同时大规模推进 Phase 3 与 Phase 2 扩源
-- **暂停 harvest 全量执行** 直至 harvest planning 文档就绪（**planning 允许启动**）
+- **不执行 harvest live** 直至 runner dry-run PASS + 人工批准
 - **不跑** 889 全量重 live · **不清洗** 26 家 all6（hold 子集）
 - **不生成 stable 200 v2** · **不剔除 12 家 six-fail**
 - **不执行** dividend YAML backfill（决策 GO，待 889 后）
