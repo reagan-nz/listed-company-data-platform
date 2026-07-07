@@ -60,7 +60,7 @@ _生成时间：2026-07-07_
 | `star` | 28 |
 | `szse_main` | 54 |
 
-**pass / fail / blocked / 429:** 1069 / 131 / 0 / 0
+**pass / fail / blocked / 429:** 1200 / 0 / 0 / 0
 
 **Planned live requests per company:** 7
 **Total planned (live):** 1400
@@ -69,12 +69,12 @@ _生成时间：2026-07-07_
 
 | source_id | reachable | reachability% | non_empty | non_empty% | valid_empty | blocked | 429 | http_error | error% | pass | fail |
 |-----------|-----------|---------------|-----------|------------|-------------|---------|-----|------------|--------|------|------|
-| `cninfo_company_basic_profile` | 185/200 | 92.5% | 185 | 92.5% | 0 | 0 | 0 | 0 | 0.0% | 185 | 15 |
-| `cninfo_dividend_financing_profile` | 180/200 | 90.0% | 172 | 86.0% | 8 | 0 | 0 | 0 | 0.0% | 180 | 20 |
-| `cninfo_executive_profile` | 174/200 | 87.0% | 174 | 87.0% | 0 | 0 | 0 | 0 | 0.0% | 174 | 26 |
-| `cninfo_share_capital_profile` | 177/200 | 88.5% | 177 | 88.5% | 0 | 0 | 0 | 0 | 0.0% | 177 | 23 |
-| `cninfo_top_shareholders_profile` | 176/200 | 88.0% | 174 | 87.0% | 0 | 0 | 0 | 0 | 0.0% | 176 | 24 |
-| `cninfo_top_float_shareholders_profile` | 177/200 | 88.5% | 172 | 86.0% | 0 | 0 | 0 | 0 | 0.0% | 177 | 23 |
+| `cninfo_company_basic_profile` | 200/200 | 100.0% | 200 | 100.0% | 0 | 0 | 0 | 0 | 0.0% | 200 | 0 |
+| `cninfo_dividend_financing_profile` | 200/200 | 100.0% | 198 | 99.0% | 2 | 0 | 0 | 0 | 0.0% | 200 | 0 |
+| `cninfo_executive_profile` | 200/200 | 100.0% | 200 | 100.0% | 0 | 0 | 0 | 0 | 0.0% | 200 | 0 |
+| `cninfo_share_capital_profile` | 200/200 | 100.0% | 200 | 100.0% | 0 | 0 | 0 | 0 | 0.0% | 200 | 0 |
+| `cninfo_top_shareholders_profile` | 200/200 | 100.0% | 200 | 100.0% | 0 | 0 | 0 | 0 | 0.0% | 200 | 0 |
+| `cninfo_top_float_shareholders_profile` | 200/200 | 100.0% | 200 | 100.0% | 0 | 0 | 0 | 0 | 0.0% | 200 | 0 |
 | `cninfo_company_security_profile` | 200/200 | 100.0% | 0 | 0.0% | 0 | 0 | 0 | 0 | 0.0% | 0 | 0 |
 
 ## Basic key field fill_rate (endpoint_found only)
@@ -93,35 +93,26 @@ _生成时间：2026-07-07_
 
 | field | fill_rate% |
 |-------|------------|
-| `F001V` | 95.9% |
+| `F001V` | 96.0% |
 | `F007V` | 100.0% |
 | `F018D` | 100.0% |
-| `F020D` | 98.8% |
+| `F020D` | 98.5% |
 | `F023D` | 92.4% |
 
 ## Dividend empty distribution
 
 | status | count |
 |--------|-------|
-| `endpoint_found` | 172 |
-| `schema_unexpected` | 20 |
-| `valid_empty` | 8 |
+| `endpoint_found` | 198 |
+| `valid_empty` | 2 |
 
 ## empty_but_valid 股东源案例
 
-| company_code | company_name | board | source_id | record_count |
-|--------------|--------------|-------|-----------|--------------|
-| `300039` | 上海凯宝 | `chinext` | `cninfo_top_float_shareholders_profile` | 0 |
-| `000637` | 茂化实华 | `szse_main` | `cninfo_top_float_shareholders_profile` | 0 |
-| `000655` | 金岭矿业 | `szse_main` | `cninfo_top_shareholders_profile` | 0 |
-| `000656` | *ST金科 | `szse_main` | `cninfo_top_float_shareholders_profile` | 0 |
-| `000677` | ST海龙 | `szse_main` | `cninfo_top_shareholders_profile` | 0 |
-| `000677` | ST海龙 | `szse_main` | `cninfo_top_float_shareholders_profile` | 0 |
-| `000723` | 美锦能源 | `szse_main` | `cninfo_top_float_shareholders_profile` | 0 |
+- 无
 
 ## Shareholder empty_but_valid policy
 
-- **empty_but_valid_count（股东源）:** 7
+- **empty_but_valid_count（股东源）:** 0
 - HTTP 200 · json/resultCode 正常 · `data.records` 为空 list → `empty_but_valid_response`
 - **不计** http_error / blocked / schema_unexpected；**计入** endpoint reachable
 - 主 gate **case_result=pass**（非接口失败）；**non_empty_rate** 仍下降
@@ -136,7 +127,7 @@ _生成时间：2026-07-07_
 | `F004V` | 100.0% |
 | `F005V` | 100.0% |
 | `F006V` | 100.0% |
-| `F011V` | 98.9% |
+| `F011V` | 99.0% |
 | `F012V` | 100.0% |
 | `F013V` | 100.0% |
 | `F014V` | 100.0% |
@@ -155,57 +146,55 @@ _生成时间：2026-07-07_
 | field | fill_rate% |
 |-------|------------|
 | `F032V` | 100.0% |
-| `F044V` | 95.7% |
+| `F044V` | 96.0% |
 | `MARKET` | 100.0% |
 
 ## Board-group pass rate (main judgment sources)
 
 | board | source_id | pass | total | pass% | reachability% |
 |-------|-----------|------|-------|-------|---------------|
-| `chinext` | `cninfo_company_basic_profile` | 47 | 52 | 90.4% | 90.4% |
-| `chinext` | `cninfo_dividend_financing_profile` | 44 | 52 | 84.6% | 84.6% |
-| `chinext` | `cninfo_executive_profile` | 42 | 52 | 80.8% | 80.8% |
-| `chinext` | `cninfo_share_capital_profile` | 43 | 52 | 82.7% | 82.7% |
-| `chinext` | `cninfo_top_shareholders_profile` | 43 | 52 | 82.7% | 82.7% |
-| `chinext` | `cninfo_top_float_shareholders_profile` | 43 | 52 | 82.7% | 82.7% |
-| `sse_main` | `cninfo_company_basic_profile` | 58 | 66 | 87.9% | 87.9% |
-| `sse_main` | `cninfo_dividend_financing_profile` | 55 | 66 | 83.3% | 83.3% |
-| `sse_main` | `cninfo_executive_profile` | 54 | 66 | 81.8% | 81.8% |
-| `sse_main` | `cninfo_share_capital_profile` | 54 | 66 | 81.8% | 81.8% |
-| `sse_main` | `cninfo_top_shareholders_profile` | 53 | 66 | 80.3% | 80.3% |
-| `sse_main` | `cninfo_top_float_shareholders_profile` | 53 | 66 | 80.3% | 80.3% |
-| `star` | `cninfo_company_basic_profile` | 27 | 28 | 96.4% | 96.4% |
-| `star` | `cninfo_dividend_financing_profile` | 27 | 28 | 96.4% | 96.4% |
-| `star` | `cninfo_executive_profile` | 27 | 28 | 96.4% | 96.4% |
-| `star` | `cninfo_share_capital_profile` | 27 | 28 | 96.4% | 96.4% |
-| `star` | `cninfo_top_shareholders_profile` | 27 | 28 | 96.4% | 96.4% |
+| `chinext` | `cninfo_company_basic_profile` | 52 | 52 | 100.0% | 100.0% |
+| `chinext` | `cninfo_dividend_financing_profile` | 52 | 52 | 100.0% | 100.0% |
+| `chinext` | `cninfo_executive_profile` | 52 | 52 | 100.0% | 100.0% |
+| `chinext` | `cninfo_share_capital_profile` | 52 | 52 | 100.0% | 100.0% |
+| `chinext` | `cninfo_top_shareholders_profile` | 52 | 52 | 100.0% | 100.0% |
+| `chinext` | `cninfo_top_float_shareholders_profile` | 52 | 52 | 100.0% | 100.0% |
+| `sse_main` | `cninfo_company_basic_profile` | 66 | 66 | 100.0% | 100.0% |
+| `sse_main` | `cninfo_dividend_financing_profile` | 66 | 66 | 100.0% | 100.0% |
+| `sse_main` | `cninfo_executive_profile` | 66 | 66 | 100.0% | 100.0% |
+| `sse_main` | `cninfo_share_capital_profile` | 66 | 66 | 100.0% | 100.0% |
+| `sse_main` | `cninfo_top_shareholders_profile` | 66 | 66 | 100.0% | 100.0% |
+| `sse_main` | `cninfo_top_float_shareholders_profile` | 66 | 66 | 100.0% | 100.0% |
+| `star` | `cninfo_company_basic_profile` | 28 | 28 | 100.0% | 100.0% |
+| `star` | `cninfo_dividend_financing_profile` | 28 | 28 | 100.0% | 100.0% |
+| `star` | `cninfo_executive_profile` | 28 | 28 | 100.0% | 100.0% |
+| `star` | `cninfo_share_capital_profile` | 28 | 28 | 100.0% | 100.0% |
+| `star` | `cninfo_top_shareholders_profile` | 28 | 28 | 100.0% | 100.0% |
 | `star` | `cninfo_top_float_shareholders_profile` | 28 | 28 | 100.0% | 100.0% |
-| `szse_main` | `cninfo_company_basic_profile` | 53 | 54 | 98.1% | 98.1% |
+| `szse_main` | `cninfo_company_basic_profile` | 54 | 54 | 100.0% | 100.0% |
 | `szse_main` | `cninfo_dividend_financing_profile` | 54 | 54 | 100.0% | 100.0% |
-| `szse_main` | `cninfo_executive_profile` | 51 | 54 | 94.4% | 94.4% |
-| `szse_main` | `cninfo_share_capital_profile` | 53 | 54 | 98.1% | 98.1% |
-| `szse_main` | `cninfo_top_shareholders_profile` | 53 | 54 | 98.1% | 98.1% |
-| `szse_main` | `cninfo_top_float_shareholders_profile` | 53 | 54 | 98.1% | 98.1% |
+| `szse_main` | `cninfo_executive_profile` | 54 | 54 | 100.0% | 100.0% |
+| `szse_main` | `cninfo_share_capital_profile` | 54 | 54 | 100.0% | 100.0% |
+| `szse_main` | `cninfo_top_shareholders_profile` | 54 | 54 | 100.0% | 100.0% |
+| `szse_main` | `cninfo_top_float_shareholders_profile` | 54 | 54 | 100.0% | 100.0% |
 
-**Overall:** pass=1069 fail=131 skipped=0 **result=LIVE_PARTIAL**
+**Overall:** pass=1200 fail=0 skipped=0 **result=LIVE_PASS**
 
 ## Gate: dividend YAML backfill
 
-**Decision: NO-GO**
+**Decision: GO**
 
-dividend reachability=90.0% error_rate=0.0% — 未达门槛 (reach>=95% & error<5%).
+dividend reachability=100.0% error_rate=0.0% valid_empty=2. 建议 YAML backfill 时窄化命名为 `dividend_history`（或等价语义），以消除 financing 过度承诺；当前 endpoint 仅覆盖历史分红。
 
 ## Gate: stable 200 non-BSE
 
 **stable_gate = LIVE_COMPLETED_DIAGNOSIS_REQUIRED**
 
-stable 200 live **已完成**（**LIVE_PARTIAL** · pass=1069 fail=131 · blocked/429/http_error=0）。
-
-Post-live 诊断见 [cninfo_c_class_stable_200_diagnosis.md](cninfo_c_class_stable_200_diagnosis.md) — 12 家 6/6 全失败表明样本二次清洗不足；**不建议**在未修订清洗规则前重跑全量。
+Cleaned stable sample **200** 家；live **已完成**（见 Overall result）；post-live 诊断 required。
 
 ## Caveats
 
-- **stable 200 non-BSE live completed**；非 verified / testing_stable_sample / DB。
+- **stable 200 non-BSE live**；非 889 全量；非 verified / testing_stable_sample。
 - **testing** status only; **no verified**.
 - **No testing_stable_sample**（文件名 stable 仅为设计语义）。
 - No database ingestion.
@@ -213,4 +202,4 @@ Post-live 诊断见 [cninfo_c_class_stable_200_diagnosis.md](cninfo_c_class_stab
 
 ## Appendix
 
-详见 [cninfo_c_class_stable_200_live_report.csv](cninfo_c_class_stable_200_live_report.csv)。
+详见 [cninfo_c_class_stable_200_live_summary.csv](cninfo_c_class_stable_200_live_summary.csv)。
