@@ -23,6 +23,7 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
+from urllib.parse import urlencode
 
 import requests
 import yaml
@@ -123,6 +124,30 @@ DEFAULT_STABLE_200_LIVE_MD = os.path.join(
     "validation",
     "cninfo_c_class_stable_200_live_summary.md",
 )
+DEFAULT_RETRY_STABLE_200_SIX_FAIL_DRYRUN_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_retry_stable_200_six_fail_12_dryrun_report.csv",
+)
+DEFAULT_RETRY_STABLE_200_SIX_FAIL_DRYRUN_MD = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_retry_stable_200_six_fail_12_dryrun_summary.md",
+)
+DEFAULT_RETRY_STABLE_200_SIX_FAIL_LIVE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_retry_stable_200_six_fail_12_live_report.csv",
+)
+DEFAULT_RETRY_STABLE_200_SIX_FAIL_LIVE_MD = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_retry_stable_200_six_fail_12_live_summary.md",
+)
 # 兼容旧常量名（dry-run 默认）
 DEFAULT_1000_NON_BSE_CSV = DEFAULT_1000_NON_BSE_DRYRUN_CSV
 DEFAULT_1000_NON_BSE_MD = DEFAULT_1000_NON_BSE_DRYRUN_MD
@@ -133,9 +158,25 @@ DIVIDEND_URL = "https://www.cninfo.com.cn/data20/companyOverview/getCompanyHisDi
 SECURITY_URL = "https://www.cninfo.com.cn/new/newInterface/marketOverview"
 
 SLEEP_SECONDS = 0.8
+LIVE_BASE_SLEEP_SECONDS = 0.5
 REQUEST_TIMEOUT = 10
 MAX_RETRIES = 1
 LIVE_PROGRESS_INTERVAL = 50
+
+# CNINFO JSON 业务码限流退避（仅 live）
+THROTTLE_BACKOFF_SECONDS = (2, 5, 10)
+THROTTLE_MSG_HINTS = (
+    "频繁", "限制", "稍后", "too many", "rate", "频次", "throttl",
+)
+
+RETRY_STABLE_200_SIX_FAIL_SAMPLE_NAME = (
+    "eval_companies_c_class_retry_stable_200_six_fail_12.yaml"
+)
+RETRY_STABLE_200_SIX_FAIL_EXPECTED_CODES = frozenset({
+    "300261", "300288", "300355", "300414",
+    "600061", "600063", "600130", "600203", "600207", "600233", "600390", "600523",
+})
+RETRY_STABLE_200_SIX_FAIL_EXPECTED_COMPANY_COUNT = 12
 
 # 主判定 source（按请求顺序）
 MAIN_SOURCE_IDS = (
@@ -263,6 +304,11 @@ CSV_FIELDS = [
     "missing_fields",
     "error_message",
     "suspected_no_dividend",
+    "retry_count",
+    "final_retrieval_status",
+    "first_result_code",
+    "final_result_code",
+    "used_orgid_variant",
 ]
 
 
@@ -288,6 +334,11 @@ class CaseRow:
     missing_fields: str = ""
     error_message: str = ""
     suspected_no_dividend: str = ""
+    retry_count: str = "0"
+    final_retrieval_status: str = ""
+    first_result_code: str = ""
+    final_result_code: str = ""
+    used_orgid_variant: str = "false"
     # 内存统计用，不写 CSV
     filled_fields: Dict[str, bool] = field(default_factory=dict, repr=False)
 
@@ -320,6 +371,46 @@ def load_sample_companies(path: str) -> List[Dict[str, str]]:
 
 def _is_retry_889_partial_sample(sample_path: str) -> bool:
     return os.path.basename(sample_path) == RETRY_889_PARTIAL_SAMPLE_NAME
+
+
+def _is_retry_stable_200_six_fail_sample(sample_path: str) -> bool:
+    return os.path.basename(sample_path) == RETRY_STABLE_200_SIX_FAIL_SAMPLE_NAME
+
+
+def _validate_pre_live_retry_stable_200_six_fail(
+    sample_path: str,
+    companies: List[Dict[str, str]],
+) -> Tuple[bool, str]:
+    """stable 200 十二家 six-fail retry 样本 hard gate。"""
+    with open(sample_path, encoding="utf-8") as fh:
+        data = yaml.safe_load(fh) or {}
+
+    issues: List[str] = []
+    expected_co = RETRY_STABLE_200_SIX_FAIL_EXPECTED_COMPANY_COUNT
+    expected_cases = expected_co * SOURCE_COUNT_PER_COMPANY
+    actual_co = len(companies)
+    actual_codes = {c["company_code"] for c in companies}
+
+    if data.get("company_count") != expected_co:
+        issues.append(f"company_count={data.get('company_count')!r} expected={expected_co}")
+    if actual_co != expected_co:
+        issues.append(f"companies list length={actual_co} expected={expected_co}")
+    if actual_codes != RETRY_STABLE_200_SIX_FAIL_EXPECTED_CODES:
+        issues.append(
+            f"company_code set mismatch expected={sorted(RETRY_STABLE_200_SIX_FAIL_EXPECTED_CODES)} "
+            f"actual={sorted(actual_codes)}"
+        )
+    if actual_co * SOURCE_COUNT_PER_COMPANY != expected_cases:
+        issues.append(
+            f"planned cases={actual_co * SOURCE_COUNT_PER_COMPANY} expected={expected_cases}"
+        )
+
+    if issues:
+        return False, "; ".join(issues)
+    return (
+        True,
+        f"company_count={expected_co} planned_cases={expected_cases} codes_ok",
+    )
 
 
 def _validate_pre_live_retry_partial(
@@ -385,6 +476,149 @@ def _referer(company_code: str, org_id: str) -> str:
 
 def _scode_url(base_url: str, company_code: str) -> str:
     return f"{base_url}?scode={company_code}"
+
+
+def _data20_url(base_url: str, company_code: str, org_id: str, with_orgid: bool) -> str:
+    if with_orgid and org_id:
+        return f"{base_url}?{urlencode({'scode': company_code, 'orgId': org_id})}"
+    return _scode_url(base_url, company_code)
+
+
+def _is_data20_endpoint(url: str) -> bool:
+    return "/data20/" in url
+
+
+def _throttle_hint_in_message(payload: Any) -> bool:
+    if not isinstance(payload, dict):
+        return False
+    parts: List[str] = []
+    for key in ("message", "msg", "resultMsg"):
+        val = payload.get(key)
+        if val is not None:
+            parts.append(str(val))
+    data = payload.get("data")
+    if isinstance(data, dict) and data.get("resultMsg") is not None:
+        parts.append(str(data.get("resultMsg")))
+    text = " ".join(parts).lower()
+    return any(hint in text for hint in THROTTLE_MSG_HINTS)
+
+
+def _is_cninfo_throttled_business_code(payload: Any, http_status: Optional[int]) -> bool:
+    """HTTP 200 但 JSON 业务码/文案表明 CNINFO 限流或频次限制。"""
+    if http_status != 200 or not isinstance(payload, dict):
+        return False
+    codes: set = set()
+    for key in ("code", "resultCode", "result_code"):
+        val = payload.get(key)
+        if val is not None:
+            codes.add(str(val))
+    data = payload.get("data")
+    if isinstance(data, dict):
+        for key in ("resultCode", "result_code"):
+            val = data.get(key)
+            if val is not None:
+                codes.add(str(val))
+    if "429" in codes or "90001" in codes:
+        return True
+    return _throttle_hint_in_message(payload)
+
+
+def _apply_fetch_meta(row: CaseRow, meta: Dict[str, str]) -> None:
+    row.retry_count = meta.get("retry_count", "0")
+    row.first_result_code = meta.get("first_result_code", "")
+    row.final_result_code = meta.get("final_result_code", row.result_code)
+    row.used_orgid_variant = meta.get("used_orgid_variant", "false")
+
+
+def _finalize_row_status(row: CaseRow) -> CaseRow:
+    if not row.final_retrieval_status:
+        row.final_retrieval_status = row.retrieval_status
+    return row
+
+
+def _live_fetch_data20(
+    base_url: str,
+    company: Dict[str, str],
+    *,
+    xhr: bool = False,
+    records_path: str = "data.records",
+    try_orgid_on_fail: bool = True,
+) -> Tuple[Optional[int], Any, str, str, Dict[str, str]]:
+    """data20 live 请求：业务码退避 + 可选 orgId fallback。"""
+    code = company["company_code"]
+    org_id = company["org_id"]
+    headers = _browser_headers(code, org_id, xhr=xhr)
+    meta: Dict[str, str] = {
+        "retry_count": "0",
+        "first_result_code": "",
+        "final_result_code": "",
+        "used_orgid_variant": "false",
+    }
+
+    def fetch(target_url: str) -> Tuple[Optional[int], Any, str]:
+        return _http_get(target_url, headers)
+
+    def fetch_with_backoff(target_url: str) -> Tuple[Optional[int], Any, str, int]:
+        http_status, payload, err = fetch(target_url)
+        if err:
+            return http_status, payload, err, 0
+        json_code, result_code = _extract_codes(payload)
+        if not meta["first_result_code"]:
+            meta["first_result_code"] = result_code or json_code
+        meta["final_result_code"] = result_code or json_code
+        retries = 0
+        while (
+            _is_cninfo_throttled_business_code(payload, http_status)
+            and retries < len(THROTTLE_BACKOFF_SECONDS)
+        ):
+            time.sleep(THROTTLE_BACKOFF_SECONDS[retries])
+            retries += 1
+            http_status, payload, err = fetch(target_url)
+            if err:
+                break
+            json_code, result_code = _extract_codes(payload)
+            meta["final_result_code"] = result_code or json_code
+        return http_status, payload, err, retries
+
+    def needs_orgid_variant(payload: Any, http_status: Optional[int]) -> bool:
+        if not isinstance(payload, dict) or not org_id:
+            return False
+        if _is_cninfo_throttled_business_code(payload, http_status):
+            return True
+        records = _get_path(payload, records_path)
+        if records is None:
+            return True
+        if base_url == BASIC_URL:
+            record0 = _get_path(payload, "data.records.0")
+            if isinstance(record0, dict):
+                basic_n = _list_len(record0.get("basicInformation"))
+                listing_n = _list_len(record0.get("listingInformation"))
+                if basic_n == 0 and listing_n == 0:
+                    return True
+        return False
+
+    url = _data20_url(base_url, code, org_id, with_orgid=False)
+    http_status, payload, err, retries = fetch_with_backoff(url)
+    meta["retry_count"] = str(retries)
+
+    if (
+        try_orgid_on_fail
+        and _is_data20_endpoint(base_url)
+        and org_id
+        and not err
+        and needs_orgid_variant(payload, http_status)
+    ):
+        variant_url = _data20_url(base_url, code, org_id, with_orgid=True)
+        meta["used_orgid_variant"] = "true"
+        v_status, v_payload, v_err, v_retries = fetch_with_backoff(variant_url)
+        meta["retry_count"] = str(int(meta["retry_count"]) + v_retries)
+        http_status, payload, err = v_status, v_payload, v_err
+        url = variant_url
+        if not err and isinstance(payload, dict):
+            json_code, result_code = _extract_codes(payload)
+            meta["final_result_code"] = result_code or json_code
+
+    return http_status, payload, err, url, meta
 
 
 def _security_url(company_code: str, org_id: str) -> str:
@@ -512,7 +746,6 @@ def _apply_http_error(row: CaseRow, http_status: Optional[int], err: str) -> Cas
 def validate_basic_live(company: Dict[str, str]) -> CaseRow:
     code = company["company_code"]
     org_id = company["org_id"]
-    url = _scode_url(BASIC_URL, code)
     row = CaseRow(
         run_mode="live",
         source_id="cninfo_company_basic_profile",
@@ -520,32 +753,46 @@ def validate_basic_live(company: Dict[str, str]) -> CaseRow:
         company_name=company["company_name"],
         org_id=org_id,
         board=company["board"],
-        request_url=url,
         records_path="data.records[0]",
         suspected_no_dividend=company.get("suspected_no_dividend", "no"),
     )
 
-    http_status, payload, err = _http_get(url, _browser_headers(code, org_id, xhr=False))
+    http_status, payload, err, url, meta = _live_fetch_data20(
+        BASIC_URL, company, xhr=False, records_path="data.records"
+    )
+    row.request_url = url
+    _apply_fetch_meta(row, meta)
     row.http_status = str(http_status) if http_status is not None else ""
     if err:
-        return _apply_http_error(row, http_status, err)
+        return _finalize_row_status(_apply_http_error(row, http_status, err))
 
     json_code, result_code = _extract_codes(payload)
     row.json_code = json_code
     row.result_code = result_code
+    row.final_result_code = meta.get("final_result_code", result_code)
+
+    if _is_cninfo_throttled_business_code(payload, http_status):
+        row.retrieval_status = "cninfo_throttled_business_code"
+        row.error_message = "CNINFO business code throttled after backoff"
+        row.case_result = "fail"
+        return _finalize_row_status(row)
 
     if not _is_success_payload(payload, http_status or 0):
         row.retrieval_status = "http_error"
         row.error_message = "HTTP or JSON code not success"
         row.case_result = "fail"
-        return row
+        return _finalize_row_status(row)
 
     record0 = _get_path(payload, "data.records.0")
     if record0 is None:
-        row.retrieval_status = "empty_response"
-        row.error_message = "data.records[0] missing"
+        if _is_cninfo_throttled_business_code(payload, http_status):
+            row.retrieval_status = "cninfo_throttled_business_code"
+            row.error_message = "data.records[0] missing under throttled response"
+        else:
+            row.retrieval_status = "empty_response"
+            row.error_message = "data.records[0] missing"
         row.case_result = "fail"
-        return row
+        return _finalize_row_status(row)
 
     basic = record0.get("basicInformation") if isinstance(record0, dict) else None
     listing = record0.get("listingInformation") if isinstance(record0, dict) else None
@@ -558,7 +805,6 @@ def validate_basic_live(company: Dict[str, str]) -> CaseRow:
     if isinstance(basic, list) and basic and isinstance(basic[0], dict):
         basic0 = basic[0]
 
-    # basic 关键字段 + derived 字段一并统计
     all_derived_fields: List[str] = []
     for fields in DERIVED_SOURCE_FIELDS.values():
         all_derived_fields.extend(fields)
@@ -583,14 +829,13 @@ def validate_basic_live(company: Dict[str, str]) -> CaseRow:
         row.retrieval_status = "schema_unexpected"
         row.error_message = "records[0] not object"
         row.case_result = "fail"
-    return row
+    return _finalize_row_status(row)
 
 
 def validate_records_list_live(source_id: str, company: Dict[str, str]) -> CaseRow:
     spec = SOURCE_SPECS[source_id]
     code = company["company_code"]
     org_id = company["org_id"]
-    url = _scode_url(spec["url"], code)
     row = CaseRow(
         run_mode="live",
         source_id=source_id,
@@ -598,44 +843,58 @@ def validate_records_list_live(source_id: str, company: Dict[str, str]) -> CaseR
         company_name=company["company_name"],
         org_id=org_id,
         board=company["board"],
-        request_url=url,
         records_path=spec["records_path"],
         suspected_no_dividend=company.get("suspected_no_dividend", "no"),
     )
 
-    http_status, payload, err = _http_get(url, _browser_headers(code, org_id))
+    http_status, payload, err, url, meta = _live_fetch_data20(
+        spec["url"], company, xhr=True, records_path=spec["records_path"]
+    )
+    row.request_url = url
+    _apply_fetch_meta(row, meta)
     row.http_status = str(http_status) if http_status is not None else ""
     if err:
-        return _apply_http_error(row, http_status, err)
+        return _finalize_row_status(_apply_http_error(row, http_status, err))
 
     json_code, result_code = _extract_codes(payload)
     row.json_code = json_code
     row.result_code = result_code
+    row.final_result_code = meta.get("final_result_code", result_code)
 
     if http_status != 200:
         row.retrieval_status = "http_error"
         row.error_message = f"HTTP {http_status}"
         row.case_result = "fail"
-        return row
+        return _finalize_row_status(row)
 
     if not isinstance(payload, dict):
         row.retrieval_status = "schema_unexpected"
         row.error_message = "response not object"
         row.case_result = "fail"
-        return row
+        return _finalize_row_status(row)
+
+    if _is_cninfo_throttled_business_code(payload, http_status):
+        row.retrieval_status = "cninfo_throttled_business_code"
+        row.error_message = "CNINFO business code throttled after backoff"
+        row.case_result = "fail"
+        return _finalize_row_status(row)
 
     records = _get_path(payload, spec["records_path"])
     if records is None:
-        row.retrieval_status = "schema_unexpected"
-        row.error_message = f"{spec['records_path']} missing"
+        if _is_cninfo_throttled_business_code(payload, http_status):
+            row.retrieval_status = "cninfo_throttled_business_code"
+            row.error_message = f"{spec['records_path']} missing under throttled response"
+        else:
+            row.retrieval_status = "schema_unexpected"
+            row.error_message = f"{spec['records_path']} missing"
         row.case_result = "fail"
-        return row
+        return _finalize_row_status(row)
 
     if not isinstance(records, list):
         row.retrieval_status = "schema_unexpected"
         row.error_message = f"{spec['records_path']} not list"
         row.case_result = "fail"
-        return row
+        return _finalize_row_status(row)
 
     row.record_count = str(len(records))
 
@@ -643,7 +902,7 @@ def validate_records_list_live(source_id: str, company: Dict[str, str]) -> CaseR
         row.retrieval_status = "http_error"
         row.error_message = "JSON code or resultCode not success"
         row.case_result = "fail"
-        return row
+        return _finalize_row_status(row)
 
     allow_valid_empty = spec.get("allow_valid_empty", False)
     if len(records) == 0:
@@ -652,7 +911,6 @@ def validate_records_list_live(source_id: str, company: Dict[str, str]) -> CaseR
             row.non_empty = "no"
             row.case_result = "pass"
         elif source_id in SHAREHOLDER_SOURCE_IDS:
-            # 股东源：HTTP 200 + 空 list 为有效空响应，endpoint 可达但 non_empty 下降
             row.retrieval_status = "empty_but_valid_response"
             row.non_empty = "no"
             row.case_result = "pass"
@@ -660,14 +918,14 @@ def validate_records_list_live(source_id: str, company: Dict[str, str]) -> CaseR
             row.retrieval_status = "empty_but_valid_response"
             row.non_empty = "no"
             row.case_result = "fail"
-        return row
+        return _finalize_row_status(row)
 
     first = records[0]
     if not isinstance(first, dict):
         row.retrieval_status = "schema_unexpected"
         row.error_message = "records[0] not object"
         row.case_result = "fail"
-        return row
+        return _finalize_row_status(row)
 
     required = spec.get("expected_fields") or []
     optional = spec.get("optional_fields") or []
@@ -685,11 +943,11 @@ def validate_records_list_live(source_id: str, company: Dict[str, str]) -> CaseR
         row.retrieval_status = "schema_unexpected"
         row.error_message = f"missing required fields: {', '.join(missing)}"
         row.case_result = "fail"
-        return row
+        return _finalize_row_status(row)
 
     row.retrieval_status = "endpoint_found"
     row.case_result = "pass"
-    return row
+    return _finalize_row_status(row)
 
 
 def validate_security_observe(company: Dict[str, str]) -> CaseRow:
@@ -811,13 +1069,13 @@ def run_live(companies: List[Dict[str, str]]) -> List[CaseRow]:
         request_count += 1
         _on_live_case_done(rows, total_requests, start_time)
         if request_count < total_requests:
-            time.sleep(SLEEP_SECONDS)
+            time.sleep(LIVE_BASE_SLEEP_SECONDS)
 
         rows.append(validate_records_list_live("cninfo_dividend_financing_profile", company))
         request_count += 1
         _on_live_case_done(rows, total_requests, start_time)
         if request_count < total_requests:
-            time.sleep(SLEEP_SECONDS)
+            time.sleep(LIVE_BASE_SLEEP_SECONDS)
 
         for sid in MAIN_SOURCE_IDS[2:]:
             rows.append(validate_records_list_live(sid, company))
@@ -830,7 +1088,7 @@ def run_live(companies: List[Dict[str, str]]) -> List[CaseRow]:
         request_count += 1
         _on_live_case_done(rows, total_requests, start_time)
         if request_count < total_requests:
-            time.sleep(SLEEP_SECONDS)
+            time.sleep(LIVE_BASE_SLEEP_SECONDS)
 
     if len(rows) % LIVE_PROGRESS_INTERVAL != 0:
         _log_live_progress(rows, total_requests, start_time)
@@ -1105,6 +1363,16 @@ def _resolve_output_paths(
     base = os.path.basename(sample_path)
     if output_csv and output_md:
         return output_csv, output_md
+    if "retry_stable_200_six_fail" in base or "six_fail_12" in base:
+        if run_mode == "live":
+            return (
+                output_csv or DEFAULT_RETRY_STABLE_200_SIX_FAIL_LIVE_CSV,
+                output_md or DEFAULT_RETRY_STABLE_200_SIX_FAIL_LIVE_MD,
+            )
+        return (
+            output_csv or DEFAULT_RETRY_STABLE_200_SIX_FAIL_DRYRUN_CSV,
+            output_md or DEFAULT_RETRY_STABLE_200_SIX_FAIL_DRYRUN_MD,
+        )
     if "stable_200_non_bse" in base or "stable_200" in base:
         if run_mode == "live":
             return (
@@ -1196,7 +1464,8 @@ def write_summary_md(
     is_200 = "smoke_200" in sample_base or "200_active" in sample_base
     is_1000_non_bse = "1000_non_bse" in sample_base or "non_bse_candidate" in sample_base
     is_retry_889 = "retry_889" in sample_base
-    is_stable_200 = "stable_200" in sample_base
+    is_retry_six_fail_12 = _is_retry_stable_200_six_fail_sample(sample_path)
+    is_stable_200 = "stable_200" in sample_base and not is_retry_six_fail_12
     sample_meta = load_sample_yaml(sample_path) if is_stable_200 else {}
 
     if is_stable_200:
@@ -1208,6 +1477,11 @@ def write_summary_md(
         title = (
             f"CNINFO C Class 889 Retry — Partial Fail Targeted "
             f"({'Dry-Run' if run_mode == 'dry-run' else 'Live'}) — {len(companies)} companies"
+        )
+    elif is_retry_six_fail_12:
+        title = (
+            f"CNINFO C Class Stable 200 Six-Fail 12 Retry "
+            f"({'Dry-Run' if run_mode == 'dry-run' else 'Live'}) Summary"
         )
     elif is_1000_non_bse:
         title = (
@@ -1457,6 +1731,25 @@ def write_summary_md(
                 "- **stable_200_non_bse** cleaned sample；验证清洗异常后 non-BSE 稳定性。",
                 "- **derived 三源无单独请求**；**security observe-only**；**source_partial** 口径见 Source policy。",
             ])
+        if is_retry_six_fail_12:
+            lines.extend([
+                "",
+                "## Runner patch（backoff + orgId fallback）",
+                "",
+                "- **cninfo_throttled_business_code**：识别 JSON `resultCode`/`code` 为 `429`/`90001` 或限流文案",
+                "- **退避重试（仅 live）**：2s → 5s → 10s，最多 3 次",
+                "- **live 基础节流**：请求间隔 **0.5s**",
+                "- **orgId fallback**：data20 endpoint 在限流/records 缺失/空 basic 时尝试 `scode+orgId`",
+                "- **已知验证案例**：600203 福日电子",
+                "",
+                "## Retry scope",
+                "",
+                "- **仅 12 家** stable 200 six-fail；**不扩** 200/889 live",
+                "- **不跑 live**（本轮 dry-run only）；**等待人工批准**",
+                "- **stable 200 v2 继续暂停**；**不剔除** 12 家",
+                "- **dividend YAML backfill** → **HOLD**",
+                "- **no verified** · **no testing_stable_sample** · **no DB**",
+            ])
     lines.extend([
         "",
         "## Gate: dividend YAML backfill",
@@ -1489,6 +1782,16 @@ def write_summary_md(
             f"Partial-fail subset **{len(companies)}** 家；planned live **{len(companies) * (len(MAIN_SOURCE_IDS) + 1)}** requests。",
             "26 家 6/6 全失败已 hold，不在此样本。",
             "**等待人工批准**后跑 `--live`。",
+        ])
+    elif is_retry_six_fail_12:
+        lines.extend([
+            "",
+            "## Gate: stable 200 six-fail 12 retry",
+            "",
+            f"**retry_gate = {'DRY_RUN_READY' if run_mode == 'dry-run' else 'LIVE_PENDING_APPROVAL'}**",
+            "",
+            f"Targeted retry **{len(companies)}** 家；planned live **{len(companies) * (len(MAIN_SOURCE_IDS) + 1)}** cases。",
+            "backoff patch + orgId fallback 已加入 runner；**等待人工批准**后 `--live`。",
         ])
     elif is_1000_non_bse:
         lines.extend([
@@ -1626,6 +1929,15 @@ def main() -> None:
             print(f"pre_live_validation: PASS  ({detail})")
         else:
             print(f"pre_live_validation: FAIL  ({detail})")
+            sys.exit(2)
+
+    if _is_retry_stable_200_six_fail_sample(sample_path):
+        ok, detail = _validate_pre_live_retry_stable_200_six_fail(sample_path, companies)
+        label = "pre_live_validation" if args.mode == "live" else "pre_dryrun_validation"
+        if ok:
+            print(f"{label}: PASS  ({detail})")
+        else:
+            print(f"{label}: FAIL  ({detail})")
             sys.exit(2)
 
     previous_baseline = None

@@ -10,7 +10,7 @@ _最后更新：2026-07-07_
 
 ## 0. 一句话现状
 
-仓库里叠了**三代方向**的代码与文档。**当前聚焦：Era C Phase 4 C 类** — **stable 200 live + diagnosis**（[diagnosis](outputs/validation/cninfo_c_class_stable_200_diagnosis.md) · LIVE_PARTIAL）；**12/12 six-fail 人工审计**（[audit CSV](outputs/validation/cninfo_c_class_stable_200_manual_audit_12_companies.csv)）；**stable 200 v2 暂停**；根因转向 **endpoint/parser debug**（[debug plan](plans/cninfo_c_class_12_six_fail_endpoint_debug_plan.md)）。前两代**已冻结**。
+仓库里叠了**三代方向**的代码与文档。**当前聚焦：Era C Phase 4 C 类** — **runner backoff + orgId fallback** 已加入；**12 家 six-fail retry dry-run 完成**（[summary](outputs/validation/cninfo_c_class_retry_stable_200_six_fail_12_dryrun_summary.md)）；**stable 200 v2 暂停**；下一步 **12 家 live（待批准）**。前两代**已冻结**。
 
 ---
 
@@ -80,7 +80,7 @@ _最后更新：2026-07-07_
 | `build_cninfo_p0_sample_companies.py` | 生成 40 家 P0 样本公司清单 | 是 |
 | `build_cninfo_report_p1_identity_mapping.py` | P1 identity mapping（离线） | 是 |
 
-**C 类 smoke / retry / stable 样本（`lab/`）：** `eval_companies_200.yaml` · `eval_companies_c_class_smoke_200_active.yaml`（195）· universe split `*_195_*` · **1000-like** `eval_companies_c_class_smoke_1000_non_bse_candidate.yaml`（889）· **retry** `*_retry_889_*` · **stable 200** `eval_companies_c_class_stable_200_non_bse.yaml`（200）
+**C 类 smoke / retry / stable 样本（`lab/`）：** `eval_companies_200.yaml` · `eval_companies_c_class_smoke_200_active.yaml`（195）· universe split `*_195_*` · **1000-like** `eval_companies_c_class_smoke_1000_non_bse_candidate.yaml`（889）· **retry** `*_retry_889_*` · **stable 200 six-fail retry** `eval_companies_c_class_retry_stable_200_six_fail_12.yaml`（12）· **stable 200** `eval_companies_c_class_stable_200_non_bse.yaml`（200）
 
 ### 2.2 活跃配置（`config/`）
 - `cninfo_table_sources.yaml` — **Phase 2** 验证脚本驱动配置（12 source；10 stable + 2 candidate）
@@ -124,7 +124,8 @@ _最后更新：2026-07-07_
 - `plans/cninfo_c_class_p2b_source_decision_table.md` — **Phase 4** P2-B 四源决策表（discovery closed · 无 YAML 执行）
 - `plans/cninfo_c_class_stable_200_sample_plan.md` — **Phase 4** stable 200 non-BSE 清洗样本设计
 - `plans/cninfo_c_class_manual_audit_12_six_fail_companies.md` — **Phase 4** stable 200 十二家 6/6 fail 人工审计结论（不剔除 · 不过拟合）
-- `plans/cninfo_c_class_12_six_fail_endpoint_debug_plan.md` — **Phase 4** 十二家 endpoint/parser 最小化 debug 计划（待批准）
+- `plans/cninfo_c_class_12_six_fail_endpoint_debug_plan.md` — **Phase 4** 十二家 endpoint/parser 最小化 debug 计划
+- `lab/debug_cninfo_c_class_12_six_fail_endpoints.py` — **Phase 4** 十二家 endpoint debug 脚本（仅 12 家 CNINFO）
 - `plans/cninfo_c_class_source_status_decision.md` — **Phase 4** C 类 10 源阶段性状态判断（scale 验证收口）
 - `plans/cninfo_c_class_universe_split_and_sample_cleaning_plan.md` — **Phase 4** C 类 universe split + 1000-like 清洗规则
 - `plans/cninfo_c_class_scale_smoke_200_plan.md` — **Phase 4** C 类 200-company scale smoke 计划（active 过滤 · gate · 不直接跑 live）
@@ -254,5 +255,5 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 2. **Phase 2 已收口**；**Phase 3 D 类设计**见 [registry YAML](config/cninfo_d_class_source_registry_draft.yaml) / [schema validation summary](outputs/validation/cninfo_d_class_schema_validation_summary.md)。
 3. **Phase 3 B 类**见 [validation design](plans/cninfo_b_class_validation_design.md) / [category routing](plans/cninfo_b_class_category_routing_rules.md) / [categories YAML](config/cninfo_announcement_categories.yaml) / [document seed summary](outputs/validation/cninfo_b_class_document_seed_summary.md) / [B schema validation](outputs/validation/cninfo_b_class_document_schema_validation_summary.md)。
 4. **Phase 4 C 类**见 [registry lint](outputs/validation/cninfo_c_class_registry_lint_summary.md) / [fixture validation](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md) / [active 30 smoke summary](outputs/validation/cninfo_c_class_scale_smoke_30_active_summary.md) / [candidates YAML](config/cninfo_c_class_source_candidates.yaml)。
-5. **下一步**：**12 家 six-fail endpoint/parser debug**（[plan](plans/cninfo_c_class_12_six_fail_endpoint_debug_plan.md) · **待人工批准**）；**stable 200 v2 暂停**；dividend YAML **HOLD**；按 board 分轨 gate。
+5. **下一步**：**12 家 targeted retry live**（[dryrun summary](outputs/validation/cninfo_c_class_retry_stable_200_six_fail_12_dryrun_summary.md) · **待人工批准**）；**stable 200 v2 暂停**；dividend YAML **HOLD**。
 6. **每完成一个 Phase**：更新分层表状态 + `outputs/validation/` 留 summary；不做数据库接入。

@@ -8,7 +8,7 @@ _最后更新：2026-07-07_
 
 ## 当前阶段（一句话）
 
-**Era C Phase 1（A 类）已收口**。**Phase 2 D 类已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通。**Phase 4 C 类** **stable 200 live + diagnosis 完成**（**LIVE_PARTIAL** · [diagnosis](outputs/validation/cninfo_c_class_stable_200_diagnosis.md)）；**12/12 six-fail 人工审计**确认 CNINFO 网页有结构化公司介绍（[audit CSV](outputs/validation/cninfo_c_class_stable_200_manual_audit_12_companies.csv) · [audit plan](plans/cninfo_c_class_manual_audit_12_six_fail_companies.md)）；**stable 200 v2 清洗暂停**；根因调查转向 **endpoint/parser debug**（[debug plan](plans/cninfo_c_class_12_six_fail_endpoint_debug_plan.md)）；**non-BSE CONDITIONAL YES**；dividend YAML **HOLD**；**无 verified**；**不入库**。
+**Era C Phase 1（A 类）已收口**。**Phase 2 D 类已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通。**Phase 4 C 类** runner **backoff + orgId fallback** 已加入；**12 家 six-fail retry dry-run 完成**（[dryrun summary](outputs/validation/cninfo_c_class_retry_stable_200_six_fail_12_dryrun_summary.md) · **DRY_RUN_ONLY** · 84 cases）；**stable 200 v2 暂停**；下一步 **12 家 targeted retry live（待批准）**；dividend YAML **HOLD**；**无 verified**；**不入库**。
 
 ---
 
@@ -216,10 +216,13 @@ flowchart TD
 | 71 | ~~stable 200 non-BSE 样本设计 + dry-run~~ → **完成**（[plan](plans/cninfo_c_class_stable_200_sample_plan.md)） |
 | 72 | ~~stable 200 live~~ → **LIVE_PARTIAL**（[diagnosis](outputs/validation/cninfo_c_class_stable_200_diagnosis.md)） |
 | 73 | ~~stable 200 二次清洗（12 家 6/6）~~ → **暂停**（人工审计 overturn · [audit plan](plans/cninfo_c_class_manual_audit_12_six_fail_companies.md)） |
-| 74 | 12 six-fail endpoint/parser debug plan → **待人工批准**（[debug plan](plans/cninfo_c_class_12_six_fail_endpoint_debug_plan.md) · 本轮无 CNINFO 请求） |
-| 75 | dividend_history YAML backfill → **HOLD** |
-| 76 | BSE legacy targeted probe（8 家 hold）→ **待启动** |
-| 77 | **暂不全量抓取、暂不入库** |
+| 74 | ~~12 six-fail endpoint/parser debug~~ → **完成**（[summary](outputs/validation/cninfo_c_class_12_six_fail_endpoint_debug_summary.md)） |
+| 75 | ~~runner 退避/重试 + orgId fallback~~ → **完成**（`validate_cninfo_c_class_scale_smoke.py`） |
+| 76 | ~~12 家 retry 样本 + dry-run~~ → **完成**（[dryrun summary](outputs/validation/cninfo_c_class_retry_stable_200_six_fail_12_dryrun_summary.md)） |
+| 77 | 12 家 targeted retry **live** → **待人工批准** |
+| 78 | dividend_history YAML backfill → **HOLD** |
+| 79 | BSE legacy targeted probe（8 家 hold）→ **待启动** |
+| 80 | **暂不全量抓取、暂不入库** |
 
 ---
 
@@ -230,7 +233,7 @@ flowchart TD
 - **不**同时大规模推进 Phase 3 与 Phase 2 扩源
 - **不跑** stable 200 全量重 live · **不生成 stable 200 v2** · **不剔除 12 家 six-fail**
 - **不执行** dividend YAML backfill（**HOLD**）
-- **12 six-fail** 不进入 hold；endpoint/parser debug **待人工批准**（本轮无 CNINFO 请求）
+- **12 six-fail** 不进入 hold；**12 家 retry live 待批准**（不扩 200/889 live）
 - **security_profile** 保持 **observe-only**（不绑定主 gate；见 [200 plan](plans/cninfo_c_class_scale_smoke_200_plan.md) §7）
 - **股东源** `empty_but_valid` 按 [200 plan](plans/cninfo_c_class_scale_smoke_200_plan.md) §6 解读（非 blocked/http_error/schema failure）
 

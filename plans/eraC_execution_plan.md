@@ -182,10 +182,13 @@ _最后更新：2026-07-05_
 73. ~~stable 200 live~~ → **完成**（§7ao · LIVE_PARTIAL）
 74. ~~stable 200 post-live diagnosis~~ → **完成**（§7ao）
 75. ~~stable 200 二次清洗~~ → **暂停**（§7ap · 人工审计 overturn）
-76. 12 six-fail endpoint/parser debug → **待人工批准**（§7ap）
-77. dividend_history YAML → **HOLD**
-78. BSE legacy targeted probe（8 家）→ **待启动**
-79. **暂不全量抓取、暂不入库**
+76. ~~12 six-fail endpoint/parser debug~~ → **完成**（§7aq）
+77. ~~runner 退避/重试 + orgId fallback~~ → **完成**（§7ar）
+78. ~~12 家 retry 样本 + dry-run~~ → **完成**（§7ar）
+79. 12 家 targeted retry live → **待人工批准**
+80. dividend_history YAML → **HOLD**
+81. BSE legacy targeted probe（8 家）→ **待启动**
+82. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -1410,6 +1413,55 @@ _最后更新：2026-07-05_
 
 ---
 
+## 7aq. Phase 4 C 类 12 Six-Fail Endpoint Debug 执行完成（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| 脚本 | `lab/debug_cninfo_c_class_12_six_fail_endpoints.py` |
+| cases | [cninfo_c_class_12_six_fail_endpoint_debug_cases.csv](../outputs/validation/cninfo_c_class_12_six_fail_endpoint_debug_cases.csv) |
+| summary | [cninfo_c_class_12_six_fail_endpoint_debug_summary.md](../outputs/validation/cninfo_c_class_12_six_fail_endpoint_debug_summary.md) |
+| 范围 | **12 家** · **84** CNINFO 请求（6 runner + 1 orgId basic 变体 / 家） |
+
+### 结论摘要
+
+| 项 | 结果 |
+|----|------|
+| debug basic 可达 | **11/12** |
+| live fail → debug pass | **11/12** |
+| 最主要 category | **`needs_more_check`**（11）+ **`endpoint_parameter_issue`**（1 · 600203） |
+| endpoint 路径 | **正确** — `getCompanyIntroduction` 等 data20 路径可用 |
+| orgId query | **600203** 需 `scode+orgId`；其余 scode-only 通常足够 |
+| 批量 live 429/90001 | **主因候选** — JSON 业务码非 HTTP 429；1400 连跑节流 |
+| sample_quality_issue | **否** |
+| stable 200 v2 | **继续暂停** |
+
+**下一步：** ~~runner 退避~~ → **完成**（§7ar）；**12 家 targeted retry live 待批准**。
+
+---
+
+## 7ar. Phase 4 C 类 Runner Backoff Patch + 12 Six-Fail Retry Dry-Run（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| Runner | `lab/validate_cninfo_c_class_scale_smoke.py` |
+| 样本 | `lab/eval_companies_c_class_retry_stable_200_six_fail_12.yaml`（**12**） |
+| dry-run | **DRY_RUN_ONLY** · **84** cases（12 × 7） |
+| 报告 | [dryrun_summary.md](../outputs/validation/cninfo_c_class_retry_stable_200_six_fail_12_dryrun_summary.md) |
+
+### Runner 变更
+
+| 能力 | 说明 |
+|------|------|
+| `cninfo_throttled_business_code` | JSON `429`/`90001` 或限流文案；不再直接判 `schema_unexpected` |
+| 退避重试（live） | 2s → 5s → 10s，最多 3 次 |
+| live 基础节流 | 请求间隔 **0.5s** |
+| orgId fallback | data20 endpoint：`scode+orgId` 单次 fallback（600203 已知案例） |
+| report 字段 | `retry_count` · `final_retrieval_status` · `first_result_code` · `final_result_code` · `used_orgid_variant` |
+
+**下一步：** **等待人工批准**后 `--live`（仅 12 家）；**stable 200 v2 暂停**；**no verified**。
+
+---
+
 ## 7am. Phase 4 C 类 Source Status Decision（2026-07-07）
 
 | 项 | 内容 |
@@ -1582,7 +1634,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **stable 200 live + diagnosis 完成**（§7ao）；**12/12 six-fail 人工审计**（§7ap）；**stable 200 v2 暂停**；下一步 **12 家 endpoint/parser debug（待批准）**；**BSE legacy** HOLD。
+当前 Phase：C 类 **runner backoff patch + 12 retry dry-run 完成**（§7ar）；**stable 200 v2 暂停**；下一步 **12 家 targeted retry live（待批准）**；**BSE legacy** HOLD。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

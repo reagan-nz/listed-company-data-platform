@@ -1,0 +1,106 @@
+version: c-class-retry-stable-200-six-fail-12-v1
+generated_at: '2026-07-07'
+parent_sample: lab/eval_companies_c_class_stable_200_non_bse.yaml
+debug_summary: outputs/validation/cninfo_c_class_12_six_fail_endpoint_debug_summary.md
+universe_id: retry_stable_200_six_fail_12
+description: stable 200 十二家 6/6 fail targeted retry（runner backoff + orgId fallback
+  patch 后）
+company_count: 12
+planned_cases: 84
+companies:
+- stock_code: '300261'
+  company_name: 雅本化学
+  short_name: 雅本化学
+  board: chinext
+  exchange: SZSE
+  orgid: '9900021099'
+  sample_role: stable_200_six_fail_retry_after_backoff_patch
+  manual_judgment: endpoint_parameter_issue_or_parser_issue
+- stock_code: '300288'
+  company_name: 朗玛信息
+  short_name: 朗玛信息
+  board: chinext
+  exchange: SZSE
+  orgid: '9900021632'
+  sample_role: stable_200_six_fail_retry_after_backoff_patch
+  manual_judgment: endpoint_parameter_issue_or_parser_issue
+- stock_code: '300355'
+  company_name: 蒙草生态
+  short_name: 蒙草生态
+  board: chinext
+  exchange: SZSE
+  orgid: '9900022668'
+  sample_role: stable_200_six_fail_retry_after_backoff_patch
+  manual_judgment: endpoint_parameter_issue_or_parser_issue
+- stock_code: '300414'
+  company_name: 中光防雷
+  short_name: 中光防雷
+  board: chinext
+  exchange: SZSE
+  orgid: '9900023935'
+  sample_role: stable_200_six_fail_retry_after_backoff_patch
+  manual_judgment: endpoint_parameter_issue_or_parser_issue
+- stock_code: '600061'
+  company_name: 国投资本
+  short_name: 国投资本
+  board: sse_main
+  exchange: SSE
+  orgid: gssh0600061
+  sample_role: stable_200_six_fail_retry_after_backoff_patch
+  manual_judgment: endpoint_parameter_issue_or_parser_issue
+- stock_code: '600063'
+  company_name: 皖维高新
+  short_name: 皖维高新
+  board: sse_main
+  exchange: SSE
+  orgid: gssh0600063
+  sample_role: stable_200_six_fail_retry_after_backoff_patch
+  manual_judgment: endpoint_parameter_issue_or_parser_issue
+- stock_code: '600130'
+  company_name: 波导股份
+  short_name: 波导股份
+  board: sse_main
+  exchange: SSE
+  orgid: gssh0600130
+  sample_role: stable_200_six_fail_retry_after_backoff_patch
+  manual_judgment: endpoint_parameter_issue_or_parser_issue
+- stock_code: '600203'
+  company_name: 福日电子
+  short_name: 福日电子
+  board: sse_main
+  exchange: SSE
+  orgid: gssh0600203
+  sample_role: stable_200_six_fail_retry_after_backoff_patch
+  manual_judgment: endpoint_parameter_issue_or_parser_issue
+- stock_code: '600207'
+  company_name: 安彩高科
+  short_name: 安彩高科
+  board: sse_main
+  exchange: SSE
+  orgid: gssh0600207
+  sample_role: stable_200_six_fail_retry_after_backoff_patch
+  manual_judgment: endpoint_parameter_issue_or_parser_issue
+- stock_code: '600233'
+  company_name: 圆通速递
+  short_name: 圆通速递
+  board: sse_main
+  exchange: SSE
+  orgid: gssh0600233
+  sample_role: stable_200_six_fail_retry_after_backoff_patch
+  manual_judgment: endpoint_parameter_issue_or_parser_issue
+- stock_code: '600390'
+  company_name: 五矿资本
+  short_name: 五矿资本
+  board: sse_main
+  exchange: SSE
+  orgid: gssh0600390
+  sample_role: stable_200_six_fail_retry_after_backoff_patch
+  manual_judgment: endpoint_parameter_issue_or_parser_issue
+- stock_code: '600523'
+  company_name: 贵航股份
+  short_name: 贵航股份
+  board: sse_main
+  exchange: SSE
+  orgid: gssh0600523
+  sample_role: stable_200_six_fail_retry_after_backoff_patch
+  manual_judgment: endpoint_parameter_issue_or_parser_issue
