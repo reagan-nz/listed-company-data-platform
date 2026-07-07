@@ -1470,11 +1470,14 @@ def write_summary_md(
             "",
             "## Gate: stable 200 non-BSE",
             "",
-            f"**stable_gate = {'DRY_RUN_READY' if run_mode == 'dry-run' else 'LIVE_PENDING_APPROVAL'}**",
+            f"**stable_gate = {'DRY_RUN_READY' if run_mode == 'dry-run' else 'LIVE_COMPLETED_DIAGNOSIS_REQUIRED'}**",
             "",
-            f"Cleaned stable sample **{len(companies)}** 家；planned live **{len(companies) * (len(MAIN_SOURCE_IDS) + 1)}** requests。",
-            "目的：验证剔除 six_fail_hold 后 non-BSE 主宇宙是否稳定。",
-            "**等待人工批准**后跑 `--live`。",
+            f"Cleaned stable sample **{len(companies)}** 家；"
+            + (
+                f"planned live **{len(companies) * (len(MAIN_SOURCE_IDS) + 1)}** requests。"
+                if run_mode == "dry-run"
+                else f"live **已完成**（见 Overall result）；post-live 诊断 required。"
+            ),
         ])
     elif is_retry_889:
         lines.extend([

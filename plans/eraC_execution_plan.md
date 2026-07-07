@@ -179,10 +179,13 @@ _最后更新：2026-07-05_
 70. ~~partial-fail targeted retry live~~ → **完成**（§7al · LIVE_PARTIAL）
 71. ~~C-class source status decision~~ → **完成**（§7am）
 72. ~~stable 200 non-BSE 样本 + dry-run~~ → **完成**（§7an）
-73. stable 200 **live** → **等待批准**
-74. dividend_history YAML backfill 执行 → **GO（决策）· 待批准**
-75. BSE legacy targeted probe（8 家）→ **待启动**
-69. **暂不全量抓取、暂不入库**
+73. ~~stable 200 live~~ → **完成**（§7ao · LIVE_PARTIAL）
+74. ~~stable 200 post-live diagnosis~~ → **完成**（§7ao）
+75. ~~stable 200 二次清洗~~ → **暂停**（§7ap · 人工审计 overturn）
+76. 12 six-fail endpoint/parser debug → **待人工批准**（§7ap）
+77. dividend_history YAML → **HOLD**
+78. BSE legacy targeted probe（8 家）→ **待启动**
+79. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -1344,7 +1347,66 @@ _最后更新：2026-07-05_
 | dry-run | **DRY_RUN_ONLY** · **1400** cases |
 | 报告 | [dryrun_summary.md](../outputs/validation/cninfo_c_class_stable_200_dryrun_summary.md) |
 
-**建议：** 等待人工批准后 stable 200 `--live`。
+**建议：** ~~等待人工批准后 stable 200 `--live`~~ → **已完成**（§7ao）
+
+---
+
+## 7ao. Phase 4 C 类 Stable 200 Live + Post-Live Diagnosis（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| Live | **200** · **1400** · **LIVE_PARTIAL** |
+| 主判定 | pass=**1069** fail=**131** · blocked/429/http_error=**0** |
+| 报告 | [live_summary.md](../outputs/validation/cninfo_c_class_stable_200_live_summary.md) · [diagnosis.md](../outputs/validation/cninfo_c_class_stable_200_diagnosis.md) |
+
+**结论：** fail = **schema_unexpected（114）** + **empty_but_valid（17）**；**12 家 6/6**；dividend **90%**；YAML → **HOLD**。
+
+**注：** §7ao 中「样本二次清洗 / 剔除 12 家」建议已被 §7ap 人工审计 **overturn**。
+
+---
+
+## 7ap. Phase 4 C 类 Stable 200 十二家 6/6 Fail 人工审计 + Endpoint Debug 转向（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| 审计对象 | stable 200 live 中 **12 家 6/6 主源失败** |
+| 人工审计表 | [cninfo_c_class_stable_200_manual_audit_12_companies.csv](../outputs/validation/cninfo_c_class_stable_200_manual_audit_12_companies.csv) |
+| 审计计划 | [cninfo_c_class_manual_audit_12_six_fail_companies.md](cninfo_c_class_manual_audit_12_six_fail_companies.md) |
+| endpoint debug 计划 | [cninfo_c_class_12_six_fail_endpoint_debug_plan.md](cninfo_c_class_12_six_fail_endpoint_debug_plan.md) |
+
+### 人工结论（12/12）
+
+| 字段 | 值 |
+|------|-----|
+| `manual_cninfo_search_found` | **yes** |
+| `manual_f10_page_exists` | **yes** |
+| `manual_basic_profile_visible` | **yes** |
+| `manual_judgment` | **`endpoint_parameter_issue_or_parser_issue`** |
+
+**不剔除 12 家：** 网页端均有结构化公司介绍；剔除会造成 stable sample **过拟合**；当前失败不应解释为公司无效。
+
+### 最可能根因
+
+- runner endpoint 与网页真实数据源不一致（`scode-only` vs `stockCode` + `orgId`）
+- parser 硬编码 `data.records`；实际响应可能为 **response_shape_mismatch**
+- 类别候选：`endpoint_parameter_issue` · `parser_schema_assumption_issue` · `current_endpoint_not_web_source`
+
+### 状态变更
+
+| 项 | 状态 |
+|----|------|
+| stable 200 v2 清洗 | **PAUSED** |
+| 12 家进入 hold | **否** |
+| 根因调查 | sample cleaning → **endpoint/parser debug** |
+| dividend YAML backfill | **HOLD** |
+| verified / testing_stable_sample | **不写** |
+
+### 下一步产出（待批准后执行 · 本轮不创建）
+
+- `outputs/validation/cninfo_c_class_12_six_fail_endpoint_debug_cases.csv`
+- `outputs/validation/cninfo_c_class_12_six_fail_endpoint_debug_summary.md`
+
+**红线：** 本轮 **无 live** · **无 CNINFO 程序请求** · **无 stable 200 v2** · **无剔除** · **无 YAML** · **无 DB** · **无 verified**
 
 ---
 
@@ -1520,7 +1582,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **stable 200 non-BSE dry-run 完成**（§7an）；**live 待批准**；**BSE legacy** HOLD。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **stable 200 live + diagnosis 完成**（§7ao）；**12/12 six-fail 人工审计**（§7ap）；**stable 200 v2 暂停**；下一步 **12 家 endpoint/parser debug（待批准）**；**BSE legacy** HOLD。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
