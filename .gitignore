@@ -77,3 +77,8 @@ lab/batch_*_2024.yaml
 # SQLite prototype (generated locally via lab/db_init.py + lab/db_import.py)
 outputs/db/*.db
 outputs/db/*.db-journal
+
+# Local CNINFO C-class harvest outputs
+outputs/harvest/cninfo_c_class/raw/
+outputs/harvest/cninfo_c_class/normalized/
+outputs/harvest/cninfo_c_class/quality/
