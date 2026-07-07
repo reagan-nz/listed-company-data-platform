@@ -187,7 +187,7 @@ MAINLINE:
 | 结果 | **DRY_RUN_ONLY** · planned live **6223** |
 | 报告 | [cninfo_c_class_smoke_1000_non_bse_dryrun_summary.md](../outputs/validation/cninfo_c_class_smoke_1000_non_bse_dryrun_summary.md) |
 
-与 195 universe split **同规则**；BSE 全量排除不进主 gate；live **待批准**。
+与 195 universe split **同规则**；BSE 全量排除不进主 gate；live **已完成**（[diagnosis](../outputs/validation/cninfo_c_class_smoke_1000_non_bse_diagnosis.md)）。
 
 ---
 
