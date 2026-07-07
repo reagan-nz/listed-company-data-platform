@@ -174,8 +174,9 @@ _最后更新：2026-07-05_
 65. ~~BSE failure diagnosis~~ → **完成**（§7ag）
 66. ~~universe split + sample cleaning~~ → **完成**（§7ah）
 67. ~~non-BSE 1000-like 离线派生 + dry-run~~ → **完成**（§7ai）
-68. non-BSE 1000-like **live** → **等待批准**
-69. BSE legacy targeted probe（8 家）→ **待启动**
+68. ~~non-BSE 1000-like live~~ → **完成**（§7aj · LIVE_PARTIAL）
+69. 样本清洗 + failed-company targeted retry → **下一步**
+70. BSE legacy targeted probe（8 家）→ **待启动**
 68. BSE legacy targeted probe → **待启动**
 69. **暂不全量抓取、暂不入库**
 
@@ -1274,7 +1275,25 @@ _最后更新：2026-07-05_
 
 **红线：** 本轮 **无 live** · **无 CNINFO** · **无 YAML backfill** · **无 DB** · **无 verified**
 
-**建议：** 等待人工批准后跑 non-BSE 1000-like `--live`
+**建议：** ~~等待人工批准后跑 non-BSE 1000-like `--live`~~ → **已完成**（§7aj）
+
+---
+
+## 7aj. Phase 4 C 类 889 Non-BSE Live + Post-889 Diagnosis（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| Live | **889** 家 · **6223** cases · **LIVE_PARTIAL** |
+| 主判定 | pass=**5064** fail=**270** · blocked=**14** · 429=**0** |
+| security | observe_pass=**889** |
+| Live 报告 | [live_report.csv](../outputs/validation/cninfo_c_class_smoke_1000_non_bse_live_report.csv) · [live_summary.md](../outputs/validation/cninfo_c_class_smoke_1000_non_bse_live_summary.md) |
+| Diagnosis | [failure_cases.csv](../outputs/validation/cninfo_c_class_smoke_1000_non_bse_failure_cases.csv) · [diagnosis.md](../outputs/validation/cninfo_c_class_smoke_1000_non_bse_diagnosis.md) |
+
+**结论：** fail 主要由 **26 家 6/6 全失败** + **empty_but_valid 计 fail**；**非系统性退化**。dividend **GO（决策）**；top_float **source_partial**；security **observe-only**。
+
+**下一步：** 样本清洗 · failed-company targeted retry · full-market non-BSE planning（CONDITIONAL）
+
+**命名修正：** live 输出 `*_live_*`；脚本 `--live` 自动写入 live 路径
 
 ---
 
@@ -1435,7 +1454,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **non-BSE 1000-like candidate dry-run 完成**（§7ai · **889** 家）；**live 待批准**；**BSE legacy** side-track HOLD。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **889 non-BSE live + diagnosis 完成**（§7aj）；下一步 **样本清洗 + targeted retry**；**BSE legacy** side-track HOLD。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

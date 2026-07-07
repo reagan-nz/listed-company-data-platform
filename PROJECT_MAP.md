@@ -10,7 +10,7 @@ _最后更新：2026-07-06_
 
 ## 0. 一句话现状
 
-仓库里叠了**三代方向**的代码与文档。**当前聚焦：Era C Phase 4 C 类** — 195 live + BSE diagnosis 完成；**universe split**；**non-BSE 1000-like candidate dry-run 完成**（**889** 家 · planned live **6223** · **无 CNINFO**）。前两代**已冻结**。
+仓库里叠了**三代方向**的代码与文档。**当前聚焦：Era C Phase 4 C 类** — **889 non-BSE live + diagnosis 完成**（LIVE_PARTIAL · [diagnosis](outputs/validation/cninfo_c_class_smoke_1000_non_bse_diagnosis.md)）。前两代**已冻结**。
 
 ---
 
@@ -250,5 +250,5 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 2. **Phase 2 已收口**；**Phase 3 D 类设计**见 [registry YAML](config/cninfo_d_class_source_registry_draft.yaml) / [schema validation summary](outputs/validation/cninfo_d_class_schema_validation_summary.md)。
 3. **Phase 3 B 类**见 [validation design](plans/cninfo_b_class_validation_design.md) / [category routing](plans/cninfo_b_class_category_routing_rules.md) / [categories YAML](config/cninfo_announcement_categories.yaml) / [document seed summary](outputs/validation/cninfo_b_class_document_seed_summary.md) / [B schema validation](outputs/validation/cninfo_b_class_document_schema_validation_summary.md)。
 4. **Phase 4 C 类**见 [registry lint](outputs/validation/cninfo_c_class_registry_lint_summary.md) / [fixture validation](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md) / [active 30 smoke summary](outputs/validation/cninfo_c_class_scale_smoke_30_active_summary.md) / [candidates YAML](config/cninfo_c_class_source_candidates.yaml)。
-5. **下一步**：**non-BSE 1000-like live** → **等待批准**（[dry-run summary](outputs/validation/cninfo_c_class_smoke_1000_non_bse_dryrun_summary.md) · 889 家 · planned **6223**）；BSE legacy **8 家 HOLD** + targeted probe；**无 live / 无 DB / 无 YAML** 直至批准。
+5. **下一步**：样本清洗（26 家 abnormal）+ **failed-company targeted retry**（[diagnosis](outputs/validation/cninfo_c_class_smoke_1000_non_bse_diagnosis.md)）；full-market non-BSE planning（CONDITIONAL）；BSE legacy **8 家 HOLD**。
 6. **每完成一个 Phase**：更新分层表状态 + `outputs/validation/` 留 summary；不做数据库接入。

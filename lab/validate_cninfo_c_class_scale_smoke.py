@@ -51,18 +51,33 @@ DEFAULT_ACTIVE_200_CSV = os.path.join(
 DEFAULT_ACTIVE_200_MD = os.path.join(
     BASE_DIR, "outputs", "validation", "cninfo_c_class_scale_smoke_200_active_summary.md"
 )
-DEFAULT_1000_NON_BSE_CSV = os.path.join(
+DEFAULT_1000_NON_BSE_DRYRUN_CSV = os.path.join(
     BASE_DIR,
     "outputs",
     "validation",
     "cninfo_c_class_smoke_1000_non_bse_dryrun_report.csv",
 )
-DEFAULT_1000_NON_BSE_MD = os.path.join(
+DEFAULT_1000_NON_BSE_DRYRUN_MD = os.path.join(
     BASE_DIR,
     "outputs",
     "validation",
     "cninfo_c_class_smoke_1000_non_bse_dryrun_summary.md",
 )
+DEFAULT_1000_NON_BSE_LIVE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_smoke_1000_non_bse_live_report.csv",
+)
+DEFAULT_1000_NON_BSE_LIVE_MD = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_smoke_1000_non_bse_live_summary.md",
+)
+# 兼容旧常量名（dry-run 默认）
+DEFAULT_1000_NON_BSE_CSV = DEFAULT_1000_NON_BSE_DRYRUN_CSV
+DEFAULT_1000_NON_BSE_MD = DEFAULT_1000_NON_BSE_DRYRUN_MD
 PREVIOUS_BASELINE_CSV = DEFAULT_CSV
 
 BASIC_URL = "https://www.cninfo.com.cn/data20/companyOverview/getCompanyIntroduction"
@@ -72,6 +87,7 @@ SECURITY_URL = "https://www.cninfo.com.cn/new/newInterface/marketOverview"
 SLEEP_SECONDS = 0.8
 REQUEST_TIMEOUT = 10
 MAX_RETRIES = 1
+LIVE_PROGRESS_INTERVAL = 50
 
 # 主判定 source（按请求顺序）
 MAIN_SOURCE_IDS = (
@@ -618,32 +634,75 @@ def build_dry_run_rows(companies: List[Dict[str, str]]) -> List[CaseRow]:
     return rows
 
 
+def _format_duration(seconds: float) -> str:
+    return f"{seconds:.1f}s"
+
+
+def _live_progress_stats(rows: List[CaseRow]) -> Dict[str, int]:
+    return {
+        "pass": sum(1 for r in rows if r.case_result == "pass"),
+        "fail": sum(1 for r in rows if r.case_result == "fail"),
+        "observe_pass": sum(1 for r in rows if r.case_result == "observe_pass"),
+        "blocked": sum(1 for r in rows if r.retrieval_status == "blocked"),
+        "http_error": sum(1 for r in rows if r.retrieval_status == "http_error"),
+        "429": sum(1 for r in rows if r.retrieval_status == "rate_limited"),
+    }
+
+
+def _log_live_progress(rows: List[CaseRow], total: int, start_time: float) -> None:
+    completed = len(rows)
+    stats = _live_progress_stats(rows)
+    elapsed = time.time() - start_time
+    remaining = (elapsed / completed * (total - completed)) if completed else 0.0
+    print(
+        f"progress: completed={completed}/{total} "
+        f"pass={stats['pass']} fail={stats['fail']} observe_pass={stats['observe_pass']} "
+        f"blocked={stats['blocked']} http_error={stats['http_error']} 429={stats['429']} "
+        f"elapsed={_format_duration(elapsed)} "
+        f"estimated_remaining={_format_duration(remaining)}",
+        flush=True,
+    )
+
+
+def _on_live_case_done(rows: List[CaseRow], total: int, start_time: float) -> None:
+    if len(rows) % LIVE_PROGRESS_INTERVAL == 0:
+        _log_live_progress(rows, total, start_time)
+
+
 def run_live(companies: List[Dict[str, str]]) -> List[CaseRow]:
     rows: List[CaseRow] = []
     request_count = 0
     total_requests = len(companies) * (len(MAIN_SOURCE_IDS) + 1)
+    start_time = time.time()
 
     for company in companies:
         rows.append(validate_basic_live(company))
         request_count += 1
+        _on_live_case_done(rows, total_requests, start_time)
         if request_count < total_requests:
             time.sleep(SLEEP_SECONDS)
 
         rows.append(validate_records_list_live("cninfo_dividend_financing_profile", company))
         request_count += 1
+        _on_live_case_done(rows, total_requests, start_time)
         if request_count < total_requests:
             time.sleep(SLEEP_SECONDS)
 
         for sid in MAIN_SOURCE_IDS[2:]:
             rows.append(validate_records_list_live(sid, company))
             request_count += 1
+            _on_live_case_done(rows, total_requests, start_time)
             if request_count < total_requests:
                 time.sleep(SLEEP_SECONDS)
 
         rows.append(validate_security_observe(company))
         request_count += 1
+        _on_live_case_done(rows, total_requests, start_time)
         if request_count < total_requests:
             time.sleep(SLEEP_SECONDS)
+
+    if len(rows) % LIVE_PROGRESS_INTERVAL != 0:
+        _log_live_progress(rows, total_requests, start_time)
 
     return rows
 
@@ -902,12 +961,25 @@ def _load_previous_baseline(csv_path: str) -> Optional[Dict[str, Any]]:
     }
 
 
-def _resolve_output_paths(sample_path: str, output_csv: Optional[str], output_md: Optional[str]) -> Tuple[str, str]:
+def _resolve_output_paths(
+    sample_path: str,
+    output_csv: Optional[str],
+    output_md: Optional[str],
+    run_mode: str = "dry_run",
+) -> Tuple[str, str]:
     base = os.path.basename(sample_path)
     if output_csv and output_md:
         return output_csv, output_md
     if "1000_non_bse" in base or "non_bse_candidate" in base:
-        return output_csv or DEFAULT_1000_NON_BSE_CSV, output_md or DEFAULT_1000_NON_BSE_MD
+        if run_mode == "live":
+            return (
+                output_csv or DEFAULT_1000_NON_BSE_LIVE_CSV,
+                output_md or DEFAULT_1000_NON_BSE_LIVE_MD,
+            )
+        return (
+            output_csv or DEFAULT_1000_NON_BSE_DRYRUN_CSV,
+            output_md or DEFAULT_1000_NON_BSE_DRYRUN_MD,
+        )
     if "smoke_200" in base or "200_active" in base:
         return output_csv or DEFAULT_ACTIVE_200_CSV, output_md or DEFAULT_ACTIVE_200_MD
     if "active" in base:
@@ -1156,21 +1228,55 @@ def write_summary_md(
         f"**Decision: {div_gate}**",
         "",
         div_gate_detail,
-        "",
-        "## Gate: expand to 200 companies",
-        "",
-        f"**enter_200 = {scale_gate}**",
-        "",
-        scale_gate_detail,
+    ])
+    if is_1000_non_bse:
+        lines.extend([
+            "",
+            "## Gate: post-889 scale / next planning",
+            "",
+            f"**next_gate = {'DIAGNOSIS_PENDING' if run_mode == 'dry-run' else 'SEE_DIAGNOSIS'}**",
+            "",
+            "889-company non-BSE 1000-like；下一门槛为 post-889 diagnosis / full-market non-BSE planning（非 enter_200）。",
+        ])
+    else:
+        lines.extend([
+            "",
+            "## Gate: expand to 200 companies",
+            "",
+            f"**enter_200 = {scale_gate}**",
+            "",
+            scale_gate_detail,
+        ])
+    lines.extend([
         "",
         "## Caveats",
         "",
-        "- 30-company stratified sample only; not full-market.",
-        "- **testing** status only; **no verified**.",
-        "- **No testing_stable_sample**.",
-        "- No database ingestion.",
-        "- security uses hardcoded `secType=szshe`; cross-board risk observed separately.",
     ])
+    if is_1000_non_bse:
+        if run_mode == "live":
+            lines.extend([
+                "- **889-company non-BSE 1000-like live sample**；非 full-market verified。",
+                "- Live 输出：`cninfo_c_class_smoke_1000_non_bse_live_report.csv` / `_live_summary.md`。",
+                "- Next gate: post-889 diagnosis / possible 1000 or full-market non-BSE planning.",
+            ])
+        else:
+            lines.extend([
+                "- **889-company non-BSE 1000-like dry-run**；planned live only；无 CNINFO。",
+            ])
+        lines.extend([
+            "- **testing** status only; **no verified**.",
+            "- **No testing_stable_sample**.",
+            "- No database ingestion.",
+            "- security observe-only；不绑定主 gate。",
+        ])
+    else:
+        lines.extend([
+            "- 30-company stratified sample only; not full-market.",
+            "- **testing** status only; **no verified**.",
+            "- **No testing_stable_sample**.",
+            "- No database ingestion.",
+            "- security uses hardcoded `secType=szshe`; cross-board risk observed separately.",
+        ])
     if is_active:
         lines.append(
             "- active 样本以 YAML 名称 heuristics 剔除退市，未联网校验 *ST 等上市状态。"
@@ -1214,7 +1320,7 @@ def main() -> None:
     args = parse_args()
     sample_path = args.sample or DEFAULT_SAMPLE
     output_csv, output_md = _resolve_output_paths(
-        sample_path, args.output_csv, args.output_md
+        sample_path, args.output_csv, args.output_md, args.mode
     )
     companies = load_sample_companies(sample_path)
     if args.mode == "live" and len(companies) < 10:
@@ -1248,6 +1354,13 @@ def main() -> None:
         f"SUMMARY  mode={run_label}  companies={len(companies)}  cases={len(rows)}  "
         f"pass={total_pass}  fail={total_fail}  skipped={total_skip}  result={result}"
     )
+    if run_label == "dry-run":
+        per_company = len(MAIN_SOURCE_IDS) + 1
+        print(
+            f"progress: dry-run planned_cases={len(rows)} "
+            f"(companies={len(companies)} x {per_company} sources, no CNINFO requests)",
+            flush=True,
+        )
     print(f"CSV   {output_csv}")
     print(f"MD    {output_md}")
 
