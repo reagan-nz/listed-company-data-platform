@@ -8,7 +8,7 @@ _最后更新：2026-07-07_
 
 ## 当前阶段（一句话）
 
-**Era C Phase 1（A 类）已收口**。**Phase 2 D 类已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通。**Phase 4 C 类** stable 200 **LIVE_PASS**（[decision](plans/cninfo_c_class_stable_200_live_pass_decision.md)）；**889 non-BSE rerun plan + dry-run 完成**（[plan](plans/cninfo_c_class_889_non_bse_rerun_plan.md) · 889×7=**6223** · **DRY_RUN_ONLY**）；下一步 **889 rerun live（待批准）**；dividend_history YAML **GO（决策 only）**；**无 verified**；**不入库**。
+**Era C Phase 1（A 类）已收口**。**Phase 2 D 类已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通。**Phase 4 C 类** **889 rerun LIVE_PARTIAL**（[diagnosis](outputs/validation/cninfo_c_class_889_non_bse_rerun_diagnosis.md) · pass=5119 fail=215）；**26 家 all6 hold** + **41 家 partial-fail retry 样本已派生**（[retry plan](plans/cninfo_c_class_889_rerun_retry_plan.md) · dry-run **287** DRY_RUN_ONLY）；**等待人工批准** partial-fail targeted retry live；**暂停 harvest**；dividend_history YAML **GO（决策 only）**；**无 verified**；**不入库**。
 
 ---
 
@@ -219,10 +219,13 @@ flowchart TD
 | 74 | ~~12 家 six-fail retry live~~ → **LIVE_PASS**（[summary](outputs/validation/cninfo_c_class_retry_stable_200_six_fail_12_live_summary.md)） |
 | 75 | ~~stable 200 v2~~ → **取消**（不需要） |
 | 76 | ~~889 non-BSE rerun plan + dry-run~~ → **完成**（[plan](plans/cninfo_c_class_889_non_bse_rerun_plan.md) · **DRY_RUN_ONLY** 6223） |
-| 77 | 889 non-BSE rerun **live** → **待人工批准** |
-| 77 | dividend_history YAML backfill → **GO（决策 only）** · 889 rerun 后再评估执行 |
-| 78 | BSE legacy targeted probe（8 家 hold）→ **待启动** |
-| 79 | **暂不全量抓取、暂不入库** |
+| 77 | ~~889 non-BSE rerun live~~ → **LIVE_PARTIAL**（[diagnosis](outputs/validation/cninfo_c_class_889_non_bse_rerun_diagnosis.md)） |
+| 78 | ~~partial-fail targeted retry 样本设计（~41 家）~~ → **完成**（[retry plan](plans/cninfo_c_class_889_rerun_retry_plan.md) · dry-run **287**） |
+| 79 | ~~26 家 all6 hold 子集标注~~ → **完成**（`eval_companies_c_class_889_rerun_all6_hold.yaml`） |
+| 80 | partial-fail targeted retry live → **等待人工批准** |
+| 81 | dividend_history YAML backfill → **GO（决策 only）** · retry 后再评估执行 |
+| 82 | BSE legacy targeted probe（8 家 hold）→ **待启动** |
+| 83 | **暂不全量抓取、暂不入库** |
 
 ---
 
@@ -231,7 +234,8 @@ flowchart TD
 - **不写 verified** / full-market stable
 - **不接** PostgreSQL / MinIO / MongoDB
 - **不**同时大规模推进 Phase 3 与 Phase 2 扩源
-- **不跑** 889 live（**待人工批准**；preflight dry-run 已完成）
+- **暂停 harvest** 直至 partial-fail targeted retry 完成
+- **不跑** 889 全量重 live · **不清洗** 26 家 all6（hold 子集）
 - **不生成 stable 200 v2** · **不剔除 12 家 six-fail**
 - **不执行** dividend YAML backfill（决策 GO，待 889 后）
 - **security_profile** 保持 **observe-only**（不绑定主 gate；见 [200 plan](plans/cninfo_c_class_scale_smoke_200_plan.md) §7）

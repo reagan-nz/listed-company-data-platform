@@ -124,6 +124,30 @@ DEFAULT_STABLE_200_LIVE_MD = os.path.join(
     "validation",
     "cninfo_c_class_stable_200_live_summary.md",
 )
+DEFAULT_RETRY_889_RERUN_PARTIAL_DRYRUN_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_889_rerun_partial_fail_retry_dryrun_report.csv",
+)
+DEFAULT_RETRY_889_RERUN_PARTIAL_DRYRUN_MD = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_889_rerun_partial_fail_retry_dryrun_summary.md",
+)
+DEFAULT_RETRY_889_RERUN_PARTIAL_LIVE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_889_rerun_partial_fail_retry_live_report.csv",
+)
+DEFAULT_RETRY_889_RERUN_PARTIAL_LIVE_MD = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_889_rerun_partial_fail_retry_live_summary.md",
+)
 DEFAULT_RETRY_STABLE_200_SIX_FAIL_DRYRUN_CSV = os.path.join(
     BASE_DIR,
     "outputs",
@@ -190,7 +214,14 @@ MAIN_SOURCE_IDS = (
 
 OBSERVE_SOURCE_ID = "cninfo_company_security_profile"
 
-# targeted retry partial-fail 样本 live 前置校验预期
+RETRY_889_RERUN_PARTIAL_SAMPLE_NAME = (
+    "eval_companies_c_class_889_rerun_partial_fail_retry.yaml"
+)
+RETRY_889_RERUN_ALL6_HOLD_SAMPLE_NAME = (
+    "eval_companies_c_class_889_rerun_all6_hold.yaml"
+)
+
+# targeted retry partial-fail 样本 live 前置校验预期（v1 889 live）
 RETRY_889_PARTIAL_SAMPLE_NAME = "eval_companies_c_class_retry_889_partial_fail_retry.yaml"
 RETRY_889_PARTIAL_EXPECTED_COMPANY_COUNT = 62
 RETRY_889_PARTIAL_EXPECTED_FAILURE_TYPE_COUNTS: Dict[str, int] = {
@@ -371,6 +402,51 @@ def load_sample_companies(path: str) -> List[Dict[str, str]]:
 
 def _is_retry_889_partial_sample(sample_path: str) -> bool:
     return os.path.basename(sample_path) == RETRY_889_PARTIAL_SAMPLE_NAME
+
+
+def _is_retry_889_rerun_partial_sample(sample_path: str) -> bool:
+    return os.path.basename(sample_path) == RETRY_889_RERUN_PARTIAL_SAMPLE_NAME
+
+
+def _load_889_rerun_all6_hold_codes() -> frozenset:
+    hold_path = os.path.join(BASE_DIR, "lab", RETRY_889_RERUN_ALL6_HOLD_SAMPLE_NAME)
+    data = load_sample_yaml(hold_path)
+    return frozenset(str(c["stock_code"]) for c in data.get("companies") or [])
+
+
+def _validate_pre_live_retry_889_rerun_partial(
+    sample_path: str,
+    companies: List[Dict[str, str]],
+) -> Tuple[bool, str]:
+    """889 rerun partial-fail targeted retry 样本 hard gate。"""
+    with open(sample_path, encoding="utf-8") as fh:
+        data = yaml.safe_load(fh) or {}
+
+    issues: List[str] = []
+    declared_count = data.get("company_count")
+    actual_co = len(companies)
+    expected_cases = actual_co * SOURCE_COUNT_PER_COMPANY
+    all6_codes = _load_889_rerun_all6_hold_codes()
+    actual_codes = {c["company_code"] for c in companies}
+
+    if declared_count != actual_co:
+        issues.append(f"company_count={declared_count!r} actual={actual_co}")
+    overlap = actual_codes & all6_codes
+    if overlap:
+        issues.append(f"overlap with all6 hold: {sorted(overlap)}")
+    if actual_co * SOURCE_COUNT_PER_COMPANY != expected_cases:
+        issues.append(
+            f"planned cases={actual_co * SOURCE_COUNT_PER_COMPANY} expected={expected_cases}"
+        )
+    if actual_co < 1:
+        issues.append("empty partial-fail sample")
+
+    if issues:
+        return False, "; ".join(issues)
+    return (
+        True,
+        f"company_count={actual_co} planned_cases={expected_cases} no_all6_overlap",
+    )
 
 
 def _is_retry_stable_200_six_fail_sample(sample_path: str) -> bool:
@@ -1383,6 +1459,16 @@ def _resolve_output_paths(
             output_csv or DEFAULT_STABLE_200_DRYRUN_CSV,
             output_md or DEFAULT_STABLE_200_DRYRUN_MD,
         )
+    if "889_rerun_partial_fail" in base:
+        if run_mode == "live":
+            return (
+                output_csv or DEFAULT_RETRY_889_RERUN_PARTIAL_LIVE_CSV,
+                output_md or DEFAULT_RETRY_889_RERUN_PARTIAL_LIVE_MD,
+            )
+        return (
+            output_csv or DEFAULT_RETRY_889_RERUN_PARTIAL_DRYRUN_CSV,
+            output_md or DEFAULT_RETRY_889_RERUN_PARTIAL_DRYRUN_MD,
+        )
     if "retry_889_partial_fail" in base or "retry_889_partial" in base:
         if run_mode == "live":
             return (
@@ -1463,7 +1549,10 @@ def write_summary_md(
     is_active = "active" in sample_base
     is_200 = "smoke_200" in sample_base or "200_active" in sample_base
     is_1000_non_bse = "1000_non_bse" in sample_base or "non_bse_candidate" in sample_base
-    is_retry_889 = "retry_889" in sample_base
+    is_retry_889_rerun_partial = _is_retry_889_rerun_partial_sample(sample_path)
+    is_retry_889 = (
+        "retry_889" in sample_base and not is_retry_889_rerun_partial
+    )
     is_retry_six_fail_12 = _is_retry_stable_200_six_fail_sample(sample_path)
     is_stable_200 = "stable_200" in sample_base and not is_retry_six_fail_12
     sample_meta = load_sample_yaml(sample_path) if is_stable_200 else {}
@@ -1472,6 +1561,11 @@ def write_summary_md(
         title = (
             f"CNINFO C Class Stable 200 Non-BSE "
             f"({'Dry-Run' if run_mode == 'dry-run' else 'Live'}) Summary"
+        )
+    elif is_retry_889_rerun_partial:
+        title = (
+            f"CNINFO C Class 889 Rerun Partial-Fail Retry "
+            f"({'Dry-Run' if run_mode == 'dry-run' else 'Live'}) — {len(companies)} companies"
         )
     elif is_retry_889:
         title = (
@@ -1750,6 +1844,20 @@ def write_summary_md(
                 "- **dividend YAML backfill** → **HOLD**",
                 "- **no verified** · **no testing_stable_sample** · **no DB**",
             ])
+        if is_retry_889_rerun_partial:
+            retry_meta = load_sample_yaml(sample_path)
+            pr_counts = retry_meta.get("retry_priority_counts") or {}
+            lines.extend([
+                "",
+                "## 889 rerun partial-fail retry scope",
+                "",
+                "- **来源：** 889 rerun diagnosis partial-fail 子集",
+                "- **排除：** 26 家 all6 hold（`eval_companies_c_class_889_rerun_all6_hold.yaml`）",
+                f"- **retry_priority：** high={pr_counts.get('high', 0)} · medium={pr_counts.get('medium', 0)} · low={pr_counts.get('low', 0)}",
+                "- **不重跑 889 全量** · **harvest 暂停**",
+                "- **runner pacing 暂不调**",
+                "- **no verified** · **no testing_stable_sample** · **no DB**",
+            ])
     lines.extend([
         "",
         "## Gate: dividend YAML backfill",
@@ -1771,6 +1879,18 @@ def write_summary_md(
                 if run_mode == "dry-run"
                 else f"live **已完成**（见 Overall result）；post-live 诊断 required。"
             ),
+        ])
+    elif is_retry_889_rerun_partial:
+        lines.extend([
+            "",
+            "## Gate: 889 rerun partial-fail targeted retry",
+            "",
+            f"**retry_gate = {'DRY_RUN_READY' if run_mode == 'dry-run' else 'LIVE_PENDING_APPROVAL'}**",
+            "",
+            f"Partial-fail subset **{len(companies)}** 家；planned live **{len(companies) * (len(MAIN_SOURCE_IDS) + 1)}** cases。",
+            "26 家 all6 hold 见 `eval_companies_c_class_889_rerun_all6_hold.yaml`（hold_no_retry）。",
+            "targeted retry 后再决定是否进入 C-class harvest。",
+            "**等待人工批准**后跑 `--live`。",
         ])
     elif is_retry_889:
         lines.extend([
@@ -1831,6 +1951,23 @@ def write_summary_md(
             "- **No testing_stable_sample**（文件名 stable 仅为设计语义）。",
             "- No database ingestion.",
             "- observe_only / derived_no_separate_fetch / source_partial 口径见 [source status decision](../plans/cninfo_c_class_source_status_decision.md)。",
+        ])
+    elif is_retry_889_rerun_partial:
+        if run_mode == "live":
+            lines.extend([
+                "- **889 rerun partial-fail targeted retry live**；非 889 全量重跑。",
+                "- 26 家 all6 hold 见 `eval_companies_c_class_889_rerun_all6_hold.yaml`。",
+            ])
+        else:
+            lines.extend([
+                "- **889 rerun partial-fail targeted retry dry-run**；planned live only；**无 CNINFO**。",
+                "- 26 家 all6 hold 已剔除；见 `eval_companies_c_class_889_rerun_all6_hold.yaml`。",
+            ])
+        lines.extend([
+            "- **testing** status only; **no verified**.",
+            "- **No testing_stable_sample**.",
+            "- No database ingestion.",
+            "- **harvest 暂停**；targeted retry 后再评估 harvest gate。",
         ])
     elif is_retry_889:
         if run_mode == "live":
@@ -1922,6 +2059,15 @@ def main() -> None:
     companies = load_sample_companies(sample_path)
     if args.mode == "live" and len(companies) < 10:
         print(f"WARN: very small sample ({len(companies)} companies)", file=sys.stderr)
+
+    if _is_retry_889_rerun_partial_sample(sample_path):
+        ok, detail = _validate_pre_live_retry_889_rerun_partial(sample_path, companies)
+        label = "pre_live_validation" if args.mode == "live" else "pre_dryrun_validation"
+        if ok:
+            print(f"{label}: PASS  ({detail})")
+        else:
+            print(f"{label}: FAIL  ({detail})")
+            sys.exit(2)
 
     if args.mode == "live" and _is_retry_889_partial_sample(sample_path):
         ok, detail = _validate_pre_live_retry_partial(sample_path, companies)

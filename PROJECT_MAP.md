@@ -10,7 +10,7 @@ _最后更新：2026-07-07_
 
 ## 0. 一句话现状
 
-仓库里叠了**三代方向**的代码与文档。**当前聚焦：Era C Phase 4 C 类** — **889 non-BSE rerun plan + dry-run 完成**（[plan](plans/cninfo_c_class_889_non_bse_rerun_plan.md)）；下一步 **889 rerun live（待批准）**。前两代**已冻结**。
+仓库里叠了**三代方向**的代码与文档。**当前聚焦：Era C Phase 4 C 类** — **889 rerun partial-fail retry 样本已派生**（41 家 · dry-run **287**）；**26 家 all6 hold**；**等待人工批准** partial-fail live；**harvest 暂停**。前两代**已冻结**。
 
 ---
 
@@ -80,7 +80,7 @@ _最后更新：2026-07-07_
 | `build_cninfo_p0_sample_companies.py` | 生成 40 家 P0 样本公司清单 | 是 |
 | `build_cninfo_report_p1_identity_mapping.py` | P1 identity mapping（离线） | 是 |
 
-**C 类 smoke / retry / stable 样本（`lab/`）：** `eval_companies_200.yaml` · `eval_companies_c_class_smoke_200_active.yaml`（195）· universe split `*_195_*` · **1000-like** `eval_companies_c_class_smoke_1000_non_bse_candidate.yaml`（889）· **retry** `*_retry_889_*` · **stable 200 six-fail retry** `eval_companies_c_class_retry_stable_200_six_fail_12.yaml`（12）· **stable 200** `eval_companies_c_class_stable_200_non_bse.yaml`（200）
+**C 类 smoke / retry / stable 样本（`lab/`）：** `eval_companies_200.yaml` · `eval_companies_c_class_smoke_200_active.yaml`（195）· universe split `*_195_*` · **1000-like** `eval_companies_c_class_smoke_1000_non_bse_candidate.yaml`（889）· **889 rerun hold** `eval_companies_c_class_889_rerun_all6_hold.yaml`（26）· **889 rerun partial retry** `eval_companies_c_class_889_rerun_partial_fail_retry.yaml`（41）· **retry** `*_retry_889_*` · **stable 200 six-fail retry** `eval_companies_c_class_retry_stable_200_six_fail_12.yaml`（12）· **stable 200** `eval_companies_c_class_stable_200_non_bse.yaml`（200）
 
 ### 2.2 活跃配置（`config/`）
 - `cninfo_table_sources.yaml` — **Phase 2** 验证脚本驱动配置（12 source；10 stable + 2 candidate）
@@ -125,6 +125,7 @@ _最后更新：2026-07-07_
 - `plans/cninfo_c_class_stable_200_sample_plan.md` — **Phase 4** stable 200 non-BSE 清洗样本设计
 - `plans/cninfo_c_class_manual_audit_12_six_fail_companies.md` — **Phase 4** stable 200 十二家 6/6 fail 人工审计结论（不剔除 · 不过拟合）
 - `plans/cninfo_c_class_889_non_bse_rerun_plan.md` — **Phase 4** 889 non-BSE 新版 runner 重跑计划
+- `plans/cninfo_c_class_889_rerun_retry_plan.md` — **Phase 4** 889 rerun partial-fail targeted retry 计划（26 hold + 41 retry）
 - `plans/cninfo_c_class_stable_200_live_pass_decision.md` — **Phase 4** stable 200 rerun LIVE_PASS 决策
 - `lab/debug_cninfo_c_class_12_six_fail_endpoints.py` — **Phase 4** 十二家 endpoint debug 脚本（仅 12 家 CNINFO）
 - `plans/cninfo_c_class_source_status_decision.md` — **Phase 4** C 类 10 源阶段性状态判断（scale 验证收口）
@@ -256,5 +257,5 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 2. **Phase 2 已收口**；**Phase 3 D 类设计**见 [registry YAML](config/cninfo_d_class_source_registry_draft.yaml) / [schema validation summary](outputs/validation/cninfo_d_class_schema_validation_summary.md)。
 3. **Phase 3 B 类**见 [validation design](plans/cninfo_b_class_validation_design.md) / [category routing](plans/cninfo_b_class_category_routing_rules.md) / [categories YAML](config/cninfo_announcement_categories.yaml) / [document seed summary](outputs/validation/cninfo_b_class_document_seed_summary.md) / [B schema validation](outputs/validation/cninfo_b_class_document_schema_validation_summary.md)。
 4. **Phase 4 C 类**见 [registry lint](outputs/validation/cninfo_c_class_registry_lint_summary.md) / [fixture validation](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md) / [active 30 smoke summary](outputs/validation/cninfo_c_class_scale_smoke_30_active_summary.md) / [candidates YAML](config/cninfo_c_class_source_candidates.yaml)。
-5. **下一步**：**889 non-BSE rerun live**（[plan](plans/cninfo_c_class_889_non_bse_rerun_plan.md) · **待人工批准**）；preflight dry-run **6223** cases 已完成。
+5. **下一步**：**等待人工批准** partial-fail targeted retry live（[retry plan](plans/cninfo_c_class_889_rerun_retry_plan.md) · 41 家 · 287 cases）；**26 家 all6 hold**；**harvest 暂停**。
 6. **每完成一个 Phase**：更新分层表状态 + `outputs/validation/` 留 summary；不做数据库接入。

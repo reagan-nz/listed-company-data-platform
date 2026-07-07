@@ -189,10 +189,14 @@ _最后更新：2026-07-05_
 80. ~~stable 200 rerun（新版 runner）~~ → **LIVE_PASS**（§7at）
 81. ~~stable 200 live pass decision~~ → **完成**（§7at）
 82. ~~889 non-BSE rerun plan + dry-run~~ → **完成**（§7au）
-83. 889 non-BSE rerun live → **待人工批准**
-83. dividend_history YAML → **GO（决策 only）** · 889 后评估执行
-84. BSE legacy targeted probe（8 家）→ **待启动**
-85. **暂不全量抓取、暂不入库**
+83. ~~889 non-BSE rerun live~~ → **LIVE_PARTIAL**（§7av）
+84. ~~post-889 diagnosis~~ → **完成**（§7av）
+85. ~~partial-fail targeted retry 设计~~ → **完成**（§7aw）
+86. ~~26 家 all6 hold 标注~~ → **完成**（§7aw）
+87. partial-fail targeted retry live → **等待人工批准**
+88. dividend_history YAML → **GO（决策 only）** · retry 后再评估执行
+89. BSE legacy targeted probe（8 家）→ **待启动**
+90. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -1512,7 +1516,46 @@ _最后更新：2026-07-05_
 
 **preflight：** 无 BSE · 无 abnormal_review · 无退市名；**000765/001267** duplicate orgid 共存（监测项）
 
-**下一步：** 人工批准后 `--live`（新 runner · backoff + orgId）；**no verified** · **no YAML** · **no DB**
+**下一步：** ~~889 live~~ → **完成**（§7av）；~~partial-fail retry 设计~~ → **完成**（§7aw）；**等待人工批准** partial-fail live。
+
+---
+
+## 7aw. Phase 4 C 类 889 Rerun Partial-Fail Retry Plan + Dry-Run（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| 计划 | [cninfo_c_class_889_rerun_retry_plan.md](cninfo_c_class_889_rerun_retry_plan.md) |
+| all6 hold | `lab/eval_companies_c_class_889_rerun_all6_hold.yaml`（**26** · hold_no_retry） |
+| partial-fail retry | `lab/eval_companies_c_class_889_rerun_partial_fail_retry.yaml`（**41**） |
+| dry-run | **DRY_RUN_ONLY** · **287** cases · preflight **PASS** |
+| 报告 | [partial_fail_retry_dryrun_summary.md](../outputs/validation/cninfo_c_class_889_rerun_partial_fail_retry_dryrun_summary.md) |
+
+### 结论摘要
+
+- **26 家 all6** → sample_quality_or_status_review · **不 retry**
+- **41 家 partial-fail** → targeted retry 候选 · high=**4** · medium=**37**
+- **board（partial）：** chinext **36** · star **2** · szse_main **2** · sse_main **1**
+- **本轮不重跑 889** · **harvest 暂停** · **runner pacing 暂不调**
+- **下一步：** **等待人工批准** partial-fail `--live`
+
+---
+
+## 7av. Phase 4 C 类 889 Non-BSE Rerun Live + Post-Diagnosis（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| Live | **LIVE_PARTIAL** · 889 · 6223 · pass=**5119** fail=**215** |
+| 报告 | [live_summary.md](../outputs/validation/cninfo_c_class_889_non_bse_rerun_live_summary.md) |
+| diagnosis | [cninfo_c_class_889_non_bse_rerun_diagnosis.md](../outputs/validation/cninfo_c_class_889_non_bse_rerun_diagnosis.md) |
+| failure cases | [cninfo_c_class_889_non_bse_rerun_failure_cases.csv](../outputs/validation/cninfo_c_class_889_non_bse_rerun_failure_cases.csv) |
+
+### 结论摘要
+
+- fail 主因：**http_error 142**（HTTP 500/`9240002`）+ **empty_but_valid 52**（executive/share）
+- **26 家新 6/6** · hold 候选 · **非** stable 200 十二家
+- chinext executive/share 偏弱 = **合法空 records**
+- backoff/orgId **有效**（throttled fail 仅 1）
+- **建议：** ~**41** 家 partial-fail targeted retry · **暂停 harvest**
 
 ---
 
@@ -1688,7 +1731,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **889 non-BSE rerun plan + dry-run 完成**（§7au）；下一步 **889 rerun live（待批准）**；**BSE legacy** HOLD。
+当前 Phase：C 类 **889 rerun partial-fail retry 样本 + dry-run 完成**（§7aw）；**等待人工批准** partial-fail live；**harvest 暂停**；**BSE legacy** HOLD。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
