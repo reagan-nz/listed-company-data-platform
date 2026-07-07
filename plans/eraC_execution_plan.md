@@ -185,10 +185,13 @@ _最后更新：2026-07-05_
 76. ~~12 six-fail endpoint/parser debug~~ → **完成**（§7aq）
 77. ~~runner 退避/重试 + orgId fallback~~ → **完成**（§7ar）
 78. ~~12 家 retry 样本 + dry-run~~ → **完成**（§7ar）
-79. 12 家 targeted retry live → **待人工批准**
-80. dividend_history YAML → **HOLD**
-81. BSE legacy targeted probe（8 家）→ **待启动**
-82. **暂不全量抓取、暂不入库**
+79. ~~12 家 targeted retry live~~ → **LIVE_PASS**（§7as）
+80. ~~stable 200 rerun（新版 runner）~~ → **LIVE_PASS**（§7at）
+81. ~~stable 200 live pass decision~~ → **完成**（§7at）
+82. 889 non-BSE rerun planning → **下一步**
+83. dividend_history YAML → **GO（决策 only）** · 889 后评估执行
+84. BSE legacy targeted probe（8 家）→ **待启动**
+85. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -1458,7 +1461,40 @@ _最后更新：2026-07-05_
 | orgId fallback | data20 endpoint：`scode+orgId` 单次 fallback（600203 已知案例） |
 | report 字段 | `retry_count` · `final_retrieval_status` · `first_result_code` · `final_result_code` · `used_orgid_variant` |
 
-**下一步：** **等待人工批准**后 `--live`（仅 12 家）；**stable 200 v2 暂停**；**no verified**。
+**下一步：** **889 non-BSE rerun planning**（§7at）。
+
+---
+
+## 7as. Phase 4 C 类 12 Six-Fail Retry Live（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| 样本 | `lab/eval_companies_c_class_retry_stable_200_six_fail_12.yaml`（**12**） |
+| Live | **LIVE_PASS** · pass=**72** · observe_pass=**12** · fail=**0** |
+| 报告 | [live_summary.md](../outputs/validation/cninfo_c_class_retry_stable_200_six_fail_12_live_summary.md) |
+
+六主源 **12/12** reachable；验证 backoff + orgId fallback 有效（含 600203）。
+
+---
+
+## 7at. Phase 4 C 类 Stable 200 Rerun LIVE_PASS + Decision（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| 决策文档 | [cninfo_c_class_stable_200_live_pass_decision.md](cninfo_c_class_stable_200_live_pass_decision.md) |
+| stable 200 rerun | **LIVE_PASS** · 200 · 1400 · pass=**1200** fail=**0** |
+| 12 retry | **LIVE_PASS** · 12 · 84 · pass=72 observe_pass=12 |
+| 报告 | [stable_200_live_summary.md](../outputs/validation/cninfo_c_class_stable_200_live_summary.md) |
+
+### 决策摘要
+
+- 前次 LIVE_PARTIAL 主因：**runner 业务码限流处理不足**（非 sample_quality · 非 parser 主因）
+- **12 家 six-fail 不清洗**
+- **stable 200 v2 取消**
+- non-BSE main：**CONDITIONAL YES** · ready for **889 rerun planning**
+- dividend_history：**GO（决策 only）** · **不执行 YAML**
+
+**下一步：** 889 non-BSE rerun plan + preflight；**no verified** · **no DB**。
 
 ---
 
@@ -1634,7 +1670,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **runner backoff patch + 12 retry dry-run 完成**（§7ar）；**stable 200 v2 暂停**；下一步 **12 家 targeted retry live（待批准）**；**BSE legacy** HOLD。
+当前 Phase：C 类 **stable 200 rerun LIVE_PASS**（§7at）；**stable 200 v2 取消**；下一步 **889 non-BSE rerun planning**；**BSE legacy** HOLD。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
