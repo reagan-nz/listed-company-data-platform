@@ -10,7 +10,7 @@ _最后更新：2026-07-06_
 
 ## 0. 一句话现状
 
-仓库里叠了**三代方向**的代码与文档。**当前聚焦：Era C Phase 4 C 类** — 889 live + diagnosis 完成；**targeted retry 样本 + dry-run 就绪**（partial **62** 家 · planned **434**）；**live 待批准**。前两代**已冻结**。
+仓库里叠了**三代方向**的代码与文档。**当前聚焦：Era C Phase 4 C 类** — 889 + 62 retry live 完成；**source status decision**（[decision](plans/cninfo_c_class_source_status_decision.md)）；阶段：**source status consolidation**。前两代**已冻结**。
 
 ---
 
@@ -122,6 +122,7 @@ _最后更新：2026-07-06_
 - `plans/cninfo_c_class_p2b_probe_plan.md` — **Phase 4** P2-B DevTools probe 计划（dividend · contact · business_scope · industry）
 - `plans/cninfo_c_class_p2b_probe_checklist.md` — **Phase 4** P2-B 人工 probe 清单
 - `plans/cninfo_c_class_p2b_source_decision_table.md` — **Phase 4** P2-B 四源决策表（discovery closed · 无 YAML 执行）
+- `plans/cninfo_c_class_source_status_decision.md` — **Phase 4** C 类 10 源阶段性状态判断（scale 验证收口）
 - `plans/cninfo_c_class_universe_split_and_sample_cleaning_plan.md` — **Phase 4** C 类 universe split + 1000-like 清洗规则
 - `plans/cninfo_c_class_scale_smoke_200_plan.md` — **Phase 4** C 类 200-company scale smoke 计划（active 过滤 · gate · 不直接跑 live）
 - `plans/cninfo_c_class_p1_yaml_backfill_decision.md` — P1 candidate YAML 回填 / 暂缓决策（**YAML 未改**）
@@ -250,5 +251,5 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 2. **Phase 2 已收口**；**Phase 3 D 类设计**见 [registry YAML](config/cninfo_d_class_source_registry_draft.yaml) / [schema validation summary](outputs/validation/cninfo_d_class_schema_validation_summary.md)。
 3. **Phase 3 B 类**见 [validation design](plans/cninfo_b_class_validation_design.md) / [category routing](plans/cninfo_b_class_category_routing_rules.md) / [categories YAML](config/cninfo_announcement_categories.yaml) / [document seed summary](outputs/validation/cninfo_b_class_document_seed_summary.md) / [B schema validation](outputs/validation/cninfo_b_class_document_schema_validation_summary.md)。
 4. **Phase 4 C 类**见 [registry lint](outputs/validation/cninfo_c_class_registry_lint_summary.md) / [fixture validation](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md) / [active 30 smoke summary](outputs/validation/cninfo_c_class_scale_smoke_30_active_summary.md) / [candidates YAML](config/cninfo_c_class_source_candidates.yaml)。
-5. **下一步**：partial-fail **targeted retry live** → **等待批准**（[dry-run summary](outputs/validation/cninfo_c_class_retry_889_partial_fail_dryrun_summary.md) · **434** requests）；889 full rerun **不推荐**；26 家 6/6 **hold**。
+5. **下一步**：**cleaned stable sample 设计**（~200 / 1000-like）；dividend_history YAML backfill（**GO 决策 · 待批准**）；BSE legacy **8 家 HOLD**；**无 live**。
 6. **每完成一个 Phase**：更新分层表状态 + `outputs/validation/` 留 summary；不做数据库接入。

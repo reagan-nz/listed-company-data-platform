@@ -176,9 +176,11 @@ _最后更新：2026-07-05_
 67. ~~non-BSE 1000-like 离线派生 + dry-run~~ → **完成**（§7ai）
 68. ~~non-BSE 1000-like live~~ → **完成**（§7aj · LIVE_PARTIAL）
 69. ~~targeted retry 样本 + dry-run~~ → **完成**（§7ak）
-70. partial-fail **targeted retry live** → **等待批准**
-71. 样本清洗（26 家 6/6 abnormal）→ **并行**
-72. BSE legacy targeted probe（8 家）→ **待启动**
+70. ~~partial-fail targeted retry live~~ → **完成**（§7al · LIVE_PARTIAL）
+71. ~~C-class source status decision~~ → **完成**（§7am）
+72. cleaned stable sample 设计 → **下一步**
+73. dividend_history YAML backfill 执行 → **GO（决策）· 待批准**
+74. BSE legacy targeted probe（8 家）→ **待启动**
 69. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
@@ -1312,7 +1314,36 @@ _最后更新：2026-07-05_
 
 **红线：** 本轮 **无 live** · **无 CNINFO** · **无 YAML** · **无 DB**
 
-**建议：** 等待人工批准后：`--live --sample-file lab/eval_companies_c_class_retry_889_partial_fail_retry.yaml`
+**建议：** ~~等待人工批准后~~ → **已完成**（§7al）
+
+---
+
+## 7al. Phase 4 C 类 62 Partial-Fail Targeted Retry Live（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| 样本 | `lab/eval_companies_c_class_retry_889_partial_fail_retry.yaml`（**62**） |
+| Live | **434** cases · **LIVE_PARTIAL** |
+| 主判定 | pass=**300** fail=**72** · blocked=**0** · 429=**0** |
+| security | observe **62/62** |
+| 报告 | [live_summary.md](../outputs/validation/cninfo_c_class_retry_889_partial_fail_live_summary.md) |
+
+**困难样本 reachability：** basic **66.1%** · executive **67.7%** · share_capital **59.7%** · dividend **96.8%**
+
+---
+
+## 7am. Phase 4 C 类 Source Status Decision（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| 文档 | [cninfo_c_class_source_status_decision.md](cninfo_c_class_source_status_decision.md) |
+| non-BSE | **CONDITIONAL YES** |
+| dividend_history | **proceed_testing** · YAML **GO（决策 only）** |
+| source_partial | top_float · share_capital |
+| observe_only | security |
+| derived | contact · business_scope · industry |
+
+**阶段：** scale smoke → **source status consolidation**
 
 ---
 
@@ -1473,7 +1504,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **targeted retry dry-run 完成**（§7ak · partial **62** 家）；**live 待批准**；**BSE legacy** side-track HOLD。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **source status decision 完成**（§7am）；下一步 **cleaned stable sample 设计** + dividend YAML backfill（**决策 only · 待批准**）；**BSE legacy** HOLD。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
