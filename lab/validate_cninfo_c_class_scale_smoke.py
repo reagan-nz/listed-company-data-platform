@@ -99,6 +99,30 @@ DEFAULT_RETRY_889_PARTIAL_LIVE_MD = os.path.join(
     "validation",
     "cninfo_c_class_retry_889_partial_fail_live_summary.md",
 )
+DEFAULT_STABLE_200_DRYRUN_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_stable_200_dryrun_report.csv",
+)
+DEFAULT_STABLE_200_DRYRUN_MD = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_stable_200_dryrun_summary.md",
+)
+DEFAULT_STABLE_200_LIVE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_stable_200_live_report.csv",
+)
+DEFAULT_STABLE_200_LIVE_MD = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_stable_200_live_summary.md",
+)
 # 兼容旧常量名（dry-run 默认）
 DEFAULT_1000_NON_BSE_CSV = DEFAULT_1000_NON_BSE_DRYRUN_CSV
 DEFAULT_1000_NON_BSE_MD = DEFAULT_1000_NON_BSE_DRYRUN_MD
@@ -271,9 +295,13 @@ class CaseRow:
         return {k: getattr(self, k) for k in CSV_FIELDS}
 
 
-def load_sample_companies(path: str) -> List[Dict[str, str]]:
+def load_sample_yaml(path: str) -> Dict[str, Any]:
     with open(path, encoding="utf-8") as fh:
-        data = yaml.safe_load(fh)
+        return yaml.safe_load(fh) or {}
+
+
+def load_sample_companies(path: str) -> List[Dict[str, str]]:
+    data = load_sample_yaml(path)
     companies = data.get("companies") or []
     out: List[Dict[str, str]] = []
     for c in companies:
@@ -1077,6 +1105,16 @@ def _resolve_output_paths(
     base = os.path.basename(sample_path)
     if output_csv and output_md:
         return output_csv, output_md
+    if "stable_200_non_bse" in base or "stable_200" in base:
+        if run_mode == "live":
+            return (
+                output_csv or DEFAULT_STABLE_200_LIVE_CSV,
+                output_md or DEFAULT_STABLE_200_LIVE_MD,
+            )
+        return (
+            output_csv or DEFAULT_STABLE_200_DRYRUN_CSV,
+            output_md or DEFAULT_STABLE_200_DRYRUN_MD,
+        )
     if "retry_889_partial_fail" in base or "retry_889_partial" in base:
         if run_mode == "live":
             return (
@@ -1158,8 +1196,15 @@ def write_summary_md(
     is_200 = "smoke_200" in sample_base or "200_active" in sample_base
     is_1000_non_bse = "1000_non_bse" in sample_base or "non_bse_candidate" in sample_base
     is_retry_889 = "retry_889" in sample_base
+    is_stable_200 = "stable_200" in sample_base
+    sample_meta = load_sample_yaml(sample_path) if is_stable_200 else {}
 
-    if is_retry_889:
+    if is_stable_200:
+        title = (
+            f"CNINFO C Class Stable 200 Non-BSE "
+            f"({'Dry-Run' if run_mode == 'dry-run' else 'Live'}) Summary"
+        )
+    elif is_retry_889:
         title = (
             f"CNINFO C Class 889 Retry — Partial Fail Targeted "
             f"({'Dry-Run' if run_mode == 'dry-run' else 'Live'}) — {len(companies)} companies"
@@ -1193,11 +1238,58 @@ def write_summary_md(
         "- **观察维度:** security（不绑定主判定）",
         "- **derived 三源:** contact / business_scope / industry（随 basic fill_rate，无单独请求）",
         "",
+    ]
+    if is_stable_200:
+        excl = sample_meta.get("excluded_by_reason") or {}
+        rules = sample_meta.get("cleaning_rules") or []
+        targets = sample_meta.get("board_targets") or {}
+        lines.extend([
+            "## Stable sample design",
+            "",
+            f"- **Parent:** `{sample_meta.get('parent_candidate', '')}` ({sample_meta.get('parent_candidate_count', '?')} companies)",
+            f"- **Eligible pool after cleaning:** {sample_meta.get('eligible_pool_count', '?')}",
+            f"- **Excluded from pool:** {sample_meta.get('excluded_count', '?')}",
+            "",
+            "### Exclusion rules",
+            "",
+        ])
+        for rule in rules:
+            lines.append(f"- {rule}")
+        lines.extend([
+            "",
+            "### Excluded by reason",
+            "",
+            "| reason | count |",
+            "|--------|-------|",
+        ])
+        for reason, cnt in sorted(excl.items()):
+            lines.append(f"| `{reason}` | {cnt} |")
+        if targets:
+            lines.extend([
+                "",
+                "### Board targets vs actual",
+                "",
+                "| board | target | actual |",
+                "|-------|--------|--------|",
+            ])
+            for board, tgt in sorted(targets.items()):
+                lines.append(f"| `{board}` | {tgt} | {strata.get(board, 0)} |")
+        lines.extend([
+            "",
+            "### Source policy（[source status decision](../plans/cninfo_c_class_source_status_decision.md)）",
+            "",
+            "- **主判定 source（6）：** basic · dividend · executive · share_capital · top_shareholders · top_float",
+            "- **observe_only：** security（不绑定主 gate）",
+            "- **derived_no_separate_fetch：** contact · business_scope · industry",
+            "- **source_partial 提醒：** share_capital · top_float（reachable ≠ non_empty）",
+            "",
+        ])
+    lines.extend([
         "## Active-only 样本分层",
         "",
         "| board | count |",
         "|-------|-------|",
-    ]
+    ])
     for board, cnt in sorted(strata.items()):
         lines.append(f"| `{board}` | {cnt} |")
 
@@ -1360,6 +1452,11 @@ def write_summary_md(
             "- **security_profile:** observe-only（不绑定主判定 gate）",
             "- **derived 三源:** contact / business_scope / industry — 无单独 HTTP 请求，仅 live 时随 basic fill_rate 统计",
         ])
+        if is_stable_200:
+            lines.extend([
+                "- **stable_200_non_bse** cleaned sample；验证清洗异常后 non-BSE 稳定性。",
+                "- **derived 三源无单独请求**；**security observe-only**；**source_partial** 口径见 Source policy。",
+            ])
     lines.extend([
         "",
         "## Gate: dividend YAML backfill",
@@ -1368,7 +1465,18 @@ def write_summary_md(
         "",
         div_gate_detail,
     ])
-    if is_retry_889:
+    if is_stable_200:
+        lines.extend([
+            "",
+            "## Gate: stable 200 non-BSE",
+            "",
+            f"**stable_gate = {'DRY_RUN_READY' if run_mode == 'dry-run' else 'LIVE_PENDING_APPROVAL'}**",
+            "",
+            f"Cleaned stable sample **{len(companies)}** 家；planned live **{len(companies) * (len(MAIN_SOURCE_IDS) + 1)}** requests。",
+            "目的：验证剔除 six_fail_hold 后 non-BSE 主宇宙是否稳定。",
+            "**等待人工批准**后跑 `--live`。",
+        ])
+    elif is_retry_889:
         lines.extend([
             "",
             "## Gate: targeted retry",
@@ -1402,7 +1510,23 @@ def write_summary_md(
         "## Caveats",
         "",
     ])
-    if is_retry_889:
+    if is_stable_200:
+        if run_mode == "live":
+            lines.extend([
+                "- **stable 200 non-BSE live**；非 889 全量；非 verified / testing_stable_sample。",
+            ])
+        else:
+            lines.extend([
+                "- **stable 200 non-BSE dry-run**；planned live only；**无 CNINFO**。",
+                "- 26 家 six_fail_hold 已从池中剔除。",
+            ])
+        lines.extend([
+            "- **testing** status only; **no verified**.",
+            "- **No testing_stable_sample**（文件名 stable 仅为设计语义）。",
+            "- No database ingestion.",
+            "- observe_only / derived_no_separate_fetch / source_partial 口径见 [source status decision](../plans/cninfo_c_class_source_status_decision.md)。",
+        ])
+    elif is_retry_889:
         if run_mode == "live":
             lines.extend([
                 "- **889 partial-fail targeted retry live**；非 889 全量重跑。",

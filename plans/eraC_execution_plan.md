@@ -178,9 +178,10 @@ _最后更新：2026-07-05_
 69. ~~targeted retry 样本 + dry-run~~ → **完成**（§7ak）
 70. ~~partial-fail targeted retry live~~ → **完成**（§7al · LIVE_PARTIAL）
 71. ~~C-class source status decision~~ → **完成**（§7am）
-72. cleaned stable sample 设计 → **下一步**
-73. dividend_history YAML backfill 执行 → **GO（决策）· 待批准**
-74. BSE legacy targeted probe（8 家）→ **待启动**
+72. ~~stable 200 non-BSE 样本 + dry-run~~ → **完成**（§7an）
+73. stable 200 **live** → **等待批准**
+74. dividend_history YAML backfill 执行 → **GO（决策）· 待批准**
+75. BSE legacy targeted probe（8 家）→ **待启动**
 69. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
@@ -1332,6 +1333,21 @@ _最后更新：2026-07-05_
 
 ---
 
+## 7an. Phase 4 C 类 Stable 200 Non-BSE Sample + Dry-Run（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| 计划 | [cninfo_c_class_stable_200_sample_plan.md](cninfo_c_class_stable_200_sample_plan.md) |
+| 样本 | `lab/eval_companies_c_class_stable_200_non_bse.yaml`（**200**） |
+| 母本 | 889 candidate；剔除 **26** six_fail_hold |
+| board | sse **66** · szse **54** · chinext **52** · star **28** |
+| dry-run | **DRY_RUN_ONLY** · **1400** cases |
+| 报告 | [dryrun_summary.md](../outputs/validation/cninfo_c_class_stable_200_dryrun_summary.md) |
+
+**建议：** 等待人工批准后 stable 200 `--live`。
+
+---
+
 ## 7am. Phase 4 C 类 Source Status Decision（2026-07-07）
 
 | 项 | 内容 |
@@ -1504,7 +1520,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **source status decision 完成**（§7am）；下一步 **cleaned stable sample 设计** + dividend YAML backfill（**决策 only · 待批准**）；**BSE legacy** HOLD。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **stable 200 non-BSE dry-run 完成**（§7an）；**live 待批准**；**BSE legacy** HOLD。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
