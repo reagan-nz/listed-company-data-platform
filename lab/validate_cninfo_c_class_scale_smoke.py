@@ -75,6 +75,30 @@ DEFAULT_1000_NON_BSE_LIVE_MD = os.path.join(
     "validation",
     "cninfo_c_class_smoke_1000_non_bse_live_summary.md",
 )
+DEFAULT_RETRY_889_PARTIAL_DRYRUN_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_retry_889_partial_fail_dryrun_report.csv",
+)
+DEFAULT_RETRY_889_PARTIAL_DRYRUN_MD = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_retry_889_partial_fail_dryrun_summary.md",
+)
+DEFAULT_RETRY_889_PARTIAL_LIVE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_retry_889_partial_fail_live_report.csv",
+)
+DEFAULT_RETRY_889_PARTIAL_LIVE_MD = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_c_class_retry_889_partial_fail_live_summary.md",
+)
 # 兼容旧常量名（dry-run 默认）
 DEFAULT_1000_NON_BSE_CSV = DEFAULT_1000_NON_BSE_DRYRUN_CSV
 DEFAULT_1000_NON_BSE_MD = DEFAULT_1000_NON_BSE_DRYRUN_MD
@@ -100,6 +124,22 @@ MAIN_SOURCE_IDS = (
 )
 
 OBSERVE_SOURCE_ID = "cninfo_company_security_profile"
+
+# targeted retry partial-fail 样本 live 前置校验预期
+RETRY_889_PARTIAL_SAMPLE_NAME = "eval_companies_c_class_retry_889_partial_fail_retry.yaml"
+RETRY_889_PARTIAL_EXPECTED_COMPANY_COUNT = 62
+RETRY_889_PARTIAL_EXPECTED_FAILURE_TYPE_COUNTS: Dict[str, int] = {
+    "multi_partial_fail": 35,
+    "single_source_fail": 17,
+    "only_shareholder_empty_but_valid": 10,
+}
+SOURCE_COUNT_PER_COMPANY = len(MAIN_SOURCE_IDS) + 1  # 6 主判定 + security observe
+
+# 股东源：空 records 视为 empty_but_valid，主 gate 不计 fail
+SHAREHOLDER_SOURCE_IDS = (
+    "cninfo_top_shareholders_profile",
+    "cninfo_top_float_shareholders_profile",
+)
 
 # derived 三源：不单独发请求，仅统计 basicInformation 字段 fill_rate
 DERIVED_SOURCE_FIELDS: Dict[str, List[str]] = {
@@ -248,6 +288,64 @@ def load_sample_companies(path: str) -> List[Dict[str, str]]:
             "suspected_no_dividend": "yes" if c.get("suspected_no_dividend") else "no",
         })
     return out
+
+
+def _is_retry_889_partial_sample(sample_path: str) -> bool:
+    return os.path.basename(sample_path) == RETRY_889_PARTIAL_SAMPLE_NAME
+
+
+def _validate_pre_live_retry_partial(
+    sample_path: str,
+    companies: List[Dict[str, str]],
+) -> Tuple[bool, str]:
+    """targeted retry partial-fail 样本 live 前置校验；失败则不发起 CNINFO。"""
+    with open(sample_path, encoding="utf-8") as fh:
+        data = yaml.safe_load(fh) or {}
+
+    issues: List[str] = []
+    expected_co = RETRY_889_PARTIAL_EXPECTED_COMPANY_COUNT
+    expected_cases = expected_co * SOURCE_COUNT_PER_COMPANY
+    actual_co = len(companies)
+
+    declared_count = data.get("company_count")
+    if declared_count != expected_co:
+        issues.append(
+            f"company_count={declared_count!r} expected={expected_co}"
+        )
+
+    if actual_co != expected_co:
+        issues.append(
+            f"companies list length={actual_co} expected={expected_co}"
+        )
+
+    ftc = data.get("failure_type_counts")
+    if not isinstance(ftc, dict):
+        issues.append("failure_type_counts missing or not a mapping")
+    else:
+        for key, expected_n in RETRY_889_PARTIAL_EXPECTED_FAILURE_TYPE_COUNTS.items():
+            actual_n = ftc.get(key)
+            if actual_n != expected_n:
+                issues.append(
+                    f"failure_type_counts[{key}]={actual_n!r} expected={expected_n}"
+                )
+        extra_keys = set(ftc.keys()) - set(RETRY_889_PARTIAL_EXPECTED_FAILURE_TYPE_COUNTS)
+        if extra_keys:
+            issues.append(f"failure_type_counts unexpected keys: {sorted(extra_keys)}")
+
+    actual_cases = actual_co * SOURCE_COUNT_PER_COMPANY
+    if actual_cases != expected_cases:
+        issues.append(
+            f"cases={actual_co}x{SOURCE_COUNT_PER_COMPANY}={actual_cases} "
+            f"expected={expected_cases}"
+        )
+
+    if issues:
+        return False, "; ".join(issues)
+    return True, (
+        f"company_count={expected_co} "
+        f"failure_type_counts={RETRY_889_PARTIAL_EXPECTED_FAILURE_TYPE_COUNTS} "
+        f"cases={expected_cases}"
+    )
 
 
 def _referer(company_code: str, org_id: str) -> str:
@@ -525,6 +623,11 @@ def validate_records_list_live(source_id: str, company: Dict[str, str]) -> CaseR
             row.retrieval_status = "valid_empty"
             row.non_empty = "no"
             row.case_result = "pass"
+        elif source_id in SHAREHOLDER_SOURCE_IDS:
+            # 股东源：HTTP 200 + 空 list 为有效空响应，endpoint 可达但 non_empty 下降
+            row.retrieval_status = "empty_but_valid_response"
+            row.non_empty = "no"
+            row.case_result = "pass"
         else:
             row.retrieval_status = "empty_but_valid_response"
             row.non_empty = "no"
@@ -707,8 +810,12 @@ def run_live(companies: List[Dict[str, str]]) -> List[CaseRow]:
     return rows
 
 
-def _is_reachable(status: str) -> bool:
-    return status in ("endpoint_found", "valid_empty")
+def _is_reachable(status: str, source_id: str = "") -> bool:
+    if status in ("endpoint_found", "valid_empty"):
+        return True
+    if source_id in SHAREHOLDER_SOURCE_IDS and status == "empty_but_valid_response":
+        return True
+    return False
 
 
 def _field_fill_aggregate(rows: List[CaseRow], field_names: List[str]) -> Dict[str, float]:
@@ -730,7 +837,7 @@ def _aggregate_by_source(rows: List[CaseRow], companies: List[Dict[str, str]]) -
     for sid in all_sources:
         subset = [r for r in rows if r.source_id == sid]
         status_ctr = Counter(r.retrieval_status for r in subset if r.retrieval_status)
-        reachable = sum(1 for r in subset if _is_reachable(r.retrieval_status))
+        reachable = sum(1 for r in subset if _is_reachable(r.retrieval_status, sid))
         pass_n = sum(1 for r in subset if r.case_result == "pass")
         fail_n = sum(1 for r in subset if r.case_result == "fail")
         blocked = status_ctr.get("blocked", 0)
@@ -770,7 +877,7 @@ def _board_group_stats(rows: List[CaseRow]) -> List[Dict[str, Any]]:
             subset = [r for r in rows if r.board == board and r.source_id == sid]
             if not subset:
                 continue
-            reachable = sum(1 for r in subset if _is_reachable(r.retrieval_status))
+            reachable = sum(1 for r in subset if _is_reachable(r.retrieval_status, sid))
             pass_n = sum(1 for r in subset if r.case_result == "pass")
             out.append({
                 "board": board,
@@ -970,6 +1077,16 @@ def _resolve_output_paths(
     base = os.path.basename(sample_path)
     if output_csv and output_md:
         return output_csv, output_md
+    if "retry_889_partial_fail" in base or "retry_889_partial" in base:
+        if run_mode == "live":
+            return (
+                output_csv or DEFAULT_RETRY_889_PARTIAL_LIVE_CSV,
+                output_md or DEFAULT_RETRY_889_PARTIAL_LIVE_MD,
+            )
+        return (
+            output_csv or DEFAULT_RETRY_889_PARTIAL_DRYRUN_CSV,
+            output_md or DEFAULT_RETRY_889_PARTIAL_DRYRUN_MD,
+        )
     if "1000_non_bse" in base or "non_bse_candidate" in base:
         if run_mode == "live":
             return (
@@ -1040,8 +1157,14 @@ def write_summary_md(
     is_active = "active" in sample_base
     is_200 = "smoke_200" in sample_base or "200_active" in sample_base
     is_1000_non_bse = "1000_non_bse" in sample_base or "non_bse_candidate" in sample_base
+    is_retry_889 = "retry_889" in sample_base
 
-    if is_1000_non_bse:
+    if is_retry_889:
+        title = (
+            f"CNINFO C Class 889 Retry — Partial Fail Targeted "
+            f"({'Dry-Run' if run_mode == 'dry-run' else 'Live'}) — {len(companies)} companies"
+        )
+    elif is_1000_non_bse:
         title = (
             f"CNINFO C Class {len(companies)}-Company Non-BSE 1000-like Dry-Run Summary"
         )
@@ -1146,6 +1269,22 @@ def write_summary_md(
     else:
         lines.append("- 无")
 
+    sh_empty_n = sum(
+        1 for r in rows
+        if r.source_id in SHAREHOLDER_SOURCE_IDS
+        and r.retrieval_status == "empty_but_valid_response"
+    )
+    lines.extend([
+        "",
+        "## Shareholder empty_but_valid policy",
+        "",
+        f"- **empty_but_valid_count（股东源）:** {sh_empty_n}",
+        "- HTTP 200 · json/resultCode 正常 · `data.records` 为空 list → `empty_but_valid_response`",
+        "- **不计** http_error / blocked / schema_unexpected；**计入** endpoint reachable",
+        "- 主 gate **case_result=pass**（非接口失败）；**non_empty_rate** 仍下降",
+        "- top_float / top_shareholders 标记 **source_partial**（reachable ≠ non_empty）",
+    ])
+
     if previous_baseline and is_active:
         lines.extend([
             "",
@@ -1229,7 +1368,18 @@ def write_summary_md(
         "",
         div_gate_detail,
     ])
-    if is_1000_non_bse:
+    if is_retry_889:
+        lines.extend([
+            "",
+            "## Gate: targeted retry",
+            "",
+            f"**retry_gate = {'DRY_RUN_READY' if run_mode == 'dry-run' else 'LIVE_PENDING_REVIEW'}**",
+            "",
+            f"Partial-fail subset **{len(companies)}** 家；planned live **{len(companies) * (len(MAIN_SOURCE_IDS) + 1)}** requests。",
+            "26 家 6/6 全失败已 hold，不在此样本。",
+            "**等待人工批准**后跑 `--live`。",
+        ])
+    elif is_1000_non_bse:
         lines.extend([
             "",
             "## Gate: post-889 scale / next planning",
@@ -1252,7 +1402,24 @@ def write_summary_md(
         "## Caveats",
         "",
     ])
-    if is_1000_non_bse:
+    if is_retry_889:
+        if run_mode == "live":
+            lines.extend([
+                "- **889 partial-fail targeted retry live**；非 889 全量重跑。",
+                "- 26 家 6/6 全失败见 `eval_companies_c_class_retry_889_six_fail_hold.yaml`（hold）。",
+            ])
+        else:
+            lines.extend([
+                "- **889 partial-fail targeted retry dry-run**；planned live only；**无 CNINFO**。",
+                "- 26 家 6/6 全失败已剔除；见 six_fail_hold 样本。",
+            ])
+        lines.extend([
+            "- **testing** status only; **no verified**.",
+            "- **No testing_stable_sample**.",
+            "- No database ingestion.",
+            "- 股东 empty_but_valid 口径已修正（见 Shareholder empty_but_valid policy）。",
+        ])
+    elif is_1000_non_bse:
         if run_mode == "live":
             lines.extend([
                 "- **889-company non-BSE 1000-like live sample**；非 full-market verified。",
@@ -1325,6 +1492,14 @@ def main() -> None:
     companies = load_sample_companies(sample_path)
     if args.mode == "live" and len(companies) < 10:
         print(f"WARN: very small sample ({len(companies)} companies)", file=sys.stderr)
+
+    if args.mode == "live" and _is_retry_889_partial_sample(sample_path):
+        ok, detail = _validate_pre_live_retry_partial(sample_path, companies)
+        if ok:
+            print(f"pre_live_validation: PASS  ({detail})")
+        else:
+            print(f"pre_live_validation: FAIL  ({detail})")
+            sys.exit(2)
 
     previous_baseline = None
     if "active" in os.path.basename(sample_path) and os.path.isfile(args.compare_with):

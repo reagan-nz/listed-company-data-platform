@@ -8,7 +8,7 @@ _最后更新：2026-07-06_
 
 ## 当前阶段（一句话）
 
-**Era C Phase 1（A 类）已收口**。**Phase 2 D 类已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通。**Phase 4 C 类** **889 non-BSE live + post-889 diagnosis 完成**（**LIVE_PARTIAL** · pass=5064 fail=270 · [live summary](outputs/validation/cninfo_c_class_smoke_1000_non_bse_live_summary.md) · [diagnosis](outputs/validation/cninfo_c_class_smoke_1000_non_bse_diagnosis.md)）；主宇宙 **non-BSE mainline**；BSE legacy **side-track HOLD**；dividend **GO（决策）**；**无 verified**；**不入库**。
+**Era C Phase 1（A 类）已收口**。**Phase 2 D 类已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通。**Phase 4 C 类** **889 live + diagnosis 完成**；**targeted retry 样本 + dry-run 已就绪**（partial **62** 家 · planned **434** · [dry-run summary](outputs/validation/cninfo_c_class_retry_889_partial_fail_dryrun_summary.md)）；**26 家 6/6 hold**；股东 **empty_but_valid 口径已修正**；**live 待批准**；dividend **GO（决策）**；**无 verified**；**不入库**。
 
 ---
 
@@ -91,7 +91,8 @@ _最后更新：2026-07-06_
 | **30 smoke（active）** | `lab/validate_cninfo_c_class_scale_smoke.py` · [active sample](lab/eval_companies_c_class_smoke_30_active.yaml) · [active summary](outputs/validation/cninfo_c_class_scale_smoke_30_active_summary.md)（**LIVE_PARTIAL** · pass=177 · blocked/429=0） |
 | **200 smoke 计划** | [cninfo_c_class_scale_smoke_200_plan.md](plans/cninfo_c_class_scale_smoke_200_plan.md)（计划 only · 不直接跑 live） |
 | **200 active 样本 + dry-run** | [eval_companies_c_class_smoke_200_active.yaml](lab/eval_companies_c_class_smoke_200_active.yaml)（**195** 家）· [dry-run summary](outputs/validation/cninfo_c_class_scale_smoke_200_active_summary.md) |
-| **1000-like non-BSE live + diagnosis** | [candidate](lab/eval_companies_c_class_smoke_1000_non_bse_candidate.yaml)（**889**）· [live report](outputs/validation/cninfo_c_class_smoke_1000_non_bse_live_report.csv) · [live summary](outputs/validation/cninfo_c_class_smoke_1000_non_bse_live_summary.md) · [diagnosis](outputs/validation/cninfo_c_class_smoke_1000_non_bse_diagnosis.md)（**LIVE_PARTIAL**） |
+| **1000-like non-BSE live + diagnosis** | [candidate](lab/eval_companies_c_class_smoke_1000_non_bse_candidate.yaml)（**889**）· [live report](outputs/validation/cninfo_c_class_smoke_1000_non_bse_live_report.csv) · [diagnosis](outputs/validation/cninfo_c_class_smoke_1000_non_bse_diagnosis.md) |
+| **Targeted retry 样本** | [failed 88](lab/eval_companies_c_class_retry_889_failed_companies.yaml) · [six-fail hold 26](lab/eval_companies_c_class_retry_889_six_fail_hold.yaml) · [partial retry 62](lab/eval_companies_c_class_retry_889_partial_fail_retry.yaml) · [dry-run summary](outputs/validation/cninfo_c_class_retry_889_partial_fail_dryrun_summary.md) |
 | **Universe split（195）** | [split plan](plans/cninfo_c_class_universe_split_and_sample_cleaning_plan.md) · non-BSE **172** · BSE-920 **12** · legacy **8** · abnormal **3** |
 | **30 smoke（含退市样本）** | [30 summary](outputs/validation/cninfo_c_class_scale_smoke_30_summary.md)（`LIVE_PARTIAL` · 退市拖累） |
 | **P2 DevTools probe** | [P2 plan](plans/cninfo_c_class_p2_probe_plan.md) · [P2 probe records](fixtures/c_class/probe/records/c_class_p2_probe_records.yaml)（**12/12**） · [P2-A backfill decision](plans/cninfo_c_class_p2a_yaml_backfill_decision.md) · [P2-A live validation](outputs/validation/cninfo_c_class_p2a_live_source_validation_summary.md)（**LIVE_PASS 12/12**） |
@@ -206,11 +207,12 @@ flowchart TD
 | 64 | ~~BSE failure diagnosis~~ → **完成**（[diagnosis](outputs/validation/cninfo_c_class_scale_smoke_200_bse_diagnosis.md)） |
 | 65 | ~~universe split + sample cleaning~~ → **完成**（[split plan](plans/cninfo_c_class_universe_split_and_sample_cleaning_plan.md)） |
 | 66 | ~~从 `eval_companies_1000` 离线派生 non-BSE ~1000 候选 + dry-run~~ → **完成** |
-| 67 | ~~non-BSE 1000-like live~~ → **LIVE_PARTIAL**（889 · [diagnosis](outputs/validation/cninfo_c_class_smoke_1000_non_bse_diagnosis.md)） |
-| 68 | 样本清洗补强（26 家 6/6 abnormal）+ failed-company targeted retry → **下一步** |
-| 69 | full-market non-BSE planning（CONDITIONAL）→ **待样本清洗后** |
-| 70 | BSE legacy targeted probe（8 家 hold）→ **待启动** |
-| 71 | **暂不全量抓取、暂不入库** |
+| 67 | ~~non-BSE 1000-like live~~ → **LIVE_PARTIAL**（[diagnosis](outputs/validation/cninfo_c_class_smoke_1000_non_bse_diagnosis.md)） |
+| 68 | ~~targeted retry 样本派生 + dry-run~~ → **完成**（partial **62** · [dry-run](outputs/validation/cninfo_c_class_retry_889_partial_fail_dryrun_summary.md)） |
+| 69 | partial-fail **targeted retry live** → **等待人工批准**（planned **434** requests） |
+| 70 | 样本清洗补强（26 家 6/6 → abnormal_review）→ **与 retry 并行** |
+| 71 | BSE legacy targeted probe（8 家 hold）→ **待启动** |
+| 72 | **暂不全量抓取、暂不入库** |
 
 ---
 
@@ -219,7 +221,8 @@ flowchart TD
 - **不写 verified** / full-market stable
 - **不接** PostgreSQL / MinIO / MongoDB
 - **不**同时大规模推进 Phase 3 与 Phase 2 扩源
-- **不跑** 889 全量重 live（diagnosis 建议 targeted retry）
+- **不跑** 889 全量重 live
+- **不跑** partial retry `--live`（**等待人工批准**；dry-run 已完成）
 - **不执行** dividend YAML backfill（决策 GO 已记录）
 - **security_profile** 保持 **observe-only**（不绑定主 gate；见 [200 plan](plans/cninfo_c_class_scale_smoke_200_plan.md) §7）
 - **股东源** `empty_but_valid` 按 [200 plan](plans/cninfo_c_class_scale_smoke_200_plan.md) §6 解读（非 blocked/http_error/schema failure）

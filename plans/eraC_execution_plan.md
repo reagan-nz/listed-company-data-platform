@@ -175,9 +175,10 @@ _最后更新：2026-07-05_
 66. ~~universe split + sample cleaning~~ → **完成**（§7ah）
 67. ~~non-BSE 1000-like 离线派生 + dry-run~~ → **完成**（§7ai）
 68. ~~non-BSE 1000-like live~~ → **完成**（§7aj · LIVE_PARTIAL）
-69. 样本清洗 + failed-company targeted retry → **下一步**
-70. BSE legacy targeted probe（8 家）→ **待启动**
-68. BSE legacy targeted probe → **待启动**
+69. ~~targeted retry 样本 + dry-run~~ → **完成**（§7ak）
+70. partial-fail **targeted retry live** → **等待批准**
+71. 样本清洗（26 家 6/6 abnormal）→ **并行**
+72. BSE legacy targeted probe（8 家）→ **待启动**
 69. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
@@ -1291,9 +1292,27 @@ _最后更新：2026-07-05_
 
 **结论：** fail 主要由 **26 家 6/6 全失败** + **empty_but_valid 计 fail**；**非系统性退化**。dividend **GO（决策）**；top_float **source_partial**；security **observe-only**。
 
-**下一步：** 样本清洗 · failed-company targeted retry · full-market non-BSE planning（CONDITIONAL）
+**下一步：** partial-fail targeted retry **live 待批准**（§7ak）；样本清洗 26 家 6/6
 
-**命名修正：** live 输出 `*_live_*`；脚本 `--live` 自动写入 live 路径
+---
+
+## 7ak. Phase 4 C 类 Failed-Company Targeted Retry Prep（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| 889 full rerun | **不推荐** |
+| 失败公司 | **88** 家（至少 1 主源 fail） |
+| six-fail hold | **26** 家 · `lab/eval_companies_c_class_retry_889_six_fail_hold.yaml` · `sample_quality_or_status_review` |
+| partial retry | **62** 家 · `lab/eval_companies_c_class_retry_889_partial_fail_retry.yaml` |
+| 全量失败索引 | `lab/eval_companies_c_class_retry_889_failed_companies.yaml` |
+| dry-run | **DRY_RUN_ONLY** · **62** × 7 = **434** cases |
+| 报告 | [dryrun_summary.md](../outputs/validation/cninfo_c_class_retry_889_partial_fail_dryrun_summary.md) |
+
+**Runner 修正：** 股东源 `empty_but_valid_response` → `case_result=pass`；计入 reachable；**source_partial**（non_empty 单独统计）
+
+**红线：** 本轮 **无 live** · **无 CNINFO** · **无 YAML** · **无 DB**
+
+**建议：** 等待人工批准后：`--live --sample-file lab/eval_companies_c_class_retry_889_partial_fail_retry.yaml`
 
 ---
 
@@ -1454,7 +1473,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **889 non-BSE live + diagnosis 完成**（§7aj）；下一步 **样本清洗 + targeted retry**；**BSE legacy** side-track HOLD。只做该 Phase，不要同时展开其他 Phase。
+当前 Phase：C 类 **targeted retry dry-run 完成**（§7ak · partial **62** 家）；**live 待批准**；**BSE legacy** side-track HOLD。只做该 Phase，不要同时展开其他 Phase。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
