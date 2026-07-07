@@ -1881,17 +1881,33 @@ def write_summary_md(
             ),
         ])
     elif is_retry_889_rerun_partial:
-        lines.extend([
-            "",
-            "## Gate: 889 rerun partial-fail targeted retry",
-            "",
-            f"**retry_gate = {'DRY_RUN_READY' if run_mode == 'dry-run' else 'LIVE_PENDING_APPROVAL'}**",
-            "",
-            f"Partial-fail subset **{len(companies)}** 家；planned live **{len(companies) * (len(MAIN_SOURCE_IDS) + 1)}** cases。",
-            "26 家 all6 hold 见 `eval_companies_c_class_889_rerun_all6_hold.yaml`（hold_no_retry）。",
-            "targeted retry 后再决定是否进入 C-class harvest。",
-            "**等待人工批准**后跑 `--live`。",
-        ])
+        if run_mode == "dry-run":
+            lines.extend([
+                "",
+                "## Gate: 889 rerun partial-fail targeted retry",
+                "",
+                "**retry_gate = DRY_RUN_READY**",
+                "",
+                f"Partial-fail subset **{len(companies)}** 家；planned live **{len(companies) * (len(MAIN_SOURCE_IDS) + 1)}** cases。",
+                "26 家 all6 hold 见 `eval_companies_c_class_889_rerun_all6_hold.yaml`（hold_no_retry）。",
+            ])
+        else:
+            lines.extend([
+                "",
+                "## Gate: 889 rerun partial-fail targeted retry",
+                "",
+                "**retry_gate = LIVE_COMPLETED_POST_DECISION**",
+                "",
+                f"Partial-fail targeted retry **已完成**（**{len(companies)}** 家 · "
+                f"**{len(companies) * (len(MAIN_SOURCE_IDS) + 1)}** cases · "
+                f"pass=**{total_pass}** fail=**{total_fail}** · "
+                f"**{'LIVE_PASS' if total_fail == 0 else 'LIVE_PARTIAL'}**）。",
+                "26 家 all6 hold 见 `eval_companies_c_class_889_rerun_all6_hold.yaml`（hold_no_retry · 不变）。",
+                "残留 fail 多为 `empty_but_valid_response` — **source-level residual**，非 runner/pacing。",
+                "post-retry 决策见 `plans/cninfo_c_class_889_post_retry_decision.md`。",
+                "**harvest** 可进入 planning（summary 须保留 26 hold + share_capital caveat）。",
+                "**889 全量不立即重跑**。",
+            ])
     elif is_retry_889:
         lines.extend([
             "",
@@ -1955,8 +1971,8 @@ def write_summary_md(
     elif is_retry_889_rerun_partial:
         if run_mode == "live":
             lines.extend([
-                "- **889 rerun partial-fail targeted retry live**；非 889 全量重跑。",
-                "- 26 家 all6 hold 见 `eval_companies_c_class_889_rerun_all6_hold.yaml`。",
+                "- **889 rerun partial-fail targeted retry live 已完成**；非 889 全量重跑。",
+                "- 26 家 all6 hold 见 `eval_companies_c_class_889_rerun_all6_hold.yaml`（hold_no_retry）。",
             ])
         else:
             lines.extend([
@@ -1967,7 +1983,8 @@ def write_summary_md(
             "- **testing** status only; **no verified**.",
             "- **No testing_stable_sample**.",
             "- No database ingestion.",
-            "- **harvest 暂停**；targeted retry 后再评估 harvest gate。",
+            "- **share_capital** 继续 **source_partial**；**executive** 继续 **caveat**。",
+            "- post-retry：**harvest 可进入 planning**（保留 26 hold + share_capital caveat）。",
         ])
     elif is_retry_889:
         if run_mode == "live":

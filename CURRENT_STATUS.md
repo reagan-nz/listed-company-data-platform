@@ -8,7 +8,7 @@ _最后更新：2026-07-07_
 
 ## 当前阶段（一句话）
 
-**Era C Phase 1（A 类）已收口**。**Phase 2 D 类已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通。**Phase 4 C 类** **889 rerun LIVE_PARTIAL**（[diagnosis](outputs/validation/cninfo_c_class_889_non_bse_rerun_diagnosis.md) · pass=5119 fail=215）；**26 家 all6 hold** + **41 家 partial-fail retry 样本已派生**（[retry plan](plans/cninfo_c_class_889_rerun_retry_plan.md) · dry-run **287** DRY_RUN_ONLY）；**等待人工批准** partial-fail targeted retry live；**暂停 harvest**；dividend_history YAML **GO（决策 only）**；**无 verified**；**不入库**。
+**Era C Phase 1（A 类）已收口**。**Phase 2 D 类已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通。**Phase 4 C 类** **889 partial-fail targeted retry live 已完成**（41 · 287 · pass=237 fail=9 · **LIVE_PARTIAL**）；[post-retry decision](plans/cninfo_c_class_889_post_retry_decision.md)：**harvest 可进入 planning**（保留 26 all6 hold + share_capital caveat）；**26 家 all6 hold** 继续 hold_no_retry；**889 不重跑**；dividend_history YAML **GO（决策 only）**；**无 verified**；**不入库**。
 
 ---
 
@@ -222,10 +222,12 @@ flowchart TD
 | 77 | ~~889 non-BSE rerun live~~ → **LIVE_PARTIAL**（[diagnosis](outputs/validation/cninfo_c_class_889_non_bse_rerun_diagnosis.md)） |
 | 78 | ~~partial-fail targeted retry 样本设计（~41 家）~~ → **完成**（[retry plan](plans/cninfo_c_class_889_rerun_retry_plan.md) · dry-run **287**） |
 | 79 | ~~26 家 all6 hold 子集标注~~ → **完成**（`eval_companies_c_class_889_rerun_all6_hold.yaml`） |
-| 80 | partial-fail targeted retry live → **等待人工批准** |
-| 81 | dividend_history YAML backfill → **GO（决策 only）** · retry 后再评估执行 |
-| 82 | BSE legacy targeted probe（8 家 hold）→ **待启动** |
-| 83 | **暂不全量抓取、暂不入库** |
+| 80 | ~~partial-fail targeted retry live~~ → **LIVE_PARTIAL**（[live summary](outputs/validation/cninfo_c_class_889_rerun_partial_fail_retry_live_summary.md) · pass=237 fail=9） |
+| 81 | ~~post-retry decision~~ → **完成**（[decision](plans/cninfo_c_class_889_post_retry_decision.md)） |
+| 82 | C-class harvest planning → **下一步**（保留 26 hold + share_capital caveat） |
+| 83 | dividend_history YAML backfill → **GO（决策 only）** · **不执行** |
+| 84 | BSE legacy targeted probe（8 家 hold）→ **待启动** |
+| 85 | **暂不全量抓取、暂不入库**
 
 ---
 
@@ -234,7 +236,7 @@ flowchart TD
 - **不写 verified** / full-market stable
 - **不接** PostgreSQL / MinIO / MongoDB
 - **不**同时大规模推进 Phase 3 与 Phase 2 扩源
-- **暂停 harvest** 直至 partial-fail targeted retry 完成
+- **暂停 harvest 全量执行** 直至 harvest planning 文档就绪（**planning 允许启动**）
 - **不跑** 889 全量重 live · **不清洗** 26 家 all6（hold 子集）
 - **不生成 stable 200 v2** · **不剔除 12 家 six-fail**
 - **不执行** dividend YAML backfill（决策 GO，待 889 后）

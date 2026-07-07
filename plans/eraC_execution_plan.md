@@ -193,10 +193,12 @@ _最后更新：2026-07-05_
 84. ~~post-889 diagnosis~~ → **完成**（§7av）
 85. ~~partial-fail targeted retry 设计~~ → **完成**（§7aw）
 86. ~~26 家 all6 hold 标注~~ → **完成**（§7aw）
-87. partial-fail targeted retry live → **等待人工批准**
-88. dividend_history YAML → **GO（决策 only）** · retry 后再评估执行
-89. BSE legacy targeted probe（8 家）→ **待启动**
-90. **暂不全量抓取、暂不入库**
+87. ~~partial-fail targeted retry live~~ → **LIVE_PARTIAL**（§7ax）
+88. ~~post-retry decision~~ → **完成**（§7ax）
+89. C-class harvest planning → **下一步**（保留 26 hold + share_capital caveat）
+90. dividend_history YAML → **GO（决策 only）** · **不执行**
+91. BSE legacy targeted probe（8 家）→ **待启动**
+92. **暂不全量抓取、暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -1516,7 +1518,27 @@ _最后更新：2026-07-05_
 
 **preflight：** 无 BSE · 无 abnormal_review · 无退市名；**000765/001267** duplicate orgid 共存（监测项）
 
-**下一步：** ~~889 live~~ → **完成**（§7av）；~~partial-fail retry 设计~~ → **完成**（§7aw）；**等待人工批准** partial-fail live。
+**下一步：** ~~partial-fail live~~ → **完成**（§7ax）；**C-class harvest planning**。
+
+---
+
+## 7ax. Phase 4 C 类 889 Partial-Fail Retry Live + Post-Retry Decision（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| Live | **LIVE_PARTIAL** · **41** · **287** · pass=**237** fail=**9** |
+| 报告 | [partial_fail_retry_live_summary.md](../outputs/validation/cninfo_c_class_889_rerun_partial_fail_retry_live_summary.md) |
+| post-retry decision | [cninfo_c_class_889_post_retry_decision.md](cninfo_c_class_889_post_retry_decision.md) |
+
+### 结论摘要
+
+- targeted retry **已完成**（非 pending approval）
+- blocked=**0** · 429=**0** · http_error=**0** → **runner/pacing 排除**
+- 残留 fail：**share_capital 8** · **executive 1** · 均为 `empty_but_valid_response`
+- **26 家 all6 hold** 继续 hold_no_retry · **889 不重跑**
+- **share_capital** → source_partial · **executive** → caveat
+- **harvest** → **可进入 planning**（summary 保留 26 hold + share_capital caveat）
+- dividend_history YAML → **GO（决策 only）** · **不执行**
 
 ---
 
@@ -1731,7 +1753,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **889 rerun partial-fail retry 样本 + dry-run 完成**（§7aw）；**等待人工批准** partial-fail live；**harvest 暂停**；**BSE legacy** HOLD。
+当前 Phase：C 类 **889 post-retry decision 完成**（§7ax）；**C-class harvest planning** 下一步；**26 all6 hold** 保留；**BSE legacy** HOLD。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
