@@ -188,7 +188,8 @@ _最后更新：2026-07-05_
 79. ~~12 家 targeted retry live~~ → **LIVE_PASS**（§7as）
 80. ~~stable 200 rerun（新版 runner）~~ → **LIVE_PASS**（§7at）
 81. ~~stable 200 live pass decision~~ → **完成**（§7at）
-82. 889 non-BSE rerun planning → **下一步**
+82. ~~889 non-BSE rerun plan + dry-run~~ → **完成**（§7au）
+83. 889 non-BSE rerun live → **待人工批准**
 83. dividend_history YAML → **GO（决策 only）** · 889 后评估执行
 84. BSE legacy targeted probe（8 家）→ **待启动**
 85. **暂不全量抓取、暂不入库**
@@ -1461,7 +1462,7 @@ _最后更新：2026-07-05_
 | orgId fallback | data20 endpoint：`scode+orgId` 单次 fallback（600203 已知案例） |
 | report 字段 | `retry_count` · `final_retrieval_status` · `first_result_code` · `final_result_code` · `used_orgid_variant` |
 
-**下一步：** **889 non-BSE rerun planning**（§7at）。
+**下一步：** ~~889 rerun planning~~ → **完成**（§7au）；**889 live 待批准**。
 
 ---
 
@@ -1494,7 +1495,24 @@ _最后更新：2026-07-05_
 - non-BSE main：**CONDITIONAL YES** · ready for **889 rerun planning**
 - dividend_history：**GO（决策 only）** · **不执行 YAML**
 
-**下一步：** 889 non-BSE rerun plan + preflight；**no verified** · **no DB**。
+**下一步：** ~~889 rerun plan~~ → **完成**（§7au）。
+
+---
+
+## 7au. Phase 4 C 类 889 Non-BSE Rerun Plan + Dry-Run（2026-07-07）
+
+| 项 | 内容 |
+|----|------|
+| 计划 | [cninfo_c_class_889_non_bse_rerun_plan.md](cninfo_c_class_889_non_bse_rerun_plan.md) |
+| 样本 | `lab/eval_companies_c_class_smoke_1000_non_bse_candidate.yaml`（**889**） |
+| dry-run | **DRY_RUN_ONLY** · **6223** cases |
+| 报告 | [rerun_dryrun_summary.md](../outputs/validation/cninfo_c_class_889_non_bse_rerun_dryrun_summary.md) |
+
+**board：** sse_main **292** · szse_main **239** · chinext **233** · star **125**
+
+**preflight：** 无 BSE · 无 abnormal_review · 无退市名；**000765/001267** duplicate orgid 共存（监测项）
+
+**下一步：** 人工批准后 `--live`（新 runner · backoff + orgId）；**no verified** · **no YAML** · **no DB**
 
 ---
 
@@ -1670,7 +1688,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **stable 200 rerun LIVE_PASS**（§7at）；**stable 200 v2 取消**；下一步 **889 non-BSE rerun planning**；**BSE legacy** HOLD。
+当前 Phase：C 类 **889 non-BSE rerun plan + dry-run 完成**（§7au）；下一步 **889 rerun live（待批准）**；**BSE legacy** HOLD。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
