@@ -1,0 +1,100 @@
+{
+  "fixtures": [
+    {
+      "case_id": "case_1_cash_only",
+      "description": "纯现金分红",
+      "company_code": "600000",
+      "company_name": "浦发银行",
+      "raw_records": [
+        {
+          "F001V": "2024年报",
+          "F007V": "10派4.1元(含税)",
+          "F018D": "2025-07-15",
+          "F020D": "2025-07-16",
+          "F023D": "2025-07-16"
+        }
+      ],
+      "expect": {
+        "dividend_parse_status": "parsed",
+        "event_count": 1,
+        "dividend_method": "cash",
+        "cash_dividend_per_share": 0.41
+      }
+    },
+    {
+      "case_id": "case_2_cash_and_stock",
+      "description": "现金 + 送股",
+      "company_code": "300001",
+      "company_name": "特锐德",
+      "raw_records": [
+        {
+          "F001V": "2023年报",
+          "F007V": "10派2元(含税)，送2股",
+          "F018D": "2024-05-20",
+          "F020D": "2024-05-21",
+          "F023D": "2024-05-21"
+        }
+      ],
+      "expect": {
+        "dividend_parse_status": "parsed",
+        "event_count": 1,
+        "dividend_method": "mixed",
+        "cash_dividend_per_share": 0.2,
+        "stock_dividend_ratio": 0.2
+      }
+    },
+    {
+      "case_id": "case_3_cash_and_transfer",
+      "description": "现金 + 转增",
+      "company_code": "688001",
+      "company_name": "华兴源创",
+      "raw_records": [
+        {
+          "F001V": "2024年报",
+          "F007V": "每10股派发现金红利0.52元（含税），转增3股",
+          "F018D": "2026-07-08",
+          "F020D": "2026-07-09",
+          "F023D": "2026-07-09"
+        }
+      ],
+      "expect": {
+        "dividend_parse_status": "parsed",
+        "event_count": 1,
+        "dividend_method": "mixed",
+        "cash_dividend_per_share": 0.052,
+        "transfer_ratio": 0.3
+      }
+    },
+    {
+      "case_id": "case_4_empty_records",
+      "description": "空分红记录 valid_empty",
+      "company_code": "600999",
+      "company_name": "测试空分红",
+      "raw_records": [],
+      "expect": {
+        "dividend_parse_status": "empty_but_valid",
+        "event_count": 0
+      }
+    },
+    {
+      "case_id": "case_5_unparseable_text",
+      "description": "无法解析文本",
+      "company_code": "000001",
+      "company_name": "测试不可解析",
+      "raw_records": [
+        {
+          "F001V": "2022年报",
+          "F007V": "不分配不转增",
+          "F018D": null,
+          "F020D": null,
+          "F023D": null
+        }
+      ],
+      "expect": {
+        "dividend_parse_status": "needs_review",
+        "event_count": 1,
+        "dividend_method": "other"
+      }
+    }
+  ]
+}

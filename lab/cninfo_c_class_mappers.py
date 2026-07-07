@@ -13,6 +13,8 @@ Maps getStockStructure single row to c_share_capital_profile logical records.
 Maps getTopTenStockholders / getTopTenCirculatingStockholders single row to
 c_shareholder_profile logical records.
 
+Maps getCompanyHisDividend data.records row(s) to dividend_history logical records.
+
 No network, no database, no verified.
 """
 
@@ -21,7 +23,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 DEFAULT_BASIC_SOURCE_ID = "cninfo_company_basic_profile"
 DEFAULT_SECURITY_SOURCE_ID = "cninfo_company_security_profile"
@@ -29,7 +31,26 @@ DEFAULT_EXECUTIVE_SOURCE_ID = "cninfo_executive_profile"
 DEFAULT_SHARE_CAPITAL_SOURCE_ID = "cninfo_share_capital_profile"
 DEFAULT_TOP_SHAREHOLDERS_SOURCE_ID = "cninfo_top_shareholders_profile"
 DEFAULT_TOP_FLOAT_SHAREHOLDERS_SOURCE_ID = "cninfo_top_float_shareholders_profile"
+DEFAULT_DIVIDEND_SOURCE_ID = "cninfo_dividend_financing_profile"
+LOGICAL_DIVIDEND_SOURCE_ID = "dividend_history"
 DEFAULT_SOURCE_STATUS = "testing"
+
+# F007V 分红方案文本解析（dividend_history v1）
+_CASH_DIVIDEND_PATTERNS = [
+    re.compile(r"10派(\d+(?:\.\d+)?)元"),
+    re.compile(r"每10股派发现金红利(\d+(?:\.\d+)?)元"),
+    re.compile(r"派发现金红利(\d+(?:\.\d+)?)元"),
+]
+_STOCK_DIVIDEND_PATTERNS = [
+    re.compile(r"10送(\d+(?:\.\d+)?)股"),
+    re.compile(r"送(\d+(?:\.\d+)?)股"),
+]
+_TRANSFER_DIVIDEND_PATTERNS = [
+    re.compile(r"10转增(\d+(?:\.\d+)?)股"),
+    re.compile(r"10转(\d+(?:\.\d+)?)股"),
+    re.compile(r"转增(\d+(?:\.\d+)?)股"),
+]
+_YEAR_PATTERN = re.compile(r"(\d{4})")
 
 SHAREHOLDER_SCOPE_TOP = "top_shareholder"
 SHAREHOLDER_SCOPE_TOP_FLOAT = "top_float_shareholder"
@@ -484,6 +505,256 @@ def map_company_shareholder_profile(
     # F007V change_status_or_change_amount_candidate.
 
     return record
+
+
+def make_dividend_history_event_id(
+    source_id: str,
+    company_code: str,
+    row_key: str,
+) -> str:
+    key = f"{source_id}|{company_code}|{row_key}"
+    return hashlib.sha256(key.encode("utf-8")).hexdigest()[:32]
+
+
+def _parse_dividend_year(report_period: Optional[str]) -> Optional[int]:
+    if not report_period:
+        return None
+    match = _YEAR_PATTERN.search(str(report_period))
+    if not match:
+        return None
+    return int(match.group(1))
+
+
+def _first_regex_match(patterns: List[re.Pattern], text: str) -> Optional[float]:
+    for pattern in patterns:
+        match = pattern.search(text)
+        if match:
+            return float(match.group(1)) / 10.0
+    return None
+
+
+def parse_dividend_f007v(plan_text: Optional[str]) -> Dict[str, Any]:
+    """
+    解析 F007V 分红方案文本为 normalized_core 数值字段。
+
+    返回 cash_dividend_per_share / stock_dividend_ratio / transfer_ratio /
+    dividend_method / dividend_parse_status / dividend_plan_text_raw。
+    """
+    raw_text = _str_or_none(plan_text)
+    result: Dict[str, Any] = {
+        "cash_dividend_per_share": None,
+        "stock_dividend_ratio": None,
+        "transfer_ratio": None,
+        "dividend_method": None,
+        "dividend_plan_text_raw": raw_text,
+        "dividend_parse_status": "needs_review",
+    }
+    if not raw_text:
+        result["dividend_parse_status"] = "partial"
+        return result
+
+    cash = _first_regex_match(_CASH_DIVIDEND_PATTERNS, raw_text)
+    stock = _first_regex_match(_STOCK_DIVIDEND_PATTERNS, raw_text)
+    transfer = _first_regex_match(_TRANSFER_DIVIDEND_PATTERNS, raw_text)
+
+    # 否定表述（如「不分配不转增」）不应触发送股/转增意图
+    cash_flag = cash is not None or (
+        "派" in raw_text and "元" in raw_text and "不分配" not in raw_text and "不派" not in raw_text
+    )
+    stock_flag = stock is not None or (
+        "送" in raw_text and "股" in raw_text and "不送" not in raw_text
+    )
+    transfer_flag = transfer is not None or (
+        ("转增" in raw_text or re.search(r"10转\d", raw_text) is not None)
+        and "不转增" not in raw_text
+    )
+
+    flags = {
+        "cash": cash_flag,
+        "stock": stock_flag,
+        "transfer": transfer_flag,
+    }
+
+    if cash is not None:
+        result["cash_dividend_per_share"] = cash
+    if stock is not None:
+        result["stock_dividend_ratio"] = stock
+    if transfer is not None:
+        result["transfer_ratio"] = transfer
+
+    active = sum(1 for k, v in flags.items() if v)
+    if active == 0:
+        result["dividend_method"] = "other"
+        result["dividend_parse_status"] = "needs_review"
+    elif active == 1:
+        if flags["cash"]:
+            result["dividend_method"] = "cash"
+        elif flags["stock"]:
+            result["dividend_method"] = "stock"
+        else:
+            result["dividend_method"] = "transfer"
+        if (flags["cash"] and cash is None) or (flags["stock"] and stock is None) or (
+            flags["transfer"] and transfer is None
+        ):
+            result["dividend_parse_status"] = "needs_review"
+        else:
+            result["dividend_parse_status"] = "parsed"
+    else:
+        result["dividend_method"] = "mixed"
+        if cash is not None or stock is not None or transfer is not None:
+            if (flags["cash"] and cash is None) or (flags["stock"] and stock is None) or (
+                flags["transfer"] and transfer is None
+            ):
+                result["dividend_parse_status"] = "partial"
+            else:
+                result["dividend_parse_status"] = "parsed"
+        else:
+            result["dividend_parse_status"] = "needs_review"
+
+    return result
+
+
+def _extract_dividend_records(raw_input: Any) -> List[Dict[str, Any]]:
+    """从 API 响应或 records 列表提取分红事件行。"""
+    if raw_input is None:
+        return []
+    if isinstance(raw_input, list):
+        return [r for r in raw_input if isinstance(r, dict)]
+    if not isinstance(raw_input, dict):
+        return []
+
+    if "F001V" in raw_input or "F007V" in raw_input:
+        return [raw_input]
+
+    data = raw_input.get("data")
+    if isinstance(data, dict) and isinstance(data.get("records"), list):
+        return [r for r in data["records"] if isinstance(r, dict)]
+
+    records = raw_input.get("records")
+    if isinstance(records, list):
+        return [r for r in records if isinstance(r, dict)]
+
+    return []
+
+
+def map_dividend_history_event(
+    raw_record: Dict[str, Any],
+    company_code: str,
+    company_name: str = "",
+    source_id: str = DEFAULT_DIVIDEND_SOURCE_ID,
+    source_status: str = DEFAULT_SOURCE_STATUS,
+) -> Dict[str, Any]:
+    """单条 getCompanyHisDividend data.records 元素 → normalized 分红事件。"""
+    report_period = _str_or_none(raw_record.get("F001V"))
+    dividend_year = _parse_dividend_year(report_period)
+    record_date = normalize_date(raw_record.get("F018D"))
+    ex_dividend_date = normalize_date(raw_record.get("F020D"))
+    payment_date = normalize_date(raw_record.get("F023D"))
+
+    parsed = parse_dividend_f007v(raw_record.get("F007V"))
+    row_key = f"{report_period or 'unknown'}|{record_date or 'unknown'}|{parsed.get('dividend_plan_text_raw') or 'unknown'}"
+
+    event: Dict[str, Any] = {
+        "dividend_history_event_id": make_dividend_history_event_id(
+            source_id, company_code, row_key
+        ),
+        "logical_source_id": LOGICAL_DIVIDEND_SOURCE_ID,
+        "source_id": source_id,
+        "company_code": company_code,
+        "report_period": report_period,
+        "dividend_year": dividend_year,
+        "record_date": record_date,
+        "ex_dividend_date": ex_dividend_date,
+        "payment_date": payment_date,
+        "cash_dividend_per_share": parsed["cash_dividend_per_share"],
+        "stock_dividend_ratio": parsed["stock_dividend_ratio"],
+        "transfer_ratio": parsed["transfer_ratio"],
+        "dividend_method": parsed["dividend_method"],
+        "dividend_plan_text_raw": parsed["dividend_plan_text_raw"],
+        "dividend_parse_status": parsed["dividend_parse_status"],
+        "raw_record_json": raw_record,
+        "raw_record_hash": compute_raw_record_hash(raw_record),
+        "source_status": source_status,
+        "field_confidence": "medium",
+    }
+    if company_name:
+        event["company_name"] = company_name
+    return event
+
+
+def _aggregate_dividend_parse_status(statuses: List[str]) -> str:
+    if not statuses:
+        return "empty_but_valid"
+    if all(s == "parsed" for s in statuses):
+        return "parsed"
+    if all(s == "needs_review" for s in statuses):
+        return "needs_review"
+    if any(s == "needs_review" for s in statuses):
+        return "partial" if any(s == "parsed" for s in statuses) else "needs_review"
+    if any(s == "partial" for s in statuses):
+        return "partial"
+    return "parsed"
+
+
+def map_dividend_history(
+    raw_input: Any,
+    company_code: str,
+    company_name: str = "",
+    source_id: str = DEFAULT_DIVIDEND_SOURCE_ID,
+    source_status: str = DEFAULT_SOURCE_STATUS,
+) -> Dict[str, Any]:
+    """
+    将 getCompanyHisDividend 响应或 records 列表映射为公司级 dividend_history 对象。
+
+    输入可为：单条 record dict · records list · 含 data.records 的 API 响应 dict。
+    """
+    records = _extract_dividend_records(raw_input)
+    events = [
+        map_dividend_history_event(
+            raw_record=r,
+            company_code=company_code,
+            company_name=company_name,
+            source_id=source_id,
+            source_status=source_status,
+        )
+        for r in records
+    ]
+
+    report_periods = [e.get("report_period") for e in events if e.get("report_period")]
+    top_report_period = report_periods[0] if len(report_periods) == 1 else None
+    parse_statuses = [e.get("dividend_parse_status", "needs_review") for e in events]
+    company_parse_status = _aggregate_dividend_parse_status(parse_statuses)
+
+    # 对外暴露的精简事件列表（normalized_core）
+    public_events: List[Dict[str, Any]] = []
+    for e in events:
+        public_events.append({
+            "dividend_year": e.get("dividend_year"),
+            "report_period": e.get("report_period"),
+            "record_date": e.get("record_date"),
+            "ex_dividend_date": e.get("ex_dividend_date"),
+            "payment_date": e.get("payment_date"),
+            "cash_dividend_per_share": e.get("cash_dividend_per_share"),
+            "stock_dividend_ratio": e.get("stock_dividend_ratio"),
+            "transfer_ratio": e.get("transfer_ratio"),
+            "dividend_method": e.get("dividend_method"),
+            "dividend_plan_text_raw": e.get("dividend_plan_text_raw"),
+            "dividend_parse_status": e.get("dividend_parse_status"),
+        })
+
+    return {
+        "company_code": company_code,
+        "company_name": company_name or None,
+        "report_period": top_report_period,
+        "dividend_history": public_events,
+        "dividend_parse_status": company_parse_status,
+        "record_count": len(events),
+        "source_evidence": {
+            "source_id": source_id,
+            "logical_source_id": LOGICAL_DIVIDEND_SOURCE_ID,
+        },
+        "events_full": events,
+    }
 
 
 def count_mapped_standard_fields(record: Dict[str, Any]) -> int:

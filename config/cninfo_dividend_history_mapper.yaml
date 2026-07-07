@@ -1,0 +1,334 @@
+# CNINFO C-Class dividend_history 字段映射配置
+# Era C Phase 4 — mapping spec only（不执行 harvest · 不写 verified）
+#
+# registry source_id: cninfo_dividend_financing_profile
+# logical_source_id:  dividend_history
+# endpoint: GET .../getCompanyHisDividend?scode={company_code}
+# records_path: data.records（一条分红事件一行）
+
+version: dividend-history-mapper-v1
+generated_at: "2026-07-07"
+status: design_only
+verified: false
+
+logical_source_id: dividend_history
+registry_source_id: cninfo_dividend_financing_profile
+endpoint_path: /data20/companyOverview/getCompanyHisDividend
+record_level: dividend_event
+
+design_principles:
+  - dividend_history 不等于 financing；禁止用 financing 作为逻辑名
+  - 分红事件为公司历史事件，非融资行为
+  - 保留 report_period；同一公司多期分红（2022/2023/2024…）
+  - 保留 raw_record_json + raw_record_hash 作为 evidence
+  - valid_empty：公司无分红记录不算失败
+
+status_counts:
+  normalized_core: 9
+  review_later: 8
+  raw_only: 4
+
+fields:
+  # --- normalized_core：进入 normalized dividend_history snapshot ---
+
+  - raw_field_name: F001V
+    normalized_field_name: report_period
+    chinese_label: 报告期
+    field_type: string
+    unit: null
+    nullable: "no"
+    description: CNINFO 历史分红记录报告期标签，如「2024年报」「2025中报」
+    example_value: "2024年报"
+    status: normalized_core
+    source_id: cninfo_dividend_financing_profile
+    caveat: 保留原始中文标签；用于多期事件区分
+
+  - raw_field_name: F001V
+    normalized_field_name: dividend_year
+    chinese_label: 分红年度
+    field_type: integer
+    unit: year
+    nullable: "yes"
+    description: 从 F001V 解析的会计年度/报告期年份（正则提取四位年）
+    example_value: "2024"
+    status: normalized_core
+    source_id: cninfo_dividend_financing_profile
+    caveat: 派生字段；F001V 非标准年时可为 null
+
+  - raw_field_name: F018D
+    normalized_field_name: record_date
+    chinese_label: 股权登记日
+    field_type: date
+    unit: null
+    nullable: "yes"
+    description: 股权登记日（probe 标注 record_date_candidate）
+    example_value: "2025-07-15"
+    status: normalized_core
+    source_id: cninfo_dividend_financing_profile
+    caveat: 889 非空记录 fill 高；老记录可为 null
+
+  - raw_field_name: F020D
+    normalized_field_name: ex_dividend_date
+    chinese_label: 除权除息日
+    field_type: date
+    unit: null
+    nullable: "yes"
+    description: 除权除息日
+    example_value: "2025-07-16"
+    status: normalized_core
+    source_id: cninfo_dividend_financing_profile
+    caveat: 889 F020D fill ~99%；老记录可为 null
+
+  - raw_field_name: F023D
+    normalized_field_name: payment_date
+    chinese_label: 派息日
+    field_type: date
+    unit: null
+    nullable: "yes"
+    description: 现金红利发放日
+    example_value: "2025-07-16"
+    status: normalized_core
+    source_id: cninfo_dividend_financing_profile
+    caveat: 老记录 F023D 可为 null（probe 已观测）
+
+  - raw_field_name: F007V
+    normalized_field_name: cash_dividend_per_share
+    chinese_label: 每股现金分红
+    field_type: number
+    unit: CNY_per_share
+    nullable: "yes"
+    description: 从 F007V 分红方案文本解析每股现金（如「10派4.1元」→ 0.41）
+    example_value: "0.41"
+    status: normalized_core
+    source_id: cninfo_dividend_financing_profile
+    caveat: 解析规则 v1；仅现金派息形态；送股/转增需另字段
+
+  - raw_field_name: F007V
+    normalized_field_name: stock_dividend_ratio
+    chinese_label: 送股比例
+    field_type: number
+    unit: ratio
+    nullable: "yes"
+    description: 从 F007V 解析送股比例（如「10送X股」）
+    example_value: null
+    status: normalized_core
+    source_id: cninfo_dividend_financing_profile
+    caveat: 无送股时 null；文本形态多样需 harvest 后校验
+
+  - raw_field_name: F007V
+    normalized_field_name: transfer_ratio
+    chinese_label: 转增比例
+    field_type: number
+    unit: ratio
+    nullable: "yes"
+    description: 从 F007V 解析资本公积转增比例（如「10转增X股」）
+    example_value: null
+    status: normalized_core
+    source_id: cninfo_dividend_financing_profile
+    caveat: 无转增时 null
+
+  - raw_field_name: F007V
+    normalized_field_name: dividend_method
+    chinese_label: 分红方式
+    field_type: string
+    unit: null
+    nullable: "yes"
+    description: 从 F007V 归类的分红方式（cash / stock / mixed / other）
+    example_value: "cash"
+    status: normalized_core
+    source_id: cninfo_dividend_financing_profile
+    caveat: v1 规则分类；复杂组合方案标 mixed
+
+  # --- review_later：语义或覆盖不足，暂不进入 normalized snapshot ---
+
+  - raw_field_name: "(n/a)"
+    normalized_field_name: announcement_date
+    chinese_label: 公告日期
+    field_type: date
+    unit: null
+    nullable: "yes"
+    description: 分红预案/实施公告披露日
+    example_value: null
+    status: review_later
+    source_id: cninfo_dividend_financing_profile
+    caveat: 当前 endpoint 无独立公告日字段；F018D 更偏登记日
+
+  - raw_field_name: "(n/a)"
+    normalized_field_name: cash_dividend_total
+    chinese_label: 现金分红总额
+    field_type: number
+    unit: CNY
+    nullable: "yes"
+    description: 当期现金分红总金额
+    example_value: null
+    status: review_later
+    source_id: cninfo_dividend_financing_profile
+    caveat: getCompanyHisDividend 未观测到总额字段；不可臆造
+
+  - raw_field_name: "(n/a)"
+    normalized_field_name: distribution_status
+    chinese_label: 分配实施状态
+    field_type: string
+    unit: null
+    nullable: "yes"
+    description: 已实施 / 预案 / 股东大会通过等状态
+    example_value: null
+    status: review_later
+    source_id: cninfo_dividend_financing_profile
+    caveat: 需从 F007V 文本或未来字段推断；v1 不标准化
+
+  - raw_field_name: F007V
+    normalized_field_name: special_dividend_note
+    chinese_label: 特殊分红说明
+    field_type: string
+    unit: null
+    nullable: "yes"
+    description: 特别分红、中期特别派息等说明性文本
+    example_value: null
+    status: review_later
+    source_id: cninfo_dividend_financing_profile
+    caveat: 需 NLP/规则从 F007V 抽取；v1 保留 raw
+
+  - raw_field_name: "(n/a)"
+    normalized_field_name: historical_anomaly_flag
+    chinese_label: 历史异常分红标记
+    field_type: boolean
+    unit: null
+    nullable: "yes"
+    description: 标识异常分红事件（大额、反复、ST 期分红等）
+    example_value: null
+    status: review_later
+    source_id: cninfo_dividend_financing_profile
+    caveat: 需 harvest 后规则引擎；非 endpoint 原生字段
+
+  - raw_field_name: "(n/a)"
+    normalized_field_name: shareholder_meeting_review_status
+    chinese_label: 股东大会审议状态
+    field_type: string
+    unit: null
+    nullable: "yes"
+    description: 股东大会是否审议通过分红方案
+    example_value: null
+    status: review_later
+    source_id: cninfo_dividend_financing_profile
+    caveat: 本 endpoint 未覆盖；非 dividend_history v1 范围
+
+  - raw_field_name: "(n/a)"
+    normalized_field_name: dividend_policy_text
+    chinese_label: 分红政策文本
+    field_type: string
+    unit: null
+    nullable: "yes"
+    description: 公司长期分红政策描述
+    example_value: null
+    status: review_later
+    source_id: cninfo_dividend_financing_profile
+    caveat: 属于公司概况文本，非历史分红 events 表
+
+  - raw_field_name: "(n/a)"
+    normalized_field_name: cumulative_dividend_label
+    chinese_label: 累计分红标签
+    field_type: string
+    unit: null
+    nullable: "yes"
+    description: 页面展示的累计分红口径标签
+    example_value: null
+    status: review_later
+    source_id: cninfo_dividend_financing_profile
+    caveat: F10 展示字段；非 getCompanyHisDividend records 列
+
+  # --- raw_only：保留在 raw_record_json，v1 不标准化 ---
+
+  - raw_field_name: F007V
+    normalized_field_name: dividend_plan_text_raw
+    chinese_label: 分红方案原文
+    field_type: string
+    unit: null
+    nullable: "yes"
+    description: F007V 完整中文分红方案文本
+    example_value: "10派4.1元(含税)"
+    status: raw_only
+    source_id: cninfo_dividend_financing_profile
+    caveat: normalized 解析字段的来源证据；必须保留 raw
+
+  - raw_field_name: "(response)"
+    normalized_field_name: data_total
+    chinese_label: 响应总条数
+    field_type: integer
+    unit: null
+    nullable: "yes"
+    description: data.total / data.count 分页元数据
+    example_value: "25"
+    status: raw_only
+    source_id: cninfo_dividend_financing_profile
+    caveat: 响应级元数据；不进事件行 normalized
+
+  - raw_field_name: "(response)"
+    normalized_field_name: data_result_code
+    chinese_label: 业务结果码
+    field_type: string
+    unit: null
+    nullable: "yes"
+    description: data.resultCode / data.resultMsg
+    example_value: "200"
+    status: raw_only
+    source_id: cninfo_dividend_financing_profile
+    caveat: 用于 retrieval 判定；不进事件 normalized
+
+  - raw_field_name: "(lineage)"
+    normalized_field_name: raw_record_json
+    chinese_label: 原始事件 JSON
+    field_type: object
+    unit: null
+    nullable: "no"
+    description: 单条 data.records 元素完整保留
+    example_value: "{}"
+    status: raw_only
+    source_id: cninfo_dividend_financing_profile
+    caveat: harvest lineage 必需；支持「过去五年是否持续分红」追溯
+
+parse_rules_v1:
+  dividend_year:
+    from: F001V
+    pattern: "(\\d{4})"
+    note: 提取首个四位年份
+  cash_dividend_per_share:
+    from: F007V
+    patterns:
+      - "10派(\\d+(?:\\.\\d+)?)元"
+    transform: "match_group_1 / 10"
+  stock_dividend_ratio:
+    from: F007V
+    patterns:
+      - "10送(\\d+(?:\\.\\d+)?)股"
+    transform: "match_group_1 / 10"
+  transfer_ratio:
+    from: F007V
+    patterns:
+      - "10转增(\\d+(?:\\.\\d+)?)股"
+      - "10转(\\d+(?:\\.\\d+)?)股"
+    transform: "match_group_1 / 10"
+  dividend_method:
+    from: F007V
+    rules:
+      - if_contains: ["派", "元"]
+        value: cash
+      - if_contains: ["送"]
+        value: stock
+      - if_contains: ["转增", "转"]
+        value: transfer
+      - if_multiple: true
+        value: mixed
+      - default: other
+
+quality_rules:
+  valid_empty:
+    condition: HTTP 200 and data.records is empty list
+    harvest_status: success_with_valid_empty
+    case_result: not_fail
+  missing:
+    condition: endpoint_found but normalized_core field null
+    harvest_status: partial_field_missing
+  source_partial:
+    condition: field present in schema but company coverage below gate
+    note: 日期字段老记录 null 率高；F007V 复杂方案解析失败

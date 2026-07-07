@@ -1,0 +1,121 @@
+source_id,source_type,raw_field_name,normalized_field_name,chinese_label,field_type,record_level,source_status,nullable,example_value,fill_rate_evidence,caveat,include_in_normalized_snapshot
+cninfo_company_basic_profile,direct,ASECCODE,company_code,证券代码,string,company,proceed_testing_with_caveat,yes,300001,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,yes
+cninfo_company_basic_profile,direct,ASECNAME,company_name,证券简称,string,company,proceed_testing_with_caveat,yes,特锐德,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,yes
+cninfo_company_basic_profile,direct,ORGNAME,legal_name,法定名称,string,company,proceed_testing_with_caveat,yes,青岛特锐德电气股份有限公司,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,yes
+cninfo_company_basic_profile,direct,F001V,english_name,英文名称,string,company,proceed_testing_with_caveat,yes,"TGOOD Electric Co., Ltd.",stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,yes
+cninfo_company_basic_profile,direct,F003V,legal_representative,法定代表人,string,company,proceed_testing_with_caveat,yes,于德翔,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,yes
+cninfo_company_basic_profile,direct,F004V,registered_address,注册地址,string,company,proceed_testing_with_caveat,yes,山东省青岛市崂山区松岭路336号,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,yes
+cninfo_company_basic_profile,direct,F005V,office_address,办公地址,string,company,proceed_testing_with_caveat,yes,山东省青岛市崂山区松岭路336号,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,yes
+cninfo_company_basic_profile,direct,F006D,listing_date,上市日期,date,company,proceed_testing_with_caveat,yes,2009-10-30,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,yes
+cninfo_company_basic_profile,direct,F007N,registered_capital,注册资本,string,company,proceed_testing_with_caveat,yes,1055390000,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,yes
+cninfo_company_basic_profile,direct,F011V,company_website,公司网址,string,company,proceed_testing_with_caveat,yes,http://www.tgood.cn,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,yes
+cninfo_company_basic_profile,direct,F016V,business_scope,经营范围,string,company,proceed_testing_with_caveat,yes,电动汽车充电设备...,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,yes
+cninfo_company_basic_profile,direct,F032V,industry,所属行业,string,company,proceed_testing_with_caveat,yes,电气机械和器材制造业,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,yes
+cninfo_company_basic_profile,direct,MARKET,listed_board,上市板块,string,company,proceed_testing_with_caveat,yes,深交所创业板,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,yes
+cninfo_company_basic_profile,direct,(derived),exchange,交易所,string,company,proceed_testing_with_caveat,yes,SZSE,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,yes
+cninfo_company_basic_profile,direct,F015V,main_business_summary,主营业务,string,company,proceed_testing_with_caveat,yes,电动汽车充电设备...,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,review
+cninfo_company_basic_profile,direct,F017V,company_profile_text,公司简介,string,company,proceed_testing_with_caveat,yes,公司专注于...,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,review
+cninfo_company_basic_profile,direct,F010D,establishment_date,成立日期,date,company,proceed_testing_with_caveat,yes,2004-03-09,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,review
+cninfo_company_basic_profile,direct,F044V,index_or_plate_labels,指数/板块标签,string,company,proceed_testing_with_caveat,yes,创业板,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,review
+cninfo_company_basic_profile,direct,F006V,postal_code,邮政编码,string,company,proceed_testing_with_caveat,yes,266104,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,no
+cninfo_company_basic_profile,direct,F012V,contact_email,联系邮箱,string,company,proceed_testing_with_caveat,yes,investor@tgood.cn,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,no
+cninfo_company_basic_profile,direct,F013V,contact_phone,联系电话,string,company,proceed_testing_with_caveat,yes,0532-88938628,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,no
+cninfo_company_basic_profile,direct,F014V,contact_fax,传真,string,company,proceed_testing_with_caveat,yes,0532-88938628,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,no
+cninfo_company_basic_profile,direct,F018V,board_secretary_candidate,董秘候选人,string,company,proceed_testing_with_caveat,yes,王军,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,no
+cninfo_company_basic_profile,direct,F047V,listing_sponsor,保荐机构,string,company,proceed_testing_with_caveat,yes,中信证券股份有限公司,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,no
+cninfo_company_basic_profile,direct,SECCODE,listing_sec_code,上市信息证券代码,string,company,proceed_testing_with_caveat,yes,300001,stable200/889 key fill >=99.6%; reach 889=97.0%,困难样本/basic empty 敏感,no
+cninfo_company_contact_profile,derived,F004V,registered_address,注册地址,string,company,derived_no_separate_fetch,yes,,889 derived fill >=98.9% (endpoint_found subset),无独立 endpoint；随 basic 可达性,yes
+cninfo_company_contact_profile,derived,F005V,office_address,办公地址,string,company,derived_no_separate_fetch,yes,,889 derived fill >=98.9% (endpoint_found subset),无独立 endpoint；随 basic 可达性,yes
+cninfo_company_contact_profile,derived,F006V,postal_code,邮政编码,string,company,derived_no_separate_fetch,yes,,889 derived fill >=98.9% (endpoint_found subset),无独立 endpoint；随 basic 可达性,yes
+cninfo_company_contact_profile,derived,F011V,company_website,公司网址,string,company,derived_no_separate_fetch,yes,,889 derived fill >=98.9% (endpoint_found subset),无独立 endpoint；随 basic 可达性,yes
+cninfo_company_contact_profile,derived,F012V,contact_email,联系邮箱,string,company,derived_no_separate_fetch,yes,,889 derived fill >=98.9% (endpoint_found subset),无独立 endpoint；随 basic 可达性,yes
+cninfo_company_contact_profile,derived,F013V,contact_phone,联系电话,string,company,derived_no_separate_fetch,yes,,889 derived fill >=98.9% (endpoint_found subset),无独立 endpoint；随 basic 可达性,yes
+cninfo_company_contact_profile,derived,F014V,contact_fax,传真,string,company,derived_no_separate_fetch,yes,,889 derived fill >=98.9% (endpoint_found subset),无独立 endpoint；随 basic 可达性,yes
+cninfo_company_contact_profile,derived,F018V,board_secretary_candidate,董秘候选人,string,company,derived_no_separate_fetch,yes,,889 derived fill >=98.9% (endpoint_found subset),无独立 endpoint；随 basic 可达性,yes
+cninfo_company_business_scope,derived,F015V,main_business_summary,主营业务,string,company,derived_no_separate_fetch,yes,,889 F015V 100%,无独立 endpoint；与 basic 重叠,yes
+cninfo_company_business_scope,derived,F016V,business_scope,经营范围,string,company,derived_no_separate_fetch,yes,,889 F016V 99.7%,无独立 endpoint；与 basic 重叠,yes
+cninfo_company_business_scope,derived,F017V,company_profile_text,公司简介,string,company,derived_no_separate_fetch,yes,,889 F017V 99.9%,无独立 endpoint；与 basic 重叠,yes
+cninfo_company_industry_profile,derived,F032V,industry,所属行业,string,company,derived_no_separate_fetch,yes,,889 F032V 99.7%,非完整行业分类体系,yes
+cninfo_company_industry_profile,derived,F044V,index_or_plate_labels,指数/板块标签,string,company,derived_no_separate_fetch,yes,,889 F044V 95.5%,非完整行业分类体系,review
+cninfo_company_industry_profile,derived,MARKET,listed_board,上市板块,string,company,derived_no_separate_fetch,yes,,889 MARKET 100%,非完整行业分类体系,yes
+cninfo_executive_profile,direct,F002V,person_name,姓名,string,executive,proceed_testing_with_caveat,yes,张为忠,889 reach 93.8%; partial retry 97.6%; 1 executive empty_but_valid residual,executive caveat；困难样本敏感,yes
+cninfo_executive_profile,direct,F009V,position,职务,string,executive,proceed_testing_with_caveat,yes,"董事长,党委书记",889 reach 93.8%; partial retry 97.6%; 1 executive empty_but_valid residual,executive caveat；困难样本敏感,yes
+cninfo_executive_profile,direct,F010V,gender_candidate,性别,string,executive,proceed_testing_with_caveat,yes,男,889 reach 93.8%; partial retry 97.6%; 1 executive empty_but_valid residual,executive caveat；困难样本敏感,yes
+cninfo_executive_profile,direct,F012V,birth_year_candidate,出生年份,string,executive,proceed_testing_with_caveat,yes,1967,889 reach 93.8%; partial retry 97.6%; 1 executive empty_but_valid residual,executive caveat；困难样本敏感,yes
+cninfo_executive_profile,direct,F017V,education_candidate,学历,string,executive,proceed_testing_with_caveat,yes,硕士研究生,889 reach 93.8%; partial retry 97.6%; 1 executive empty_but_valid residual,executive caveat；困难样本敏感,review
+cninfo_executive_profile,direct,F005N,shareholding_quantity_candidate,持股数量,number,executive,proceed_testing_with_caveat,yes,217000,889 reach 93.8%; partial retry 97.6%; 1 executive empty_but_valid residual,executive caveat；困难样本敏感,review
+cninfo_executive_profile,direct,F012N,compensation_candidate,薪酬,number,executive,proceed_testing_with_caveat,yes,90.95,889 reach 93.8%; partial retry 97.6%; 1 executive empty_but_valid residual,executive caveat；困难样本敏感,review
+cninfo_executive_profile,direct,F001V,person_id_candidate,人员ID,string,executive,proceed_testing_with_caveat,yes,D231120024,889 reach 93.8%; partial retry 97.6%; 1 executive empty_but_valid residual,executive caveat；困难样本敏感,no
+cninfo_executive_profile,direct,SEQID,row_sequence_id,行序号,integer,executive,proceed_testing_with_caveat,yes,15891431386,889 reach 93.8%; partial retry 97.6%; 1 executive empty_but_valid residual,executive caveat；困难样本敏感,no
+cninfo_executive_profile,direct,(n/a),term_start_candidate,任期开始,date,executive,proceed_testing_with_caveat,yes,,889 reach 93.8%; partial retry 97.6%; 1 executive empty_but_valid residual,executive caveat；困难样本敏感,review
+cninfo_executive_profile,direct,(n/a),term_end_candidate,任期结束,date,executive,proceed_testing_with_caveat,yes,,889 reach 93.8%; partial retry 97.6%; 1 executive empty_but_valid residual,executive caveat；困难样本敏感,review
+cninfo_share_capital_profile,direct,VARYDATE,report_date,变动/报告日期,date,share_capital,source_partial,yes,2024-12-31,889 reach 94.2%; partial retry 80.5%; 8 share_capital empty_but_valid residual,share_capital source_partial；单位语义 candidate-level,yes
+cninfo_share_capital_profile,direct,F021N,total_share_capital,总股本,number,share_capital,source_partial,yes,1055390000,889 reach 94.2%; partial retry 80.5%; 8 share_capital empty_but_valid residual,share_capital source_partial；单位语义 candidate-level,yes
+cninfo_share_capital_profile,direct,F022N,float_share_capital,流通股本,number,share_capital,source_partial,yes,991234567,889 reach 94.2%; partial retry 80.5%; 8 share_capital empty_but_valid residual,share_capital source_partial；单位语义 candidate-level,yes
+cninfo_share_capital_profile,direct,F023N,restricted_share_capital,限售股本,number,share_capital,source_partial,yes,64115433,889 reach 94.2%; partial retry 80.5%; 8 share_capital empty_but_valid residual,share_capital source_partial；单位语义 candidate-level,yes
+cninfo_share_capital_profile,direct,F002V,change_reason_or_source,变动原因,string,share_capital,source_partial,yes,定期报告,889 reach 94.2%; partial retry 80.5%; 8 share_capital empty_but_valid residual,share_capital source_partial；单位语义 candidate-level,review
+cninfo_share_capital_profile,direct,F024N,unrestricted_share_candidate,无限售股份,number,share_capital,source_partial,yes,,889 reach 94.2%; partial retry 80.5%; 8 share_capital empty_but_valid residual,share_capital source_partial；单位语义 candidate-level,review
+cninfo_share_capital_profile,direct,F028N,change_amount_candidate,变动数量,number,share_capital,source_partial,yes,,889 reach 94.2%; partial retry 80.5%; 8 share_capital empty_but_valid residual,share_capital source_partial；单位语义 candidate-level,review
+cninfo_share_capital_profile,direct,F003N,total_capital_candidate,总资本候选,number,share_capital,source_partial,yes,,889 reach 94.2%; partial retry 80.5%; 8 share_capital empty_but_valid residual,share_capital source_partial；单位语义 candidate-level,review
+cninfo_share_capital_profile,direct,(n/a),share_unit,股份单位,string,share_capital,source_partial,yes,,889 reach 94.2%; partial retry 80.5%; 8 share_capital empty_but_valid residual,share_capital source_partial；单位语义 candidate-level,review
+cninfo_top_shareholders_profile,direct,F001D,report_period,报告期,date,shareholder,proceed_testing_with_caveat,yes,,889 top_sh/top_float reach 97.0%; empty_but_valid 单独统计,股东 empty_but_valid policy；reachable≠non_empty,yes
+cninfo_top_shareholders_profile,direct,F002V,shareholder_name,股东名称,string,shareholder,proceed_testing_with_caveat,yes,,889 top_sh/top_float reach 97.0%; empty_but_valid 单独统计,股东 empty_but_valid policy；reachable≠non_empty,yes
+cninfo_top_shareholders_profile,direct,F003N,holding_shares,持股数量,number,shareholder,proceed_testing_with_caveat,yes,,889 top_sh/top_float reach 97.0%; empty_but_valid 单独统计,股东 empty_but_valid policy；reachable≠non_empty,yes
+cninfo_top_shareholders_profile,direct,F004N,holding_ratio,持股比例,number,shareholder,proceed_testing_with_caveat,yes,,889 top_sh/top_float reach 97.0%; empty_but_valid 单独统计,股东 empty_but_valid policy；reachable≠non_empty,yes
+cninfo_top_shareholders_profile,direct,F005N,rank,排名,integer,shareholder,proceed_testing_with_caveat,yes,,889 top_sh/top_float reach 97.0%; empty_but_valid 单独统计,股东 empty_but_valid policy；reachable≠non_empty,yes
+cninfo_top_shareholders_profile,direct,F006V,shareholder_type_candidate,股东类型,string,shareholder,proceed_testing_with_caveat,yes,,889 top_sh/top_float reach 97.0%; empty_but_valid 单独统计,股东 empty_but_valid policy；reachable≠non_empty,review
+cninfo_top_shareholders_profile,direct,F007V,change_status_or_change_amount_candidate,变动状态/变动量,string,shareholder,proceed_testing_with_caveat,yes,未变,889 top_sh/top_float reach 97.0%; empty_but_valid 单独统计,股东 empty_but_valid policy；reachable≠non_empty,no
+cninfo_top_float_shareholders_profile,direct,F001D,report_period,报告期,date,shareholder,source_partial,yes,,889 top_sh/top_float reach 97.0%; empty_but_valid 单独统计,股东 empty_but_valid policy；top_float source_partial,yes
+cninfo_top_float_shareholders_profile,direct,F002V,shareholder_name,股东名称,string,shareholder,source_partial,yes,,889 top_sh/top_float reach 97.0%; empty_but_valid 单独统计,股东 empty_but_valid policy；top_float source_partial,yes
+cninfo_top_float_shareholders_profile,direct,F003N,holding_shares,持股数量,number,shareholder,source_partial,yes,,889 top_sh/top_float reach 97.0%; empty_but_valid 单独统计,股东 empty_but_valid policy；top_float source_partial,yes
+cninfo_top_float_shareholders_profile,direct,F004N,holding_ratio,持股比例,number,shareholder,source_partial,yes,,889 top_sh/top_float reach 97.0%; empty_but_valid 单独统计,股东 empty_but_valid policy；top_float source_partial,yes
+cninfo_top_float_shareholders_profile,direct,F005N,rank,排名,integer,shareholder,source_partial,yes,,889 top_sh/top_float reach 97.0%; empty_but_valid 单独统计,股东 empty_but_valid policy；top_float source_partial,yes
+cninfo_top_float_shareholders_profile,direct,F006V,shareholder_type_candidate,股东类型,string,shareholder,source_partial,yes,,889 top_sh/top_float reach 97.0%; empty_but_valid 单独统计,股东 empty_but_valid policy；top_float source_partial,review
+cninfo_top_float_shareholders_profile,direct,F007V,change_status_or_change_amount_candidate,变动状态/变动量,string,shareholder,source_partial,yes,未变,889 top_sh/top_float reach 97.0%; empty_but_valid 单独统计,股东 empty_but_valid policy；top_float source_partial,no
+cninfo_dividend_financing_profile,direct,F001V,report_period,报告期/分红年度,string,dividend,proceed_testing,yes,2024年报,889 reach 97.0%; stable200 100%; partial retry 100%,dividend_history only；≠financing；YAML GO decision only,yes
+cninfo_dividend_financing_profile,direct,F007V,dividend_plan_text,分红方案文本,string,dividend,proceed_testing,yes,10派4.1元(含税),889 reach 97.0%; stable200 100%; partial retry 100%,dividend_history only；≠financing；YAML GO decision only,yes
+cninfo_dividend_financing_profile,direct,F018D,announcement_date_candidate,公告日期,date,dividend,proceed_testing,yes,2025-07-15,889 reach 97.0%; stable200 100%; partial retry 100%,dividend_history only；≠financing；YAML GO decision only,yes
+cninfo_dividend_financing_profile,direct,F020D,ex_right_dividend_date_candidate,除权除息日,date,dividend,proceed_testing,yes,2025-07-16,889 reach 97.0%; stable200 100%; partial retry 100%,dividend_history only；≠financing；YAML GO decision only,yes
+cninfo_dividend_financing_profile,direct,F023D,dividend_payment_date_candidate,派息日,date,dividend,proceed_testing,yes,2025-07-16,889 reach 97.0%; stable200 100%; partial retry 100%,dividend_history only；≠financing；YAML GO decision only,yes
+cninfo_company_security_profile,observe_only,secCode,security_code,证券代码,string,security,observe_only,yes,600000,889 observe 100%；不绑定主 gate,security observe-only；secType=szshe 硬编码,no
+cninfo_company_security_profile,observe_only,secName,stock_short_name,证券简称,string,security,observe_only,yes,浦发银行,889 observe 100%；不绑定主 gate,security observe-only；secType=szshe 硬编码,no
+cninfo_company_security_profile,observe_only,secType,security_type_code,证券类型代码,string,security,observe_only,yes,szshe,889 observe 100%；不绑定主 gate,security observe-only；secType=szshe 硬编码,no
+cninfo_company_security_profile,observe_only,tradingStatus,trading_status_code,交易状态代码,string,security,observe_only,yes,,889 observe 100%；不绑定主 gate,security observe-only；secType=szshe 硬编码,no
+cninfo_company_security_profile,observe_only,age,listing_age_years_candidate,上市年限,string,security,observe_only,yes,25,889 observe 100%；不绑定主 gate,security observe-only；secType=szshe 硬编码,no
+cninfo_company_security_profile,observe_only,finance,is_finance_related_candidate,金融相关标志,boolean,security,observe_only,yes,false,889 observe 100%；不绑定主 gate,security observe-only；secType=szshe 硬编码,no
+cninfo_company_security_profile,observe_only,delisted,is_delisted,是否退市,boolean,security,observe_only,yes,false,889 observe 100%；不绑定主 gate,security observe-only；secType=szshe 硬编码,no
+cninfo_company_security_profile,observe_only,sshk,shanghai_hong_kong_connect_candidate,沪港通标志,boolean,security,observe_only,yes,,889 observe 100%；不绑定主 gate,security observe-only；secType=szshe 硬编码,no
+cninfo_company_security_profile,observe_only,szhk,shenzhen_hong_kong_connect_candidate,深港通标志,boolean,security,observe_only,yes,,889 observe 100%；不绑定主 gate,security observe-only；secType=szshe 硬编码,no
+cninfo_company_security_profile,observe_only,(derived),exchange,交易所,string,security,observe_only,yes,SSE,889 observe 100%；不绑定主 gate,security observe-only；secType=szshe 硬编码,no
+cninfo_company_security_profile,observe_only,(n/a),listed_board,上市板块,string,security,observe_only,yes,,889 observe 100%；不绑定主 gate,security observe-only；secType=szshe 硬编码,no
+cninfo_company_security_profile,observe_only,(n/a),listing_date,上市日期,date,security,observe_only,yes,,889 observe 100%；不绑定主 gate,security observe-only；secType=szshe 硬编码,no
+cninfo_company_security_profile,observe_only,(n/a),listing_status,上市状态,string,security,observe_only,yes,,889 observe 100%；不绑定主 gate,security observe-only；secType=szshe 硬编码,no
+cninfo_company_security_profile,observe_only,(n/a),is_st_candidate,ST候选标志,boolean,security,observe_only,yes,,889 observe 100%；不绑定主 gate,security observe-only；secType=szshe 硬编码,no
+cninfo_company_basic_profile,direct,(lineage),raw_record_json,原始响应,object,company,proceed_testing_with_caveat,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,yes
+cninfo_company_basic_profile,direct,(lineage),raw_record_hash,原始哈希,string,company,proceed_testing_with_caveat,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,yes
+cninfo_company_basic_profile,direct,(lineage),source_status,源状态,string,company,proceed_testing_with_caveat,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,review
+cninfo_company_basic_profile,direct,(lineage),field_confidence,字段置信度,string,company,proceed_testing_with_caveat,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,review
+cninfo_executive_profile,direct,(lineage),raw_record_json,原始响应,object,company,proceed_testing_with_caveat,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,yes
+cninfo_executive_profile,direct,(lineage),raw_record_hash,原始哈希,string,company,proceed_testing_with_caveat,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,yes
+cninfo_executive_profile,direct,(lineage),source_status,源状态,string,company,proceed_testing_with_caveat,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,review
+cninfo_executive_profile,direct,(lineage),field_confidence,字段置信度,string,company,proceed_testing_with_caveat,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,review
+cninfo_share_capital_profile,direct,(lineage),raw_record_json,原始响应,object,company,source_partial,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,yes
+cninfo_share_capital_profile,direct,(lineage),raw_record_hash,原始哈希,string,company,source_partial,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,yes
+cninfo_share_capital_profile,direct,(lineage),source_status,源状态,string,company,source_partial,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,review
+cninfo_share_capital_profile,direct,(lineage),field_confidence,字段置信度,string,company,source_partial,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,review
+cninfo_top_shareholders_profile,direct,(lineage),raw_record_json,原始响应,object,company,proceed_testing_with_caveat,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,yes
+cninfo_top_shareholders_profile,direct,(lineage),raw_record_hash,原始哈希,string,company,proceed_testing_with_caveat,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,yes
+cninfo_top_shareholders_profile,direct,(lineage),source_status,源状态,string,company,proceed_testing_with_caveat,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,review
+cninfo_top_shareholders_profile,direct,(lineage),field_confidence,字段置信度,string,company,proceed_testing_with_caveat,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,review
+cninfo_top_float_shareholders_profile,direct,(lineage),raw_record_json,原始响应,object,company,source_partial,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,yes
+cninfo_top_float_shareholders_profile,direct,(lineage),raw_record_hash,原始哈希,string,company,source_partial,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,yes
+cninfo_top_float_shareholders_profile,direct,(lineage),source_status,源状态,string,company,source_partial,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,review
+cninfo_top_float_shareholders_profile,direct,(lineage),field_confidence,字段置信度,string,company,source_partial,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,review
+cninfo_dividend_financing_profile,direct,(lineage),raw_record_json,原始响应,object,company,proceed_testing,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,yes
+cninfo_dividend_financing_profile,direct,(lineage),raw_record_hash,原始哈希,string,company,proceed_testing,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,yes
+cninfo_dividend_financing_profile,direct,(lineage),source_status,源状态,string,company,proceed_testing,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,review
+cninfo_dividend_financing_profile,direct,(lineage),field_confidence,字段置信度,string,company,proceed_testing,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,review
+cninfo_company_security_profile,observe_only,(lineage),raw_record_json,原始响应,object,company,observe_only,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,yes
+cninfo_company_security_profile,observe_only,(lineage),raw_record_hash,原始哈希,string,company,observe_only,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,yes
+cninfo_company_security_profile,observe_only,(lineage),source_status,源状态,string,company,observe_only,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,review
+cninfo_company_security_profile,observe_only,(lineage),field_confidence,字段置信度,string,company,observe_only,yes,,harvest lineage 必需,保留 raw lineage；不写 verified,review
