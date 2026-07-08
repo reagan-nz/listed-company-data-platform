@@ -101,12 +101,13 @@ class TestHarvestRunnerSafety(unittest.TestCase):
 
         with patch("harvest_cninfo_c_class.run_live_harvest", return_value=([], {})):
             with patch("harvest_cninfo_c_class.write_smoke_csv"):
-                with patch("harvest_cninfo_c_class.write_smoke_summary"):
-                    with patch("harvest_cninfo_c_class.load_run_status", return_value=None):
-                        buf = io.StringIO()
-                        with redirect_stdout(buf):
-                            _run_live_full(args, DEFAULT_SAMPLE, HOLD_PATH)
-                        output = buf.getvalue()
+                with patch("harvest_cninfo_c_class.write_quality_harvest_summary"):
+                    with patch("harvest_cninfo_c_class.write_full_harvest_summary"):
+                        with patch("harvest_cninfo_c_class.load_run_status", return_value=None):
+                            buf = io.StringIO()
+                            with redirect_stdout(buf):
+                                _run_live_full(args, DEFAULT_SAMPLE, HOLD_PATH)
+                            output = buf.getvalue()
         self.assertIn("pre_live_harvest_validation: PASS", output)
         self.assertIn("resume_skip_count=", output)
         self.assertIn("resume_pending_count=", output)

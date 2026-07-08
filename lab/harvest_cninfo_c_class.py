@@ -97,6 +97,14 @@ DEFAULT_SMOKE_CSV = os.path.join(
 DEFAULT_SMOKE_MD = os.path.join(
     BASE_DIR, "outputs", "validation", "cninfo_c_class_harvest_smoke_summary.md"
 )
+DEFAULT_FULL_CSV = os.path.join(
+    BASE_DIR, "outputs", "validation", "cninfo_c_class_harvest_full_report.csv"
+)
+DEFAULT_FULL_MD = os.path.join(
+    BASE_DIR, "outputs", "validation", "cninfo_c_class_harvest_full_summary.md"
+)
+
+MATRIX_SOURCES_PER_COMPANY = 10  # len(HARVEST_MATRIX_SOURCE_ORDER)，含 derived
 
 # live 安全：full harvest 需显式 --approve-full-harvest；smoke 使用 --limit
 FULL_HARVEST_APPROVAL_REQUIRED = "FULL_HARVEST_APPROVAL_REQUIRED"
@@ -109,9 +117,37 @@ HARVEST_SUCCESS_STATUSES = frozenset({
 })
 
 HARVEST_OUTPUT_ROOT = "outputs/harvest/cninfo_c_class"
+DEFAULT_HARVEST_OUTPUT_ROOT = HARVEST_OUTPUT_ROOT
 QUALITY_DIR_REL = f"{HARVEST_OUTPUT_ROOT}/quality"
 RUN_STATUS_REL = f"{QUALITY_DIR_REL}/run_status.json"
 COMPANY_HARVEST_STATUS_REL = f"{QUALITY_DIR_REL}/company_harvest_status.csv"
+
+PHASE2_SMOKE_SAMPLE_BASENAME = "eval_companies_c_class_phase2_smoke_200.yaml"
+PHASE2_SMOKE_EXPECTED_COUNT = 200
+PHASE2_SMOKE_APPROVAL_REQUIRED = "PHASE2_SMOKE_HARVEST_APPROVAL_REQUIRED"
+
+
+def configure_harvest_output_root(output_root: Optional[str] = None) -> str:
+    """配置 harvest 产物根目录；默认保持 863 主轨路径不变。"""
+    global HARVEST_OUTPUT_ROOT, QUALITY_DIR_REL, RUN_STATUS_REL, COMPANY_HARVEST_STATUS_REL
+    root = (output_root or DEFAULT_HARVEST_OUTPUT_ROOT).rstrip("/")
+    HARVEST_OUTPUT_ROOT = root
+    QUALITY_DIR_REL = f"{root}/quality"
+    COMPANY_HARVEST_STATUS_REL = f"{QUALITY_DIR_REL}/company_harvest_status.csv"
+    if root == DEFAULT_HARVEST_OUTPUT_ROOT:
+        RUN_STATUS_REL = f"{QUALITY_DIR_REL}/run_status.json"
+    else:
+        RUN_STATUS_REL = f"{root}/run_status.json"
+    return root
+
+
+def reset_harvest_output_root() -> None:
+    configure_harvest_output_root(None)
+
+
+def is_phase2_smoke_sample(sample_path: str) -> bool:
+    norm = sample_path.replace("\\", "/")
+    return norm.endswith(PHASE2_SMOKE_SAMPLE_BASENAME)
 
 # harvest plan §3 source → mapper 接线（dry-run 验收用）
 HARVEST_MAPPER_REGISTRY: Dict[str, Dict[str, str]] = {
@@ -345,11 +381,18 @@ def validate_harvest_preflight(
     actual_codes = {c["company_code"] for c in companies}
     overlap = actual_codes & hold_codes
 
+    # 863 主轨默认 863；其他 universe 以 YAML company_count 为准
+    expected_size = (
+        int(declared)
+        if declared is not None and int(declared) != HARVEST_EXPECTED_COMPANY_COUNT
+        else HARVEST_EXPECTED_COMPANY_COUNT
+    )
+
     issues: List[str] = []
-    if declared != actual:
+    if declared is not None and int(declared) != actual:
         issues.append(f"company_count={declared!r} actual={actual}")
-    if actual != HARVEST_EXPECTED_COMPANY_COUNT:
-        issues.append(f"expected={HARVEST_EXPECTED_COMPANY_COUNT} actual={actual}")
+    if actual != expected_size:
+        issues.append(f"expected={expected_size} actual={actual}")
     if overlap:
         issues.append(f"hold_overlap={sorted(overlap)}")
     for sid in HARVEST_MATRIX_SOURCE_ORDER:
@@ -794,13 +837,21 @@ def validate_smoke_preflight(
     )
 
 
-def resolve_live_execution_mode(args: argparse.Namespace) -> str:
+def resolve_live_execution_mode(
+    args: argparse.Namespace,
+    sample_path: str = "",
+) -> str:
     """
     解析 live 执行模式。
 
+    - phase2_smoke: phase2 smoke YAML + --approve-phase2-smoke-harvest
     - smoke: --live --limit N（无需 approve）
     - full: --live --approve-full-harvest（无 limit 或 limit>=863）
     """
+    if sample_path and is_phase2_smoke_sample(sample_path):
+        if getattr(args, "approve_phase2_smoke_harvest", False):
+            return "phase2_smoke"
+        return ""
     if args.limit is not None:
         return "smoke"
     if args.approve_full_harvest:
@@ -808,11 +859,17 @@ def resolve_live_execution_mode(args: argparse.Namespace) -> str:
     return ""
 
 
-def enforce_live_approval_gate(args: argparse.Namespace) -> str:
+def enforce_live_approval_gate(
+    args: argparse.Namespace,
+    sample_path: str = "",
+) -> str:
     """live 入口安全闸：无 approve 且无 limit 时拒绝。"""
-    mode = resolve_live_execution_mode(args)
+    mode = resolve_live_execution_mode(args, sample_path)
     if not mode:
-        print(FULL_HARVEST_APPROVAL_REQUIRED, file=sys.stderr)
+        if sample_path and is_phase2_smoke_sample(sample_path):
+            print(PHASE2_SMOKE_APPROVAL_REQUIRED, file=sys.stderr)
+        else:
+            print(FULL_HARVEST_APPROVAL_REQUIRED, file=sys.stderr)
         sys.exit(2)
     return mode
 
@@ -904,6 +961,7 @@ def validate_pre_live_harvest(
     *,
     execution_mode: str,
     approve_full_harvest: bool,
+    approve_phase2_smoke_harvest: bool = False,
     limit: Optional[int],
     resume: bool,
     run_status_path: Optional[str] = None,
@@ -931,7 +989,23 @@ def validate_pre_live_harvest(
             issues.append(f"expected={HARVEST_EXPECTED_COMPANY_COUNT} actual={actual}")
         if not approve_full_harvest:
             issues.append("approve_full_harvest_required")
+    elif execution_mode == "phase2_smoke":
+        data = load_sample_yaml(sample_path)
+        declared = data.get("company_count")
+        actual = len(companies)
+        if declared != actual:
+            issues.append(f"company_count_declared={declared!r} actual={actual}")
+        if actual != PHASE2_SMOKE_EXPECTED_COUNT:
+            issues.append(f"expected={PHASE2_SMOKE_EXPECTED_COUNT} actual={actual}")
+        if not approve_phase2_smoke_harvest:
+            issues.append("approve_phase2_smoke_harvest_required")
+        if approve_full_harvest:
+            issues.append("approve_full_harvest_not_valid_for_phase2")
+        if limit is not None and len(companies) > limit:
+            issues.append(f"companies={len(companies)} limit={limit}")
     elif execution_mode == "smoke":
+        if is_phase2_smoke_sample(sample_path):
+            issues.append("phase2_smoke_requires_approve_phase2_smoke_harvest")
         if limit is None or limit < 1:
             issues.append(f"smoke_limit_invalid={limit!r}")
         if len(companies) > (limit or 0):
@@ -959,6 +1033,13 @@ def validate_pre_live_harvest(
         detail = (
             f"mode=full company_count={len(companies)} hold_overlap=0 "
             f"approve_full_harvest=true planned_http_cases={len(companies) * HTTP_SOURCES_PER_COMPANY}"
+        )
+    elif execution_mode == "phase2_smoke":
+        detail = (
+            f"mode=phase2_smoke company_count={len(companies)} hold_overlap=0 "
+            f"approve_phase2_smoke_harvest=true "
+            f"output_root={HARVEST_OUTPUT_ROOT} "
+            f"planned_http_cases={len(companies) * HTTP_SOURCES_PER_COMPANY}"
         )
     else:
         detail = (
@@ -1640,20 +1721,165 @@ def run_live_harvest(
             "last_updated": request_time,
         })
 
-    write_quality_artifacts(company_status_rows, field_fill_rows, source_quality, companies, stats)
+    write_quality_artifacts(
+        company_status_rows, field_fill_rows, source_quality, companies, stats,
+        write_summary=False,
+    )
     return report_rows, dict(stats)
 
 
-def write_quality_artifacts(
-    company_status_rows: List[Dict[str, str]],
-    field_fill_rows: List[Dict[str, str]],
-    source_quality: Counter,
-    companies: List[Dict[str, str]],
-    stats: Dict[str, int],
-) -> None:
-    quality_dir = _harvest_abs_path(f"{HARVEST_OUTPUT_ROOT}/quality")
-    os.makedirs(quality_dir, exist_ok=True)
+@dataclass
+class HarvestGateMetrics:
+    """resume 感知的 harvest gate 统计。"""
 
+    total_harvest_universe: int
+    resume_enabled: bool
+    resume_skipped_companies: int
+    newly_processed_companies: int
+    completed_companies_total: int
+    expected_new_raw: int
+    expected_total_raw: int
+    expected_new_normalized: int
+    expected_total_normalized: int
+    actual_new_raw: int
+    actual_total_raw: int
+    actual_new_normalized: int
+    actual_total_normalized: int
+    blocked_count: int
+    http_error_count: int
+    gate: str = ""
+
+
+def _stats_from_report_rows(report_rows: List[Dict[str, str]]) -> Dict[str, int]:
+    stats: Dict[str, int] = Counter()
+    stats["http_requests"] = sum(
+        1 for r in report_rows
+        if r.get("source_type") != "derived" and r.get("raw_written") == "yes"
+    )
+    stats["raw_files"] = stats["http_requests"]
+    stats["normalized_files"] = sum(1 for r in report_rows if r.get("normalized_written") == "yes")
+    stats["success_count"] = sum(
+        1 for r in report_rows if r.get("harvest_result") in ("success", "empty_but_valid")
+    )
+    stats["empty_but_valid_count"] = sum(
+        1 for r in report_rows if r.get("harvest_result") == "empty_but_valid"
+    )
+    stats["blocked_count"] = sum(1 for r in report_rows if r.get("harvest_result") == "blocked")
+    stats["http_error_count"] = sum(
+        1 for r in report_rows if r.get("harvest_result") == "http_error"
+    )
+    stats["failed_count"] = sum(1 for r in report_rows if r.get("harvest_result") == "failed")
+    return dict(stats)
+
+
+def count_harvest_artifacts_on_disk() -> Dict[str, int]:
+    """统计磁盘上 raw / normalized / company 覆盖（不重跑 harvest）。"""
+    raw_root = _harvest_abs_path(f"{HARVEST_OUTPUT_ROOT}/raw")
+    norm_root = _harvest_abs_path(f"{HARVEST_OUTPUT_ROOT}/normalized")
+    raw_count = 0
+    for _root, _dirs, files in os.walk(raw_root):
+        raw_count += len(files)
+    norm_count = 0
+    for _root, _dirs, files in os.walk(norm_root):
+        norm_count += len(files)
+    basic_dir = os.path.join(norm_root, "company_basic_profile")
+    company_codes: set = set()
+    if os.path.isdir(basic_dir):
+        for name in os.listdir(basic_dir):
+            if name.endswith(".json"):
+                company_codes.add(name[:-5])
+    return {
+        "raw_files_total": raw_count,
+        "normalized_files_total": norm_count,
+        "completed_companies_total": len(company_codes),
+    }
+
+
+def compute_harvest_gate_metrics(
+    report_rows: List[Dict[str, str]],
+    *,
+    total_universe: int = HARVEST_EXPECTED_COMPANY_COUNT,
+    resume_enabled: bool = False,
+    resume_skip_count: int = 0,
+    disk_counts: Optional[Dict[str, int]] = None,
+) -> HarvestGateMetrics:
+    """根据本轮 report 与磁盘总量计算 resume 感知 gate 指标。"""
+    report_company_codes = {r["company_code"] for r in report_rows if r.get("company_code")}
+    newly_processed = len(report_company_codes)
+    if resume_enabled and resume_skip_count == 0 and newly_processed < total_universe:
+        resume_skip_count = total_universe - newly_processed
+
+    stats = _stats_from_report_rows(report_rows)
+    actual_new_raw = stats.get("raw_files", 0)
+    actual_new_normalized = stats.get("normalized_files", 0)
+
+    disk = disk_counts or count_harvest_artifacts_on_disk()
+    actual_total_raw = disk.get("raw_files_total", actual_new_raw)
+    actual_total_normalized = disk.get("normalized_files_total", actual_new_normalized)
+    completed_total = disk.get("completed_companies_total", resume_skip_count + newly_processed)
+
+    expected_new_raw = newly_processed * HTTP_SOURCES_PER_COMPANY
+    expected_new_normalized = newly_processed * MATRIX_SOURCES_PER_COMPANY
+    expected_total_raw = total_universe * HTTP_SOURCES_PER_COMPANY
+    expected_total_normalized = total_universe * MATRIX_SOURCES_PER_COMPANY
+
+    metrics = HarvestGateMetrics(
+        total_harvest_universe=total_universe,
+        resume_enabled=resume_enabled,
+        resume_skipped_companies=resume_skip_count,
+        newly_processed_companies=newly_processed,
+        completed_companies_total=completed_total,
+        expected_new_raw=expected_new_raw,
+        expected_total_raw=expected_total_raw,
+        expected_new_normalized=expected_new_normalized,
+        expected_total_normalized=expected_total_normalized,
+        actual_new_raw=actual_new_raw,
+        actual_total_raw=actual_total_raw,
+        actual_new_normalized=actual_new_normalized,
+        actual_total_normalized=actual_total_normalized,
+        blocked_count=stats.get("blocked_count", 0),
+        http_error_count=stats.get("http_error_count", 0),
+    )
+    metrics.gate = evaluate_harvest_gate(metrics)
+    return metrics
+
+
+def evaluate_harvest_gate(metrics: HarvestGateMetrics) -> str:
+    """判定 harvest gate：PASS · PASS_WITH_RESUME · FAIL。"""
+    if metrics.blocked_count != 0 or metrics.http_error_count != 0:
+        return "FAIL"
+    new_raw_ok = metrics.actual_new_raw == metrics.expected_new_raw
+    new_norm_ok = metrics.actual_new_normalized == metrics.expected_new_normalized
+    complete_ok = metrics.completed_companies_total == metrics.total_harvest_universe
+    if not (new_raw_ok and new_norm_ok and complete_ok):
+        return "FAIL"
+    if metrics.resume_enabled:
+        total_raw_ok = metrics.actual_total_raw == metrics.expected_total_raw
+        total_norm_ok = metrics.actual_total_normalized == metrics.expected_total_normalized
+        if total_raw_ok and total_norm_ok:
+            return "PASS_WITH_RESUME"
+        return "FAIL"
+    total_raw_ok = metrics.actual_total_raw == metrics.expected_total_raw
+    total_norm_ok = metrics.actual_total_normalized == metrics.expected_total_normalized
+    if total_raw_ok and total_norm_ok:
+        return "PASS"
+    return "FAIL"
+
+
+def load_harvest_report_csv(path: str) -> List[Dict[str, str]]:
+    with open(path, encoding="utf-8") as fh:
+        return list(csv.DictReader(fh))
+
+
+def write_quality_harvest_summary(
+    metrics: HarvestGateMetrics,
+    stats: Dict[str, int],
+    *,
+    run_mode_label: str = "live full",
+) -> None:
+    """写入 quality/harvest_summary.md（resume 感知）。"""
+    quality_dir = _harvest_abs_path(QUALITY_DIR_REL)
+    os.makedirs(quality_dir, exist_ok=True)
     summary_path = os.path.join(quality_dir, "harvest_summary.md")
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     lines = [
@@ -1663,16 +1889,36 @@ def write_quality_artifacts(
         "",
         "## Run mode",
         "",
-        "**live smoke**",
+        f"**{run_mode_label}**",
         "",
-        f"- companies: **{len(companies)}**",
+        "## Universe",
+        "",
+        f"- total_harvest_universe: **{metrics.total_harvest_universe}**",
+        f"- resume_enabled: **{str(metrics.resume_enabled).lower()}**",
+        f"- resume_skipped_companies: **{metrics.resume_skipped_companies}**",
+        f"- newly_processed_companies: **{metrics.newly_processed_companies}**",
+        f"- completed_companies_total: **{metrics.completed_companies_total}**",
+        "",
+        "## This run",
+        "",
         f"- HTTP requests: **{stats.get('http_requests', 0)}**",
         f"- success: **{stats.get('success_count', 0)}**",
         f"- empty_but_valid: **{stats.get('empty_but_valid_count', 0)}**",
-        f"- blocked: **{stats.get('blocked_count', 0)}**",
-        f"- http_error: **{stats.get('http_error_count', 0)}**",
-        f"- raw files: **{stats.get('raw_files', 0)}**",
-        f"- normalized files: **{stats.get('normalized_files', 0)}**",
+        f"- blocked: **{metrics.blocked_count}**",
+        f"- http_error: **{metrics.http_error_count}**",
+        "",
+        "## File counts",
+        "",
+        f"| metric | expected (new) | actual (new) | expected (total) | actual (total) |",
+        f"|--------|----------------|--------------|------------------|----------------|",
+        f"| raw | {metrics.expected_new_raw} | {metrics.actual_new_raw} | "
+        f"{metrics.expected_total_raw} | {metrics.actual_total_raw} |",
+        f"| normalized | {metrics.expected_new_normalized} | {metrics.actual_new_normalized} | "
+        f"{metrics.expected_total_normalized} | {metrics.actual_total_normalized} |",
+        "",
+        "## Gate",
+        "",
+        f"**harvest_full_gate = {metrics.gate}**",
         "",
         "## Caveats",
         "",
@@ -1683,6 +1929,193 @@ def write_quality_artifacts(
     ]
     with open(summary_path, "w", encoding="utf-8") as fh:
         fh.write("\n".join(lines))
+
+
+def write_full_harvest_summary(
+    path: str,
+    metrics: HarvestGateMetrics,
+    report_rows: List[Dict[str, str]],
+    stats: Dict[str, int],
+    sample_path: str,
+) -> None:
+    """写入 full harvest validation summary（resume 感知 gate）。"""
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    status_ctr = Counter(r["retrieval_status"] for r in report_rows)
+    harvest_ctr = Counter(r["harvest_result"] for r in report_rows)
+    dividend_rows = [r for r in report_rows if r["source_id"] == "cninfo_dividend_financing_profile"]
+    dividend_parsed = sum(
+        1 for r in dividend_rows
+        if r["harvest_result"] in ("success", "empty_but_valid")
+    )
+
+    lines = [
+        "# CNINFO C-Class Harvest Full Summary",
+        "",
+        f"_生成时间：{now}_",
+        "",
+        "## Run mode",
+        "",
+        "**live full**（`--approve-full-harvest`）",
+        "",
+        f"## Overall gate: **{metrics.gate}**",
+        "",
+        "## Universe",
+        "",
+        f"- Sample: `{os.path.relpath(sample_path, BASE_DIR)}`",
+        f"- total_harvest_universe: **{metrics.total_harvest_universe}**",
+        f"- resume_skipped_companies: **{metrics.resume_skipped_companies}**",
+        f"- newly_processed_companies: **{metrics.newly_processed_companies}**",
+        f"- completed_companies_total: **{metrics.completed_companies_total}**",
+        "",
+        "## HTTP & harvest counts (this run)",
+        "",
+        "| metric | count |",
+        "|--------|-------|",
+        f"| HTTP requests | **{stats.get('http_requests', 0)}** |",
+        f"| success | **{stats.get('success_count', 0)}** |",
+        f"| empty_but_valid | **{stats.get('empty_but_valid_count', 0)}** |",
+        f"| blocked | **{metrics.blocked_count}** |",
+        f"| http_error | **{metrics.http_error_count}** |",
+        f"| raw files written (new) | **{metrics.actual_new_raw}** |",
+        f"| normalized files written (new) | **{metrics.actual_new_normalized}** |",
+        f"| raw files total (disk) | **{metrics.actual_total_raw}** |",
+        f"| normalized files total (disk) | **{metrics.actual_total_normalized}** |",
+        "",
+        "## Expected vs actual",
+        "",
+        f"| check | expected | actual |",
+        f"|-------|----------|--------|",
+        f"| new raw | {metrics.expected_new_raw} | {metrics.actual_new_raw} |",
+        f"| new normalized | {metrics.expected_new_normalized} | {metrics.actual_new_normalized} |",
+        f"| total raw | {metrics.expected_total_raw} | {metrics.actual_total_raw} |",
+        f"| total normalized | {metrics.expected_total_normalized} | {metrics.actual_total_normalized} |",
+        f"| completed companies | {metrics.total_harvest_universe} | {metrics.completed_companies_total} |",
+        f"| dividend_history (new) | {metrics.newly_processed_companies} | {dividend_parsed} |",
+        "",
+        "## retrieval_status distribution",
+        "",
+    ]
+    for status, count in sorted(status_ctr.items()):
+        lines.append(f"- `{status}`: {count}")
+    lines.extend(["", "## harvest_result distribution", ""])
+    for label, count in sorted(harvest_ctr.items()):
+        lines.append(f"- `{label}`: {count}")
+
+    lines.extend([
+        "",
+        "## Gate checks",
+        "",
+        f"1. new raw == expected_new_raw: **{'PASS' if metrics.actual_new_raw == metrics.expected_new_raw else 'FAIL'}**",
+        f"2. new normalized == expected_new_normalized: **{'PASS' if metrics.actual_new_normalized == metrics.expected_new_normalized else 'FAIL'}**",
+        f"3. completed_companies_total == 863: **{'PASS' if metrics.completed_companies_total == metrics.total_harvest_universe else 'FAIL'}**",
+        f"4. blocked == 0: **{'PASS' if metrics.blocked_count == 0 else 'FAIL'}**",
+        f"5. http_error == 0: **{'PASS' if metrics.http_error_count == 0 else 'FAIL'}**",
+        "",
+        "## Gate",
+        "",
+        f"**harvest_full_gate = {metrics.gate}**",
+        "",
+        "## Appendix",
+        "",
+        "详见 [cninfo_c_class_harvest_full_report.csv](cninfo_c_class_harvest_full_report.csv)。",
+        "",
+    ])
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write("\n".join(lines))
+
+
+def regenerate_harvest_summaries_from_artifacts(
+    report_csv_path: Optional[str] = None,
+    sample_path: Optional[str] = None,
+    full_summary_path: Optional[str] = None,
+    full_report_path: Optional[str] = None,
+) -> HarvestGateMetrics:
+    """
+    从现有 report / quality / 磁盘产物离线重生成 summary（无 CNINFO · 无 harvest）。
+    """
+    report_csv_path = report_csv_path or (
+        DEFAULT_FULL_CSV if os.path.isfile(DEFAULT_FULL_CSV) else DEFAULT_SMOKE_CSV
+    )
+    sample_path = sample_path or os.path.join(BASE_DIR, DEFAULT_HARVEST_SAMPLE_REL)
+    full_summary_path = full_summary_path or DEFAULT_FULL_MD
+    full_report_path = full_report_path or DEFAULT_FULL_CSV
+
+    report_rows = load_harvest_report_csv(report_csv_path)
+    run_status = load_run_status() or {}
+    resume_enabled = bool(run_status.get("resume_enabled"))
+    total_universe = int(run_status.get("company_count") or HARVEST_EXPECTED_COMPANY_COUNT)
+    resume_skip = total_universe - len({r["company_code"] for r in report_rows})
+    if resume_skip < 0:
+        resume_skip = 0
+
+    disk_counts = count_harvest_artifacts_on_disk()
+    metrics = compute_harvest_gate_metrics(
+        report_rows,
+        total_universe=total_universe,
+        resume_enabled=resume_enabled,
+        resume_skip_count=resume_skip,
+        disk_counts=disk_counts,
+    )
+    stats = _stats_from_report_rows(report_rows)
+
+    # 同步 full report（本轮 newly processed 明细）
+    os.makedirs(os.path.dirname(full_report_path), exist_ok=True)
+    with open(full_report_path, "w", encoding="utf-8", newline="") as fh:
+        writer = csv.DictWriter(fh, fieldnames=SMOKE_CSV_FIELDS)
+        writer.writeheader()
+        writer.writerows(report_rows)
+
+    write_quality_harvest_summary(metrics, stats, run_mode_label="live full (regenerated)")
+    write_full_harvest_summary(full_summary_path, metrics, report_rows, stats, sample_path)
+    return metrics
+
+
+def write_quality_artifacts(
+    company_status_rows: List[Dict[str, str]],
+    field_fill_rows: List[Dict[str, str]],
+    source_quality: Counter,
+    companies: List[Dict[str, str]],
+    stats: Dict[str, int],
+    *,
+    write_summary: bool = False,
+    gate_metrics: Optional[HarvestGateMetrics] = None,
+) -> None:
+    quality_dir = _harvest_abs_path(f"{HARVEST_OUTPUT_ROOT}/quality")
+    os.makedirs(quality_dir, exist_ok=True)
+
+    if gate_metrics is not None:
+        write_quality_harvest_summary(gate_metrics, stats)
+    elif write_summary:
+        summary_path = os.path.join(quality_dir, "harvest_summary.md")
+        now = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        lines = [
+            "# CNINFO C-Class Harvest Summary",
+            "",
+            f"_生成时间：{now}_",
+            "",
+            "## Run mode",
+            "",
+            "**live smoke**",
+            "",
+            f"- companies: **{len(companies)}**",
+            f"- HTTP requests: **{stats.get('http_requests', 0)}**",
+            f"- success: **{stats.get('success_count', 0)}**",
+            f"- empty_but_valid: **{stats.get('empty_but_valid_count', 0)}**",
+            f"- blocked: **{stats.get('blocked_count', 0)}**",
+            f"- http_error: **{stats.get('http_error_count', 0)}**",
+            f"- raw files: **{stats.get('raw_files', 0)}**",
+            f"- normalized files: **{stats.get('normalized_files', 0)}**",
+            "",
+            "## Caveats",
+            "",
+            "- **no verified** · **no DB** · **no MinIO**",
+            "- security → observe_only",
+            "- dividend_history ≠ financing",
+            "",
+        ]
+        with open(summary_path, "w", encoding="utf-8") as fh:
+            fh.write("\n".join(lines))
 
     fill_path = os.path.join(quality_dir, "field_fill_rate.csv")
     with open(fill_path, "w", encoding="utf-8", newline="") as fh:
@@ -1739,7 +2172,7 @@ def write_smoke_summary(
     )
     smoke_pass = (
         raw_n >= len(companies) * HTTP_SOURCES_PER_COMPANY
-        and norm_n >= len(companies) * len(HARVEST_MATRIX_SOURCE_ORDER)
+        and norm_n >= len(companies) * MATRIX_SOURCES_PER_COMPANY
         and dividend_parsed == len(companies)
         and os.path.isfile(_harvest_abs_path(f"{HARVEST_OUTPUT_ROOT}/quality/harvest_summary.md"))
     )
@@ -1787,7 +2220,7 @@ def write_smoke_summary(
         "## Smoke checks",
         "",
         f"1. raw files generated: **{'PASS' if raw_n >= len(companies) * HTTP_SOURCES_PER_COMPANY else 'FAIL'}** ({raw_n})",
-        f"2. normalized files generated: **{'PASS' if norm_n >= len(companies) * len(HARVEST_MATRIX_SOURCE_ORDER) else 'FAIL'}** ({norm_n})",
+        f"2. normalized files generated: **{'PASS' if norm_n >= len(companies) * MATRIX_SOURCES_PER_COMPANY else 'FAIL'}** ({norm_n})",
         f"3. dividend_history harvest: **{'PASS' if dividend_parsed == len(companies) else 'FAIL'}** ({dividend_parsed}/{len(companies)})",
         f"4. quality summary: **{'PASS' if os.path.isfile(_harvest_abs_path(f'{HARVEST_OUTPUT_ROOT}/quality/harvest_summary.md')) else 'FAIL'}**",
         "5. failures carry retrieval_status / source_status: **PASS**（见 smoke report CSV）",
@@ -1832,6 +2265,16 @@ def parse_args() -> argparse.Namespace:
         help="显式批准 863 full harvest（无 --limit 时必需）",
     )
     parser.add_argument(
+        "--approve-phase2-smoke-harvest",
+        action="store_true",
+        help="显式批准 Phase 2 smoke 200 live harvest（与 --approve-full-harvest 独立）",
+    )
+    parser.add_argument(
+        "--output-root",
+        default=None,
+        help="harvest 产物根目录（phase2 须隔离；默认 outputs/harvest/cninfo_c_class）",
+    )
+    parser.add_argument(
         "--resume",
         action="store_true",
         help="续跑框架：跳过 company_harvest_status.csv 中 harvest_status=complete 的公司",
@@ -1841,6 +2284,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-validation-md", default=DEFAULT_DRYRUN_VALIDATION_MD)
     parser.add_argument("--smoke-csv", default=DEFAULT_SMOKE_CSV)
     parser.add_argument("--smoke-md", default=DEFAULT_SMOKE_MD)
+    parser.add_argument("--full-csv", default=DEFAULT_FULL_CSV)
+    parser.add_argument("--full-md", default=DEFAULT_FULL_MD)
+    parser.add_argument(
+        "--regenerate-summary",
+        action="store_true",
+        help="从现有 report/quality/磁盘产物离线重生成 summary（无 CNINFO）",
+    )
     parser.add_argument(
         "--build-sample",
         action="store_true",
@@ -1946,6 +2396,13 @@ def _run_live_smoke(args: argparse.Namespace, sample_path: str, hold_path: str) 
     run_status["completed_company_count"] = skip_count + len(pending)
     write_run_status(run_status)
 
+    metrics = compute_harvest_gate_metrics(
+        report_rows,
+        total_universe=len(companies),
+        resume_enabled=args.resume,
+        resume_skip_count=skip_count if args.resume else 0,
+    )
+    write_quality_harvest_summary(metrics, stats, run_mode_label="live smoke")
     write_smoke_csv(args.smoke_csv, report_rows)
     write_smoke_summary(
         args.smoke_md, companies, report_rows, stats, sample_path, args.limit,
@@ -1966,6 +2423,83 @@ def _run_live_smoke(args: argparse.Namespace, sample_path: str, hold_path: str) 
     print(f"RAW   {_harvest_abs_path(HARVEST_OUTPUT_ROOT + '/raw/')}")
     print(f"NORM  {_harvest_abs_path(HARVEST_OUTPUT_ROOT + '/normalized/')}")
     print(f"QUAL  {_harvest_abs_path(HARVEST_OUTPUT_ROOT + '/quality/')}")
+    print(f"CSV   {args.smoke_csv}")
+    print(f"MD    {args.smoke_md}")
+
+
+def _run_live_phase2_smoke(args: argparse.Namespace, sample_path: str, hold_path: str) -> None:
+    all_companies = load_sample_companies(sample_path)
+    companies = all_companies[: args.limit] if args.limit is not None else all_companies
+
+    ok, detail = validate_pre_live_harvest(
+        sample_path,
+        companies,
+        hold_path,
+        execution_mode="phase2_smoke",
+        approve_full_harvest=args.approve_full_harvest,
+        approve_phase2_smoke_harvest=args.approve_phase2_smoke_harvest,
+        limit=args.limit,
+        resume=args.resume,
+    )
+    label = "pre_live_harvest_validation"
+    if ok:
+        print(f"{label}: PASS  ({detail})")
+    else:
+        print(f"{label}: FAIL  ({detail})", file=sys.stderr)
+        sys.exit(2)
+
+    pending, skip_count, pending_count = apply_resume_filter(companies, args.resume)
+    print(f"resume_skip_count={skip_count}")
+    print(f"resume_pending_count={pending_count}")
+
+    run_status = make_run_status(
+        mode="live",
+        company_count=len(companies),
+        completed_company_count=skip_count,
+        status="running",
+        resume_enabled=args.resume,
+    )
+    write_run_status(run_status)
+
+    mapper_ok, _mapper_rows = validate_mapper_wiring()
+    if not mapper_ok:
+        print("mapper_wiring: FAIL", file=sys.stderr)
+        sys.exit(2)
+    print("mapper_wiring: PASS")
+
+    report_rows, stats = run_live_harvest(pending)
+
+    run_status["status"] = "completed"
+    run_status["finished_at"] = _utc_now_iso()
+    run_status["completed_company_count"] = skip_count + len(pending)
+    write_run_status(run_status)
+
+    metrics = compute_harvest_gate_metrics(
+        report_rows,
+        total_universe=len(companies),
+        resume_enabled=args.resume,
+        resume_skip_count=skip_count if args.resume else 0,
+    )
+    write_quality_harvest_summary(metrics, stats, run_mode_label="live phase2 smoke")
+    write_smoke_csv(args.smoke_csv, report_rows)
+    write_smoke_summary(
+        args.smoke_md, companies, report_rows, stats, sample_path, args.limit,
+    )
+
+    smoke_pass = "PASS" if stats.get("http_requests", 0) > 0 and stats.get("raw_files", 0) > 0 else "FAIL"
+    print(
+        f"SUMMARY  mode=live-phase2-smoke  companies={len(companies)}  "
+        f"output_root={HARVEST_OUTPUT_ROOT}  "
+        f"http_requests={stats.get('http_requests', 0)}  "
+        f"success={stats.get('success_count', 0)}  "
+        f"raw_files={stats.get('raw_files', 0)}  "
+        f"normalized_files={stats.get('normalized_files', 0)}  "
+        f"smoke={smoke_pass}"
+    )
+    print(f"RAW   {_harvest_abs_path(HARVEST_OUTPUT_ROOT + '/raw/')}")
+    print(f"NORM  {_harvest_abs_path(HARVEST_OUTPUT_ROOT + '/normalized/')}")
+    print(f"QUAL  {_harvest_abs_path(HARVEST_OUTPUT_ROOT + '/quality/')}")
+    print(f"STATUS  {_quality_abs_path(RUN_STATUS_REL)}")
     print(f"CSV   {args.smoke_csv}")
     print(f"MD    {args.smoke_md}")
 
@@ -2015,23 +2549,29 @@ def _run_live_full(args: argparse.Namespace, sample_path: str, hold_path: str) -
     run_status["completed_company_count"] = skip_count + len(pending)
     write_run_status(run_status)
 
-    write_smoke_csv(args.smoke_csv, report_rows)
-    write_smoke_summary(
-        args.smoke_md,
-        all_companies,
+    metrics = compute_harvest_gate_metrics(
         report_rows,
-        stats,
-        sample_path,
-        len(all_companies),
+        total_universe=len(all_companies),
+        resume_enabled=args.resume,
+        resume_skip_count=skip_count,
+    )
+    write_quality_harvest_summary(metrics, stats, run_mode_label="live full")
+    full_csv = getattr(args, "full_csv", None) or DEFAULT_FULL_CSV
+    full_md = getattr(args, "full_md", None) or DEFAULT_FULL_MD
+    write_smoke_csv(full_csv, report_rows)
+    write_full_harvest_summary(
+        full_md, metrics, report_rows, stats, sample_path,
     )
 
     print(
         f"SUMMARY  mode=live-full  companies={len(all_companies)}  "
-        f"resume_pending={pending_count}  "
+        f"resume_skipped={metrics.resume_skipped_companies}  "
+        f"newly_processed={metrics.newly_processed_companies}  "
+        f"completed_total={metrics.completed_companies_total}  "
         f"http_requests={stats.get('http_requests', 0)}  "
-        f"success={stats.get('success_count', 0)}  "
-        f"raw_files={stats.get('raw_files', 0)}  "
-        f"normalized_files={stats.get('normalized_files', 0)}"
+        f"new_raw={metrics.actual_new_raw}/{metrics.expected_new_raw}  "
+        f"new_norm={metrics.actual_new_normalized}/{metrics.expected_new_normalized}  "
+        f"gate={metrics.gate}"
     )
     print(f"RAW   {_harvest_abs_path(HARVEST_OUTPUT_ROOT + '/raw/')}")
     print(f"NORM  {_harvest_abs_path(HARVEST_OUTPUT_ROOT + '/normalized/')}")
@@ -2039,8 +2579,30 @@ def _run_live_full(args: argparse.Namespace, sample_path: str, hold_path: str) -
     print(f"STATUS  {_quality_abs_path(RUN_STATUS_REL)}")
 
 
+def _run_regenerate_summary(args: argparse.Namespace, sample_path: str) -> None:
+    metrics = regenerate_harvest_summaries_from_artifacts(
+        report_csv_path=args.full_csv if os.path.isfile(args.full_csv) else args.smoke_csv,
+        sample_path=sample_path,
+        full_summary_path=args.full_md,
+        full_report_path=args.full_csv,
+    )
+    print("pre_regenerate_summary: PASS")
+    print(f"resume_skipped_companies={metrics.resume_skipped_companies}")
+    print(f"newly_processed_companies={metrics.newly_processed_companies}")
+    print(f"completed_companies_total={metrics.completed_companies_total}")
+    print(f"expected_new_raw={metrics.expected_new_raw}")
+    print(f"actual_new_raw={metrics.actual_new_raw}")
+    print(f"expected_new_normalized={metrics.expected_new_normalized}")
+    print(f"actual_new_normalized={metrics.actual_new_normalized}")
+    print(f"harvest_full_gate={metrics.gate}")
+    print(f"QUAL  {_quality_abs_path(f'{HARVEST_OUTPUT_ROOT}/quality/harvest_summary.md')}")
+    print(f"MD    {args.full_md}")
+    print(f"CSV   {args.full_csv}")
+
+
 def main() -> None:
     args = parse_args()
+    configure_harvest_output_root(args.output_root)
 
     sample_path = args.sample_file
     if not os.path.isabs(sample_path):
@@ -2059,10 +2621,16 @@ def main() -> None:
             )
             sys.exit(2)
 
+    if args.regenerate_summary:
+        _run_regenerate_summary(args, sample_path)
+        return
+
     if args.mode == "live":
-        execution_mode = enforce_live_approval_gate(args)
+        execution_mode = enforce_live_approval_gate(args, sample_path)
         if execution_mode == "smoke":
             _run_live_smoke(args, sample_path, hold_path)
+        elif execution_mode == "phase2_smoke":
+            _run_live_phase2_smoke(args, sample_path, hold_path)
         else:
             _run_live_full(args, sample_path, hold_path)
         return

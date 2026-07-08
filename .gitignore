@@ -82,3 +82,14 @@ outputs/db/*.db-journal
 outputs/harvest/cninfo_c_class/raw/
 outputs/harvest/cninfo_c_class/normalized/
 outputs/harvest/cninfo_c_class/quality/
+# Phase 2 isolated harvest root (post-approval live writes)
+outputs/harvest/cninfo_c_class/phase2_smoke_200/
+# Transient harvest resume markers (any output root)
+outputs/harvest/**/run_status.json
+outputs/harvest/**/company_harvest_status.csv
+
+# CNINFO C-class snapshot JSON batches (regenerate from harvest; keep validation summaries)
+outputs/snapshot/
+
+# Local temp files
+*.tmp
