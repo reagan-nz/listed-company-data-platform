@@ -1,0 +1,25 @@
+registry_field,source_artifact,source_field,mapping_type,confidence,notes
+company_id,派生规则,exchange+org_id,rule_derived,high,"{exchange}:{org_id}；org_id 缺失降级为 {exchange}:{company_code}"
+company_code,eval_companies_c_class_harvest_863_non_bse.yaml,stock_code,direct,high,BSE legacy 行填 83/87 code；920 canonical 行填 920 code
+company_name,eval YAML,short_name,direct,high,fallback company_name
+company_full_name,snapshot JSON,modules.company_identity.fields.legal_name,enrichment,high,按 company_code join；无 snapshot 留空
+english_name,snapshot JSON,modules.company_identity.fields.english_name,enrichment,high,按 company_code join；无 snapshot 留空
+exchange,eval YAML,exchange,direct,high,
+board,eval YAML,board,direct,high,
+listing_status,snapshot JSON / 名称规则,snapshot_status / short_name,rule_derived,medium,delisted_flag=true 则 delisted；否则 listed
+active_status,规则派生,BSE YAML / hold YAML,rule_derived,medium,863=active；BSE legacy=legacy_code；非 canonical=duplicate_code
+org_id,eval YAML,orgid,direct,high,多源冲突 prefer 863 > hold > BSE920 > 6124
+legacy_code,eval_companies_c_class_smoke_195_bse_legacy_hold.yaml,stock_code,lookup,medium,仅 BSE 83/87 层或 920 行 previous 填充
+previous_code,BSE mapping / BSE 策略文档,legacy stock_code,rule_derived,medium,920 行填对应 83/87 code；非 BSE 留空
+rename_history,—,—,default,low,首轮默认空数组 []；未来公告解析
+org_id_conflict_flag,规则派生,全局 org_id 计数,rule_derived,high,同 org_id 对应 >1 company_code 则 true
+st_flag,eval YAML 名称,short_name / company_name,rule_derived,medium,匹配 *ST 或 ST 前缀
+delisted_flag,eval YAML 名称,short_name,rule_derived,medium,名称含「退」则 true
+suspended_flag,—,—,default,low,首轮默认 false；无稳定数据源
+hold_flag,eval_companies_c_class_889_rerun_all6_hold.yaml / BSE legacy YAML,成员关系,lookup,high,code 在 hold 或 BSE legacy universe 则 true
+harvest_support_status,规则派生,universe 成员关系,rule_derived,high,863=completed_863；hold=hold；BSE920=supported；legacy/6124=unsupported
+snapshot_support_status,company_snapshot_status.csv,status,rule_derived,high,863 且非 failed=completed_863；无 snapshot=unsupported
+source,派生脚本,—,rule_derived,high,标注主种子：harvest_863_yaml / hold_26_yaml / bse_920_yaml / full_market_2024
+last_updated,派生脚本,—,rule_derived,high,派生执行时刻 ISO8601 UTC
+confidence,规则派生,多源一致性,rule_derived,medium,863+snapshot=high；仅6124=low；BSE legacy=medium
+notes,hold YAML / QA,hold_reason / notes,merge,medium,拼接 hold 原因与 all6 fail 摘要

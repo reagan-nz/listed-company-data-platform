@@ -1,0 +1,2 @@
+review_id,conflict_id,company_code_1,company_code_2,company_name,org_id,decision,canonical,canonical_policy,merge_executed,notes
+REVIEW_0508,CONFLICT_0508_839729_920729,839729,920729,永顺生物,gfbj0839729,approved_canonical_mapping,CNINFO_920729,legacy_code_mapping,false,legacy_code 重复登记；839729 保持独立 duplicate_code 行；不合并 harvest/snapshot

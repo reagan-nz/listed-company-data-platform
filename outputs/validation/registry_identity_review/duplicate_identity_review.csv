@@ -1,0 +1,2 @@
+review_id,conflict_id,company_id_1,company_id_2,company_code_1,company_code_2,company_name_1,company_name_2,org_id,canonical_candidate,conflict_reason,manual_priority,review_status
+REVIEW_0508,CONFLICT_0508_839729_920729,CNINFO_839729,CNINFO_920729,839729,920729,永顺生物,永顺生物,legacy_code_duplicate,CNINFO_920729,legacy_code_duplicate,HIGH,pending

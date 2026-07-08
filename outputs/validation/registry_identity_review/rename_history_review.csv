@@ -1,0 +1,16 @@
+review_id,conflict_id,old_name,new_name,company_code_1,company_code_2,org_id,rename_candidate,evidence_required,canonical_candidate,review_status
+REVIEW_0001,CONFLICT_0001_000022_001872,深赤湾A,招商港口,000022,001872,gssz0000022,深赤湾A -> 招商港口,rename_date;announcement,CNINFO_001872,pending
+REVIEW_0002,CONFLICT_0002_000043_001914,中航善达,招商积余,000043,001914,gssz0000043,中航善达 -> 招商积余,rename_date;announcement,CNINFO_001914,pending
+REVIEW_0003,CONFLICT_0003_000765_001267,*ST华信,汇绿生态,000765,001267,gssz0000765,*ST华信 -> 汇绿生态,rename_date;announcement,CNINFO_001267,pending
+REVIEW_0004,CONFLICT_0004_300114_302132,中航电测,中航成飞,300114,302132,9900013408,中航电测 -> 中航成飞,rename_date;announcement,CNINFO_302132,pending
+REVIEW_0009,CONFLICT_0009_430090_920090,同辉信息,*ST同辉,430090,920090,9900020567,同辉信息 -> *ST同辉,rename_date;announcement,CNINFO_920090,pending
+REVIEW_0023,CONFLICT_0023_600087_601975,退市长油,招商南油,600087,601975,gssh0600087,退市长油 -> 招商南油,rename_date;announcement,CNINFO_601975,pending
+REVIEW_0025,CONFLICT_0025_601268_601399,*ST二重,国机重装,601268,601399,9900010450,*ST二重 -> 国机重装,rename_date;announcement,CNINFO_601399,pending
+REVIEW_0026,CONFLICT_0026_601313_601360,江南嘉捷,三六零,601313,601360,9900021962,江南嘉捷 -> 三六零,rename_date;announcement,CNINFO_601360,pending
+REVIEW_0027,CONFLICT_0027_688287_832317,退市观典,观典防务,688287,832317,gfbj0832317,退市观典 -> 观典防务,rename_date;announcement,CNINFO_832317,pending
+REVIEW_0064,CONFLICT_0064_832023_920023,田野股份,*ST田野,832023,920023,gfbj0832023,田野股份 -> *ST田野,rename_date;announcement,CNINFO_920023,pending
+REVIEW_0103,CONFLICT_0103_833575_920575,康乐卫士,*ST康乐,833575,920575,gfbj0833575,康乐卫士 -> *ST康乐,rename_date;announcement,CNINFO_920575,pending
+REVIEW_0126,CONFLICT_0126_835174_920174,五新隧装,五新智能,835174,920174,gfbj0835174,五新隧装 -> 五新智能,rename_date;announcement,CNINFO_920174,pending
+REVIEW_0199,CONFLICT_0199_839680_920680,*ST广道,广道退,839680,920680,gfbj0839680,*ST广道 -> 广道退,rename_date;announcement,CNINFO_920680,pending
+REVIEW_0277,CONFLICT_0277_600631_600827,百联股份,百联股份,600631,600827,company_name_duplicate,百联股份 -> 百联股份,rename_date;announcement,CNINFO_600827,pending
+REVIEW_0278,CONFLICT_0278_600637_600832,东方明珠,东方明珠,600637,600832,company_name_duplicate,东方明珠 -> 东方明珠,rename_date;announcement,CNINFO_600832,pending
