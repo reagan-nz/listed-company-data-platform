@@ -1,6 +1,6 @@
 # 当前进展：CNINFO 数据源 A–F 分层验证（Phase 1 已收口 · Phase 2 已收口）
 
-_最后更新：2026-07-07_
+_最后更新：2026-07-08_
 
 > **本文件说明「现在具体在做什么」。** 仓库整体导航见 [PROJECT_MAP.md](PROJECT_MAP.md)；**A–F 分层与验证口径权威文档**见 [plans/cninfo_data_source_layered_inventory.md](plans/cninfo_data_source_layered_inventory.md)；产品大方向见 [ROADMAP.md](ROADMAP.md)。
 
@@ -8,7 +8,7 @@ _最后更新：2026-07-07_
 
 ## 当前阶段（一句话）
 
-**Era C Phase 1（A 类）已收口**。**Phase 2 D 类已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通。**Phase 4 C 类** **Harvest Runner 安全控制已就绪**（`--approve-full-harvest` · `--resume` 框架 · 5/5 safety tests）；**full_harvest_gate = PENDING_APPROVAL**；**无 verified**；**不入库**。
+**Era C Phase 1（A 类）已收口**。**Phase 2 D 类已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通。**Phase 4 C 类** **863 snapshot 已生成**；**状态 `SNAPSHOT_GENERATED_QA_REVIEW`**；**Harvest runner output-root isolation extension 已完成**（gate **PASS** · test **8/8**）；**Phase 2 live harvest 仍未执行**；**仍须显式用户批准**；**C-class 未整体完成**；**下一步：Phase 2 live harvest 显式用户批准**；**无 verified**；**不入库**。
 
 ---
 
@@ -104,7 +104,30 @@ _最后更新：2026-07-07_
 | **P1 probe records** | [c_class_p1_probe_records.yaml](fixtures/c_class/probe/records/c_class_p1_probe_records.yaml)（**9** 条 · basic+security 已填 · industry observed）· [P1 execution notes](plans/cninfo_c_class_p1_probe_execution_notes.md) |
 | **P1 probe review** | [probe review](plans/cninfo_c_class_p1_probe_review.md) · [YAML backfill decision](plans/cninfo_c_class_p1_yaml_backfill_decision.md) · [field mapping draft](plans/cninfo_c_class_basic_profile_field_mapping_draft.md) |
 | **既有 P0 参考** | `lab/validate_cninfo_f10_company_profile.py`（本阶段不扩跑） |
-| 性质 | **设计草案 + offline validation**；不入库、不写 migration、不写 verified、不做全市场 F10 抓取 |
+| **863 full harvest** | `lab/harvest_cninfo_c_class.py` · [full summary](outputs/validation/cninfo_c_class_harvest_full_summary.md) · **PASS_WITH_RESUME**（863 · 6041/8630） |
+| **Harvest 离线 QA** | `lab/review_cninfo_c_class_full_harvest_qa.py` · [qa review](outputs/validation/cninfo_c_class_full_harvest_qa_review.md) · **PASS_WITH_CAVEAT** |
+| **QA flag triage** | `lab/triage_cninfo_c_class_full_harvest_qa_flags.py` · [triage](outputs/validation/cninfo_c_class_full_harvest_qa_flag_triage.md) · **PASS_WITH_CAVEAT_REVIEW_QUEUE_READY** |
+| **dividend parser patch** | `lab/cninfo_c_class_mappers.py` · `parse_dividend_f007v()` · fixture **10/10 PASS** |
+| **dividend 离线 re-map** | `lab/remap_cninfo_c_class_dividend_history_offline.py` · [remap summary](outputs/validation/cninfo_c_class_dividend_history_remap_summary.md) · needs_review **80→12** |
+| **Open issues & closure** | [cninfo_c_class_open_issues_closure_plan.md](plans/cninfo_c_class_open_issues_closure_plan.md) · **HARVEST_COMPLETED_QA_ONGOING** · **9 open issues** |
+| **QA queue closure plan** | [cninfo_c_class_qa_review_queue_closure_plan.md](plans/cninfo_c_class_qa_review_queue_closure_plan.md) · [closure CSV](outputs/validation/cninfo_c_class_qa_review_queue_closure_plan.csv)（**72** flags · P0=6 / P1=12 / P2=54） |
+| **QA queue closure classification** | [closure summary](outputs/validation/cninfo_c_class_qa_review_queue_closure_summary.md) · [classification CSV](outputs/validation/cninfo_c_class_qa_review_queue_closure_classification.csv) · **gate PASS**（accepted=60 · manual=10 · follow-up=2） |
+| **review_later 复判** | [reclassification report](outputs/validation/cninfo_c_class_review_later_field_reclassification.md) · [CSV](outputs/validation/cninfo_c_class_review_later_field_reclassification.csv)（**31** 字段 · promote=10 · keep=13） |
+| **review_later promotion plan** | [promotion plan](outputs/validation/cninfo_c_class_review_later_promotion_plan.md) · [CSV](outputs/validation/cninfo_c_class_review_later_promotion_plan.csv)（**10** candidates · ready=9 · mapper_patch=1） |
+| **promotion candidate approval** | [approval summary](outputs/validation/cninfo_c_class_review_later_promotion_candidate_approval.md) · [CSV](outputs/validation/cninfo_c_class_review_later_promotion_candidate_approval.csv) · **gate PASS**（**9** approved_as_candidate） |
+| **Field & Quality Consolidation Batch** | [batch summary](outputs/validation/cninfo_c_class_field_quality_consolidation_batch_summary.md) · [establishment_date remap](outputs/validation/cninfo_c_class_establishment_date_remap_summary.md) · [after-patch approval](outputs/validation/cninfo_c_class_review_later_promotion_candidate_approval_after_patch.md) · [raw_only policy](outputs/validation/cninfo_c_class_raw_only_field_policy_review.md) · [quality rules draft](plans/cninfo_c_class_product_quality_rules_draft.md) |
+| **Field Freeze Review** | [freeze summary](outputs/validation/cninfo_c_class_field_freeze_summary.md) · [final catalog](outputs/validation/cninfo_c_class_final_field_catalog.csv) · [freeze v1](plans/cninfo_c_class_field_freeze_v1.md) · [profile matrix](outputs/validation/cninfo_c_class_company_profile_coverage_matrix.csv) |
+| **Field Inventory Promotion** | [promotion summary](outputs/validation/cninfo_c_class_field_inventory_promotion_summary.md) · [promotion check](outputs/validation/cninfo_c_class_field_inventory_promotion_check.csv) · **normalized_core=74** |
+| **Company Snapshot Planning** | [architecture plan](plans/cninfo_c_class_company_snapshot_architecture_plan.md) · [field mapping](outputs/validation/cninfo_c_class_company_snapshot_field_mapping.csv) · [planning summary](outputs/validation/cninfo_c_class_company_snapshot_planning_summary.md) |
+| **Snapshot Builder Prototype** | [builder](../lab/build_cninfo_c_class_company_snapshot.py) · [demo 688750](outputs/snapshot/cninfo_c_class/company_snapshot_demo/688750.json) · [demo summary](outputs/validation/cninfo_c_class_snapshot_builder_demo_summary.md) |
+| **Snapshot Smoke 10** | [smoke sample](lab/eval_companies_c_class_snapshot_smoke_10.yaml) · [runner](lab/run_cninfo_c_class_snapshot_smoke_10.py) · [smoke outputs](outputs/snapshot/cninfo_c_class/smoke/) · [report](outputs/validation/cninfo_c_class_snapshot_smoke_10_report.csv) · [summary](outputs/validation/cninfo_c_class_snapshot_smoke_10_summary.md) · **gate PASS_WITH_CAVEAT** |
+| **Snapshot Full Batch Planning** | [full batch plan](plans/cninfo_c_class_snapshot_full_batch_plan.md) · [planning summary](outputs/validation/cninfo_c_class_snapshot_full_batch_planning_summary.md) · **863** 家 · **gate PASS_WITH_CAVEAT** |
+| **Snapshot Full Batch Runner** | [batch runner](lab/build_cninfo_c_class_snapshot_batch.py) · [test](lab/test_cninfo_c_class_snapshot_batch_runner.py) · [dry-run summary](outputs/validation/cninfo_c_class_snapshot_batch_dryrun_summary.md) · test **5/5 PASS** |
+| **Snapshot Full Execution Approval** | [approval checklist](plans/cninfo_c_class_snapshot_full_execution_approval_checklist.md) · [approval summary](outputs/validation/cninfo_c_class_snapshot_full_execution_approval_summary.md) · gate **READY_FOR_APPROVAL** |
+| **Snapshot Full Batch** | [full snapshots](outputs/snapshot/cninfo_c_class/full/) · **863** JSON · status **complete_with_caveat=863** |
+| **Snapshot Full QA Review** | [review script](lab/review_cninfo_c_class_snapshot_full_quality.py) · [quality summary](outputs/validation/cninfo_c_class_snapshot_full_quality_summary.md) · [module coverage](outputs/validation/cninfo_c_class_snapshot_full_module_coverage.csv) · test **5/5 PASS** |
+| **Full Market Expansion Planning** | [registry plan](plans/cninfo_c_class_full_market_universe_registry_plan.md) · [universe design](outputs/validation/cninfo_c_class_full_market_universe_design.md) · [BSE strategy](plans/cninfo_c_class_bse_expansion_strategy.md) · [hold policy](plans/cninfo_c_class_hold_company_policy.md) · [harvest architecture](plans/cninfo_c_class_full_market_harvest_architecture.md) · [expansion summary](outputs/validation/cninfo_c_class_full_market_expansion_planning_summary.md) |
+| 性质 | **863 snapshot 已生成 · QA review 完成 · 全市场扩展规划完成**；状态 **`SNAPSHOT_GENERATED_QA_REVIEW`** · 不入库 · 不写 verified |
 
 ---
 
@@ -233,10 +256,60 @@ flowchart TD
 | 88 | ~~harvest live runner smoke~~ → **PASS**（10 家 · [smoke summary](outputs/validation/cninfo_c_class_harvest_smoke_summary.md)） |
 | 89 | ~~863 full harvest approval plan~~ → **完成**（[execution plan](plans/cninfo_c_class_full_harvest_863_execution_plan.md)） |
 | 90 | ~~harvest runner 安全控制~~ → **完成**（`--approve-full-harvest` · `--resume` · [safety test](outputs/validation/cninfo_c_class_harvest_runner_safety_test_summary.md) **5/5**） |
-| 91 | 863 full harvest 执行 → **PENDING_APPROVAL**（`full_harvest_gate`） |
-| 92 | dividend_history YAML backfill → **GO（决策 only）** · **不执行** |
-| 93 | BSE legacy targeted probe（8 家 hold）→ **待启动** |
-| 94 | **暂不全量 harvest live、暂不入库**
+| 91 | ~~863 full harvest 执行~~ → **PASS_WITH_RESUME**（[full summary](outputs/validation/cninfo_c_class_harvest_full_summary.md) · 863 · 6041/8630） |
+| 92 | ~~863 full harvest 离线 QA~~ → **PASS_WITH_CAVEAT**（[qa review](outputs/validation/cninfo_c_class_full_harvest_qa_review.md) · flags=137） |
+| 93 | ~~QA flag triage~~ → **PASS_WITH_CAVEAT_REVIEW_QUEUE_READY**（[triage](outputs/validation/cninfo_c_class_full_harvest_qa_flag_triage.md)） |
+| 94 | ~~dividend F007V parser patch~~ → **完成**（`10股派X元` · fixture 10/10） |
+| 95 | ~~dividend_history 离线 re-map~~ → **完成**（needs_review **80→12** · [remap](outputs/validation/cninfo_c_class_dividend_history_remap_summary.md)） |
+| 96 | ~~open issues & closure plan~~ → **完成**（[closure plan](plans/cninfo_c_class_open_issues_closure_plan.md) · **9 open issues**） |
+| 97 | ~~QA review queue closure planning~~ → **完成**（[qa closure plan](plans/cninfo_c_class_qa_review_queue_closure_plan.md) · 72 flags） |
+| 98 | ~~执行 QA queue closure classification~~ → **完成**（[closure summary](outputs/validation/cninfo_c_class_qa_review_queue_closure_summary.md) · gate PASS） |
+| 99 | ~~review_later 31 字段复判~~ → **完成**（[reclassification](outputs/validation/cninfo_c_class_review_later_field_reclassification.md) · promote=10） |
+| 100 | ~~review_later promotion planning~~ → **完成**（[promotion plan](outputs/validation/cninfo_c_class_review_later_promotion_plan.md) · ready=9） |
+| 101 | ~~promotion candidate approval~~ → **完成**（[approval](outputs/validation/cninfo_c_class_review_later_promotion_candidate_approval.md) · 9 approved · gate PASS） |
+| 102 | ~~mapper patch planning~~（establishment_date）→ **完成**（[patch plan](outputs/validation/cninfo_c_class_establishment_date_mapper_patch_plan.md) · PLANNED_NOT_IMPLEMENTED） |
+| 103 | ~~raw_only 25 字段政策~~ → **完成**（[policy review](outputs/validation/cninfo_c_class_raw_only_field_policy_review.md)） |
+| 104 | ~~product quality rules draft~~ → **完成**（[rules draft](plans/cninfo_c_class_product_quality_rules_draft.md)） |
+| 105 | ~~establishment_date mapper patch implementation~~ → **完成**（[remap summary](outputs/validation/cninfo_c_class_establishment_date_remap_summary.md) · 863 parsed · [after-patch approval](outputs/validation/cninfo_c_class_review_later_promotion_candidate_approval_after_patch.md)） |
+| 106 | ~~C-class Field Freeze Review~~ → **完成**（[freeze summary](outputs/validation/cninfo_c_class_field_freeze_summary.md) · [final catalog](outputs/validation/cninfo_c_class_final_field_catalog.csv) · **120** 字段） |
+| 107 | ~~field inventory 升格执行~~ → **完成**（[promotion summary](outputs/validation/cninfo_c_class_field_inventory_promotion_summary.md) · **10** promoted · normalized_core=**74**） |
+| 108 | ~~company_snapshot planning~~ → **完成**（[architecture plan](plans/cninfo_c_class_company_snapshot_architecture_plan.md) · **18** 模块 · **120** 行映射） |
+| 109 | ~~snapshot builder prototype~~ → **demo 完成**（[688750 snapshot](outputs/snapshot/cninfo_c_class/company_snapshot_demo/688750.json) · gate PASS） |
+| 110 | ~~snapshot smoke 10 家 batch~~ → **完成**（[smoke summary](outputs/validation/cninfo_c_class_snapshot_smoke_10_summary.md) · **10** 家 · gate **PASS_WITH_CAVEAT**） |
+| 111 | ~~863-wide snapshot batch 规划~~ → **完成**（[full batch plan](plans/cninfo_c_class_snapshot_full_batch_plan.md) · gate **PASS_WITH_CAVEAT**） |
+| 112 | ~~full batch runner 实现（dry-run）~~ → **完成**（[dry-run summary](outputs/validation/cninfo_c_class_snapshot_batch_dryrun_summary.md) · test **5/5 PASS**） |
+| 113 | ~~full batch 执行批准 checklist~~ → **完成**（[approval checklist](plans/cninfo_c_class_snapshot_full_execution_approval_checklist.md) · gate **READY_FOR_APPROVAL**） |
+| 114 | ~~full batch 执行~~ → **完成**（863 JSON · complete_with_caveat=863） |
+| 115 | ~~full snapshot QA review~~ → **完成**（[quality summary](outputs/validation/cninfo_c_class_snapshot_full_quality_summary.md) · test **5/5 PASS**） |
+| 116 | ~~full market expansion planning~~ → **完成**（[expansion summary](outputs/validation/cninfo_c_class_full_market_expansion_planning_summary.md)） |
+| 117 | ~~company registry draft design~~ → **完成**（[registry design](plans/cninfo_c_class_company_registry_design.md) · [lineage design](outputs/validation/cninfo_c_class_company_registry_lineage_design.md) · [registry readiness matrix](outputs/validation/cninfo_c_class_registry_readiness_matrix.csv) · gate **READY_FOR_SCHEMA_APPROVAL**） |
+| 118 | ~~company registry schema approval~~ → **完成**（[schema approval checklist](plans/cninfo_c_class_company_registry_schema_approval_checklist.md) · [schema approval summary](outputs/validation/cninfo_c_class_registry_schema_approval_summary.md) · gate **PASS**） |
+| 119 | ~~registry candidate derivation design~~ → **完成**（[derivation design](plans/cninfo_c_class_registry_derivation_design.md) · [derivation mapping](outputs/validation/cninfo_c_class_registry_derivation_mapping.csv) · [derivation summary](outputs/validation/cninfo_c_class_registry_derivation_summary.md)） |
+| 120 | ~~registry candidate generator 实现~~ → **完成**（[generator](lab/derive_cninfo_c_class_company_registry_candidate.py) · [candidate draft](outputs/validation/cninfo_c_class_company_registry_candidate_draft.csv) · [candidate summary](outputs/validation/cninfo_c_class_company_registry_candidate_summary.md) · test **5/5 PASS**） |
+| 121 | ~~registry candidate QA review~~ → **完成**（[QA script](lab/review_cninfo_c_class_registry_candidate_quality.py) · [quality report](outputs/validation/cninfo_c_class_registry_candidate_quality_report.csv) · [quality summary](outputs/validation/cninfo_c_class_registry_candidate_quality_summary.md) · gate **PASS_WITH_CAVEAT**） |
+| 122 | ~~registry conflict triage design~~ → **完成**（[triage design](plans/cninfo_c_class_registry_conflict_triage_design.md) · [triage CSV](outputs/validation/cninfo_c_class_registry_conflict_triage.csv) · [resolution policy](plans/cninfo_c_class_registry_conflict_resolution_policy.md) · gate **READY_FOR_CANONICAL_APPROVAL**） |
+| 123 | ~~canonical identity approval design~~ → **完成**（[approval design](plans/cninfo_c_class_registry_canonical_identity_approval.md) · [approval CSV](outputs/validation/cninfo_c_class_registry_canonical_identity_approval.csv) · [approval summary](outputs/validation/cninfo_c_class_registry_canonical_identity_approval_summary.md) · gate **READY_FOR_MANUAL_SIGNOFF**） |
+| 124 | ~~registry identity review queue 生成~~ → **完成**（[review queue](outputs/validation/cninfo_c_class_registry_identity_review_queue.csv) · [review folder](outputs/validation/registry_identity_review/) · [queue summary](outputs/validation/cninfo_c_class_registry_identity_review_queue_summary.md)） |
+| 125 | ~~registry conflict fast triage~~ → **完成**（[fast triage summary](outputs/validation/cninfo_c_class_registry_conflict_fast_triage_summary.md) · actionable **259** · remaining manual **9**） |
+| 126 | ~~registry rename history signoff~~ → **完成**（[rename signoff CSV](outputs/validation/cninfo_c_class_registry_rename_history_signoff.csv) · [rename signoff summary](outputs/validation/cninfo_c_class_registry_rename_history_signoff_summary.md) · gate **PASS** · 10 approved · 5 manual · **无 merge**） |
+| 127 | ~~BSE legacy + duplicate identity signoff~~ → **完成**（[BSE signoff](outputs/validation/cninfo_c_class_registry_bse_legacy_mapping_signoff.csv) · [duplicate signoff](outputs/validation/cninfo_c_class_registry_duplicate_identity_signoff.csv) · [identity signoff summary](outputs/validation/cninfo_c_class_registry_identity_signoff_summary.md) · gate **PASS** · **无 merge**） |
+| 128 | ~~registry identity decision ledger 合并~~ → **完成**（[decision ledger](outputs/validation/cninfo_c_class_registry_identity_decision_ledger.csv) · [ledger summary](outputs/validation/cninfo_c_class_registry_identity_decision_ledger_summary.md) · gate **PASS** · **267** decisions · **无 merge**） |
+| 129 | ~~registry product decision review~~ → **完成**（[product decision review](plans/cninfo_c_class_registry_product_decision_review.md) · [product decision summary](outputs/validation/cninfo_c_class_registry_product_decision_summary.md) · gate **PASS_WITH_CAVEAT** · implementation **deferred**） |
+| 130 | ~~full-market expansion execution readiness 评估~~ → **完成**（[readiness review](plans/cninfo_c_class_full_market_expansion_readiness_review.md) · [readiness matrix](outputs/validation/cninfo_c_class_full_market_expansion_readiness_matrix.csv) · [readiness summary](outputs/validation/cninfo_c_class_full_market_expansion_readiness_summary.md) · gate **PASS_WITH_CAVEAT** · execution **deferred**） |
+| 131 | ~~universe reconciliation + phased execution planning~~ → **完成**（[reconciliation plan](plans/cninfo_c_class_full_market_universe_reconciliation_plan.md) · [reconciliation matrix](outputs/validation/cninfo_c_class_full_market_universe_reconciliation_matrix.csv) · [phased execution plan](plans/cninfo_c_class_full_market_phased_execution_plan.md) · execution **deferred**） |
+| 132 | ~~Phase 0 offline reconciliation script build~~ → **完成**（[reconcile script](lab/reconcile_cninfo_c_class_full_market_universe.py) · [result CSV](outputs/validation/cninfo_c_class_full_market_universe_reconciliation_result.csv) · [summary](outputs/validation/cninfo_c_class_full_market_universe_reconciliation_summary.md) · test **6/6 PASS** · gate **PASS_WITH_CAVEAT**） |
+| 133 | ~~Phase 1 registry candidate refresh planning~~ → **完成**（[refresh plan](plans/cninfo_c_class_registry_candidate_refresh_plan.md) · [action matrix](outputs/validation/cninfo_c_class_registry_candidate_refresh_action_matrix.csv) · [execution plan](plans/cninfo_c_class_registry_candidate_refresh_execution_plan.md) · [planning summary](outputs/validation/cninfo_c_class_registry_candidate_refresh_planning_summary.md) · gate **DESIGN_COMPLETE**） |
+| 134 | ~~Phase 1 refresh script dry-run 实现~~ → **完成**（[refresh script](lab/refresh_cninfo_c_class_company_registry_candidate.py) · [refreshed CSV](outputs/validation/cninfo_c_class_company_registry_candidate_refreshed.csv) · [refresh summary](outputs/validation/cninfo_c_class_company_registry_candidate_refresh_summary.md) · test **8/8 PASS** · gate **PASS_WITH_CAVEAT** · **无 merge**） |
+| 135 | ~~Phase 2 expansion smoke planning~~ → **完成**（[smoke plan](plans/cninfo_c_class_phase2_expansion_smoke_plan.md) · [candidate matrix](outputs/validation/cninfo_c_class_phase2_expansion_smoke_candidate_matrix.csv) · [execution checklist](plans/cninfo_c_class_phase2_expansion_smoke_execution_checklist.md) · [planning summary](outputs/validation/cninfo_c_class_phase2_expansion_smoke_planning_summary.md) · gate **DESIGN_COMPLETE**） |
+| 136 | ~~Phase 2 smoke universe selection script~~ → **完成**（[select script](lab/select_cninfo_c_class_phase2_smoke_universe.py) · [smoke YAML](lab/eval_companies_c_class_phase2_smoke_200.yaml) · [selection matrix](outputs/validation/cninfo_c_class_phase2_smoke_200_selection_matrix.csv) · [selection summary](outputs/validation/cninfo_c_class_phase2_smoke_200_selection_summary.md) · test **8/8 PASS** · gate **PASS**） |
+| 137 | ~~Phase 2 harvest dry-run planning~~ → **完成**（[dry-run plan](plans/cninfo_c_class_phase2_smoke_200_harvest_dryrun_plan.md) · [expected case matrix](outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_expected_case_matrix.csv) · [command checklist](plans/cninfo_c_class_phase2_smoke_200_harvest_command_checklist.md) · [review checklist](outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_dryrun_review_checklist.md) · gate **READY_FOR_DRYRUN**） |
+| 138 | ~~Phase 2 harvest dry-run 执行~~ → **完成**（[dry-run report](outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_dryrun_report.csv) · [dry-run QA](outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_dryrun_qa_summary.md) · gate **PASS** · **1400** cases · live **未批准**） |
+| 139 | ~~Phase 2 live harvest approval planning~~ → **完成**（[approval plan](plans/cninfo_c_class_phase2_smoke_200_live_harvest_approval_plan.md) · [approval checklist](outputs/validation/cninfo_c_class_phase2_smoke_200_live_harvest_approval_checklist.md) · [command draft](plans/cninfo_c_class_phase2_smoke_200_live_harvest_command_draft.md) · [approval summary](outputs/validation/cninfo_c_class_phase2_smoke_200_live_harvest_approval_summary.md) · gate **READY_FOR_APPROVAL** · **runner extension required**） |
+| 140 | ~~harvest runner output-root isolation extension~~ → **完成**（[extension summary](outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_output_root_extension_summary.md) · [isolation test](lab/test_cninfo_c_class_harvest_output_root_isolation.py) · test **8/8 PASS** · safety **5/5 PASS** · gate **PASS** · live **未执行**） |
+| 141 | Phase 2 live harvest 显式用户批准 → **待批准** |
+| 100 | dividend_history YAML backfill → **GO（决策 only）** · **不执行** |
+| 101 | BSE legacy / hold / abnormal side-track → **待文档化** |
+| 102 | **暂不入库** · **C-class 未整体完成**
 
 ---
 
@@ -245,7 +318,7 @@ flowchart TD
 - **不写 verified** / full-market stable
 - **不接** PostgreSQL / MinIO / MongoDB
 - **不**同时大规模推进 Phase 3 与 Phase 2 扩源
-- **不执行 harvest live** 直至 runner dry-run PASS + 人工批准
+- **不执行 harvest live 重跑**（863 已完成；parser patch 已离线 re-map normalized）
 - **不跑** 889 全量重 live · **不清洗** 26 家 all6（hold 子集）
 - **不生成 stable 200 v2** · **不剔除 12 家 six-fail**
 - **不执行** dividend YAML backfill（决策 GO，待 889 后）

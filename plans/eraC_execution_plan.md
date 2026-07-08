@@ -204,10 +204,60 @@ _最后更新：2026-07-05_
 95. ~~harvest live runner smoke~~ → **PASS**（§7be · limit=10）
 96. ~~863 full harvest approval plan~~ → **完成**（§7bf）
 97. ~~harvest runner 安全控制~~ → **完成**（§7bg · safety test 5/5）
-98. 863 full harvest 执行 → **PENDING_APPROVAL**（`full_harvest_gate`）
-99. dividend_history YAML registry → **GO（decision only）** · **不执行 backfill**
-100. BSE legacy targeted probe（8 家）→ **待启动**
-101. **暂不全量 harvest live、暂不入库**
+98. ~~863 full harvest 执行~~ → **PASS_WITH_RESUME**（§7bi）
+99. ~~863 full harvest 离线 QA~~ → **PASS_WITH_CAVEAT**（§7bj）
+100. ~~QA flag triage~~ → **PASS_WITH_CAVEAT_REVIEW_QUEUE_READY**（§7bk）
+101. ~~dividend F007V parser patch~~ → **完成**（§7bl · fixture 10/10）
+102. ~~dividend_history 离线 re-map~~ → **完成**（§7bl · needs_review 80→12）
+103. ~~open issues & closure plan~~ → **完成**（§7bm · 9 open issues）
+104. ~~QA review queue closure planning~~ → **完成**（§7bn · 72 flags · closure CSV）
+105. ~~执行 QA queue closure classification~~ → **完成**（§7bo · gate PASS）
+106. ~~review_later 31 字段复判~~ → **完成**（§7bp · 31 fields）
+107. ~~review_later promotion planning~~ → **完成**（§7bq · 10 candidates · ready=9）
+108. ~~promotion candidate approval~~ → **完成**（§7br · 9 approved · gate PASS）
+109. ~~Field & Quality Consolidation Batch~~ → **完成**（§7bs）
+110. ~~establishment_date mapper patch implementation~~ → **完成**（§7bt）
+111. ~~C-class Field Freeze Review~~ → **完成**（§7bu）
+112. ~~field inventory 升格执行~~ → **完成**（§7bv）
+113. ~~company_snapshot planning~~ → **完成**（§7bw）
+114. ~~snapshot builder prototype~~ → **demo 完成**（§7bx）
+115. ~~snapshot smoke 10 家 batch~~ → **完成**（§7by · gate **PASS_WITH_CAVEAT**）
+116. ~~863-wide snapshot batch 规划~~ → **完成**（§7bz · gate **PASS_WITH_CAVEAT**）
+117. ~~full batch runner dry-run~~ → **完成**（§7ca · test **5/5 PASS**）
+118. ~~full batch 执行批准 checklist~~ → **完成**（§7cb · gate **READY_FOR_APPROVAL**）
+119. ~~full batch 执行~~ → **完成**（§7cc · 863 JSON）
+120. ~~full snapshot QA review~~ → **完成**（§7cc · test **5/5 PASS**）
+121. ~~full market expansion planning~~ → **完成**（§7cd）
+122. ~~company registry draft design~~ → **完成**（§7ce · gate **READY_FOR_SCHEMA_APPROVAL**）
+123. ~~company registry schema approval~~ → **完成**（§7cf · gate **PASS**）
+124. ~~registry candidate derivation design~~ → **完成**（§7cg）
+125. ~~registry candidate generator 实现~~ → **完成**（§7ch · test **5/5 PASS**）
+126. ~~registry candidate QA review~~ → **完成**（§7ci · gate **PASS_WITH_CAVEAT**）
+127. ~~registry conflict triage design~~ → **完成**（§7cj · gate **READY_FOR_CANONICAL_APPROVAL**）
+128. ~~canonical identity approval design~~ → **完成**（§7ck · gate **READY_FOR_MANUAL_SIGNOFF**）
+129. ~~registry identity review queue 生成~~ → **完成**（§7cl · **508** pending）
+130. ~~registry conflict fast triage~~ → **完成**（§7cm · remaining manual **9**）
+131. ~~registry rename history signoff~~ → **完成**（§7cn · gate **PASS**）
+132. ~~BSE legacy + duplicate identity signoff~~ → **完成**（§7co · gate **PASS**）
+133. ~~registry identity decision ledger 合并~~ → **完成**（§7cp · gate **PASS**）
+134. ~~registry product decision review~~ → **完成**（§7cq · gate **PASS_WITH_CAVEAT**）
+135. ~~full-market expansion execution readiness 评估~~ → **完成**（§7cr · gate **PASS_WITH_CAVEAT**）
+136. ~~universe reconciliation + phased execution planning~~ → **完成**（§7cs · execution **deferred**）
+137. ~~Phase 0 offline reconciliation script build~~ → **完成**（§7ct · dry-run · gate **PASS_WITH_CAVEAT**）
+138. ~~Phase 1 registry candidate refresh planning~~ → **完成**（§7cu · gate **DESIGN_COMPLETE**）
+139. ~~Phase 1 refresh script dry-run 实现~~ → **完成**（§7cv · gate **PASS_WITH_CAVEAT**）
+140. ~~Phase 2 expansion smoke planning~~ → **完成**（§7cw · gate **DESIGN_COMPLETE**）
+141. ~~Phase 2 smoke universe selection script~~ → **完成**（§7cx · smoke YAML · gate **PASS**）
+142. ~~Phase 2 harvest dry-run planning~~ → **完成**（§7cy · gate **READY_FOR_DRYRUN**）
+143. ~~Phase 2 harvest dry-run 执行~~ → **完成**（§7cz · gate **PASS**）
+144. ~~Phase 2 live harvest approval planning~~ → **完成**（§7da · gate **READY_FOR_APPROVAL**）
+145. ~~harvest runner output-root isolation extension~~ → **完成**（§7db · gate **PASS**）
+146. **Phase 2 live harvest 显式用户批准** → **待批准**
+105. review_later / raw_only 复判 → **待启动**（31 + 25）
+106. company_snapshot planning → **待启动**（P2）
+107. dividend_history YAML backfill → **GO（决策 only）** · **不执行**
+108. BSE / hold / abnormal side-track → **待文档化**
+109. **C-class 未整体完成** · **暂不入库**
 
 **不要与 Phase 3 B 类并行抢主线时分散验证资源。**
 
@@ -1527,7 +1577,7 @@ _最后更新：2026-07-05_
 
 **preflight：** 无 BSE · 无 abnormal_review · 无退市名；**000765/001267** duplicate orgid 共存（监测项）
 
-**下一步：** ~~harvest runner 安全控制~~ → **完成**（§7bg）；**full_harvest_gate = PENDING_APPROVAL**。
+**下一步：** ~~full market expansion planning~~ → **完成**（§7cd）；**registry draft 派生 / product layer 决策**。
 
 ---
 
@@ -1560,7 +1610,1448 @@ _最后更新：2026-07-05_
 |------|------|
 | harvest_smoke_gate | **PASS** |
 | safety_controls | **PASS**（5/5） |
-| full_harvest_gate | **PENDING_APPROVAL** |
+| full_harvest_gate | **PASS_WITH_RESUME** |
+
+---
+
+## 7bi. Phase 4 C 类 863 Full Harvest 执行（2026-07-07 ~ 2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| runner | `lab/harvest_cninfo_c_class.py` · `--live --approve-full-harvest --resume` |
+| universe | **863** non-BSE（889 − 26 hold） |
+| resume | smoke **10** 家跳过 · 本轮新增 **853** 家 |
+| 磁盘计数 | raw **6041** · normalized **8630** · companies **863** |
+| blocked / http_error | **0** / **0** |
+| hold_overlap | **0** |
+| 报告 | [harvest_full_summary.md](../outputs/validation/cninfo_c_class_harvest_full_summary.md) · [harvest_summary.md](../outputs/harvest/cninfo_c_class/quality/harvest_summary.md) |
+
+### Gate
+
+| Gate | 状态 |
+|------|------|
+| harvest_full_gate | **PASS_WITH_RESUME** |
+
+**红线：** **no verified** · **no DB** · **no MinIO** · dividend_history ≠ financing
+
+---
+
+## 7bj. Phase 4 C 类 Full Harvest 离线 QA Review（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| 脚本 | `lab/review_cninfo_c_class_full_harvest_qa.py` |
+| 报告 | [cninfo_c_class_full_harvest_qa_review.md](../outputs/validation/cninfo_c_class_full_harvest_qa_review.md) |
+| flags | [cninfo_c_class_full_harvest_qa_flags.csv](../outputs/validation/cninfo_c_class_full_harvest_qa_flags.csv)（**137**） |
+
+### QA 结论
+
+| 维度 | 结果 |
+|------|------|
+| qa_conclusion | **PASS_WITH_CAVEAT** |
+| harvest_full_gate | **PASS_WITH_RESUME**（复核） |
+| flags | dividend_parse **77** · source_caveat **54** · missing_normalized_core **6** |
+
+**政策：** `source_partial` / `empty_but_valid` 不自动 FAIL；`security_observe` 不进入主 snapshot。
+
+---
+
+## 7bk. Phase 4 C 类 QA Flag Triage / Review Planning（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| 脚本 | `lab/triage_cninfo_c_class_full_harvest_qa_flags.py` |
+| 报告 | [cninfo_c_class_full_harvest_qa_flag_triage.md](../outputs/validation/cninfo_c_class_full_harvest_qa_flag_triage.md) |
+| 明细 | [cninfo_c_class_full_harvest_qa_flag_triage.csv](../outputs/validation/cninfo_c_class_full_harvest_qa_flag_triage.csv)（**146** rows） |
+
+### 分层
+
+| Tier | 范围 | 公司数 |
+|------|------|--------|
+| **P0** | missing_normalized_core | **6** |
+| **P1** | dividend_parse needs_review | **77**（80 事件） |
+| **P2** | source_caveat / empty_but_valid | **28** |
+
+### F007V needs_review pattern（80 事件）
+
+| pattern | count | share |
+|---------|-------|-------|
+| `10股派X元（含税）` 类（tax_inclusive_exclusive_complex） | **70** | 87.5% |
+| other_unparseable | 5 | 6.2% |
+| cash_plus_stock_transfer_combo | 3 | 3.8% |
+| stock_or_transfer_combo | 2 | 2.5% |
+
+### Triage 结论
+
+| 结论 | **PASS_WITH_CAVEAT_REVIEW_QUEUE_READY**（post-patch） |
+|------|--------------------------------------------------------|
+| post-patch needs_review | **12** 事件 / **12** 家公司（长尾） |
+| 主导 pattern 已消除 | `10股派X元（含税）` 类 **70→0** |
+
+---
+
+## 7bl. Phase 4 C 类 dividend_history Parser Patch + 离线 Re-map（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| parser | `lab/cninfo_c_class_mappers.py` · `parse_dividend_f007v()` |
+| 新增 pattern | `10股派X元` · `每10股派X元` · 含税全角/半角括号 |
+| fixture | `fixtures/c_class/dividend_history/dividend_history_mapper_fixtures.json` · **10/10 PASS** |
+| re-map 脚本 | `lab/remap_cninfo_c_class_dividend_history_offline.py` |
+| 输入 | `outputs/harvest/cninfo_c_class/raw/dividend_history/`（**863** 文件 · **未修改**） |
+| 输出 | `outputs/harvest/cninfo_c_class/normalized/dividend_history/`（**863** 文件 · **197** 变更） |
+| 报告 | [remap_summary.md](../outputs/validation/cninfo_c_class_dividend_history_remap_summary.md) · [remap_report.csv](../outputs/validation/cninfo_c_class_dividend_history_remap_report.csv) |
+
+### Re-map 统计
+
+| 指标 | before | after |
+|------|--------|-------|
+| needs_review 事件 | **80** | **12** |
+| parsed 事件 | **7053** | **7297** |
+| partial 事件 | **1367** | **1123** |
+| empty_but_valid 公司 | **38** | **38** |
+
+### Gate（不变）
+
+| Gate | 状态 |
+|------|------|
+| harvest_full_gate | **PASS_WITH_RESUME** |
+
+**红线：** **无 CNINFO** · **无 live** · **raw 未改** · **no verified** · **no DB/MinIO/RAG**
+
+---
+
+## 7bm. Phase 4 C 类 Open Issues & Closure Plan（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| 计划 | [cninfo_c_class_open_issues_closure_plan.md](cninfo_c_class_open_issues_closure_plan.md) |
+| harvest milestone | **completed** · `PASS_WITH_RESUME` |
+| overall C-class | **NOT fully completed** |
+| current status | **`HARVEST_COMPLETED_QA_ONGOING`** |
+| completed milestones | **9** |
+| open issues | **9**（A–I） |
+| QA flags remaining | **72** |
+
+### Closure order
+
+| P | 工作包 |
+|---|--------|
+| **P0** | QA review queue closure |
+| **P1** | review_later / raw_only · product quality rules |
+| **P2** | company_snapshot planning |
+| **P3** | security observe decision |
+| **P4** | hold / BSE / abnormal |
+| **P5** | registry backfill planning |
+
+### Next immediate task
+
+~~**只做 QA review queue closure planning**~~ → **完成**（§7bn）。
+
+~~**下一步：执行 QA queue closure classification**~~ → **完成**（§7bo）。
+
+~~**下一步：review_later promotion planning**~~ → **完成**（§7bq）。
+
+~~**下一步：promotion candidate approval**~~ → **完成**（§7br）。
+
+~~**Field & Quality Consolidation Batch**~~ → **完成**（§7bs）。
+
+~~**establishment_date mapper patch implementation**~~ → **完成**（§7bt）。
+
+~~**C-class Field Freeze Review**~~ → **完成**（§7bu）。
+
+~~**field inventory 升格执行**~~ → **完成**（§7bv）。
+
+~~**company_snapshot planning**~~ → **完成**（§7bw）。
+
+~~**snapshot builder prototype**~~ → **demo 完成**（§7bx）。
+
+~~**snapshot smoke 10 家 batch**~~ → **完成**（§7by · gate **PASS_WITH_CAVEAT**）。
+
+~~**863-wide snapshot batch 规划**~~ → **完成**（§7bz · gate **PASS_WITH_CAVEAT**）。
+
+~~**full batch runner 实现与执行批准**~~ → **dry-run 完成**（§7ca）。
+
+~~**full batch 执行批准**~~ → **checklist 完成**（§7cb · **READY_FOR_APPROVAL**）。
+
+~~**人工批准后执行 full batch**~~ → **完成**（§7cc · 863 snapshot）。
+
+**下一步：Phase 2 live harvest 显式用户批准** — runner extension **complete** · live **NOT APPROVED** · **NOT EXECUTED**。
+
+---
+
+## 7db. Phase 4 C 类 Harvest Runner Output-Root Isolation Extension（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| runner | [harvest_cninfo_c_class.py](../lab/harvest_cninfo_c_class.py) |
+| isolation test | [test_cninfo_c_class_harvest_output_root_isolation.py](../lab/test_cninfo_c_class_harvest_output_root_isolation.py) · **8/8 PASS** |
+| safety regression | [test_cninfo_c_class_harvest_runner_safety.py](../lab/test_cninfo_c_class_harvest_runner_safety.py) · **5/5 PASS** |
+| extension summary | [cninfo_c_class_phase2_smoke_200_harvest_output_root_extension_summary.md](../outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_output_root_extension_summary.md) |
+| output_root | `outputs/harvest/cninfo_c_class/phase2_smoke_200/` |
+| CLI | `--output-root` · `--approve-phase2-smoke-harvest` |
+| resume isolation | `{output_root}/quality/company_harvest_status.csv` · `{output_root}/run_status.json` |
+| dry-run report | [cninfo_c_class_phase2_smoke_200_harvest_output_root_dryrun_report.csv](../outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_output_root_dryrun_report.csv) |
+| companies | **200** |
+| planned_http_cases | **1400** |
+| cninfo_called | **false** |
+| real_harvest_executed | **false** |
+| extension gate | **`phase2_smoke_harvest_output_root_extension_gate = PASS`** |
+| live harvest | **NOT APPROVED** · **NOT EXECUTED** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 规划结论
+
+- `--output-root` 将 raw / normalized / quality 路由至隔离目录
+- Phase 2 live 须 `--approve-phase2-smoke-harvest`（与 `--approve-full-harvest` 独立）
+- 省略 `--output-root` 时 863 主轨行为不变
+
+### Next immediate task
+
+**Phase 2 live harvest 显式用户批准**（见 [command draft](cninfo_c_class_phase2_smoke_200_live_harvest_command_draft.md)）
+
+**红线：** **no live**（本轮） · **no CNINFO**（本轮）
+
+---
+
+## 7da. Phase 4 C 类 Phase 2 Live Harvest Approval Planning（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| approval plan | [cninfo_c_class_phase2_smoke_200_live_harvest_approval_plan.md](cninfo_c_class_phase2_smoke_200_live_harvest_approval_plan.md) |
+| approval checklist | [cninfo_c_class_phase2_smoke_200_live_harvest_approval_checklist.md](../outputs/validation/cninfo_c_class_phase2_smoke_200_live_harvest_approval_checklist.md) |
+| command draft | [cninfo_c_class_phase2_smoke_200_live_harvest_command_draft.md](cninfo_c_class_phase2_smoke_200_live_harvest_command_draft.md) |
+| approval summary | [cninfo_c_class_phase2_smoke_200_live_harvest_approval_summary.md](../outputs/validation/cninfo_c_class_phase2_smoke_200_live_harvest_approval_summary.md) |
+| dry-run basis | gate **PASS** · 200 companies · 1400 HTTP |
+| approval gate | **`phase2_smoke_200_live_harvest_approval_gate = READY_FOR_APPROVAL`** |
+| runner_extension_required | **true** |
+| delisted caveat | **7** rows |
+| live harvest | **NOT APPROVED** · **NOT EXECUTED** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 规划结论
+
+- dry-run 证据充分 · 12/15 checklist PASS
+- output/resume 隔离须 runner 扩展
+- live 须显式用户批准
+
+### Next immediate task
+
+**Implement harvest runner output-root isolation extension**
+
+**红线：** **no live** · **no CNINFO**（本轮）
+
+---
+
+## 7cz. Phase 4 C 类 Phase 2 Smoke 200 Harvest Dry-Run Execution（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| dry-run report | [cninfo_c_class_phase2_smoke_200_harvest_dryrun_report.csv](../outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_dryrun_report.csv) |
+| dry-run summary | [cninfo_c_class_phase2_smoke_200_harvest_dryrun_summary.md](../outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_dryrun_summary.md) |
+| validation summary | [cninfo_c_class_phase2_smoke_200_harvest_dryrun_validation_summary.md](../outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_dryrun_validation_summary.md) |
+| QA summary | [cninfo_c_class_phase2_smoke_200_harvest_dryrun_qa_summary.md](../outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_dryrun_qa_summary.md) |
+| companies | **200** |
+| planned_http_cases | **1400** |
+| matrix_rows | **2000** |
+| cninfo_called | **false** |
+| real_harvest_executed | **false** |
+| execution gate | **`phase2_smoke_harvest_dryrun_execution_gate = PASS`** |
+| live harvest | **NOT APPROVED** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### QA
+
+- validation checks **10/10 PASS**
+- 7 delisted rows tracked as smoke caveat
+- raw/normalized 磁盘未变
+
+### Next immediate task
+
+**Phase 2 live harvest approval planning**
+
+**红线：** **no live harvest** · **no snapshot**
+
+---
+
+## 7cy. Phase 4 C 类 Phase 2 Smoke 200 Harvest Dry-Run Planning（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| dry-run plan | [cninfo_c_class_phase2_smoke_200_harvest_dryrun_plan.md](cninfo_c_class_phase2_smoke_200_harvest_dryrun_plan.md) |
+| expected case matrix | [cninfo_c_class_phase2_smoke_200_harvest_expected_case_matrix.csv](../outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_expected_case_matrix.csv) |
+| command checklist | [cninfo_c_class_phase2_smoke_200_harvest_command_checklist.md](cninfo_c_class_phase2_smoke_200_harvest_command_checklist.md) |
+| review checklist | [cninfo_c_class_phase2_smoke_200_harvest_dryrun_review_checklist.md](../outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_dryrun_review_checklist.md) |
+| smoke YAML | [eval_companies_c_class_phase2_smoke_200.yaml](../lab/eval_companies_c_class_phase2_smoke_200.yaml) · **200** |
+| planned HTTP cases | **1400**（200 × 7） |
+| dry-run gate | **`phase2_smoke_harvest_dryrun_gate = READY_FOR_DRYRUN`** |
+| dry-run execution | **not started** |
+| live harvest | **NOT APPROVED** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 规划结论
+
+- 6 direct + 1 security observe-only + 3 derived（basic 派生）
+- dry-run 报告路径与 863 分离规划
+- live 须 output-root 隔离 + 显式批准
+
+### Next immediate task
+
+**Execute Phase 2 harvest dry-run**（`harvest_cninfo_c_class.py --dry-run --sample-file ...`）
+
+**红线：** **no live** · **no CNINFO during planning**
+
+---
+
+## 7cx. Phase 4 C 类 Phase 2 Smoke Universe Selection Dry-Run（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| select script | [select_cninfo_c_class_phase2_smoke_universe.py](../lab/select_cninfo_c_class_phase2_smoke_universe.py) |
+| test | [test_cninfo_c_class_phase2_smoke_universe_selection.py](../lab/test_cninfo_c_class_phase2_smoke_universe_selection.py) · **8/8 PASS** |
+| smoke YAML | [eval_companies_c_class_phase2_smoke_200.yaml](../lab/eval_companies_c_class_phase2_smoke_200.yaml) · **200** 家 |
+| selection matrix | [cninfo_c_class_phase2_smoke_200_selection_matrix.csv](../outputs/validation/cninfo_c_class_phase2_smoke_200_selection_matrix.csv) |
+| selection summary | [cninfo_c_class_phase2_smoke_200_selection_summary.md](../outputs/validation/cninfo_c_class_phase2_smoke_200_selection_summary.md) |
+| eligible_non_bse | **4643** |
+| selected | **200** |
+| seed | **20260708** |
+| selection gate | **`phase2_smoke_universe_selection_gate = PASS`** |
+| harvest / snapshot | **not started** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 分布（selected 200）
+
+| 维度 | 分布 |
+|------|------|
+| exchange | SSE **87** · SZSE **113** |
+| board | sse_main **66** · szse_main **61** · chinext **52** · star **21** |
+
+### Next immediate task
+
+**Phase 2 harvest dry-run planning**
+
+**红线：** **no live harvest** · **no CNINFO** · **no snapshot**
+
+---
+
+## 7cw. Phase 4 C 类 Phase 2 Expansion Smoke Planning（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| smoke plan | [cninfo_c_class_phase2_expansion_smoke_plan.md](cninfo_c_class_phase2_expansion_smoke_plan.md) |
+| candidate matrix | [cninfo_c_class_phase2_expansion_smoke_candidate_matrix.csv](../outputs/validation/cninfo_c_class_phase2_expansion_smoke_candidate_matrix.csv) |
+| output design | [cninfo_c_class_phase2_smoke_universe_output_design.md](cninfo_c_class_phase2_smoke_universe_output_design.md) |
+| execution checklist | [cninfo_c_class_phase2_expansion_smoke_execution_checklist.md](cninfo_c_class_phase2_expansion_smoke_execution_checklist.md) |
+| planning summary | [cninfo_c_class_phase2_expansion_smoke_planning_summary.md](../outputs/validation/cninfo_c_class_phase2_expansion_smoke_planning_summary.md) |
+| eligible pool | **matched_active** · **4647** |
+| recommended smoke size | **200** |
+| expected HTTP (future) | **1400**（200 × 7） |
+| planning gate | **`phase2_expansion_smoke_planning_gate = DESIGN_COMPLETE`** |
+| execution | **not started** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 规划结论
+
+- 主选池 4647 · 排除 1477 + board=bse 附加过滤
+- 推荐 200 家分层抽样 · non-BSE smoke
+- smoke YAML **未生成**
+
+### Next immediate task
+
+**Build Phase 2 smoke universe selection script dry-run**
+
+**红线：** **no harvest** · **no CNINFO** · **no smoke YAML**（除非下轮显式 --write）
+
+---
+
+## 7cv. Phase 4 C 类 Phase 1 Registry Candidate Refresh Dry-Run（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| refresh script | [refresh_cninfo_c_class_company_registry_candidate.py](../lab/refresh_cninfo_c_class_company_registry_candidate.py) |
+| test | [test_cninfo_c_class_company_registry_candidate_refresh.py](../lab/test_cninfo_c_class_company_registry_candidate_refresh.py) · **8/8 PASS** |
+| refreshed CSV | [cninfo_c_class_company_registry_candidate_refreshed.csv](../outputs/validation/cninfo_c_class_company_registry_candidate_refreshed.csv) · **6124** 行 |
+| refresh summary | [cninfo_c_class_company_registry_candidate_refresh_summary.md](../outputs/validation/cninfo_c_class_company_registry_candidate_refresh_summary.md) |
+| refresh gate | **`registry_candidate_refresh_dryrun_gate = PASS_WITH_CAVEAT`** |
+| manual_review_required | **26**（identity_conflict 10 + needs_manual_review 16） |
+| merge_executed | **false** |
+| registry implemented | **false** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 刷新结果
+
+| classification | count |
+|----------------|-------|
+| matched_active | **4647** |
+| already_in_c_class | **863** |
+| matched_hold | **26** |
+| matched_bse_supported_candidate | **320** |
+| matched_bse_legacy_hold | **242** |
+| identity_conflict | **10** |
+| needs_manual_review | **16** |
+
+### Next immediate task
+
+**Phase 2 expansion smoke planning**
+
+**红线：** **no harvest** · **no CNINFO** · **no registry implementation**
+
+---
+
+## 7cu. Phase 4 C 类 Phase 1 Registry Candidate Refresh Planning（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| refresh plan | [cninfo_c_class_registry_candidate_refresh_plan.md](cninfo_c_class_registry_candidate_refresh_plan.md) |
+| action matrix | [cninfo_c_class_registry_candidate_refresh_action_matrix.csv](../outputs/validation/cninfo_c_class_registry_candidate_refresh_action_matrix.csv) |
+| execution plan | [cninfo_c_class_registry_candidate_refresh_execution_plan.md](cninfo_c_class_registry_candidate_refresh_execution_plan.md) |
+| planning summary | [cninfo_c_class_registry_candidate_refresh_planning_summary.md](../outputs/validation/cninfo_c_class_registry_candidate_refresh_planning_summary.md) |
+| Phase 0 input | [reconciliation_result.csv](../outputs/validation/cninfo_c_class_full_market_universe_reconciliation_result.csv) · **6124** 行 |
+| candidate draft | [company_registry_candidate_draft.csv](../outputs/validation/cninfo_c_class_company_registry_candidate_draft.csv) |
+| planning gate | **`registry_candidate_refresh_planning_gate = DESIGN_COMPLETE`** |
+| refreshed CSV | **not generated** |
+| future script | `lab/refresh_cninfo_c_class_company_registry_candidate.py` |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 规划结论
+
+- 6124 行均可分配 refresh_action
+- 863 保持 high confidence · 4647 matched_active 标 candidate_supported
+- conflict 10 + manual 16 禁止自动扩展池
+- **不 merge** · **不触发 harvest**
+
+### Next immediate task
+
+**Implement Phase 1 refresh script dry-run**
+
+**红线：** **无 refreshed CSV write**（除非未来 `--write`）· **no harvest** · **no registry implementation**
+
+---
+
+## 7ct. Phase 4 C 类 Phase 0 Universe Reconciliation Dry-Run（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| reconcile script | [reconcile_cninfo_c_class_full_market_universe.py](../lab/reconcile_cninfo_c_class_full_market_universe.py) |
+| test | [test_cninfo_c_class_full_market_universe_reconciliation.py](../lab/test_cninfo_c_class_full_market_universe_reconciliation.py) · **6/6 PASS** |
+| result CSV | [cninfo_c_class_full_market_universe_reconciliation_result.csv](../outputs/validation/cninfo_c_class_full_market_universe_reconciliation_result.csv) · **6124** 行 |
+| summary | [cninfo_c_class_full_market_universe_reconciliation_summary.md](../outputs/validation/cninfo_c_class_full_market_universe_reconciliation_summary.md) |
+| reconciliation gate | **`universe_reconciliation_dryrun_gate = PASS_WITH_CAVEAT`** |
+| already_in_c_class | **863** |
+| matched_active | **4647** |
+| matched_hold | **26** |
+| BSE supported / legacy | **320** / **242** |
+| identity_conflict | **10** |
+| needs_manual_review | **16** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 结论
+
+- Era B 6124 逐行离线分类完成 · **不 auto merge**
+- 不创建 registry 行 · 不触发 harvest 扩展
+- execution harvest/snapshot **not started**
+
+### Next immediate task
+
+**Phase 1 registry candidate refresh planning**
+
+**红线：** **无 CNINFO** · **no live** · **no harvest** · **no snapshot**
+
+---
+
+## 7cs. Phase 4 C 类 Full-Market Universe Reconciliation + Phased Execution Planning（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| reconciliation plan | [cninfo_c_class_full_market_universe_reconciliation_plan.md](cninfo_c_class_full_market_universe_reconciliation_plan.md) |
+| reconciliation matrix | [cninfo_c_class_full_market_universe_reconciliation_matrix.csv](../outputs/validation/cninfo_c_class_full_market_universe_reconciliation_matrix.csv) |
+| phased execution plan | [cninfo_c_class_full_market_phased_execution_plan.md](cninfo_c_class_full_market_phased_execution_plan.md) |
+| Era B baseline | **6124** |
+| Era C active | **863** |
+| hold | **26** |
+| BSE 920 / legacy | **326** / **251**（candidate 估算） |
+| new candidates | **~5235**（Era B − Era C − hold 粗估） |
+| identity conflicts | **508** triaged · ledger **267** |
+| planning gate | **`phased_execution_plan_gate = DESIGN_COMPLETE`** |
+| execution | **not started** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 规划结论
+
+- Era B 与 Era C 为不同 lineage；**不做简单减法**
+- 匹配优先级：code → canonical → org_id → rename → legacy → name
+- 分类 taxonomy 8 类 · **不 auto merge**
+- 分阶段：Phase 0 reconciliation → Phase 1 refresh → Phase 2 smoke → Phase 3 batch 500 → Phase 4 full
+
+### Next immediate task
+
+**Phase 0 offline reconciliation script build and dry-run**
+
+**红线：** **无 CNINFO** · **no live** · **no harvest** · **no snapshot** · **no registry implementation**
+
+---
+
+## 7cr. Phase 4 C 类 Full-Market Expansion Readiness Review（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| readiness review | [cninfo_c_class_full_market_expansion_readiness_review.md](cninfo_c_class_full_market_expansion_readiness_review.md) |
+| readiness matrix | [cninfo_c_class_full_market_expansion_readiness_matrix.csv](../outputs/validation/cninfo_c_class_full_market_expansion_readiness_matrix.csv) |
+| readiness summary | [cninfo_c_class_full_market_expansion_readiness_summary.md](../outputs/validation/cninfo_c_class_full_market_expansion_readiness_summary.md) |
+| 863 universe | [eval_companies_c_class_harvest_863_non_bse.yaml](../lab/eval_companies_c_class_harvest_863_non_bse.yaml) · **863** 家 |
+| 全市场基准 | [eval_companies_full_market_2024.yaml](../lab/eval_companies_full_market_2024.yaml) · **6124** 家 |
+| decision ledger | [cninfo_c_class_registry_identity_decision_ledger.csv](../outputs/validation/cninfo_c_class_registry_identity_decision_ledger.csv) |
+| expansion gate | **`full_market_expansion_readiness_gate = PASS_WITH_CAVEAT`** |
+| 863 pipeline | **proven**（harvest → snapshot → QA） |
+| full-market execution | **not started** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 评估结论
+
+- 863 snapshot 流水线已证明 · `complete_with_caveat` 合法
+- 全市场扩展架构 **ready** · execution **deferred**
+- 主阻塞：universe reconciliation · registry implementation decision · BSE legacy · hold policy
+- **不声称** full market support
+
+### Next immediate task
+
+**Full-market universe reconciliation and phased execution planning**
+
+**红线：** **无 full-market harvest** · **no snapshot build** · **no registry implementation** · **no verified**
+
+---
+
+## 7cq. Phase 4 C 类 Registry Product Decision Review（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| product decision review | [cninfo_c_class_registry_product_decision_review.md](cninfo_c_class_registry_product_decision_review.md) |
+| product decision summary | [cninfo_c_class_registry_product_decision_summary.md](../outputs/validation/cninfo_c_class_registry_product_decision_summary.md) |
+| decision ledger | [cninfo_c_class_registry_identity_decision_ledger.csv](../outputs/validation/cninfo_c_class_registry_identity_decision_ledger.csv) |
+| total decisions | **267** · approved **259** · manual **8** |
+| product gate | **`registry_product_decision_gate = PASS_WITH_CAVEAT`** |
+| Layer 1 governance | **ready** |
+| Layer 2 implementation | **not implemented** |
+| Layer 3 integration | **future** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 决策结论
+
+- Identity governance layer 已具备未来实现条件
+- **不声称** registry 已实现
+- 8 例 manual 不阻塞架构批准 · 阻塞全量自动 reconciliation
+- registry implementation **intentionally postponed**
+
+### Next immediate task
+
+**full-market expansion execution readiness 评估**
+
+**红线：** **无 registry implementation** · **no verified**
+
+---
+
+## 7cp. Phase 4 C 类 Registry Identity Decision Ledger Consolidation（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| ledger builder | [build_cninfo_c_class_registry_identity_decision_ledger.py](../lab/build_cninfo_c_class_registry_identity_decision_ledger.py) |
+| decision ledger | [cninfo_c_class_registry_identity_decision_ledger.csv](../outputs/validation/cninfo_c_class_registry_identity_decision_ledger.csv) |
+| ledger summary | [cninfo_c_class_registry_identity_decision_ledger_summary.md](../outputs/validation/cninfo_c_class_registry_identity_decision_ledger_summary.md) |
+| total_decisions | **267** |
+| approved_count | **259** |
+| manual_review_count | **8** |
+| merge_executed | **false** |
+| ledger gate | **`registry_identity_decision_ledger_gate = PASS`** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 合并来源
+
+| source_queue | 行数 | approved | manual |
+|--------------|------|----------|--------|
+| rename_history_signoff | 15 | 10 | 5 |
+| bse_legacy_mapping_signoff | 251 | 248 | 3 |
+| duplicate_identity_signoff | 1 | 1 | 0 |
+
+### 结论
+
+- rename / BSE / duplicate 决策合并为统一账本
+- Approval ≠ merge；registry candidate **未修改**
+- 账本为未来 registry 实现输入
+
+### Next immediate task
+
+**product layer 决策**
+
+**红线：** **无 CNINFO** · **无 merge** · **no verified**
+
+---
+
+## 7co. Phase 4 C 类 Registry BSE Legacy + Duplicate Identity Signoff（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| signoff generator | [build_cninfo_c_class_registry_identity_signoff.py](../lab/build_cninfo_c_class_registry_identity_signoff.py) |
+| BSE signoff | [cninfo_c_class_registry_bse_legacy_mapping_signoff.csv](../outputs/validation/cninfo_c_class_registry_bse_legacy_mapping_signoff.csv) |
+| duplicate signoff | [cninfo_c_class_registry_duplicate_identity_signoff.csv](../outputs/validation/cninfo_c_class_registry_duplicate_identity_signoff.csv) |
+| identity signoff summary | [cninfo_c_class_registry_identity_signoff_summary.md](../outputs/validation/cninfo_c_class_registry_identity_signoff_summary.md) |
+| BSE total | **251** |
+| BSE approved | **248** |
+| BSE manual | **3** |
+| duplicate signoff | **1** |
+| merge_executed | **false** |
+| signoff gate | **`registry_identity_signoff_gate = PASS`** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### Signoff 结论
+
+- BSE：`org_id_match=true` + `BSE_83_87_or_43x_to_920` → `approved_canonical_mapping` · `legacy_code_mapping`
+- BSE 例外 3 例 → `manual_identity_review`
+- duplicate 839729/920729 → canonical **CNINFO_920729** · **无 merge**
+- 身份决策账本记录 only · **未修改** registry candidate
+
+### Next immediate task
+
+**identity decision ledger 收口 / product layer 决策**
+
+**红线：** **无 CNINFO** · **无 merge** · **no verified**
+
+---
+
+## 7cn. Phase 4 C 类 Registry Rename History Signoff（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| rename signoff CSV | [cninfo_c_class_registry_rename_history_signoff.csv](../outputs/validation/cninfo_c_class_registry_rename_history_signoff.csv) |
+| rename signoff summary | [cninfo_c_class_registry_rename_history_signoff_summary.md](../outputs/validation/cninfo_c_class_registry_rename_history_signoff_summary.md) |
+| rename_total | **15** |
+| approved_rename_history | **10** |
+| manual_identity_review | **5** |
+| identity merge | **未执行** |
+| signoff gate | **`registry_rename_history_signoff_gate = PASS`** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### Signoff 结论
+
+- 10 例批准为 `rename_history_candidate`（血缘元数据 only）
+- 5 例保持 `manual_identity_review`（退市/跨市场/同名异码）
+- rename_history 不替代 company identity · 不触发 merge
+
+### Next immediate task
+
+**BSE legacy mapping signoff / duplicate identity signoff**
+
+**红线：** **无 CNINFO** · **无 merge** · **no verified**
+
+---
+
+## 7cm. Phase 4 C 类 Registry Conflict Fast Triage（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| fast triage script | [build_cninfo_c_class_registry_conflict_fast_triage.py](../lab/build_cninfo_c_class_registry_conflict_fast_triage.py) |
+| BSE fast triage | [bse_legacy_mapping_fast_triage.csv](../outputs/validation/bse_legacy_mapping_fast_triage.csv) |
+| rename fast triage | [rename_history_fast_triage.csv](../outputs/validation/rename_history_fast_triage.csv) |
+| manual fast triage | [manual_high_risk_fast_triage.csv](../outputs/validation/manual_high_risk_fast_triage.csv) |
+| duplicate decision | [duplicate_identity_decision.md](../outputs/validation/duplicate_identity_decision.md) |
+| fast triage summary | [cninfo_c_class_registry_conflict_fast_triage_summary.md](../outputs/validation/cninfo_c_class_registry_conflict_fast_triage_summary.md) |
+| conflict total | **508** |
+| actionable candidates | **259** |
+| remaining manual（优先） | **9** |
+| deferred likely_safe_later | **241** |
+| gate | **`registry_conflict_fast_triage_gate = READY_FOR_MANUAL_SIGNOFF`** |
+
+### 分桶结果
+
+| 模块 | 设计层可行动 | 须人工 |
+|------|-------------|--------|
+| BSE legacy（251） | approved_mapping **248** | manual **3** |
+| rename（15） | rename_candidate **10** | manual **5** |
+| duplicate（1） | 决策备忘 | pending signoff |
+| manual high（241） | likely_safe_later **241** | defer |
+
+### Next immediate task
+
+**manual identity signoff（优先 9 条）**
+
+**红线：** **无 CNINFO** · **无 merge** · **no verified**
+
+---
+
+## 7cl. Phase 4 C 类 Registry Identity Review Queue（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| queue generator | [build_cninfo_c_class_registry_identity_review_queue.py](../lab/build_cninfo_c_class_registry_identity_review_queue.py) |
+| review queue | [cninfo_c_class_registry_identity_review_queue.csv](../outputs/validation/cninfo_c_class_registry_identity_review_queue.csv) |
+| split queues | [registry_identity_review/](../outputs/validation/registry_identity_review/) |
+| queue summary | [cninfo_c_class_registry_identity_review_queue_summary.md](../outputs/validation/cninfo_c_class_registry_identity_review_queue_summary.md) |
+| total conflicts | **508**（全部 `review_status=pending`） |
+| high priority（P0+P1+P3） | **493** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 队列分布
+
+| 队列 | 行数 |
+|------|------|
+| possible_legacy_mapping | **251** |
+| possible_rename | **15** |
+| duplicate_identity | **1** |
+| manual_review_high_risk | **241** |
+| manual_review_low_risk | **0** |
+
+### Review 顺序
+
+P0 duplicate → P1 BSE legacy → P2 rename → P3 high risk manual → P4 low risk manual
+
+**政策：** identity review ≠ identity merge；不批准 · 不合并
+
+### Next immediate task
+
+**manual identity signoff**
+
+**红线：** **无 CNINFO** · **无 live** · **no verified**
+
+---
+
+## 7ck. Phase 4 C 类 Registry Canonical Identity Approval Design（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| approval design | [cninfo_c_class_registry_canonical_identity_approval.md](cninfo_c_class_registry_canonical_identity_approval.md) |
+| approval CSV | [cninfo_c_class_registry_canonical_identity_approval.csv](../outputs/validation/cninfo_c_class_registry_canonical_identity_approval.csv) |
+| approval summary | [cninfo_c_class_registry_canonical_identity_approval_summary.md](../outputs/validation/cninfo_c_class_registry_canonical_identity_approval_summary.md) |
+| conflict_total | **508** |
+| approved_canonical_mapping（设计推荐） | **252** |
+| approved_rename_history（设计推荐） | **15** |
+| unresolved | **241** |
+| approval gate | **`registry_canonical_identity_approval_gate = READY_FOR_MANUAL_SIGNOFF`** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 设计结论
+
+- Approval ≠ merge；仅身份决策元数据
+- Canonical priority：org_id > code mapping > rename evidence > name similarity
+- BSE 839729/920729 → canonical **CNINFO_920729**；无 merge 执行
+- **不修改** registry candidate CSV
+
+### Next immediate task
+
+**manual identity signoff**
+
+**红线：** **无 CNINFO** · **无 live** · **no verified**
+
+---
+
+## 7cj. Phase 4 C 类 Registry Conflict Triage Design（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| triage design | [cninfo_c_class_registry_conflict_triage_design.md](cninfo_c_class_registry_conflict_triage_design.md) |
+| triage CSV | [cninfo_c_class_registry_conflict_triage.csv](../outputs/validation/cninfo_c_class_registry_conflict_triage.csv) |
+| resolution policy | [cninfo_c_class_registry_conflict_resolution_policy.md](cninfo_c_class_registry_conflict_resolution_policy.md) |
+| triage summary | [cninfo_c_class_registry_conflict_triage_summary.md](../outputs/validation/cninfo_c_class_registry_conflict_triage_summary.md) |
+| conflict total | **508** |
+| unresolved | **508** |
+| triage gate | **`registry_conflict_triage_gate = READY_FOR_CANONICAL_APPROVAL`** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 分类规模
+
+| type | count |
+|------|-------|
+| possible_legacy_mapping | **251** |
+| needs_manual_review | **241** |
+| possible_rename | **15** |
+| duplicate_identity | **1** |
+
+### 设计结论
+
+- 四类 conflict taxonomy 已定义；508 条 triage 记录全部 `unresolved`
+- resolution policy：允许 mapping/rename 元数据候选；**永不**自动合并 financial/events/shareholders/snapshots
+- **不修改** registry candidate CSV · **不自动合并**身份
+
+### Next immediate task
+
+**canonical identity approval**
+
+**红线：** **无 CNINFO** · **无 live** · **no verified**
+
+---
+
+## 7ci. Phase 4 C 类 Registry Candidate QA Review（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| QA script | [review_cninfo_c_class_registry_candidate_quality.py](../lab/review_cninfo_c_class_registry_candidate_quality.py) |
+| quality report | [cninfo_c_class_registry_candidate_quality_report.csv](../outputs/validation/cninfo_c_class_registry_candidate_quality_report.csv) |
+| quality summary | [cninfo_c_class_registry_candidate_quality_summary.md](../outputs/validation/cninfo_c_class_registry_candidate_quality_summary.md) |
+| candidate_count | **6124** |
+| org_id conflict 组 | **259** |
+| duplicate findings | **508** |
+| missing identity 行 | **0** |
+| QA gate | **`registry_candidate_quality_gate = PASS_WITH_CAVEAT`** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### QA 结论
+
+- 身份核心字段完整（missing_rate=0）
+- universe lineage 对账：863/26/12/8/5215 符合预期
+- 259 org_id 冲突组须人工 review；不自动合并
+- confidence 不升级
+
+### Next immediate task
+
+**registry candidate conflict triage / product layer 决策**
+
+**红线：** **无 CNINFO** · **无 live** · **no verified**
+
+---
+
+## 7ch. Phase 4 C 类 Registry Candidate Generator（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| generator | [derive_cninfo_c_class_company_registry_candidate.py](../lab/derive_cninfo_c_class_company_registry_candidate.py) |
+| candidate draft CSV | [cninfo_c_class_company_registry_candidate_draft.csv](../outputs/validation/cninfo_c_class_company_registry_candidate_draft.csv) |
+| candidate summary | [cninfo_c_class_company_registry_candidate_summary.md](../outputs/validation/cninfo_c_class_company_registry_candidate_summary.md) |
+| test | [test_cninfo_c_class_registry_candidate_generator.py](../lab/test_cninfo_c_class_registry_candidate_generator.py) · **5/5 PASS** |
+| candidate 行数 | **6124** |
+| org_id conflict 组 | **259** |
+| hold 行 | **34** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 实现结论
+
+- 离线派生：863 active + 26 hold + BSE 20 + 6124 baseline 填充
+- `company_id` = `CNINFO_{company_code}`；org_id 冲突不自动合并
+- snapshot enrichment：863 行 `confidence=high`
+- **非 production registry** · 无 CNINFO · 无 live · 无 harvest
+
+### Next immediate task
+
+**registry candidate QA review / universe reconciliation**
+
+**红线：** **无 CNINFO** · **无 live** · **no verified**
+
+---
+
+## 7cg. Phase 4 C 类 Registry Candidate Derivation Design（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| derivation design | [cninfo_c_class_registry_derivation_design.md](cninfo_c_class_registry_derivation_design.md) |
+| derivation mapping | [cninfo_c_class_registry_derivation_mapping.csv](../outputs/validation/cninfo_c_class_registry_derivation_mapping.csv) |
+| derivation summary | [cninfo_c_class_registry_derivation_summary.md](../outputs/validation/cninfo_c_class_registry_derivation_summary.md) |
+| 映射字段数 | **24** |
+| 实现状态 | **设计完成 · 实现未启动** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 设计结论
+
+- 输入产物：863 YAML · 26 hold · BSE 920/legacy · 6124 baseline · 863 snapshot
+- 24 字段派生映射已定义；canonical 规则：org_id > company_code > company_name
+- 未来 candidate 构成：863 active + 26 hold + BSE + 6124 填充（本轮不 merge）
+- **本轮不生成** registry candidate 数据行
+
+### Next immediate task
+
+**registry candidate generator 实现**（`lab/derive_cninfo_c_class_company_registry_candidate.py`）
+
+**红线：** **无 CNINFO** · **无 live** · **no verified**
+
+---
+
+## 7cf. Phase 4 C 类 Company Registry Schema Approval（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| schema approval checklist | [cninfo_c_class_company_registry_schema_approval_checklist.md](cninfo_c_class_company_registry_schema_approval_checklist.md) |
+| schema approval summary | [cninfo_c_class_registry_schema_approval_summary.md](../outputs/validation/cninfo_c_class_registry_schema_approval_summary.md) |
+| schema 字段数 | **24** core（+ `security_type` 观察层扩展） |
+| approved | **18** · approved_with_caveat **6** · pending **0** |
+| approval gate | **`registry_schema_approval_gate = PASS`** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 审批结论
+
+- 24 字段 schema 正式批准（无 rejected · 无 pending）
+- registry 定位为身份治理层；不立即替代 YAML
+- BSE：920 active = future supported candidate；83/87 legacy = legacy_hold；canonical = 920729
+- **本轮不执行** probe · **不生成** registry 数据
+
+### Next immediate task
+
+**registry 派生脚本设计 / product layer 决策**
+
+**红线：** **无 CNINFO** · **无 live** · **no verified**
+
+---
+
+## 7ce. Phase 4 C 类 Company Registry Draft Design（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| registry design | [cninfo_c_class_company_registry_design.md](cninfo_c_class_company_registry_design.md) |
+| lineage design | [cninfo_c_class_company_registry_lineage_design.md](../outputs/validation/cninfo_c_class_company_registry_lineage_design.md) |
+| registry readiness matrix | [cninfo_c_class_registry_readiness_matrix.csv](../outputs/validation/cninfo_c_class_registry_readiness_matrix.csv) |
+| planning summary | [cninfo_c_class_company_registry_planning_summary.md](../outputs/validation/cninfo_c_class_company_registry_planning_summary.md) |
+| schema 字段 | **24** 核心字段（6 组）+ BSE identity 扩展 |
+| registry 定位 | 身份治理层；**不立即替代** eval YAML |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 规划结论
+
+- `company_registry` 定义为身份治理层（identity governance），非数据采集层
+- Era B 6124 + Era C 863 + hold 26 + BSE smoke 血缘已设计
+- BSE 920 active / 83-87 legacy 政策写入 registry design §4
+- **本轮不生成** registry 数据行 · **不执行** derive backfill
+
+### Next immediate task
+
+**registry schema 审批 / 派生脚本设计 / product layer 决策**
+
+**红线：** **无 CNINFO** · **无 live** · **no verified**
+
+---
+
+## 7cd. Phase 4 C 类 Full Market Expansion Planning（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| registry plan | [cninfo_c_class_full_market_universe_registry_plan.md](cninfo_c_class_full_market_universe_registry_plan.md) |
+| universe design | [cninfo_c_class_full_market_universe_design.md](../outputs/validation/cninfo_c_class_full_market_universe_design.md) |
+| BSE strategy | [cninfo_c_class_bse_expansion_strategy.md](cninfo_c_class_bse_expansion_strategy.md) |
+| hold policy | [cninfo_c_class_hold_company_policy.md](cninfo_c_class_hold_company_policy.md) |
+| harvest architecture | [cninfo_c_class_full_market_harvest_architecture.md](cninfo_c_class_full_market_harvest_architecture.md) |
+| readiness matrix | [cninfo_c_class_full_market_readiness_matrix.csv](../outputs/validation/cninfo_c_class_full_market_readiness_matrix.csv) |
+| expansion summary | [cninfo_c_class_full_market_expansion_planning_summary.md](../outputs/validation/cninfo_c_class_full_market_expansion_planning_summary.md) |
+| 当前 universe | **863** non-BSE |
+| 目标 universe | **~6124** A 股（`eval_companies_full_market_2024.yaml`） |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 规划结论
+
+- company_registry 字段与五板块覆盖规则已定义
+- BSE 分 920 active / 83-87 legacy 侧轨
+- 26 all6 hold 推荐 Option B（独立侧轨 universe）
+- 5000+ 规模须 phased harvest + resume + failure isolation
+- **本轮不执行** harvest / snapshot / registry backfill
+
+### Next immediate task
+
+**registry draft 派生 / product layer 决策**
+
+**红线：** **无 CNINFO** · **无 live** · **no verified**
+
+---
+
+## 7cc. Phase 4 C 类 Snapshot Full Batch + QA Review（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| full snapshots | [outputs/snapshot/cninfo_c_class/full/](../outputs/snapshot/cninfo_c_class/full/) · **863** JSON |
+| status CSV | complete_with_caveat=**863** · failed=**0** |
+| QA review script | `lab/review_cninfo_c_class_snapshot_full_quality.py` |
+| QA test | `lab/test_cninfo_c_class_snapshot_full_quality_review.py` · **5/5 PASS** |
+| completeness report | [cninfo_c_class_snapshot_full_completeness_report.csv](../outputs/validation/cninfo_c_class_snapshot_full_completeness_report.csv) |
+| module coverage | [cninfo_c_class_snapshot_full_module_coverage.csv](../outputs/validation/cninfo_c_class_snapshot_full_module_coverage.csv) |
+| field coverage | [cninfo_c_class_snapshot_full_field_coverage.csv](../outputs/validation/cninfo_c_class_snapshot_full_field_coverage.csv) |
+| quality flags | [cninfo_c_class_snapshot_full_quality_flags.csv](../outputs/validation/cninfo_c_class_snapshot_full_quality_flags.csv) |
+| quality summary | [cninfo_c_class_snapshot_full_quality_summary.md](../outputs/validation/cninfo_c_class_snapshot_full_quality_summary.md) |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### QA 结论
+
+- valid_json **863/863** · duplicate **0** · malformed **0**
+- technology_profile not_available **863/863**（预期）
+- shareholder / market / investor / risk **partial 为主**（不判失败）
+- quality flags 已记录（schema_drift / field_missing 等）；**本轮不修复**
+
+### Next immediate task
+
+**product layer / security observe 决策**
+
+**红线：** **无 CNINFO** · **snapshot 只读 QA** · **no verified**
+
+---
+
+## 7cb. Phase 4 C 类 Snapshot Full Execution Approval Checklist（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| approval checklist | [cninfo_c_class_snapshot_full_execution_approval_checklist.md](cninfo_c_class_snapshot_full_execution_approval_checklist.md) |
+| approval summary | [cninfo_c_class_snapshot_full_execution_approval_summary.md](../outputs/validation/cninfo_c_class_snapshot_full_execution_approval_summary.md) |
+| universe | **863** · hold_overlap **0** |
+| runner safety | 默认 dry-run · 双开关批准 · exit 2 无批准 |
+| output path | `full/` 存在 · **0** snapshot JSON · smoke/demo 隔离 |
+| resume / error | status CSV 863 pending · error CSV 就绪 · 单公司隔离已测 |
+| gate | **`snapshot_full_execution_gate = READY_FOR_APPROVAL`** |
+| C-class status | **`HARVEST_COMPLETED_QA_ONGOING`** |
+
+### 验证结论
+
+- 全部框架检查 **PASS**（§1–§5）
+- 质量预期允许 `complete_with_caveat` / partial / not_available
+- **本轮未执行** `--execute` · **未生成** full snapshot JSON
+
+### Next immediate task
+
+**人工批准后执行 full batch**
+
+**红线：** **无 CNINFO** · **no verified**
+
+---
+
+## 7ca. Phase 4 C 类 Company Snapshot Full Batch Runner Dry-Run（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| batch runner | `lab/build_cninfo_c_class_snapshot_batch.py` |
+| test | `lab/test_cninfo_c_class_snapshot_batch_runner.py` · **5/5 PASS** |
+| universe | [eval_companies_c_class_harvest_863_non_bse.yaml](../lab/eval_companies_c_class_harvest_863_non_bse.yaml) · **863** 家 |
+| hold_overlap | **0** |
+| status CSV | [company_snapshot_status.csv](../outputs/snapshot/cninfo_c_class/full/quality/company_snapshot_status.csv) |
+| error CSV | [company_snapshot_error.csv](../outputs/snapshot/cninfo_c_class/full/quality/company_snapshot_error.csv) |
+| dry-run report | [cninfo_c_class_snapshot_batch_dryrun_report.csv](../outputs/validation/cninfo_c_class_snapshot_batch_dryrun_report.csv) |
+| dry-run summary | [cninfo_c_class_snapshot_batch_dryrun_summary.md](../outputs/validation/cninfo_c_class_snapshot_batch_dryrun_summary.md) |
+| test summary | [cninfo_c_class_snapshot_batch_runner_test_summary.md](../outputs/validation/cninfo_c_class_snapshot_batch_runner_test_summary.md) |
+| execute 批准 | `--approve-full-snapshot-batch`（未执行） |
+| gate | **`snapshot_batch_dryrun_gate = PASS_WITH_CAVEAT`** |
+| C-class status | **`HARVEST_COMPLETED_QA_ONGOING`** |
+
+### 验证结论
+
+- dry-run 验证 universe=863 · hold_overlap=0 · status/error/resume 框架就绪
+- **未调用** `build_snapshot` · **未生成** `full/*.json`
+- 单公司错误隔离与 resume 逻辑经 mock 测试通过
+
+### Next immediate task
+
+**人工批准后执行 full batch**（§7cb）
+
+**红线：** **无 CNINFO** · **normalized 只读** · **no verified**
+
+---
+
+## 7bz. Phase 4 C 类 Company Snapshot Full Batch Planning（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| full batch plan | [cninfo_c_class_snapshot_full_batch_plan.md](cninfo_c_class_snapshot_full_batch_plan.md) |
+| planning summary | [cninfo_c_class_snapshot_full_batch_planning_summary.md](../outputs/validation/cninfo_c_class_snapshot_full_batch_planning_summary.md) |
+| universe | [eval_companies_c_class_harvest_863_non_bse.yaml](../lab/eval_companies_c_class_harvest_863_non_bse.yaml) · **863** 家 |
+| 排除 | 26 all6 hold（已在 universe 派生时排除） |
+| 规划输出目录 | `outputs/snapshot/cninfo_c_class/full/`（**本轮未写入**） |
+| resume 设计 | `company_snapshot_status.csv` |
+| error 设计 | `company_snapshot_error.csv` |
+| quality summary | `snapshot_quality_summary.md`（执行阶段生成） |
+| builder_change_required | **no**（batch runner 泛化 smoke 10 即可） |
+| gate | **`snapshot_full_batch_gate = PASS_WITH_CAVEAT`** |
+| C-class status | **`HARVEST_COMPLETED_QA_ONGOING`** |
+
+### 验证结论
+
+- smoke 10 已验证 18 模块可泛化；863 风险主要为 known partial 放大
+- `technology_profile` / `market_behavior` / `investor_relation` 保持 partial/not_available，不强制补齐
+- 单公司失败隔离 + resume 设计已文档化
+
+### Next immediate task
+
+**full batch 执行批准**（§7ca）
+
+**红线：** **无 CNINFO** · **normalized 只读** · **no verified**
+
+---
+
+## 7by. Phase 4 C 类 Company Snapshot Smoke 10（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| smoke sample | [eval_companies_c_class_snapshot_smoke_10.yaml](../lab/eval_companies_c_class_snapshot_smoke_10.yaml) · **10** 家 |
+| runner | `lab/run_cninfo_c_class_snapshot_smoke_10.py` |
+| smoke snapshots | [outputs/snapshot/cninfo_c_class/smoke/](../outputs/snapshot/cninfo_c_class/smoke/) · **10** JSON |
+| report | [cninfo_c_class_snapshot_smoke_10_report.csv](../outputs/validation/cninfo_c_class_snapshot_smoke_10_report.csv) |
+| summary | [cninfo_c_class_snapshot_smoke_10_summary.md](../outputs/validation/cninfo_c_class_snapshot_smoke_10_summary.md) |
+| demo dir | **未覆盖**（`company_snapshot_demo/688750.json` 保持） |
+| board 分布 | sse_main=**2** · szse_main=**4** · chinext=**2** · star=**2** |
+| snapshot_status | complete_with_caveat=**10** |
+| gate | **`snapshot_smoke_gate = PASS_WITH_CAVEAT`** |
+| C-class status | **`HARVEST_COMPLETED_QA_ONGOING`** |
+
+### 验证结论
+
+- 18 模块结构在 10 家样本上稳定；`technology_profile` 统一 `not_available`
+- executive empty 样本（002267/301332）`executive_profile` partial 符合预期
+- 跨公司字段漂移（002267 partial 模块）已记录为 schema issue，**本轮不修代码**
+- source alias / quality status 无阻塞问题
+
+### Next immediate task
+
+**863-wide snapshot batch 规划**（§7bz）
+
+**红线：** **无 CNINFO** · **normalized 只读** · **no verified**
+
+---
+
+## 7bx. Phase 4 C 类 Company Snapshot Builder Prototype（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| builder | `lab/build_cninfo_c_class_company_snapshot.py` |
+| demo company | **688750**（金天钛业 · 科创板；`300750` 不在 harvest） |
+| demo snapshot | [688750.json](../outputs/snapshot/cninfo_c_class/company_snapshot_demo/688750.json) |
+| demo summary | [cninfo_c_class_snapshot_builder_demo_summary.md](../outputs/validation/cninfo_c_class_snapshot_builder_demo_summary.md) |
+| smoke plan | [cninfo_c_class_snapshot_smoke_plan.md](cninfo_c_class_snapshot_smoke_plan.md) · **10 家 · 已执行**（§7by） |
+| modules | **18** 一级模块 |
+| demo module status | available=**12** · partial=**5** · not_available=**1**（technology_profile） |
+| field mapping | **120** |
+| gate | **`snapshot_builder_prototype_gate = PASS`** |
+| C-class status | **`HARVEST_COMPLETED_QA_ONGOING`** |
+
+### 验证结论
+
+- normalized → company object snapshot **可合理聚合**
+- 数组模块（executive / shareholder / dividend / capital_action / event）正常
+- derived 源字段 alias 已处理（`main_business` · `company_introduction` · dividend dates）
+- 无阻塞性 schema 问题
+
+### Next immediate task
+
+~~**snapshot smoke 10 家 batch**~~ → **完成**（§7by）
+
+**红线：** **无 CNINFO** · **normalized 只读** · **no verified**
+
+---
+
+## 7bw. Phase 4 C 类 Company Snapshot Planning（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| 生成脚本 | `lab/generate_cninfo_c_class_company_snapshot_planning.py` |
+| 架构计划 | [cninfo_c_class_company_snapshot_architecture_plan.md](cninfo_c_class_company_snapshot_architecture_plan.md) |
+| 字段映射 | [cninfo_c_class_company_snapshot_field_mapping.csv](../outputs/validation/cninfo_c_class_company_snapshot_field_mapping.csv) · **120** 行 |
+| source priority | [cninfo_c_class_snapshot_source_priority_rules.md](cninfo_c_class_snapshot_source_priority_rules.md) |
+| conflict resolution | [cninfo_c_class_snapshot_conflict_resolution.md](cninfo_c_class_snapshot_conflict_resolution.md) |
+| quality model | [cninfo_c_class_snapshot_quality_model.md](cninfo_c_class_snapshot_quality_model.md) |
+| 摘要 | [cninfo_c_class_company_snapshot_planning_summary.md](../outputs/validation/cninfo_c_class_company_snapshot_planning_summary.md) |
+| 一级模块 | **18**（company object 视角） |
+| normalized_core 输入 | **74** 字段 |
+| gate | **`company_snapshot_planning_gate = PASS`** |
+| C-class status | **`HARVEST_COMPLETED_QA_ONGOING`** |
+
+### 本轮不实现
+
+- database · API · frontend · RAG · MinIO · harvest rerun
+
+### Next immediate task
+
+**snapshot builder prototype**（离线只读 normalized 聚合 PoC）
+
+**红线：** **无 CNINFO** · **no verified** · **raw/normalized/inventory 未改**
+
+---
+
+## 7bv. Phase 4 C 类 Field Inventory Promotion（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| 执行脚本 | `lab/execute_cninfo_c_class_field_inventory_promotion.py` |
+| promotion check | [cninfo_c_class_field_inventory_promotion_check.csv](../outputs/validation/cninfo_c_class_field_inventory_promotion_check.csv) |
+| 摘要 | [cninfo_c_class_field_inventory_promotion_summary.md](../outputs/validation/cninfo_c_class_field_inventory_promotion_summary.md) |
+| 更新目录 | [cninfo_c_class_final_field_catalog.csv](../outputs/validation/cninfo_c_class_final_field_catalog.csv) |
+| gate | **`field_inventory_promotion_gate = PASS`** |
+| promoted | **10** |
+| normalized_core before → after | **64 → 74** |
+| approved_as_candidate after | **0** |
+| review_later / raw_only / observe_only | **19 / 13 / 14**（不变） |
+| cninfo_c_class_field_inventory.csv（原始） | **未修改** |
+| raw / normalized harvest | **未修改** |
+| C-class status | **`HARVEST_COMPLETED_QA_ONGOING`** |
+
+### Promoted fields（10）
+
+- **establishment_date**（basic · F010D）
+- **education_candidate**（executive · F017V）
+- **shareholder_type_candidate** ×2（top_sh · top_float）
+- **source_status** ×6（basic · executive · share_capital · top_sh · top_float · dividend）
+
+### Next immediate task
+
+~~**company_snapshot planning**~~ → **完成**（§7bw）
+
+**见 §7bw** — snapshot builder prototype
+
+---
+
+## 7bu. Phase 4 C 类 Field Freeze Review（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| 生成脚本 | `lab/generate_cninfo_c_class_field_freeze_review.py` |
+| 最终字段目录 | [cninfo_c_class_final_field_catalog.csv](../outputs/validation/cninfo_c_class_final_field_catalog.csv) · **120** 行 |
+| 冻结摘要 | [cninfo_c_class_field_freeze_summary.md](../outputs/validation/cninfo_c_class_field_freeze_summary.md) |
+| 冻结说明 | [cninfo_c_class_field_freeze_v1.md](cninfo_c_class_field_freeze_v1.md) |
+| 画像覆盖矩阵 | [cninfo_c_class_company_profile_coverage_matrix.csv](../outputs/validation/cninfo_c_class_company_profile_coverage_matrix.csv) |
+| field_inventory.csv | **未修改**（评审产物独立落账） |
+| C-class status | **`HARVEST_COMPLETED_QA_ONGOING`** |
+
+### 冻结字段分布
+
+| current_status | count |
+|----------------|-------|
+| normalized_core | **64** |
+| approved_as_candidate | **10** |
+| review_later | **19** |
+| raw_only | **13** |
+| observe_only | **14** |
+
+### 公司画像模块覆盖
+
+| 模块 | 状态 |
+|------|------|
+| identity / business / financial / shareholder / dividend / event | available 或 partial |
+| industry / executive / quality | partial |
+| R&D / risk | not_modeled |
+| security | observe-only（不进主 snapshot） |
+
+### Next immediate task
+
+~~**field inventory 升格执行**~~ → **完成**（§7bv）
+
+~~**company_snapshot planning**~~ → **完成**（§7bw）
+
+**红线：** **无 CNINFO** · **no verified** · **inventory/raw/normalized 未改**
+
+---
+
+## 7bt. Phase 4 C 类 establishment_date Mapper Patch + Offline Re-map（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| mapper | `lab/cninfo_c_class_mappers.py` · `map_company_basic_profile()` · `_map_establishment_date()` |
+| fixture tests | `lab/test_cninfo_c_class_mappers.py` · **5/5 PASS** |
+| offline remap | `lab/remap_cninfo_c_class_basic_profile_offline.py` |
+| remap summary | [cninfo_c_class_establishment_date_remap_summary.md](../outputs/validation/cninfo_c_class_establishment_date_remap_summary.md) |
+| remap report | [cninfo_c_class_establishment_date_remap_report.csv](../outputs/validation/cninfo_c_class_establishment_date_remap_report.csv) |
+| after-patch approval | [approval CSV](../outputs/validation/cninfo_c_class_review_later_promotion_candidate_approval_after_patch.csv) · **10** candidates · gate **PASS** |
+| establishment_date stats | present=**863** · null=**0** · invalid=**0** · changed_files=**863** |
+| CNINFO requests | **0** |
+| harvest rerun | **not needed** |
+| QA | [full harvest QA](../outputs/validation/cninfo_c_class_full_harvest_qa_review.md) · flags=**72** · 无新增严重 flag |
+| C-class status | **`HARVEST_COMPLETED_QA_ONGOING`** |
+
+### Mapper 规则
+
+- raw `F010D` → normalized `establishment_date`
+- 正常日期 → ISO `YYYY-MM-DD` · `establishment_date_parse_status=parsed`
+- null/空 → `establishment_date=null` · `null_but_valid`
+- 非标准 → 保留原值 · `needs_review` · `establishment_date_field_quality=nonstandard_date`
+- 解析失败不导致整家公司 mapper fail
+
+### Promotion after patch
+
+- `establishment_date`：`normalized_core_candidate_after_mapper_patch` → **`approved_as_candidate_after_patch`**（PROMO-010）
+- 上轮 9 个 `approved_as_candidate` 保持不变
+- **未改 field inventory** · **未升格 normalized_core**
+
+### Next immediate task
+
+**field inventory 升格执行**（10 candidates · 需单独批准轮次）
+
+**红线：** **无 CNINFO** · **no verified** · **no testing_stable_sample** · **raw 未修改**
+
+---
+
+## 7bs. Phase 4 C 类 Field & Quality Consolidation Batch（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| 批次摘要 | [cninfo_c_class_field_quality_consolidation_batch_summary.md](../outputs/validation/cninfo_c_class_field_quality_consolidation_batch_summary.md) |
+| promotion approval | [approval CSV](../outputs/validation/cninfo_c_class_review_later_promotion_candidate_approval.csv) · **9** approved · gate **PASS** |
+| establishment_date | ~~patch plan~~ **IMPLEMENTED**（§7bt）· [remap summary](../outputs/validation/cninfo_c_class_establishment_date_remap_summary.md) |
+| raw_only policy | [policy CSV](../outputs/validation/cninfo_c_class_raw_only_field_policy_review.csv) · **25** fields |
+| quality rules | [product_quality_rules_draft.md](cninfo_c_class_product_quality_rules_draft.md) · gate **PASS** |
+| C-class status | **`HARVEST_COMPLETED_QA_ONGOING`** |
+
+### Next immediate task
+
+~~**establishment_date mapper patch implementation**~~ → **完成**（§7bt）。
+
+**field inventory 升格执行**（需单独批准轮次）
+
+---
+
+## 7br. Phase 4 C 类 review_later Promotion Candidate Approval（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| 摘要 | [cninfo_c_class_review_later_promotion_candidate_approval.md](../outputs/validation/cninfo_c_class_review_later_promotion_candidate_approval.md) |
+| 落账 CSV | [cninfo_c_class_review_later_promotion_candidate_approval.csv](../outputs/validation/cninfo_c_class_review_later_promotion_candidate_approval.csv) |
+| 规划输入 | [cninfo_c_class_review_later_promotion_plan.csv](../outputs/validation/cninfo_c_class_review_later_promotion_plan.csv) |
+| gate | **`promotion_candidate_approval_gate = PASS`** |
+| ready candidates | **9** |
+| approved_as_candidate | **9** |
+| excluded | **1**（establishment_date · mapper_patch_required） |
+| C-class status | **`HARVEST_COMPLETED_QA_ONGOING`**（未整体完成） |
+
+### Approved（9）
+
+- **P0/P1 业务字段（3）**：education_candidate · shareholder_type_candidate ×2
+- **P2 lineage source_status（6）**：basic · executive · share_capital · top_shareholders · top_float · dividend_history
+
+### 未 approval（§7br 时点）
+
+- **establishment_date**（F010D）— ~~待 implementation~~ → **已 approval after patch**（§7bt · PROMO-010）
+
+### Next immediate task（§7br 时点）
+
+~~**mapper patch planning**~~ → **完成**（§7bs）。
+
+~~**establishment_date mapper patch implementation**~~ → **完成**（§7bt）
+
+**见 §7bt** — field inventory 升格执行
+
+---
+
+## 7bq. Phase 4 C 类 review_later Promotion Planning（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| 计划 | [cninfo_c_class_review_later_promotion_plan.md](../outputs/validation/cninfo_c_class_review_later_promotion_plan.md) |
+| CSV | [cninfo_c_class_review_later_promotion_plan.csv](../outputs/validation/cninfo_c_class_review_later_promotion_plan.csv) |
+| promote candidates | **10** |
+| C-class status | **`HARVEST_COMPLETED_QA_ONGOING`**（未整体完成） |
+
+### Promotion target 分布
+
+| recommended_target | count |
+|--------------------|-------|
+| normalized_core_candidate_ready | **9** |
+| normalized_core_candidate_after_mapper_patch | **1** |
+| normalized_core_candidate_after_definition | **0** |
+| defer_promotion | **0** |
+
+### 要点
+
+- **P0**：`establishment_date`（需 mapper patch 规划）· `education_candidate`（ready）
+- **P1**：`shareholder_type_candidate` ×2（ready；top_float medium risk）
+- **P2**：lineage `source_status` ×6（ready + qa_rule_required）
+- **本轮未改** inventory · raw/normalized · **未执行** mapper patch
+
+### Next immediate task
+
+~~**promotion candidate approval**~~ → **完成**（§7br · 9 approved）。
+
+**mapper patch planning**（establishment_date）
+
+**红线：** **无 CNINFO** · **无 live** · **无 harvest** · **no verified**
+
+---
+
+## 7bp. Phase 4 C 类 review_later 31 字段复判（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| 报告 | [cninfo_c_class_review_later_field_reclassification.md](../outputs/validation/cninfo_c_class_review_later_field_reclassification.md) |
+| CSV | [cninfo_c_class_review_later_field_reclassification.csv](../outputs/validation/cninfo_c_class_review_later_field_reclassification.csv) |
+| review_later total | **31** |
+| C-class status | **`HARVEST_COMPLETED_QA_ONGOING`**（未整体完成） |
+
+### 复判分布
+
+| recommended_classification | count |
+|----------------------------|-------|
+| keep_review_later | **13** |
+| promote_to_normalized_core_candidate | **10** |
+| needs_mapper_patch | **3** |
+| needs_definition | **3** |
+| downgrade_to_raw_only | **2** |
+
+### 要点
+
+- **10** promote candidates（含 establishment_date · education · shareholder_type ×2 · lineage source_status ×6）
+- **3** mapper patch 候选（F002V · F005N · F012N）；本轮未实施
+- **2** downgrade raw_only（F024N · F003N）
+- **未改** field inventory · raw/normalized
+
+### Next immediate task
+
+~~**review_later promotion planning**~~ → **完成**（§7bq）。
+
+**红线：** **无 CNINFO** · **无 live** · **无 harvest** · **raw/normalized 未改** · **no verified**
+
+---
+
+## 7bo. Phase 4 C 类 QA Review Queue Closure Classification（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| 摘要 | [cninfo_c_class_qa_review_queue_closure_summary.md](../outputs/validation/cninfo_c_class_qa_review_queue_closure_summary.md) |
+| 落账 CSV | [cninfo_c_class_qa_review_queue_closure_classification.csv](../outputs/validation/cninfo_c_class_qa_review_queue_closure_classification.csv) |
+| 规划输入 | [cninfo_c_class_qa_review_queue_closure_plan.csv](../outputs/validation/cninfo_c_class_qa_review_queue_closure_plan.csv) |
+| gate | **`qa_queue_closure_classification_gate = PASS`** |
+| C-class status | **`HARVEST_COMPLETED_QA_ONGOING`**（未整体完成） |
+| queue total | **72** |
+
+### 落账分布
+
+| closure_status | 数量 |
+|----------------|------|
+| accepted_caveat | **60** |
+| manual_review_queue | **10** |
+| open_followup_issue | **2** |
+
+### Follow-ups（不阻塞 gate）
+
+- 10 条 dividend long-tail → `manual_review_queue`
+- 2 条 parser patch later：**002019** · **002060**（空格含税变体；本轮未 patch）
+
+### Next immediate task
+
+~~**review_later 31 字段复判**~~ → **完成**（§7bp）。
+
+**红线：** **无 CNINFO** · **无 live** · **无 harvest** · **raw/normalized 未改** · **no verified**
+
+---
+
+## 7bn. Phase 4 C 类 QA Review Queue Closure Plan（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| 计划 | [cninfo_c_class_qa_review_queue_closure_plan.md](cninfo_c_class_qa_review_queue_closure_plan.md) |
+| 分类 CSV | [cninfo_c_class_qa_review_queue_closure_plan.csv](../outputs/validation/cninfo_c_class_qa_review_queue_closure_plan.csv) |
+| C-class status | **`HARVEST_COMPLETED_QA_ONGOING`**（未整体完成） |
+| QA queue total | **72** |
+| P0 / P1 / P2 | **6** / **12** / **54** |
+| QA conclusion | **PASS_WITH_CAVEAT** |
+| Triage conclusion | **PASS_WITH_CAVEAT_REVIEW_QUEUE_READY** |
+
+### Closure action 分布（规划）
+
+| closure_action | 数量 |
+|----------------|------|
+| close_as_accepted_nullable_gap | 6 |
+| close_as_manual_review_queue | 10 |
+| open_parser_patch_issue | 2 |
+| close_as_accepted_source_caveat | 54 |
+
+### P0 判断摘要
+
+6 家公司 **12** 字段缺口均为 **basic source missing** → `close_as_accepted_nullable_gap`；无 mapper bug · 无 data repair。
+
+### P1 判断摘要
+
+10 条 → manual review queue；2 条空格含税变体 → `open_parser_patch_issue`（延后，本轮不修 parser）。
+
+### P2 判断摘要
+
+54 条 empty_but_valid 均 → `close_as_accepted_source_caveat`；**needs_manual_review = 0**。
+
+### Next immediate task
+
+~~**执行 QA queue closure classification**~~ → **完成**（§7bo）。
+
+**红线：** **无 CNINFO** · **无 live** · **无 harvest** · **raw/normalized 未改** · **no verified**
 
 ---
 
@@ -1984,7 +3475,7 @@ _最后更新：2026-07-05_
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **Harvest Runner 安全控制完成**（§7bg）；**full_harvest_gate = PENDING_APPROVAL**；**BSE legacy** HOLD。
+当前 Phase：C 类 **863 snapshot 已生成**（§7cc）；**`SNAPSHOT_GENERATED_QA_REVIEW`**；**Harvest runner output-root isolation extension 完成**（§7db · gate **PASS**）；**C-class 未整体完成**；**下一步 Phase 2 live harvest 显式用户批准**；**live NOT APPROVED** · **NOT EXECUTED**；**BSE legacy** HOLD。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

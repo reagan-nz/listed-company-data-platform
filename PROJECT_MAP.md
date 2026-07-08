@@ -1,6 +1,6 @@
 # 仓库地图（PROJECT_MAP）
 
-_最后更新：2026-07-07_
+_最后更新：2026-07-08_
 
 > **这份文件是"仓库导航图"。** 目的很直接：让任何人（包括你自己、以及便宜/换代的 AI 模型）打开仓库后，**不用逐个文件猜用途**，就能知道「现在聚焦什么、哪个文件属于哪条线、哪个能删/能停/要留」。
 >
@@ -10,7 +10,7 @@ _最后更新：2026-07-07_
 
 ## 0. 一句话现状
 
-仓库里叠了**三代方向**的代码与文档。**当前聚焦：Era C Phase 4 C 类** — **Harvest Runner 安全控制完成**；**full_harvest_gate = PENDING_APPROVAL**。前两代**已冻结**。
+仓库里叠了**三代方向**的代码与文档。**当前聚焦：Era C Phase 4 C 类** — **harvest milestone 完成**；**`HARVEST_COMPLETED_QA_ONGOING`**；**Field & Quality Consolidation Batch 完成**（[summary](outputs/validation/cninfo_c_class_field_quality_consolidation_batch_summary.md)）；**C-class 未整体完成**。前两代**已冻结**。
 
 ---
 
@@ -66,7 +66,10 @@ _最后更新：2026-07-07_
 | `validate_cninfo_c_class_live_sources.py` | **Phase 4**：C 类 P1 basic/security live validation（`--dry-run` 默认） | 是 |
 | `validate_cninfo_c_class_p2a_live_sources.py` | **Phase 4**：C 类 P2-A live validation（`--dry-run` 默认） | 是 |
 | `validate_cninfo_c_class_scale_smoke.py` | **Phase 4**：C 类 30/200 scale smoke（fill_rate · `--sample-file` · `--dry-run` 默认） | 是 |
-| `harvest_cninfo_c_class.py` | **Phase 4**：C 类 harvest（`--dry-run` · `--live --limit` smoke · `--approve-full-harvest` full） | 是 |
+| `harvest_cninfo_c_class.py` | **Phase 4**：C 类 harvest（`--dry-run` · `--live --limit` smoke · `--approve-full-harvest` full · `--output-root` 隔离 · `--approve-phase2-smoke-harvest` phase2 · `--regenerate-summary`） | 是 |
+| `review_cninfo_c_class_full_harvest_qa.py` | **Phase 4**：863 full harvest 离线 QA review（无网络） | 是 |
+| `triage_cninfo_c_class_full_harvest_qa_flags.py` | **Phase 4**：QA flags 分层 triage / review planning（无网络） | 是 |
+| `remap_cninfo_c_class_dividend_history_offline.py` | **Phase 4**：dividend_history 离线 re-map（读 raw · 写 normalized） | 是 |
 | `test_cninfo_c_class_harvest_runner_safety.py` | **Phase 4**：harvest runner 安全控制测试（5 cases · 无网络） | 是 |
 | `seed_cninfo_c_class_executive_profile_fixtures.py` | **Phase 4**：内置 getCompanyExecutives 行 → executive_profile fixture JSONL（无网络） | 是 |
 | `validate_cninfo_c_class_executive_profile_schema.py` | **Phase 4**：executive_profile fixture JSON Schema 校验 | 是 |
@@ -132,7 +135,105 @@ _最后更新：2026-07-07_
 - `plans/cninfo_c_class_889_post_retry_decision.md` — **Phase 4** 889 post-retry 决策与 harvest gate 初步判断
 - `plans/cninfo_c_class_field_inventory.md` — **Phase 4** C-class 字段清单（raw/normalized harvest 准备）
 - `plans/cninfo_c_class_harvest_plan.md` — **Phase 4** C-class harvest 执行方案（863 家 · planning only）
-- `plans/cninfo_c_class_full_harvest_863_execution_plan.md` — **Phase 4** 863 full harvest 批准前执行计划（**PENDING_APPROVAL**）
+- `plans/cninfo_c_class_full_harvest_863_execution_plan.md` — **Phase 4** 863 full harvest 执行计划（**已执行 · PASS_WITH_RESUME**）
+- `plans/cninfo_c_class_open_issues_closure_plan.md` — **Phase 4** C-class 开放问题与收口计划（**HARVEST_COMPLETED_QA_ONGOING** · 9 open issues）
+- `outputs/validation/cninfo_c_class_field_quality_consolidation_batch_summary.md` — **Phase 4** Field & Quality Consolidation Batch 摘要
+- `plans/cninfo_c_class_product_quality_rules_draft.md` — **Phase 4** 产品层质量规则初稿
+- `outputs/validation/cninfo_c_class_establishment_date_mapper_patch_plan.md` — **Phase 4** establishment_date mapper patch 规划
+- `outputs/validation/cninfo_c_class_establishment_date_remap_summary.md` — **Phase 4** establishment_date 离线 re-map 摘要（**IMPLEMENTED** · 863 parsed）
+- `lab/remap_cninfo_c_class_basic_profile_offline.py` — **Phase 4** basic profile 离线 re-map 脚本
+- `outputs/validation/cninfo_c_class_review_later_promotion_candidate_approval_after_patch.md` — **Phase 4** promotion after patch（**10** candidates · gate PASS）
+- `plans/cninfo_c_class_company_snapshot_architecture_plan.md` — **Phase 4** Company Snapshot 架构计划（**18** 模块）
+- `outputs/validation/cninfo_c_class_company_snapshot_field_mapping.csv` — **Phase 4** snapshot 字段映射（**120** 行）
+- `plans/cninfo_c_class_snapshot_source_priority_rules.md` — snapshot 多源优先级规则
+- `plans/cninfo_c_class_snapshot_conflict_resolution.md` — snapshot 冲突消解规则
+- `plans/cninfo_c_class_snapshot_quality_model.md` — snapshot 质量模型
+- `outputs/validation/cninfo_c_class_company_snapshot_planning_summary.md` — snapshot planning 摘要
+- `lab/build_cninfo_c_class_company_snapshot.py` — **Phase 4** Company Snapshot Builder（离线只读 PoC）
+- `outputs/snapshot/cninfo_c_class/company_snapshot_demo/688750.json` — snapshot demo 产物
+- `outputs/validation/cninfo_c_class_snapshot_builder_demo_summary.md` — builder demo 摘要
+- `plans/cninfo_c_class_snapshot_smoke_plan.md` — 10 家 smoke 规划
+- `lab/eval_companies_c_class_snapshot_smoke_10.yaml` — **Phase 4** snapshot smoke 10 家样本
+- `lab/run_cninfo_c_class_snapshot_smoke_10.py` — **Phase 4** snapshot smoke 10 家 batch runner（离线）
+- `outputs/snapshot/cninfo_c_class/smoke/` — snapshot smoke 10 家产物（**10** JSON）
+- `outputs/validation/cninfo_c_class_snapshot_smoke_10_report.csv` — smoke 10 质量报告
+- `outputs/validation/cninfo_c_class_snapshot_smoke_10_summary.md` — smoke 10 摘要（gate **PASS_WITH_CAVEAT**）
+- `plans/cninfo_c_class_snapshot_full_batch_plan.md` — **Phase 4** 863 家 snapshot full batch 执行规划
+- `lab/build_cninfo_c_class_snapshot_batch.py` — **Phase 4** snapshot full batch runner（默认 `--dry-run`）
+- `lab/test_cninfo_c_class_snapshot_batch_runner.py` — batch runner 测试（**5/5 PASS**）
+- `outputs/snapshot/cninfo_c_class/full/quality/company_snapshot_status.csv` — batch status 框架（863 pending）
+- `outputs/snapshot/cninfo_c_class/full/quality/company_snapshot_error.csv` — batch error 框架
+- `outputs/validation/cninfo_c_class_snapshot_batch_dryrun_report.csv` — dry-run 报告（863 行）
+- `outputs/validation/cninfo_c_class_snapshot_batch_dryrun_summary.md` — dry-run 摘要（gate **PASS_WITH_CAVEAT**）
+- `outputs/validation/cninfo_c_class_snapshot_batch_runner_test_summary.md` — runner 测试摘要（**5/5 PASS**）
+- `plans/cninfo_c_class_snapshot_full_execution_approval_checklist.md` — **Phase 4** full batch 执行前审核清单（gate **READY_FOR_APPROVAL**）
+- `lab/review_cninfo_c_class_snapshot_full_quality.py` — **Phase 4** full snapshot QA review（离线只读）
+- `lab/test_cninfo_c_class_snapshot_full_quality_review.py` — QA review 测试（**5/5 PASS**）
+- `outputs/snapshot/cninfo_c_class/full/` — **863** 家 full snapshot JSON
+- `outputs/validation/cninfo_c_class_snapshot_full_completeness_report.csv` — snapshot 完整性报告
+- `outputs/validation/cninfo_c_class_snapshot_full_module_coverage.csv` — 18 模块覆盖率
+- `outputs/validation/cninfo_c_class_snapshot_full_field_coverage.csv` — 字段覆盖率
+- `outputs/validation/cninfo_c_class_snapshot_full_quality_flags.csv` — QA flags
+- `outputs/validation/cninfo_c_class_snapshot_full_quality_summary.md` — full snapshot QA 摘要
+- `outputs/validation/cninfo_c_class_snapshot_full_quality_review_test_summary.md` — QA review 测试摘要
+- `plans/cninfo_c_class_full_market_universe_registry_plan.md` — **Phase 4** 全市场 company_registry 架构规划
+- `outputs/validation/cninfo_c_class_full_market_universe_design.md` — **Phase 4** 863 vs 全市场 universe 设计
+- `plans/cninfo_c_class_bse_expansion_strategy.md` — **Phase 4** BSE 扩展策略（920 / legacy 分轨）
+- `plans/cninfo_c_class_hold_company_policy.md` — **Phase 4** hold 公司侧轨政策
+- `plans/cninfo_c_class_full_market_harvest_architecture.md` — **Phase 4** 全市场 Harvest→Snapshot→QA 架构
+- `plans/cninfo_c_class_full_market_expansion_readiness_review.md` — **Phase 4** 全市场扩展就绪度评估（§7cr · gate **PASS_WITH_CAVEAT**）
+- `lab/reconcile_cninfo_c_class_full_market_universe.py` — **Phase 4** 全市场 universe 离线对账脚本（§7ct · dry-run）
+- `lab/test_cninfo_c_class_full_market_universe_reconciliation.py` — **Phase 4** 对账测试（6/6 PASS）
+- `outputs/validation/cninfo_c_class_full_market_universe_reconciliation_result.csv` — **Phase 4** 对账结果（6124 行）
+- `plans/cninfo_c_class_registry_candidate_refresh_plan.md` — **Phase 4** registry candidate refresh 规划（§7cu）
+- `lab/refresh_cninfo_c_class_company_registry_candidate.py` — **Phase 4** registry candidate refresh 脚本（§7cv · dry-run / --write）
+- `lab/test_cninfo_c_class_company_registry_candidate_refresh.py` — **Phase 4** refresh 测试（8/8 PASS）
+- `outputs/validation/cninfo_c_class_company_registry_candidate_refreshed.csv` — **Phase 4** refreshed candidate（6124 行 · validation artifact）
+- `plans/cninfo_c_class_phase2_expansion_smoke_plan.md` — **Phase 4** Phase 2 expansion smoke 规划（§7cw）
+- `plans/cninfo_c_class_phase2_smoke_universe_output_design.md` — **Phase 4** smoke universe 未来产物设计
+- `plans/cninfo_c_class_phase2_expansion_smoke_execution_checklist.md` — **Phase 4** smoke 未来执行检查清单
+- `outputs/validation/cninfo_c_class_phase2_expansion_smoke_candidate_matrix.csv` — **Phase 4** smoke 候选矩阵
+- `lab/select_cninfo_c_class_phase2_smoke_universe.py` — **Phase 4** Phase 2 smoke 200 选股脚本（§7cx）
+- `lab/test_cninfo_c_class_phase2_smoke_universe_selection.py` — **Phase 4** smoke 选股测试（8/8 PASS）
+- `lab/eval_companies_c_class_phase2_smoke_200.yaml` — **Phase 4** smoke 200 universe（200 家）
+- `outputs/validation/cninfo_c_class_phase2_smoke_200_selection_matrix.csv` — **Phase 4** smoke 选股矩阵
+- `plans/cninfo_c_class_phase2_smoke_200_harvest_dryrun_plan.md` — **Phase 4** smoke 200 harvest dry-run 规划（§7cy）
+- `plans/cninfo_c_class_phase2_smoke_200_harvest_command_checklist.md` — **Phase 4** harvest 命令检查清单
+- `outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_expected_case_matrix.csv` — **Phase 4** harvest 预期 case 矩阵
+- `outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_dryrun_report.csv` — **Phase 4** smoke 200 harvest dry-run 报告（2000 行 matrix）
+- `outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_dryrun_summary.md` — **Phase 4** dry-run 摘要
+- `outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_dryrun_validation_summary.md` — **Phase 4** dry-run validation 摘要
+- `outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_dryrun_qa_summary.md` — **Phase 4** dry-run QA 摘要（§7cz · gate **PASS**）
+- `plans/cninfo_c_class_phase2_smoke_200_live_harvest_approval_plan.md` — **Phase 4** live harvest 批准规划（§7da）
+- `plans/cninfo_c_class_phase2_smoke_200_live_harvest_command_draft.md` — **Phase 4** live harvest 命令草案（**NOT APPROVED**）
+- `outputs/validation/cninfo_c_class_phase2_smoke_200_live_harvest_approval_checklist.md` — **Phase 4** live harvest 批准检查清单
+- `outputs/validation/cninfo_c_class_phase2_smoke_200_live_harvest_approval_summary.md` — **Phase 4** live harvest 批准摘要
+- `lab/test_cninfo_c_class_harvest_output_root_isolation.py` — **Phase 4** output-root 隔离测试（§7db · **8/8 PASS**）
+- `outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_output_root_extension_summary.md` — **Phase 4** runner 扩展摘要（§7db · gate **PASS**）
+- `outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_output_root_dryrun_report.csv` — **Phase 4** output-root dry-run 报告
+- `outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_output_root_dryrun_summary.md` — **Phase 4** output-root dry-run 摘要
+- `outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_output_root_dryrun_validation_summary.md` — **Phase 4** output-root dry-run validation 摘要
+- `plans/cninfo_c_class_registry_candidate_refresh_execution_plan.md` — **Phase 4** refresh 未来执行计划（§7cu）
+- `outputs/validation/cninfo_c_class_registry_candidate_refresh_action_matrix.csv` — **Phase 4** refresh action 矩阵
+- `outputs/validation/cninfo_c_class_registry_candidate_refresh_planning_summary.md` — **Phase 4** refresh 规划摘要
+- `plans/cninfo_c_class_full_market_universe_reconciliation_plan.md` — **Phase 4** 全市场 universe 对账设计（§7cs）
+- `plans/cninfo_c_class_full_market_phased_execution_plan.md` — **Phase 4** 全市场分阶段执行计划（§7cs）
+- `outputs/validation/cninfo_c_class_full_market_universe_reconciliation_matrix.csv` — **Phase 4** 全市场对账矩阵
+- `outputs/validation/cninfo_c_class_full_market_readiness_matrix.csv` — **Phase 4** 全市场就绪矩阵（规划阶段）
+- `outputs/validation/cninfo_c_class_full_market_expansion_readiness_matrix.csv` — **Phase 4** 全市场扩展就绪矩阵（§7cr）
+- `outputs/validation/cninfo_c_class_full_market_expansion_readiness_summary.md` — **Phase 4** 全市场扩展就绪度摘要
+- `outputs/validation/cninfo_c_class_full_market_expansion_planning_summary.md` — **Phase 4** 全市场扩展规划摘要
+- `outputs/validation/cninfo_c_class_field_inventory_promotion_summary.md` — **Phase 4** 字段升格摘要（**10** promoted · normalized_core=**74**）
+- `outputs/validation/cninfo_c_class_field_inventory_promotion_check.csv` — **Phase 4** 升格核对表
+- `outputs/validation/cninfo_c_class_final_field_catalog.csv` — **Phase 4** 最终字段目录（**120** 字段 · inventory 未改）
+- `outputs/validation/cninfo_c_class_field_freeze_summary.md` — **Phase 4** Field Freeze 摘要
+- `plans/cninfo_c_class_field_freeze_v1.md` — **Phase 4** 字段冻结说明 v1
+- `outputs/validation/cninfo_c_class_company_profile_coverage_matrix.csv` — **Phase 4** 公司画像覆盖矩阵
+- `outputs/validation/cninfo_c_class_raw_only_field_policy_review.md` — **Phase 4** raw_only 25 字段政策复判
+- `outputs/validation/cninfo_c_class_review_later_promotion_candidate_approval.md` — **Phase 4** promotion candidate approval（**9** approved · gate PASS）
+- `outputs/validation/cninfo_c_class_review_later_field_reclassification.md` — **Phase 4** review_later 31 字段复判报告
+- `plans/cninfo_c_class_qa_review_queue_closure_plan.md` — **Phase 4** QA review queue 关闭计划（72 flags · P0=6 / P1=12 / P2=54）
+- `outputs/validation/cninfo_c_class_qa_review_queue_closure_summary.md` — **Phase 4** QA queue closure classification 摘要（**gate PASS**）
 - `plans/cninfo_c_class_dividend_history_mapping.md` — **Phase 4** dividend_history 字段映射（≠ financing）
 - `config/cninfo_dividend_history_mapper.yaml` — dividend_history mapper 配置（normalized_core=9）
 - `plans/cninfo_c_class_stable_200_live_pass_decision.md` — **Phase 4** stable 200 rerun LIVE_PASS 决策
@@ -266,5 +367,5 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 2. **Phase 2 已收口**；**Phase 3 D 类设计**见 [registry YAML](config/cninfo_d_class_source_registry_draft.yaml) / [schema validation summary](outputs/validation/cninfo_d_class_schema_validation_summary.md)。
 3. **Phase 3 B 类**见 [validation design](plans/cninfo_b_class_validation_design.md) / [category routing](plans/cninfo_b_class_category_routing_rules.md) / [categories YAML](config/cninfo_announcement_categories.yaml) / [document seed summary](outputs/validation/cninfo_b_class_document_seed_summary.md) / [B schema validation](outputs/validation/cninfo_b_class_document_schema_validation_summary.md)。
 4. **Phase 4 C 类**见 [registry lint](outputs/validation/cninfo_c_class_registry_lint_summary.md) / [fixture validation](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md) / [active 30 smoke summary](outputs/validation/cninfo_c_class_scale_smoke_30_active_summary.md) / [candidates YAML](config/cninfo_c_class_source_candidates.yaml)。
-5. **下一步**：**人工批准 → 863 full harvest**（[approval plan](plans/cninfo_c_class_full_harvest_863_execution_plan.md) · [safety test](outputs/validation/cninfo_c_class_harvest_runner_safety_test_summary.md) 5/5）。
+5. **Harvest runner output-root isolation extension 已完成**（[extension summary](outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_output_root_extension_summary.md) · gate **PASS** · test **8/8**）；**Phase 2 live harvest 仍未执行**；**仍须显式用户批准**；状态 **`SNAPSHOT_GENERATED_QA_REVIEW`**；**下一步**：**Phase 2 live harvest 显式用户批准** · **无 live harvest**（未经批准）。
 6. **每完成一个 Phase**：更新分层表状态 + `outputs/validation/` 留 summary；不做数据库接入。
