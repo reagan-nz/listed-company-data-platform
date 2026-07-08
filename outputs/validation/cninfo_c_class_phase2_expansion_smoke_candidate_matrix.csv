@@ -1,0 +1,9 @@
+pool_name,classification,eligible,count,selection_rule,risk,notes
+matched_active,matched_active,true,4647,primary_pool_stratified_sample_200,medium,refresh_action=full_market_active_candidate; harvest=candidate_supported; snapshot=not_built; manual=false
+already_in_c_class,already_in_c_class,false,863,exclude_resume_complete,low,863 harvest+snapshot 已验证; 不进入 smoke
+matched_hold,matched_hold,false,26,exclude_hold_side_track,high,all6 hold_no_retry 侧轨
+matched_bse_supported_candidate,matched_bse_supported_candidate,false,320,exclude_bse_920_separate_gate,medium,BSE 920 独立 smoke gate; 非 Phase 2 non-BSE 主轨
+matched_bse_legacy_hold,matched_bse_legacy_hold,false,242,exclude_legacy_hold_side_track,high,BSE 83/87/43 legacy 侧轨
+identity_conflict,identity_conflict,false,10,exclude_conflict_dual_row,high,rename/duplicate 双行; merge_executed=false
+needs_manual_review,needs_manual_review,false,16,exclude_manual_queue,high,ledger/同名异码待人工
+not_found_in_cninfo,not_found_in_cninfo,false,0,exclude_unresolved,medium,Era B 无 candidate 对应; 本轮 0 例
