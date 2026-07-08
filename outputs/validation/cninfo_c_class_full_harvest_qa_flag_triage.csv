@@ -1,0 +1,79 @@
+priority_tier,company_code,company_name,flag_category,source_id,source_logical,field_name,reason,f007v_pattern,f007v_text_sample,recommended_action
+P0,002710,慈铭体检,missing_normalized_core,cninfo_company_industry_profile,industry,F032V,normalized_core 字段未填充 filled=0,,,人工核对 basic/derived 源 JSON；非 harvest 重跑
+P0,002710,慈铭体检,missing_normalized_core,cninfo_company_industry_profile,industry,F044V,normalized_core 字段未填充 filled=0,,,人工核对 basic/derived 源 JSON；非 harvest 重跑
+P0,601206,海尔施,missing_normalized_core,cninfo_company_industry_profile,industry,F032V,normalized_core 字段未填充 filled=0,,,人工核对 basic/derived 源 JSON；非 harvest 重跑
+P0,601206,海尔施,missing_normalized_core,cninfo_company_industry_profile,industry,F044V,normalized_core 字段未填充 filled=0,,,人工核对 basic/derived 源 JSON；非 harvest 重跑
+P0,688235,百济神州,missing_normalized_core,cninfo_company_contact_profile,contact,F018V,normalized_core 字段未填充 filled=0,,,人工核对 basic/derived 源 JSON；非 harvest 重跑
+P0,688235,百济神州,missing_normalized_core,cninfo_company_business_scope,business_scope,F016V,normalized_core 字段未填充 filled=0,,,人工核对 basic/derived 源 JSON；非 harvest 重跑
+P0,688688,蚂蚁集团,missing_normalized_core,cninfo_company_industry_profile,industry,F032V,normalized_core 字段未填充 filled=0,,,人工核对 basic/derived 源 JSON；非 harvest 重跑
+P0,688688,蚂蚁集团,missing_normalized_core,cninfo_company_industry_profile,industry,F044V,normalized_core 字段未填充 filled=0,,,人工核对 basic/derived 源 JSON；非 harvest 重跑
+P0,688795,摩尔线程,missing_normalized_core,cninfo_company_contact_profile,contact,F014V,normalized_core 字段未填充 filled=0,,,人工核对 basic/derived 源 JSON；非 harvest 重跑
+P0,688795,摩尔线程,missing_normalized_core,cninfo_company_industry_profile,industry,F044V,normalized_core 字段未填充 filled=0,,,人工核对 basic/derived 源 JSON；非 harvest 重跑
+P0,688809,强一股份,missing_normalized_core,cninfo_company_contact_profile,contact,F014V,normalized_core 字段未填充 filled=0,,,人工核对 basic/derived 源 JSON；非 harvest 重跑
+P0,688809,强一股份,missing_normalized_core,cninfo_company_industry_profile,industry,F044V,normalized_core 字段未填充 filled=0,,,人工核对 basic/derived 源 JSON；非 harvest 重跑
+P1,000011,深物业A,dividend_parse,cninfo_dividend_financing_profile,dividend_history,F007V,dividend_parse_status=needs_review · period=1995年报,送股/转增+派现组合,10送1派1.00元,人工 review
+P1,000655,金岭矿业,dividend_parse,cninfo_dividend_financing_profile,dividend_history,F007V,dividend_parse_status=needs_review · period=1995年报,其他无法解析文本,94和95未分配利润均结转至上市后分配,人工 review
+P1,000905,厦门港务,dividend_parse,cninfo_dividend_financing_profile,dividend_history,F007V,dividend_parse_status=needs_review · period=2006三季报,送股/转增组合,10转增8 股,人工 review
+P1,002019,亿帆医药,dividend_parse,cninfo_dividend_financing_profile,dividend_history,F007V,dividend_parse_status=needs_review · period=2005年报,含税/不含税复杂表达,10派1.5 元（含税）,parser patch 候选（重复 pattern）
+P1,002041,登海种业,dividend_parse,cninfo_dividend_financing_profile,dividend_history,F007V,dividend_parse_status=needs_review · period=2014年报,送股/转增+派现组合,10送14转増1股派3.5元(含税),人工 review
+P1,002060,广东建工,dividend_parse,cninfo_dividend_financing_profile,dividend_history,F007V,dividend_parse_status=needs_review · period=2007年报,含税/不含税复杂表达,10派1.2 元（含税）,parser patch 候选（重复 pattern）
+P1,600702,舍得酒业,dividend_parse,cninfo_dividend_financing_profile,dividend_history,F007V,dividend_parse_status=needs_review · period=1995年报,其他无法解析文本,95年度利润滚存至96年度一并分配,人工 review
+P1,600716,凤凰股份,dividend_parse,cninfo_dividend_financing_profile,dividend_history,F007V,dividend_parse_status=needs_review · period=1995年报,其他无法解析文本,95年7月至12月利润全部上交,人工 review
+P1,600728,佳都科技,dividend_parse,cninfo_dividend_financing_profile,dividend_history,F007V,dividend_parse_status=needs_review · period=1995年报,其他无法解析文本,95年度利润只对老股东分配,人工 review
+P1,600777,*ST新潮,dividend_parse,cninfo_dividend_financing_profile,dividend_history,F007V,dividend_parse_status=needs_review · period=1995年报,其他无法解析文本,未分配利润滚存96年度合并派发,人工 review
+P1,600877,电科芯片,dividend_parse,cninfo_dividend_financing_profile,dividend_history,F007V,dividend_parse_status=needs_review · period=1995年报,送股/转增组合,10送3.5元,人工 review
+P1,603023,威帝股份,dividend_parse,cninfo_dividend_financing_profile,dividend_history,F007V,dividend_parse_status=needs_review · period=2015年报,送股/转增+派现组合,10送5转增15派1.5元(含税),人工 review
+P2,000037,深南电A,source_caveat,cninfo_top_shareholders_profile,top_shareholders,,top_shareholders retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,000055,方大集团,source_caveat,cninfo_top_float_shareholders_profile,top_float,,top_float retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002255,海陆重工,source_caveat,cninfo_top_shareholders_profile,top_shareholders,,top_shareholders retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002255,海陆重工,source_caveat,cninfo_top_float_shareholders_profile,top_float,,top_float retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002258,利尔化学,source_caveat,cninfo_top_shareholders_profile,top_shareholders,,top_shareholders retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002258,利尔化学,source_caveat,cninfo_top_float_shareholders_profile,top_float,,top_float retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002267,陕天然气,source_caveat,cninfo_executive_profile,executive,,executive retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002267,陕天然气,source_caveat,cninfo_share_capital_profile,share_capital,,share_capital retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002267,陕天然气,source_caveat,cninfo_top_shareholders_profile,top_shareholders,,top_shareholders retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002290,禾盛新材,source_caveat,cninfo_executive_profile,executive,,executive retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002302,西部建设,source_caveat,cninfo_executive_profile,executive,,executive retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002302,西部建设,source_caveat,cninfo_share_capital_profile,share_capital,,share_capital retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002322,理工能科,source_caveat,cninfo_top_float_shareholders_profile,top_float,,top_float retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002338,奥普光电,source_caveat,cninfo_share_capital_profile,share_capital,,share_capital retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002338,奥普光电,source_caveat,cninfo_top_shareholders_profile,top_shareholders,,top_shareholders retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002355,兴民智通,source_caveat,cninfo_top_shareholders_profile,top_shareholders,,top_shareholders retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002355,兴民智通,source_caveat,cninfo_top_float_shareholders_profile,top_float,,top_float retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002360,ST同德,source_caveat,cninfo_top_shareholders_profile,top_shareholders,,top_shareholders retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002361,神剑股份,source_caveat,cninfo_executive_profile,executive,,executive retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002361,神剑股份,source_caveat,cninfo_share_capital_profile,share_capital,,share_capital retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002361,神剑股份,source_caveat,cninfo_top_shareholders_profile,top_shareholders,,top_shareholders retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002710,慈铭体检,source_caveat,cninfo_share_capital_profile,share_capital,,share_capital retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002710,慈铭体检,source_caveat,cninfo_top_shareholders_profile,top_shareholders,,top_shareholders retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,002710,慈铭体检,source_caveat,cninfo_top_float_shareholders_profile,top_float,,top_float retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,300510,金冠股份,source_caveat,cninfo_top_float_shareholders_profile,top_float,,top_float retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,300513,恒实科技,source_caveat,cninfo_top_float_shareholders_profile,top_float,,top_float retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,300793,佳禾智能,source_caveat,cninfo_top_float_shareholders_profile,top_float,,top_float retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,301330,熵基科技,source_caveat,cninfo_top_float_shareholders_profile,top_float,,top_float retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,301332,德尔玛,source_caveat,cninfo_executive_profile,executive,,executive retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,301332,德尔玛,source_caveat,cninfo_top_float_shareholders_profile,top_float,,top_float retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,301333,诺思格,source_caveat,cninfo_executive_profile,executive,,executive retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,301333,诺思格,source_caveat,cninfo_top_shareholders_profile,top_shareholders,,top_shareholders retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,301333,诺思格,source_caveat,cninfo_top_float_shareholders_profile,top_float,,top_float retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,301382,蜂助手,source_caveat,cninfo_executive_profile,executive,,executive retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,301382,蜂助手,source_caveat,cninfo_share_capital_profile,share_capital,,share_capital retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,301382,蜂助手,source_caveat,cninfo_top_float_shareholders_profile,top_float,,top_float retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,301390,经纬股份,source_caveat,cninfo_share_capital_profile,share_capital,,share_capital retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,301390,经纬股份,source_caveat,cninfo_top_float_shareholders_profile,top_float,,top_float retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,301391,卡莱特,source_caveat,cninfo_executive_profile,executive,,executive retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,301419,阿莱德,source_caveat,cninfo_executive_profile,executive,,executive retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,301419,阿莱德,source_caveat,cninfo_top_shareholders_profile,top_shareholders,,top_shareholders retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,301583,托伦斯,source_caveat,cninfo_share_capital_profile,share_capital,,share_capital retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,301583,托伦斯,source_caveat,cninfo_top_shareholders_profile,top_shareholders,,top_shareholders retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,301583,托伦斯,source_caveat,cninfo_top_float_shareholders_profile,top_float,,top_float retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,301669,高特电子,source_caveat,cninfo_top_shareholders_profile,top_shareholders,,top_shareholders retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,301669,高特电子,source_caveat,cninfo_top_float_shareholders_profile,top_float,,top_float retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,601206,海尔施,source_caveat,cninfo_share_capital_profile,share_capital,,share_capital retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,601206,海尔施,source_caveat,cninfo_top_shareholders_profile,top_shareholders,,top_shareholders retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,601206,海尔施,source_caveat,cninfo_top_float_shareholders_profile,top_float,,top_float retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,688688,蚂蚁集团,source_caveat,cninfo_share_capital_profile,share_capital,,share_capital retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,688688,蚂蚁集团,source_caveat,cninfo_top_shareholders_profile,top_shareholders,,top_shareholders retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,688688,蚂蚁集团,source_caveat,cninfo_top_float_shareholders_profile,top_float,,top_float retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,688797,臻宝科技,source_caveat,cninfo_top_shareholders_profile,top_shareholders,,top_shareholders retrieval=empty_but_valid_response source_status=proceed_testing_with_caveat,,,记录 empty_but_valid；不触发 harvest 重跑
+P2,688797,臻宝科技,source_caveat,cninfo_top_float_shareholders_profile,top_float,,top_float retrieval=empty_but_valid_response source_status=source_partial,,,记录 empty_but_valid；不触发 harvest 重跑

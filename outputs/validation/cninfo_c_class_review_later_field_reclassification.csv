@@ -1,0 +1,32 @@
+field_name,normalized_field_name,source_id,logical_name,current_classification,fill_rate_if_available,raw_available,mapper_available,quality_issue,semantic_stability,recommended_classification,reason
+F015V,main_business_summary,cninfo_company_basic_profile,basic,review_later,863/863 (100.0%),yes,partial,basic normalized 未落槽；business_scope derived 已覆盖,high,keep_review_later,已在 cninfo_company_business_scope derived 作为 normalized_core；避免 basic 重复
+F017V,company_profile_text,cninfo_company_basic_profile,basic,review_later,862/863 (99.9%),yes,partial,basic normalized 未落槽；business_scope derived 已覆盖,high,keep_review_later,已在 business_scope.company_introduction 覆盖；长文本展示性强
+F010D,establishment_date,cninfo_company_basic_profile,basic,review_later,863/863 (100.0%),yes,no,mapper 未映射至 basic normalized,high,promote_to_normalized_core_candidate,成立日期语义稳定、fill 满；值得进入 snapshot candidate
+F044V,index_or_plate_labels,cninfo_company_basic_profile,basic,review_later,823/863 (95.4%),yes,partial,与 listed_board/MARKET 部分重叠,medium,keep_review_later,指数/板块标签口径弱于 industry；industry derived 已保留
+F044V,index_or_plate_labels,cninfo_company_industry_profile,basic,review_later,823/863 (95.4%),yes,yes,非完整行业分类体系,medium,keep_review_later,observed-only 语义；与 listed_board 重叠；待产品展示规则
+F017V,education_candidate,cninfo_executive_profile,executive,review_later,9848/10151 rows (97.0%),yes,yes,none,high,promote_to_normalized_core_candidate,mapper 已映射、fill 高、语义清楚；inventory 标记滞后
+F005N,shareholding_quantity_candidate,cninfo_executive_profile,executive,review_later,9241/10151 rows (91.0%；含大量 0),yes,no,零值 vs 未披露语义不清,medium,needs_mapper_patch,raw 有值但 mapper 未导出；需先定义 0 的含义与单位
+F012N,compensation_candidate,cninfo_executive_profile,executive,review_later,7998/10151 rows (78.8%),yes,no,薪酬单位/币种未标准化,medium,needs_mapper_patch,值得结构化但需 mapper 补全与单位口径
+(n/a),term_start_candidate,cninfo_executive_profile,executive,review_later,n/a,no,no,CNINFO 源无对应字段,low,needs_definition,schema 占位字段；需先定义业务口径与数据源
+(n/a),term_end_candidate,cninfo_executive_profile,executive,review_later,n/a,no,no,CNINFO 源无对应字段,low,needs_definition,schema 占位字段；需先定义业务口径与数据源
+F002V,change_reason_or_source,cninfo_share_capital_profile,share_capital,review_later,4228/4228 rows (100.0%),yes,partial,mapper 仅用于 row_key 未导出,high,needs_mapper_patch,fill 满且语义清楚；需补 mapper 导出 change_reason
+F024N,unrestricted_share_candidate,cninfo_share_capital_profile,share_capital,review_later,140/4228 rows (3.3%),yes,no,极低 fill；source_partial,low,downgrade_to_raw_only,稀疏字段；不适合 structured snapshot
+F028N,change_amount_candidate,cninfo_share_capital_profile,share_capital,review_later,2759/4228 rows (65.3%),yes,no,source_partial；变动量单位未统一,medium,keep_review_later,有价值但口径与单位需人工确认后再升格
+F003N,total_capital_candidate,cninfo_share_capital_profile,share_capital,review_later,4228/4228 rows (100.0%),yes,no,与 F021N total_share_capital 冗余,medium,downgrade_to_raw_only,与 normalized_core total_share_capital 重复；保留 raw 追溯
+(n/a),share_unit,cninfo_share_capital_profile,share_capital,review_later,n/a,no,no,源端无显式单位字段,low,needs_definition,需定义股本数量单位（股/万股）业务规则
+F006V,shareholder_type_candidate,cninfo_top_shareholders_profile,top_shareholders,review_later,41950/41950 rows (100.0%),yes,yes,none,high,promote_to_normalized_core_candidate,mapper 已映射、fill 满；inventory 标记滞后
+F006V,shareholder_type_candidate,cninfo_top_float_shareholders_profile,top_float,review_later,41760/41760 rows (100.0%),yes,yes,none,high,promote_to_normalized_core_candidate,mapper 已映射、fill 满；top_float source_partial caveat 不阻塞
+(lineage),source_status,cninfo_company_basic_profile,basic,review_later,863/863 (100.0%),yes,yes,none,high,promote_to_normalized_core_candidate,harvest lineage 已写入全部 normalized；可升格 candidate
+(lineage),field_confidence,cninfo_company_basic_profile,basic,review_later,863/863 (hardcoded medium),no,partial,当前硬编码 medium；无 per-field 评分,low,keep_review_later,产品层 field_confidence 规则未定义
+(lineage),source_status,cninfo_executive_profile,executive,review_later,863/863 (100.0%),yes,yes,none,high,promote_to_normalized_core_candidate,harvest lineage 已写入全部 normalized；可升格 candidate
+(lineage),field_confidence,cninfo_executive_profile,executive,review_later,863/863 (hardcoded medium),no,partial,当前硬编码 medium；无 per-field 评分,low,keep_review_later,产品层 field_confidence 规则未定义
+(lineage),source_status,cninfo_share_capital_profile,share_capital,review_later,863/863 (100.0%),yes,yes,none,high,promote_to_normalized_core_candidate,harvest lineage 已写入全部 normalized；可升格 candidate
+(lineage),field_confidence,cninfo_share_capital_profile,share_capital,review_later,863/863 (hardcoded medium),no,partial,当前硬编码 medium；无 per-field 评分,low,keep_review_later,产品层 field_confidence 规则未定义
+(lineage),source_status,cninfo_top_shareholders_profile,top_shareholders,review_later,863/863 (100.0%),yes,yes,none,high,promote_to_normalized_core_candidate,harvest lineage 已写入全部 normalized；可升格 candidate
+(lineage),field_confidence,cninfo_top_shareholders_profile,top_shareholders,review_later,863/863 (hardcoded medium),no,partial,当前硬编码 medium；无 per-field 评分,low,keep_review_later,产品层 field_confidence 规则未定义
+(lineage),source_status,cninfo_top_float_shareholders_profile,top_float,review_later,863/863 (100.0%),yes,yes,none,high,promote_to_normalized_core_candidate,harvest lineage 已写入全部 normalized；可升格 candidate
+(lineage),field_confidence,cninfo_top_float_shareholders_profile,top_float,review_later,863/863 (hardcoded medium),no,partial,当前硬编码 medium；无 per-field 评分,low,keep_review_later,产品层 field_confidence 规则未定义
+(lineage),source_status,cninfo_dividend_financing_profile,dividend_history,review_later,863/863 (100.0%),yes,yes,none,high,promote_to_normalized_core_candidate,harvest lineage 已写入全部 normalized；可升格 candidate
+(lineage),field_confidence,cninfo_dividend_financing_profile,dividend_history,review_later,863/863 (hardcoded medium),no,partial,当前硬编码 medium；无 per-field 评分,low,keep_review_later,产品层 field_confidence 规则未定义
+(lineage),source_status,cninfo_company_security_profile,security,review_later,863/863 (observe_only),yes,yes,security observe_only 不进主 snapshot,high,keep_review_later,observe_only 源；主 snapshot 政策待 security 决策
+(lineage),field_confidence,cninfo_company_security_profile,security,review_later,863/863 (hardcoded medium),no,partial,当前硬编码 medium；无 per-field 评分,low,keep_review_later,产品层 field_confidence 规则未定义

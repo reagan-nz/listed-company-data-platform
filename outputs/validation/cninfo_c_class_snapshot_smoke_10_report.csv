@@ -1,0 +1,11 @@
+company_code,company_name,board,snapshot_status,available_modules,partial_modules,not_available_modules,field_count,quality_caveat_count,schema_issue
+688750,金天钛业,star,complete_with_caveat,12,5,1,843,7,
+000009,中国宝安,szse_main,complete_with_caveat,12,5,1,969,6,
+601988,中国银行,sse_main,complete_with_caveat,12,5,1,1023,7,
+300009,安科生物,chinext,complete_with_caveat,12,5,1,993,7,
+000895,双汇发展,szse_main,complete_with_caveat,12,5,1,1094,7,
+002267,陕天然气,szse_main,complete_with_caveat,8,9,1,394,11,
+601328,交通银行,sse_main,complete_with_caveat,12,5,1,1016,7,
+688981,中芯国际,star,complete_with_caveat,11,6,1,840,8,
+000550,江铃汽车,szse_main,complete_with_caveat,12,5,1,1040,7,
+301332,德尔玛,chinext,complete_with_caveat,10,7,1,418,9,

@@ -1,0 +1,121 @@
+field_name,normalized_field_name,source_id,logical_name,current_status,final_layer,data_type,description,source_available,quality_status,promotion_status,notes
+ASECCODE,company_code,cninfo_company_basic_profile,company,normalized_core,normalized,string,证券代码,yes,proceed_with_caveat,not_promoted,困难样本/basic empty 敏感
+ASECNAME,company_name,cninfo_company_basic_profile,company,normalized_core,normalized,string,证券简称,yes,proceed_with_caveat,not_promoted,困难样本/basic empty 敏感
+ORGNAME,legal_name,cninfo_company_basic_profile,company,normalized_core,normalized,string,法定名称,yes,proceed_with_caveat,not_promoted,困难样本/basic empty 敏感
+F001V,english_name,cninfo_company_basic_profile,company,normalized_core,normalized,string,英文名称,yes,proceed_with_caveat,not_promoted,困难样本/basic empty 敏感
+F003V,legal_representative,cninfo_company_basic_profile,company,normalized_core,normalized,string,法定代表人,yes,proceed_with_caveat,not_promoted,困难样本/basic empty 敏感
+F004V,registered_address,cninfo_company_basic_profile,company,normalized_core,normalized,string,注册地址,yes,proceed_with_caveat,not_promoted,困难样本/basic empty 敏感
+F005V,office_address,cninfo_company_basic_profile,company,normalized_core,normalized,string,办公地址,yes,proceed_with_caveat,not_promoted,困难样本/basic empty 敏感
+F006D,listing_date,cninfo_company_basic_profile,company,normalized_core,normalized,date,上市日期,yes,proceed_with_caveat,not_promoted,困难样本/basic empty 敏感
+F007N,registered_capital,cninfo_company_basic_profile,company,normalized_core,normalized,string,注册资本,yes,proceed_with_caveat,not_promoted,困难样本/basic empty 敏感
+F011V,company_website,cninfo_company_basic_profile,company,normalized_core,normalized,string,公司网址,yes,proceed_with_caveat,not_promoted,困难样本/basic empty 敏感
+F016V,business_scope,cninfo_company_basic_profile,company,normalized_core,normalized,string,经营范围,yes,proceed_with_caveat,not_promoted,困难样本/basic empty 敏感
+F032V,industry,cninfo_company_basic_profile,company,normalized_core,normalized,string,所属行业,yes,proceed_with_caveat,not_promoted,困难样本/basic empty 敏感
+MARKET,listed_board,cninfo_company_basic_profile,company,normalized_core,normalized,string,上市板块,yes,proceed_with_caveat,not_promoted,困难样本/basic empty 敏感
+(derived),exchange,cninfo_company_basic_profile,company,normalized_core,normalized,string,交易所,yes,proceed_with_caveat,not_promoted,困难样本/basic empty 敏感
+F015V,main_business_summary,cninfo_company_basic_profile,company,review_later,candidate,string,主营业务,yes,proceed_with_caveat,not_promoted,困难样本/basic empty 敏感
+F017V,company_profile_text,cninfo_company_basic_profile,company,review_later,candidate,string,公司简介,yes,proceed_with_caveat,not_promoted,困难样本/basic empty 敏感
+F010D,establishment_date,cninfo_company_basic_profile,company,normalized_core,normalized,date,成立日期,yes,proceed_with_caveat,promoted_to_normalized_core,candidate approval after patch only；未改 field inventory；未升格 normalized_core; 困难样本/basic empty 敏感
+F044V,index_or_plate_labels,cninfo_company_basic_profile,company,review_later,candidate,string,指数/板块标签,yes,proceed_with_caveat,not_promoted,困难样本/basic empty 敏感
+F006V,postal_code,cninfo_company_basic_profile,company,raw_only,raw,string,邮政编码,yes,proceed_with_caveat,not_promoted,raw_policy=keep_raw_only_permanently; 困难样本/basic empty 敏感
+F012V,contact_email,cninfo_company_basic_profile,company,raw_only,raw,string,联系邮箱,yes,proceed_with_caveat,not_promoted,raw_policy=keep_raw_only_permanently; 困难样本/basic empty 敏感
+F013V,contact_phone,cninfo_company_basic_profile,company,raw_only,raw,string,联系电话,yes,proceed_with_caveat,not_promoted,raw_policy=keep_raw_only_permanently; 困难样本/basic empty 敏感
+F014V,contact_fax,cninfo_company_basic_profile,company,raw_only,raw,string,传真,yes,proceed_with_caveat,not_promoted,raw_policy=keep_raw_only_permanently; 困难样本/basic empty 敏感
+F018V,board_secretary_candidate,cninfo_company_basic_profile,company,raw_only,raw,string,董秘候选人,yes,proceed_with_caveat,not_promoted,raw_policy=keep_raw_only_permanently; 困难样本/basic empty 敏感
+F047V,listing_sponsor,cninfo_company_basic_profile,company,raw_only,raw,string,保荐机构,yes,proceed_with_caveat,not_promoted,raw_policy=convert_to_review_later_candidate; 困难样本/basic empty 敏感
+SECCODE,listing_sec_code,cninfo_company_basic_profile,company,raw_only,raw,string,上市信息证券代码,yes,proceed_with_caveat,not_promoted,raw_policy=keep_raw_only_permanently; 困难样本/basic empty 敏感
+F004V,registered_address,cninfo_company_contact_profile,contact,normalized_core,normalized,string,注册地址,yes,derived_ok,not_promoted,无独立 endpoint；随 basic 可达性
+F005V,office_address,cninfo_company_contact_profile,contact,normalized_core,normalized,string,办公地址,yes,derived_ok,not_promoted,无独立 endpoint；随 basic 可达性
+F006V,postal_code,cninfo_company_contact_profile,contact,normalized_core,normalized,string,邮政编码,yes,derived_ok,not_promoted,无独立 endpoint；随 basic 可达性
+F011V,company_website,cninfo_company_contact_profile,contact,normalized_core,normalized,string,公司网址,yes,derived_ok,not_promoted,无独立 endpoint；随 basic 可达性
+F012V,contact_email,cninfo_company_contact_profile,contact,normalized_core,normalized,string,联系邮箱,yes,derived_ok,not_promoted,无独立 endpoint；随 basic 可达性
+F013V,contact_phone,cninfo_company_contact_profile,contact,normalized_core,normalized,string,联系电话,yes,derived_ok,not_promoted,无独立 endpoint；随 basic 可达性
+F014V,contact_fax,cninfo_company_contact_profile,contact,normalized_core,normalized,string,传真,yes,derived_ok,not_promoted,无独立 endpoint；随 basic 可达性
+F018V,board_secretary_candidate,cninfo_company_contact_profile,contact,normalized_core,normalized,string,董秘候选人,yes,derived_ok,not_promoted,无独立 endpoint；随 basic 可达性
+F015V,main_business_summary,cninfo_company_business_scope,business,normalized_core,normalized,string,主营业务,yes,derived_ok,not_promoted,无独立 endpoint；与 basic 重叠
+F016V,business_scope,cninfo_company_business_scope,business,normalized_core,normalized,string,经营范围,yes,derived_ok,not_promoted,无独立 endpoint；与 basic 重叠
+F017V,company_profile_text,cninfo_company_business_scope,business,normalized_core,normalized,string,公司简介,yes,derived_ok,not_promoted,无独立 endpoint；与 basic 重叠
+F032V,industry,cninfo_company_industry_profile,industry,normalized_core,normalized,string,所属行业,yes,derived_ok,not_promoted,非完整行业分类体系
+F044V,index_or_plate_labels,cninfo_company_industry_profile,industry,review_later,candidate,string,指数/板块标签,yes,derived_ok,not_promoted,非完整行业分类体系
+MARKET,listed_board,cninfo_company_industry_profile,industry,normalized_core,normalized,string,上市板块,yes,derived_ok,not_promoted,非完整行业分类体系
+F002V,person_name,cninfo_executive_profile,executive,normalized_core,normalized,string,姓名,yes,proceed_with_caveat,not_promoted,executive caveat；困难样本敏感
+F009V,position,cninfo_executive_profile,executive,normalized_core,normalized,string,职务,yes,proceed_with_caveat,not_promoted,executive caveat；困难样本敏感
+F010V,gender_candidate,cninfo_executive_profile,executive,normalized_core,normalized,string,性别,yes,proceed_with_caveat,not_promoted,executive caveat；困难样本敏感
+F012V,birth_year_candidate,cninfo_executive_profile,executive,normalized_core,normalized,string,出生年份,yes,proceed_with_caveat,not_promoted,executive caveat；困难样本敏感
+F017V,education_candidate,cninfo_executive_profile,executive,normalized_core,normalized,string,学历,yes,proceed_with_caveat,promoted_to_normalized_core,candidate approval only；未改 field inventory; executive caveat；困难样本敏感
+F005N,shareholding_quantity_candidate,cninfo_executive_profile,executive,review_later,candidate,number,持股数量,yes,proceed_with_caveat,not_promoted,executive caveat；困难样本敏感
+F012N,compensation_candidate,cninfo_executive_profile,executive,review_later,candidate,number,薪酬,yes,proceed_with_caveat,not_promoted,executive caveat；困难样本敏感
+F001V,person_id_candidate,cninfo_executive_profile,executive,raw_only,raw,string,人员ID,yes,proceed_with_caveat,not_promoted,raw_policy=keep_raw_only_permanently; executive caveat；困难样本敏感
+SEQID,row_sequence_id,cninfo_executive_profile,executive,raw_only,raw,integer,行序号,yes,proceed_with_caveat,not_promoted,raw_policy=lineage_only; executive caveat；困难样本敏感
+(n/a),term_start_candidate,cninfo_executive_profile,executive,review_later,candidate,date,任期开始,yes,proceed_with_caveat,not_promoted,executive caveat；困难样本敏感
+(n/a),term_end_candidate,cninfo_executive_profile,executive,review_later,candidate,date,任期结束,yes,proceed_with_caveat,not_promoted,executive caveat；困难样本敏感
+VARYDATE,report_date,cninfo_share_capital_profile,share_capital,normalized_core,normalized,date,变动/报告日期,yes,source_partial,not_promoted,share_capital source_partial；单位语义 candidate-level
+F021N,total_share_capital,cninfo_share_capital_profile,share_capital,normalized_core,normalized,number,总股本,yes,source_partial,not_promoted,share_capital source_partial；单位语义 candidate-level
+F022N,float_share_capital,cninfo_share_capital_profile,share_capital,normalized_core,normalized,number,流通股本,yes,source_partial,not_promoted,share_capital source_partial；单位语义 candidate-level
+F023N,restricted_share_capital,cninfo_share_capital_profile,share_capital,normalized_core,normalized,number,限售股本,yes,source_partial,not_promoted,share_capital source_partial；单位语义 candidate-level
+F002V,change_reason_or_source,cninfo_share_capital_profile,share_capital,review_later,candidate,string,变动原因,yes,source_partial,not_promoted,share_capital source_partial；单位语义 candidate-level
+F024N,unrestricted_share_candidate,cninfo_share_capital_profile,share_capital,raw_only,raw,number,无限售股份,yes,source_partial,not_promoted,share_capital source_partial；单位语义 candidate-level
+F028N,change_amount_candidate,cninfo_share_capital_profile,share_capital,review_later,candidate,number,变动数量,yes,source_partial,not_promoted,share_capital source_partial；单位语义 candidate-level
+F003N,total_capital_candidate,cninfo_share_capital_profile,share_capital,raw_only,raw,number,总资本候选,yes,source_partial,not_promoted,share_capital source_partial；单位语义 candidate-level
+(n/a),share_unit,cninfo_share_capital_profile,share_capital,review_later,candidate,string,股份单位,yes,source_partial,not_promoted,share_capital source_partial；单位语义 candidate-level
+F001D,report_period,cninfo_top_shareholders_profile,shareholder,normalized_core,normalized,date,报告期,yes,empty_but_valid_policy,not_promoted,股东 empty_but_valid policy；reachable≠non_empty
+F002V,shareholder_name,cninfo_top_shareholders_profile,shareholder,normalized_core,normalized,string,股东名称,yes,empty_but_valid_policy,not_promoted,股东 empty_but_valid policy；reachable≠non_empty
+F003N,holding_shares,cninfo_top_shareholders_profile,shareholder,normalized_core,normalized,number,持股数量,yes,empty_but_valid_policy,not_promoted,股东 empty_but_valid policy；reachable≠non_empty
+F004N,holding_ratio,cninfo_top_shareholders_profile,shareholder,normalized_core,normalized,number,持股比例,yes,empty_but_valid_policy,not_promoted,股东 empty_but_valid policy；reachable≠non_empty
+F005N,rank,cninfo_top_shareholders_profile,shareholder,normalized_core,normalized,integer,排名,yes,empty_but_valid_policy,not_promoted,股东 empty_but_valid policy；reachable≠non_empty
+F006V,shareholder_type_candidate,cninfo_top_shareholders_profile,shareholder,normalized_core,normalized,string,股东类型,yes,empty_but_valid_policy,promoted_to_normalized_core,candidate approval only；未改 field inventory; 股东 empty_but_valid policy；reachable≠non_empty
+F007V,change_status_or_change_amount_candidate,cninfo_top_shareholders_profile,shareholder,raw_only,raw,string,变动状态/变动量,yes,empty_but_valid_policy,not_promoted,raw_policy=keep_raw_only_for_now; 股东 empty_but_valid policy；reachable≠non_empty
+F001D,report_period,cninfo_top_float_shareholders_profile,shareholder,normalized_core,normalized,date,报告期,yes,source_partial,not_promoted,股东 empty_but_valid policy；top_float source_partial
+F002V,shareholder_name,cninfo_top_float_shareholders_profile,shareholder,normalized_core,normalized,string,股东名称,yes,source_partial,not_promoted,股东 empty_but_valid policy；top_float source_partial
+F003N,holding_shares,cninfo_top_float_shareholders_profile,shareholder,normalized_core,normalized,number,持股数量,yes,source_partial,not_promoted,股东 empty_but_valid policy；top_float source_partial
+F004N,holding_ratio,cninfo_top_float_shareholders_profile,shareholder,normalized_core,normalized,number,持股比例,yes,source_partial,not_promoted,股东 empty_but_valid policy；top_float source_partial
+F005N,rank,cninfo_top_float_shareholders_profile,shareholder,normalized_core,normalized,integer,排名,yes,source_partial,not_promoted,股东 empty_but_valid policy；top_float source_partial
+F006V,shareholder_type_candidate,cninfo_top_float_shareholders_profile,shareholder,normalized_core,normalized,string,股东类型,yes,source_partial,promoted_to_normalized_core,top_float source_partial caveat 已接受；candidate only; 股东 empty_but_valid policy；top_float source_partial
+F007V,change_status_or_change_amount_candidate,cninfo_top_float_shareholders_profile,shareholder,raw_only,raw,string,变动状态/变动量,yes,source_partial,not_promoted,raw_policy=keep_raw_only_for_now; 股东 empty_but_valid policy；top_float source_partial
+F001V,report_period,cninfo_dividend_financing_profile,dividend_history,normalized_core,normalized,string,报告期/分红年度,yes,proceed_testing,not_promoted,dividend_history only；≠financing；YAML GO decision only
+F007V,dividend_plan_text,cninfo_dividend_financing_profile,dividend_history,normalized_core,normalized,string,分红方案文本,yes,proceed_testing,not_promoted,dividend_history only；≠financing；YAML GO decision only
+F018D,announcement_date_candidate,cninfo_dividend_financing_profile,dividend_history,normalized_core,normalized,date,公告日期,yes,proceed_testing,not_promoted,dividend_history only；≠financing；YAML GO decision only
+F020D,ex_right_dividend_date_candidate,cninfo_dividend_financing_profile,dividend_history,normalized_core,normalized,date,除权除息日,yes,proceed_testing,not_promoted,dividend_history only；≠financing；YAML GO decision only
+F023D,dividend_payment_date_candidate,cninfo_dividend_financing_profile,dividend_history,normalized_core,normalized,date,派息日,yes,proceed_testing,not_promoted,dividend_history only；≠financing；YAML GO decision only
+secCode,security_code,cninfo_company_security_profile,security,observe_only,observe,string,证券代码,observe_only,observe_only,not_promoted,raw_policy=observe_only_excluded; security observe-only；secType=szshe 硬编码
+secName,stock_short_name,cninfo_company_security_profile,security,observe_only,observe,string,证券简称,observe_only,observe_only,not_promoted,raw_policy=observe_only_excluded; security observe-only；secType=szshe 硬编码
+secType,security_type_code,cninfo_company_security_profile,security,observe_only,observe,string,证券类型代码,observe_only,observe_only,not_promoted,raw_policy=observe_only_excluded; security observe-only；secType=szshe 硬编码
+tradingStatus,trading_status_code,cninfo_company_security_profile,security,observe_only,observe,string,交易状态代码,observe_only,observe_only,not_promoted,raw_policy=observe_only_excluded; security observe-only；secType=szshe 硬编码
+age,listing_age_years_candidate,cninfo_company_security_profile,security,observe_only,observe,string,上市年限,observe_only,observe_only,not_promoted,raw_policy=observe_only_excluded; security observe-only；secType=szshe 硬编码
+finance,is_finance_related_candidate,cninfo_company_security_profile,security,observe_only,observe,boolean,金融相关标志,observe_only,observe_only,not_promoted,raw_policy=observe_only_excluded; security observe-only；secType=szshe 硬编码
+delisted,is_delisted,cninfo_company_security_profile,security,observe_only,observe,boolean,是否退市,observe_only,observe_only,not_promoted,raw_policy=observe_only_excluded; security observe-only；secType=szshe 硬编码
+sshk,shanghai_hong_kong_connect_candidate,cninfo_company_security_profile,security,observe_only,observe,boolean,沪港通标志,observe_only,observe_only,not_promoted,raw_policy=observe_only_excluded; security observe-only；secType=szshe 硬编码
+szhk,shenzhen_hong_kong_connect_candidate,cninfo_company_security_profile,security,observe_only,observe,boolean,深港通标志,observe_only,observe_only,not_promoted,raw_policy=observe_only_excluded; security observe-only；secType=szshe 硬编码
+(derived),exchange,cninfo_company_security_profile,security,observe_only,observe,string,交易所,observe_only,observe_only,not_promoted,raw_policy=observe_only_excluded; security observe-only；secType=szshe 硬编码
+(n/a),listed_board,cninfo_company_security_profile,security,observe_only,observe,string,上市板块,observe_only,observe_only,not_promoted,raw_policy=observe_only_excluded; security observe-only；secType=szshe 硬编码
+(n/a),listing_date,cninfo_company_security_profile,security,observe_only,observe,date,上市日期,observe_only,observe_only,not_promoted,raw_policy=observe_only_excluded; security observe-only；secType=szshe 硬编码
+(n/a),listing_status,cninfo_company_security_profile,security,observe_only,observe,string,上市状态,observe_only,observe_only,not_promoted,raw_policy=observe_only_excluded; security observe-only；secType=szshe 硬编码
+(n/a),is_st_candidate,cninfo_company_security_profile,security,observe_only,observe,boolean,ST候选标志,observe_only,observe_only,not_promoted,raw_policy=observe_only_excluded; security observe-only；secType=szshe 硬编码
+(lineage),raw_record_json,cninfo_company_basic_profile,company,normalized_core,normalized,object,原始响应,yes,proceed_with_caveat,not_promoted,保留 raw lineage；不写 verified
+(lineage),raw_record_hash,cninfo_company_basic_profile,company,normalized_core,normalized,string,原始哈希,yes,proceed_with_caveat,not_promoted,保留 raw lineage；不写 verified
+(lineage),source_status,cninfo_company_basic_profile,company,normalized_core,normalized,string,源状态,yes,proceed_with_caveat,promoted_to_normalized_core,lineage batch approval；非业务字段升格; 保留 raw lineage；不写 verified
+(lineage),field_confidence,cninfo_company_basic_profile,company,review_later,candidate,string,字段置信度,yes,proceed_with_caveat,not_promoted,保留 raw lineage；不写 verified
+(lineage),raw_record_json,cninfo_executive_profile,company,normalized_core,normalized,object,原始响应,yes,proceed_with_caveat,not_promoted,保留 raw lineage；不写 verified
+(lineage),raw_record_hash,cninfo_executive_profile,company,normalized_core,normalized,string,原始哈希,yes,proceed_with_caveat,not_promoted,保留 raw lineage；不写 verified
+(lineage),source_status,cninfo_executive_profile,company,normalized_core,normalized,string,源状态,yes,proceed_with_caveat,promoted_to_normalized_core,lineage batch approval；非业务字段升格; 保留 raw lineage；不写 verified
+(lineage),field_confidence,cninfo_executive_profile,company,review_later,candidate,string,字段置信度,yes,proceed_with_caveat,not_promoted,保留 raw lineage；不写 verified
+(lineage),raw_record_json,cninfo_share_capital_profile,company,normalized_core,normalized,object,原始响应,yes,source_partial,not_promoted,保留 raw lineage；不写 verified
+(lineage),raw_record_hash,cninfo_share_capital_profile,company,normalized_core,normalized,string,原始哈希,yes,source_partial,not_promoted,保留 raw lineage；不写 verified
+(lineage),source_status,cninfo_share_capital_profile,company,normalized_core,normalized,string,源状态,yes,source_partial,promoted_to_normalized_core,lineage batch approval；非业务字段升格; 保留 raw lineage；不写 verified
+(lineage),field_confidence,cninfo_share_capital_profile,company,review_later,candidate,string,字段置信度,yes,source_partial,not_promoted,保留 raw lineage；不写 verified
+(lineage),raw_record_json,cninfo_top_shareholders_profile,company,normalized_core,normalized,object,原始响应,yes,proceed_with_caveat,not_promoted,保留 raw lineage；不写 verified
+(lineage),raw_record_hash,cninfo_top_shareholders_profile,company,normalized_core,normalized,string,原始哈希,yes,proceed_with_caveat,not_promoted,保留 raw lineage；不写 verified
+(lineage),source_status,cninfo_top_shareholders_profile,company,normalized_core,normalized,string,源状态,yes,proceed_with_caveat,promoted_to_normalized_core,lineage batch approval；非业务字段升格; 保留 raw lineage；不写 verified
+(lineage),field_confidence,cninfo_top_shareholders_profile,company,review_later,candidate,string,字段置信度,yes,proceed_with_caveat,not_promoted,保留 raw lineage；不写 verified
+(lineage),raw_record_json,cninfo_top_float_shareholders_profile,company,normalized_core,normalized,object,原始响应,yes,source_partial,not_promoted,保留 raw lineage；不写 verified
+(lineage),raw_record_hash,cninfo_top_float_shareholders_profile,company,normalized_core,normalized,string,原始哈希,yes,source_partial,not_promoted,保留 raw lineage；不写 verified
+(lineage),source_status,cninfo_top_float_shareholders_profile,company,normalized_core,normalized,string,源状态,yes,source_partial,promoted_to_normalized_core,lineage batch approval；非业务字段升格; 保留 raw lineage；不写 verified
+(lineage),field_confidence,cninfo_top_float_shareholders_profile,company,review_later,candidate,string,字段置信度,yes,source_partial,not_promoted,保留 raw lineage；不写 verified
+(lineage),raw_record_json,cninfo_dividend_financing_profile,dividend_history,normalized_core,normalized,object,原始响应,yes,proceed_testing,not_promoted,保留 raw lineage；不写 verified
+(lineage),raw_record_hash,cninfo_dividend_financing_profile,dividend_history,normalized_core,normalized,string,原始哈希,yes,proceed_testing,not_promoted,保留 raw lineage；不写 verified
+(lineage),source_status,cninfo_dividend_financing_profile,dividend_history,normalized_core,normalized,string,源状态,yes,proceed_testing,promoted_to_normalized_core,lineage batch approval；非业务字段升格; 保留 raw lineage；不写 verified
+(lineage),field_confidence,cninfo_dividend_financing_profile,dividend_history,review_later,candidate,string,字段置信度,yes,proceed_testing,not_promoted,保留 raw lineage；不写 verified
+(lineage),raw_record_json,cninfo_company_security_profile,company,normalized_core,normalized,object,原始响应,observe_only,observe_only,not_promoted,保留 raw lineage；不写 verified
+(lineage),raw_record_hash,cninfo_company_security_profile,company,normalized_core,normalized,string,原始哈希,observe_only,observe_only,not_promoted,保留 raw lineage；不写 verified
+(lineage),source_status,cninfo_company_security_profile,company,review_later,candidate,string,源状态,observe_only,observe_only,not_promoted,保留 raw lineage；不写 verified
+(lineage),field_confidence,cninfo_company_security_profile,company,review_later,candidate,string,字段置信度,observe_only,observe_only,not_promoted,保留 raw lineage；不写 verified

@@ -1,0 +1,26 @@
+field_name,normalized_field_name,source_id,logical_name,current_classification,raw_available,reason_for_raw_only,recommended_policy,can_be_revisited_later,notes
+F006V,postal_code,cninfo_company_basic_profile,basic,raw_only,yes,contact derived profile 已作为 normalized_core 覆盖,keep_raw_only_permanently,no,basic 槽位保留 raw 追溯；避免与 contact 重复
+F012V,contact_email,cninfo_company_basic_profile,basic,raw_only,yes,contact derived 已映射 contact_email,keep_raw_only_permanently,no,结构化出口在 cninfo_company_contact_profile
+F013V,contact_phone,cninfo_company_basic_profile,basic,raw_only,yes,contact derived 已映射 contact_phone,keep_raw_only_permanently,no,同上
+F014V,contact_fax,cninfo_company_basic_profile,basic,raw_only,yes,contact derived 已映射 contact_fax,keep_raw_only_permanently,no,同上
+F018V,board_secretary_candidate,cninfo_company_basic_profile,basic,raw_only,yes,contact derived 已映射 board_secretary_candidate,keep_raw_only_permanently,no,同上
+F047V,listing_sponsor,cninfo_company_basic_profile,basic,raw_only,yes,保荐机构展示性强；未进入 snapshot schema,convert_to_review_later_candidate,yes,未来可评估是否进入 review_later；当前不升格
+SECCODE,listing_sec_code,cninfo_company_basic_profile,basic,raw_only,yes,与 ASECCODE/company_code 冗余,keep_raw_only_permanently,no,listingInformation 辅助键；保留 raw
+F001V,person_id_candidate,cninfo_executive_profile,executive,raw_only,yes,CNINFO 内部人员 ID；非产品展示字段,keep_raw_only_permanently,no,仅追溯/去重
+SEQID,row_sequence_id,cninfo_executive_profile,executive,raw_only,yes,行级序列号；用于 raw 去重,lineage_only,no,不进用户 snapshot
+F007V,change_status_or_change_amount_candidate,cninfo_top_shareholders_profile,top_shareholders,raw_only,yes,变动状态文本口径不稳；展示性强,keep_raw_only_for_now,yes,863 有值但语义混杂；待 parser 规则
+F007V,change_status_or_change_amount_candidate,cninfo_top_float_shareholders_profile,top_float,raw_only,yes,同上；top_float source_partial,keep_raw_only_for_now,yes,source_partial caveat 下保留 raw
+secCode,security_code,cninfo_company_security_profile,security,raw_only,yes,security observe_only；不进主 company snapshot,observe_only_excluded,yes,待 security observe 决策后再评估是否侧轨展示
+secName,stock_short_name,cninfo_company_security_profile,security,raw_only,yes,security observe_only；不进主 company snapshot,observe_only_excluded,yes,待 security observe 决策后再评估是否侧轨展示
+secType,security_type_code,cninfo_company_security_profile,security,raw_only,yes,security observe_only；不进主 company snapshot,observe_only_excluded,yes,待 security observe 决策后再评估是否侧轨展示
+tradingStatus,trading_status_code,cninfo_company_security_profile,security,raw_only,yes,security observe_only；不进主 company snapshot,observe_only_excluded,yes,待 security observe 决策后再评估是否侧轨展示
+age,listing_age_years_candidate,cninfo_company_security_profile,security,raw_only,yes,security observe_only；不进主 company snapshot,observe_only_excluded,yes,待 security observe 决策后再评估是否侧轨展示
+finance,is_finance_related_candidate,cninfo_company_security_profile,security,raw_only,yes,security observe_only；不进主 company snapshot,observe_only_excluded,yes,待 security observe 决策后再评估是否侧轨展示
+delisted,is_delisted,cninfo_company_security_profile,security,raw_only,yes,security observe_only；不进主 company snapshot,observe_only_excluded,yes,待 security observe 决策后再评估是否侧轨展示
+sshk,shanghai_hong_kong_connect_candidate,cninfo_company_security_profile,security,raw_only,yes,security observe_only；不进主 company snapshot,observe_only_excluded,yes,待 security observe 决策后再评估是否侧轨展示
+szhk,shenzhen_hong_kong_connect_candidate,cninfo_company_security_profile,security,raw_only,yes,security observe_only；不进主 company snapshot,observe_only_excluded,yes,待 security observe 决策后再评估是否侧轨展示
+(derived),exchange,cninfo_company_security_profile,security,raw_only,yes,security observe_only；不进主 company snapshot,observe_only_excluded,yes,待 security observe 决策后再评估是否侧轨展示
+(n/a),listed_board,cninfo_company_security_profile,security,raw_only,yes,security observe_only；不进主 company snapshot,observe_only_excluded,yes,待 security observe 决策后再评估是否侧轨展示
+(n/a),listing_date,cninfo_company_security_profile,security,raw_only,yes,security observe_only；不进主 company snapshot,observe_only_excluded,yes,待 security observe 决策后再评估是否侧轨展示
+(n/a),listing_status,cninfo_company_security_profile,security,raw_only,yes,security observe_only；不进主 company snapshot,observe_only_excluded,yes,待 security observe 决策后再评估是否侧轨展示
+(n/a),is_st_candidate,cninfo_company_security_profile,security,raw_only,yes,security observe_only；不进主 company snapshot,observe_only_excluded,yes,待 security observe 决策后再评估是否侧轨展示

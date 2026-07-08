@@ -1,0 +1,57 @@
+version: c-class-snapshot-smoke-10-v1
+seed: 20260708
+derived_from: plans/cninfo_c_class_snapshot_smoke_plan.md
+notes: >
+  Snapshot smoke 10 家样本；从既有 863 harvest universe 选取，不修改 harvest universe。
+  覆盖 SSE/SZSE 主板、创业板、科创板；含完整公司与 source_partial/empty_but_valid 样本。
+companies:
+  - company_code: "688750"
+    company_name: 金天钛业
+    board: star
+    selection_reason: PoC demo 对照；科创板；有色金属；10 源齐全
+    expected_snapshot_complexity: medium
+  - company_code: "000009"
+    company_name: 中国宝安
+    board: szse_main
+    selection_reason: 深交所主板；综合类；高管/股东/分红丰富；establishment_date patch 样本
+    expected_snapshot_complexity: high
+  - company_code: "601988"
+    company_name: 中国银行
+    board: sse_main
+    selection_reason: 上交所主板；大型金融；normalized 覆盖评分高
+    expected_snapshot_complexity: high
+  - company_code: "300009"
+    company_name: 安科生物
+    board: chinext
+    selection_reason: 创业板；医药生物；与科创板对照
+    expected_snapshot_complexity: medium
+  - company_code: "000895"
+    company_name: 双汇发展
+    board: szse_main
+    selection_reason: 深交所主板；食品制造；dividend_history 事件多
+    expected_snapshot_complexity: high
+  - company_code: "002267"
+    company_name: 陕天然气
+    board: szse_main
+    selection_reason: executive empty_but_valid；partial 模块验证
+    expected_snapshot_complexity: partial
+  - company_code: "601328"
+    company_name: 交通银行
+    board: sse_main
+    selection_reason: 上交所主板；大型金融；与 601988 同业对照
+    expected_snapshot_complexity: medium
+  - company_code: "688981"
+    company_name: 中芯国际
+    board: star
+    selection_reason: 科创板；半导体大型公司
+    expected_snapshot_complexity: high
+  - company_code: "000550"
+    company_name: 江铃汽车
+    board: szse_main
+    selection_reason: 深交所主板；汽车制造；dividend 丰富
+    expected_snapshot_complexity: medium
+  - company_code: "301332"
+    company_name: 德尔玛
+    board: chinext
+    selection_reason: 创业板；较新上市；executive empty_but_valid 困难样本
+    expected_snapshot_complexity: partial

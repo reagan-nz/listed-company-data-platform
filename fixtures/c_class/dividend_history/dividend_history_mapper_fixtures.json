@@ -95,6 +95,113 @@
         "event_count": 1,
         "dividend_method": "other"
       }
+    },
+    {
+      "case_id": "case_6_ten_shares_cash_fullwidth_tax",
+      "description": "10股派1元（含税）",
+      "company_code": "600010",
+      "company_name": "测试十股派全角含税",
+      "raw_records": [
+        {
+          "F001V": "2024年报",
+          "F007V": "10股派1元（含税）",
+          "F018D": "2025-07-01",
+          "F020D": "2025-07-02",
+          "F023D": "2025-07-02"
+        }
+      ],
+      "expect": {
+        "dividend_parse_status": "parsed",
+        "event_count": 1,
+        "dividend_method": "cash",
+        "cash_dividend_per_share": 0.1
+      }
+    },
+    {
+      "case_id": "case_7_ten_shares_cash_halfwidth_tax",
+      "description": "10股派0.5元(含税)",
+      "company_code": "600011",
+      "company_name": "测试十股派半角含税",
+      "raw_records": [
+        {
+          "F001V": "2024年报",
+          "F007V": "10股派0.5元(含税)",
+          "F018D": "2025-07-01",
+          "F020D": "2025-07-02",
+          "F023D": "2025-07-02"
+        }
+      ],
+      "expect": {
+        "dividend_parse_status": "parsed",
+        "event_count": 1,
+        "dividend_method": "cash",
+        "cash_dividend_per_share": 0.05
+      }
+    },
+    {
+      "case_id": "case_8_per_ten_shares_cash",
+      "description": "每10股派2元（含税）",
+      "company_code": "600012",
+      "company_name": "测试每十股派",
+      "raw_records": [
+        {
+          "F001V": "2023年报",
+          "F007V": "每10股派2元（含税）",
+          "F018D": "2024-05-20",
+          "F020D": "2024-05-21",
+          "F023D": "2024-05-21"
+        }
+      ],
+      "expect": {
+        "dividend_parse_status": "parsed",
+        "event_count": 1,
+        "dividend_method": "cash",
+        "cash_dividend_per_share": 0.2
+      }
+    },
+    {
+      "case_id": "case_9_per_ten_shares_cash_bonus_long",
+      "description": "每10股派发现金红利3元（含税）",
+      "company_code": "600013",
+      "company_name": "测试每十股派发现金红利",
+      "raw_records": [
+        {
+          "F001V": "2022年报",
+          "F007V": "每10股派发现金红利3元（含税）",
+          "F018D": "2023-06-01",
+          "F020D": "2023-06-02",
+          "F023D": "2023-06-02"
+        }
+      ],
+      "expect": {
+        "dividend_parse_status": "parsed",
+        "event_count": 1,
+        "dividend_method": "cash",
+        "cash_dividend_per_share": 0.3
+      }
+    },
+    {
+      "case_id": "case_10_ten_shares_cash_stock_transfer",
+      "description": "10股派1元（含税），送1股，转增2股",
+      "company_code": "600014",
+      "company_name": "测试十股派混合",
+      "raw_records": [
+        {
+          "F001V": "2021年报",
+          "F007V": "10股派1元（含税），送1股，转增2股",
+          "F018D": "2022-07-01",
+          "F020D": "2022-07-02",
+          "F023D": "2022-07-02"
+        }
+      ],
+      "expect": {
+        "dividend_parse_status": "parsed",
+        "event_count": 1,
+        "dividend_method": "mixed",
+        "cash_dividend_per_share": 0.1,
+        "stock_dividend_ratio": 0.1,
+        "transfer_ratio": 0.2
+      }
     }
   ]
 }

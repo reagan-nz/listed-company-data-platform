@@ -36,9 +36,12 @@ LOGICAL_DIVIDEND_SOURCE_ID = "dividend_history"
 DEFAULT_SOURCE_STATUS = "testing"
 
 # F007V 分红方案文本解析（dividend_history v1）
+# 顺序：更具体模式优先；含税/税前/税后括号文本不影响金额捕获
 _CASH_DIVIDEND_PATTERNS = [
-    re.compile(r"10派(\d+(?:\.\d+)?)元"),
     re.compile(r"每10股派发现金红利(\d+(?:\.\d+)?)元"),
+    re.compile(r"每10股派(\d+(?:\.\d+)?)元"),
+    re.compile(r"10股派(\d+(?:\.\d+)?)元"),
+    re.compile(r"10派(\d+(?:\.\d+)?)元"),
     re.compile(r"派发现金红利(\d+(?:\.\d+)?)元"),
 ]
 _STOCK_DIVIDEND_PATTERNS = [
@@ -113,6 +116,41 @@ def make_shareholder_profile_id(
 ) -> str:
     key = f"{source_id}|{company_code}|{row_key}"
     return hashlib.sha256(key.encode("utf-8")).hexdigest()[:32]
+
+
+_ISO_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def _map_establishment_date(raw_value: Any) -> Dict[str, Any]:
+    """
+    将 basic F010D 映射为 establishment_date。
+
+    - 正常 ISO/YYYYMMDD 日期 -> parsed
+    - null/空 -> null_but_valid
+    - 非标准文本 -> 保留原值 + needs_review（不导致整家公司 mapper 失败）
+    """
+    if raw_value is None:
+        return {
+            "establishment_date": None,
+            "establishment_date_parse_status": "null_but_valid",
+        }
+    if isinstance(raw_value, str) and not raw_value.strip():
+        return {
+            "establishment_date": None,
+            "establishment_date_parse_status": "null_but_valid",
+        }
+    s = str(raw_value).strip()
+    normalized = normalize_date(raw_value)
+    if normalized and _ISO_DATE_RE.fullmatch(normalized):
+        return {
+            "establishment_date": normalized,
+            "establishment_date_parse_status": "parsed",
+        }
+    return {
+        "establishment_date": s,
+        "establishment_date_parse_status": "needs_review",
+        "establishment_date_field_quality": "nonstandard_date",
+    }
 
 
 def normalize_date(value: Any) -> Optional[str]:
@@ -248,8 +286,11 @@ def map_company_basic_profile(
         if val is not None:
             record[key] = val
 
+    if basic_list:
+        record.update(_map_establishment_date(basic.get("F010D")))
+
     # Fields without schema slots remain in raw_record_json only:
-    # F015V main_business, F017V company_introduction, F010D establishment_date,
+    # F015V main_business, F017V company_introduction,
     # F044V index_or_plate_labels, F012V-F014V contact, listing F047V etc.
 
     if listing and not basic.get("ASECCODE"):
@@ -763,6 +804,7 @@ def count_mapped_standard_fields(record: Dict[str, Any]) -> int:
         "profile_id", "source_id", "company_code", "company_name",
         "raw_record_json", "raw_record_hash", "source_status",
         "field_confidence", "created_at", "org_id",
+        "establishment_date_parse_status", "establishment_date_field_quality",
     }
     return sum(
         1 for k, v in record.items()

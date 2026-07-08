@@ -1,0 +1,16 @@
+module,field_count,normalized_fields,candidate_fields,raw_fields,status
+company_identity,10,6,0,3,available
+business_profile,6,6,0,0,available
+industry,3,1,1,1,partial
+financial,7,6,1,0,available
+technology,0,0,0,0,not_modeled
+organization,7,7,0,0,available
+shareholder,4,4,0,0,available
+governance,6,3,3,0,partial
+capital_action,9,6,2,0,available
+risk,0,0,0,0,not_modeled
+event_timeline,3,3,0,0,available
+market_behavior,5,0,0,5,partial
+investor_relation,5,5,0,0,available
+document_evidence,2,2,0,0,available
+quality_status,3,1,1,0,partial
