@@ -1,0 +1,11 @@
+component,current_status,863_status,full_market_status,blocker,priority,notes
+universe,863_yaml_proven,PASS_863_hold0,NOT_READY,Era B 6124 vs CNINFO F10 未 reconciliation,P0,基准 eval_companies_full_market_2024.yaml 6124 家; 863 为已验证子集; ST/delisted 政策待定
+registry,governance_ready,not_required_for_863,IMPLEMENTATION_DEFERRED,Layer 2 company_registry 未实现,P1,candidate 6124 行; decision ledger 267 条; merge_executed=false
+identity governance,READY,READY_FOR_863,READY_FOR_EXPANSION,none architecture-level,P1,259 approved + 8 manual; 不阻塞架构批准; 阻塞全量自动 reconciliation
+harvest,stable,PASS_WITH_RESUME,UNTESTED_AT_SCALE,5000+ 分批/退避/resume 未在全量实测,P1,runner 已在 863 证明; 须 phased harvest 计划与批准模板
+snapshot,stable,863_complete_with_caveat,UNTESTED_AT_SCALE,6124 batch 未执行,P1,863/863 valid JSON 0 failed; complete_with_caveat 合法终态
+QA,stable,863_863_valid,READY_WITH_CAVEAT,field_missing_flags 预期增多,P2,QA 框架可复用; caveat 政策已确立; 非 verified gate
+BSE,partial,not_in_863,NOT_READY,legacy 83/87 incompatible + 3 manual mapping,P0,920 candidate 已生成; 83/87 侧轨; 863 不含 BSE
+hold,26_excluded,excluded_from_863,POLICY_PENDING,all6 hold 政策未固化执行,P1,26 家 6/6 fail; 推荐 Option B 侧轨未执行
+source validation,6_testing_4_candidate,stable_reach_863,UNTESTED_AT_SCALE,6124 规模各源 reach 未验证,P1,top_float 93% 最低; security observe_only; 须 phased smoke
+mapper,stable,863_remap_done,UNTESTED_AT_SCALE,无已知架构阻塞,P2,establishment_date remap 已完成; 全量异常样本未覆盖

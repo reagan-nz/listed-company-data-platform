@@ -1,0 +1,8 @@
+category,count_estimate,source,status,risk,next_action
+Era B baseline,6124,eval_companies_full_market_2024.yaml,defined,medium,Era B 年报口径；非 CNINFO 原生列表；作为对账主输入
+Era C active,863,eval_companies_c_class_harvest_863_non_bse.yaml,proven,low,已 harvest + snapshot + QA；分类为 already_in_c_class
+Hold,26,eval_companies_c_class_889_rerun_all6_hold.yaml,policy_pending,high,6/6 fail hold_no_retry；分类 matched_hold；须 hold policy 固化后执行
+BSE 920,326,registry_candidate_draft board=bse code=92*,partial_ready,medium,smoke 12 家已验证；分类 matched_bse_supported_candidate；须 BSE 子 gate
+BSE legacy,251,registry_candidate_draft legacy 83/87/43*,hold_separate,high,legacy_code_incompatible；分类 matched_bse_legacy_hold；3 manual mapping 未结案
+Identity conflicts,508,cninfo_c_class_registry_conflict_triage.csv,triaged,medium,251 legacy + 241 manual + 15 rename + 1 duplicate；ledger 267 已结案；不 auto merge
+New candidates,5235,Era B minus Era C minus hold (offline estimate),not_reconciled,medium,主扩展池粗估；须 Phase 0 reconciliation 精确分类；含 ST/delisted 待政策

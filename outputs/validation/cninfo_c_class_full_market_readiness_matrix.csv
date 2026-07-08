@@ -1,0 +1,28 @@
+component,current_status,863_status,full_market_status,blocker,priority
+company_registry,not_built,stable_yaml_eval,not_built,无统一 registry 主数据层,P0
+universe_validation,proven,PASS_863_hold0,untested_at_scale,6124 与 CNINFO 未交叉验证,P0
+source_basic_profile,testing,stable_99pct_reach,untested_at_scale,异常公司 HTTP 500,P1
+source_executive_profile,testing,stable_95pct_reach,untested_at_scale,困难样本敏感,P2
+source_share_capital_profile,source_partial,stable_with_caveat,untested_at_scale,empty_but_valid_10家,P2
+source_top_shareholders,testing_with_caveat,stable_empty_policy,untested_at_scale,reachable_neq_nonempty,P2
+source_top_float_shareholders,source_partial,lowest_reach_93pct,untested_at_scale,889最低主源之一,P2
+source_dividend_history,testing,stable_97pct_reach,untested_at_scale,valid_empty_38家,P2
+source_security_observe,observe_only,100pct_observe,observe_only,不进主gate,P3
+source_contact_derived,derived,stable_via_basic,derived,依赖basic可达性,P3
+source_business_scope_derived,derived,stable_via_basic,derived,依赖basic可达性,P3
+source_industry_derived,derived,stable_via_basic,derived,非完整行业体系,P3
+mapper,stable,863_remap_done,untested_at_scale,无已知阻塞,P2
+snapshot_builder,stable,863_complete_with_caveat,untested_at_scale,无,P1
+snapshot_batch_runner,stable,863_0_failed,untested_at_scale,无,P1
+quality_review,stable,863_863_valid,untested_at_scale,field_missing_flags预期多,P2
+harvest_runner,stable,PASS_WITH_RESUME,untested_at_scale,5000+需分批+退避,P1
+BSE_920,hold_separate,not_in_863,partial_ready,仅12家smoke验证,P1
+BSE_legacy_83_87,hold,not_in_863,unsupported,legacy_code_incompatible,P0
+hold_26_all6,hold_excluded,excluded_from_863,policy_undecided,6/6_fail_no_retry,P1
+hold_policy,draft,recommended_option_B,not_executed,需人工复审流程,P2
+security_observe_decision,pending,observe_only_863,observe_only,产品层未决策,P2
+field_inventory,frozen,74_normalized_core,frozen,本轮不扩展,P3
+field_mapping,frozen,120_rows,frozen,本轮不扩展,P3
+incremental_update,not_designed,resume_only,not_designed,缺stale_flag/registry,P2
+phased_harvest_plan,not_designed,863_monolithic,not_designed,需批次批准模板,P1
+full_market_snapshot_qa,proven,863_PASS,untested_at_scale,无,P2

@@ -1,0 +1,9 @@
+classification,count,refresh_action,confidence_after_refresh,harvest_support_status_after,snapshot_support_status_after,manual_review_required,notes
+matched_active,4647,full_market_active_candidate,low,candidate_supported,not_built,false,Era B 扩展主池；无 C-class 实测；进入未来 phased harvest manifest
+already_in_c_class,863,preserve_high_confidence,high,supported,supported,false,863 harvest+snapshot 已验证；不降级 confidence
+matched_hold,26,preserve_hold,medium,hold,hold,false,26 all6 hold_no_retry 侧轨；hold_flag=true
+matched_bse_supported_candidate,320,bse_supported_candidate,medium,candidate_supported,not_built,false,BSE 920 轨；独立 smoke gate；ledger 映射优先
+matched_bse_legacy_hold,242,preserve_legacy_hold,medium,legacy_hold,hold,false,BSE 83/87/43 legacy 侧轨；不进入主 harvest gate
+identity_conflict,10,conflict_review_required,review,manual_review,manual_review,true,rename/duplicate 双行保留；merge_executed=false
+needs_manual_review,16,manual_review_required,review,manual_review,manual_review,true,ledger manual 或同名异码；处置前禁止自动扩展
+not_found_in_cninfo,0,exclude_unresolved,low,unsupported_unknown,not_built,true,Era B 有记录但 candidate 无对应；本轮 0 例
