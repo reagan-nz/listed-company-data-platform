@@ -1,6 +1,6 @@
 # 当前进展：CNINFO 数据源 A–F 分层验证（Phase 1 已收口 · Phase 2 已收口）
 
-_最后更新：2026-07-08_
+_最后更新：2026-07-09_
 
 > **本文件说明「现在具体在做什么」。** 仓库整体导航见 [PROJECT_MAP.md](PROJECT_MAP.md)；**A–F 分层与验证口径权威文档**见 [plans/cninfo_data_source_layered_inventory.md](plans/cninfo_data_source_layered_inventory.md)；产品大方向见 [ROADMAP.md](ROADMAP.md)。
 
@@ -8,7 +8,7 @@ _最后更新：2026-07-08_
 
 ## 当前阶段（一句话）
 
-**Era C Phase 1（A 类）已收口**。**Phase 2 D 类已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通。**Phase 4 C 类** **863 snapshot 已生成**；**状态 `SNAPSHOT_GENERATED_QA_REVIEW`**；**Harvest runner output-root isolation extension 已完成**（gate **PASS** · test **8/8**）；**Phase 2 live harvest 仍未执行**；**仍须显式用户批准**；**C-class 未整体完成**；**下一步：Phase 2 live harvest 显式用户批准**；**无 verified**；**不入库**。
+**Era C Phase 1（A 类）已收口**。**Phase 2 D 类已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通。**Phase 4 C 类** **863 snapshot 已生成**；**状态 `SNAPSHOT_GENERATED_QA_REVIEW`**；**Phase 3 batch 500 harvest dry-run 已执行**（**500** 家 · **3500** HTTP · gate **PASS**）；**Phase 3 approval flag 扩展已完成**（`--approve-phase3-batch-500-harvest` · test **10/10 PASS**）；**Live approval plan 已完成**（gate **`READY_FOR_APPROVAL`**）；**Live harvest 未执行**；**显式批准仍待用户**；**Snapshot 未启动**；**C-class 未整体完成**；**下一步：等待用户显式批准 Phase 3 batch 500 live harvest**；**无 verified**；**不入库**。
 
 ---
 
@@ -306,7 +306,22 @@ flowchart TD
 | 138 | ~~Phase 2 harvest dry-run 执行~~ → **完成**（[dry-run report](outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_dryrun_report.csv) · [dry-run QA](outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_dryrun_qa_summary.md) · gate **PASS** · **1400** cases · live **未批准**） |
 | 139 | ~~Phase 2 live harvest approval planning~~ → **完成**（[approval plan](plans/cninfo_c_class_phase2_smoke_200_live_harvest_approval_plan.md) · [approval checklist](outputs/validation/cninfo_c_class_phase2_smoke_200_live_harvest_approval_checklist.md) · [command draft](plans/cninfo_c_class_phase2_smoke_200_live_harvest_command_draft.md) · [approval summary](outputs/validation/cninfo_c_class_phase2_smoke_200_live_harvest_approval_summary.md) · gate **READY_FOR_APPROVAL** · **runner extension required**） |
 | 140 | ~~harvest runner output-root isolation extension~~ → **完成**（[extension summary](outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_output_root_extension_summary.md) · [isolation test](lab/test_cninfo_c_class_harvest_output_root_isolation.py) · test **8/8 PASS** · safety **5/5 PASS** · gate **PASS** · live **未执行**） |
-| 141 | Phase 2 live harvest 显式用户批准 → **待批准** |
+| 141 | ~~Phase 2 live harvest 执行~~ → **完成**（[live report](outputs/validation/cninfo_c_class_phase2_smoke_200_live_harvest_report.csv) · [live summary](outputs/validation/cninfo_c_class_phase2_smoke_200_live_harvest_summary.md) · **1400** HTTP · terminal smoke **PASS** · markdown gate **FAIL**） |
+| 142 | ~~Phase 2 live harvest QA review~~ → **完成**（[QA summary](outputs/validation/cninfo_c_class_phase2_smoke_200_live_harvest_qa_summary.md) · [isolation check](outputs/validation/cninfo_c_class_phase2_smoke_200_output_isolation_check.md) · gate **PASS_WITH_CAVEAT** · **188/200** complete · snapshot **未启动**） |
+| 143 | ~~Phase 2 snapshot dry-run planning（188 成功子集）~~ → **完成**（[dry-run plan](plans/cninfo_c_class_phase2_smoke_188_snapshot_dryrun_plan.md) · [subset design](outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_subset_design.csv) · [command checklist](plans/cninfo_c_class_phase2_smoke_188_snapshot_command_checklist.md) · [planning summary](outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_planning_summary.md) · gate **DESIGN_COMPLETE** · **builder extension required** · snapshot **未启动**） |
+| 144 | ~~snapshot builder extension（phase2 188 子集）~~ → **完成**（[extension summary](outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_builder_extension_summary.md) · [188 YAML](lab/eval_companies_c_class_phase2_smoke_188_snapshot.yaml) · test **9/9 PASS** · gate **PASS**） |
+| 145 | ~~Phase 2 smoke 188 snapshot dry-run 执行~~ → **完成**（[dry-run report](outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_dryrun_report.csv) · [dry-run summary](outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_dryrun_summary.md) · **188** 家 · JSON **未生成**） |
+| 146 | ~~Phase 2 smoke 188 snapshot build 显式用户批准~~ → **已批准并执行** |
+| 147 | ~~Phase 2 smoke 188 snapshot build 执行~~ → **完成**（[build report](outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_build_report.csv) · [build summary](outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_build_summary.md) · [build QA](outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_build_qa_summary.md) · **188** JSON · gate **PASS_WITH_CAVEAT** · 输出 `outputs/snapshot/cninfo_c_class/phase2_smoke_188/`） |
+| 148 | ~~Phase 2 smoke 188 snapshot QA review~~ → **完成**（[QA summary](outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_qa_summary.md) · [review script](lab/review_cninfo_c_class_phase2_smoke_188_snapshot_quality.py) · test **5/5 PASS** · gate **PASS_WITH_CAVEAT** · status CSV 已校正） |
+| 149 | ~~Phase 2 smoke closure review~~ → **完成**（[closure review](plans/cninfo_c_class_phase2_smoke_closure_review.md) · [closure metrics](outputs/validation/cninfo_c_class_phase2_smoke_closure_metrics.csv) · [excluded ledger](outputs/validation/cninfo_c_class_phase2_smoke_excluded_company_caveat_ledger.csv) · gate **PASS_WITH_CAVEAT**） |
+| 150 | ~~Phase 3 batch expansion planning~~ → **就绪**（[readiness summary](outputs/validation/cninfo_c_class_phase3_batch_readiness_summary.md) · `READY_FOR_PLANNING`） |
+| 151 | ~~Phase 3 batch 500 expansion planning~~ → **完成**（[expansion plan](plans/cninfo_c_class_phase3_batch_500_expansion_plan.md) · [planning summary](outputs/validation/cninfo_c_class_phase3_batch_500_planning_summary.md) · gate **DESIGN_COMPLETE** · **未执行**） |
+| 152 | ~~Phase 3 batch 500 universe selection~~ → **完成**（[selection script](lab/select_cninfo_c_class_phase3_batch_500_universe.py) · [batch YAML](lab/eval_companies_c_class_phase3_batch_500_001.yaml) · [selection summary](outputs/validation/cninfo_c_class_phase3_batch_500_001_selection_summary.md) · test **12/12 PASS** · gate **PASS**） |
+| 153 | ~~Phase 3 batch 500 harvest dry-run planning~~ → **完成**（[dry-run plan](plans/cninfo_c_class_phase3_batch_500_001_harvest_dryrun_plan.md) · [expected case matrix](outputs/validation/cninfo_c_class_phase3_batch_500_001_harvest_expected_case_matrix.csv) · [command checklist](plans/cninfo_c_class_phase3_batch_500_001_harvest_command_checklist.md) · gate **READY_FOR_DRYRUN** · dry-run **未执行**） |
+| 154 | ~~Phase 3 batch 500 harvest dry-run execution~~ → **完成**（[dry-run QA](outputs/validation/cninfo_c_class_phase3_batch_500_001_harvest_dryrun_qa_summary.md) · **500** · **3500** HTTP · gate **PASS** · live **未批准**） |
+| 155 | ~~Phase 3 harvest runner approval flag extension + live approval planning~~ → **完成**（[approval plan](plans/cninfo_c_class_phase3_batch_500_001_live_harvest_approval_plan.md) · [extension summary](outputs/validation/cninfo_c_class_phase3_batch_500_001_harvest_approval_extension_summary.md) · test **10/10 PASS** · gate **`READY_FOR_APPROVAL`** · live **未执行**） |
+| 156 | Phase 3 batch 500 live harvest（显式用户批准） → **待批准** |
 | 100 | dividend_history YAML backfill → **GO（决策 only）** · **不执行** |
 | 101 | BSE legacy / hold / abnormal side-track → **待文档化** |
 | 102 | **暂不入库** · **C-class 未整体完成**

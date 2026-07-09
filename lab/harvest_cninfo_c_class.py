@@ -126,6 +126,14 @@ PHASE2_SMOKE_SAMPLE_BASENAME = "eval_companies_c_class_phase2_smoke_200.yaml"
 PHASE2_SMOKE_EXPECTED_COUNT = 200
 PHASE2_SMOKE_APPROVAL_REQUIRED = "PHASE2_SMOKE_HARVEST_APPROVAL_REQUIRED"
 
+PHASE3_BATCH_SAMPLE_BASENAME = "eval_companies_c_class_phase3_batch_500_001.yaml"
+PHASE3_BATCH_EXPECTED_COUNT = 500
+PHASE3_BATCH_OUTPUT_ROOT = "outputs/harvest/cninfo_c_class/phase3_batch_500_001"
+PHASE2_BATCH_OUTPUT_ROOT = "outputs/harvest/cninfo_c_class/phase2_smoke_200"
+PHASE3_BATCH_APPROVAL_REQUIRED = "PHASE3_BATCH_500_HARVEST_APPROVAL_REQUIRED"
+PHASE3_OUTPUT_ROOT_REQUIRED = "PHASE3_BATCH_OUTPUT_ROOT_REQUIRED"
+PHASE3_OUTPUT_ROOT_FORBIDDEN = "PHASE3_BATCH_OUTPUT_ROOT_FORBIDDEN"
+
 
 def configure_harvest_output_root(output_root: Optional[str] = None) -> str:
     """配置 harvest 产物根目录；默认保持 863 主轨路径不变。"""
@@ -148,6 +156,36 @@ def reset_harvest_output_root() -> None:
 def is_phase2_smoke_sample(sample_path: str) -> bool:
     norm = sample_path.replace("\\", "/")
     return norm.endswith(PHASE2_SMOKE_SAMPLE_BASENAME)
+
+
+def is_phase3_batch_sample(sample_path: str) -> bool:
+    norm = sample_path.replace("\\", "/")
+    return norm.endswith(PHASE3_BATCH_SAMPLE_BASENAME)
+
+
+def _normalize_output_root_path(path: str) -> str:
+    return path.replace("\\", "/").rstrip("/")
+
+
+def validate_phase3_output_root(output_root: Optional[str] = None) -> Tuple[bool, str]:
+    """
+    Phase 3 live harvest 输出根目录安全检查。
+    须使用隔离的 phase3_batch_500_001 根目录，禁止 863 主轨与 phase2 目录。
+    """
+    effective = _normalize_output_root_path(output_root or HARVEST_OUTPUT_ROOT)
+    expected = _normalize_output_root_path(PHASE3_BATCH_OUTPUT_ROOT)
+    default_root = _normalize_output_root_path(DEFAULT_HARVEST_OUTPUT_ROOT)
+    phase2_root = _normalize_output_root_path(PHASE2_BATCH_OUTPUT_ROOT)
+
+    if not output_root:
+        return False, PHASE3_OUTPUT_ROOT_REQUIRED
+    if effective == default_root:
+        return False, f"{PHASE3_OUTPUT_ROOT_FORBIDDEN}:default_863_root"
+    if effective == phase2_root:
+        return False, f"{PHASE3_OUTPUT_ROOT_FORBIDDEN}:phase2_smoke_200"
+    if effective != expected:
+        return False, f"output_root_must_be={expected} actual={effective}"
+    return True, expected
 
 # harvest plan §3 source → mapper 接线（dry-run 验收用）
 HARVEST_MAPPER_REGISTRY: Dict[str, Dict[str, str]] = {
@@ -844,6 +882,7 @@ def resolve_live_execution_mode(
     """
     解析 live 执行模式。
 
+    - phase3_batch: phase3 batch YAML + --approve-phase3-batch-500-harvest
     - phase2_smoke: phase2 smoke YAML + --approve-phase2-smoke-harvest
     - smoke: --live --limit N（无需 approve）
     - full: --live --approve-full-harvest（无 limit 或 limit>=863）
@@ -851,6 +890,10 @@ def resolve_live_execution_mode(
     if sample_path and is_phase2_smoke_sample(sample_path):
         if getattr(args, "approve_phase2_smoke_harvest", False):
             return "phase2_smoke"
+        return ""
+    if sample_path and is_phase3_batch_sample(sample_path):
+        if getattr(args, "approve_phase3_batch_500_harvest", False):
+            return "phase3_batch"
         return ""
     if args.limit is not None:
         return "smoke"
@@ -868,6 +911,8 @@ def enforce_live_approval_gate(
     if not mode:
         if sample_path and is_phase2_smoke_sample(sample_path):
             print(PHASE2_SMOKE_APPROVAL_REQUIRED, file=sys.stderr)
+        elif sample_path and is_phase3_batch_sample(sample_path):
+            print(PHASE3_BATCH_APPROVAL_REQUIRED, file=sys.stderr)
         else:
             print(FULL_HARVEST_APPROVAL_REQUIRED, file=sys.stderr)
         sys.exit(2)
@@ -962,9 +1007,11 @@ def validate_pre_live_harvest(
     execution_mode: str,
     approve_full_harvest: bool,
     approve_phase2_smoke_harvest: bool = False,
+    approve_phase3_batch_500_harvest: bool = False,
     limit: Optional[int],
     resume: bool,
     run_status_path: Optional[str] = None,
+    output_root: Optional[str] = None,
 ) -> Tuple[bool, str]:
     """
     live harvest 前置检查：
@@ -1001,11 +1048,34 @@ def validate_pre_live_harvest(
             issues.append("approve_phase2_smoke_harvest_required")
         if approve_full_harvest:
             issues.append("approve_full_harvest_not_valid_for_phase2")
+        if approve_phase3_batch_500_harvest:
+            issues.append("approve_phase3_batch_not_valid_for_phase2")
+        if limit is not None and len(companies) > limit:
+            issues.append(f"companies={len(companies)} limit={limit}")
+    elif execution_mode == "phase3_batch":
+        data = load_sample_yaml(sample_path)
+        declared = data.get("company_count")
+        actual = len(companies)
+        if declared != actual:
+            issues.append(f"company_count_declared={declared!r} actual={actual}")
+        if actual != PHASE3_BATCH_EXPECTED_COUNT:
+            issues.append(f"expected={PHASE3_BATCH_EXPECTED_COUNT} actual={actual}")
+        if not approve_phase3_batch_500_harvest:
+            issues.append("approve_phase3_batch_500_harvest_required")
+        if approve_full_harvest:
+            issues.append("approve_full_harvest_not_valid_for_phase3")
+        if approve_phase2_smoke_harvest:
+            issues.append("approve_phase2_smoke_not_valid_for_phase3")
+        root_ok, root_detail = validate_phase3_output_root(output_root)
+        if not root_ok:
+            issues.append(root_detail)
         if limit is not None and len(companies) > limit:
             issues.append(f"companies={len(companies)} limit={limit}")
     elif execution_mode == "smoke":
         if is_phase2_smoke_sample(sample_path):
             issues.append("phase2_smoke_requires_approve_phase2_smoke_harvest")
+        if is_phase3_batch_sample(sample_path):
+            issues.append("phase3_batch_requires_approve_phase3_batch_500_harvest")
         if limit is None or limit < 1:
             issues.append(f"smoke_limit_invalid={limit!r}")
         if len(companies) > (limit or 0):
@@ -1038,6 +1108,13 @@ def validate_pre_live_harvest(
         detail = (
             f"mode=phase2_smoke company_count={len(companies)} hold_overlap=0 "
             f"approve_phase2_smoke_harvest=true "
+            f"output_root={HARVEST_OUTPUT_ROOT} "
+            f"planned_http_cases={len(companies) * HTTP_SOURCES_PER_COMPANY}"
+        )
+    elif execution_mode == "phase3_batch":
+        detail = (
+            f"mode=phase3_batch company_count={len(companies)} hold_overlap=0 "
+            f"approve_phase3_batch_500_harvest=true "
             f"output_root={HARVEST_OUTPUT_ROOT} "
             f"planned_http_cases={len(companies) * HTTP_SOURCES_PER_COMPANY}"
         )
@@ -2270,6 +2347,11 @@ def parse_args() -> argparse.Namespace:
         help="显式批准 Phase 2 smoke 200 live harvest（与 --approve-full-harvest 独立）",
     )
     parser.add_argument(
+        "--approve-phase3-batch-500-harvest",
+        action="store_true",
+        help="显式批准 Phase 3 batch 500 live harvest（与 full/phase2 批准独立）",
+    )
+    parser.add_argument(
         "--output-root",
         default=None,
         help="harvest 产物根目录（phase2 须隔离；默认 outputs/harvest/cninfo_c_class）",
@@ -2438,8 +2520,12 @@ def _run_live_phase2_smoke(args: argparse.Namespace, sample_path: str, hold_path
         execution_mode="phase2_smoke",
         approve_full_harvest=args.approve_full_harvest,
         approve_phase2_smoke_harvest=args.approve_phase2_smoke_harvest,
+        approve_phase3_batch_500_harvest=getattr(
+            args, "approve_phase3_batch_500_harvest", False
+        ),
         limit=args.limit,
         resume=args.resume,
+        output_root=args.output_root,
     )
     label = "pre_live_harvest_validation"
     if ok:
@@ -2489,6 +2575,85 @@ def _run_live_phase2_smoke(args: argparse.Namespace, sample_path: str, hold_path
     smoke_pass = "PASS" if stats.get("http_requests", 0) > 0 and stats.get("raw_files", 0) > 0 else "FAIL"
     print(
         f"SUMMARY  mode=live-phase2-smoke  companies={len(companies)}  "
+        f"output_root={HARVEST_OUTPUT_ROOT}  "
+        f"http_requests={stats.get('http_requests', 0)}  "
+        f"success={stats.get('success_count', 0)}  "
+        f"raw_files={stats.get('raw_files', 0)}  "
+        f"normalized_files={stats.get('normalized_files', 0)}  "
+        f"smoke={smoke_pass}"
+    )
+    print(f"RAW   {_harvest_abs_path(HARVEST_OUTPUT_ROOT + '/raw/')}")
+    print(f"NORM  {_harvest_abs_path(HARVEST_OUTPUT_ROOT + '/normalized/')}")
+    print(f"QUAL  {_harvest_abs_path(HARVEST_OUTPUT_ROOT + '/quality/')}")
+    print(f"STATUS  {_quality_abs_path(RUN_STATUS_REL)}")
+    print(f"CSV   {args.smoke_csv}")
+    print(f"MD    {args.smoke_md}")
+
+
+def _run_live_phase3_batch(args: argparse.Namespace, sample_path: str, hold_path: str) -> None:
+    all_companies = load_sample_companies(sample_path)
+    companies = all_companies[: args.limit] if args.limit is not None else all_companies
+
+    ok, detail = validate_pre_live_harvest(
+        sample_path,
+        companies,
+        hold_path,
+        execution_mode="phase3_batch",
+        approve_full_harvest=args.approve_full_harvest,
+        approve_phase2_smoke_harvest=args.approve_phase2_smoke_harvest,
+        approve_phase3_batch_500_harvest=args.approve_phase3_batch_500_harvest,
+        limit=args.limit,
+        resume=args.resume,
+        output_root=args.output_root,
+    )
+    label = "pre_live_harvest_validation"
+    if ok:
+        print(f"{label}: PASS  ({detail})")
+    else:
+        print(f"{label}: FAIL  ({detail})", file=sys.stderr)
+        sys.exit(2)
+
+    pending, skip_count, pending_count = apply_resume_filter(companies, args.resume)
+    print(f"resume_skip_count={skip_count}")
+    print(f"resume_pending_count={pending_count}")
+
+    run_status = make_run_status(
+        mode="live",
+        company_count=len(companies),
+        completed_company_count=skip_count,
+        status="running",
+        resume_enabled=args.resume,
+    )
+    write_run_status(run_status)
+
+    mapper_ok, _mapper_rows = validate_mapper_wiring()
+    if not mapper_ok:
+        print("mapper_wiring: FAIL", file=sys.stderr)
+        sys.exit(2)
+    print("mapper_wiring: PASS")
+
+    report_rows, stats = run_live_harvest(pending)
+
+    run_status["status"] = "completed"
+    run_status["finished_at"] = _utc_now_iso()
+    run_status["completed_company_count"] = skip_count + len(pending)
+    write_run_status(run_status)
+
+    metrics = compute_harvest_gate_metrics(
+        report_rows,
+        total_universe=len(companies),
+        resume_enabled=args.resume,
+        resume_skip_count=skip_count if args.resume else 0,
+    )
+    write_quality_harvest_summary(metrics, stats, run_mode_label="live phase3 batch")
+    write_smoke_csv(args.smoke_csv, report_rows)
+    write_smoke_summary(
+        args.smoke_md, companies, report_rows, stats, sample_path, args.limit,
+    )
+
+    smoke_pass = "PASS" if stats.get("http_requests", 0) > 0 and stats.get("raw_files", 0) > 0 else "FAIL"
+    print(
+        f"SUMMARY  mode=live-phase3-batch  companies={len(companies)}  "
         f"output_root={HARVEST_OUTPUT_ROOT}  "
         f"http_requests={stats.get('http_requests', 0)}  "
         f"success={stats.get('success_count', 0)}  "
@@ -2631,6 +2796,8 @@ def main() -> None:
             _run_live_smoke(args, sample_path, hold_path)
         elif execution_mode == "phase2_smoke":
             _run_live_phase2_smoke(args, sample_path, hold_path)
+        elif execution_mode == "phase3_batch":
+            _run_live_phase3_batch(args, sample_path, hold_path)
         else:
             _run_live_full(args, sample_path, hold_path)
         return

@@ -252,7 +252,22 @@ _最后更新：2026-07-05_
 143. ~~Phase 2 harvest dry-run 执行~~ → **完成**（§7cz · gate **PASS**）
 144. ~~Phase 2 live harvest approval planning~~ → **完成**（§7da · gate **READY_FOR_APPROVAL**）
 145. ~~harvest runner output-root isolation extension~~ → **完成**（§7db · gate **PASS**）
-146. **Phase 2 live harvest 显式用户批准** → **待批准**
+146. ~~Phase 2 live harvest 执行~~ → **完成**（§7dc · **1400** HTTP · terminal smoke **PASS**）
+147. ~~Phase 2 live harvest QA review~~ → **完成**（§7dc · gate **PASS_WITH_CAVEAT**）
+148. ~~Phase 2 snapshot dry-run planning（188 成功子集）~~ → **完成**（§7de · gate **DESIGN_COMPLETE**）
+149. ~~snapshot builder extension（phase2 188 子集）~~ → **完成**（§7df · gate **PASS**）
+150. ~~Phase 2 smoke 188 snapshot dry-run 执行~~ → **完成**（§7df · **188** 家）
+151. ~~Phase 2 smoke 188 snapshot build 显式用户批准~~ → **已批准**
+152. ~~Phase 2 smoke 188 snapshot build 执行~~ → **完成**（§7dg · gate **PASS_WITH_CAVEAT**）
+153. ~~Phase 2 smoke 188 snapshot QA review~~ → **完成**（§7dh · gate **PASS_WITH_CAVEAT** · test **5/5 PASS**）
+154. ~~Phase 2 smoke closure review~~ → **完成**（§7di · gate **PASS_WITH_CAVEAT**）
+155. **Phase 3 batch expansion planning** → **就绪**（`READY_FOR_PLANNING`）
+156. ~~Phase 3 batch 500 expansion planning~~ → **完成**（§7dj · gate **DESIGN_COMPLETE**）
+157. ~~Phase 3 batch 500 universe selection~~ → **完成**（§7dk · **500** · gate **PASS** · test **12/12 PASS**）
+158. ~~Phase 3 batch 500 harvest dry-run planning~~ → **完成**（§7dl · gate **READY_FOR_DRYRUN**）
+159. ~~Phase 3 batch 500 harvest dry-run execution~~ → **完成**（§7dm · gate **PASS**）
+160. ~~Phase 3 harvest runner approval flag extension + live approval planning~~ → **完成**（§7dn · test **10/10 PASS** · gate **`READY_FOR_APPROVAL`** · live **未执行**）
+161. **Phase 3 batch 500 live harvest（显式用户批准）** → **待批准**
 105. review_later / raw_only 复判 → **待启动**（31 + 25）
 106. company_snapshot planning → **待启动**（P2）
 107. dividend_history YAML backfill → **GO（决策 only）** · **不执行**
@@ -1776,7 +1791,385 @@ _最后更新：2026-07-05_
 
 ~~**人工批准后执行 full batch**~~ → **完成**（§7cc · 863 snapshot）。
 
-**下一步：Phase 2 live harvest 显式用户批准** — runner extension **complete** · live **NOT APPROVED** · **NOT EXECUTED**。
+**下一步：等待用户显式批准 Phase 3 batch 500 live harvest** — approval extension **完成**（§7dn · gate **`READY_FOR_APPROVAL`** · live **未执行**）。
+
+---
+
+## 7dn. Phase 4 C 类 Phase 3 Batch 500 Harvest Approval Extension（2026-07-09）
+
+| 项 | 内容 |
+|----|------|
+| runner | [harvest_cninfo_c_class.py](../lab/harvest_cninfo_c_class.py) |
+| approval flag | **`--approve-phase3-batch-500-harvest`**（已实现） |
+| approval test | [test_cninfo_c_class_phase3_batch_500_harvest_approval.py](../lab/test_cninfo_c_class_phase3_batch_500_harvest_approval.py) · **10/10 PASS** |
+| output root safety | 强制 `outputs/harvest/cninfo_c_class/phase3_batch_500_001/` |
+| resume marker | `run_status.json` / `company_harvest_status.csv` 隔离于 phase3 root |
+| phase2 behavior | **保留**（test case 9 · **8/8 PASS**） |
+| 863 behavior | **保留**（test case 10 · **5/5 PASS**） |
+| approval plan | [cninfo_c_class_phase3_batch_500_001_live_harvest_approval_plan.md](cninfo_c_class_phase3_batch_500_001_live_harvest_approval_plan.md) |
+| approval checklist | [cninfo_c_class_phase3_batch_500_001_live_harvest_approval_checklist.md](../outputs/validation/cninfo_c_class_phase3_batch_500_001_live_harvest_approval_checklist.md) |
+| command draft | [cninfo_c_class_phase3_batch_500_001_live_harvest_command_draft.md](cninfo_c_class_phase3_batch_500_001_live_harvest_command_draft.md) · **NOT APPROVED YET** |
+| extension summary | [cninfo_c_class_phase3_batch_500_001_harvest_approval_extension_summary.md](../outputs/validation/cninfo_c_class_phase3_batch_500_001_harvest_approval_extension_summary.md) |
+| approval gate | **`phase3_batch_500_001_live_harvest_approval_gate = READY_FOR_APPROVAL`** |
+| live harvest | **NOT APPROVED** · **NOT EXECUTED** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- Phase 3 专用 approval flag 与 output-root 安全校验已实现
+- dry-run 不要求 approval flag；live 须 `--approve-phase3-batch-500-harvest` + 隔离 output root
+- `--approve-full-harvest` / `--approve-phase2-smoke-harvest` 单独使用不可通过 Phase 3 live gate
+- 本轮 **无 CNINFO** · **无 live** · **无 harvest 执行**
+
+### Next immediate task
+
+**等待用户显式批准 Phase 3 batch 500 live harvest**
+
+**红线：** **no live**（未经批准） · **no verified**
+
+---
+
+## 7dm. Phase 4 C 类 Phase 3 Batch 500 Harvest Dry-Run Execution（2026-07-09）
+
+| 项 | 内容 |
+|----|------|
+| batch YAML | [eval_companies_c_class_phase3_batch_500_001.yaml](../lab/eval_companies_c_class_phase3_batch_500_001.yaml) |
+| dry-run report | [cninfo_c_class_phase3_batch_500_001_harvest_dryrun_report.csv](../outputs/validation/cninfo_c_class_phase3_batch_500_001_harvest_dryrun_report.csv) |
+| dry-run summary | [cninfo_c_class_phase3_batch_500_001_harvest_dryrun_summary.md](../outputs/validation/cninfo_c_class_phase3_batch_500_001_harvest_dryrun_summary.md) |
+| validation summary | [cninfo_c_class_phase3_batch_500_001_harvest_dryrun_validation_summary.md](../outputs/validation/cninfo_c_class_phase3_batch_500_001_harvest_dryrun_validation_summary.md) |
+| dry-run QA | [cninfo_c_class_phase3_batch_500_001_harvest_dryrun_qa_summary.md](../outputs/validation/cninfo_c_class_phase3_batch_500_001_harvest_dryrun_qa_summary.md) |
+| output root (planned) | `outputs/harvest/cninfo_c_class/phase3_batch_500_001/` |
+| companies | **500** |
+| planned_http_cases | **3500** |
+| matrix_rows | **5000** |
+| direct / derived / observe | **3000** / **1500** / **500** |
+| cninfo_called | **false** |
+| raw/normalized writes | **0** |
+| execution gate | **`phase3_batch_500_001_harvest_dryrun_execution_gate = PASS`** |
+| live harvest | **NOT APPROVED** |
+| approval flag | **`--approve-phase3-batch-500-harvest` 已实现**（§7dn） |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- dry-run 全项 PASS；863 主轨与 Phase 2 产物未修改
+- phase3 harvest root 无实际 harvest 文件写入（仅 validation 产物）
+- live 须 runner extension + 显式批准
+
+### Next immediate task
+
+**Phase 3 harvest runner approval flag extension + live approval planning**
+
+**红线：** **no live** · **no verified**
+
+---
+
+## 7dl. Phase 4 C 类 Phase 3 Batch 500 Harvest Dry-Run Planning（2026-07-09）
+
+| 项 | 内容 |
+|----|------|
+| dry-run plan | [cninfo_c_class_phase3_batch_500_001_harvest_dryrun_plan.md](cninfo_c_class_phase3_batch_500_001_harvest_dryrun_plan.md) |
+| expected case matrix | [cninfo_c_class_phase3_batch_500_001_harvest_expected_case_matrix.csv](../outputs/validation/cninfo_c_class_phase3_batch_500_001_harvest_expected_case_matrix.csv) |
+| command checklist | [cninfo_c_class_phase3_batch_500_001_harvest_command_checklist.md](cninfo_c_class_phase3_batch_500_001_harvest_command_checklist.md) |
+| review checklist | [cninfo_c_class_phase3_batch_500_001_harvest_dryrun_review_checklist.md](../outputs/validation/cninfo_c_class_phase3_batch_500_001_harvest_dryrun_review_checklist.md) |
+| planning summary | [cninfo_c_class_phase3_batch_500_001_harvest_dryrun_planning_summary.md](../outputs/validation/cninfo_c_class_phase3_batch_500_001_harvest_dryrun_planning_summary.md) |
+| batch YAML | [eval_companies_c_class_phase3_batch_500_001.yaml](../lab/eval_companies_c_class_phase3_batch_500_001.yaml) |
+| companies | **500** |
+| planned_http_cases | **3500** |
+| matrix_rows | **5000** |
+| output root (future) | `outputs/harvest/cninfo_c_class/phase3_batch_500_001/` |
+| planning gate | **`phase3_batch_500_001_harvest_dryrun_planning_gate = READY_FOR_DRYRUN`** |
+| runner gap | **`phase3_runner_approval_flag_required = true`** · `--approve-phase3-batch-500-harvest` 待实现 |
+| dry-run executed | **NO** |
+| live approved | **NO** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 规划结论
+
+- 500 家 listed-only universe · 3500 HTTP · 5000 matrix rows
+- output-root 隔离设计完成；runner Phase 3 approval flag **未实现**（本轮不扩展）
+- dry-run 执行前须 review checklist 17 项
+
+### Next immediate task
+
+**Phase 3 batch 500 harvest dry-run execution**
+
+**红线：** **no live** · **no CNINFO** · **no runner extension**（本轮）
+
+---
+
+## 7dk. Phase 4 C 类 Phase 3 Batch 500 Universe Selection（2026-07-09）
+
+| 项 | 内容 |
+|----|------|
+| selection script | [select_cninfo_c_class_phase3_batch_500_universe.py](../lab/select_cninfo_c_class_phase3_batch_500_universe.py) |
+| selection test | [test_cninfo_c_class_phase3_batch_500_universe_selection.py](../lab/test_cninfo_c_class_phase3_batch_500_universe_selection.py) · **12/12 PASS** |
+| batch YAML | [eval_companies_c_class_phase3_batch_500_001.yaml](../lab/eval_companies_c_class_phase3_batch_500_001.yaml) |
+| selection matrix | [cninfo_c_class_phase3_batch_500_001_selection_matrix.csv](../outputs/validation/cninfo_c_class_phase3_batch_500_001_selection_matrix.csv) |
+| selection summary | [cninfo_c_class_phase3_batch_500_001_selection_summary.md](../outputs/validation/cninfo_c_class_phase3_batch_500_001_selection_summary.md) |
+| batch_id | `phase3_batch_500_001` |
+| seed | **20260709** |
+| primary_pool | **4643** |
+| eligible_after_exclusions | **4145** |
+| selected | **500** |
+| listing_status | **500** listed |
+| selection gate | **`phase3_batch_500_001_universe_selection_gate = PASS`** |
+| harvest | **NOT STARTED** |
+| snapshot | **NOT STARTED** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 选股结论
+
+- Phase 2 200 + 12 failure + delisted/name caveat 硬排除
+- 分层抽样 exchange/board/listing_status/security_type
+- 全部 exclusion check = 0
+
+### Next immediate task
+
+**Phase 3 batch 500 harvest dry-run planning**
+
+**红线：** **no live** · **no harvest** · **no verified**
+
+---
+
+## 7dj. Phase 4 C 类 Phase 3 Batch 500 Expansion Planning（2026-07-09）
+
+| 项 | 内容 |
+|----|------|
+| expansion plan | [cninfo_c_class_phase3_batch_500_expansion_plan.md](cninfo_c_class_phase3_batch_500_expansion_plan.md) |
+| candidate matrix | [cninfo_c_class_phase3_batch_500_candidate_matrix.csv](../outputs/validation/cninfo_c_class_phase3_batch_500_candidate_matrix.csv) |
+| output design | [cninfo_c_class_phase3_batch_500_output_design.md](cninfo_c_class_phase3_batch_500_output_design.md) |
+| execution checklist | [cninfo_c_class_phase3_batch_500_execution_checklist.md](cninfo_c_class_phase3_batch_500_execution_checklist.md) |
+| planning summary | [cninfo_c_class_phase3_batch_500_planning_summary.md](../outputs/validation/cninfo_c_class_phase3_batch_500_planning_summary.md) |
+| batch size | **500** |
+| eligible pool | **~4145** |
+| expected HTTP | **3500** |
+| harvest root (future) | `outputs/harvest/cninfo_c_class/phase3_batch_500_001/` |
+| snapshot root (future) | `outputs/snapshot/cninfo_c_class/phase3_batch_500_001_success_subset/` |
+| planning gate | **`phase3_batch_500_planning_gate = DESIGN_COMPLETE`** |
+| batch YAML | **NOT GENERATED** |
+| live harvest | **NOT APPROVED** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 规划结论
+
+- 主池 matched_active **4643**（primary filter）；eligible **~4145** after Phase 2 + delisted/inactive exclusions
+- 强化预筛：delisted · 退/退市/*ST · Phase 2 200/12 · BSE · hold · manual_review
+- 3500 HTTP · isolated output root · snapshot仅 success subset
+
+### Next immediate task
+
+**Phase 3 batch 500 universe selection**（script + YAML · **no live**）
+
+**红线：** **no harvest** · **no snapshot** · **no verified**
+
+---
+
+## 7di. Phase 4 C 类 Phase 2 Smoke Closure Review（2026-07-09）
+
+| 项 | 内容 |
+|----|------|
+| closure review | [cninfo_c_class_phase2_smoke_closure_review.md](cninfo_c_class_phase2_smoke_closure_review.md) |
+| closure metrics | [cninfo_c_class_phase2_smoke_closure_metrics.csv](../outputs/validation/cninfo_c_class_phase2_smoke_closure_metrics.csv) |
+| excluded ledger | [cninfo_c_class_phase2_smoke_excluded_company_caveat_ledger.csv](../outputs/validation/cninfo_c_class_phase2_smoke_excluded_company_caveat_ledger.csv) |
+| Phase 3 readiness | [cninfo_c_class_phase3_batch_readiness_summary.md](../outputs/validation/cninfo_c_class_phase3_batch_readiness_summary.md) |
+| smoke selected | **200** |
+| harvest usable | **188** |
+| all-direct-failure | **12** |
+| snapshot JSON | **188** valid |
+| closure gate | **`phase2_smoke_closure_gate = PASS_WITH_CAVEAT`** |
+| Phase 3 readiness gate | **`phase3_batch_planning_readiness_gate = READY_FOR_PLANNING`** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### Closure 结论
+
+- Pipeline 成功扩展到非 863 样本；失败集中可解释（delisted/inactive / **9240002**）
+- 无 output isolation breach；**不**证明全市场稳定性 / BSE / 6124 full harvest
+- Phase 3 建议：**500** companies/batch · matched_active · 强化 delisted 预筛
+
+### Next immediate task
+
+**Phase 3 batch expansion planning**（规划 only · **no live**）
+
+**红线：** **no 6124 full harvest** · **no verified** · **no live authorization**
+
+---
+
+## 7dh. Phase 4 C 类 Phase 2 Smoke 188 Snapshot QA Review（2026-07-09）
+
+| 项 | 内容 |
+|----|------|
+| review script | [review_cninfo_c_class_phase2_smoke_188_snapshot_quality.py](../lab/review_cninfo_c_class_phase2_smoke_188_snapshot_quality.py) |
+| review test | [test_cninfo_c_class_phase2_smoke_188_snapshot_quality_review.py](../lab/test_cninfo_c_class_phase2_smoke_188_snapshot_quality_review.py) · **5/5 PASS** |
+| snapshot dir | `outputs/snapshot/cninfo_c_class/phase2_smoke_188/` |
+| completeness report | [cninfo_c_class_phase2_smoke_188_snapshot_completeness_report.csv](../outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_completeness_report.csv) |
+| module coverage | [cninfo_c_class_phase2_smoke_188_snapshot_module_coverage.csv](../outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_module_coverage.csv) |
+| quality flags | [cninfo_c_class_phase2_smoke_188_snapshot_quality_flags.csv](../outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_quality_flags.csv) |
+| QA summary | [cninfo_c_class_phase2_smoke_188_snapshot_qa_summary.md](../outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_qa_summary.md) |
+| status CSV（已校正） | `outputs/snapshot/cninfo_c_class/phase2_smoke_188/quality/company_snapshot_status.csv` |
+| json_count | **188** |
+| valid_json_count | **188** |
+| excluded_code_present_count | **0** |
+| snapshot_status | **188** `complete_with_caveat` |
+| QA gate | **`phase2_smoke_188_snapshot_qa_gate = PASS_WITH_CAVEAT`** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### QA 结论
+
+- 188 JSON 全部可解析；12 家 all-direct-failure 排除代码未出现
+- `company_snapshot_status.csv` 从 dry-run `pending` 重写为 `reviewed` + `file_exists=true`
+- 模块覆盖与 863 QA 模式一致：`technology_profile` 全 `not_available`；多模块 `partial` 为预期
+- **无 CNINFO** · **无 harvest rerun** · **无 snapshot rebuild**
+
+### Next immediate task
+
+**Phase 2 smoke closure review**
+
+**红线：** **no full 500 batch** until closure review complete · **no verified**
+
+---
+
+## 7dg. Phase 4 C 类 Phase 2 Smoke 188 Snapshot Build（2026-07-09）
+
+| 项 | 内容 |
+|----|------|
+| batch runner | [build_cninfo_c_class_snapshot_batch.py](../lab/build_cninfo_c_class_snapshot_batch.py) |
+| 188 universe YAML | [eval_companies_c_class_phase2_smoke_188_snapshot.yaml](../lab/eval_companies_c_class_phase2_smoke_188_snapshot.yaml) |
+| harvest_root | `outputs/harvest/cninfo_c_class/phase2_smoke_200/` |
+| snapshot output | `outputs/snapshot/cninfo_c_class/phase2_smoke_188/` |
+| build report | [cninfo_c_class_phase2_smoke_188_snapshot_build_report.csv](../outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_build_report.csv) |
+| build summary | [cninfo_c_class_phase2_smoke_188_snapshot_build_summary.md](../outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_build_summary.md) |
+| build QA | [cninfo_c_class_phase2_smoke_188_snapshot_build_qa_summary.md](../outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_build_qa_summary.md) |
+| companies | **188** |
+| excluded | **12** all-direct-failure（无 JSON） |
+| json_snapshot_count | **188** |
+| failed_snapshot_count | **0** |
+| snapshot_status | **188** `complete_with_caveat` |
+| build gate | **`phase2_smoke_188_snapshot_build_gate = PASS_WITH_CAVEAT`** |
+| full snapshot isolation | **PASS**（863 `full/` 未修改） |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- 用户显式批准 Phase 2 smoke 188 snapshot build
+- 离线从 phase2 isolated normalized 构建；**无 CNINFO** · **无 harvest rerun**
+- 12 家 all-direct-failure 公司未生成 snapshot
+- quality `company_snapshot_status.csv` 仍为 dry-run 遗留 pending（caveat；JSON 已生成）
+
+### Next immediate task
+
+**Phase 2 smoke 188 snapshot QA review**
+
+**红线：** **no full snapshot overwrite** · **no registry** · **no verified**
+
+---
+
+## 7df. Phase 4 C 类 Phase 2 Smoke 188 Snapshot Builder Extension + Dry-Run（2026-07-09）
+
+| 项 | 内容 |
+|----|------|
+| batch runner | [build_cninfo_c_class_snapshot_batch.py](../lab/build_cninfo_c_class_snapshot_batch.py) |
+| company builder | [build_cninfo_c_class_company_snapshot.py](../lab/build_cninfo_c_class_company_snapshot.py) |
+| extension test | [test_cninfo_c_class_phase2_smoke_188_snapshot_builder_extension.py](../lab/test_cninfo_c_class_phase2_smoke_188_snapshot_builder_extension.py) · **9/9 PASS** |
+| 188 universe YAML | [eval_companies_c_class_phase2_smoke_188_snapshot.yaml](../lab/eval_companies_c_class_phase2_smoke_188_snapshot.yaml) |
+| extension summary | [cninfo_c_class_phase2_smoke_188_snapshot_builder_extension_summary.md](../outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_builder_extension_summary.md) |
+| dry-run report | [cninfo_c_class_phase2_smoke_188_snapshot_dryrun_report.csv](../outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_dryrun_report.csv) |
+| dry-run summary | [cninfo_c_class_phase2_smoke_188_snapshot_dryrun_summary.md](../outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_dryrun_summary.md) |
+| CLI | `--harvest-root` · `--output-dir` · `--sample-file` · `--approve-phase2-smoke-188-snapshot` |
+| harvest_root | `outputs/harvest/cninfo_c_class/phase2_smoke_200/` |
+| snapshot output | `outputs/snapshot/cninfo_c_class/phase2_smoke_188/` |
+| companies | **188** |
+| excluded | **12** all-direct-failure |
+| dry-run gate | **`snapshot_batch_dryrun_gate = PASS_WITH_CAVEAT`** |
+| extension gate | **`phase2_smoke_188_snapshot_builder_extension_gate = PASS`** |
+| snapshot JSON build | **NOT EXECUTED** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 扩展结论
+
+- `--harvest-root` 路由 phase2 isolated normalized 输入
+- `--output-dir` 路由 phase2 isolated snapshot 输出
+- phase2 批准与 863 `--approve-full-snapshot-batch` 独立
+- 863 batch runner 回归 **5/5 PASS**
+
+### Next immediate task
+
+**Phase 2 smoke 188 snapshot build 显式用户批准**
+
+**红线：** **no snapshot JSON build**（本轮） · **no CNINFO**
+
+---
+
+## 7de. Phase 4 C 类 Phase 2 Smoke 188 Snapshot Dry-Run Planning（2026-07-09）
+
+| 项 | 内容 |
+|----|------|
+| dry-run plan | [cninfo_c_class_phase2_smoke_188_snapshot_dryrun_plan.md](cninfo_c_class_phase2_smoke_188_snapshot_dryrun_plan.md) |
+| subset design | [cninfo_c_class_phase2_smoke_188_snapshot_subset_design.csv](../outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_subset_design.csv) |
+| command checklist | [cninfo_c_class_phase2_smoke_188_snapshot_command_checklist.md](cninfo_c_class_phase2_smoke_188_snapshot_command_checklist.md) |
+| review checklist | [cninfo_c_class_phase2_smoke_188_snapshot_dryrun_review_checklist.md](../outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_dryrun_review_checklist.md) |
+| planning summary | [cninfo_c_class_phase2_smoke_188_snapshot_planning_summary.md](../outputs/validation/cninfo_c_class_phase2_smoke_188_snapshot_planning_summary.md) |
+| input harvest root | `outputs/harvest/cninfo_c_class/phase2_smoke_200/` |
+| future snapshot root | `outputs/snapshot/cninfo_c_class/phase2_smoke_188/` |
+| subset count | **188** |
+| excluded count | **12** all-direct-failure |
+| snapshot_builder_extension_required | **true** |
+| planning gate | **`phase2_smoke_188_snapshot_dryrun_planning_gate = DESIGN_COMPLETE`** |
+| snapshot build | **NOT STARTED** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 规划结论
+
+- snapshot 仅覆盖 **188** 成功子集；排除 **12** all-direct-failure 公司
+- 须扩展 builder：`--harvest-root` · `--output-dir` · 188 universe · phase2 approval flag
+- 863 `full/` snapshot 与 harvest 主轨不被覆盖
+
+### Next immediate task
+
+**Snapshot builder extension**（见 [command checklist](cninfo_c_class_phase2_smoke_188_snapshot_command_checklist.md)）
+
+**红线：** **no snapshot build**（本轮） · **no CNINFO**
+
+---
+
+## 7dc. Phase 4 C 类 Phase 2 Smoke 200 Live Harvest + QA Review（2026-07-08）
+
+| 项 | 内容 |
+|----|------|
+| live report | [cninfo_c_class_phase2_smoke_200_live_harvest_report.csv](../outputs/validation/cninfo_c_class_phase2_smoke_200_live_harvest_report.csv) |
+| live summary | [cninfo_c_class_phase2_smoke_200_live_harvest_summary.md](../outputs/validation/cninfo_c_class_phase2_smoke_200_live_harvest_summary.md) |
+| QA report | [cninfo_c_class_phase2_smoke_200_live_harvest_qa_report.csv](../outputs/validation/cninfo_c_class_phase2_smoke_200_live_harvest_qa_report.csv) |
+| company failure summary | [cninfo_c_class_phase2_smoke_200_live_harvest_company_failure_summary.csv](../outputs/validation/cninfo_c_class_phase2_smoke_200_live_harvest_company_failure_summary.csv) |
+| source summary | [cninfo_c_class_phase2_smoke_200_live_harvest_source_summary.csv](../outputs/validation/cninfo_c_class_phase2_smoke_200_live_harvest_source_summary.csv) |
+| QA summary | [cninfo_c_class_phase2_smoke_200_live_harvest_qa_summary.md](../outputs/validation/cninfo_c_class_phase2_smoke_200_live_harvest_qa_summary.md) |
+| isolation check | [cninfo_c_class_phase2_smoke_200_output_isolation_check.md](../outputs/validation/cninfo_c_class_phase2_smoke_200_output_isolation_check.md) |
+| review script | [review_cninfo_c_class_phase2_smoke_200_live_harvest_qa.py](../lab/review_cninfo_c_class_phase2_smoke_200_live_harvest_qa.py) |
+| output_root | `outputs/harvest/cninfo_c_class/phase2_smoke_200/` |
+| companies | **200** |
+| http_requests | **1400** |
+| raw_files | **1400** |
+| normalized_files | **1928** |
+| complete_direct_companies | **188/200** |
+| terminal smoke | **PASS** |
+| markdown harvest_smoke_gate | **FAIL** |
+| QA gate | **`phase2_smoke_live_harvest_qa_gate = PASS_WITH_CAVEAT`** |
+| isolation gate | **`phase2_output_isolation_gate = PASS`** |
+| snapshot | **NOT STARTED** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### QA 结论
+
+- terminal `smoke=PASS` 与 markdown `harvest_smoke_gate=FAIL` 为 **runner gate 口径不一致** + markdown 过严
+- **72** missing normalized = **12** 公司 × **6** direct 源；集中于 delisted / 退 / ST 行
+- 全部 http_error 为 business_code **9240002**
+- dividend `valid_empty` 视为合法空态，非致命失败
+- 863 harvest 目录未被 Phase 2 run 写入
+
+### Next immediate task
+
+**Phase 2 snapshot dry-run planning**（**188** 成功子集；排除 **12** all-direct-failure 公司）
+
+**红线：** **no snapshot execution**（本轮） · **no CNINFO rerun**
 
 ---
 
@@ -3475,7 +3868,7 @@ P0 duplicate → P1 BSE legacy → P2 rename → P3 high risk manual → P4 low 
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **863 snapshot 已生成**（§7cc）；**`SNAPSHOT_GENERATED_QA_REVIEW`**；**Harvest runner output-root isolation extension 完成**（§7db · gate **PASS**）；**C-class 未整体完成**；**下一步 Phase 2 live harvest 显式用户批准**；**live NOT APPROVED** · **NOT EXECUTED**；**BSE legacy** HOLD。
+当前 Phase：C 类 **863 snapshot 已生成**（§7cc）；**`SNAPSHOT_GENERATED_QA_REVIEW`**；**Phase 3 approval extension 已完成**（§7dn · gate **`READY_FOR_APPROVAL`**）；**Live harvest 未执行**；**下一步：等待用户显式批准 Phase 3 batch 500 live harvest**；**BSE legacy** HOLD。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
