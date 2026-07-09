@@ -21,7 +21,8 @@ import os
 import sys
 import time
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+import calendar
+from datetime import date, datetime, timezone
 from typing import Any, Dict, List, Optional, Set, Tuple
 
 import requests
@@ -37,6 +38,39 @@ DEFAULT_UNIVERSE_CSV = os.path.join(
 )
 DEFAULT_OUTPUT_ROOT = os.path.join(
     BASE_DIR, "outputs", "validation", "cninfo_d_class_tiny_live_validation"
+)
+DEFAULT_V2_OUTPUT_ROOT = os.path.join(
+    BASE_DIR, "outputs", "validation", "cninfo_d_class_tiny_live_validation_v2"
+)
+DEFAULT_V2_UNIVERSE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_d_class_phase1_tiny_live_universe_v2_draft.csv",
+)
+V1_LIVE_REPORT_CSV = os.path.join(
+    DEFAULT_OUTPUT_ROOT, "reports", "d_class_tiny_live_report.csv"
+)
+DRYRUN_REPORT_CSV = os.path.join(
+    DEFAULT_OUTPUT_ROOT, "reports", "d_class_tiny_live_dryrun_report.csv"
+)
+DRYRUN_SUMMARY_MD = os.path.join(
+    DEFAULT_OUTPUT_ROOT, "reports", "d_class_tiny_live_dryrun_summary.md"
+)
+V2_DRYRUN_REPORT_CSV = os.path.join(
+    DEFAULT_V2_OUTPUT_ROOT,
+    "reports",
+    "d_class_tiny_live_v2_bounded_probe_dryrun_report.csv",
+)
+V2_DRYRUN_SUMMARY_MD = os.path.join(
+    DEFAULT_V2_OUTPUT_ROOT,
+    "reports",
+    "d_class_tiny_live_v2_bounded_probe_dryrun_summary.md",
+)
+V2_COMPARISON_REPORT_CSV = os.path.join(
+    DEFAULT_V2_OUTPUT_ROOT,
+    "reports",
+    "d_class_tiny_live_v2_comparison_report.csv",
 )
 TABLE_SOURCES_YAML = os.path.join(BASE_DIR, "config", "cninfo_table_sources.yaml")
 REGISTRY_YAML = os.path.join(BASE_DIR, "config", "cninfo_d_class_source_registry_draft.yaml")
@@ -59,8 +93,15 @@ AJAX_HEADERS = {
 }
 
 RUNNER_GATE = "READY_FOR_APPROVAL"
+V2_RUNNER_GATE = "READY_FOR_APPROVAL"
 EXECUTION_GATE_PASS = "PASS_WITH_CAVEAT"
 EXECUTION_GATE_FAIL = "FAIL"
+V2_PROBE_CASE_IDS: Set[str] = {"DLC003", "DLC006"}
+V2_BASELINE_CASE_IDS: Set[str] = {"DLC001", "DLC002", "DLC004", "DLC005", "DLC007"}
+V2_DLC003_MAX_CAP = 24
+V2_DLC006_MAX_CAP = 20
+V2_TOTAL_MAX_CAP = 44
+V2_REFERENCE_DATE = date(2026, 7, 9)
 EXPECTED_UNIVERSE_SIZE = 7
 ALLOWED_CASE_IDS: Set[str] = {f"DLC{i:03d}" for i in range(1, 8)}
 
@@ -85,6 +126,16 @@ MINIO_WRITE_BLOCKED = "minio_write_not_allowed"
 RAG_RUN_BLOCKED = "rag_run_not_allowed"
 VERIFIED_BLOCKED = "verified_status_not_allowed"
 PRODUCTION_READY_BLOCKED = "production_ready_not_allowed"
+V2_OUTPUT_ROOT_REQUIRED = "v2_output_root_must_be_cninfo_d_class_tiny_live_validation_v2"
+V1_OUTPUT_ROOT_WRITE_BLOCKED = "v1_output_root_write_blocked_for_bounded_probe_v2"
+V2_APPROVAL_REQUIRED = "approve_d_class_tiny_live_v2_bounded_probe_required"
+V2_WRONG_APPROVAL_FLAG = "wrong_approval_flag_for_bounded_probe_v2"
+V2_PROBE_CASE_ONLY = "only_dlc003_dlc006_may_execute_bounded_probes"
+V2_DLC003_CAP_EXCEEDED = "dlc003_request_cap_exceeded"
+V2_DLC006_CAP_EXCEEDED = "dlc006_request_cap_exceeded"
+V2_TOTAL_CAP_EXCEEDED = "v2_total_request_cap_exceeded"
+V2_INVENTED_COMPANY_CODE = "invented_or_placeholder_company_code_not_allowed"
+V2_MIXED_MODE_BLOCKED = "bounded_probe_v2_incompatible_with_v1_live_approval"
 
 DRYRUN_REPORT_COLUMNS = [
     "case_id",
@@ -133,6 +184,111 @@ QUALITY_REPORT_COLUMNS = [
     "notes",
 ]
 
+V2_DRYRUN_REPORT_COLUMNS = [
+    "case_id",
+    "component",
+    "company_code",
+    "company_name",
+    "probe_type",
+    "probe_dimension",
+    "planned_probe_value",
+    "planned_endpoint",
+    "request_index",
+    "max_request_count",
+    "early_stop_enabled",
+    "cninfo_call_planned",
+    "dryrun_status",
+    "notes",
+]
+
+V2_COMPARISON_REPORT_COLUMNS = [
+    "case_id",
+    "component",
+    "v1_retrieval_status",
+    "v2_retrieval_status",
+    "v1_cninfo_request_count",
+    "v2_cninfo_request_count",
+    "expectation_met_v1",
+    "expectation_met_v2",
+    "probe_extension_applied",
+    "notes",
+]
+
+V2_LIVE_REPORT_COLUMNS = [
+    "case_id",
+    "component",
+    "company_code",
+    "company_name",
+    "probe_type",
+    "probe_dimension",
+    "probe_value",
+    "retrieval_status",
+    "quality_status",
+    "lineage_status",
+    "record_count",
+    "empty_but_valid",
+    "needs_review",
+    "endpoint_used",
+    "request_index",
+    "max_request_count",
+    "early_stop_triggered",
+    "cninfo_request_count",
+    "db_write",
+    "minio_write",
+    "rag_run",
+    "notes",
+]
+
+V2_QUALITY_REPORT_COLUMNS = [
+    "case_id",
+    "component",
+    "expected_behavior",
+    "retrieval_status",
+    "quality_status",
+    "lineage_status",
+    "record_count",
+    "acceptable",
+    "cninfo_request_count",
+    "early_stop_triggered",
+    "notes",
+]
+
+
+@dataclass
+class ProbePlanEntry:
+    case_id: str
+    component: str
+    company_code: str
+    company_name: str
+    probe_type: str
+    probe_dimension: str
+    planned_probe_value: str
+    planned_endpoint: str
+    request_index: int
+    max_request_count: int
+    early_stop_enabled: str
+    cninfo_call_planned: str
+    dryrun_status: str
+    notes: str
+
+    def to_row(self) -> Dict[str, str]:
+        return {
+            "case_id": self.case_id,
+            "component": self.component,
+            "company_code": self.company_code,
+            "company_name": self.company_name,
+            "probe_type": self.probe_type,
+            "probe_dimension": self.probe_dimension,
+            "planned_probe_value": self.planned_probe_value,
+            "planned_endpoint": self.planned_endpoint,
+            "request_index": str(self.request_index),
+            "max_request_count": str(self.max_request_count),
+            "early_stop_enabled": self.early_stop_enabled,
+            "cninfo_call_planned": self.cninfo_call_planned,
+            "dryrun_status": self.dryrun_status,
+            "notes": self.notes,
+        }
+
 
 @dataclass
 class UniverseCase:
@@ -165,6 +321,928 @@ def validate_output_root(output_root: str) -> Tuple[bool, str]:
     if root == allowed or root.startswith(allowed + os.sep):
         return True, ""
     return False, OUTPUT_ROOT_VIOLATION
+
+
+def validate_v2_output_root(output_root: str) -> Tuple[bool, str]:
+    root = _normalize_output_root(output_root)
+    v2_allowed = _normalize_output_root(DEFAULT_V2_OUTPUT_ROOT)
+    v1_root = _normalize_output_root(DEFAULT_OUTPUT_ROOT)
+    if root == v1_root or root.startswith(v1_root + os.sep):
+        return False, V1_OUTPUT_ROOT_WRITE_BLOCKED
+    if root == v2_allowed or root.startswith(v2_allowed + os.sep):
+        return True, ""
+    return False, V2_OUTPUT_ROOT_REQUIRED
+
+
+def _params_key(params: Dict[str, Any]) -> str:
+    return json.dumps(params, sort_keys=True, ensure_ascii=False)
+
+
+def _format_probe_value(params: Dict[str, Any]) -> str:
+    if "tdate" in params and "type" in params:
+        return f"type={params['type']};tdate={params['tdate']}"
+    if "tdate" in params:
+        return f"tdate={params['tdate']}"
+    if "type" in params:
+        return f"type={params['type']}"
+    return json.dumps(params, ensure_ascii=False, sort_keys=True)
+
+
+def _month_end_date(year: int, month: int) -> str:
+    last_day = calendar.monthrange(year, month)[1]
+    return f"{year:04d}-{month:02d}-{last_day:02d}"
+
+
+def _month_end_dates(count: int, ref: date) -> List[str]:
+    dates: List[str] = []
+    year, month = ref.year, ref.month
+    for _ in range(count):
+        dates.append(_month_end_date(year, month))
+        month -= 1
+        if month == 0:
+            month = 12
+            year -= 1
+    return dates
+
+
+def _quarter_end_dates(count: int, ref: date) -> List[str]:
+    """从参考日所在季度向前回溯季末日。"""
+    quarter_ends = [(3, 31), (6, 30), (9, 30), (12, 31)]
+    q_idx = next(i for i, (m, _) in enumerate(quarter_ends) if ref.month <= m)
+    year = ref.year
+    month, day = quarter_ends[q_idx]
+    dates: List[str] = []
+    for _ in range(count):
+        dates.append(f"{year:04d}-{month:02d}-{day:02d}")
+        q_idx -= 1
+        if q_idx < 0:
+            q_idx = 3
+            year -= 1
+        month, day = quarter_ends[q_idx]
+    return dates
+
+
+def _dlc003_v1_baseline_tdates() -> List[str]:
+    return [
+        "2026-06-08",
+        "2026-07-03",
+        "2025-12-31",
+        "2025-06-30",
+        "2024-12-31",
+        "2024-06-28",
+        "2023-12-29",
+        "2023-06-30",
+    ]
+
+
+def _dlc006_v1_baseline_params() -> List[Dict[str, Any]]:
+    return [
+        {"type": "desc"},
+        {"type": "inc", "tdate": "2026-07-03"},
+        {"type": "inc", "tdate": "2025-12-31"},
+        {"type": "inc", "tdate": "2025-06-30"},
+        {"type": "desc", "tdate": "2026-07-03"},
+    ]
+
+
+def _dedupe_param_list(
+    items: List[Tuple[str, Dict[str, Any]]],
+) -> List[Tuple[str, Dict[str, Any]]]:
+    seen: Set[str] = set()
+    out: List[Tuple[str, Dict[str, Any]]] = []
+    for dimension, params in items:
+        key = _params_key(params)
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append((dimension, params))
+    return out
+
+
+def build_bounded_probe_plan_dlc003(max_requests: int) -> List[Tuple[str, Dict[str, Any]]]:
+    base = dict(load_table_source_configs().get("restricted_shares_unlock", {}).get("params_template") or {})
+    items: List[Tuple[str, Dict[str, Any]]] = []
+    for tdate in _dlc003_v1_baseline_tdates():
+        items.append(("v1_baseline_replay", {**base, "tdate": tdate}))
+    for tdate in _month_end_dates(12, V2_REFERENCE_DATE):
+        items.append(("recent_12m_monthly", {**base, "tdate": tdate}))
+    for tdate in _quarter_end_dates(8, V2_REFERENCE_DATE):
+        items.append(("recent_24m_quarterly", {**base, "tdate": tdate}))
+        items.append(("reporting_window_quarterly", {**base, "tdate": tdate}))
+    deduped = _dedupe_param_list(items)
+    return deduped[:max_requests]
+
+
+def build_bounded_probe_plan_dlc006(max_requests: int) -> List[Tuple[str, Dict[str, Any]]]:
+    items: List[Tuple[str, Dict[str, Any]]] = []
+    for params in _dlc006_v1_baseline_params():
+        items.append(("v1_baseline_replay", dict(params)))
+    quarter_4 = _quarter_end_dates(4, V2_REFERENCE_DATE)
+    for tdate in quarter_4:
+        items.append(("recent_12m_quarterly_inc", {"type": "inc", "tdate": tdate}))
+    quarter_8 = _quarter_end_dates(8, V2_REFERENCE_DATE)
+    for tdate in quarter_8:
+        items.append(("recent_24m_quarterly_both", {"type": "inc", "tdate": tdate}))
+        items.append(("recent_24m_quarterly_both", {"type": "desc", "tdate": tdate}))
+    for params in _dlc006_v1_baseline_params():
+        items.append(("v1_modes_expanded_dates", dict(params)))
+    deduped = _dedupe_param_list(items)
+    return deduped[:max_requests]
+
+
+def load_v1_probe_cases() -> Dict[str, UniverseCase]:
+    cases = load_universe(DEFAULT_UNIVERSE_CSV)
+    return {c.case_id: c for c in cases if c.case_id in V2_PROBE_CASE_IDS}
+
+
+def load_v1_live_report_rows(path: Optional[str] = None) -> Dict[str, Dict[str, str]]:
+    report_path = path or V1_LIVE_REPORT_CSV
+    if not os.path.isfile(report_path):
+        return {}
+    with open(report_path, newline="", encoding="utf-8") as f:
+        return {row["case_id"]: row for row in csv.DictReader(f)}
+
+
+def parse_cases_filter(cases_arg: Optional[str]) -> Set[str]:
+    if not cases_arg or cases_arg.strip().lower() == "all":
+        return set(V2_PROBE_CASE_IDS)
+    selected = {c.strip() for c in cases_arg.split(",") if c.strip()}
+    return selected
+
+
+def validate_v2_case_selection(selected: Set[str]) -> List[str]:
+    issues: List[str] = []
+    if not selected:
+        issues.append(f"{V2_PROBE_CASE_ONLY}:empty_selection")
+    extra = selected - V2_PROBE_CASE_IDS
+    if extra:
+        issues.append(f"{V2_PROBE_CASE_ONLY}:{','.join(sorted(extra))}")
+    return issues
+
+
+def validate_v2_request_caps(dlc003_max: int, dlc006_max: int) -> List[str]:
+    issues: List[str] = []
+    if dlc003_max > V2_DLC003_MAX_CAP:
+        issues.append(f"{V2_DLC003_CAP_EXCEEDED}:{dlc003_max}>{V2_DLC003_MAX_CAP}")
+    if dlc006_max > V2_DLC006_MAX_CAP:
+        issues.append(f"{V2_DLC006_CAP_EXCEEDED}:{dlc006_max}>{V2_DLC006_MAX_CAP}")
+    if dlc003_max + dlc006_max > V2_TOTAL_MAX_CAP:
+        issues.append(
+            f"{V2_TOTAL_CAP_EXCEEDED}:{dlc003_max}+{dlc006_max}>{V2_TOTAL_MAX_CAP}"
+        )
+    return issues
+
+
+def validate_v2_probe_cases(cases: Dict[str, UniverseCase]) -> List[str]:
+    issues: List[str] = []
+    for case_id in sorted(V2_PROBE_CASE_IDS):
+        case = cases.get(case_id)
+        if case is None:
+            issues.append(f"missing_probe_case:{case_id}")
+            continue
+        if not case.company_code:
+            issues.append(f"{V2_INVENTED_COMPANY_CODE}:{case_id}")
+        if "CANDIDATE_REQUIRED" in case.case_id:
+            issues.append(f"{V2_INVENTED_COMPANY_CODE}:{case.case_id}")
+    return issues
+
+
+def build_v2_probe_plan_rows(
+    probe_cases: Dict[str, UniverseCase],
+    endpoints: Dict[str, str],
+    dlc003_max: int,
+    dlc006_max: int,
+) -> List[ProbePlanEntry]:
+    rows: List[ProbePlanEntry] = []
+    if "DLC003" in probe_cases:
+        case = probe_cases["DLC003"]
+        endpoint = endpoints.get(case.component, "")
+        plan = build_bounded_probe_plan_dlc003(dlc003_max)
+        for idx, (dimension, params) in enumerate(plan, start=1):
+            rows.append(
+                ProbePlanEntry(
+                    case_id=case.case_id,
+                    component=case.component,
+                    company_code=case.company_code,
+                    company_name=case.company_name,
+                    probe_type="tdate",
+                    probe_dimension=dimension,
+                    planned_probe_value=_format_probe_value(params),
+                    planned_endpoint=endpoint,
+                    request_index=idx,
+                    max_request_count=dlc003_max,
+                    early_stop_enabled="yes",
+                    cninfo_call_planned="yes",
+                    dryrun_status="planned",
+                    notes="early stop on first company-level hit; no event-date guessing",
+                )
+            )
+    if "DLC006" in probe_cases:
+        case = probe_cases["DLC006"]
+        endpoint = endpoints.get(case.component, "")
+        plan = build_bounded_probe_plan_dlc006(dlc006_max)
+        for idx, (dimension, params) in enumerate(plan, start=1):
+            rows.append(
+                ProbePlanEntry(
+                    case_id=case.case_id,
+                    component=case.component,
+                    company_code=case.company_code,
+                    company_name=case.company_name,
+                    probe_type="mode_date",
+                    probe_dimension=dimension,
+                    planned_probe_value=_format_probe_value(params),
+                    planned_endpoint=endpoint,
+                    request_index=idx,
+                    max_request_count=dlc006_max,
+                    early_stop_enabled="yes",
+                    cninfo_call_planned="yes",
+                    dryrun_status="planned",
+                    notes="early stop on first company-level hit; no event-date guessing",
+                )
+            )
+    return rows
+
+
+def build_v2_comparison_plan_rows(
+    probe_cases: Dict[str, UniverseCase],
+    plan_rows: List[ProbePlanEntry],
+    v1_rows: Dict[str, Dict[str, str]],
+) -> List[Dict[str, str]]:
+    planned_counts: Dict[str, int] = {}
+    for row in plan_rows:
+        planned_counts[row.case_id] = planned_counts.get(row.case_id, 0) + 1
+
+    v1_cases = {c.case_id: c for c in load_universe(DEFAULT_UNIVERSE_CSV)}
+    comparison: List[Dict[str, str]] = []
+    all_case_ids = sorted(V2_PROBE_CASE_IDS | V2_BASELINE_CASE_IDS)
+    for case_id in all_case_ids:
+        v1 = v1_rows.get(case_id, {})
+        v1_rs = v1.get("retrieval_status", "v1_reference_missing")
+        v1_cnt = v1.get("cninfo_request_count", "0")
+        if case_id in V2_PROBE_CASE_IDS:
+            case = probe_cases[case_id]
+            exp_v1 = "yes" if v1 and is_case_acceptable(case, v1) else ("no" if v1 else "unknown")
+            comparison.append(
+                {
+                    "case_id": case_id,
+                    "component": case.component,
+                    "v1_retrieval_status": v1_rs,
+                    "v2_retrieval_status": "planned",
+                    "v1_cninfo_request_count": v1_cnt,
+                    "v2_cninfo_request_count": str(planned_counts.get(case_id, 0)),
+                    "expectation_met_v1": exp_v1,
+                    "expectation_met_v2": "planned",
+                    "probe_extension_applied": "yes",
+                    "notes": "bounded probe extension planned; live not executed",
+                }
+            )
+        else:
+            case = v1_cases.get(case_id)
+            exp_v1 = (
+                "yes"
+                if case and v1 and is_case_acceptable(case, v1)
+                else ("no" if v1 else "unknown")
+            )
+            comparison.append(
+                {
+                    "case_id": case_id,
+                    "component": case.component if case else v1.get("component", ""),
+                    "v1_retrieval_status": v1_rs,
+                    "v2_retrieval_status": "v1_baseline_reference",
+                    "v1_cninfo_request_count": v1_cnt,
+                    "v2_cninfo_request_count": "0",
+                    "expectation_met_v1": exp_v1,
+                    "expectation_met_v2": "na",
+                    "probe_extension_applied": "no",
+                    "notes": "baseline reference only; no v2 CNINFO",
+                }
+            )
+    return comparison
+
+
+def write_v2_dryrun_report(rows: List[ProbePlanEntry], output_paths: Dict[str, str]) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "d_class_tiny_live_v2_bounded_probe_dryrun_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=V2_DRYRUN_REPORT_COLUMNS)
+        writer.writeheader()
+        writer.writerows(row.to_row() for row in rows)
+    return report_path
+
+
+def write_v2_comparison_report(rows: List[Dict[str, str]], output_paths: Dict[str, str]) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "d_class_tiny_live_v2_comparison_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=V2_COMPARISON_REPORT_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_v2_dryrun_summary(
+    plan_rows: List[ProbePlanEntry],
+    comparison_rows: List[Dict[str, str]],
+    dlc003_max: int,
+    dlc006_max: int,
+    output_paths: Dict[str, str],
+) -> str:
+    dlc003_planned = sum(1 for r in plan_rows if r.case_id == "DLC003")
+    dlc006_planned = sum(1 for r in plan_rows if r.case_id == "DLC006")
+    total_planned = len(plan_rows)
+    caps_ok = (
+        dlc003_planned <= dlc003_max <= V2_DLC003_MAX_CAP
+        and dlc006_planned <= dlc006_max <= V2_DLC006_MAX_CAP
+        and total_planned <= V2_TOTAL_MAX_CAP
+    )
+    lines = [
+        "# CNINFO D 类 Tiny Live V2 Bounded Probe Dry-run 摘要",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** v2 bounded probe dry-run only · **CNINFO calls = 0** · **NOT APPROVED**",
+        "",
+        "## Planned Request Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        f"| DLC003 planned | **{dlc003_planned}** |",
+        f"| DLC006 planned | **{dlc006_planned}** |",
+        f"| Total planned | **{total_planned}** |",
+        f"| DLC003 cap | **{dlc003_max}** (max {V2_DLC003_MAX_CAP}) |",
+        f"| DLC006 cap | **{dlc006_max}** (max {V2_DLC006_MAX_CAP}) |",
+        f"| Total cap | **{V2_TOTAL_MAX_CAP}** |",
+        f"| Caps respected | **{'yes' if caps_ok else 'no'}** |",
+        "",
+        "## Safety",
+        "",
+        "| 项 | 状态 |",
+        "|----|------|",
+        "| Output root isolated (v2) | **yes** |",
+        "| v1 output untouched | **yes** |",
+        "| CNINFO calls | **0** |",
+        "| DB / MinIO / RAG | **0** |",
+        "| verified / production_ready | **no** |",
+        "",
+        "## Comparison Plan",
+        "",
+        f"| comparison rows | {len(comparison_rows)} |",
+        "",
+        "## Gate",
+        "",
+        "```text",
+        f"d_class_tiny_live_v2_bounded_probe_runner_gate = {V2_RUNNER_GATE}",
+        "```",
+        "",
+        "**不是 PASS** · **不是 live_ready** · **不是 verified** · **不是 production_ready**",
+        "",
+    ]
+    summary_path = os.path.join(
+        output_paths["reports"], "d_class_tiny_live_v2_bounded_probe_dryrun_summary.md"
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    return summary_path
+
+
+def enforce_v2_forbidden_options(args: argparse.Namespace) -> None:
+    enforce_forbidden_options(args)
+    if args.bounded_probe_v2 and args.approve_d_class_tiny_live_validation and args.mode == "live":
+        print(f"ERROR: {V2_MIXED_MODE_BLOCKED}", file=sys.stderr)
+        sys.exit(2)
+    if args.bounded_probe_v2 and args.approve_d_class_tiny_live_validation:
+        print(f"ERROR: {V2_WRONG_APPROVAL_FLAG}:approve_d_class_tiny_live_validation", file=sys.stderr)
+        sys.exit(2)
+    if not args.bounded_probe_v2 and args.approve_d_class_tiny_live_v2_bounded_probe:
+        print(f"ERROR: {V2_WRONG_APPROVAL_FLAG}:v2_flag_without_bounded_probe_v2", file=sys.stderr)
+        sys.exit(2)
+
+
+def enforce_v2_live_approval_gate(args: argparse.Namespace) -> None:
+    if args.mode == "live" and args.bounded_probe_v2:
+        if not args.approve_d_class_tiny_live_v2_bounded_probe:
+            print(f"ERROR: {V2_APPROVAL_REQUIRED}", file=sys.stderr)
+            sys.exit(2)
+
+
+def _assess_v2_probe_row(
+    case: UniverseCase,
+    err: str,
+    company_records: List[Dict[str, Any]],
+) -> Tuple[str, str, str, str, str, str, List[str]]:
+    """单探测行状态评估。"""
+    notes_parts: List[str] = []
+    record_count = len(company_records)
+    empty_but_valid = "no"
+    needs_review = "no"
+
+    if err in ("rate_limited",) or err.startswith("network_error"):
+        retrieval_status = "http_error" if err.startswith("network_error") else "blocked"
+        quality_status = "blocked"
+        lineage_status = "needs_review"
+        notes_parts.append(err)
+    elif err.startswith("http_") or err == "invalid_json":
+        retrieval_status = "http_error"
+        quality_status = "blocked"
+        lineage_status = "needs_review"
+        notes_parts.append(err)
+    elif record_count == 0:
+        retrieval_status = "empty_but_valid"
+        quality_status = "pass"
+        lineage_status = "discovered"
+        empty_but_valid = "yes"
+        notes_parts.append("company-level zero rows; legal empty per quality policy")
+    else:
+        retrieval_status = "found"
+        quality_status = "pass"
+        lineage_status = "discovered"
+        notes_parts.append(f"found {record_count} row(s) for company")
+
+    return (
+        retrieval_status,
+        quality_status,
+        lineage_status,
+        str(record_count),
+        empty_but_valid,
+        needs_review,
+        notes_parts,
+    )
+
+
+def execute_v2_bounded_probe_case(
+    case: UniverseCase,
+    plan: List[Tuple[str, Dict[str, Any]]],
+    probe_type: str,
+    max_request_count: int,
+    source_cfg: dict,
+    endpoint: str,
+    session: requests.Session,
+    stats: LiveStats,
+    output_paths: Dict[str, str],
+) -> Tuple[List[Dict[str, str]], Dict[str, str], bool]:
+    """执行 v2 有界探测；返回逐探测行、case 汇总、是否 early stop。"""
+    probe_rows: List[Dict[str, str]] = []
+    all_records: List[Dict[str, Any]] = []
+    used_params: Dict[str, Any] = {}
+    http_status = 0
+    case_early_stop = False
+    last_error = ""
+
+    for idx, (dimension, params) in enumerate(plan, start=1):
+        payload, http_status, err = _cninfo_request(
+            session, source_cfg, params, stats, case.case_id
+        )
+        used_params = params
+        records = _extract_records(payload) if payload is not None and not err else []
+        company_records = _filter_company_records(records, case.company_code)
+        if err:
+            last_error = err
+
+        (
+            retrieval_status,
+            quality_status,
+            lineage_status,
+            record_count,
+            empty_but_valid,
+            needs_review,
+            notes_parts,
+        ) = _assess_v2_probe_row(case, err, company_records)
+
+        row_early_stop = "no"
+        if company_records and not err:
+            all_records = company_records
+            case_early_stop = True
+            row_early_stop = "yes"
+            notes_parts.append("early stop triggered on company-level hit")
+
+        probe_rows.append(
+            {
+                "case_id": case.case_id,
+                "component": case.component,
+                "company_code": case.company_code,
+                "company_name": case.company_name,
+                "probe_type": probe_type,
+                "probe_dimension": dimension,
+                "probe_value": _format_probe_value(params),
+                "retrieval_status": retrieval_status,
+                "quality_status": quality_status,
+                "lineage_status": lineage_status,
+                "record_count": record_count,
+                "empty_but_valid": empty_but_valid,
+                "needs_review": needs_review,
+                "endpoint_used": endpoint,
+                "request_index": str(idx),
+                "max_request_count": str(max_request_count),
+                "early_stop_triggered": row_early_stop,
+                "cninfo_request_count": str(stats.case_request_counts.get(case.case_id, 0)),
+                "db_write": "no",
+                "minio_write": "no",
+                "rag_run": "no",
+                "notes": "; ".join(notes_parts),
+            }
+        )
+
+        if case_early_stop:
+            break
+        if err and not (err.startswith("http_") or err == "invalid_json"):
+            break
+        if err in ("invalid_json",) or err.startswith("http_"):
+            last_error = err
+            continue
+
+    final_count = len(all_records)
+    if case_early_stop:
+        summary_rs = "found"
+        summary_qs = "pass"
+        summary_ls = "discovered"
+        summary_empty = "no"
+        summary_notes = f"early stop after {stats.case_request_counts.get(case.case_id, 0)} requests; found {final_count} row(s)"
+    elif last_error and not all_records:
+        summary_rs, summary_qs, summary_ls, _, summary_empty, _, note_parts = _assess_v2_probe_row(
+            case, last_error, []
+        )
+        summary_notes = "; ".join(note_parts)
+    else:
+        summary_rs = "empty_but_valid"
+        summary_qs = "pass"
+        summary_ls = "discovered"
+        summary_empty = "yes"
+        summary_notes = (
+            f"exhausted bounded probe cap ({stats.case_request_counts.get(case.case_id, 0)} requests); "
+            "company-level zero rows; legal empty per quality policy"
+        )
+
+    snapshot_path = os.path.join(
+        output_paths["live_snapshots"],
+        f"{case.case_id}_{case.component}.json",
+    )
+    with open(snapshot_path, "w", encoding="utf-8") as f:
+        json.dump(
+            {
+                "case_id": case.case_id,
+                "company_code": case.company_code,
+                "component": case.component,
+                "endpoint": endpoint,
+                "params": used_params,
+                "http_status": http_status,
+                "record_count": final_count,
+                "sample_records": all_records[:3],
+                "cninfo_called": True,
+                "early_stop": case_early_stop,
+                "bounded_probe_v2": True,
+                "db_write": False,
+                "minio_write": False,
+                "rag_run": False,
+            },
+            f,
+            ensure_ascii=False,
+            indent=2,
+        )
+
+    case_summary = {
+        "case_id": case.case_id,
+        "component": case.component,
+        "expected_behavior": case.expected_behavior,
+        "retrieval_status": summary_rs,
+        "quality_status": summary_qs,
+        "lineage_status": summary_ls,
+        "record_count": str(final_count),
+        "empty_but_valid": summary_empty,
+        "needs_review": "no",
+        "endpoint_used": endpoint,
+        "cninfo_request_count": str(stats.case_request_counts.get(case.case_id, 0)),
+        "early_stop_triggered": "yes" if case_early_stop else "no",
+        "db_write": "no",
+        "minio_write": "no",
+        "rag_run": "no",
+        "notes": summary_notes,
+    }
+    return probe_rows, case_summary, case_early_stop
+
+
+def build_v2_comparison_live_rows(
+    probe_cases: Dict[str, UniverseCase],
+    case_summaries: Dict[str, Dict[str, str]],
+    v1_rows: Dict[str, Dict[str, str]],
+    stats: LiveStats,
+) -> List[Dict[str, str]]:
+    v1_cases = {c.case_id: c for c in load_universe(DEFAULT_UNIVERSE_CSV)}
+    comparison: List[Dict[str, str]] = []
+    for case_id in sorted(V2_PROBE_CASE_IDS | V2_BASELINE_CASE_IDS):
+        v1 = v1_rows.get(case_id, {})
+        v1_rs = v1.get("retrieval_status", "v1_reference_missing")
+        v1_cnt = v1.get("cninfo_request_count", "0")
+        if case_id in V2_PROBE_CASE_IDS:
+            case = probe_cases[case_id]
+            v2 = case_summaries[case_id]
+            v2_cnt = str(stats.case_request_counts.get(case_id, 0))
+            exp_v1 = "yes" if v1 and is_case_acceptable(case, v1) else ("no" if v1 else "unknown")
+            exp_v2 = "yes" if is_case_acceptable(case, v2) else "no"
+            comparison.append(
+                {
+                    "case_id": case_id,
+                    "component": case.component,
+                    "v1_retrieval_status": v1_rs,
+                    "v2_retrieval_status": v2.get("retrieval_status", ""),
+                    "v1_cninfo_request_count": v1_cnt,
+                    "v2_cninfo_request_count": v2_cnt,
+                    "expectation_met_v1": exp_v1,
+                    "expectation_met_v2": exp_v2,
+                    "probe_extension_applied": "yes",
+                    "notes": v2.get("notes", ""),
+                }
+            )
+        else:
+            case = v1_cases.get(case_id)
+            exp_v1 = (
+                "yes"
+                if case and v1 and is_case_acceptable(case, v1)
+                else ("no" if v1 else "unknown")
+            )
+            comparison.append(
+                {
+                    "case_id": case_id,
+                    "component": case.component if case else v1.get("component", ""),
+                    "v1_retrieval_status": v1_rs,
+                    "v2_retrieval_status": "v1_baseline_reference",
+                    "v1_cninfo_request_count": v1_cnt,
+                    "v2_cninfo_request_count": "0",
+                    "expectation_met_v1": exp_v1,
+                    "expectation_met_v2": "na",
+                    "probe_extension_applied": "no",
+                    "notes": "baseline reference only; no v2 CNINFO",
+                }
+            )
+    return comparison
+
+
+def compute_v2_execution_gate(
+    stats: LiveStats,
+    dlc003_max: int,
+    dlc006_max: int,
+) -> str:
+    if stats.db_writes or stats.minio_writes or stats.rag_runs:
+        return EXECUTION_GATE_FAIL
+    dlc003_used = stats.case_request_counts.get("DLC003", 0)
+    dlc006_used = stats.case_request_counts.get("DLC006", 0)
+    if dlc003_used > dlc003_max or dlc006_used > dlc006_max:
+        return EXECUTION_GATE_FAIL
+    if dlc003_used + dlc006_used > V2_TOTAL_MAX_CAP:
+        return EXECUTION_GATE_FAIL
+    return EXECUTION_GATE_PASS
+
+
+def write_v2_live_report(rows: List[Dict[str, str]], output_paths: Dict[str, str]) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "d_class_tiny_live_v2_bounded_probe_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=V2_LIVE_REPORT_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_v2_quality_report(
+    summaries: List[Dict[str, str]],
+    probe_cases: Dict[str, UniverseCase],
+    output_paths: Dict[str, str],
+) -> str:
+    quality_rows = []
+    for row in summaries:
+        case = probe_cases[row["case_id"]]
+        quality_rows.append(
+            {
+                "case_id": row["case_id"],
+                "component": row["component"],
+                "expected_behavior": row["expected_behavior"],
+                "retrieval_status": row["retrieval_status"],
+                "quality_status": row["quality_status"],
+                "lineage_status": row["lineage_status"],
+                "record_count": row["record_count"],
+                "acceptable": "yes" if is_case_acceptable(case, row) else "no",
+                "cninfo_request_count": row["cninfo_request_count"],
+                "early_stop_triggered": row["early_stop_triggered"],
+                "notes": row["notes"],
+            }
+        )
+    path = os.path.join(
+        output_paths["reports"], "d_class_tiny_live_v2_bounded_probe_quality_report.csv"
+    )
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=V2_QUALITY_REPORT_COLUMNS)
+        writer.writeheader()
+        writer.writerows(quality_rows)
+    return path
+
+
+def write_v2_live_summary(
+    case_summaries: Dict[str, Dict[str, str]],
+    comparison_rows: List[Dict[str, str]],
+    stats: LiveStats,
+    gate: str,
+    early_stop_count: int,
+    output_paths: Dict[str, str],
+) -> str:
+    dlc003 = case_summaries.get("DLC003", {})
+    dlc006 = case_summaries.get("DLC006", {})
+    lines = [
+        "# CNINFO D 类 Tiny Live V2 Bounded Probe 执行摘要",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** v2 bounded probe live · **无 DB/MinIO/RAG** · **不是 verified**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        f"| DLC003 CNINFO requests | **{stats.case_request_counts.get('DLC003', 0)}** |",
+        f"| DLC006 CNINFO requests | **{stats.case_request_counts.get('DLC006', 0)}** |",
+        f"| Total CNINFO requests | **{stats.cninfo_requests}** |",
+        f"| Early stop count | **{early_stop_count}** |",
+        f"| DB writes | **{stats.db_writes}** |",
+        f"| MinIO writes | **{stats.minio_writes}** |",
+        f"| RAG runs | **{stats.rag_runs}** |",
+        "",
+        "## Case Results",
+        "",
+        "| case_id | retrieval | records | requests | early_stop |",
+        "|---------|-----------|---------|----------|------------|",
+        f"| DLC003 | {dlc003.get('retrieval_status', '')} | {dlc003.get('record_count', '')} | "
+        f"{dlc003.get('cninfo_request_count', '')} | {dlc003.get('early_stop_triggered', '')} |",
+        f"| DLC006 | {dlc006.get('retrieval_status', '')} | {dlc006.get('record_count', '')} | "
+        f"{dlc006.get('cninfo_request_count', '')} | {dlc006.get('early_stop_triggered', '')} |",
+        "",
+        "## Gate",
+        "",
+        "```text",
+        f"d_class_tiny_live_v2_bounded_probe_execution_gate = {gate}",
+        "```",
+        "",
+        "**不是 PASS** · **不是 verified** · **不是 production_ready**",
+        "",
+        "## Parallel Safety",
+        "",
+        "- v1 outputs: **unchanged**",
+        "- baseline cases DLC001/002/004/005/007: **v1 reference only**",
+        "- C-class: **`SNAPSHOT_GENERATED_QA_REVIEW`**（不变）",
+        "",
+    ]
+    summary_path = os.path.join(
+        output_paths["reports"], "d_class_tiny_live_v2_bounded_probe_summary.md"
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    return summary_path
+
+
+def run_bounded_probe_v2(args: argparse.Namespace) -> int:
+    enforce_v2_forbidden_options(args)
+    enforce_v2_live_approval_gate(args)
+
+    ok_root, root_err = validate_v2_output_root(args.output_root)
+    if not ok_root:
+        print(f"ERROR: {root_err}", file=sys.stderr)
+        return 2
+
+    cap_issues = validate_v2_request_caps(args.dlc003_max_requests, args.dlc006_max_requests)
+    if cap_issues:
+        print(f"ERROR: cap validation failed: {cap_issues}", file=sys.stderr)
+        return 2
+
+    selected = parse_cases_filter(args.cases)
+    selection_issues = validate_v2_case_selection(selected)
+    if selection_issues:
+        print(f"ERROR: case selection failed: {selection_issues}", file=sys.stderr)
+        return 2
+
+    probe_cases_all = load_v1_probe_cases()
+    probe_cases = {k: v for k, v in probe_cases_all.items() if k in selected}
+    case_issues = validate_v2_probe_cases(probe_cases)
+    if case_issues:
+        print(f"ERROR: probe case validation failed: {case_issues}", file=sys.stderr)
+        return 2
+
+    output_root = _normalize_output_root(args.output_root)
+    output_paths = ensure_output_layout(output_root, args.mode)
+    endpoints = load_registry_endpoints()
+    source_configs = load_table_source_configs()
+
+    plan_rows = build_v2_probe_plan_rows(
+        probe_cases,
+        endpoints,
+        args.dlc003_max_requests,
+        args.dlc006_max_requests,
+    )
+    dlc003_planned = sum(1 for r in plan_rows if r.case_id == "DLC003")
+    dlc006_planned = sum(1 for r in plan_rows if r.case_id == "DLC006")
+    if dlc003_planned > args.dlc003_max_requests:
+        print(f"ERROR: {V2_DLC003_CAP_EXCEEDED}:planned={dlc003_planned}", file=sys.stderr)
+        return 2
+    if dlc006_planned > args.dlc006_max_requests:
+        print(f"ERROR: {V2_DLC006_CAP_EXCEEDED}:planned={dlc006_planned}", file=sys.stderr)
+        return 2
+    if dlc003_planned + dlc006_planned > V2_TOTAL_MAX_CAP:
+        print(f"ERROR: {V2_TOTAL_CAP_EXCEEDED}:planned={dlc003_planned + dlc006_planned}", file=sys.stderr)
+        return 2
+
+    if args.mode != "live":
+        v1_rows = load_v1_live_report_rows(args.v1_report_path)
+        comparison_rows = build_v2_comparison_plan_rows(probe_cases, plan_rows, v1_rows)
+        report_path = write_v2_dryrun_report(plan_rows, output_paths)
+        comparison_path = write_v2_comparison_report(comparison_rows, output_paths)
+        summary_path = write_v2_dryrun_summary(
+            plan_rows,
+            comparison_rows,
+            args.dlc003_max_requests,
+            args.dlc006_max_requests,
+            output_paths,
+        )
+        print(
+            f"mode=bounded_probe_v2_dry_run dlc003_planned={dlc003_planned} "
+            f"dlc006_planned={dlc006_planned} total_planned={len(plan_rows)} cninfo_calls=0"
+        )
+        print(f"gate=d_class_tiny_live_v2_bounded_probe_runner_gate={V2_RUNNER_GATE}")
+        print(f"dryrun_report={report_path}")
+        print(f"comparison_report={comparison_path}")
+        print(f"dryrun_summary={summary_path}")
+        return 0
+
+    session = requests.Session()
+    stats = LiveStats()
+    all_probe_rows: List[Dict[str, str]] = []
+    case_summaries: Dict[str, Dict[str, str]] = {}
+    early_stop_count = 0
+
+    probe_specs = [
+        ("DLC003", "tdate", build_bounded_probe_plan_dlc003(args.dlc003_max_requests)),
+        ("DLC006", "mode_date", build_bounded_probe_plan_dlc006(args.dlc006_max_requests)),
+    ]
+    for case_id, probe_type, plan in probe_specs:
+        if case_id not in probe_cases:
+            continue
+        case = probe_cases[case_id]
+        source_cfg = source_configs.get(case.component, {})
+        endpoint = endpoints.get(case.component, source_cfg.get("api_url", ""))
+        max_cap = (
+            args.dlc003_max_requests if case_id == "DLC003" else args.dlc006_max_requests
+        )
+        probe_rows, summary, stopped = execute_v2_bounded_probe_case(
+            case,
+            plan,
+            probe_type,
+            max_cap,
+            source_cfg,
+            endpoint,
+            session,
+            stats,
+            output_paths,
+        )
+        all_probe_rows.extend(probe_rows)
+        case_summaries[case_id] = summary
+        if stopped:
+            early_stop_count += 1
+        print(
+            f"{case_id} {summary['retrieval_status']}: records={summary['record_count']} "
+            f"requests={summary['cninfo_request_count']} early_stop={summary['early_stop_triggered']}",
+            flush=True,
+        )
+
+    gate = compute_v2_execution_gate(
+        stats, args.dlc003_max_requests, args.dlc006_max_requests
+    )
+    v1_rows = load_v1_live_report_rows(args.v1_report_path)
+    comparison_rows = build_v2_comparison_live_rows(
+        probe_cases, case_summaries, v1_rows, stats
+    )
+    report_path = write_v2_live_report(all_probe_rows, output_paths)
+    quality_path = write_v2_quality_report(
+        list(case_summaries.values()), probe_cases, output_paths
+    )
+    comparison_path = write_v2_comparison_report(comparison_rows, output_paths)
+    summary_path = write_v2_live_summary(
+        case_summaries,
+        comparison_rows,
+        stats,
+        gate,
+        early_stop_count,
+        output_paths,
+    )
+
+    print(
+        f"mode=bounded_probe_v2_live dlc003_requests={stats.case_request_counts.get('DLC003', 0)} "
+        f"dlc006_requests={stats.case_request_counts.get('DLC006', 0)} "
+        f"total_requests={stats.cninfo_requests} early_stop_count={early_stop_count}"
+    )
+    print(f"gate=d_class_tiny_live_v2_bounded_probe_execution_gate={gate}")
+    print(f"live_report={report_path}")
+    print(f"quality_report={quality_path}")
+    print(f"comparison_report={comparison_path}")
+    print(f"summary={summary_path}")
+    return 0 if gate == EXECUTION_GATE_PASS else 1
 
 
 def ensure_output_layout(output_root: str, mode: str) -> Dict[str, str]:
@@ -605,6 +1683,27 @@ def write_dryrun_report(rows: List[Dict[str, str]], output_paths: Dict[str, str]
     return report_path
 
 
+def write_dryrun_summary(rows: List[Dict[str, str]], output_paths: Dict[str, str]) -> str:
+    lines = [
+        "# CNINFO D 类 Tiny Live Validation Dry-run 摘要",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** dry-run only · **CNINFO calls = 0**",
+        "",
+        f"| Total cases | {len(rows)} |",
+        "",
+        "```text",
+        f"d_class_tiny_live_runner_gate = {RUNNER_GATE}",
+        "```",
+        "",
+    ]
+    summary_path = os.path.join(output_paths["reports"], "d_class_tiny_live_dryrun_summary.md")
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    return summary_path
+
+
 def write_live_report(rows: List[Dict[str, str]], output_paths: Dict[str, str]) -> str:
     report_path = os.path.join(output_paths["reports"], "d_class_tiny_live_report.csv")
     with open(report_path, "w", newline="", encoding="utf-8") as f:
@@ -724,7 +1823,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.set_defaults(mode="dry_run")
 
     parser.add_argument("--universe-csv", "--universe", dest="universe_csv", default=DEFAULT_UNIVERSE_CSV)
-    parser.add_argument("--output-root", default=DEFAULT_OUTPUT_ROOT)
+    parser.add_argument("--output-root", default=None)
     parser.add_argument(
         "--approve-d-class-tiny-live-validation",
         action="store_true",
@@ -741,11 +1840,51 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--mark-verified", action="store_true")
     parser.add_argument("--production-ready", action="store_true")
     parser.add_argument("--limit", type=int, default=None)
+    parser.add_argument(
+        "--bounded-probe-v2",
+        action="store_true",
+        help="启用 v2 bounded probe 模式（仅 DLC003/DLC006）",
+    )
+    parser.add_argument(
+        "--approve-d-class-tiny-live-v2-bounded-probe",
+        action="store_true",
+        help="显式批准 v2 bounded probe live（当前 offline 回合仍不执行）",
+    )
+    parser.add_argument(
+        "--dlc003-max-requests",
+        type=int,
+        default=V2_DLC003_MAX_CAP,
+        help="DLC003 请求硬顶（最大 24）",
+    )
+    parser.add_argument(
+        "--dlc006-max-requests",
+        type=int,
+        default=V2_DLC006_MAX_CAP,
+        help="DLC006 请求硬顶（最大 20）",
+    )
+    parser.add_argument(
+        "--cases",
+        default="DLC003,DLC006",
+        help="v2 bounded probe case 过滤（仅允许 DLC003,DLC006）",
+    )
+    parser.add_argument(
+        "--v1-report-path",
+        default=V1_LIVE_REPORT_CSV,
+        help="只读 v1 live 报告路径（comparison 用）",
+    )
     return parser
 
 
 def main(argv: Optional[List[str]] = None) -> int:
     args = build_parser().parse_args(argv)
+
+    if args.bounded_probe_v2:
+        if args.output_root is None:
+            args.output_root = DEFAULT_V2_OUTPUT_ROOT
+        return run_bounded_probe_v2(args)
+
+    if args.output_root is None:
+        args.output_root = DEFAULT_OUTPUT_ROOT
 
     enforce_forbidden_options(args)
     enforce_live_approval_gate(args)
@@ -784,9 +1923,11 @@ def main(argv: Optional[List[str]] = None) -> int:
             endpoint = endpoints.get(case.component, "")
             dry_rows.append(build_dryrun_row(case, endpoint, output_paths, True))
         report_path = write_dryrun_report(dry_rows, output_paths)
+        summary_path = write_dryrun_summary(dry_rows, output_paths)
         print(f"mode=dry_run cases={len(cases)} cninfo_calls=0")
         print(f"gate=d_class_tiny_live_runner_gate={RUNNER_GATE}")
         print(f"dryrun_report={report_path}")
+        print(f"dryrun_summary={summary_path}")
         return 0
 
     session = requests.Session()

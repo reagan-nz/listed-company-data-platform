@@ -1,0 +1,15 @@
+field_name,required,allowed_values,validation_rule,applies_to,notes
+replacement_case_id,true,DLC003R|DLC006R,must_be_one_of_slot_ids,both,DLC003R or DLC006R only
+replaces_case_id,true,DLC003|DLC006,must_match_replacement_pairing,both,DLC003R->DLC003 DLC006R->DLC006
+component,true,restricted_shares_unlock|shareholder_change,must_match_slot_component,both,pairing enforced by replacement_case_id
+required_behavior,true,captured_normal,must_equal_captured_normal,both,fixed for replacement validation
+company_code,true,,not_empty_after_human_input,both,no invented codes; 6-digit A-share expected
+company_name,true,,not_empty_after_human_input,both,human provided only
+event_evidence_type,true,regulatory_disclosure|unlock_schedule_record|shareholder_change_announcement|internal_research_note|prior_validation_record,must_be_allowed_type,both,see intake instructions
+event_evidence_description,true,,not_empty_after_human_input,both,no guessing
+event_date_or_period,true,,not_empty_after_human_input,both,no guessing; human recorded period
+source_reference,true,,not_empty_after_human_input,both,human internal reference; no web scrape
+human_provided,true,true|false,must_be_true_after_human_input,both,false while waiting; true when human confirms
+candidate_status,true,candidate_required|human_candidate_provided|rejected,must_be_human_candidate_provided_when_complete,both,candidate_required until human fills
+notes,false,,recommended_reason_for_captured_normal,both,why this company should produce captured_normal
+duplicate_company_code,false,,no_duplicate_unless_justified_in_notes,both,DLC003R and DLC006R must differ or notes justify

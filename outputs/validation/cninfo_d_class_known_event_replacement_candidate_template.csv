@@ -1,0 +1,3 @@
+replacement_case_id,replaces_case_id,component,required_behavior,company_code,company_name,event_evidence_type,event_evidence_description,event_date_or_period,source_reference,human_provided,candidate_status,notes
+DLC003R,DLC003,restricted_shares_unlock,captured_normal,,,,,,,false,candidate_required,human must provide known unlock event company and evidence; no web lookup; no invented codes
+DLC006R,DLC006,shareholder_change,captured_normal,,,,,,,false,candidate_required,human must provide known shareholder inc/desc event company and evidence; no web lookup; no invented codes

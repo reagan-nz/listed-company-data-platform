@@ -1,0 +1,8 @@
+case_id,replaces_case_id,component,company_code,company_name,expected_behavior,candidate_status,requires_human_candidate,event_evidence_required,include_in_future_validation,notes
+DLC001,,margin_trading,000895,双汇发展,captured_normal,unchanged_from_calibrated,false,false,false,baseline reference only; no replacement validation CNINFO
+DLC002,,block_trade,601988,中国银行,empty_but_valid,unchanged_from_calibrated,false,false,false,baseline reference only; no replacement validation CNINFO
+DLC004,,disclosure_schedule,600000,浦发银行,captured_normal,unchanged_from_calibrated,false,false,false,baseline reference only; no replacement validation CNINFO
+DLC005,,equity_pledge,688981,中芯国际,empty_but_valid,unchanged_from_calibrated,false,false,false,baseline reference only; no replacement validation CNINFO
+DLC007,,executive_shareholding,002415,海康威视,needs_review_candidate,unchanged_from_calibrated,false,false,false,baseline reference only; no replacement validation CNINFO
+DLC003R_CANDIDATE_REQUIRED,DLC003,restricted_shares_unlock,,,captured_normal,candidate_required,true,true,pending_human_candidate,placeholder; human must provide company_code and event evidence; no invented codes
+DLC006R_CANDIDATE_REQUIRED,DLC006,shareholder_change,,,captured_normal,candidate_required,true,true,pending_human_candidate,placeholder; human must provide company_code and event evidence; no invented codes

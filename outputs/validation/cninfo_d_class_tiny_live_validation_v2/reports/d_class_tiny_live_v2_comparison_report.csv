@@ -1,0 +1,8 @@
+case_id,component,v1_retrieval_status,v2_retrieval_status,v1_cninfo_request_count,v2_cninfo_request_count,expectation_met_v1,expectation_met_v2,probe_extension_applied,notes
+DLC001,margin_trading,found,v1_baseline_reference,1,0,yes,na,no,baseline reference only; no v2 CNINFO
+DLC002,block_trade,empty_but_valid,v1_baseline_reference,1,0,yes,na,no,baseline reference only; no v2 CNINFO
+DLC003,restricted_shares_unlock,empty_but_valid,empty_but_valid,8,21,no,no,yes,exhausted bounded probe cap (21 requests); company-level zero rows; legal empty per quality policy
+DLC004,disclosure_schedule,found,v1_baseline_reference,1,0,yes,na,no,baseline reference only; no v2 CNINFO
+DLC005,equity_pledge,empty_but_valid,v1_baseline_reference,1,0,yes,na,no,baseline reference only; no v2 CNINFO
+DLC006,shareholder_change,empty_but_valid,empty_but_valid,5,19,no,no,yes,exhausted bounded probe cap (19 requests); company-level zero rows; legal empty per quality policy
+DLC007,executive_shareholding,found,v1_baseline_reference,1,0,yes,na,no,baseline reference only; no v2 CNINFO

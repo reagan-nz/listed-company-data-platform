@@ -1,0 +1,3 @@
+case_id,component,company_code,company_name,old_expected_behavior,proposed_expected_behavior,reason,evidence_level,requires_human_approval,apply_now
+DLC003,restricted_shares_unlock,300009,安科生物,captured_normal,empty_but_valid,v1+v2 bounded probes returned 0 rows,bounded_probe_supported,true,false
+DLC006,shareholder_change,000550,江铃汽车,captured_normal,empty_but_valid,v1+v2 bounded probes returned 0 rows,bounded_probe_supported,true,false
