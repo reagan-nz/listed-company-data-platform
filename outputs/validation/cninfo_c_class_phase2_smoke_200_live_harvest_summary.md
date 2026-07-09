@@ -65,3 +65,5 @@ _生成时间：2026-07-08_
 ## Appendix
 
 详见 [cninfo_c_class_harvest_smoke_report.csv](cninfo_c_class_harvest_smoke_report.csv)。
+
+> **Note:** source copied from generic live smoke outputs after Phase 2 run.

@@ -1,0 +1,13 @@
+company_code,company_name,listing_status,failure_pattern,http_error_count,blocked_count,business_code,caveat_class,future_policy,notes
+000038,大通退,delisted,all_direct_failure,5,1,9240002,delisted_inactive,exclude_from_phase3_main_batch,all 6 direct sources failed; listing_status=delisted in selection YAML
+000616,*ST海投,listed,all_direct_failure,6,0,9240002,st_inactive_caveat,manual_review_before_retry,all 6 direct sources failed; ST name; listed in selection YAML
+000956,中原退市,delisted,all_direct_failure,6,0,9240002,delisted_inactive,exclude_from_phase3_main_batch,all 6 direct sources failed; listing_status=delisted
+002087,新纺退,delisted,all_direct_failure,6,0,9240002,delisted_inactive,exclude_from_phase3_main_batch,all 6 direct sources failed; listing_status=delisted
+002231,*ST奥维,listed,all_direct_failure,6,0,9240002,st_inactive_caveat,manual_review_before_retry,all 6 direct sources failed; ST name
+300023,宝德退,delisted,all_direct_failure,5,1,9240002,delisted_inactive,exclude_from_phase3_main_batch,all 6 direct sources failed; listing_status=delisted
+300356,光一退,delisted,all_direct_failure,6,0,9240002,delisted_inactive,exclude_from_phase3_main_batch,all 6 direct sources failed; listing_status=delisted
+600005,武钢股份,listed,all_direct_failure,6,0,9240002,legacy_inactive,manual_review_before_retry,legacy name; all 6 direct sources failed; merger/delist history candidate
+600290,*ST华仪,listed,all_direct_failure,6,0,9240002,st_inactive_caveat,manual_review_before_retry,all 6 direct sources failed; ST name
+600634,退市富控,delisted,all_direct_failure,6,0,9240002,delisted_inactive,exclude_from_phase3_main_batch,all 6 direct sources failed; listing_status=delisted
+600646,ST国嘉,listed,all_direct_failure,6,0,9240002,st_inactive_caveat,manual_review_before_retry,all 6 direct sources failed; ST legacy name
+600696,退市岩石,delisted,all_direct_failure,6,0,9240002,delisted_inactive,exclude_from_phase3_main_batch,all 6 direct sources failed; listing_status=delisted

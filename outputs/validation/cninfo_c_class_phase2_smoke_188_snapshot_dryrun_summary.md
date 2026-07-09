@@ -8,7 +8,7 @@ _生成时间：2026-07-09_
 
 # Batch Universe
 
-company_count: **863**
+company_count: **188**
 
 hold_count: **26**（all6 hold 已排除）
 
@@ -18,36 +18,36 @@ hold_overlap: **0**
 
 | board | count |
 |-------|-------|
-| chinext | **231** |
-| sse_main | **281** |
-| star | **125** |
-| szse_main | **226** |
+| chinext | **50** |
+| sse_main | **61** |
+| star | **21** |
+| szse_main | **56** |
 
 # Output Design
 
-snapshot_path: `outputs/snapshot/cninfo_c_class/full/{company_code}.json`
+snapshot_path: `outputs/snapshot/cninfo_c_class/phase2_smoke_188/{company_code}.json`
 
-quality_path: `outputs/snapshot/cninfo_c_class/full/quality/`
+quality_path: `outputs/snapshot/cninfo_c_class/phase2_smoke_188/quality/`
 
 planned_modules: **18**
 
 # Resume Design
 
-- status file: `outputs/snapshot/cninfo_c_class/full/quality/company_snapshot_status.csv`
+- status file: `outputs/snapshot/cninfo_c_class/phase2_smoke_188/quality/company_snapshot_status.csv`
 - terminal statuses: complete, complete_with_caveat, failed
 - resume skips terminal rows unless `--force`
 - dry-run resume_skipped: **0**
 
 # Error Handling
 
-- error file: `outputs/snapshot/cninfo_c_class/full/quality/company_snapshot_error.csv`
+- error file: `outputs/snapshot/cninfo_c_class/phase2_smoke_188/quality/company_snapshot_error.csv`
 - 单公司 `try/except` 隔离；失败写入 error CSV，继续下一家
 - dry-run 仅初始化空 error CSV（header only）
 
 # Estimated Scale
 
-- companies: **863**
-- snapshot JSON: **863**（执行阶段）
+- companies: **188**
+- snapshot JSON: **188**（执行阶段）
 - estimated disk: **500–900 MB**
 - estimated runtime: **15–45 min**（离线单进程粗估）
 
@@ -60,7 +60,7 @@ snapshot_batch_dryrun_gate = PASS_WITH_CAVEAT
 ## Validation
 
 - universe_ok: **True**
-- expected_count: **863**
+- expected_count: **188**
 - hold_overlap_count: **0**
 
 ## 红线确认

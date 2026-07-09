@@ -1,0 +1,18 @@
+metric_group,metric_name,value,gate_impact,notes
+universe,selected companies,200,PASS,phase2_smoke_universe_selection_gate=PASS
+universe,matched_active pool size,4647,informational,eligible_non_bse=4643
+harvest,harvested companies,200,PASS_WITH_CAVEAT,terminal smoke PASS
+harvest,HTTP requests,1400,PASS_WITH_CAVEAT,200 companies x 7 live direct sources
+harvest,raw files,1400,PASS_WITH_CAVEAT,one raw per HTTP case
+harvest,normalized files,1928,PASS_WITH_CAVEAT,expected max 2000; 72 missing = 12x6 direct gaps
+harvest,harvest usable companies,188,PASS_WITH_CAVEAT,all 6 direct sources usable
+harvest,all-direct-failure companies,12,PASS_WITH_CAVEAT,concentrated delisted/inactive; business_code 9240002
+snapshot,snapshot subset,188,PASS_WITH_CAVEAT,excludes 12 all-direct-failure
+snapshot,snapshot JSON count,188,PASS_WITH_CAVEAT,phase2_smoke_188_snapshot_build_gate
+snapshot,valid JSON count,188,PASS_WITH_CAVEAT,phase2_smoke_188_snapshot_qa_gate
+snapshot,excluded code present count,0,PASS_WITH_CAVEAT,12 failure codes absent from snapshot output
+snapshot,snapshot status complete_with_caveat count,188,PASS_WITH_CAVEAT,no pure complete snapshots
+quality,quality flag count,4945,PASS_WITH_CAVEAT,field_missing/info dominant; consistent with 863 pattern
+quality,module caveat count,12,PASS_WITH_CAVEAT,modules with module_gate=PASS_WITH_CAVEAT in snapshot QA
+closure,phase2_smoke_closure_gate,PASS_WITH_CAVEAT,PASS_WITH_CAVEAT,pipeline expanded beyond 863; failures explainable
+readiness,phase3_batch_planning_readiness_gate,READY_FOR_PLANNING,READY_FOR_PLANNING,planning only; no live authorization

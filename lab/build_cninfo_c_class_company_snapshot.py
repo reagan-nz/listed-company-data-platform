@@ -26,9 +26,29 @@ if _LAB_DIR not in sys.path:
     sys.path.insert(0, _LAB_DIR)
 
 BASE_DIR = os.path.dirname(_LAB_DIR)
-HARVEST_ROOT = os.path.join(BASE_DIR, "outputs/harvest/cninfo_c_class")
+DEFAULT_HARVEST_ROOT = os.path.join(BASE_DIR, "outputs/harvest/cninfo_c_class")
+HARVEST_ROOT = DEFAULT_HARVEST_ROOT
 NORM_ROOT = os.path.join(HARVEST_ROOT, "normalized")
 QUALITY_DIR = os.path.join(HARVEST_ROOT, "quality")
+
+
+def configure_snapshot_harvest_root(harvest_root: Optional[str] = None) -> str:
+    """配置 snapshot 读取的 harvest normalized 根目录。"""
+    global HARVEST_ROOT, NORM_ROOT, QUALITY_DIR
+    if harvest_root:
+        root = harvest_root.rstrip("/")
+        if not os.path.isabs(root):
+            root = os.path.join(BASE_DIR, root)
+    else:
+        root = DEFAULT_HARVEST_ROOT
+    HARVEST_ROOT = root
+    NORM_ROOT = os.path.join(HARVEST_ROOT, "normalized")
+    QUALITY_DIR = os.path.join(HARVEST_ROOT, "quality")
+    return HARVEST_ROOT
+
+
+def reset_snapshot_harvest_root() -> None:
+    configure_snapshot_harvest_root(None)
 
 MAPPING_CSV = os.path.join(
     BASE_DIR, "outputs/validation/cninfo_c_class_company_snapshot_field_mapping.csv"

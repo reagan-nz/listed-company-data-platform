@@ -1,0 +1,11 @@
+source_id,source_type,total_cases,success_count,valid_empty_count,empty_but_valid_count,http_error_count,blocked_count,normalized_written_count,source_gate,notes
+cninfo_company_basic_profile,direct,200,188,0,0,11,1,188,PASS_WITH_CAVEAT,188/200 usable; failures concentrated in delisted/inactive rows
+cninfo_dividend_financing_profile,direct,200,182,6,0,12,0,188,PASS_WITH_CAVEAT,188/200 usable; failures concentrated in delisted/inactive rows
+cninfo_executive_profile,direct,200,188,0,0,11,1,188,PASS_WITH_CAVEAT,188/200 usable; failures concentrated in delisted/inactive rows
+cninfo_share_capital_profile,direct,200,188,0,0,12,0,188,PASS_WITH_CAVEAT,188/200 usable; failures concentrated in delisted/inactive rows
+cninfo_top_shareholders_profile,direct,200,186,0,2,12,0,188,PASS_WITH_CAVEAT,188/200 usable; failures concentrated in delisted/inactive rows
+cninfo_top_float_shareholders_profile,direct,200,187,0,1,12,0,188,PASS_WITH_CAVEAT,188/200 usable; failures concentrated in delisted/inactive rows
+cninfo_company_contact_profile,derived,200,188,0,12,0,0,200,PASS,188/200 complete
+cninfo_company_business_scope,derived,200,188,0,12,0,0,200,PASS,188/200 complete
+cninfo_company_industry_profile,derived,200,188,0,12,0,0,200,PASS,188/200 complete
+cninfo_company_security_profile,observe_only,200,200,0,0,0,0,200,PASS,observe-only security source; 200/200 written
