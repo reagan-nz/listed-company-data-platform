@@ -1,0 +1,44 @@
+{
+  "_fixture_meta": {
+    "case_id": "AC002",
+    "purpose": "valid document_lineage aligned with report_document",
+    "phase1_freeze": "v1",
+    "cninfo_called": false,
+    "pdf_downloaded": false
+  },
+  "document_id": "a_doc_ac002_2024_semi",
+  "report_document": {
+    "document_id": "a_doc_ac002_2024_semi",
+    "company_code": "999102",
+    "company_name": "示例公司乙",
+    "report_type": "semi_annual_report",
+    "report_period": "2024-06-30",
+    "publish_date": "2025-08-28",
+    "announcement_id": "fixture_ann_ac002_semi",
+    "announcement_title": "2024年半年度报告",
+    "pdf_url": "http://static.example.invalid/finalpage/2025-08-28/fixture_ann_ac002_semi.PDF",
+    "adjunct_url": "/finalpage/2025-08-28/fixture_ann_ac002_semi.PDF",
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_time": "2026-07-09T08:05:00+08:00",
+    "raw_hash": "sha256:synthetic_ac002_semi",
+    "lineage_status": "linked",
+    "quality_status": "pass"
+  },
+  "document_lineage": {
+    "source_url": "https://www.cninfo.com.cn/new/commonUrl?url=disclosure/list/notice",
+    "storage_status": "not_attempted",
+    "version": 1,
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_time": "2026-07-09T08:05:00+08:00",
+    "raw_hash": "sha256:synthetic_ac002_semi",
+    "adjunct_url": "/finalpage/2025-08-28/fixture_ann_ac002_semi.PDF",
+    "pdf_url": "http://static.example.invalid/finalpage/2025-08-28/fixture_ann_ac002_semi.PDF",
+    "lineage_status": "linked"
+  },
+  "expected_behavior": {
+    "lineage_aligned": true,
+    "lineage_status": "linked",
+    "storage_status": "not_attempted",
+    "document_id_match": true
+  }
+}

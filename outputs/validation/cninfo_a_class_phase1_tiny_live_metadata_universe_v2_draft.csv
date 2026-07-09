@@ -1,0 +1,6 @@
+case_id,company_code,company_name,report_type,expected_period,source_name,risk_level,reason
+ALM001,600000,浦发银行,annual_report,2024-12-31,A类年报 metadata,low,SSE主板大型金融；年报metadata路径；registry phase1_in_scope；P1 annual coverage 100%；活跃上市非ST非退市
+ALM002,300001,特锐德,semi_annual_report,2024-06-30,A类半年报 metadata,low,创业板活跃公司；半年报metadata路径；对齐implementation plan ARC002；非ST非退市
+ALM003,688001,华兴源创,quarterly_report_q1,2025-03-31,A类季报 metadata,low,科创板活跃样本；一季度报告metadata；688001=华兴源创（v2 修正公司名）；非BSE legacy
+ALM004,000858,五粮液,quarterly_report_q3,2024-09-30,A类季报 metadata,low,深交所主板蓝筹；三季度报告metadata；Era C 863已验证universe；活跃上市非ST
+ALM005,600519,贵州茅台,annual_report,2024-12-31,A类年报 metadata,low,SSE主板蓝筹；第二路annual对照；高密度披露样本；活跃上市非ST非退市

@@ -1,0 +1,21 @@
+metric_group,metric_name,value,gate_impact,notes
+v1_tiny_live,v1_cases,5,PASS_WITH_CAVEAT,v1 execution gate retained as historical record
+v1_tiny_live,v1_success,5,PASS_WITH_CAVEAT,all cases returned metadata; title caveats present
+v1_tiny_live,v1_failed,0,PASS_WITH_CAVEAT,no network or universe failures
+v1_tiny_live,v1_wrong_report_type_or_title_caveats,4,PASS_WITH_CAVEAT,ALM001 ALM005 semi-annual; ALM003 name; ALM004 English
+v2_tiny_live,v2_cases,5,PASS_WITH_CAVEAT,tiny universe v2 draft ALM001-ALM005
+v2_tiny_live,v2_success,5,PASS_WITH_CAVEAT,all cases retrieval_status=found
+v2_tiny_live,v2_failed,0,PASS_WITH_CAVEAT,no failures after v2 matching
+v2_tiny_live,v2_wrong_report_type_match,0,PASS_WITH_CAVEAT,v2 matching logic fixed annual/semi/quarterly confusion
+v2_matching,v2_title_match_pass,5,PASS_WITH_CAVEAT,title_match_status=pass for all 5 cases
+v2_matching,v2_period_match_pass,5,PASS_WITH_CAVEAT,period_match_status=pass for all 5 cases
+v2_matching,english_titles_rejected,4,PASS_WITH_CAVEAT,English titles skipped during v2 live matching
+v2_tiny_live,cninfo_requests_v2,11,PASS_WITH_CAVEAT,v2 rerun only; closure round CNINFO=0
+red_line,pdf_downloaded,0,PASS_WITH_CAVEAT,permanently disabled
+red_line,pdf_parsed,0,PASS_WITH_CAVEAT,permanently disabled
+red_line,db_write,0,PASS_WITH_CAVEAT,no database writes
+red_line,minio_write,0,PASS_WITH_CAVEAT,no object storage writes
+red_line,rag_run,0,PASS_WITH_CAVEAT,no embeddings or RAG
+red_line,verified,false,PASS_WITH_CAVEAT,not marked verified
+red_line,production_ready,false,PASS_WITH_CAVEAT,not production ready
+closure,closure_cninfo_calls,0,PASS_WITH_CAVEAT,this documentation round only

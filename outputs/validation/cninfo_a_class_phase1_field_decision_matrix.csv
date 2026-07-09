@@ -1,0 +1,41 @@
+field_name,object,current_level,proposed_level,decision,reason,source,risk
+document_id,report_document,required,required,keep,逻辑文档主键；dedup 与 lineage 锚点,derived,low
+company_code,report_document,required,required,keep,关联 C-class company 与 coverage 分母,secCode / input universe,low
+company_name,report_document,recommended,recommended,keep,展示字段；响应可能缺失不阻塞 capture,secName,low
+report_type,report_document,required,required,keep,四类定期报告枚举门禁,title routing + category,low
+report_period,report_document,required,required,keep,effective found 要求非 unknown,derived from title/date,medium
+publish_date,report_document,required,required,keep,规范化披露日,announcementTime,low
+announcement_id,report_document,required,required,keep,CNINFO 公告主键,announcementId,low
+announcement_title,report_document,required,required,keep,标题匹配与 QA 必需,announcementTitle,low
+pdf_url,report_document,required,required,keep,Phase1 核心产出；not_found 时字段存在值可为 null,adjunctUrl normalized,medium
+adjunct_url,report_document,recommended,recommended,keep,原始 CNINFO 字段保留便于 URL 重建,adjunctUrl,low
+source_endpoint,report_document,required,required,keep,metadata 谱系必需,registry / hisAnnouncement/query,low
+retrieval_time,report_document,required,required,keep,ISO8601 抓取时间,harvest runner,low
+raw_hash,report_document,recommended,required,upgrade,响应级 hash 为 lineage 变更检测门禁；无需 PDF 下载,hash of raw response,low
+lineage_status,report_document,required,required,keep,discovered / not_found 等状态门控,QA rules,low
+quality_status,report_document,required,required,keep,pass / caveat / blocked 门控,QA rules,low
+org_id,report_document,recommended,recommended,keep,live 检索通常需要但不阻塞 offline fixture,orgId / topSearch,medium
+announcement_time,report_document,recommended,recommended,keep,保留 API 原始时间戳,announcementTime,low
+raw_metadata_json,report_document,recommended,recommended,keep,完整原始对象审计保留,CNINFO response object,low
+notes,report_document,future,removed,remove,自由文本仅 QA 侧车；不进 Phase1 归一化契约,manual,low
+company_code,report_period_snapshot,required,required,keep,覆盖视图聚合键,input universe,low
+year,report_period_snapshot,required,required,keep,会计年度,expected period set,low
+quarter,report_period_snapshot,recommended,recommended,keep,季报需要；年报可为 null,expected period set,low
+report_type,report_period_snapshot,required,required,keep,与 report_document 对齐,expected period set,low
+document_id,report_period_snapshot,required,required,keep,命中链接；未命中 null,report_document link,low
+available_sections,report_period_snapshot,future,future,defer,依赖 future parser；Phase1 不填,parser output,low
+coverage_status,report_period_snapshot,recommended,recommended,keep,found / not_found / caveat 覆盖 QA,QA rules,low
+expected_period,report_period_snapshot,recommended,recommended,keep,期望报告期端点与 coverage 分母对齐,harvest config,medium
+source_url,document_lineage,recommended,recommended,keep,Referer 或页面 URL 可选 enrichment,page_url / referer,low
+download_time,document_lineage,future,future,defer,PDF 下载层 deferred,download runner,low
+file_hash,document_lineage,future,future,defer,PDF 内容 hash deferred,PDF content,low
+file_size,document_lineage,future,future,defer,需下载后才有,PDF content,low
+mime_type,document_lineage,recommended,removed,remove,未下载无法验证；排除出 Phase1 契约,assumed,low
+storage_status,document_lineage,required,required,keep,Phase1 固定 not_attempted,fixed not_attempted,low
+version,document_lineage,required,required,keep,lineage 版本追踪,lineage tracker,low
+source_endpoint,document_lineage,required,required,keep,与 report_document 一致或独立副本,hisAnnouncement/query,low
+retrieval_time,document_lineage,required,required,keep,谱系记录时间,harvest runner,low
+raw_hash,document_lineage,recommended,recommended,keep,响应 hash 副本便于 lineage 对象自包含,response hash,low
+adjunct_url,document_lineage,recommended,recommended,keep,原始 adjunctUrl 保留,adjunctUrl,low
+pdf_url,document_lineage,recommended,recommended,keep,归一化 URL 副本,lineage 自包含,low
+lineage_status,document_lineage,required,required,keep,与 report_document.lineage_status 对齐,QA rules,low

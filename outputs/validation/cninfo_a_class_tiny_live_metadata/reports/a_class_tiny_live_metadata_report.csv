@@ -1,0 +1,6 @@
+case_id,company_code,company_name,report_type,retrieval_status,quality_status,lineage_status,announcement_id,announcement_title,announcement_time,pdf_url_present,adjunct_url_present,pdf_downloaded,pdf_parsed,notes
+ALM001,600000,浦发银行,annual_report,found,pass,discovered,1220912090,上海浦东发展银行股份有限公司2024年半年度报告,2024-08-19T16:00:00+00:00,yes,yes,no,no,live metadata retrieved; expected_period=2024-12-31; storage_status=not_attempted; PDF not downloaded
+ALM002,300001,特锐德,semi_annual_report,found,pass,discovered,1220987147,2024年半年度报告,2024-08-26T16:00:00+00:00,yes,yes,no,no,live metadata retrieved; expected_period=2024-06-30; storage_status=not_attempted; PDF not downloaded
+ALM003,688001,华熙生物,quarterly_report_q1,found,pass,discovered,1223423562,华兴源创：2025年第一季度报告,2025-04-29T16:00:00+00:00,yes,yes,no,no,live metadata retrieved; expected_period=2025-03-31; storage_status=not_attempted; PDF not downloaded
+ALM004,000858,五粮液,quarterly_report_q3,found,pass,discovered,1221635907,2024年第三季度报告（英文）,2024-11-05T16:00:00+00:00,yes,yes,no,no,live metadata retrieved; expected_period=2024-09-30; storage_status=not_attempted; PDF not downloaded
+ALM005,600519,贵州茅台,annual_report,found,pass,discovered,1220825189,贵州茅台2024年半年度报告,2024-08-08T16:00:00+00:00,yes,yes,no,no,live metadata retrieved; expected_period=2024-12-31; storage_status=not_attempted; PDF not downloaded

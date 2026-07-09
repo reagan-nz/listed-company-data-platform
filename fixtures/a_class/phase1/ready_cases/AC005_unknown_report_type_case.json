@@ -1,0 +1,33 @@
+{
+  "_fixture_meta": {
+    "case_id": "AC005",
+    "purpose": "unknown report_type enum without forced mapping",
+    "phase1_freeze": "v1",
+    "cninfo_called": false,
+    "pdf_downloaded": false
+  },
+  "report_document": {
+    "document_id": "a_doc_ac005_unknown_type",
+    "company_code": "999105",
+    "company_name": "示例公司戊",
+    "report_type": "interim_management_report",
+    "report_period": "2024-09-30",
+    "publish_date": "2025-10-15",
+    "announcement_id": "fixture_ann_ac005_unknown",
+    "announcement_title": "2024年三季度主要经营数据公告",
+    "pdf_url": "http://static.example.invalid/finalpage/2025-10-15/fixture_ann_ac005_unknown.PDF",
+    "adjunct_url": "/finalpage/2025-10-15/fixture_ann_ac005_unknown.PDF",
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_time": "2026-07-09T08:20:00+08:00",
+    "raw_hash": "sha256:synthetic_ac005_unknown",
+    "lineage_status": "needs_review",
+    "quality_status": "needs_review",
+    "report_type_status": "review_later"
+  },
+  "expected_behavior": {
+    "report_type_valid": false,
+    "forced_report_type_mapping": false,
+    "quality_status": "needs_review",
+    "quality_status_must_not_be": "verified"
+  }
+}

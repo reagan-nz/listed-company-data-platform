@@ -1,0 +1,29 @@
+{
+  "_fixture_meta": {
+    "purpose": "A-class Phase1 freeze v1 synthetic report_period_snapshot schema skeleton",
+    "phase1_freeze": "v1",
+    "freeze_v1_catalog": "outputs/validation/cninfo_a_class_phase1_freeze_v1_field_catalog.csv",
+    "validated_against": "freeze_v1",
+    "cninfo_called": false,
+    "pdf_downloaded": false,
+    "notes": "Synthetic coverage view; links to report_document_fixture document_id"
+  },
+  "report_period_snapshot": {
+    "company_code": "999001",
+    "year": 2024,
+    "quarter": null,
+    "report_type": "annual_report",
+    "document_id": "a_doc_fixture_999001_2024_annual",
+    "coverage_status": "found",
+    "expected_period": "2024-12-31"
+  },
+  "report_period_snapshot_not_found_example": {
+    "company_code": "999002",
+    "year": 2024,
+    "quarter": 1,
+    "report_type": "quarterly_report_q1",
+    "document_id": null,
+    "coverage_status": "not_found",
+    "expected_period": "2024-03-31"
+  }
+}

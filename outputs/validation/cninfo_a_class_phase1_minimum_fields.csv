@@ -1,0 +1,41 @@
+field_name,object,required_level,source,description,status
+document_id,report_document,required,derived,逻辑文档主键；候选等于 announcement_id 或 company_code+report_type+report_period 复合,planned
+company_code,report_document,required,secCode / input universe,证券代码；关联 C-class company,planned
+company_name,report_document,recommended,secName,公司简称；响应中可能缺失,planned
+report_type,report_document,required,title routing + category,annual_report / semi_annual_report / quarterly_report_q1 / quarterly_report_q3,planned
+report_period,report_document,required,derived from title/date,报告期如 2024-12-31；unknown 不算 effective found,planned
+publish_date,report_document,required,announcementTime,披露日；由 announcementTime 归一化,planned
+announcement_id,report_document,required,announcementId,CNINFO 公告主键,planned
+announcement_title,report_document,required,announcementTitle,公告标题原文,planned
+pdf_url,report_document,required,adjunctUrl normalized,完整静态 PDF URL；not_found 时可为 null,planned
+adjunct_url,report_document,recommended,adjunctUrl,CNINFO 原始 adjunctUrl 相对或绝对路径,planned
+source_endpoint,report_document,required,registry / hisAnnouncement/query,检索使用的 API endpoint URL,planned
+retrieval_time,report_document,required,harvest runner,元数据抓取时间 ISO8601,planned
+raw_hash,report_document,recommended,hash of raw response,原始响应 JSON hash；非 PDF 文件 hash,planned
+lineage_status,report_document,required,QA rules,discovered / linked / needs_review / not_found,planned
+quality_status,report_document,required,QA rules,pass / caveat / blocked / needs_review,planned
+org_id,report_document,recommended,orgId / topSearch,CNINFO orgId；hisAnnouncement stock 参数通常需要,planned
+announcement_time,report_document,recommended,announcementTime,原始披露时间戳；publish_date 派生前保留,planned
+raw_metadata_json,report_document,recommended,CNINFO response object,完整原始公告对象；审计用,planned
+notes,report_document,future,manual,人工或规则备注,deferred
+company_code,report_period_snapshot,required,input universe,证券代码,planned
+year,report_period_snapshot,required,expected period set,会计年度,planned
+quarter,report_period_snapshot,recommended,expected period set,1/2/3/4；年报可为 null,planned
+report_type,report_period_snapshot,required,expected period set,与 report_document.report_type 一致,planned
+document_id,report_period_snapshot,required,report_document link,命中时的 document_id；未命中 null,planned
+available_sections,report_period_snapshot,future,parser output,解析后可填章节列表；Phase 0 为 not_parsed,deferred
+coverage_status,report_period_snapshot,recommended,QA rules,found / not_found / caveat,planned
+expected_period,report_period_snapshot,recommended,harvest config,期望报告期端点日期,planned
+source_url,document_lineage,recommended,page_url / referer,UI 页面或 referer URL,planned
+download_time,document_lineage,future,download runner,PDF 下载时间；Phase 0 固定 null,deferred
+file_hash,document_lineage,future,PDF content,PDF 内容 hash；Phase 0 固定 null,deferred
+file_size,document_lineage,future,PDF content,文件字节大小；Phase 0 固定 null,deferred
+mime_type,document_lineage,recommended,assumed,默认 application/pdf；未下载不验证,planned
+storage_status,document_lineage,required,fixed not_attempted,Phase 0 值 not_attempted；未来 stored/failed,planned
+version,document_lineage,required,lineage tracker,lineage 版本号；初版为 1,planned
+source_endpoint,document_lineage,required,hisAnnouncement/query,与 report_document.source_endpoint 一致,planned
+retrieval_time,document_lineage,required,harvest runner,谱系记录时间,planned
+raw_hash,document_lineage,recommended,response hash,响应级 hash；用于变更检测,planned
+adjunct_url,document_lineage,recommended,adjunctUrl,原始 adjunctUrl 保留,planned
+pdf_url,document_lineage,recommended,adjunctUrl normalized,归一化后的 PDF URL,planned
+lineage_status,document_lineage,required,QA rules,与 report_document.lineage_status 对齐,planned

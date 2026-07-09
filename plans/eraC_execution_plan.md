@@ -306,6 +306,7 @@ _最后更新：2026-07-09_
 184. ~~D 类 tiny live validation 隔离执行~~ → **完成**（§7dzg · execution gate **`PASS_WITH_CAVEAT`** · **5/7 acceptable** · CNINFO **18** · **不是 verified**）
 185. ~~D 类 Phase 1 tiny live 收口评审~~ → **完成**（§7dzh · closure gate **`PASS_WITH_CAVEAT`** · **无 rerun** · **无 CNINFO**）
 186. ~~D 类 DLC003/DLC006 expectation calibration 决策包~~ → **完成**（§7dzi · calibration gate **`READY_FOR_HUMAN_DECISION`** · v2 rerun **NOT APPROVED**）
+187. ~~D 类 Phase 1 边界 signoff~~ → **完成**（§7dzj · boundary gate **`PASS_WITH_CAVEAT`** · **不是 verified**）
 105. review_later / raw_only 复判 → **待启动**（31 + 25）
 106. company_snapshot planning → **待启动**（P2）
 107. dividend_history YAML backfill → **GO（决策 only）** · **不执行**
@@ -2071,6 +2072,30 @@ _最后更新：2026-07-09_
 **等待用户显式批准 Phase 3 batch 500 live harvest**
 
 **红线：** **no live**（未经批准） · **no verified**
+
+---
+
+## 7dzn. A 类 Phase 1 Boundary Signoff（2026-07-09）
+
+> **并行约束：** 本轮 **不调用 CNINFO** · **无 live** · **git commit 边界 only**。
+
+| 项 | 内容 |
+|----|------|
+| boundary signoff | [cninfo_a_class_phase1_boundary_signoff.md](cninfo_a_class_phase1_boundary_signoff.md) |
+| boundary metrics | [cninfo_a_class_phase1_boundary_metrics.csv](../outputs/validation/cninfo_a_class_phase1_boundary_metrics.csv) |
+| boundary summary | [cninfo_a_class_phase1_boundary_summary.md](../outputs/validation/cninfo_a_class_phase1_boundary_summary.md) |
+| boundary gate | **`a_class_phase1_boundary_gate = PASS_WITH_CAVEAT`** |
+| CNINFO calls（本回合） | **0** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`**（不变） |
+
+### 执行结论
+
+- Phase 1 全链归档：freeze v1 · benchmark · tiny live v1/v2 · fix · closure
+- **不是 verified** · **不是 production_ready** · **无 PDF 层**
+
+### Next immediate task
+
+Option B / C / D 规划（未执行 · 仍 metadata-only · 无 PDF）。
 
 ---
 
@@ -5320,7 +5345,7 @@ P0 duplicate → P1 BSE legacy → P2 rename → P3 high risk manual → P4 low 
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **863 snapshot 已生成**（§7cc）；**`SNAPSHOT_GENERATED_QA_REVIEW`**；Phase 3.5 batch planning **完成**（§7dpx · draft **500** · gate **`READY_FOR_REVIEW`**）；**下一步** harvest dry-run。**并行：A 类 Phase 1 tiny live metadata v2 closure 已完成**（§7dzm · closure gate **`PASS_WITH_CAVEAT`** · **无 CNINFO** · **无 verified**）。**BSE legacy** HOLD。
+当前 Phase：C 类 **863 snapshot 已生成**（§7cc）；**`SNAPSHOT_GENERATED_QA_REVIEW`**；Phase 3.5 batch planning **完成**（§7dpx · draft **500** · gate **`READY_FOR_REVIEW`**）；**下一步** harvest dry-run。**并行：A 类 Phase 1 boundary 已收口**（§7dzn · `a_class_phase1_boundary_gate = PASS_WITH_CAVEAT`** · **不是 verified**）。**BSE legacy** HOLD。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

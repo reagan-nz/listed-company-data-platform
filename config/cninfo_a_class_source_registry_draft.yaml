@@ -1,0 +1,216 @@
+# CNINFO A 类 Source Registry YAML Draft
+# 设计草案 — periodic report metadata layer；非生产配置；不入库；不写 verified。
+# Phase1 freeze v1 对齐：outputs/validation/cninfo_a_class_phase1_freeze_v1_field_catalog.csv
+# 权威设计：plans/cninfo_a_class_report_metadata_architecture_plan.md
+# 边界：A-class 专注定期报告；B-class 承接非定期公告事件流。
+# 本轮：offline schema only；live_validation_status=not_run；不执行 CNINFO 请求。
+
+version: "draft-0.1-phase1-freeze-v1"
+status: design_only
+source_layer: periodic_report_metadata
+live_validation_status: not_run
+
+generated_from:
+  - plans/cninfo_a_class_report_metadata_architecture_plan.md
+  - plans/cninfo_a_class_phase1_schema_freeze_review.md
+  - outputs/validation/cninfo_a_class_phase1_freeze_v1_field_catalog.csv
+  - outputs/validation/cninfo_a_class_phase1_field_decision_matrix.csv
+  - outputs/validation/cninfo_report_phase1_final_summary.md
+  - lab/validate_cninfo_report_coverage.py
+
+field_catalog_ref: outputs/validation/cninfo_a_class_phase1_freeze_v1_field_catalog.csv
+
+# 逻辑对象映射（freeze v1）
+object_mapping:
+  report_document:
+    role: primary_metadata_record
+    description: 单份定期报告主记录（company × report_type × report_period）
+    required_field_count: 13
+    field_refs:
+      required:
+        - document_id
+        - company_code
+        - report_type
+        - report_period
+        - publish_date
+        - announcement_id
+        - announcement_title
+        - pdf_url
+        - source_endpoint
+        - retrieval_time
+        - raw_hash
+        - lineage_status
+        - quality_status
+      recommended:
+        - company_name
+        - adjunct_url
+        - org_id
+        - announcement_time
+        - raw_metadata_json
+      removed:
+        - notes
+  report_period_snapshot:
+    role: coverage_read_model
+    description: 公司报告期覆盖视图（期望期 vs 实际 document_id）
+    required_field_count: 4
+    field_refs:
+      required:
+        - company_code
+        - year
+        - report_type
+        - document_id
+      recommended:
+        - quarter
+        - coverage_status
+        - expected_period
+      future:
+        - available_sections
+  document_lineage:
+    role: pdf_url_lineage
+    description: PDF URL 与检索谱系；Phase1 storage_status=not_attempted
+    required_field_count: 5
+    field_refs:
+      required:
+        - storage_status
+        - version
+        - source_endpoint
+        - retrieval_time
+        - lineage_status
+      recommended:
+        - source_url
+        - raw_hash
+        - adjunct_url
+        - pdf_url
+      future:
+        - download_time
+        - file_hash
+        - file_size
+      removed:
+        - mime_type
+
+defaults:
+  source_site: cninfo.com.cn
+  source_layer: periodic_report_metadata
+  discovery_method: cninfo_announcement_search
+  query_endpoint_design_ref: https://www.cninfo.com.cn/new/hisAnnouncement/query
+  orgid_helper_design_ref: https://www.cninfo.com.cn/new/information/topSearch/query
+  query_method: POST
+  params_location: json
+  timeout_seconds: 10
+  sleep_seconds: 0.6
+  headers_profile: cninfo_ajax
+  url_field: adjunctUrl
+  title_field: announcementTitle
+  publish_date_field: announcementTime
+  document_id_field: announcementId
+  org_id_field: orgId
+  company_code_field: secCode
+  company_name_field: secName
+  storage_status_phase1: not_attempted
+
+lineage_status_values:
+  - discovered
+  - linked
+  - needs_review
+  - not_found
+
+quality_status_values:
+  - pass
+  - caveat
+  - blocked
+  - needs_review
+
+coverage_status_values:
+  - found
+  - not_found
+  - caveat
+
+report_type_values:
+  - annual_report
+  - semi_annual_report
+  - quarterly_report_q1
+  - quarterly_report_q3
+
+phase1_report_title_exclusions:
+  - 披露提示性公告
+  - 提示性公告
+  - 业绩说明会
+  - 投资者说明会
+  - 摘要
+  - 英文版
+  - 解读
+
+sources:
+  - source_id: cninfo_a_class_periodic_report_annual
+    source_name: A类年报 metadata
+    phase1_status: phase1_in_scope
+    live_validation_status: not_run
+    report_type: annual_report
+    object_outputs:
+      - report_document
+      - report_period_snapshot
+      - document_lineage
+    category_design_ref: category_ndbg_szsh
+    title_positive_patterns:
+      - 年度报告
+      - 年报
+    period_anchor: year_end
+    status:
+      recommended_status: testing
+      verified: false
+      blocked: false
+      stability_status: phase1_p1_effective_coverage_inherited
+    notes: >-
+      Design-only registry entry. Endpoint inherited from A-class Phase1
+      validate_cninfo_report_coverage.py. No live execution this round.
+
+  - source_id: cninfo_a_class_periodic_report_semi_annual
+    source_name: A类半年报 metadata
+    phase1_status: phase1_in_scope
+    live_validation_status: not_run
+    report_type: semi_annual_report
+    object_outputs:
+      - report_document
+      - report_period_snapshot
+      - document_lineage
+    category_design_ref: category_bndbg_szsh
+    title_positive_patterns:
+      - 半年度报告
+      - 半年报
+    period_anchor: half_year_end
+    status:
+      recommended_status: testing
+      verified: false
+      blocked: false
+      stability_status: phase1_p1_effective_coverage_inherited
+    notes: Design-only. No live execution this round.
+
+  - source_id: cninfo_a_class_periodic_report_quarterly
+    source_name: A类季报 metadata
+    phase1_status: phase1_in_scope
+    live_validation_status: not_run
+    report_type_candidates:
+      - quarterly_report_q1
+      - quarterly_report_q3
+    object_outputs:
+      - report_document
+      - report_period_snapshot
+      - document_lineage
+    category_design_ref: category_yjdbg_szsh
+    category_fallback_design_ref: category_sjdbg_szsh
+    title_positive_patterns:
+      quarterly_report_q1:
+        - 第一季度报告
+        - 一季度报告
+      quarterly_report_q3:
+        - 第三季度报告
+        - 三季度报告
+    period_anchor: quarter_end
+    status:
+      recommended_status: testing
+      verified: false
+      blocked: false
+      stability_status: phase1_p1_q1_q3_partial_gap_szse
+    notes: >-
+      Design-only. Q1/Q3 SZSE ChiNext gap documented in Phase1 summary.
+      No live execution this round.

@@ -1,0 +1,6 @@
+case_id,company_code,report_type,retrieval_status,quality_status,lineage_status,pdf_url_present,adjunct_url_present,pdf_downloaded,pdf_parsed,notes
+ALM001,600000,annual_report,found,pass,discovered,yes,yes,no,no,live metadata retrieved; expected_period=2024-12-31; storage_status=not_attempted; PDF not downloaded
+ALM002,300001,semi_annual_report,found,pass,discovered,yes,yes,no,no,live metadata retrieved; expected_period=2024-06-30; storage_status=not_attempted; PDF not downloaded
+ALM003,688001,quarterly_report_q1,found,pass,discovered,yes,yes,no,no,live metadata retrieved; expected_period=2025-03-31; storage_status=not_attempted; PDF not downloaded
+ALM004,000858,quarterly_report_q3,found,pass,discovered,yes,yes,no,no,live metadata retrieved; expected_period=2024-09-30; storage_status=not_attempted; PDF not downloaded
+ALM005,600519,annual_report,found,pass,discovered,yes,yes,no,no,live metadata retrieved; expected_period=2024-12-31; storage_status=not_attempted; PDF not downloaded

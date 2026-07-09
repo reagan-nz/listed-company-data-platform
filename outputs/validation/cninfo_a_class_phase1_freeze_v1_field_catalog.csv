@@ -1,0 +1,41 @@
+object,field_name,level,description,source,status
+report_document,document_id,required,逻辑文档主键；候选等于 announcement_id 或复合键,derived,frozen_required
+report_document,company_code,required,证券代码；关联 C-class company,secCode / input universe,frozen_required
+report_document,report_type,required,annual_report / semi_annual_report / quarterly_report_q1 / quarterly_report_q3,title routing + category,frozen_required
+report_document,report_period,required,报告期如 2024-12-31；unknown 不算 effective found,derived from title/date,frozen_required
+report_document,publish_date,required,披露日；由 announcementTime 归一化,announcementTime,frozen_required
+report_document,announcement_id,required,CNINFO 公告主键,announcementId,frozen_required
+report_document,announcement_title,required,公告标题原文,announcementTitle,frozen_required
+report_document,pdf_url,required,完整静态 PDF URL；not_found 时字段存在值可为 null,adjunctUrl normalized,frozen_required
+report_document,source_endpoint,required,检索使用的 API endpoint URL,registry / hisAnnouncement/query,frozen_required
+report_document,retrieval_time,required,元数据抓取时间 ISO8601,harvest runner,frozen_required
+report_document,raw_hash,required,原始响应 JSON hash；非 PDF 文件 hash,hash of raw response,frozen_required
+report_document,lineage_status,required,discovered / linked / needs_review / not_found,QA rules,frozen_required
+report_document,quality_status,required,pass / caveat / blocked / needs_review,QA rules,frozen_required
+report_document,company_name,recommended,公司简称；响应中可能缺失,secName,frozen_recommended
+report_document,adjunct_url,recommended,CNINFO 原始 adjunctUrl 相对或绝对路径,adjunctUrl,frozen_recommended
+report_document,org_id,recommended,CNINFO orgId；hisAnnouncement stock 参数通常需要,orgId / topSearch,frozen_recommended
+report_document,announcement_time,recommended,原始披露时间戳；publish_date 派生前保留,announcementTime,frozen_recommended
+report_document,raw_metadata_json,recommended,完整原始公告对象；审计用,CNINFO response object,frozen_recommended
+report_document,notes,removed,自由文本仅 QA 侧车；不进 Phase1 归一化契约,manual,frozen_removed
+report_period_snapshot,company_code,required,证券代码,input universe,frozen_required
+report_period_snapshot,year,required,会计年度,expected period set,frozen_required
+report_period_snapshot,report_type,required,与 report_document.report_type 一致,expected period set,frozen_required
+report_period_snapshot,document_id,required,命中时的 document_id；未命中 null,report_document link,frozen_required
+report_period_snapshot,quarter,recommended,1/2/3/4；年报可为 null,expected period set,frozen_recommended
+report_period_snapshot,coverage_status,recommended,found / not_found / caveat,QA rules,frozen_recommended
+report_period_snapshot,expected_period,recommended,期望报告期端点日期,harvest config,frozen_recommended
+report_period_snapshot,available_sections,future,解析后可填章节列表；Phase1 为 not_parsed,parser output,frozen_future
+document_lineage,storage_status,required,Phase1 固定 not_attempted,fixed not_attempted,frozen_required
+document_lineage,version,required,lineage 版本号；初版为 1,lineage tracker,frozen_required
+document_lineage,source_endpoint,required,与 report_document.source_endpoint 一致,hisAnnouncement/query,frozen_required
+document_lineage,retrieval_time,required,谱系记录时间,harvest runner,frozen_required
+document_lineage,lineage_status,required,与 report_document.lineage_status 对齐,QA rules,frozen_required
+document_lineage,source_url,recommended,UI 页面或 referer URL,page_url / referer,frozen_recommended
+document_lineage,raw_hash,recommended,响应级 hash；用于变更检测,response hash,frozen_recommended
+document_lineage,adjunct_url,recommended,原始 adjunctUrl 保留,adjunctUrl,frozen_recommended
+document_lineage,pdf_url,recommended,归一化后的 PDF URL,adjunctUrl normalized,frozen_recommended
+document_lineage,download_time,future,PDF 下载时间；Phase1 固定 null,download runner,frozen_future
+document_lineage,file_hash,future,PDF 内容 hash；Phase1 固定 null,PDF content,frozen_future
+document_lineage,file_size,future,文件字节大小；Phase1 固定 null,PDF content,frozen_future
+document_lineage,mime_type,removed,未下载无法验证；排除出 Phase1 契约,assumed,frozen_removed

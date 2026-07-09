@@ -1,0 +1,23 @@
+{
+  "_fixture_meta": {
+    "purpose": "A-class Phase1 freeze v1 synthetic document_lineage schema skeleton",
+    "phase1_freeze": "v1",
+    "freeze_v1_catalog": "outputs/validation/cninfo_a_class_phase1_freeze_v1_field_catalog.csv",
+    "validated_against": "freeze_v1",
+    "cninfo_called": false,
+    "pdf_downloaded": false,
+    "notes": "URLs are synthetic placeholders; storage_status must be not_attempted in Phase1"
+  },
+  "document_id": "a_doc_fixture_999001_2024_annual",
+  "document_lineage": {
+    "source_url": null,
+    "storage_status": "not_attempted",
+    "version": 1,
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_time": "2026-07-09T06:00:00+08:00",
+    "raw_hash": "sha256:synthetic_a_class_fixture_hash_999001_annual",
+    "adjunct_url": "/finalpage/2025-03-15/fixture_ann_a_999001_2024_annual.PDF",
+    "pdf_url": "http://static.example.invalid/finalpage/2025-03-15/fixture_ann_a_999001_2024_annual.PDF",
+    "lineage_status": "discovered"
+  }
+}

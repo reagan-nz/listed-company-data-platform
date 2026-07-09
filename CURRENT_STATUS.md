@@ -8,7 +8,7 @@ _最后更新：2026-07-09_
 
 ## 当前阶段（一句话）
 
-**Era C Phase 1（A 类）已收口**。**Phase 2 D 类 endpoint 验证已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通；**B-class Phase 1 tiny live 收口完成**（**5/5 resolved** · closure gate **`PASS_WITH_CAVEAT`** · **无 verified**）；**B-class Phase 2 expansion 收口完成**（**20/20 acceptable** · closure gate **`PASS_WITH_CAVEAT`** · **无 verified**）；**D-class Phase 0 市场行为层规划已启动**（offline only · **无 D-class live**）；**D-class Phase 1 schema freeze review 已准备**（gate **`READY_FOR_APPROVAL`** · lint **10/10 PASS** · **无 D-class live**）；**D-class Phase 1 schema freeze approval package 已准备**（**未 signoff** · **无 D-class live**）。**Phase 4 C 类** **863 snapshot 已生成**；**状态 `SNAPSHOT_GENERATED_QA_REVIEW`**；**Phase 3 batch 500 closure 已完成**（closure gate **`PASS_WITH_CAVEAT`**）；**Phase 3.5 batch planning 已准备**（draft **500** · eligible **3645** · gate **`READY_FOR_REVIEW`**）；**并行：A-class Report Metadata Phase 0 规划已启动**（offline only · **无 CNINFO** · **无 PDF** · **无解析** · **无 RAG** · **B/C 输出未触碰**）；**A-class Phase 1 freeze v1 已离线实现**（implementation gate **`PASS_OFFLINE`** · lint **14/14 PASS**）；**A-class ready-case benchmark 已完成**（**5/5 PASS** · gate **`READY_FOR_REVIEW`** · **无 CNINFO**）；**A-class tiny live metadata approval package 已准备**（gate **`READY_FOR_APPROVAL`** · **无 A-class live** · **无 PDF**）；**A-class tiny live metadata v2 rerun 已执行**（**5/5 correct report-type** · v2 gate **`PASS_WITH_CAVEAT`** · CNINFO **11** · **无 PDF** · **无 verified**）；**A-class Phase 1 tiny live metadata v2 closure 已完成**（closure gate **`PASS_WITH_CAVEAT`** · **无 CNINFO**）；**C-class 未整体完成**；**无 verified**；**不入库**。
+**Era C Phase 1（A 类）已收口**。**Phase 2 D 类 endpoint 验证已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通；**B-class Phase 1 tiny live 收口完成**（**5/5 resolved** · closure gate **`PASS_WITH_CAVEAT`** · **无 verified**）；**B-class Phase 2 expansion 收口完成**（**20/20 acceptable** · closure gate **`PASS_WITH_CAVEAT`** · **无 verified**）；**D-class Phase 0 市场行为层规划已启动**（offline only · **无 D-class live**）；**D-class Phase 1 schema freeze review 已准备**（gate **`READY_FOR_APPROVAL`** · lint **10/10 PASS** · **无 D-class live**）；**D-class Phase 1 schema freeze approval package 已准备**（**未 signoff** · **无 D-class live**）。**Phase 4 C 类** **863 snapshot 已生成**；**状态 `SNAPSHOT_GENERATED_QA_REVIEW`**；**Phase 3 batch 500 closure 已完成**（closure gate **`PASS_WITH_CAVEAT`**）；**Phase 3.5 batch planning 已准备**（draft **500** · eligible **3645** · gate **`READY_FOR_REVIEW`**）；**Phase 3.5 harvest dry-run 与 approval extension 已准备**（dry-run gate **`PASS_OFFLINE`** · approval gate **`READY_FOR_APPROVAL`** · test **11/11 PASS** · CNINFO **0** · **未批准 live**）；**并行：A-class Report Metadata Phase 0 规划已启动**（offline only · **无 CNINFO** · **无 PDF** · **无解析** · **无 RAG** · **B/C 输出未触碰**）；**A-class Phase 1 freeze v1 已离线实现**（implementation gate **`PASS_OFFLINE`** · lint **14/14 PASS**）；**A-class ready-case benchmark 已完成**（**5/5 PASS** · gate **`READY_FOR_REVIEW`** · **无 CNINFO**）；**A-class tiny live metadata approval package 已准备**（gate **`READY_FOR_APPROVAL`** · **无 A-class live** · **无 PDF**）；**A-class tiny live metadata v2 rerun 已执行**（**5/5 correct report-type** · v2 gate **`PASS_WITH_CAVEAT`** · CNINFO **11** · **无 PDF** · **无 verified**）；**A-class Phase 1 tiny live metadata v2 closure 已完成**（closure gate **`PASS_WITH_CAVEAT`** · **无 CNINFO**）；**A-class Phase 1 boundary 已收口**（`a_class_phase1_boundary_gate = PASS_WITH_CAVEAT`** · **不是 verified** · **不是 production_ready**）；**C-class 未整体完成**；**无 verified**；**不入库**。
 
 ---
 
@@ -110,8 +110,11 @@ _最后更新：2026-07-09_
 | **V2 closure metrics** | [cninfo_a_class_phase1_tiny_live_metadata_v2_closure_metrics.csv](outputs/validation/cninfo_a_class_phase1_tiny_live_metadata_v2_closure_metrics.csv) |
 | **V2 closure summary** | [cninfo_a_class_phase1_tiny_live_metadata_v2_closure_summary.md](outputs/validation/cninfo_a_class_phase1_tiny_live_metadata_v2_closure_summary.md) |
 | **Next-step recommendation** | [cninfo_a_class_phase1_next_step_recommendation.md](plans/cninfo_a_class_phase1_next_step_recommendation.md) |
-| **Gate** | `a_class_phase1_freeze_v1_implementation_gate = PASS_OFFLINE` · `a_class_ready_case_benchmark_gate = READY_FOR_REVIEW` · `a_class_tiny_live_metadata_v2_execution_gate = PASS_WITH_CAVEAT` · `a_class_phase1_tiny_live_metadata_v2_closure_gate = PASS_WITH_CAVEAT` |
-| **下一步** | Option A：Phase 1 边界 signoff → Option B/C 规划（**仍无 PDF · 无 verified**） |
+| **Boundary signoff** | [cninfo_a_class_phase1_boundary_signoff.md](plans/cninfo_a_class_phase1_boundary_signoff.md) |
+| **Boundary metrics** | [cninfo_a_class_phase1_boundary_metrics.csv](outputs/validation/cninfo_a_class_phase1_boundary_metrics.csv) |
+| **Boundary summary** | [cninfo_a_class_phase1_boundary_summary.md](outputs/validation/cninfo_a_class_phase1_boundary_summary.md) |
+| **Gate** | `a_class_phase1_freeze_v1_implementation_gate = PASS_OFFLINE` · `a_class_ready_case_benchmark_gate = READY_FOR_REVIEW` · `a_class_tiny_live_metadata_v2_execution_gate = PASS_WITH_CAVEAT` · `a_class_phase1_tiny_live_metadata_v2_closure_gate = PASS_WITH_CAVEAT` · `a_class_phase1_boundary_gate = PASS_WITH_CAVEAT` |
+| **下一步** | Option B/C/D 规划（**未执行** · **仍无 PDF · 无 verified**） |
 | 性质 | **规划 only**；不接 DB/MinIO/RAG；不写 verified；不升级 testing_stable_sample；不 merge identity |
 
 ---
@@ -191,7 +194,9 @@ _最后更新：2026-07-09_
 | **Closure gate** | `d_class_phase1_tiny_live_closure_gate = PASS_WITH_CAVEAT`（**不是 PASS** · **不是 verified**） |
 | **DLC003/DLC006 calibration** | [calibration review](plans/cninfo_d_class_dlc003_dlc006_calibration_review.md) · [decision matrix](outputs/validation/cninfo_d_class_dlc003_dlc006_calibration_decision_matrix.csv) · [universe v2 draft](outputs/validation/cninfo_d_class_phase1_tiny_live_universe_v2_draft.csv) · [calibration summary](outputs/validation/cninfo_d_class_dlc003_dlc006_calibration_summary.md) |
 | **Calibration gate** | `d_class_dlc003_dlc006_calibration_gate = READY_FOR_HUMAN_DECISION`（**不是 PASS** · **不是 approved**） |
-| **下一步** | 人工选择 DLC003/DLC006 Option B/C · v2 rerun **NOT APPROVED** · D-class harvest architecture 离线规划 |
+| **Phase 1 boundary** | [boundary signoff](plans/cninfo_d_class_phase1_boundary_signoff.md) · [boundary metrics](outputs/validation/cninfo_d_class_phase1_boundary_metrics.csv) · [boundary summary](outputs/validation/cninfo_d_class_phase1_boundary_summary.md) |
+| **Boundary gate** | `d_class_phase1_boundary_gate = PASS_WITH_CAVEAT`（**不是 PASS** · **不是 verified**） |
+| **下一步** | 人工选择 DLC003/DLC006 Option B/C · 或 D-class Phase 2 规划（**均不自动执行**） |
 | 性质 | **规划 only**；7 源市场行为类别；不接 DB/MinIO/RAG；不写 verified；不升级 testing_stable_sample |
 
 ---

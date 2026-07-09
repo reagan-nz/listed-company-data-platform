@@ -1,0 +1,6 @@
+case_id,object_type,expected_status,actual_status,quality_status,lineage_status,passed,notes
+AC001,report_document,valid_pass,valid_pass,pass,discovered,yes,all objects valid; quality pass; lineage discovered
+AC002,document_lineage,lineage_valid,lineage_valid,pass,linked,yes,lineage aligned with report_document
+AC003,report_document,quality_downgrade,quality_downgrade,needs_review,needs_review,yes,missing pdf_url; quality downgraded
+AC004,report_document,dedup_review,dedup_review,caveat,needs_review,yes,duplicate document_id; dedup required; no auto merge
+AC005,report_document,enum_invalid,enum_invalid,needs_review,needs_review,yes,unknown report_type preserved; quality downgraded

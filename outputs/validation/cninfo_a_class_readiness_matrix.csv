@@ -1,0 +1,7 @@
+component,current_status,needed_for_phase1,risk,priority,notes
+report_metadata,partial_design,report_document object defined; Phase1 retrieval script exists; dedicated A-class schema not frozen,low,P0,Inherit validate_cninfo_report_coverage.py; freeze JSON Schema in next offline task
+pdf_lineage,prototype_only,adjunctUrl mapping known from Phase1; document_lineage object defined; no market-scale lineage test,medium,P0,Phase1 only capture pdf_url + retrieval_time + raw_hash; storage_status=not_attempted; no download
+document_identity,draft_exists,company_code + announcement_id keys assumed; document_id derivation not frozen; no dedup policy script,medium,P0,Reuse A-class org_id mapping; align with C-class company_code; no identity merge
+report_period,partial_design,report_period_snapshot object defined; P1 coverage 94.10%; quarterly gaps on SZSE ChiNext,medium,P0,Q1/Q3 category fallback documented in coverage script; freeze period parsing rules offline
+quality_tracking,partial,P1 audit 97.5% on 40-company subset; no A-class harvest QA runner; quality_status enum defined,medium,P1,Reuse C-class QA report pattern for future metadata harvest
+future_parser,explicitly_deferred,not_started,low,P3,No PDF parse/chunk/embed; available_sections deferred; Era B parser frozen

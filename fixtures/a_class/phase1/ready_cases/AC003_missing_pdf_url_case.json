@@ -1,0 +1,51 @@
+{
+  "_fixture_meta": {
+    "case_id": "AC003",
+    "purpose": "report metadata exists but pdf_url lineage is missing",
+    "phase1_freeze": "v1",
+    "cninfo_called": false,
+    "pdf_downloaded": false
+  },
+  "report_document": {
+    "document_id": "a_doc_ac003_missing_pdf",
+    "company_code": "999103",
+    "company_name": "示例公司丙",
+    "report_type": "quarterly_report_q1",
+    "report_period": "2024-03-31",
+    "publish_date": "2025-04-28",
+    "announcement_id": "fixture_ann_ac003_q1",
+    "announcement_title": "2024年第一季度报告",
+    "pdf_url": null,
+    "adjunct_url": null,
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_time": "2026-07-09T08:10:00+08:00",
+    "raw_hash": "sha256:synthetic_ac003_missing_pdf",
+    "lineage_status": "needs_review",
+    "quality_status": "needs_review"
+  },
+  "report_period_snapshot": {
+    "company_code": "999103",
+    "year": 2024,
+    "quarter": 1,
+    "report_type": "quarterly_report_q1",
+    "document_id": "a_doc_ac003_missing_pdf",
+    "coverage_status": "caveat",
+    "expected_period": "2024-03-31"
+  },
+  "document_lineage": {
+    "storage_status": "not_attempted",
+    "version": 1,
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_time": "2026-07-09T08:10:00+08:00",
+    "raw_hash": "sha256:synthetic_ac003_missing_pdf",
+    "adjunct_url": null,
+    "pdf_url": null,
+    "lineage_status": "needs_review"
+  },
+  "expected_behavior": {
+    "pdf_url_present": false,
+    "quality_status": "needs_review",
+    "lineage_status": "needs_review",
+    "quality_status_must_not_be": "verified"
+  }
+}

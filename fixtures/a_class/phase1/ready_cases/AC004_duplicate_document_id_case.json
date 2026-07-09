@@ -1,0 +1,54 @@
+{
+  "_fixture_meta": {
+    "case_id": "AC004",
+    "purpose": "duplicate document_id with different metadata candidates",
+    "phase1_freeze": "v1",
+    "cninfo_called": false,
+    "pdf_downloaded": false
+  },
+  "document_id": "a_doc_ac004_dup",
+  "candidates": [
+    {
+      "candidate_rank": 1,
+      "report_document": {
+        "document_id": "a_doc_ac004_dup",
+        "company_code": "999104",
+        "report_type": "annual_report",
+        "report_period": "2024-12-31",
+        "publish_date": "2025-03-25",
+        "announcement_id": "fixture_ann_ac004_dup_a",
+        "announcement_title": "2024年年度报告",
+        "pdf_url": "http://static.example.invalid/finalpage/2025-03-25/fixture_ann_ac004_dup_a.PDF",
+        "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+        "retrieval_time": "2026-07-09T08:15:00+08:00",
+        "raw_hash": "sha256:synthetic_ac004_dup_a",
+        "lineage_status": "discovered",
+        "quality_status": "caveat"
+      }
+    },
+    {
+      "candidate_rank": 2,
+      "report_document": {
+        "document_id": "a_doc_ac004_dup",
+        "company_code": "999104",
+        "report_type": "annual_report",
+        "report_period": "2024-12-31",
+        "publish_date": "2025-04-01",
+        "announcement_id": "fixture_ann_ac004_dup_b",
+        "announcement_title": "2024年年度报告（修订稿）",
+        "pdf_url": "http://static.example.invalid/finalpage/2025-04-01/fixture_ann_ac004_dup_b.PDF",
+        "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+        "retrieval_time": "2026-07-09T08:16:00+08:00",
+        "raw_hash": "sha256:synthetic_ac004_dup_b",
+        "lineage_status": "needs_review",
+        "quality_status": "caveat"
+      }
+    }
+  ],
+  "expected_behavior": {
+    "same_document_id": true,
+    "dedup_decision_required": true,
+    "automatic_merge": false,
+    "quality_status": "caveat"
+  }
+}

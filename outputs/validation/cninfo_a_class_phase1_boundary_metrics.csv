@@ -1,0 +1,20 @@
+metric_group,gate_name,value,gate_impact,notes
+phase1_gate,freeze_v1_gate,PASS_OFFLINE,PASS_WITH_CAVEAT,offline implementation complete lint 14/14
+phase1_gate,ready_case_benchmark_gate,READY_FOR_REVIEW,PASS_WITH_CAVEAT,AC001-AC005 offline benchmark 5/5 not production signoff
+phase1_gate,tiny_live_v1_gate,PASS_WITH_CAVEAT,PASS_WITH_CAVEAT,historical v1 run with title caveats retained
+phase1_gate,tiny_live_v2_gate,PASS_WITH_CAVEAT,PASS_WITH_CAVEAT,v2 rerun 5/5 correct report-type
+phase1_gate,tiny_live_v2_closure_gate,PASS_WITH_CAVEAT,PASS_WITH_CAVEAT,offline closure documentation only
+phase1_gate,phase1_boundary_gate,PASS_WITH_CAVEAT,PASS_WITH_CAVEAT,A-class Phase 1 metadata validation boundary closed with caveat
+v2_tiny_live,v2_cases,5,PASS_WITH_CAVEAT,universe v2 draft ALM001-ALM005
+v2_tiny_live,v2_success,5,PASS_WITH_CAVEAT,all retrieval_status=found
+v2_tiny_live,v2_failed,0,PASS_WITH_CAVEAT,no failures
+v2_matching,wrong_report_type,0,PASS_WITH_CAVEAT,v2 matching fixed v1 annual/semi and English issues
+v2_matching,title_match_pass,5,PASS_WITH_CAVEAT,title_match_status=pass all cases
+v2_matching,period_match_pass,5,PASS_WITH_CAVEAT,period_match_status=pass all cases
+red_line,pdf_download,0,PASS_WITH_CAVEAT,permanently disabled
+red_line,pdf_parse,0,PASS_WITH_CAVEAT,permanently disabled
+red_line,db_write,0,PASS_WITH_CAVEAT,no database writes
+red_line,minio_write,0,PASS_WITH_CAVEAT,no object storage writes
+red_line,rag_run,0,PASS_WITH_CAVEAT,no embeddings or RAG
+red_line,verified,false,PASS_WITH_CAVEAT,not marked verified
+red_line,production_ready,false,PASS_WITH_CAVEAT,not production ready
