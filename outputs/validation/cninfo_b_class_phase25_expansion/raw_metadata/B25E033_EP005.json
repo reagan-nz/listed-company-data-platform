@@ -1,0 +1,28 @@
+{
+  "case": {
+    "case_id": "B25E033",
+    "company_code": "688169",
+    "company_name": "石头科技",
+    "market": "科创板",
+    "announcement_type": "general_announcement",
+    "target_endpoint": [
+      "EP001",
+      "EP005"
+    ],
+    "expected_lineage_type": "general_announcement_metadata_lineage",
+    "risk_level": "low",
+    "phase1_overlap": "no",
+    "phase2_overlap": "no",
+    "phase25_include": "yes",
+    "reason": "STAR智能硬件；STAR bucket"
+  },
+  "mode": "dry_run",
+  "cninfo_called": false,
+  "pdf_download_enabled": false,
+  "pdf_parse_enabled": false,
+  "planned_endpoints": [
+    "EP001",
+    "EP005"
+  ],
+  "validation_issues": []
+}

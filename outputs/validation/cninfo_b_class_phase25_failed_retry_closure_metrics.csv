@@ -1,0 +1,25 @@
+metric_group,metric_name,value,gate_impact,notes
+execution,phase25_total_cases,50,PASS_WITH_CAVEAT,universe B25E001-B25E050
+execution,original_acceptable_cases,45,PASS_WITH_CAVEAT,original phase25 live batch
+execution,original_failed_cases,5,PASS_WITH_CAVEAT,network_error or orgId resolution
+execution,retry_cases,5,PASS_WITH_CAVEAT,isolated failed-case retry only
+execution,retry_acceptable_cases,5,PASS_WITH_CAVEAT,all found/pass/discovered
+execution,retry_failed_cases,0,PASS_WITH_CAVEAT,no retry failure
+execution,effective_acceptable_cases,50,PASS_WITH_CAVEAT,45 original + 5 retry recovered
+execution,effective_unresolved_cases,0,PASS_WITH_CAVEAT,no unresolved after merge
+cninfo,cninfo_requests_original,93,PASS_WITH_CAVEAT,phase25 live batch only
+cninfo,cninfo_requests_retry,10,PASS_WITH_CAVEAT,failed retry live batch only
+cninfo,cninfo_requests_closure,0,PASS_WITH_CAVEAT,closure round CNINFO=0
+safety,pdf_downloaded,0,PASS_WITH_CAVEAT,metadata only boundary enforced
+safety,pdf_parsed,0,PASS_WITH_CAVEAT,no parser invoked
+safety,ocr,0,PASS_WITH_CAVEAT,no OCR invoked
+safety,extraction,0,PASS_WITH_CAVEAT,no section extraction
+safety,db_write,0,PASS_WITH_CAVEAT,no database writes
+safety,minio_write,0,PASS_WITH_CAVEAT,no object storage writes
+safety,rag_run,0,PASS_WITH_CAVEAT,no embeddings or vector index
+status,verified,false,PASS_WITH_CAVEAT,explicitly not verified
+status,production_ready,false,PASS_WITH_CAVEAT,not production_ready claim
+isolation,phase25_expansion_baseline_unchanged,true,PASS_WITH_CAVEAT,original 45-case report preserved
+isolation,successful_45_not_rerun,true,PASS_WITH_CAVEAT,retry scope 5 only
+isolation,c_class_untouched,true,PASS_WITH_CAVEAT,SNAPSHOT_GENERATED_QA_REVIEW preserved
+gate,b_class_phase25_failed_retry_closure_gate,PASS_WITH_CAVEAT,PASS_WITH_CAVEAT,50/50 effective coverage limited expansion only

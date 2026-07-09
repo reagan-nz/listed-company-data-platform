@@ -1,0 +1,6 @@
+case_id,company_code,company_name,market,announcement_type,target_endpoint,original_failure_type,original_failure_stage,retry_priority,retry_include,retry_strategy,notes
+B25E003,601398,工商银行,SSE主板,periodic_report,EP001;EP002;EP004,network_timeout,EP001_hisAnnouncement_fetch,high,yes,isolated_metadata_retry,same endpoints as Phase 2.5 batch; transient network; schema_impact=none
+B25E008,000063,中兴通讯,SZSE主板,periodic_report,EP001;EP004,proxy_503,EP001_hisAnnouncement_fetch,high,yes,isolated_metadata_retry,same endpoints as Phase 2.5 batch; proxy transient; schema_impact=none
+B25E032,688036,传音控股,科创板,general_announcement,EP001;EP005,network_timeout,EP001_hisAnnouncement_fetch,high,yes,isolated_metadata_retry,same endpoints as Phase 2.5 batch; STAR board general; schema_impact=none
+B25E039,002594,比亚迪,SZSE主板,general_announcement,EP001;EP005,ep002_orgid_resolution_failed,EP002_topSearch_orgId,medium,yes,isolated_metadata_retry,EP002 orgId retry then EP001; TLC002 pattern; schema_impact=none
+B25E040,002714,牧原股份,SZSE主板,general_announcement,EP001;EP005,ep002_orgid_resolution_failed,EP002_topSearch_orgId,medium,yes,isolated_metadata_retry,EP002 orgId retry then EP001; TLC002 pattern; schema_impact=none

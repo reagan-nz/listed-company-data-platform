@@ -1,0 +1,24 @@
+metric_group,metric_name,value,gate_impact,notes
+execution,phase25_cases,50,PASS_WITH_CAVEAT,universe B25E001-B25E050
+execution,acceptable_cases,45,PASS_WITH_CAVEAT,found/pass/discovered threshold met
+execution,failed_cases,5,PASS_WITH_CAVEAT,network_error or orgId resolution failure
+execution,needs_review_cases,5,PASS_WITH_CAVEAT,all 5 failed cases quality_status=needs_review
+execution,empty_but_valid_cases,0,PASS_WITH_CAVEAT,no empty_response acceptable cases
+cninfo,cninfo_requests,93,PASS_WITH_CAVEAT,live batch only; closure round CNINFO=0
+endpoint,ep001_hits,45,PASS_WITH_CAVEAT,hisAnnouncement/query successful cases
+endpoint,ep002_hits,48,PASS_WITH_CAVEAT,topSearch orgId including partial failed-case attempts
+endpoint,ep004_hits,25,PASS_WITH_CAVEAT,periodic_report metadata lineage
+endpoint,ep005_hits,25,PASS_WITH_CAVEAT,general_announcement metadata lineage
+lineage,pdf_url_present_cases,45,PASS_WITH_CAVEAT,URL registered not downloaded for acceptable cases
+lineage,adjunct_url_present_cases,45,PASS_WITH_CAVEAT,adjunctUrl from CNINFO metadata for acceptable cases
+safety,pdf_downloaded,0,PASS_WITH_CAVEAT,metadata only boundary enforced
+safety,pdf_parsed,0,PASS_WITH_CAVEAT,no parser invoked
+safety,db_write,0,PASS_WITH_CAVEAT,no database writes
+safety,minio_write,0,PASS_WITH_CAVEAT,no object storage writes
+safety,rag_run,0,PASS_WITH_CAVEAT,no embeddings or vector index
+status,verified,false,PASS_WITH_CAVEAT,explicitly not verified
+status,production_ready,false,PASS_WITH_CAVEAT,not production_ready claim
+isolation,phase1_baseline_unchanged,true,PASS_WITH_CAVEAT,tiny live + TLC002 mtimes unchanged
+isolation,phase2_baseline_unchanged,true,PASS_WITH_CAVEAT,phase2 expansion untouched
+isolation,c_class_untouched,true,PASS_WITH_CAVEAT,SNAPSHOT_GENERATED_QA_REVIEW preserved
+gate,b_class_phase25_expansion_closure_gate,PASS_WITH_CAVEAT,PASS_WITH_CAVEAT,45/50 acceptable limited expansion only

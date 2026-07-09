@@ -302,7 +302,9 @@ _最后更新：2026-07-09_
 183. ~~B 类 Phase 2.5 expansion live metadata validation 执行~~ → **完成**（§7dxl · **45/50 acceptable** · CNINFO **93** · execution gate **`PASS_WITH_CAVEAT`** · **无 PDF**）
 184. ~~B 类 Phase 2.5 expansion closure review~~ → **完成**（§7dxm · **5 network_error triaged** · closure gate **`PASS_WITH_CAVEAT`** · **无 verified**）
 185. ~~B 类 Phase 2.5 failed-case isolated retry 批准包准备~~ → **完成**（§7dxn · retry **5** · dry-run **5/5** · test **14/14 PASS** · package gate **`READY_FOR_APPROVAL`** · **无 CNINFO**）
-186. ~~D 类 Phase 0 市场行为层架构规划 + source discovery~~ → **完成**（§7dz · gate **`DESIGN_STARTED`** · **无 D-class live** · **C-class 不变**）
+186. ~~B 类 Phase 2.5 failed-case isolated retry 执行~~ → **完成**（§7dxo · **5/5 found** · CNINFO **10** · execution gate **`PASS_WITH_CAVEAT`** · **无 PDF**）
+187. ~~B 类 Phase 2.5 failed retry closure review~~ → **完成**（§7dxp · **50/50 effective** · closure gate **`PASS_WITH_CAVEAT`** · **无 verified**）
+188. ~~D 类 Phase 0 市场行为层架构规划 + source discovery~~ → **完成**（§7dz · gate **`DESIGN_STARTED`** · **无 D-class live** · **C-class 不变**）
 179. ~~D 类 Phase 1 schema freeze review + offline lint~~ → **完成**（§7dza · gate **`READY_FOR_APPROVAL`** · lint **10/10 PASS** · **无 D-class live**）
 180. ~~D 类 Phase 1 schema freeze approval package~~ → **完成**（§7dzb · gate **`READY_FOR_APPROVAL`** · **未 signoff** · **无 D-class live**）
 180. ~~D 类 Phase 1 freeze v1 offline implementation~~ → **完成**（§7dzc · implementation gate **`PASS_OFFLINE`** · lint **12/12 PASS** · **无 D-class live**）
@@ -320,6 +322,7 @@ _最后更新：2026-07-09_
 192. ~~D 类 DLC003/DLC006 校准人工 signoff~~ → **完成**（§7dzo · final calibration gate **`HUMAN_SIGNED_OFF_WITH_CAVEAT`** · **不是 verified**）
 193. ~~D 类 known event replacement case 规划~~ → **完成**（§7dzp · planning gate **`READY_FOR_HUMAN_CANDIDATES`** · **无 CNINFO**）
 194. ~~D 类 known event candidate intake 校验准备~~ → **完成**（§7dzq · intake gate **`WAITING_FOR_HUMAN_INPUT`** · tests **10/10** · **无 CNINFO**）
+195. ~~D 类 known event candidate evidence type 规范化 + intake 校验~~ → **完成**（§7dzr · intake gate **`HUMAN_CANDIDATE_VALIDATED`** · DLC003R/DLC006R validated · **无 CNINFO**）
 194. ~~A 类 Phase 2 merge closure review~~ → **完成**（§7dzt · **12 accepted** · **8 unresolved network** · closure gate **`PASS_WITH_CAVEAT_NETWORK_UNRESOLVED`** · **无 CNINFO**）
 105. review_later / raw_only 复判 → **待启动**（31 + 25）
 106. company_snapshot planning → **待启动**（P2）
@@ -2836,7 +2839,77 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 ~~B 类 Phase 2.5 failed-case isolated retry 批准包准备~~ → **已完成**（§7dxn）
 
-**人工批准 5-case isolated retry → `--approve-b-class-phase25-failed-retry` live**（仍无 PDF · 无 verified · 不重跑 45）
+~~B 类 Phase 2.5 failed-case isolated retry 执行~~ → **已完成**（§7dxo）
+
+~~B 类 Phase 2.5 failed retry closure review~~ → **已完成**（§7dxp）
+
+**B-class Phase 2.5 commit boundary**（50/50 effective · 仍无 PDF · 无 verified）
+
+---
+
+## 7dxp. B 类 Phase 2.5 Failed Retry Closure Review（2026-07-09）
+
+> **并行约束：** 离线收口 only；**无 CNINFO** · **无 live** · **无 rerun** · **schema 不变**。
+
+| 项 | 内容 |
+|----|------|
+| closure review | [cninfo_b_class_phase25_failed_retry_closure_review.md](cninfo_b_class_phase25_failed_retry_closure_review.md) |
+| merged effective result | [cninfo_b_class_phase25_effective_merged_result.csv](../outputs/validation/cninfo_b_class_phase25_effective_merged_result.csv) |
+| closure metrics | [cninfo_b_class_phase25_failed_retry_closure_metrics.csv](../outputs/validation/cninfo_b_class_phase25_failed_retry_closure_metrics.csv) |
+| closure summary | [cninfo_b_class_phase25_failed_retry_closure_summary.md](../outputs/validation/cninfo_b_class_phase25_failed_retry_closure_summary.md) |
+| post-retry recommendation | [cninfo_b_class_phase25_post_retry_next_step_recommendation.md](cninfo_b_class_phase25_post_retry_next_step_recommendation.md) |
+| original acceptable | **45** |
+| retry recovered | **5** |
+| effective coverage | **50/50** |
+| unresolved | **0** |
+| closure gate | **`b_class_phase25_failed_retry_closure_gate = PASS_WITH_CAVEAT`** |
+| CNINFO calls (closure) | **0** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- 45 original + 5 retry recovered = **50/50 effective** · 无 unresolved
+- network/proxy/orgId 失败已恢复 · **非 schema failure**
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task（B-class）
+
+**Option A：B-class Phase 2.5 commit boundary**
+
+---
+
+## 7dxo. B 类 Phase 2.5 Failed-case Isolated Retry Live Execution（2026-07-09）
+
+> **并行约束：** 隔离 retry live 执行；**metadata + URL lineage only** · **无 PDF** · **schema 不变**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_b_class_phase25_expansion_validation.py](../lab/run_cninfo_b_class_phase25_expansion_validation.py)（`--retry-failed-only`） |
+| retry universe | [cninfo_b_class_phase25_failed_retry_universe.csv](../outputs/validation/cninfo_b_class_phase25_failed_retry_universe.csv)（**5** 家） |
+| report | [b_class_phase25_failed_retry_report.csv](../outputs/validation/cninfo_b_class_phase25_failed_retry/reports/b_class_phase25_failed_retry_report.csv) |
+| summary | [b_class_phase25_failed_retry_summary.md](../outputs/validation/cninfo_b_class_phase25_failed_retry/reports/b_class_phase25_failed_retry_summary.md) |
+| quality report | [b_class_phase25_failed_retry_quality_report.csv](../outputs/validation/cninfo_b_class_phase25_failed_retry/reports/b_class_phase25_failed_retry_quality_report.csv) |
+| approval flag | `--approve-b-class-phase25-failed-retry` |
+| output root | `outputs/validation/cninfo_b_class_phase25_failed_retry/` |
+| found | **5** |
+| acceptable | **5** |
+| failed | **0** |
+| CNINFO requests | **10** |
+| endpoint hits | EP001 **5** · EP002 **5** · EP004 **2** · EP005 **3** |
+| PDF download / parse | **0** |
+| successful 45 not rerun | **yes** |
+| Phase 2.5 expansion baseline | **untouched**（仍 **45/50** found） |
+| execution gate | **`b_class_phase25_failed_retry_execution_gate = PASS_WITH_CAVEAT`** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- 5/5 retry cases `found/pass/discovered` · 原 network/orgId 失败全部恢复
+- Phase 2.5 主 batch 报告未修改 · **不是 PASS** · **不是 verified**
+
+### Next immediate task（B-class）
+
+**Phase 2.5 failed retry closure review 或 commit boundary**
 
 ---
 
@@ -2940,7 +3013,7 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 ### Next immediate task（B-class）
 
-~~closure review~~ → ~~retry 批准包~~ → **人工批准 isolated retry live**（见 §7dxn）
+~~closure review~~ → ~~retry 批准包~~ → ~~isolated retry live~~ → ~~failed retry closure~~ → **B-class Phase 2.5 commit boundary**（见 §7dxp）
 
 ---
 
@@ -3859,6 +3932,35 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 - intake 规则与离线校验脚本就绪 · 模板 **未修改**
 - DLC003R/DLC006R `company_code` 仍空 · 等待人工填码
+
+---
+
+## 7dzr. D 类 Known Event Candidate Evidence Type 规范化 + Intake 校验（2026-07-09）
+
+> **并行约束：** 仅规范化 `event_evidence_type` · **不调用 CNINFO** · **无 web** · **无 live/rerun/harvest** · **不修改 universe / execution reports**。
+
+| 项 | 内容 |
+|----|------|
+| candidate template | [cninfo_d_class_known_event_replacement_candidate_template.csv](../outputs/validation/cninfo_d_class_known_event_replacement_candidate_template.csv) |
+| validation report | [cninfo_d_class_known_event_candidate_validation_report.csv](../outputs/validation/cninfo_d_class_known_event_candidate_validation_report.csv) |
+| validation summary | [cninfo_d_class_known_event_candidate_validation_summary.md](../outputs/validation/cninfo_d_class_known_event_candidate_validation_summary.md) |
+| intake summary | [cninfo_d_class_known_event_candidate_intake_summary.md](../outputs/validation/cninfo_d_class_known_event_candidate_intake_summary.md) |
+| DLC003R | **688671** 碧兴物联 · `unlock_schedule_record`（原始：CNINFO 限售股上市流通公告） |
+| DLC006R | **301259** 艾布鲁 · `shareholder_change_announcement`（原始：CNINFO 简式权益变动报告书） |
+| candidate_validation_status | **`HUMAN_CANDIDATE_VALIDATED`** |
+| intake gate | **`d_class_known_event_candidate_intake_gate = HUMAN_CANDIDATE_VALIDATED`** |
+| planning gate | **`READY_FOR_HUMAN_CANDIDATES`**（保持） |
+| final calibration gate | **`HUMAN_SIGNED_OFF_WITH_CAVEAT`**（保持） |
+| boundary gate | **`PASS_WITH_CAVEAT`**（保持） |
+| CNINFO calls（本回合） | **0** |
+| web lookup | **0** |
+| live / rerun / harvest | **0** |
+
+### 执行结论
+
+- 原始 CNINFO 中文披露标签保留于 `event_evidence_description` / `notes`；`event_evidence_type` 使用既有内部枚举（**未扩展**白名单）
+- DLC003R / DLC006R 全部 intake checks **PASS**（24/24）
+- **下一步：** replacement approval package 评审（**NOT APPROVED** · **不是 verified**）
 
 **红线：** **不是 ready_for_live** · **不是 verified**
 

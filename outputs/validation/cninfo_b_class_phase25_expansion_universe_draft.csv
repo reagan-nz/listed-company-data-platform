@@ -1,0 +1,51 @@
+case_id,company_code,company_name,market,announcement_type,target_endpoint,expected_lineage_type,risk_level,phase1_overlap,phase2_overlap,phase25_include,reason
+B25E001,600900,长江电力,SSE主板,periodic_report,EP001;EP004,periodic_report_metadata_lineage,low,no,no,yes,水电龙头；SSE主板年报；mainboard annual report bucket
+B25E002,601166,兴业银行,SSE主板,periodic_report,EP001;EP002;EP004,periodic_report_metadata_lineage,low,no,no,yes,股份制银行；EP002+EP004；financial bucket
+B25E003,601398,工商银行,SSE主板,periodic_report,EP001;EP002;EP004,periodic_report_metadata_lineage,low,no,no,yes,国有大型银行；orgId压测；financial bucket
+B25E004,601288,农业银行,SSE主板,periodic_report,EP001;EP002;EP004,periodic_report_metadata_lineage,low,no,no,yes,国有大型银行；EP002路径；financial bucket
+B25E005,601939,建设银行,SSE主板,periodic_report,EP001;EP002;EP004,periodic_report_metadata_lineage,low,no,no,yes,国有大型银行；金融子类扩展；financial bucket
+B25E006,601601,中国太保,SSE主板,periodic_report,EP001;EP002;EP004,periodic_report_metadata_lineage,low,no,no,yes,保险龙头；EP002+定期报告；financial bucket
+B25E007,600030,中信证券,SSE主板,periodic_report,EP001;EP004,periodic_report_metadata_lineage,low,no,no,yes,券商龙头；SSE periodic；financial bucket
+B25E008,000063,中兴通讯,SZSE主板,periodic_report,EP001;EP004,periodic_report_metadata_lineage,low,no,no,yes,通信设备科技；SZSE主板年报；technology bucket
+B25E009,000568,泸州老窖,SZSE主板,periodic_report,EP001;EP004,periodic_report_metadata_lineage,low,no,no,yes,白酒消费；SZSE periodic；consumer bucket
+B25E010,002304,洋河股份,SZSE主板,periodic_report,EP001;EP004,periodic_report_metadata_lineage,low,no,no,yes,白酒消费龙头；consumer bucket
+B25E011,600887,伊利股份,SSE主板,periodic_report,EP001;EP004,periodic_report_metadata_lineage,low,no,no,yes,乳业消费；SSE periodic；consumer bucket
+B25E012,601012,隆基绿能,SSE主板,periodic_report,EP001;EP004,periodic_report_metadata_lineage,low,no,no,yes,光伏科技；SSE年报；technology bucket
+B25E013,600309,万华化学,SSE主板,periodic_report,EP001;EP004,periodic_report_metadata_lineage,low,no,no,yes,化工制造龙头；manufacturing bucket
+B25E014,600585,海螺水泥,SSE主板,periodic_report,EP001;EP004,periodic_report_metadata_lineage,low,no,no,yes,建材制造；SSE periodic；manufacturing bucket
+B25E015,000425,徐工机械,SZSE主板,periodic_report,EP001;EP004,periodic_report_metadata_lineage,low,no,no,yes,工程机械；SZSE制造；manufacturing bucket
+B25E016,601668,中国建筑,SSE主板,periodic_report,EP001;EP004,periodic_report_metadata_lineage,low,no,no,yes,建筑央企；mainboard annual report
+B25E017,601899,紫金矿业,SSE主板,periodic_report,EP001;EP004,periodic_report_metadata_lineage,low,no,no,yes,矿业制造；SSE periodic；manufacturing bucket
+B25E018,600104,上汽集团,SSE主板,periodic_report,EP001;EP004,periodic_report_metadata_lineage,low,no,no,yes,汽车制造；SSE年报；manufacturing bucket
+B25E019,000776,广发证券,SZSE主板,periodic_report,EP001;EP002;EP004,periodic_report_metadata_lineage,low,no,no,yes,券商；EP002+EP004；financial bucket
+B25E020,601211,国泰君安,SSE主板,periodic_report,EP001;EP002;EP004,periodic_report_metadata_lineage,low,no,no,yes,券商龙头；金融EP002；financial bucket
+B25E021,600406,国电南瑞,SSE主板,periodic_report,EP001;EP004,periodic_report_metadata_lineage,low,no,no,yes,电网科技；technology bucket
+B25E022,002352,顺丰控股,SZSE主板,periodic_report,EP001;EP004,periodic_report_metadata_lineage,low,no,no,yes,物流消费；SZSE periodic；mixed bucket
+B25E023,601800,中国交建,SSE主板,periodic_report,EP001;EP004,periodic_report_metadata_lineage,low,no,no,yes,基建央企；manufacturing bucket
+B25E024,600009,上海机场,SSE主板,periodic_report,EP001;EP004,periodic_report_metadata_lineage,low,no,no,yes,交通运输；SSE年报；mixed bucket
+B25E025,000538,云南白药,SZSE主板,periodic_report,EP001;EP004,periodic_report_metadata_lineage,low,no,no,yes,医药消费；SZSE periodic；consumer bucket
+B25E026,300015,爱尔眼科,创业板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,ChiNext医疗；EP005；growth board bucket
+B25E027,300142,沃森生物,创业板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,ChiNext生物；general announcement
+B25E028,300274,阳光电源,创业板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,新能源科技；ChiNext EP005
+B25E029,300496,中科创达,创业板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,软件科技；technology bucket
+B25E030,300760,迈瑞医疗,创业板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,医疗器械龙头；ChiNext general
+B25E031,688008,澜起科技,科创板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,STAR半导体；EP005；STAR bucket
+B25E032,688036,传音控股,科创板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,STAR消费电子；technology bucket
+B25E033,688169,石头科技,科创板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,STAR智能硬件；STAR bucket
+B25E034,688256,寒武纪,科创板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,AI芯片；科创板EP005
+B25E035,688303,大全能源,科创板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,STAR光伏；general announcement
+B25E036,000100,TCL科技,SZSE主板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,SZSE面板科技；SZSE general bucket
+B25E037,000977,浪潮信息,SZSE主板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,SZSE服务器；technology bucket
+B25E038,002230,科大讯飞,SZSE主板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,SZSE人工智能；SZSE general bucket
+B25E039,002594,比亚迪,SZSE主板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,新能源车龙头；SZSE general
+B25E040,002714,牧原股份,SZSE主板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,农业消费；SZSE general bucket
+B25E041,601688,华泰证券,SSE主板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,SSE券商一般公告；SSE general bucket
+B25E042,601727,上海电气,SSE主板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,SSE装备制造；manufacturing general
+B25E043,601989,中国重工,SSE主板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,SSE船舶制造；SSE general bucket
+B25E044,600028,中国石化,SSE主板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,能源央企一般公告；SSE general
+B25E045,600050,中国联通,SSE主板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,电信运营；SSE general bucket
+B25E046,600588,用友网络,SSE主板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,企业软件；technology general
+B25E047,600690,海尔智家,SSE主板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,家电消费；consumer general
+B25E048,600893,航发动力,SSE主板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,航空制造；SSE general bucket
+B25E049,000166,申万宏源,SZSE主板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,SZSE券商一般公告；financial general
+B25E050,601766,中国中车,SSE主板,general_announcement,EP001;EP005,general_announcement_metadata_lineage,low,no,no,yes,轨道交通；mixed annual/general closing case

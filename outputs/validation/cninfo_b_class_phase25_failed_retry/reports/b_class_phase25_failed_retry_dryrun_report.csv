@@ -1,0 +1,6 @@
+case_id,company_code,company_name,market,announcement_type,target_endpoint,original_failure_type,retry_priority,planned_request_count,planned_output,pdf_download,pdf_parse,ocr,extraction,cninfo_call_planned,dryrun_status,notes
+B25E003,601398,工商银行,SSE主板,periodic_report,EP001;EP002;EP004,network_timeout,high,2,raw_metadata/B25E003_EP004.json,0,0,0,0,0,planned_ok,retry dry-run; CNINFO not called; metadata and pdf URL lineage only
+B25E008,000063,中兴通讯,SZSE主板,periodic_report,EP001;EP004,proxy_503,high,2,raw_metadata/B25E008_EP004.json,0,0,0,0,0,planned_ok,retry dry-run; CNINFO not called; metadata and pdf URL lineage only
+B25E032,688036,传音控股,科创板,general_announcement,EP001;EP005,network_timeout,high,2,raw_metadata/B25E032_EP005.json,0,0,0,0,0,planned_ok,retry dry-run; CNINFO not called; metadata and pdf URL lineage only
+B25E039,002594,比亚迪,SZSE主板,general_announcement,EP001;EP005,ep002_orgid_resolution_failed,medium,2,raw_metadata/B25E039_EP005.json,0,0,0,0,0,planned_ok,retry dry-run; CNINFO not called; metadata and pdf URL lineage only
+B25E040,002714,牧原股份,SZSE主板,general_announcement,EP001;EP005,ep002_orgid_resolution_failed,medium,2,raw_metadata/B25E040_EP005.json,0,0,0,0,0,planned_ok,retry dry-run; CNINFO not called; metadata and pdf URL lineage only

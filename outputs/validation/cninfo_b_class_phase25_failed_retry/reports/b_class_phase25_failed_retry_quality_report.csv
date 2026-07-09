@@ -1,0 +1,6 @@
+case_id,company_code,original_failure_type,retry_retrieval_status,quality_status,lineage_status,pdf_url_present,pdf_downloaded,pdf_parsed,notes
+B25E003,601398,network_timeout,found,pass,discovered,1,0,0,phase25 failed retry live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B25E008,000063,proxy_503,found,pass,discovered,1,0,0,phase25 failed retry live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B25E032,688036,network_timeout,found,pass,discovered,1,0,0,phase25 failed retry live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B25E039,002594,ep002_orgid_resolution_failed,found,pass,discovered,1,0,0,phase25 failed retry live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B25E040,002714,ep002_orgid_resolution_failed,found,pass,discovered,1,0,0,phase25 failed retry live; live metadata retrieved; PDF not downloaded; quality_checks_pass

@@ -488,7 +488,7 @@ _最后更新：2026-07-09_
 - `lab/validate_cninfo_d_class_known_event_candidates.py` — 候选 intake 离线校验脚本
 - `outputs/validation/cninfo_d_class_known_event_candidate_validation_report.csv` — intake 校验报告
 - `outputs/validation/cninfo_d_class_known_event_candidate_validation_summary.md` — intake 校验摘要
-- `outputs/validation/cninfo_d_class_known_event_candidate_intake_summary.md` — intake 准备摘要（gate **WAITING_FOR_HUMAN_INPUT**）
+- `outputs/validation/cninfo_d_class_known_event_candidate_intake_summary.md` — intake 完成摘要（gate **HUMAN_CANDIDATE_VALIDATED**）
 - `plans/cninfo_d_class_market_data_architecture_plan.md` — **Phase 0** D 类市场行为结构化数据层架构计划（event/metric timeline · 非 company profile）
 - `plans/cninfo_d_class_source_discovery_plan.md` — **Phase 0** D 类 7 源 source discovery 离线策略
 - `outputs/validation/cninfo_d_class_readiness_matrix.csv` — D 类 Phase 0 readiness 矩阵（**12** 组件 · gate **DESIGN_STARTED**）
@@ -574,6 +574,14 @@ _最后更新：2026-07-09_
 - `outputs/validation/cninfo_b_class_phase25_failed_retry_package_summary.md` — Phase 2.5 failed retry 包摘要（package gate **READY_FOR_APPROVAL**）
 - `lab/test_cninfo_b_class_phase25_failed_retry_runner.py` — Phase 2.5 failed retry runner 测试（**14/14 PASS**）
 - `outputs/validation/cninfo_b_class_phase25_failed_retry/reports/b_class_phase25_failed_retry_dryrun_report.csv` — Phase 2.5 failed retry dry-run 报告
+- `outputs/validation/cninfo_b_class_phase25_failed_retry/reports/b_class_phase25_failed_retry_report.csv` — Phase 2.5 failed retry live 报告（**5/5 found**）
+- `outputs/validation/cninfo_b_class_phase25_failed_retry/reports/b_class_phase25_failed_retry_summary.md` — Phase 2.5 failed retry 执行摘要（execution gate **PASS_WITH_CAVEAT**）
+- `outputs/validation/cninfo_b_class_phase25_failed_retry/reports/b_class_phase25_failed_retry_quality_report.csv` — Phase 2.5 failed retry quality 报告
+- `plans/cninfo_b_class_phase25_failed_retry_closure_review.md` — Phase 2.5 failed retry 收口评审
+- `outputs/validation/cninfo_b_class_phase25_effective_merged_result.csv` — Phase 2.5 合并有效结果（**50/50**）
+- `outputs/validation/cninfo_b_class_phase25_failed_retry_closure_metrics.csv` — Phase 2.5 failed retry 收口指标
+- `outputs/validation/cninfo_b_class_phase25_failed_retry_closure_summary.md` — Phase 2.5 failed retry 收口摘要（closure gate **PASS_WITH_CAVEAT**）
+- `plans/cninfo_b_class_phase25_post_retry_next_step_recommendation.md` — Phase 2.5 post-retry 下一步建议
 - `outputs/validation/cninfo_b_class_phase2_expansion/reports/b_class_phase2_expansion_summary.md` — Phase 2 live 执行摘要（execution gate **PASS_WITH_CAVEAT**）
 - `outputs/validation/cninfo_b_class_phase2_expansion/reports/b_class_phase2_expansion_quality_report.csv` — Phase 2 quality 报告
 - `plans/cninfo_b_class_phase1_tiny_live_closure_review.md` — Phase 1 tiny live 收口评审
@@ -728,6 +736,8 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 15. **B 类 Phase 2.5 50-company live metadata validation 已执行**（[execution summary](outputs/validation/cninfo_b_class_phase25_expansion/reports/b_class_phase25_expansion_summary.md) · **45/50 acceptable** · CNINFO **93** · gate **`PASS_WITH_CAVEAT`** · **无 PDF** · **无 verified**）。
 16. **B 类 Phase 2.5 expansion 收口完成**（[closure summary](outputs/validation/cninfo_b_class_phase25_expansion_closure_summary.md) · **5 network_error triaged** · closure gate **`PASS_WITH_CAVEAT`** · **无 verified**）。
 17. **B 类 Phase 2.5 failed-case isolated retry 批准包已准备**（[package summary](outputs/validation/cninfo_b_class_phase25_failed_retry_package_summary.md) · retry **5** · dry-run **5/5** · test **14/14 PASS** · gate **`READY_FOR_APPROVAL`** · **无 CNINFO** · **无 live**）。
+18. **B 类 Phase 2.5 failed-case isolated retry 已执行**（[retry summary](outputs/validation/cninfo_b_class_phase25_failed_retry/reports/b_class_phase25_failed_retry_summary.md) · **5/5 found** · CNINFO **10** · gate **`PASS_WITH_CAVEAT`** · **无 PDF** · **无 verified**）。
+19. **B 类 Phase 2.5 failed retry 收口完成**（[closure summary](outputs/validation/cninfo_b_class_phase25_failed_retry_closure_summary.md) · **50/50 effective** · closure gate **`PASS_WITH_CAVEAT`** · **无 verified**）。
 9. **D 类 Phase 0 市场行为层规划**见 [architecture plan](plans/cninfo_d_class_market_data_architecture_plan.md) / [discovery plan](plans/cninfo_d_class_source_discovery_plan.md) / [readiness matrix](outputs/validation/cninfo_d_class_readiness_matrix.csv)（**无 D-class live**）。
 10. **D 类 Phase 1 schema freeze review 已准备**（[freeze review](plans/cninfo_d_class_phase1_schema_freeze_review.md) · lint **10/10** · gate **`READY_FOR_APPROVAL`** · **无 D-class live**）。
 11. **D 类 Phase 1 schema freeze approval package 已准备**（[approval summary](outputs/validation/cninfo_d_class_phase1_schema_freeze_approval_summary.md) · **未 signoff** · **无 D-class live**）。
@@ -745,5 +755,5 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 23. **D 类 v2 bounded probe 已收口**（[closure summary](outputs/validation/cninfo_d_class_tiny_live_v2_bounded_probe_closure_summary.md) · closure gate **`PASS_WITH_CAVEAT`** · final calibration **`READY_FOR_HUMAN_SIGNOFF`**）。
 24. **D 类 DLC003/DLC006 校准人工 signoff 已完成**（[human signoff](outputs/validation/cninfo_d_class_dlc003_dlc006_calibration_human_signoff.md) · [calibrated universe](outputs/validation/cninfo_d_class_phase1_tiny_live_universe_calibrated.csv) · gate **`HUMAN_SIGNED_OFF_WITH_CAVEAT`** · **不是 verified**）。
 25. **D 类 known event replacement 规划已准备**（[planning summary](outputs/validation/cninfo_d_class_known_event_replacement_planning_summary.md) · gate **`READY_FOR_HUMAN_CANDIDATES`** · **NOT APPROVED**）。
-26. **D 类 known event candidate intake 校验已准备**（[intake summary](outputs/validation/cninfo_d_class_known_event_candidate_intake_summary.md) · tests **10/10** · intake gate **`WAITING_FOR_HUMAN_INPUT`**）。
+26. **D 类 known event candidate intake 已校验通过**（[intake summary](outputs/validation/cninfo_d_class_known_event_candidate_intake_summary.md) · [validation summary](outputs/validation/cninfo_d_class_known_event_candidate_validation_summary.md) · DLC003R **688671** · DLC006R **301259** · intake gate **`HUMAN_CANDIDATE_VALIDATED`** · **不是 verified**）。
 12. **每完成一个 Phase**：更新分层表状态 + `outputs/validation/` 留 summary；不做数据库接入。

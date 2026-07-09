@@ -1,0 +1,28 @@
+{
+  "case": {
+    "case_id": "B25E039",
+    "company_code": "002594",
+    "company_name": "比亚迪",
+    "market": "SZSE主板",
+    "announcement_type": "general_announcement",
+    "target_endpoint": [
+      "EP001",
+      "EP005"
+    ],
+    "expected_lineage_type": "general_announcement_metadata_lineage",
+    "risk_level": "low",
+    "phase1_overlap": "no",
+    "phase2_overlap": "no",
+    "phase25_include": "yes",
+    "reason": "新能源车龙头；SZSE general"
+  },
+  "mode": "dry_run",
+  "cninfo_called": false,
+  "pdf_download_enabled": false,
+  "pdf_parse_enabled": false,
+  "planned_endpoints": [
+    "EP001",
+    "EP005"
+  ],
+  "validation_issues": []
+}

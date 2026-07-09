@@ -1,0 +1,11 @@
+bucket,selection_rule,target_count,reason,risk_level,include_in_phase25
+mainboard annual report metadata,SSE/SZSE主板活跃上市；近一年有年度报告；非ST非退市；代码000/001/002/600/601/603；排除Phase1/Phase2已测代码,8,扩展EP004定期报告路径；补足Phase2未覆盖的主板年报样本,low,yes
+SZSE mainboard general announcement metadata,SZSE主板（含原中小板002）；近90天有一般公告；非ST；排除已测代码,6,覆盖SZSE主板EP005一般公告；与SSE一般公告分流,low,yes
+SSE mainboard general announcement metadata,SSE主板600/601/603；近90天有一般公告；非ST；排除已测代码,6,覆盖SSE主板EP005；能源央企与基建类一般公告,low,yes
+ChiNext announcement metadata,创业板300开头；一般公告或定期报告混合；非ST；排除300009/300059等Phase1/2代码,6,创业板扩大；growth board EP005为主,low,yes
+STAR board announcement metadata,科创板688开头；一般公告为主；非ST；排除688981等Phase1/2代码,5,科创板EP005扩展；STAR样本加深,low,yes
+financial companies,银行保险券商；优先含EP002 orgId路径；大型活跃金融；排除Phase1/2金融代码,6,压测EP002；金融子类多样化,low,yes
+consumer companies,食品饮料家电医药消费；定期或一般公告；龙头活跃；排除Phase1/2消费代码,5,消费板块metadata稳定性,low,yes
+manufacturing companies,机械化工汽车建筑能源制造；定期报告为主；排除Phase1/2制造代码,4,制造业EP004扩展,low,yes
+technology companies,半导体软件新能源科技；创业板/科创板/主板科技；排除Phase1/2科技代码,4,科技板块公告类型多样,low,yes
+mixed annual/general announcement cases,同一板块内定期与一般公告各半；用于观察endpoint mix；全bucket去重后补足至50,0,确保25 EP004 + 25 EP005均衡；本bucket为交叉约束非独立抽样,low,yes
