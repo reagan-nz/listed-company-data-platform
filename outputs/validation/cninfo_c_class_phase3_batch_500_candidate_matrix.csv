@@ -1,0 +1,13 @@
+pool_name,classification,eligible,count,excluded_count,selection_rule,risk,notes
+matched_active,matched_active,true,4647,0,primary_pool_source,low,full refreshed matched_active classification; primary pool after filters=4643 (non-bse candidate_supported not_built no_manual_review)
+already_in_c_class,already_in_c_class,false,863,863,hard_exclude,none,Era C 863 validated universe; snapshot_support may be built in future registry
+phase2_smoke_200,phase2_smoke_200,false,200,200,hard_exclude,low,already live harvested under phase2_smoke_200 output root; do not re-harvest
+phase2_all_direct_failure,phase2_all_direct_failure,false,12,12,hard_exclude,high,all 6 direct sources failed; business_code 9240002; see excluded caveat ledger
+delisted_or_inactive_caveat,delisted_or_inactive_caveat,false,318,318,hard_exclude_from_primary,high,primary pool rows with listing_status=delisted OR name contains 退/退市/*ST; 20 overlap with phase2 smoke 200
+matched_hold,matched_hold,false,26,26,hard_exclude,medium,26 all6 hold subset; not for expansion batch
+matched_bse_supported_candidate,matched_bse_supported_candidate,false,320,320,hard_exclude,medium,BSE supported candidates; out of Phase 3 non-BSE scope
+matched_bse_legacy_hold,matched_bse_legacy_hold,false,242,242,hard_exclude,medium,BSE legacy hold; separate side-track
+identity_conflict,identity_conflict,false,10,10,hard_exclude,high,org_id or code identity conflicts
+needs_manual_review,needs_manual_review,false,16,16,hard_exclude,high,requires_manual_review classification bucket
+not_found_in_cninfo,not_found_in_cninfo,false,0,0,hard_exclude,low,no rows in current refreshed candidate CSV
+eligible_main_batch,eligible_main_batch,true,4145,0,stratified_pick_500,low,primary pool 4643 minus phase2 200 minus delisted/inactive caveat 318 with overlap dedup; target selection size=500

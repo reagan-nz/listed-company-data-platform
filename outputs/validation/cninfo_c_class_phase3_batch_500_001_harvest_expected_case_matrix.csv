@@ -1,0 +1,11 @@
+source_id,source_type,companies,planned_cases,live_call,observe_only,derived_from,notes
+basic,direct,500,500,true,false,,cninfo_company_basic_profile; direct_fetch; mapper=map_company_basic_profile
+executive,direct,500,500,true,false,,cninfo_executive_profile; direct_fetch; mapper=map_company_executive_profile
+share_capital,direct,500,500,true,false,,cninfo_share_capital_profile; direct_fetch; source_partial policy applies
+top_shareholders,direct,500,500,true,false,,cninfo_top_shareholders_profile; direct_fetch; empty_but_valid policy applies
+top_float_shareholders,direct,500,500,true,false,,cninfo_top_float_shareholders_profile; direct_fetch; lowest reach source in 863
+dividend_history,direct,500,500,true,false,,cninfo_dividend_financing_profile; direct_fetch; valid_empty policy applies
+security,observe_only,500,500,true,true,,cninfo_company_security_profile; observe_fetch; not in main snapshot gate
+contact,derived,500,500,false,false,basic,cninfo_company_contact_profile; derived from basic; no independent HTTP
+business_scope,derived,500,500,false,false,basic,cninfo_company_business_scope; derived from basic; no independent HTTP
+industry,derived,500,500,false,false,basic,cninfo_company_industry_profile; derived from basic; no independent HTTP
