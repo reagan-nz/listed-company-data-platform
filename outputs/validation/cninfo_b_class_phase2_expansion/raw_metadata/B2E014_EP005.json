@@ -1,0 +1,63 @@
+{
+  "case": {
+    "case_id": "B2E014",
+    "company_code": "002415",
+    "company_name": "海康威视",
+    "market": "SZSE主板",
+    "announcement_type": "general_announcement",
+    "target_endpoint": [
+      "EP001",
+      "EP005"
+    ],
+    "risk_level": "low",
+    "reason": "安防科技龙头；中小板一般公告；technology bucket",
+    "phase2_include": "yes"
+  },
+  "mode": "live",
+  "cninfo_called": true,
+  "pdf_download_enabled": false,
+  "pdf_parse_enabled": false,
+  "record": {
+    "case_id": "B2E014",
+    "company_code": "002415",
+    "company_name": "海康威视",
+    "endpoint_id": "EP005",
+    "announcement_id": "1223747249",
+    "announcement_title": "关于公司回购股份的进展公告",
+    "announcement_time": "2025-06-03T16:00:00+00:00",
+    "announcement_category": "general_announcement",
+    "pdf_url": "http://static.cninfo.com.cn/finalpage/2025-06-04/1223747249.PDF",
+    "adjunct_url": "finalpage/2025-06-04/1223747249.PDF",
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_status": "found",
+    "quality_status": "pass",
+    "lineage_status": "discovered",
+    "error_type": "",
+    "notes": "phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass"
+  },
+  "raw_announcement": {
+    "id": null,
+    "secCode": "002415",
+    "secName": "海康威视",
+    "orgId": "9900012688",
+    "announcementId": "1223747249",
+    "announcementTitle": "关于公司回购股份的进展公告",
+    "announcementTime": 1748966400000,
+    "adjunctUrl": "finalpage/2025-06-04/1223747249.PDF",
+    "adjunctSize": 101,
+    "adjunctType": "PDF",
+    "storageTime": null,
+    "columnId": "09020202||250101||251302",
+    "pageColumn": "SZZB",
+    "announcementType": "01010503||010112||011513",
+    "associateAnnouncement": null,
+    "important": null,
+    "batchNum": null,
+    "announcementContent": "",
+    "orgName": null,
+    "tileSecName": "海康威视",
+    "shortTitle": "关于公司回购股份的进展公告",
+    "announcementTypeName": null,
+    "secNameList": null
+  }
+}

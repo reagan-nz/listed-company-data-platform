@@ -1,0 +1,63 @@
+{
+  "case": {
+    "case_id": "B2E019",
+    "company_code": "000333",
+    "company_name": "美的集团",
+    "market": "SZSE主板",
+    "announcement_type": "periodic_report",
+    "target_endpoint": [
+      "EP001",
+      "EP004"
+    ],
+    "risk_level": "low",
+    "reason": "家电制造龙头；与Phase 1江铃汽车同属制造但更大样本；manufacturing",
+    "phase2_include": "yes"
+  },
+  "mode": "live",
+  "cninfo_called": true,
+  "pdf_download_enabled": false,
+  "pdf_parse_enabled": false,
+  "record": {
+    "case_id": "B2E019",
+    "company_code": "000333",
+    "company_name": "美的集团",
+    "endpoint_id": "EP004",
+    "announcement_id": "1222951181",
+    "announcement_title": "2024年年度报告",
+    "announcement_time": "2025-03-28T16:00:00+00:00",
+    "announcement_category": "periodic_report",
+    "pdf_url": "http://static.cninfo.com.cn/finalpage/2025-03-29/1222951181.PDF",
+    "adjunct_url": "finalpage/2025-03-29/1222951181.PDF",
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_status": "found",
+    "quality_status": "pass",
+    "lineage_status": "discovered",
+    "error_type": "",
+    "notes": "phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass"
+  },
+  "raw_announcement": {
+    "id": null,
+    "secCode": "000333",
+    "secName": "美的集团",
+    "orgId": "9900005965",
+    "announcementId": "1222951181",
+    "announcementTitle": "2024年<em>年度报告</em>",
+    "announcementTime": 1743177600000,
+    "adjunctUrl": "finalpage/2025-03-29/1222951181.PDF",
+    "adjunctSize": 6581,
+    "adjunctType": "PDF",
+    "storageTime": null,
+    "columnId": "09020202||250101||251302",
+    "pageColumn": "SZZB",
+    "announcementType": "01010503||010112||010301",
+    "associateAnnouncement": null,
+    "important": null,
+    "batchNum": null,
+    "announcementContent": "",
+    "orgName": null,
+    "tileSecName": "美的集团",
+    "shortTitle": "2024年<em>年度报告</em>",
+    "announcementTypeName": null,
+    "secNameList": null
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "case": {
+    "case_id": "B2E010",
+    "company_code": "300124",
+    "company_name": "汇川技术",
+    "market": "创业板",
+    "announcement_type": "general_announcement",
+    "target_endpoint": [
+      "EP001",
+      "EP005"
+    ],
+    "risk_level": "low",
+    "reason": "创业板工业自动化；制造+科技交叉；general announcement bucket",
+    "phase2_include": "yes"
+  },
+  "mode": "live",
+  "cninfo_called": true,
+  "pdf_download_enabled": false,
+  "pdf_parse_enabled": false,
+  "record": {
+    "case_id": "B2E010",
+    "company_code": "300124",
+    "company_name": "汇川技术",
+    "endpoint_id": "EP005",
+    "announcement_id": "1223861015",
+    "announcement_title": "关于所属子公司苏州汇川联合动力系统股份有限公司首次公开发行股票并在创业板上市申请获深圳证券交易所上市审核委员会审议通过的公告",
+    "announcement_time": "2025-06-12T13:26:10+00:00",
+    "announcement_category": "general_announcement",
+    "pdf_url": "http://static.cninfo.com.cn/finalpage/2025-06-12/1223861015.PDF",
+    "adjunct_url": "finalpage/2025-06-12/1223861015.PDF",
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_status": "found",
+    "quality_status": "pass",
+    "lineage_status": "discovered",
+    "error_type": "",
+    "notes": "phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass"
+  },
+  "raw_announcement": {
+    "id": null,
+    "secCode": "300124",
+    "secName": "汇川技术",
+    "orgId": "9900012527",
+    "announcementId": "1223861015",
+    "announcementTitle": "关于所属子公司苏州汇川联合动力系统股份有限公司首次公开发行股票并在创业板上市申请获深圳证券交易所上市审核委员会审议通过的公告",
+    "announcementTime": 1749734770000,
+    "adjunctUrl": "finalpage/2025-06-12/1223861015.PDF",
+    "adjunctSize": 166,
+    "adjunctType": "PDF",
+    "storageTime": null,
+    "columnId": "09020202||160203||250301||251302",
+    "pageColumn": "SZCY",
+    "announcementType": "01010501||010112||010115||012399",
+    "associateAnnouncement": null,
+    "important": null,
+    "batchNum": null,
+    "announcementContent": "",
+    "orgName": null,
+    "tileSecName": "汇川技术",
+    "shortTitle": "关于所属子公司苏州汇川联合动力系统股份有限公司首次公开发行股票并在创业板上市申请获深圳证券交易所上市审核委员会审议通过的公告",
+    "announcementTypeName": null,
+    "secNameList": null
+  }
+}

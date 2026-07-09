@@ -1,0 +1,21 @@
+case_id,company_code,company_name,market,announcement_type,target_endpoint,risk_level,reason,phase2_include
+B2E001,000001,平安银行,SZSE主板,periodic_report,EP001;EP002;EP004,low,大型银行；EP002 orgId辅助；定期报告metadata；活跃非ST,yes
+B2E002,000002,万科A,SZSE主板,periodic_report,EP001;EP004,low,主板地产龙头；年度报告metadata路径；bucket: mainboard annual report,yes
+B2E003,000858,五粮液,SZSE主板,periodic_report,EP001;EP004,low,消费白酒龙头；已知年度报告；bucket: consumer + known annual reports,yes
+B2E004,000651,格力电器,SZSE主板,periodic_report,EP001;EP004,low,家电制造龙头；主板定期报告；bucket: consumer + manufacturing,yes
+B2E005,600519,贵州茅台,SSE主板,periodic_report,EP001;EP004,low,SSE消费蓝筹；年度报告metadata；large-cap非金融,yes
+B2E006,600036,招商银行,SSE主板,periodic_report,EP001;EP002;EP004,low,大型银行；EP002压测；金融bucket扩展,yes
+B2E007,601318,中国平安,SSE主板,periodic_report,EP001;EP002;EP004,low,保险金融龙头；orgId+定期报告；financial bucket,yes
+B2E008,300059,东方财富,创业板,general_announcement,EP001;EP005,low,创业板金融科技；一般公告EP005；growth board bucket,yes
+B2E009,300750,宁德时代,创业板,general_announcement,EP001;EP005,low,创业板新能源龙头；一般公告metadata；technology bucket,yes
+B2E010,300124,汇川技术,创业板,general_announcement,EP001;EP005,low,创业板工业自动化；制造+科技交叉；general announcement bucket,yes
+B2E011,688111,金山办公,科创板,general_announcement,EP001;EP005,low,科创板软件；STAR board EP005；technology bucket,yes
+B2E012,688599,天合光能,科创板,general_announcement,EP001;EP005,low,科创板光伏；STAR扩展；general announcement bucket,yes
+B2E013,000725,京东方A,SZSE主板,general_announcement,EP001;EP005,low,面板科技龙头；主板一般公告；technology + general announcements,yes
+B2E014,002415,海康威视,SZSE主板,general_announcement,EP001;EP005,low,安防科技龙头；中小板一般公告；technology bucket,yes
+B2E015,601888,中国中免,SSE主板,general_announcement,EP001;EP005,low,消费旅游零售；SSE一般公告；consumer bucket,yes
+B2E016,600276,恒瑞医药,SSE主板,periodic_report,EP001;EP004,low,医药制造龙头；定期报告；manufacturing + known annual reports,yes
+B2E017,601857,中国石油,SSE主板,periodic_report,EP001;EP004,low,能源央企；大型定期报告；mainboard annual report bucket,yes
+B2E018,600000,浦发银行,SSE主板,periodic_report,EP001;EP002;EP004,low,股份制银行；EP002+EP004；financial bucket,yes
+B2E019,000333,美的集团,SZSE主板,periodic_report,EP001;EP004,low,家电制造龙头；与Phase 1江铃汽车同属制造但更大样本；manufacturing,yes
+B2E020,601628,中国人寿,SSE主板,periodic_report,EP001;EP002;EP004,low,大型保险；金融+定期报告；financial bucket closing,yes

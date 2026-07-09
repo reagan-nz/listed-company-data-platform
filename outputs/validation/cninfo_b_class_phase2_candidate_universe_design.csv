@@ -1,0 +1,10 @@
+bucket,selection_rule,target_count,reason,risk_level,include_in_phase2
+mainboard annual report metadata,SZSE/SSE主板活跃上市；近一年有年度报告公告；非ST非退市；代码以000/001/002/600/601/603开头；优先大型蓝筹与制造业龙头,4,覆盖EP004定期报告metadata主路径；验证主板orgId与公告检索稳定性,low,yes
+SZSE growth board announcement metadata,创业板300开头活跃公司；近90天有一般公告；非ST非退市,3,覆盖ChiNext板块EP005一般公告路径；补充Phase 1 TLC002创业板样本外多样性,low,yes
+STAR board announcement metadata,科创板688开头活跃公司；近90天有一般公告或定期报告；非ST非退市,3,覆盖科创板EP001/EP005；Phase 1仅1家STAR需扩大,low,yes
+large-cap bank / financial company,SSE/SZSE大型银行保险券商；市值与公告频率高；优先需EP002 orgId辅助,3,压测EP002 topSearch与金融类orgId解析；Phase 1中国银行已验证需扩展同业,low,yes
+consumer company,食品饮料家电白酒零售消费龙头；主板或创业板；年度报告与一般公告均活跃,3,消费板块公告标题规范度高；利于category routing观察,low,yes
+manufacturing company,汽车机械化工等制造业；SZSE/SSE主板；非ST,2,制造业一般公告与定期报告混合；对齐Phase 1江铃汽车bucket扩展,low,yes
+technology company,半导体软件新能源科技龙头；含创业板与科创板；非ST,2,科技板块公告类型多样；pdf_url lineage需观察,low,yes
+companies with known annual reports,公开信息可确认已披露最近一期年度报告；优先2024年报已发布公司,3,确保EP004路径有明确目标公告；降低empty_response风险,low,yes
+companies with general announcements,近90天有股东大会决议员工持股等非定期公告；优先EP005路径,3,确保EP005路径有检索目标；覆盖general_announcement metadata,low,yes

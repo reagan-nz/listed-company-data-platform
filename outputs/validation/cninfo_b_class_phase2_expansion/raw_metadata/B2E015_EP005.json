@@ -1,0 +1,63 @@
+{
+  "case": {
+    "case_id": "B2E015",
+    "company_code": "601888",
+    "company_name": "中国中免",
+    "market": "SSE主板",
+    "announcement_type": "general_announcement",
+    "target_endpoint": [
+      "EP001",
+      "EP005"
+    ],
+    "risk_level": "low",
+    "reason": "消费旅游零售；SSE一般公告；consumer bucket",
+    "phase2_include": "yes"
+  },
+  "mode": "live",
+  "cninfo_called": true,
+  "pdf_download_enabled": false,
+  "pdf_parse_enabled": false,
+  "record": {
+    "case_id": "B2E015",
+    "company_code": "601888",
+    "company_name": "中国中免",
+    "endpoint_id": "EP005",
+    "announcement_id": "1223859418",
+    "announcement_title": "中国旅游集团中免股份有限公司2024年年度权益分派实施公告",
+    "announcement_time": "2025-06-12T16:00:00+00:00",
+    "announcement_category": "general_announcement",
+    "pdf_url": "http://static.cninfo.com.cn/finalpage/2025-06-13/1223859418.PDF",
+    "adjunct_url": "finalpage/2025-06-13/1223859418.PDF",
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_status": "found",
+    "quality_status": "pass",
+    "lineage_status": "discovered",
+    "error_type": "",
+    "notes": "phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass"
+  },
+  "raw_announcement": {
+    "id": null,
+    "secCode": "601888",
+    "secName": "中国中免",
+    "orgId": "9900008313",
+    "announcementId": "1223859418",
+    "announcementTitle": "中国旅游集团中免股份有限公司2024年年度权益分派实施公告",
+    "announcementTime": 1749744000000,
+    "adjunctUrl": "finalpage/2025-06-13/1223859418.PDF",
+    "adjunctSize": 135,
+    "adjunctType": "PDF",
+    "storageTime": null,
+    "columnId": "250401||251302||2705",
+    "pageColumn": "SHZB",
+    "announcementType": "01010503||010113||011301",
+    "associateAnnouncement": null,
+    "important": null,
+    "batchNum": null,
+    "announcementContent": "",
+    "orgName": null,
+    "tileSecName": "中国中免",
+    "shortTitle": "中国旅游集团中免股份有限公司2024年年度权益分派实施公告",
+    "announcementTypeName": null,
+    "secNameList": null
+  }
+}

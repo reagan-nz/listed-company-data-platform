@@ -1,0 +1,63 @@
+{
+  "case": {
+    "case_id": "B2E005",
+    "company_code": "600519",
+    "company_name": "贵州茅台",
+    "market": "SSE主板",
+    "announcement_type": "periodic_report",
+    "target_endpoint": [
+      "EP001",
+      "EP004"
+    ],
+    "risk_level": "low",
+    "reason": "SSE消费蓝筹；年度报告metadata；large-cap非金融",
+    "phase2_include": "yes"
+  },
+  "mode": "live",
+  "cninfo_called": true,
+  "pdf_download_enabled": false,
+  "pdf_parse_enabled": false,
+  "record": {
+    "case_id": "B2E005",
+    "company_code": "600519",
+    "company_name": "贵州茅台",
+    "endpoint_id": "EP004",
+    "announcement_id": "1222993920",
+    "announcement_title": "贵州茅台2024年年度报告",
+    "announcement_time": "2025-04-02T16:00:00+00:00",
+    "announcement_category": "periodic_report",
+    "pdf_url": "http://static.cninfo.com.cn/finalpage/2025-04-03/1222993920.PDF",
+    "adjunct_url": "finalpage/2025-04-03/1222993920.PDF",
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_status": "found",
+    "quality_status": "pass",
+    "lineage_status": "discovered",
+    "error_type": "",
+    "notes": "phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass"
+  },
+  "raw_announcement": {
+    "id": null,
+    "secCode": "600519",
+    "secName": "贵州茅台",
+    "orgId": "gssh0600519",
+    "announcementId": "1222993920",
+    "announcementTitle": "贵州茅台2024年<em>年度报告</em>",
+    "announcementTime": 1743609600000,
+    "adjunctUrl": "finalpage/2025-04-03/1222993920.PDF",
+    "adjunctSize": 3542,
+    "adjunctType": "PDF",
+    "storageTime": null,
+    "columnId": "250401||251302",
+    "pageColumn": "SHZB",
+    "announcementType": "01010503||010113||010301",
+    "associateAnnouncement": null,
+    "important": null,
+    "batchNum": null,
+    "announcementContent": "",
+    "orgName": null,
+    "tileSecName": "贵州茅台",
+    "shortTitle": "贵州茅台2024年<em>年度报告</em>",
+    "announcementTypeName": null,
+    "secNameList": null
+  }
+}

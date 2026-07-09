@@ -1,0 +1,21 @@
+case_id,company_code,retrieval_status,quality_status,lineage_status,pdf_url_present,pdf_downloaded,pdf_parsed,notes
+B2E001,000001,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B2E002,000002,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B2E003,000858,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B2E004,000651,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B2E005,600519,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B2E006,600036,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B2E007,601318,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B2E008,300059,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B2E009,300750,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B2E010,300124,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B2E011,688111,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B2E012,688599,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B2E013,000725,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B2E014,002415,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B2E015,601888,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B2E016,600276,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B2E017,601857,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B2E018,600000,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B2E019,000333,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B2E020,601628,found,pass,discovered,1,0,0,phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass

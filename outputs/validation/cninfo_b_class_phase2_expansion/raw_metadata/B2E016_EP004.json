@@ -1,0 +1,63 @@
+{
+  "case": {
+    "case_id": "B2E016",
+    "company_code": "600276",
+    "company_name": "恒瑞医药",
+    "market": "SSE主板",
+    "announcement_type": "periodic_report",
+    "target_endpoint": [
+      "EP001",
+      "EP004"
+    ],
+    "risk_level": "low",
+    "reason": "医药制造龙头；定期报告；manufacturing + known annual reports",
+    "phase2_include": "yes"
+  },
+  "mode": "live",
+  "cninfo_called": true,
+  "pdf_download_enabled": false,
+  "pdf_parse_enabled": false,
+  "record": {
+    "case_id": "B2E016",
+    "company_code": "600276",
+    "company_name": "恒瑞医药",
+    "endpoint_id": "EP004",
+    "announcement_id": "1222961962",
+    "announcement_title": "恒瑞医药2024年年度报告",
+    "announcement_time": "2025-03-30T16:00:00+00:00",
+    "announcement_category": "periodic_report",
+    "pdf_url": "http://static.cninfo.com.cn/finalpage/2025-03-31/1222961962.PDF",
+    "adjunct_url": "finalpage/2025-03-31/1222961962.PDF",
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_status": "found",
+    "quality_status": "pass",
+    "lineage_status": "discovered",
+    "error_type": "",
+    "notes": "phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass"
+  },
+  "raw_announcement": {
+    "id": null,
+    "secCode": "600276",
+    "secName": "恒瑞医药",
+    "orgId": "gssh0600276",
+    "announcementId": "1222961962",
+    "announcementTitle": "恒瑞医药2024年<em>年度报告</em>",
+    "announcementTime": 1743350400000,
+    "adjunctUrl": "finalpage/2025-03-31/1222961962.PDF",
+    "adjunctSize": 7530,
+    "adjunctType": "PDF",
+    "storageTime": null,
+    "columnId": "250401||251302",
+    "pageColumn": "SHZB",
+    "announcementType": "01010503||010113||010301",
+    "associateAnnouncement": null,
+    "important": null,
+    "batchNum": null,
+    "announcementContent": "",
+    "orgName": null,
+    "tileSecName": "恒瑞医药",
+    "shortTitle": "恒瑞医药2024年<em>年度报告</em>",
+    "announcementTypeName": null,
+    "secNameList": null
+  }
+}

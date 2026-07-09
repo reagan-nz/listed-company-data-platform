@@ -1,0 +1,63 @@
+{
+  "case": {
+    "case_id": "B2E008",
+    "company_code": "300059",
+    "company_name": "东方财富",
+    "market": "创业板",
+    "announcement_type": "general_announcement",
+    "target_endpoint": [
+      "EP001",
+      "EP005"
+    ],
+    "risk_level": "low",
+    "reason": "创业板金融科技；一般公告EP005；growth board bucket",
+    "phase2_include": "yes"
+  },
+  "mode": "live",
+  "cninfo_called": true,
+  "pdf_download_enabled": false,
+  "pdf_parse_enabled": false,
+  "record": {
+    "case_id": "B2E008",
+    "company_code": "300059",
+    "company_name": "东方财富",
+    "endpoint_id": "EP005",
+    "announcement_id": "1223911133",
+    "announcement_title": "东方财富信息股份有限公司关于签署最高额保证合同的公告",
+    "announcement_time": "2025-06-18T16:00:00+00:00",
+    "announcement_category": "general_announcement",
+    "pdf_url": "http://static.cninfo.com.cn/finalpage/2025-06-19/1223911133.PDF",
+    "adjunct_url": "finalpage/2025-06-19/1223911133.PDF",
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_status": "found",
+    "quality_status": "pass",
+    "lineage_status": "discovered",
+    "error_type": "",
+    "notes": "phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass"
+  },
+  "raw_announcement": {
+    "id": null,
+    "secCode": "300059",
+    "secName": "东方财富",
+    "orgId": "9900010488",
+    "announcementId": "1223911133",
+    "announcementTitle": "东方财富信息股份有限公司关于签署最高额保证合同的公告",
+    "announcementTime": 1750262400000,
+    "adjunctUrl": "finalpage/2025-06-19/1223911133.PDF",
+    "adjunctSize": 423,
+    "adjunctType": "PDF",
+    "storageTime": null,
+    "columnId": "09020202||160203||250301||251302",
+    "pageColumn": "SZCY",
+    "announcementType": "01010503||010112||010115||012327",
+    "associateAnnouncement": null,
+    "important": null,
+    "batchNum": null,
+    "announcementContent": "",
+    "orgName": null,
+    "tileSecName": "东方财富",
+    "shortTitle": "东方财富信息股份有限公司关于签署最高额保证合同的公告",
+    "announcementTypeName": null,
+    "secNameList": null
+  }
+}

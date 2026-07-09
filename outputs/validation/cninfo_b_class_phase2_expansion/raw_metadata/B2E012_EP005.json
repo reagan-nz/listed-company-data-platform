@@ -1,0 +1,63 @@
+{
+  "case": {
+    "case_id": "B2E012",
+    "company_code": "688599",
+    "company_name": "天合光能",
+    "market": "科创板",
+    "announcement_type": "general_announcement",
+    "target_endpoint": [
+      "EP001",
+      "EP005"
+    ],
+    "risk_level": "low",
+    "reason": "科创板光伏；STAR扩展；general announcement bucket",
+    "phase2_include": "yes"
+  },
+  "mode": "live",
+  "cninfo_called": true,
+  "pdf_download_enabled": false,
+  "pdf_parse_enabled": false,
+  "record": {
+    "case_id": "B2E012",
+    "company_code": "688599",
+    "company_name": "天合光能",
+    "endpoint_id": "EP005",
+    "announcement_id": "1223956820",
+    "announcement_title": "天合光能股份有限公司向不特定对象发行可转换公司债券2025年跟踪评级报告",
+    "announcement_time": "2025-06-23T16:00:00+00:00",
+    "announcement_category": "general_announcement",
+    "pdf_url": "http://static.cninfo.com.cn/finalpage/2025-06-24/1223956820.PDF",
+    "adjunct_url": "finalpage/2025-06-24/1223956820.PDF",
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_status": "found",
+    "quality_status": "pass",
+    "lineage_status": "discovered",
+    "error_type": "",
+    "notes": "phase2 expansion live; live metadata retrieved; PDF not downloaded; quality_checks_pass"
+  },
+  "raw_announcement": {
+    "id": null,
+    "secCode": "688599",
+    "secName": "天合光能",
+    "orgId": "GD155612",
+    "announcementId": "1223956820",
+    "announcementTitle": "天合光能股份有限公司向不特定对象发行可转换公司债券2025年跟踪评级报告",
+    "announcementTime": 1750694400000,
+    "adjunctUrl": "finalpage/2025-06-24/1223956820.PDF",
+    "adjunctSize": 3425,
+    "adjunctType": "PDF",
+    "storageTime": null,
+    "columnId": "251302||253201||2705",
+    "pageColumn": "SHKCB",
+    "announcementType": "01010503||01010907||010123||010999||0129",
+    "associateAnnouncement": null,
+    "important": null,
+    "batchNum": null,
+    "announcementContent": "",
+    "orgName": null,
+    "tileSecName": "天合光能",
+    "shortTitle": "天合光能股份有限公司向不特定对象发行可转换公司债券2025年跟踪评级报告",
+    "announcementTypeName": null,
+    "secNameList": null
+  }
+}
