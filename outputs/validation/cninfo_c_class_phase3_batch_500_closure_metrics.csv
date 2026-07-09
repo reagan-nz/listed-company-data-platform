@@ -1,0 +1,27 @@
+metric_group,metric_name,value,gate_impact,notes
+universe,input_companies,500,PASS_WITH_CAVEAT,phase3_batch_500_001 universe YAML
+universe,excluded_identity_caveat,9,PASS_WITH_CAVEAT,7 delisted_or_reorganized + 2 manual_identity_review
+universe,success_subset_companies,491,PASS_WITH_CAVEAT,500 minus 9 identity caveat
+harvest,raw_files,3500,PASS_WITH_CAVEAT,500 companies x 7 live direct sources
+harvest,normalized_files,4917,PASS_WITH_CAVEAT,includes derived sources
+harvest,harvest_complete_companies,487,PASS_WITH_CAVEAT,13 non-complete in batch
+harvest,harvest_gate,PASS_WITH_CAVEAT,terminal smoke + live harvest
+identity_triage,all_direct_failure_companies,9,PASS_WITH_CAVEAT,HTTP 500 business_code 9240002
+identity_triage,delisted_or_reorganized,7,PASS_WITH_CAVEAT,hard exclude from success subset
+identity_triage,manual_identity_review,2,PASS_WITH_CAVEAT,600705 601028 hold for manual review
+snapshot,snapshot_json,491,PASS,phase3_batch_500_success_snapshot_build_gate=PASS
+snapshot,snapshot_failed,0,PASS,build execute success 491 failed 0
+snapshot,valid_json,491,PASS_WITH_CAVEAT,phase3_batch_500_success_snapshot_qa_gate
+snapshot,duplicate_company_code,0,PASS_WITH_CAVEAT,QA integrity check
+snapshot,excluded_code_present,0,PASS_WITH_CAVEAT,9 caveat codes absent from snapshot output
+snapshot,snapshot_status_complete_with_caveat,491,PASS_WITH_CAVEAT,no pure complete snapshots
+quality,quality_flag_count,13110,PASS_WITH_CAVEAT,field_missing/info dominant; consistent with 863 pattern
+quality,module_caveat_modules,17,PASS_WITH_CAVEAT,modules with module_gate=PASS_WITH_CAVEAT in snapshot QA
+isolation,cninfo_calls_during_snapshot_build,0,PASS,offline build from normalized only
+isolation,cninfo_calls_during_qa,0,PASS,offline QA review only
+isolation,cninfo_calls_during_closure,0,PASS,documentation only
+isolation,raw_modified,false,PASS,closure did not modify harvest raw
+isolation,normalized_modified,false,PASS,closure did not modify harvest normalized
+isolation,full_snapshot_touched,false,PASS,863 JSON count unchanged
+isolation,phase2_snapshot_touched,false,PASS,188 JSON count unchanged
+closure,phase3_batch_500_closure_gate,PASS_WITH_CAVEAT,PASS_WITH_CAVEAT,491 success subset completed; not verified not production_ready

@@ -273,7 +273,10 @@ _最后更新：2026-07-09_
 164. ~~Phase 3 batch 500 success-subset snapshot dry-run planning + execution~~ → **完成**（§7dpr · **491** · JSON **0** · gate **`READY_FOR_DRYRUN`**）
 165. ~~Phase 3 batch 500 success-subset snapshot build approval package~~ → **完成**（§7dps · gate **`READY_FOR_APPROVAL`** · build **未执行**）
 166. ~~Phase 3 success-subset snapshot approval extension~~ → **完成**（§7dpt · test **11/11 PASS** · build **未执行**）
-167. **Phase 3 batch 500 success-subset snapshot build（显式用户批准）** → **待批准**
+167. ~~Phase 3 batch 500 success-subset snapshot build~~ → **完成**（§7dpu · **491** JSON · gate **PASS**）
+168. ~~Phase 3 success-subset snapshot QA review~~ → **完成**（§7dpv · test **6/6 PASS** · gate **`PASS_WITH_CAVEAT`**）
+169. ~~Phase 3 batch 500 closure review~~ → **完成**（§7dpw · gate **`PASS_WITH_CAVEAT`**）
+170. **Phase 3.5 batch planning 或 A/B/D integration planning** → **待启动**（见 [next-step recommendation](cninfo_c_class_phase3_next_step_recommendation.md)）
 172. ~~B 类 Phase 1 endpoint candidate 表 + minimum fields freeze review~~ → **完成**（§7dp · gate **`READY_FOR_APPROVAL`** · **无 B-class live**）
 164. ~~B 类 Phase 1 schema review package 准备~~ → **完成**（§7dq · gate **`READY_FOR_APPROVAL`** · **无 B-class live**）
 165. ~~B 类 Phase 1 schema signoff 准备~~ → **完成**（§7dr · signoff gate **`READY_FOR_IMPLEMENTATION`** · **无 B-class live**）
@@ -288,10 +291,15 @@ _最后更新：2026-07-09_
 174. ~~B 类 TLC002 isolated retry runner 实现~~ → **完成**（§7dxc · tests **10/10**）
 175. ~~B 类 TLC002 isolated retry 执行~~ → **完成**（§7dxd · **failure recovered**）
 176. ~~B 类 Phase 1 tiny live closure review~~ → **完成**（§7dxe · **5/5 resolved** · closure gate **`PASS_WITH_CAVEAT`** · **无 verified**）
-177. ~~D 类 Phase 0 市场行为层架构规划 + source discovery~~ → **完成**（§7dz · gate **`DESIGN_STARTED`** · **无 D-class live** · **C-class 不变**）
-178. ~~D 类 Phase 1 schema freeze review + offline lint~~ → **完成**（§7dza · gate **`READY_FOR_APPROVAL`** · lint **10/10 PASS** · **无 D-class live**）
-179. ~~D 类 Phase 1 schema freeze approval package~~ → **完成**（§7dzb · gate **`READY_FOR_APPROVAL`** · **未 signoff** · **无 D-class live**）
+177. ~~B 类 Phase 2 expansion planning package~~ → **完成**（§7dxf · universe draft **20** · planning gate **`READY_FOR_APPROVAL`** · **无 B-class live**）
+178. ~~B 类 Phase 2 expansion runner 离线准备~~ → **完成**（§7dxg · dry-run **20/20** · test **12/12 PASS** · runner gate **`READY_FOR_APPROVAL`** · **无 CNINFO**）
+179. ~~D 类 Phase 0 市场行为层架构规划 + source discovery~~ → **完成**（§7dz · gate **`DESIGN_STARTED`** · **无 D-class live** · **C-class 不变**）
+179. ~~D 类 Phase 1 schema freeze review + offline lint~~ → **完成**（§7dza · gate **`READY_FOR_APPROVAL`** · lint **10/10 PASS** · **无 D-class live**）
+180. ~~D 类 Phase 1 schema freeze approval package~~ → **完成**（§7dzb · gate **`READY_FOR_APPROVAL`** · **未 signoff** · **无 D-class live**）
 180. ~~D 类 Phase 1 freeze v1 offline implementation~~ → **完成**（§7dzc · implementation gate **`PASS_OFFLINE`** · lint **12/12 PASS** · **无 D-class live**）
+181. ~~D 类 Phase 1 ready-case benchmark 离线执行~~ → **完成**（§7dzd · benchmark gate **`READY_FOR_REVIEW`** · cases **7/7 PASS** · tests **8/8 PASS** · **无 D-class live**）
+182. ~~D 类 Phase 1 tiny live metadata 批准包准备~~ → **完成**（§7dze · tiny live gate **`READY_FOR_APPROVAL`** · universe **7** · **无 D-class live**）
+183. ~~D 类 tiny live validation runner 离线准备 + dry-run~~ → **完成**（§7dzf · runner gate **`READY_FOR_APPROVAL`** · tests **10/10 PASS** · **无 D-class live**）
 105. review_later / raw_only 复判 → **待启动**（31 + 25）
 106. company_snapshot planning → **待启动**（P2）
 107. dividend_history YAML backfill → **GO（决策 only）** · **不执行**
@@ -1815,7 +1823,66 @@ _最后更新：2026-07-09_
 
 ~~**人工批准后执行 full batch**~~ → **完成**（§7cc · 863 snapshot）。
 
-**下一步：Phase 3 batch 500 success-subset snapshot build 显式用户批准** — approval extension **完成**（§7dpt · gate **`READY_FOR_APPROVAL`** · build **未执行**）。
+**下一步：Phase 3.5 batch planning 或 A/B/D integration planning** — Phase 3 batch 500 closure **完成**（§7dpw · gate **`PASS_WITH_CAVEAT`**）。
+
+---
+
+## 7dpw. Phase 4 C 类 Phase 3 Batch 500 Closure Review（2026-07-09）
+
+| 项 | 内容 |
+|----|------|
+| closure review | [cninfo_c_class_phase3_batch_500_closure_review.md](cninfo_c_class_phase3_batch_500_closure_review.md) |
+| closure metrics | [cninfo_c_class_phase3_batch_500_closure_metrics.csv](../outputs/validation/cninfo_c_class_phase3_batch_500_closure_metrics.csv) |
+| closure summary | [cninfo_c_class_phase3_batch_500_closure_summary.md](../outputs/validation/cninfo_c_class_phase3_batch_500_closure_summary.md) |
+| next-step recommendation | [cninfo_c_class_phase3_next_step_recommendation.md](cninfo_c_class_phase3_next_step_recommendation.md) |
+| input companies | **500** |
+| excluded identity caveat | **9** |
+| success subset | **491** |
+| snapshot JSON | **491** |
+| closure gate | **`phase3_batch_500_closure_gate = PASS_WITH_CAVEAT`** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- 离线 closure 完成；**CNINFO calls = 0** · snapshot JSON / raw / normalized **未修改**
+- **非 verified** · **非 production_ready** · **非 full-market**
+
+### Next immediate task
+
+**Phase 3.5 batch planning**（Option A）或 **A/B/D integration planning**（Option D）
+
+**红线：** **no verified** · **no Phase 4 full expansion yet**
+
+---
+
+## 7dpv. Phase 4 C 类 Phase 3 Success-Subset Snapshot QA Review（2026-07-09）
+
+| 项 | 内容 |
+|----|------|
+| QA reviewer | [review_cninfo_c_class_phase3_batch_500_success_snapshot_quality.py](../lab/review_cninfo_c_class_phase3_batch_500_success_snapshot_quality.py) |
+| test script | [test_cninfo_c_class_phase3_batch_500_success_snapshot_quality_review.py](../lab/test_cninfo_c_class_phase3_batch_500_success_snapshot_quality_review.py) |
+| completeness report | [cninfo_c_class_phase3_batch_500_success_snapshot_completeness_report.csv](../outputs/validation/cninfo_c_class_phase3_batch_500_success_snapshot_completeness_report.csv) |
+| module coverage | [cninfo_c_class_phase3_batch_500_success_snapshot_module_coverage.csv](../outputs/validation/cninfo_c_class_phase3_batch_500_success_snapshot_module_coverage.csv) |
+| quality flags | [cninfo_c_class_phase3_batch_500_success_snapshot_quality_flags.csv](../outputs/validation/cninfo_c_class_phase3_batch_500_success_snapshot_quality_flags.csv) |
+| QA summary | [cninfo_c_class_phase3_batch_500_success_snapshot_qa_summary.md](../outputs/validation/cninfo_c_class_phase3_batch_500_success_snapshot_qa_summary.md) |
+| status CSV | `outputs/snapshot/cninfo_c_class/phase3_batch_500_001_success/quality/company_snapshot_status.csv` |
+| json_count | **491** |
+| valid_json_count | **491** |
+| excluded_code_present_count | **0** |
+| test result | **6/6 PASS** |
+| QA gate | **`phase3_batch_500_success_snapshot_qa_gate = PASS_WITH_CAVEAT`** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- 离线 QA 完成；**无 CNINFO** · **无 rebuild** · snapshot JSON **未修改**（status CSV 已校正）
+- full（**863**）/ phase2（**188**）snapshot 未触碰
+
+### Next immediate task
+
+**Phase 3 closure review**（不推荐 Phase 4 / full expansion 直至 closure 完成）
+
+**红线：** **no verified** · **no harvest rerun**
 
 ---
 
@@ -1998,6 +2065,97 @@ _最后更新：2026-07-09_
 **等待用户显式批准 Phase 3 batch 500 live harvest**
 
 **红线：** **no live**（未经批准） · **no verified**
+
+---
+
+## 7dzj. A 类 Phase 1 Tiny Live Metadata Validation 执行（2026-07-09）
+
+> **用户已批准** `--approve-a-class-tiny-live-metadata` · metadata only · **无 PDF 下载/解析**
+
+| 项 | 内容 |
+|----|------|
+| live report | [a_class_tiny_live_metadata_report.csv](../outputs/validation/cninfo_a_class_tiny_live_metadata/reports/a_class_tiny_live_metadata_report.csv) |
+| live summary | [a_class_tiny_live_metadata_summary.md](../outputs/validation/cninfo_a_class_tiny_live_metadata/reports/a_class_tiny_live_metadata_summary.md) |
+| quality report | [a_class_tiny_live_metadata_quality_report.csv](../outputs/validation/cninfo_a_class_tiny_live_metadata/reports/a_class_tiny_live_metadata_quality_report.csv) |
+| execution gate | **`a_class_tiny_live_metadata_execution_gate = PASS_WITH_CAVEAT`**（**不是 PASS · 不是 verified**） |
+| CNINFO requests | **10**（topSearch **5** + hisAnnouncement **5**） |
+| metadata found | **5/5** |
+| PDF downloaded / parsed | **0 / 0** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`**（不变） |
+| B-class / D-class outputs | **UNTOUCHED** |
+
+### 执行结论
+
+- ALM001–ALM005 全部 `retrieval_status=found`；`pdf_downloaded=no` · `pdf_parsed=no`
+- Caveats：ALM001/ALM005 命中半年报非年报；ALM003 universe 公司名与代码不一致；ALM004 英文版 title 漏过 exclusion
+- **无 verified** · **无 production_ready** · **无 testing_stable_sample 升级**
+
+### Next immediate task（A-class）
+
+review live caveats → 修正 universe / title-period 匹配 → 决定是否扩大样本或更新 registry `live_validation_status`。
+
+---
+
+## 7dzi. A 类 Phase 1 Tiny Live Metadata Runner（2026-07-09）
+
+> **并行约束：** 本轮 **不调用 CNINFO**、**不 live**、**不下载 PDF**、**不解析 PDF**；**不修改 B-class / C-class / D-class 既有输出**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [lab/run_cninfo_a_class_tiny_live_metadata_validation.py](../lab/run_cninfo_a_class_tiny_live_metadata_validation.py) |
+| tests | [lab/test_cninfo_a_class_tiny_live_metadata_validation_runner.py](../lab/test_cninfo_a_class_tiny_live_metadata_validation_runner.py)（**9/9 PASS**） |
+| dry-run report | [a_class_tiny_live_metadata_dryrun_report.csv](../outputs/validation/cninfo_a_class_tiny_live_metadata/reports/a_class_tiny_live_metadata_dryrun_report.csv) |
+| dry-run summary | [a_class_tiny_live_metadata_dryrun_summary.md](../outputs/validation/cninfo_a_class_tiny_live_metadata/reports/a_class_tiny_live_metadata_dryrun_summary.md) |
+| extension summary | [cninfo_a_class_tiny_live_metadata_runner_extension_summary.md](../outputs/validation/cninfo_a_class_tiny_live_metadata_runner_extension_summary.md) |
+| approval flag | `--approve-a-class-tiny-live-metadata` |
+| output root | `outputs/validation/cninfo_a_class_tiny_live_metadata/` |
+| runner gate | **`a_class_tiny_live_metadata_runner_gate = READY_FOR_APPROVAL`**（**不是 PASS · 不是 live_ready**） |
+| CNINFO calls | **0** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`**（不变） |
+| B-class outputs | **UNTOUCHED** |
+| D-class outputs | **UNTOUCHED** |
+
+### 执行结论
+
+- default mode = dry-run · live 须 `--approve-a-class-tiny-live-metadata`
+- dry-run ALM001–ALM005 全 **planned_ok**
+- PDF download / parse / OCR / extraction **永久禁用**
+- live CNINFO path **reserved · 未执行**
+- 本轮 **无 CNINFO** · **无 live** · **无 PDF** · **无 verified**
+
+### Next immediate task（A-class · human approval）
+
+用户显式批准 tiny live metadata → 未来回合执行 isolated live metadata validation（**仍无 PDF**）。
+
+---
+
+## 7dzh. A 类 Phase 1 Tiny Live Metadata Approval Package（2026-07-09）
+
+> **并行约束：** 本轮 **不调用 CNINFO**、**不 live**、**不下载 PDF**、**不解析 PDF**；**不修改 B-class / C-class / D-class 既有输出**。
+
+| 项 | 内容 |
+|----|------|
+| approval checklist | [cninfo_a_class_phase1_tiny_live_metadata_approval_checklist.md](../outputs/validation/cninfo_a_class_phase1_tiny_live_metadata_approval_checklist.md) |
+| tiny universe | [cninfo_a_class_phase1_tiny_live_metadata_universe.csv](../outputs/validation/cninfo_a_class_phase1_tiny_live_metadata_universe.csv)（**5** 家 · ALM001–ALM005） |
+| command draft | [cninfo_a_class_phase1_tiny_live_metadata_command_draft.md](cninfo_a_class_phase1_tiny_live_metadata_command_draft.md)（**NOT APPROVED**） |
+| approval summary | [cninfo_a_class_phase1_tiny_live_metadata_approval_summary.md](../outputs/validation/cninfo_a_class_phase1_tiny_live_metadata_approval_summary.md) |
+| tiny live gate | **`a_class_phase1_tiny_live_metadata_gate = READY_FOR_APPROVAL`**（**不是 PASS · 不是 verified**） |
+| output isolation root | `outputs/validation/cninfo_a_class_tiny_live_metadata/` |
+| CNINFO calls | **0** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`**（不变） |
+| B-class outputs | **UNTOUCHED** |
+| D-class outputs | **UNTOUCHED** |
+
+### 执行结论
+
+- ready-case benchmark（AC001–AC005）审阅完成 → tiny live approval package 已准备
+- universe 覆盖 annual / semi_annual / quarterly（registry `phase1_in_scope` source only）
+- runner `validate_cninfo_a_class_phase1_tiny_live_metadata.py` **未实现**
+- 本轮 **无 CNINFO** · **无 live** · **无 PDF** · **无 verified**
+
+### Next immediate task（A-class · human approval）
+
+用户显式批准 tiny live metadata → 未来回合实现 runner + isolated live metadata validation（**仍无 PDF**）。
 
 ---
 
@@ -2362,9 +2520,72 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 ### Next immediate task（B-class）
 
-~~B 类 Phase 1 tiny live closure review~~ → **已完成**（§7dxe）
+~~B 类 Phase 2 expansion runner 离线准备~~ → **已完成**（§7dxg）
 
-**B-class Phase 2 规划 / 扩大样本设计**（仍无 PDF · 无 verified · 无 production_ready）
+**人工批准 Phase 2 runner + 样本规模 → `--approve-b-class-phase2-expansion` live**（仍无 PDF · 无 verified）
+
+---
+
+## 7dxg. B 类 Phase 2 Expansion Runner 离线准备（2026-07-09）
+
+> **并行约束：** runner 准备 only；**无 CNINFO** · **无 live** · **schema 不变**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [lab/run_cninfo_b_class_phase2_expansion_validation.py](../lab/run_cninfo_b_class_phase2_expansion_validation.py) |
+| tests | [lab/test_cninfo_b_class_phase2_expansion_runner.py](../lab/test_cninfo_b_class_phase2_expansion_runner.py)（**12/12 PASS**） |
+| extension summary | [cninfo_b_class_phase2_expansion_runner_extension_summary.md](../outputs/validation/cninfo_b_class_phase2_expansion_runner_extension_summary.md) |
+| dry-run report | [b_class_phase2_expansion_dryrun_report.csv](../outputs/validation/cninfo_b_class_phase2_expansion/reports/b_class_phase2_expansion_dryrun_report.csv) |
+| dry-run summary | [b_class_phase2_expansion_dryrun_summary.md](../outputs/validation/cninfo_b_class_phase2_expansion/reports/b_class_phase2_expansion_dryrun_summary.md) |
+| output root | `outputs/validation/cninfo_b_class_phase2_expansion/` |
+| approval flag | `--approve-b-class-phase2-expansion` |
+| universe size | **20** |
+| dry-run cases | **20/20 planned_ok** |
+| runner gate | **`b_class_phase2_expansion_runner_gate = READY_FOR_APPROVAL`** |
+| CNINFO calls | **0** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- dry-run default · approval gate · output isolation · 20-case universe enforced
+- PDF/DB/MinIO/RAG/verified/production_ready blocked
+- **不是 PASS** · **不是 live_ready** · **不是 verified**
+
+### Next immediate task（B-class）
+
+**人工批准 → `--live --approve-b-class-phase2-expansion`**（未来回合）
+
+---
+
+## 7dxf. B 类 Phase 2 Expansion Planning Package（2026-07-09）
+
+> **并行约束：** 离线规划 only；**无 CNINFO** · **无 live** · **无 retry** · **schema 不变**。
+
+| 项 | 内容 |
+|----|------|
+| expansion plan | [cninfo_b_class_phase2_expansion_plan.md](cninfo_b_class_phase2_expansion_plan.md) |
+| candidate universe design | [cninfo_b_class_phase2_candidate_universe_design.csv](../outputs/validation/cninfo_b_class_phase2_candidate_universe_design.csv) |
+| universe draft | [cninfo_b_class_phase2_expansion_universe_draft.csv](../outputs/validation/cninfo_b_class_phase2_expansion_universe_draft.csv)（**20** 家） |
+| command draft | [cninfo_b_class_phase2_expansion_command_draft.md](cninfo_b_class_phase2_expansion_command_draft.md) |
+| approval checklist | [cninfo_b_class_phase2_expansion_approval_checklist.md](../outputs/validation/cninfo_b_class_phase2_expansion_approval_checklist.md) |
+| approval summary | [cninfo_b_class_phase2_expansion_approval_summary.md](../outputs/validation/cninfo_b_class_phase2_expansion_approval_summary.md) |
+| output root (planned) | `outputs/validation/cninfo_b_class_phase2_expansion/` |
+| approval flag (planned) | `--approve-b-class-phase2-expansion` |
+| sample options | A=**20** · B=**50** · C=**100**（**未自动选定**） |
+| Phase 1 closure gate | **`PASS_WITH_CAVEAT`**（保持） |
+| planning gate | **`b_class_phase2_expansion_planning_gate = READY_FOR_APPROVAL`** |
+| CNINFO calls | **0** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- expansion plan · universe design · 20-company draft · command draft · approval package 已生成
+- 建议从 Option A（20）或 B（50）起步，暂不直接 100（Phase 1 TLC002 transient network error）
+- **不是 PASS** · **不是 live_ready** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task（B-class）
+
+**人工批准样本规模 → runner 扩展 → `--approve-b-class-phase2-expansion` live**
 
 ---
 
@@ -2394,7 +2615,9 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 ### Next immediate task（B-class）
 
-**Phase 2 规划 / 扩大样本设计**（offline first）
+~~Phase 2 规划 / 扩大样本设计~~ → **已完成**（§7dxf）
+
+**人工批准 Phase 2 样本规模 → runner 扩展 → live expansion**
 
 ---
 
@@ -2635,6 +2858,110 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 **人工 signoff schema freeze** → harvest architecture 规划（**仍无 live**）
 
 **红线：** **no CNINFO** · **no live** · **implementation gate 不是 PASS**（production）
+
+---
+
+## 7dzd. D 类 Phase 1 Ready-case Benchmark 离线执行（2026-07-09）
+
+> **并行约束：** C-class `SNAPSHOT_GENERATED_QA_REVIEW` 不变；A/B-class 输出未触碰；本轮 **不调用 CNINFO**、**不 live**、**不 harvest**。
+
+| 项 | 内容 |
+|----|------|
+| benchmark runner | [run_cninfo_d_class_phase1_ready_case_benchmark.py](../lab/run_cninfo_d_class_phase1_ready_case_benchmark.py) |
+| benchmark CSV | [cninfo_d_class_phase1_ready_case_benchmark.csv](../outputs/validation/cninfo_d_class_phase1_ready_case_benchmark.csv) |
+| benchmark summary | [cninfo_d_class_phase1_ready_case_benchmark_summary.md](../outputs/validation/cninfo_d_class_phase1_ready_case_benchmark_summary.md) |
+| tests | [test_cninfo_d_class_phase1_ready_case_benchmark.py](../lab/test_cninfo_d_class_phase1_ready_case_benchmark.py)（**8/8 PASS**） |
+| ready cases | **DC001–DC007** · **7/7 PASS** |
+| field catalog ref | [cninfo_d_class_phase1_freeze_v1_field_catalog.csv](../outputs/validation/cninfo_d_class_phase1_freeze_v1_field_catalog.csv) |
+| quality policy ref | [cninfo_d_class_event_quality_policy.md](cninfo_d_class_event_quality_policy.md) |
+| benchmark gate | **`d_class_ready_case_benchmark_gate = READY_FOR_REVIEW`**（**不是 PASS** · **不是 live_ready**） |
+| implementation gate | **`d_class_phase1_freeze_v1_implementation_gate = PASS_OFFLINE`**（不变） |
+| schema freeze gate | **`d_class_phase1_schema_freeze_gate = READY_FOR_APPROVAL`**（不变） |
+| CNINFO calls | **0** |
+| D-class live | **NOT EXECUTED** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`**（不变） |
+
+### 执行结论
+
+- DC001/DC004 `empty_but_valid` · DC002–DC006 `captured_pass` · DC007 `needs_review_accepted`
+- 对照 freeze v1 field catalog 校验 required 字段；quality policy 覆盖 retrieval/quality/lineage
+- 测试确认无 CNINFO/网络调用 · removed 字段 absent · 无 verified · 无 testing_stable_sample 升级
+- 本轮 **无 CNINFO** · **无 live** · **无 harvest**
+
+### Next immediate task（D-class · offline / human）
+
+**人工 review benchmark summary** → harvest architecture 规划（**仍无 live**）
+
+**红线：** **no CNINFO** · **no live** · **benchmark gate 不是 PASS**
+
+---
+
+## 7dze. D 类 Phase 1 Tiny Live Metadata 批准包准备（2026-07-09）
+
+> **并行约束：** C-class `SNAPSHOT_GENERATED_QA_REVIEW` 不变；A/B-class 输出未触碰；本轮 **不调用 CNINFO**、**不 live**、**不 harvest**。
+
+| 项 | 内容 |
+|----|------|
+| approval checklist | [cninfo_d_class_phase1_tiny_live_approval_checklist.md](../outputs/validation/cninfo_d_class_phase1_tiny_live_approval_checklist.md) |
+| tiny universe | [cninfo_d_class_phase1_tiny_live_universe.csv](../outputs/validation/cninfo_d_class_phase1_tiny_live_universe.csv)（**7** 家 · DLC001–DLC007） |
+| command draft | [cninfo_d_class_phase1_tiny_live_command_draft.md](cninfo_d_class_phase1_tiny_live_command_draft.md) |
+| approval summary | [cninfo_d_class_phase1_tiny_live_approval_summary.md](../outputs/validation/cninfo_d_class_phase1_tiny_live_approval_summary.md) |
+| output root (planned) | `outputs/validation/cninfo_d_class_tiny_live_validation/` |
+| approval flag (planned) | `--approve-d-class-tiny-live-validation` |
+| component scope | **7** 源（margin_trading · block_trade · restricted_shares_unlock · disclosure_schedule · equity_pledge · shareholder_change · executive_shareholding） |
+| executed endpoints | **NONE** |
+| CNINFO calls | **0** |
+| tiny live gate | **`d_class_phase1_tiny_live_validation_gate = READY_FOR_APPROVAL`** |
+| benchmark gate | **`d_class_ready_case_benchmark_gate = READY_FOR_REVIEW`**（不变） |
+| implementation gate | **`d_class_phase1_freeze_v1_implementation_gate = PASS_OFFLINE`**（不变） |
+| D-class live | **NOT EXECUTED** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`**（不变） |
+
+### 执行结论
+
+- tiny universe **7** cases：4 captured_normal · 2 empty_but_valid · 1 needs_review_candidate
+- 批准 checklist · command draft · isolation root 已定义；runner **未实现**
+- 本轮 **无 CNINFO** · **无 live** · **无 harvest** · **无 verified**
+
+### Next immediate task（D-class · human）
+
+**用户显式批准 tiny live metadata** → 未来回合实现 runner + isolated live
+
+**红线：** **no live** until explicit approval · **gate 不是 PASS** · **不是 live_ready**
+
+---
+
+## 7dzf. D 类 Tiny Live Validation Runner 离线准备 + Dry-run（2026-07-09）
+
+> **并行约束：** C-class `SNAPSHOT_GENERATED_QA_REVIEW` 不变；A/B-class 输出未触碰；本轮 **不调用 CNINFO**、**不 live**、**不 harvest**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_d_class_tiny_live_validation.py](../lab/run_cninfo_d_class_tiny_live_validation.py) |
+| tests | [test_cninfo_d_class_tiny_live_validation_runner.py](../lab/test_cninfo_d_class_tiny_live_validation_runner.py)（**10/10 PASS**） |
+| dry-run report | [d_class_tiny_live_dryrun_report.csv](../outputs/validation/cninfo_d_class_tiny_live_validation/reports/d_class_tiny_live_dryrun_report.csv) |
+| dry-run summary | [d_class_tiny_live_dryrun_summary.md](../outputs/validation/cninfo_d_class_tiny_live_validation/reports/d_class_tiny_live_dryrun_summary.md) |
+| extension summary | [cninfo_d_class_tiny_live_runner_extension_summary.md](../outputs/validation/cninfo_d_class_tiny_live_runner_extension_summary.md) |
+| approval flag | `--approve-d-class-tiny-live-validation`（live 须显式批准 · **本回合未启用 live probe**） |
+| output root | `outputs/validation/cninfo_d_class_tiny_live_validation/` |
+| dry-run cases | **7/7 planned** · DLC001–DLC007 |
+| runner gate | **`d_class_tiny_live_runner_gate = READY_FOR_APPROVAL`** |
+| tiny live gate | **`d_class_phase1_tiny_live_validation_gate = READY_FOR_APPROVAL`**（不变） |
+| CNINFO calls | **0** |
+| D-class live | **NOT EXECUTED**（live stub only） |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`**（不变） |
+
+### 执行结论
+
+- runner default dry-run；live 须 `--approve-d-class-tiny-live-validation`；错误 flag / DB / MinIO / RAG / verified 均拒绝
+- dry-run 生成 7 case 计划报告；输出根隔离 enforced
+- 测试 **10/10 PASS**；**无 CNINFO** · **无 live probe 实现**
+
+### Next immediate task（D-class · human）
+
+**用户显式批准 tiny live** → 未来回合实现 live metadata probe + isolated execution
+
+**红线：** **no live** until explicit approval · **runner gate 不是 PASS**
 
 ---
 
@@ -4771,7 +5098,7 @@ P0 duplicate → P1 BSE legacy → P2 rename → P3 high risk manual → P4 low 
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **863 snapshot 已生成**（§7cc）；**`SNAPSHOT_GENERATED_QA_REVIEW`**；Phase 3 success-subset snapshot approval extension **完成**（§7dpt · gate **`READY_FOR_APPROVAL`** · build **未执行**）；**下一步** 显式用户批准。**并行：A 类 ready-case benchmark 已完成**（§7dzg · **5/5 PASS** · gate **`READY_FOR_REVIEW`** · **无 CNINFO**）。**BSE legacy** HOLD。
+当前 Phase：C 类 **863 snapshot 已生成**（§7cc）；**`SNAPSHOT_GENERATED_QA_REVIEW`**；Phase 3 batch 500 closure **完成**（§7dpw · gate **`PASS_WITH_CAVEAT`**）；**下一步** Phase 3.5 planning 或 A/B/D integration。**并行：A 类 tiny live metadata validation 已执行**（§7dzj · **5/5 found** · gate **`PASS_WITH_CAVEAT`** · CNINFO **10** · **无 PDF** · **无 verified**）。**BSE legacy** HOLD。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

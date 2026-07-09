@@ -61,6 +61,32 @@ FULL_SNAPSHOT_BATCH_APPROVAL_REQUIRED = "FULL_SNAPSHOT_BATCH_APPROVAL_REQUIRED"
 PHASE2_SMOKE_188_SAMPLE_BASENAME = "eval_companies_c_class_phase2_smoke_188_snapshot.yaml"
 PHASE2_SMOKE_188_EXPECTED_COUNT = 188
 PHASE2_SMOKE_188_APPROVAL_REQUIRED = "PHASE2_SMOKE_188_SNAPSHOT_APPROVAL_REQUIRED"
+PHASE2_SNAPSHOT_OUTPUT_ROOT_REL = "outputs/snapshot/cninfo_c_class/phase2_smoke_188"
+
+PHASE3_SUCCESS_SNAPSHOT_SAMPLE_BASENAME = (
+    "eval_companies_c_class_phase3_batch_500_success_snapshot_491.yaml"
+)
+PHASE3_SUCCESS_SNAPSHOT_EXPECTED_COUNT = 491
+PHASE3_SUCCESS_SNAPSHOT_OUTPUT_ROOT_REL = (
+    "outputs/snapshot/cninfo_c_class/phase3_batch_500_001_success"
+)
+PHASE3_SUCCESS_SNAPSHOT_HARVEST_ROOT_REL = (
+    "outputs/harvest/cninfo_c_class/phase3_batch_500_001"
+)
+PHASE3_SUCCESS_SNAPSHOT_APPROVAL_REQUIRED = "PHASE3_SUCCESS_SNAPSHOT_APPROVAL_REQUIRED"
+PHASE3_FULL_SNAPSHOT_APPROVAL_REJECTED = "PHASE3_FULL_SNAPSHOT_APPROVAL_REJECTED"
+PHASE3_OUTPUT_ROOT_MISMATCH = "PHASE3_OUTPUT_ROOT_MISMATCH"
+PHASE3_UNIVERSE_COUNT_MISMATCH = "PHASE3_UNIVERSE_COUNT_MISMATCH"
+PHASE3_EXCLUDED_CODES_PRESENT = "PHASE3_EXCLUDED_CODES_PRESENT"
+PHASE3_FULL_SNAPSHOT_ISOLATION_VIOLATION = "PHASE3_FULL_SNAPSHOT_ISOLATION_VIOLATION"
+PHASE3_PHASE2_SNAPSHOT_ISOLATION_VIOLATION = "PHASE3_PHASE2_SNAPSHOT_ISOLATION_VIOLATION"
+
+PHASE3_EXCLUDED_IDENTITY_CAVEAT_CODES = frozenset({
+    "600102", "600270", "600317", "600625", "600627",
+    "600705", "600840", "601028", "601989",
+})
+
+FULL_SNAPSHOT_OUT_DIR_REL = "outputs/snapshot/cninfo_c_class/full"
 
 
 def configure_snapshot_batch_paths(
@@ -92,21 +118,99 @@ def is_phase2_smoke_188_sample(sample_path: str) -> bool:
     return norm.endswith(PHASE2_SMOKE_188_SAMPLE_BASENAME)
 
 
+def is_phase3_success_snapshot_sample(sample_path: str) -> bool:
+    norm = sample_path.replace("\\", "/")
+    return norm.endswith(PHASE3_SUCCESS_SNAPSHOT_SAMPLE_BASENAME)
+
+
+def is_full_snapshot_universe_sample(sample_path: str) -> bool:
+    norm = sample_path.replace("\\", "/")
+    return norm.endswith(os.path.basename(UNIVERSE_YAML))
+
+
+def _norm_abs_path(path: str) -> str:
+    return os.path.normpath(path).replace("\\", "/")
+
+
+def enforce_phase3_success_snapshot_preflight(
+    sample_path: str,
+    output_dir: str,
+    companies: List[Dict[str, str]],
+) -> None:
+    """Phase 3 success-subset build 前隔离与 universe 校验。"""
+    if not is_phase3_success_snapshot_sample(sample_path):
+        return
+
+    norm_out = _norm_abs_path(output_dir).rstrip("/")
+    expected_out = _norm_abs_path(
+        os.path.join(BASE_DIR, PHASE3_SUCCESS_SNAPSHOT_OUTPUT_ROOT_REL)
+    ).rstrip("/")
+    if norm_out != expected_out:
+        print(f"{PHASE3_OUTPUT_ROOT_MISMATCH}: {norm_out}", file=sys.stderr)
+        raise SystemExit(2)
+
+    if len(companies) != PHASE3_SUCCESS_SNAPSHOT_EXPECTED_COUNT:
+        print(
+            f"{PHASE3_UNIVERSE_COUNT_MISMATCH}: {len(companies)}",
+            file=sys.stderr,
+        )
+        raise SystemExit(2)
+
+    codes = {c["company_code"] for c in companies}
+    overlap = sorted(codes & PHASE3_EXCLUDED_IDENTITY_CAVEAT_CODES)
+    if overlap:
+        print(f"{PHASE3_EXCLUDED_CODES_PRESENT}: {overlap}", file=sys.stderr)
+        raise SystemExit(2)
+
+    full_dir = _norm_abs_path(os.path.join(BASE_DIR, FULL_SNAPSHOT_OUT_DIR_REL)).rstrip("/")
+    phase2_dir = _norm_abs_path(
+        os.path.join(BASE_DIR, PHASE2_SNAPSHOT_OUTPUT_ROOT_REL)
+    ).rstrip("/")
+    if norm_out == full_dir or norm_out.startswith(full_dir + "/"):
+        print(PHASE3_FULL_SNAPSHOT_ISOLATION_VIOLATION, file=sys.stderr)
+        raise SystemExit(2)
+    if norm_out == phase2_dir or norm_out.startswith(phase2_dir + "/"):
+        print(PHASE3_PHASE2_SNAPSHOT_ISOLATION_VIOLATION, file=sys.stderr)
+        raise SystemExit(2)
+
+
 def resolve_execute_mode(args: argparse.Namespace, sample_path: str) -> str:
     if sample_path and is_phase2_smoke_188_sample(sample_path):
         if getattr(args, "approve_phase2_smoke_188_snapshot", False):
             return "phase2_smoke_188"
         return ""
+    if sample_path and is_phase3_success_snapshot_sample(sample_path):
+        if getattr(args, "approve_phase3_success_snapshot_build", False):
+            return "phase3_success_snapshot"
+        return ""
     if args.approve_full_snapshot_batch:
+        if sample_path and (
+            is_phase3_success_snapshot_sample(sample_path)
+            or is_phase2_smoke_188_sample(sample_path)
+        ):
+            return ""
+        if getattr(args, "approve_phase3_success_snapshot_build", False):
+            return ""
         return "full"
     return ""
 
 
 def enforce_execute_approval(args: argparse.Namespace, sample_path: str) -> str:
+    if sample_path and is_phase3_success_snapshot_sample(sample_path):
+        if args.approve_full_snapshot_batch:
+            print(PHASE3_FULL_SNAPSHOT_APPROVAL_REJECTED, file=sys.stderr)
+            raise SystemExit(2)
+    if sample_path and is_full_snapshot_universe_sample(sample_path):
+        if getattr(args, "approve_phase3_success_snapshot_build", False):
+            print(FULL_SNAPSHOT_BATCH_APPROVAL_REQUIRED, file=sys.stderr)
+            raise SystemExit(2)
+
     mode = resolve_execute_mode(args, sample_path)
     if not mode:
         if sample_path and is_phase2_smoke_188_sample(sample_path):
             print(PHASE2_SMOKE_188_APPROVAL_REQUIRED, file=sys.stderr)
+        elif sample_path and is_phase3_success_snapshot_sample(sample_path):
+            print(PHASE3_SUCCESS_SNAPSHOT_APPROVAL_REQUIRED, file=sys.stderr)
         else:
             print(FULL_SNAPSHOT_BATCH_APPROVAL_REQUIRED, file=sys.stderr)
         raise SystemExit(2)
@@ -640,6 +744,11 @@ def main() -> int:
         help="显式批准 Phase 2 smoke 188 snapshot batch 执行",
     )
     parser.add_argument(
+        "--approve-phase3-success-snapshot-build",
+        action="store_true",
+        help="显式批准 Phase 3 batch 500 success-subset（491）snapshot build",
+    )
+    parser.add_argument(
         "--sample-file",
         default=None,
         help="universe YAML 路径（优先于 --universe-file）",
@@ -720,6 +829,7 @@ def main() -> int:
     configure_snapshot_batch_paths(harvest_root=args.harvest_root, output_dir=args.output_dir)
 
     companies, universe_meta = load_universe_yaml(sample_file)
+    enforce_phase3_success_snapshot_preflight(sample_file, FULL_OUT_DIR, companies)
     hold_codes = load_hold_codes(HOLD_YAML)
     declared_count = universe_meta.get("company_count")
     expected_count = declared_count if declared_count is not None else len(companies)
