@@ -82,11 +82,19 @@ outputs/db/*.db-journal
 outputs/harvest/cninfo_c_class/raw/
 outputs/harvest/cninfo_c_class/normalized/
 outputs/harvest/cninfo_c_class/quality/
-# Phase 2 isolated harvest root (post-approval live writes)
-outputs/harvest/cninfo_c_class/phase2_smoke_200/
+# 隔离批次 harvest 根目录（phase2 smoke / phase3 batch 等 live 写入）
+outputs/harvest/cninfo_c_class/phase*/
 # Transient harvest resume markers (any output root)
 outputs/harvest/**/run_status.json
 outputs/harvest/**/company_harvest_status.csv
+
+# C-class 逐行 validation 大表（脚本可重跑；保留 *_summary.md 与小表）
+outputs/validation/cninfo_c_class_phase*_harvest_dryrun_report.csv
+outputs/validation/cninfo_c_class_phase*_harvest_output_root_dryrun_report.csv
+outputs/validation/cninfo_c_class_phase*_live_harvest_report.csv
+outputs/validation/cninfo_c_class_phase*_live_harvest_qa_report.csv
+outputs/validation/cninfo_c_class_phase*_selection_matrix.csv
+outputs/validation/cninfo_c_class_phase*_snapshot_quality_flags.csv
 
 # CNINFO C-class snapshot JSON batches (regenerate from harvest; keep validation summaries)
 outputs/snapshot/
