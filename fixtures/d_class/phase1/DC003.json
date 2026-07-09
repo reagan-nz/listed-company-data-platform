@@ -1,0 +1,41 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class Phase1 freeze v1 ready case DC003 — restricted_shares_unlock 正常捕获",
+    "ready_case_id": "DC003",
+    "phase1_freeze": "v1",
+    "component": "restricted_shares_unlock",
+    "case_type": "captured_normal",
+    "cninfo_called": false,
+    "synthetic": true
+  },
+  "market_event": {
+    "event_id": "fixture_dc003_unlock_999103_20260110",
+    "company_code": "999103",
+    "event_type": "restricted_shares_unlock",
+    "event_time": "2026-01-10",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/liftBan/detail",
+    "source_record_id": "fixture_raw_unlock_dc003",
+    "event_status": "captured",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "restricted_shares_unlock",
+      "query_mode": "tdate_daily",
+      "query_params": {
+        "tdate": "2026-01-10"
+      },
+      "fetch_time": "2026-07-09T08:00:00+08:00",
+      "raw_record_hash": "sha256:synthetic_unlock_dc003",
+      "lineage_status": "discovered"
+    }
+  },
+  "restricted_shares_unlock": {
+    "company_code": "999103",
+    "company_name": "示例公司丙",
+    "announcement_date": "2026-01-05",
+    "unlock_date": "2026-01-10",
+    "unlock_amount": 5000000.0,
+    "unlock_ratio": 2.5,
+    "tradable_amount": 5000000.0,
+    "quality_status": "pass"
+  }
+}

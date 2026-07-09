@@ -1,0 +1,20 @@
+metric_group,metric_name,value,gate_impact,notes
+freeze,freeze_v1_gate,PASS_OFFLINE,boundary_support,offline implementation complete
+benchmark,ready_case_benchmark_gate,READY_FOR_REVIEW,boundary_support,DC001-DC007 offline benchmark 7/7 pass
+tiny_live,tiny_live_execution_gate,PASS_WITH_CAVEAT,boundary_primary,5/7 acceptable CNINFO 18
+closure,tiny_live_closure_gate,PASS_WITH_CAVEAT,boundary_support,offline closure no rerun
+calibration,calibration_gate,READY_FOR_HUMAN_DECISION,boundary_pending,DLC003 DLC006 decision package
+coverage,components_covered,7,boundary_support,all 7 Phase1 components probed
+coverage,tiny_live_cases,7,boundary_support,DLC001-DLC007
+outcome,acceptable_cases,5,boundary_primary,DLC001 DLC002 DLC004 DLC005 DLC007
+outcome,failed_expectation_cases,2,boundary_caveat,DLC003 DLC006 not schema failure
+quality,empty_but_valid_cases,4,informational,includes 2 expectation mismatches
+quality,needs_review_cases,1,informational,DLC007 executive
+execution,cninfo_requests_live,18,informational,tiny live execution only
+execution,cninfo_requests_closure,0,required,boundary signoff round
+safety,db_write,0,required,no database writes
+safety,minio_write,0,required,no object storage writes
+safety,rag_run,0,required,no RAG or embeddings
+status,verified,false,required,not marked verified
+status,production_ready,false,required,not production ready
+boundary,phase1_boundary_gate,PASS_WITH_CAVEAT,boundary_final,D-class Phase1 event metadata validation closed with caveat

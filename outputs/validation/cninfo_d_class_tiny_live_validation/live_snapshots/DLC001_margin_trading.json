@@ -1,0 +1,32 @@
+{
+  "case_id": "DLC001",
+  "company_code": "000895",
+  "component": "margin_trading",
+  "endpoint": "https://www.cninfo.com.cn/data20/marginTrading/detailList",
+  "params": {},
+  "http_status": 200,
+  "record_count": 1,
+  "sample_records": [
+    {
+      "TRADEDATE": "2026-07-08",
+      "SECCODE": "000895",
+      "SECNAME": "双汇发展",
+      "F001N": 263311847.0,
+      "F002N": 27505153.0,
+      "F003N": null,
+      "F004N": 1386700.0,
+      "F006N": 171500,
+      "F007N": null,
+      "F008N": 32032770.0,
+      "F009N": 295344617.0,
+      "F010V": "深圳",
+      "F011V": "001001",
+      "F012V": "A股",
+      "MEMO": null
+    }
+  ],
+  "cninfo_called": true,
+  "db_write": false,
+  "minio_write": false,
+  "rag_run": false
+}

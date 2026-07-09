@@ -1,0 +1,39 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class Phase1 margin_trading schema example only",
+    "phase1_freeze": "v1",
+    "component": "margin_trading",
+    "cninfo_called": false,
+    "synthetic": true
+  },
+  "market_event": {
+    "event_id": "fixture_d_margin_999001_20260102",
+    "company_code": "999001",
+    "event_type": "margin_trading",
+    "event_time": "2026-01-02",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/marginTrading/detailList",
+    "source_record_id": "fixture_raw_margin_001",
+    "event_status": "captured",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "margin_trading",
+      "query_mode": "detailList_default",
+      "query_params": {},
+      "fetch_time": "2026-07-09T06:00:00+08:00",
+      "raw_record_hash": "sha256:synthetic_margin_fixture_001"
+    }
+  },
+  "margin_trading": {
+    "company_code": "999001",
+    "company_name": "示例公司甲",
+    "trade_date": "2026-01-02",
+    "financing_balance": 1000000.0,
+    "financing_buy_amount": 50000.0,
+    "margin_balance": 200000.0,
+    "margin_sell_amount": 10000.0,
+    "total_margin_balance": 1200000.0,
+    "source_endpoint": "https://www.cninfo.com.cn/data20/marginTrading/detailList",
+    "retrieval_time": "2026-07-09T06:00:00+08:00",
+    "quality_status": "pass"
+  }
+}

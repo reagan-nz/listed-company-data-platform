@@ -1,0 +1,41 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class Phase1 freeze v1 ready case DC005 — shareholder_change 增持捕获",
+    "ready_case_id": "DC005",
+    "phase1_freeze": "v1",
+    "component": "shareholder_change",
+    "case_type": "captured_normal",
+    "cninfo_called": false,
+    "synthetic": true
+  },
+  "market_event": {
+    "event_id": "fixture_dc005_sh_999105_20260120",
+    "company_code": "999105",
+    "event_type": "shareholder_change",
+    "event_time": "2026-01-20",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/shareholeder/detail",
+    "source_record_id": "fixture_raw_sh_inc_dc005",
+    "event_status": "captured",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "shareholder_change",
+      "query_mode": "type_inc",
+      "query_params": {
+        "type": "inc"
+      },
+      "fetch_time": "2026-07-09T08:00:00+08:00",
+      "raw_record_hash": "sha256:synthetic_sh_inc_dc005",
+      "lineage_status": "discovered"
+    }
+  },
+  "shareholder_change": {
+    "company_code": "999105",
+    "company_name": "示例公司戊",
+    "shareholder_name": "示例股东甲",
+    "change_type": "inc",
+    "change_amount": 1200000.0,
+    "change_ratio": 0.35,
+    "change_date": "2026-01-20",
+    "quality_status": "pass"
+  }
+}

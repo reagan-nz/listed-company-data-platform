@@ -1,0 +1,54 @@
+{
+  "case_id": "DLC007",
+  "company_code": "002415",
+  "component": "executive_shareholding",
+  "endpoint": "https://www.cninfo.com.cn/data20/leader/detail",
+  "params": {
+    "timeMark": "threeMonth",
+    "varyType": "b"
+  },
+  "http_status": 200,
+  "record_count": 2,
+  "sample_records": [
+    {
+      "SECCODE": "002415",
+      "SECNAME": "海康威视",
+      "ENDDATE": "2026-04-28",
+      "DECLAREDATE": "2026-04-29",
+      "HUMANNAME": "奉玮",
+      "F001V": "奉玮",
+      "F002V": "高管、董秘",
+      "F003V": "本人",
+      "F004N": null,
+      "F005N": 7.29,
+      "F006N": 72900,
+      "F007N": 0.008,
+      "F008N": 34.5,
+      "F009N": null,
+      "F010V": "竞价交易",
+      "F011V": "临时公告"
+    },
+    {
+      "SECCODE": "002415",
+      "SECNAME": "海康威视",
+      "ENDDATE": "2026-04-29",
+      "DECLAREDATE": "2026-04-30",
+      "HUMANNAME": "奉玮",
+      "F001V": "奉玮",
+      "F002V": "高管、董秘",
+      "F003V": "本人",
+      "F004N": null,
+      "F005N": 46.95,
+      "F006N": 396600,
+      "F007N": 0.0433,
+      "F008N": 34.7,
+      "F009N": null,
+      "F010V": "竞价交易",
+      "F011V": "临时公告"
+    }
+  ],
+  "cninfo_called": true,
+  "db_write": false,
+  "minio_write": false,
+  "rag_run": false
+}

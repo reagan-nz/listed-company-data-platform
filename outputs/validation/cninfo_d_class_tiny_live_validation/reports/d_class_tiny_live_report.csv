@@ -1,0 +1,8 @@
+case_id,company_code,company_name,component,expected_behavior,retrieval_status,quality_status,lineage_status,record_count,empty_but_valid,needs_review,endpoint_used,cninfo_request_count,db_write,minio_write,rag_run,notes
+DLC001,000895,双汇发展,margin_trading,captured_normal,found,pass,discovered,1,no,no,https://www.cninfo.com.cn/data20/marginTrading/detailList,1,no,no,no,found 1 row(s) for company
+DLC002,601988,中国银行,block_trade,empty_but_valid,empty_but_valid,pass,discovered,0,yes,no,https://www.cninfo.com.cn/data20/ints/statistics,1,no,no,no,company-level zero rows; legal empty per quality policy
+DLC003,300009,安科生物,restricted_shares_unlock,captured_normal,empty_but_valid,pass,discovered,0,yes,no,https://www.cninfo.com.cn/data20/liftBan/detail,8,no,no,no,company-level zero rows; legal empty per quality policy
+DLC004,600000,浦发银行,disclosure_schedule,captured_normal,found,pass,discovered,1,no,no,https://www.cninfo.com.cn/new/information/getPrbookInfo,1,no,no,no,found 1 row(s) for company
+DLC005,688981,中芯国际,equity_pledge,empty_but_valid,empty_but_valid,pass,discovered,0,yes,no,https://www.cninfo.com.cn/data20/equityPledge/list,1,no,no,no,company-level zero rows; legal empty per quality policy
+DLC006,000550,江铃汽车,shareholder_change,captured_normal,empty_but_valid,pass,discovered,0,yes,no,https://www.cninfo.com.cn/data20/shareholeder/detail,5,no,no,no,company-level zero rows; legal empty per quality policy
+DLC007,002415,海康威视,executive_shareholding,needs_review_candidate,found,needs_review,needs_review,2,no,yes,https://www.cninfo.com.cn/data20/leader/detail,1,no,no,no,executive position/amount mapping medium confidence

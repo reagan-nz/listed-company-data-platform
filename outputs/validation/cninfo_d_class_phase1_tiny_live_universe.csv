@@ -1,0 +1,8 @@
+case_id,company_code,company_name,component,market,risk_level,expected_behavior,reason
+DLC001,000895,双汇发展,margin_trading,szse_main,low,captured_normal,SZSE主板活跃蓝筹；融资融券detailList公司级过滤预期有行；对齐DC001空态对照组之正常捕获样本；非ST非退市
+DLC002,601988,中国银行,block_trade,sse_main,low,empty_but_valid,SSE主板大型金融；大宗交易稀疏日预期零行合法空态；对齐DC002正常捕获口径之empty_but_valid探针；非BSE
+DLC003,300009,安科生物,restricted_shares_unlock,chinext,low,captured_normal,创业板活跃公司；解禁日历稀疏但历史有解禁事件；对齐DC003 captured；非ST非退市
+DLC004,600000,浦发银行,disclosure_schedule,sse_main,low,captured_normal,SSE主板金融；getPrbookInfo预约披露行预期可捕获；活跃上市非退市
+DLC005,688981,中芯国际,equity_pledge,star,low,empty_but_valid,科创板大型半导体；特定查询日无质押行属合法空态；对齐DC004 empty_but_valid；非BSE legacy
+DLC006,000550,江铃汽车,shareholder_change,szse_main,low,captured_normal,SZSE主板制造；股东增减持inc/desc模式预期有行或mode级空态可区分；对齐DC005 captured
+DLC007,002415,海康威视,executive_shareholding,szse_main,low,needs_review_candidate,SZSE主板龙头；高管持股varyType/position映射medium confidence；安全needs_review候选；对齐DC007；不forced pass

@@ -1,0 +1,40 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class Phase1 block_trade schema example only",
+    "phase1_freeze": "v1",
+    "component": "block_trade",
+    "cninfo_called": false,
+    "synthetic": true
+  },
+  "market_event": {
+    "event_id": "fixture_d_block_999002_20260103",
+    "company_code": "999002",
+    "event_type": "block_trade",
+    "event_time": "2026-01-03",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/ints/statistics",
+    "source_record_id": "fixture_raw_block_001",
+    "event_status": "captured",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "block_trade",
+      "query_mode": "tdate_daily",
+      "query_params": {
+        "tdate": "2026-01-03"
+      },
+      "fetch_time": "2026-07-09T06:00:00+08:00",
+      "raw_record_hash": "sha256:synthetic_block_fixture_001"
+    }
+  },
+  "block_trade": {
+    "company_code": "999002",
+    "company_name": "示例公司乙",
+    "trade_date": "2026-01-03",
+    "transaction_price": 12.34,
+    "transaction_volume": 1000000.0,
+    "transaction_amount": 12340000.0,
+    "buyer": null,
+    "seller": null,
+    "source_endpoint": "https://www.cninfo.com.cn/data20/ints/statistics",
+    "quality_status": "pass"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class Phase1 freeze v1 ready case DC007 — needs_review 映射歧义",
+    "ready_case_id": "DC007",
+    "phase1_freeze": "v1",
+    "component": "equity_pledge",
+    "case_type": "needs_review",
+    "cninfo_called": false,
+    "synthetic": true,
+    "review_reason": "pledge_ratio 多字段候选不一致"
+  },
+  "market_event": {
+    "event_id": "fixture_dc007_pledge_999107_20260128",
+    "company_code": "999107",
+    "event_type": "equity_pledge",
+    "event_time": "2026-01-28",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/equityPledge/list",
+    "source_record_id": "fixture_raw_pledge_dc007",
+    "event_status": "captured",
+    "quality_status": "needs_review",
+    "lineage": {
+      "registry_source_id": "equity_pledge",
+      "query_mode": "tdate_daily",
+      "query_params": {
+        "tdate": "2026-01-28"
+      },
+      "fetch_time": "2026-07-09T08:00:00+08:00",
+      "raw_record_hash": "sha256:synthetic_pledge_dc007",
+      "lineage_status": "needs_review"
+    }
+  },
+  "equity_pledge": {
+    "company_code": "999107",
+    "company_name": "示例公司庚",
+    "pledge_date": "2026-01-28",
+    "pledged_shares": 8000000.0,
+    "pledge_ratio": 12.5,
+    "pledgee": "示例质权人",
+    "quality_status": "needs_review"
+  }
+}

@@ -277,7 +277,8 @@ _最后更新：2026-07-09_
 168. ~~Phase 3 success-subset snapshot QA review~~ → **完成**（§7dpv · test **6/6 PASS** · gate **`PASS_WITH_CAVEAT`**）
 169. ~~Phase 3 batch 500 closure review~~ → **完成**（§7dpw · gate **`PASS_WITH_CAVEAT`**）
 170. ~~Phase 3.5 batch planning~~ → **完成**（§7dpx · draft **500** · eligible **3645** · gate **`READY_FOR_REVIEW`** · **未批准**）
-171. **Phase 3.5 harvest dry-run + approval extension** → **待启动**
+171. ~~Phase 3.5 harvest dry-run + approval extension~~ → **完成**（§7dpy · dry-run gate **`PASS_OFFLINE`** · approval gate **`READY_FOR_APPROVAL`** · test **11/11 PASS** · **未批准 live**）
+172. **Phase 3.5 live harvest**（用户批准后） → **待启动**
 172. ~~B 类 Phase 1 endpoint candidate 表 + minimum fields freeze review~~ → **完成**（§7dp · gate **`READY_FOR_APPROVAL`** · **无 B-class live**）
 164. ~~B 类 Phase 1 schema review package 准备~~ → **完成**（§7dq · gate **`READY_FOR_APPROVAL`** · **无 B-class live**）
 165. ~~B 类 Phase 1 schema signoff 准备~~ → **完成**（§7dr · signoff gate **`READY_FOR_IMPLEMENTATION`** · **无 B-class live**）
@@ -3212,6 +3213,65 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 ---
 
+## 7dzi. D 类 DLC003/DLC006 Expectation Calibration 决策包（2026-07-09）
+
+> **并行约束：** C-class `SNAPSHOT_GENERATED_QA_REVIEW` 不变；A/B-class 输出未触碰；本轮 **不调用 CNINFO** · **无 rerun** · **不修改 execution report**。
+
+| 项 | 内容 |
+|----|------|
+| calibration review | [cninfo_d_class_dlc003_dlc006_calibration_review.md](cninfo_d_class_dlc003_dlc006_calibration_review.md) |
+| decision matrix | [cninfo_d_class_dlc003_dlc006_calibration_decision_matrix.csv](../outputs/validation/cninfo_d_class_dlc003_dlc006_calibration_decision_matrix.csv) |
+| universe v2 draft | [cninfo_d_class_phase1_tiny_live_universe_v2_draft.csv](../outputs/validation/cninfo_d_class_phase1_tiny_live_universe_v2_draft.csv)（placeholders only） |
+| v2 rerun planning | [cninfo_d_class_tiny_live_v2_rerun_planning_note.md](cninfo_d_class_tiny_live_v2_rerun_planning_note.md)（**NOT APPROVED**） |
+| calibration summary | [cninfo_d_class_dlc003_dlc006_calibration_summary.md](../outputs/validation/cninfo_d_class_dlc003_dlc006_calibration_summary.md) |
+| recommended | **Option B or C**（两者均推荐默认） |
+| not recommended | **Option A**（立即 reclassify to empty_but_valid） |
+| calibration gate | **`d_class_dlc003_dlc006_calibration_gate = READY_FOR_HUMAN_DECISION`** |
+| CNINFO calls（calibration） | **0** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`**（不变） |
+
+### 执行结论
+
+- DLC003/DLC006 记为 expectation mismatch / probe-window limitation（**非 schema failure**）
+- universe v2 placeholders · **无发明公司代码**
+- v2 rerun **NOT APPROVED**
+
+**红线：** **calibration gate 不是 PASS** · **v2 rerun NOT APPROVED**
+
+---
+
+## 7dzj. D 类 Phase 1 边界 Signoff（2026-07-09）
+
+> **并行约束：** C-class `SNAPSHOT_GENERATED_QA_REVIEW` 不变；A/B-class 输出未触碰；本轮 **不调用 CNINFO** · **无 rerun** · **git commit 边界 only**。
+
+| 项 | 内容 |
+|----|------|
+| boundary signoff | [cninfo_d_class_phase1_boundary_signoff.md](cninfo_d_class_phase1_boundary_signoff.md) |
+| boundary metrics | [cninfo_d_class_phase1_boundary_metrics.csv](../outputs/validation/cninfo_d_class_phase1_boundary_metrics.csv) |
+| boundary summary | [cninfo_d_class_phase1_boundary_summary.md](../outputs/validation/cninfo_d_class_phase1_boundary_summary.md) |
+| boundary gate | **`d_class_phase1_boundary_gate = PASS_WITH_CAVEAT`** |
+| calibration gate | **`d_class_dlc003_dlc006_calibration_gate = READY_FOR_HUMAN_DECISION`**（保持） |
+| tiny live execution gate | **`PASS_WITH_CAVEAT`**（保持） |
+| closure gate | **`PASS_WITH_CAVEAT`**（保持） |
+| CNINFO calls（本回合） | **0** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`**（不变） |
+
+### 执行结论
+
+- Phase 1 事件元数据验证边界 **closed with caveat**
+- 7 组件 · 5/7 acceptable · DLC003/DLC006 pending human decision
+- **无** verified · **无** production_ready · **无** harvest · DB/MinIO/RAG **0**
+
+### Next options（不执行）
+
+- **B** bounded probe extension design for DLC003/DLC006
+- **C** human-selected replacement case design for DLC003/DLC006
+- **D** D-class Phase 2 planning after human decision
+
+**红线：** **boundary gate 不是 PASS** · **不是 verified**
+
+---
+
 ## 7dv. B 类 Tiny Live Validation 批准包准备（2026-07-09）
 
 > **并行约束：** C-class Phase 3 live harvest 可能在另一终端运行；本轮 **不调用 CNINFO**、**不 live**；**不读写在跑输出根** `outputs/harvest/cninfo_c_class/phase3_batch_500_001/`。
@@ -5345,7 +5405,7 @@ P0 duplicate → P1 BSE legacy → P2 rename → P3 high risk manual → P4 low 
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **863 snapshot 已生成**（§7cc）；**`SNAPSHOT_GENERATED_QA_REVIEW`**；Phase 3.5 batch planning **完成**（§7dpx · draft **500** · gate **`READY_FOR_REVIEW`**）；**下一步** harvest dry-run。**并行：A 类 Phase 1 boundary 已收口**（§7dzn · `a_class_phase1_boundary_gate = PASS_WITH_CAVEAT`** · **不是 verified**）。**BSE legacy** HOLD。
+当前 Phase：C 类 **863 snapshot 已生成**（§7cc）；**`SNAPSHOT_GENERATED_QA_REVIEW`**；Phase 3.5 harvest dry-run **完成**（§7dpy · dry-run gate **`PASS_OFFLINE`** · approval **`READY_FOR_APPROVAL`**）；**下一步** 用户批准后 Phase 3.5 live harvest。**并行：A 类 Phase 1 boundary 已收口**（§7dzn · `a_class_phase1_boundary_gate = PASS_WITH_CAVEAT`** · **不是 verified**）。**BSE legacy** HOLD。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

@@ -1,0 +1,80 @@
+field_name,component,current_level,proposed_level,decision,reason,source,risk
+event_id,market_event,candidate,required,required,Logical primary key for dedup and timeline linkage,design,low
+company_code,market_event,candidate,required,required,Universe linkage key shared with C-class identity,design,low
+event_type,market_event,candidate,required,required,Routes to one of seven market behavior components,design,low
+event_time,market_event,candidate,required,required,Primary sort key for company market timeline,design,low
+source_endpoint,market_event,candidate,required,required,Mandatory API lineage for audit,registry_yaml,low
+source_record_id,market_event,candidate,required,required,Stable id inside source response or hash fallback,design,low
+event_status,market_event,candidate,required,required,Operational capture outcome dimension,design,low
+quality_status,market_event,candidate,required,required,Phase1 QA gate dimension,design,low
+lineage,market_event,candidate,recommended,recommended,Raw hash and query params for mapper audit,registry_yaml,medium
+company_code,margin_trading,candidate,required,required,Securities code for metric row,phase2_ui,low
+company_name,margin_trading,candidate,recommended,recommended,Display label may be absent in edge cases,phase2_ui,low
+trade_date,margin_trading,candidate,required,required,Trade date dimension for daily margin metrics,phase2_ui,low
+financing_balance,margin_trading,candidate,required,required,Core margin financing balance metric,phase2_ui,medium
+financing_buy_amount,margin_trading,candidate,recommended,recommended,Useful flow metric; unit semantics medium confidence,phase2_ui,medium
+margin_balance,margin_trading,candidate,required,required,Securities lending balance,phase2_ui,medium
+margin_sell_amount,margin_trading,candidate,recommended,recommended,Flow metric secondary to balances,phase2_ui,medium
+total_margin_balance,margin_trading,candidate,required,required,Combined margin balance headline metric,phase2_ui,medium
+source_endpoint,margin_trading,candidate,required,required,Component-level endpoint mirrors envelope,registry_yaml,low
+retrieval_time,margin_trading,candidate,required,required,Fetch timestamp for metric snapshot lineage,design,low
+quality_status,margin_trading,candidate,required,required,Component QA must align with envelope,design,low
+company_code,block_trade,candidate,required,required,Event company key,phase2_ui,low
+company_name,block_trade,candidate,recommended,recommended,Optional display field,phase2_ui,low
+trade_date,block_trade,candidate,required,required,Block trade session date,phase2_ui,low
+transaction_price,block_trade,candidate,required,required,Average transaction price from F004N mapping,phase2_ui,medium
+transaction_volume,block_trade,candidate,required,required,Aggregate volume from F002N mapping,phase2_ui,medium
+transaction_amount,block_trade,candidate,required,required,Aggregate amount from F003N mapping,phase2_ui,medium
+buyer,block_trade,candidate,future,future,No buyer field in Phase2 statistics endpoint,discovery_plan,high
+seller,block_trade,candidate,future,future,No seller field in Phase2 statistics endpoint,discovery_plan,high
+source_endpoint,block_trade,candidate,required,required,data20/ints/statistics lineage,registry_yaml,low
+quality_status,block_trade,candidate,required,required,QA gate for block trade events,design,low
+company_code,restricted_shares_unlock,candidate,required,required,Unlock event company key,phase2_ui,low
+company_name,restricted_shares_unlock,candidate,recommended,recommended,Optional short name,phase2_ui,low
+announcement_date,restricted_shares_unlock,candidate,recommended,recommended,DECLAREDATE available but secondary to unlock_date,phase2_ui,low
+unlock_date,restricted_shares_unlock,candidate,required,required,Primary event date from F003D,phase2_ui,low
+unlock_amount,restricted_shares_unlock,candidate,required,required,Unlock share count F004N,phase2_ui,medium
+unlock_ratio,restricted_shares_unlock,candidate,required,required,Unlock ratio F005N,phase2_ui,medium
+tradable_amount,restricted_shares_unlock,candidate,recommended,recommended,F008N semantics medium confidence,phase2_ui,medium
+quality_status,restricted_shares_unlock,candidate,required,required,QA gate,design,low
+company_code,disclosure_schedule,candidate,required,required,Schedule row company key,phase2_ui,low
+company_name,disclosure_schedule,candidate,recommended,recommended,Optional secname,phase2_ui,low
+report_type,disclosure_schedule,candidate,required,required,Report period or type f001d_0102,phase2_ui,low
+planned_date,disclosure_schedule,candidate,required,required,First scheduled disclosure f002d_0102,phase2_ui,low
+actual_date,disclosure_schedule,candidate,recommended,recommended,Actual disclosure f006d_0102 may be null pre-disclosure,phase2_ui,low
+change_history,disclosure_schedule,candidate,recommended,recommended,Array of f003-f005 change dates; structure TBD,phase2_ui,medium
+quality_status,disclosure_schedule,candidate,required,required,QA gate,design,low
+company_code,equity_pledge,candidate,required,required,Pledge event company key,phase2_ui,low
+company_name,equity_pledge,candidate,recommended,recommended,Optional display name,phase2_ui,low
+pledge_date,equity_pledge,candidate,required,required,Primary pledge event date,phase2_ui,medium
+pledged_shares,equity_pledge,candidate,required,required,Pledged share count F006N unit medium,phase2_ui,medium
+pledge_ratio,equity_pledge,candidate,required,required,Pledge ratio candidate F007N/F012N,phase2_ui,medium
+pledgee,equity_pledge,candidate,recommended,recommended,Counterparty name F003V/F008V mapping,phase2_ui,medium
+pledge_status,equity_pledge,candidate,future,future,Status normalization not frozen in Phase2,discovery_plan,high
+quality_status,equity_pledge,candidate,required,required,QA gate,design,low
+company_code,shareholder_change,candidate,required,required,Shareholder change event key,phase2_ui,low
+company_name,shareholder_change,candidate,recommended,recommended,Optional secname,phase2_ui,low
+shareholder_name,shareholder_change,candidate,required,required,Actor F002V,phase2_ui,low
+change_type,shareholder_change,candidate,required,required,inc or desc query mode,phase2_ui,low
+change_amount,shareholder_change,candidate,required,required,Share change amount F004N,phase2_ui,medium
+change_ratio,shareholder_change,candidate,recommended,recommended,Change ratio F005N,phase2_ui,medium
+change_date,shareholder_change,candidate,required,required,VARYDATE primary event date,phase2_ui,low
+quality_status,shareholder_change,candidate,required,required,QA gate,design,low
+company_code,executive_shareholding,candidate,required,required,Executive change company key,phase2_ui,low
+executive_name,executive_shareholding,candidate,required,required,HUMANNAME actor field,phase2_ui,low
+position,executive_shareholding,candidate,recommended,recommended,Position spread across F001V/F002V,phase2_ui,medium
+change_type,executive_shareholding,candidate,required,required,varyType semantics medium; required at product layer,phase2_ui,medium
+change_amount,executive_shareholding,candidate,required,required,Mapped from F004N-F009N family,phase2_ui,medium
+change_date,executive_shareholding,candidate,required,required,ENDDATE or VARYDATE per row,phase2_ui,medium
+quality_status,executive_shareholding,candidate,required,required,QA gate,design,low
+company_name,executive_shareholding,candidate,recommended,recommended,Useful display; not in user minimum list but aligns with other components,design,low
+source_endpoint,restricted_shares_unlock,candidate,recommended,recommended,Carried on envelope; optional at component payload,registry_yaml,low
+source_endpoint,disclosure_schedule,candidate,recommended,recommended,Envelope carries endpoint; getPrbookInfo,registry_yaml,low
+source_endpoint,equity_pledge,candidate,recommended,recommended,Envelope carries endpoint,registry_yaml,low
+source_endpoint,shareholder_change,candidate,recommended,recommended,Envelope carries endpoint,registry_yaml,low
+source_endpoint,executive_shareholding,candidate,recommended,recommended,Envelope carries endpoint,registry_yaml,low
+retrieval_time,block_trade,candidate,recommended,recommended,Use envelope lineage.fetch_time unless component override,design,low
+retrieval_time,restricted_shares_unlock,candidate,recommended,recommended,Use envelope lineage.fetch_time,design,low
+raw_record_json,market_event,raw_only,recommended,recommended,Full CNINFO row preservation per d_class schemas,schema_draft,low
+verified_flag,market_event,forbidden,removed,removed,Must not appear in Phase1 contract,policy,low
+testing_stable_sample_flag,market_event,forbidden,removed,removed,No status upgrade in Phase1 freeze,policy,low

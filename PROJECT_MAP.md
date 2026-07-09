@@ -10,7 +10,7 @@ _最后更新：2026-07-09_
 
 ## 0. 一句话现状
 
-仓库里叠了**三代方向**的代码与文档。**当前聚焦：Era C Phase 4 C 类** — **863 snapshot 已生成**；**`SNAPSHOT_GENERATED_QA_REVIEW`**；Phase 3.5 batch planning **完成**（draft **500** · gate **`READY_FOR_REVIEW`** · **未批准**）。**并行：A-class Phase 1 boundary 已收口**（`a_class_phase1_boundary_gate = PASS_WITH_CAVEAT`** · **不是 verified** · **不是 production_ready**）。前两代**已冻结**。
+仓库里叠了**三代方向**的代码与文档。**当前聚焦：Era C Phase 4 C 类** — **863 snapshot 已生成**；**`SNAPSHOT_GENERATED_QA_REVIEW`**；Phase 3.5 harvest dry-run **完成**（dry-run gate **`PASS_OFFLINE`** · approval **`READY_FOR_APPROVAL`** · **未批准 live**）。**并行：A-class Phase 1 boundary 已收口**（`a_class_phase1_boundary_gate = PASS_WITH_CAVEAT`** · **不是 verified** · **不是 production_ready**）。前两代**已冻结**。
 
 ---
 
@@ -301,7 +301,13 @@ _最后更新：2026-07-09_
 - `outputs/validation/cninfo_c_class_phase35_batch_universe_draft.csv` — **Phase 4** Phase 3.5 universe draft（**500**）
 - `outputs/validation/cninfo_c_class_phase35_batch_approval_checklist.md` — **Phase 4** Phase 3.5 审批清单
 - `outputs/validation/cninfo_c_class_phase35_batch_planning_summary.md` — **Phase 4** Phase 3.5 规划摘要
-- `lab/select_cninfo_c_class_phase35_batch_universe.py` — **Phase 4** Phase 3.5 universe 选股脚本（Option A / D 推荐）
+- `lab/eval_companies_c_class_phase35_batch_500_001.yaml` — **Phase 4** Phase 3.5 batch 500 harvest YAML（**500**）
+- `outputs/validation/cninfo_c_class_phase35_harvest_dryrun_report.csv` — **Phase 4** Phase 3.5 harvest dry-run 报告
+- `outputs/validation/cninfo_c_class_phase35_harvest_dryrun_summary.md` — **Phase 4** Phase 3.5 harvest dry-run 摘要
+- `outputs/validation/cninfo_c_class_phase35_harvest_approval_extension_summary.md` — **Phase 4** Phase 3.5 approval extension 摘要
+- `plans/cninfo_c_class_phase35_live_harvest_command_draft.md` — **Phase 4** Phase 3.5 live harvest 命令草稿（**NOT APPROVED**）
+- `lab/test_cninfo_c_class_phase35_harvest_approval.py` — **Phase 4** Phase 3.5 harvest approval 测试（**11/11 PASS**）
+- `lab/select_cninfo_c_class_phase35_batch_universe.py` — **Phase 4** Phase 3.5 universe 选股 / YAML 生成脚本
 - `lab/test_cninfo_c_class_harvest_output_root_isolation.py` — **Phase 4** output-root 隔离测试（§7db · **8/8 PASS**）
 - `outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_output_root_extension_summary.md` — **Phase 4** runner 扩展摘要（§7db · gate **PASS**）
 - `outputs/validation/cninfo_c_class_phase2_smoke_200_harvest_output_root_dryrun_report.csv` — **Phase 4** output-root dry-run 报告
@@ -613,7 +619,7 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 2. **Phase 2 已收口**；**Phase 3 D 类设计**见 [registry YAML](config/cninfo_d_class_source_registry_draft.yaml) / [schema validation summary](outputs/validation/cninfo_d_class_schema_validation_summary.md)。
 3. **Phase 3 B 类**见 [validation design](plans/cninfo_b_class_validation_design.md) / [category routing](plans/cninfo_b_class_category_routing_rules.md) / [categories YAML](config/cninfo_announcement_categories.yaml) / [document seed summary](outputs/validation/cninfo_b_class_document_seed_summary.md) / [B schema validation](outputs/validation/cninfo_b_class_document_schema_validation_summary.md)。
 4. **Phase 4 C 类**见 [registry lint](outputs/validation/cninfo_c_class_registry_lint_summary.md) / [fixture validation](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md) / [active 30 smoke summary](outputs/validation/cninfo_c_class_scale_smoke_30_active_summary.md) / [candidates YAML](config/cninfo_c_class_source_candidates.yaml)。
-5. **C 类**状态 **`SNAPSHOT_GENERATED_QA_REVIEW`**；Phase 3.5 batch planning **完成**（[planning doc](plans/cninfo_c_class_phase35_batch_planning.md) · draft **500** · gate **`READY_FOR_REVIEW`** · **未批准**）；**下一步**：harvest dry-run planning。
+5. **C 类**状态 **`SNAPSHOT_GENERATED_QA_REVIEW`**；Phase 3.5 harvest dry-run **完成**（[extension summary](outputs/validation/cninfo_c_class_phase35_harvest_approval_extension_summary.md) · dry-run gate **`PASS_OFFLINE`** · approval **`READY_FOR_APPROVAL`** · **未批准 live**）；**下一步**：用户批准后 Phase 3.5 live harvest。
 6. **A 类 Report Metadata Phase 0 规划已启动**（[planning summary](outputs/validation/cninfo_a_class_initial_planning_summary.md) · **无 CNINFO · 无 PDF**）。
 7. **A 类 Phase 1 freeze v1 已离线实现**（[implementation summary](outputs/validation/cninfo_a_class_phase1_freeze_v1_implementation_summary.md) · gate **`PASS_OFFLINE`**）。
 8. **A 类 ready-case benchmark 已完成**（[benchmark summary](outputs/validation/cninfo_a_class_phase1_ready_case_benchmark_summary.md) · **5/5 PASS** · gate **`READY_FOR_REVIEW`** · **无 CNINFO**）。

@@ -1,0 +1,35 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class Phase1 freeze v1 ready case DC004 — equity_pledge 合法空态",
+    "ready_case_id": "DC004",
+    "phase1_freeze": "v1",
+    "component": "equity_pledge",
+    "case_type": "empty_but_valid",
+    "cninfo_called": false,
+    "synthetic": true
+  },
+  "market_event": {
+    "event_id": "fixture_dc004_pledge_999104_20260115",
+    "company_code": "999104",
+    "event_type": "equity_pledge",
+    "event_time": "2026-01-15",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/equityPledge/list",
+    "source_record_id": "synthetic_empty_pledge_dc004",
+    "event_status": "empty_but_valid",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "equity_pledge",
+      "query_mode": "tdate_daily",
+      "query_params": {
+        "tdate": "2026-01-15"
+      },
+      "fetch_time": "2026-07-09T08:00:00+08:00",
+      "raw_record_hash": "sha256:synthetic_empty_pledge_dc004",
+      "lineage_status": "discovered"
+    }
+  },
+  "equity_pledge": {
+    "company_code": "999104",
+    "quality_status": "pass"
+  }
+}

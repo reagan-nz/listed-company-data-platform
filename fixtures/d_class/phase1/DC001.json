@@ -1,0 +1,33 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class Phase1 freeze v1 ready case DC001 — margin_trading 合法空态",
+    "ready_case_id": "DC001",
+    "phase1_freeze": "v1",
+    "component": "margin_trading",
+    "case_type": "empty_but_valid",
+    "cninfo_called": false,
+    "synthetic": true
+  },
+  "market_event": {
+    "event_id": "fixture_dc001_margin_999101_20260102",
+    "company_code": "999101",
+    "event_type": "margin_trading",
+    "event_time": "2026-01-02",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/marginTrading/detailList",
+    "source_record_id": "synthetic_empty_margin_dc001",
+    "event_status": "empty_but_valid",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "margin_trading",
+      "query_mode": "detailList_default",
+      "query_params": {},
+      "fetch_time": "2026-07-09T08:00:00+08:00",
+      "raw_record_hash": "sha256:synthetic_empty_margin_dc001",
+      "lineage_status": "discovered"
+    }
+  },
+  "margin_trading": {
+    "company_code": "999101",
+    "quality_status": "pass"
+  }
+}

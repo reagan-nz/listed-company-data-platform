@@ -1,0 +1,15 @@
+metric_group,metric_name,value,gate_impact,notes
+universe,input_cases,7,required,DLC001-DLC007 one per component
+universe,components_covered,7,required,margin_trading block_trade restricted_shares_unlock disclosure_schedule equity_pledge shareholder_change executive_shareholding
+execution,cninfo_requests,18,informational,tiny live execution total; closure round 0
+outcome,acceptable_cases,5,gate_support,DLC001 DLC002 DLC004 DLC005 DLC007
+outcome,failed_expectation_cases,2,gate_caveat,DLC003 DLC006 expectation mismatch not schema failure
+quality,empty_but_valid_cases,4,informational,DLC002 DLC003 DLC005 DLC006 company-level zero rows
+quality,needs_review_cases,1,informational,DLC007 executive mapping medium confidence
+safety,db_write,0,required,no database writes
+safety,minio_write,0,required,no object storage writes
+safety,rag_run,0,required,no RAG or embeddings
+status,verified,false,required,not marked verified
+status,production_ready,false,required,not production ready
+gate,d_class_tiny_live_execution_gate,PASS_WITH_CAVEAT,frozen,unchanged from execution
+gate,d_class_phase1_tiny_live_closure_gate,PASS_WITH_CAVEAT,closure,5/7 acceptable; 2 expectation mismatches documented

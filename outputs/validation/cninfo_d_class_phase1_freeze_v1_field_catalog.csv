@@ -1,0 +1,80 @@
+component,field_name,level,description,source,status,quality_rule
+market_event,event_id,required,Logical primary key for dedup and timeline linkage,design,frozen_required,must_be_present
+market_event,company_code,required,Universe linkage key shared with C-class identity,design,frozen_required,must_be_present
+market_event,event_type,required,Routes to one of seven market behavior components,design,frozen_required,must_be_present
+market_event,event_time,required,Primary sort key for company market timeline,design,frozen_required,must_be_present
+market_event,source_endpoint,required,Mandatory API lineage for audit,registry_yaml,frozen_required,must_be_present
+market_event,source_record_id,required,Stable id inside source response or hash fallback,design,frozen_required,must_be_present
+market_event,event_status,required,Operational capture outcome dimension,design,frozen_required,must_be_present
+market_event,quality_status,required,Phase1 QA gate dimension,design,frozen_required,must_be_present
+market_event,lineage,recommended,Raw hash and query params for mapper audit,registry_yaml,frozen_recommended,nullable_if_missing
+margin_trading,company_code,required,Securities code for metric row,phase2_ui,frozen_required,must_be_present
+margin_trading,company_name,recommended,Display label may be absent in edge cases,phase2_ui,frozen_recommended,nullable_if_missing
+margin_trading,trade_date,required,Trade date dimension for daily margin metrics,phase2_ui,frozen_required,must_be_present
+margin_trading,financing_balance,required,Core margin financing balance metric,phase2_ui,frozen_required,must_be_present
+margin_trading,financing_buy_amount,recommended,Useful flow metric; unit semantics medium confidence,phase2_ui,frozen_recommended,nullable_if_missing
+margin_trading,margin_balance,required,Securities lending balance,phase2_ui,frozen_required,must_be_present
+margin_trading,margin_sell_amount,recommended,Flow metric secondary to balances,phase2_ui,frozen_recommended,nullable_if_missing
+margin_trading,total_margin_balance,required,Combined margin balance headline metric,phase2_ui,frozen_required,must_be_present
+margin_trading,source_endpoint,required,Component-level endpoint mirrors envelope,registry_yaml,frozen_required,must_be_present
+margin_trading,retrieval_time,required,Fetch timestamp for metric snapshot lineage,design,frozen_required,must_be_present
+margin_trading,quality_status,required,Component QA must align with envelope,design,frozen_required,must_be_present
+block_trade,company_code,required,Event company key,phase2_ui,frozen_required,must_be_present
+block_trade,company_name,recommended,Optional display field,phase2_ui,frozen_recommended,nullable_if_missing
+block_trade,trade_date,required,Block trade session date,phase2_ui,frozen_required,must_be_present
+block_trade,transaction_price,required,Average transaction price from F004N mapping,phase2_ui,frozen_required,must_be_present
+block_trade,transaction_volume,required,Aggregate volume from F002N mapping,phase2_ui,frozen_required,must_be_present
+block_trade,transaction_amount,required,Aggregate amount from F003N mapping,phase2_ui,frozen_required,must_be_present
+block_trade,buyer,future,No buyer field in Phase2 statistics endpoint,discovery_plan,deferred_future,deferred_phase1
+block_trade,seller,future,No seller field in Phase2 statistics endpoint,discovery_plan,deferred_future,deferred_phase1
+block_trade,source_endpoint,required,data20/ints/statistics lineage,registry_yaml,frozen_required,must_be_present
+block_trade,quality_status,required,QA gate for block trade events,design,frozen_required,must_be_present
+restricted_shares_unlock,company_code,required,Unlock event company key,phase2_ui,frozen_required,must_be_present
+restricted_shares_unlock,company_name,recommended,Optional short name,phase2_ui,frozen_recommended,nullable_if_missing
+restricted_shares_unlock,announcement_date,recommended,DECLAREDATE available but secondary to unlock_date,phase2_ui,frozen_recommended,nullable_if_missing
+restricted_shares_unlock,unlock_date,required,Primary event date from F003D,phase2_ui,frozen_required,must_be_present
+restricted_shares_unlock,unlock_amount,required,Unlock share count F004N,phase2_ui,frozen_required,must_be_present
+restricted_shares_unlock,unlock_ratio,required,Unlock ratio F005N,phase2_ui,frozen_required,must_be_present
+restricted_shares_unlock,tradable_amount,recommended,F008N semantics medium confidence,phase2_ui,frozen_recommended,nullable_if_missing
+restricted_shares_unlock,quality_status,required,QA gate,design,frozen_required,must_be_present
+disclosure_schedule,company_code,required,Schedule row company key,phase2_ui,frozen_required,must_be_present
+disclosure_schedule,company_name,recommended,Optional secname,phase2_ui,frozen_recommended,nullable_if_missing
+disclosure_schedule,report_type,required,Report period or type f001d_0102,phase2_ui,frozen_required,must_be_present
+disclosure_schedule,planned_date,required,First scheduled disclosure f002d_0102,phase2_ui,frozen_required,must_be_present
+disclosure_schedule,actual_date,recommended,Actual disclosure f006d_0102 may be null pre-disclosure,phase2_ui,frozen_recommended,nullable_if_missing
+disclosure_schedule,change_history,recommended,Array of f003-f005 change dates; structure TBD,phase2_ui,frozen_recommended,nullable_if_missing
+disclosure_schedule,quality_status,required,QA gate,design,frozen_required,must_be_present
+equity_pledge,company_code,required,Pledge event company key,phase2_ui,frozen_required,must_be_present
+equity_pledge,company_name,recommended,Optional display name,phase2_ui,frozen_recommended,nullable_if_missing
+equity_pledge,pledge_date,required,Primary pledge event date,phase2_ui,frozen_required,must_be_present
+equity_pledge,pledged_shares,required,Pledged share count F006N unit medium,phase2_ui,frozen_required,must_be_present
+equity_pledge,pledge_ratio,required,Pledge ratio candidate F007N/F012N,phase2_ui,frozen_required,must_be_present
+equity_pledge,pledgee,recommended,Counterparty name F003V/F008V mapping,phase2_ui,frozen_recommended,nullable_if_missing
+equity_pledge,pledge_status,future,Status normalization not frozen in Phase2,discovery_plan,deferred_future,deferred_phase1
+equity_pledge,quality_status,required,QA gate,design,frozen_required,must_be_present
+shareholder_change,company_code,required,Shareholder change event key,phase2_ui,frozen_required,must_be_present
+shareholder_change,company_name,recommended,Optional secname,phase2_ui,frozen_recommended,nullable_if_missing
+shareholder_change,shareholder_name,required,Actor F002V,phase2_ui,frozen_required,must_be_present
+shareholder_change,change_type,required,inc or desc query mode,phase2_ui,frozen_required,must_be_present
+shareholder_change,change_amount,required,Share change amount F004N,phase2_ui,frozen_required,must_be_present
+shareholder_change,change_ratio,recommended,Change ratio F005N,phase2_ui,frozen_recommended,nullable_if_missing
+shareholder_change,change_date,required,VARYDATE primary event date,phase2_ui,frozen_required,must_be_present
+shareholder_change,quality_status,required,QA gate,design,frozen_required,must_be_present
+executive_shareholding,company_code,required,Executive change company key,phase2_ui,frozen_required,must_be_present
+executive_shareholding,executive_name,required,HUMANNAME actor field,phase2_ui,frozen_required,must_be_present
+executive_shareholding,position,recommended,Position spread across F001V/F002V,phase2_ui,frozen_recommended,nullable_if_missing
+executive_shareholding,change_type,required,varyType semantics medium; required at product layer,phase2_ui,frozen_required,must_be_present
+executive_shareholding,change_amount,required,Mapped from F004N-F009N family,phase2_ui,frozen_required,must_be_present
+executive_shareholding,change_date,required,ENDDATE or VARYDATE per row,phase2_ui,frozen_required,must_be_present
+executive_shareholding,quality_status,required,QA gate,design,frozen_required,must_be_present
+executive_shareholding,company_name,recommended,Useful display; not in user minimum list but aligns with other components,design,frozen_recommended,nullable_if_missing
+restricted_shares_unlock,source_endpoint,recommended,Carried on envelope; optional at component payload,registry_yaml,frozen_recommended,nullable_if_missing
+disclosure_schedule,source_endpoint,recommended,Envelope carries endpoint; getPrbookInfo,registry_yaml,frozen_recommended,nullable_if_missing
+equity_pledge,source_endpoint,recommended,Envelope carries endpoint,registry_yaml,frozen_recommended,nullable_if_missing
+shareholder_change,source_endpoint,recommended,Envelope carries endpoint,registry_yaml,frozen_recommended,nullable_if_missing
+executive_shareholding,source_endpoint,recommended,Envelope carries endpoint,registry_yaml,frozen_recommended,nullable_if_missing
+block_trade,retrieval_time,recommended,Use envelope lineage.fetch_time unless component override,design,frozen_recommended,nullable_if_missing
+restricted_shares_unlock,retrieval_time,recommended,Use envelope lineage.fetch_time,design,frozen_recommended,nullable_if_missing
+market_event,raw_record_json,recommended,Full CNINFO row preservation per d_class schemas,schema_draft,frozen_recommended,nullable_if_missing
+market_event,verified_flag,removed,Must not appear in Phase1 contract,policy,excluded_removed,excluded_from_phase1
+market_event,testing_stable_sample_flag,removed,No status upgrade in Phase1 freeze,policy,excluded_removed,excluded_from_phase1

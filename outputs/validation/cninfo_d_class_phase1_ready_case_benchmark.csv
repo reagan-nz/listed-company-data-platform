@@ -1,0 +1,8 @@
+case_id,component,scenario,expected_status,actual_status,retrieval_status,quality_status,lineage_status,passed,notes
+DC001,margin_trading,empty_but_valid,empty_but_valid_pass,empty_but_valid_pass,empty_but_valid,pass,discovered,yes,empty_but_valid accepted per quality policy
+DC002,block_trade,captured_normal,captured_pass,captured_pass,found,pass,discovered,yes,required fields complete; captured pass
+DC003,restricted_shares_unlock,captured_normal,captured_pass,captured_pass,found,pass,discovered,yes,required fields complete; captured pass
+DC004,equity_pledge,empty_but_valid,empty_but_valid_pass,empty_but_valid_pass,empty_but_valid,pass,discovered,yes,empty_but_valid accepted per quality policy
+DC005,shareholder_change,captured_normal,captured_pass,captured_pass,found,pass,discovered,yes,required fields complete; captured pass
+DC006,executive_shareholding,captured_normal,captured_pass,captured_pass,found,pass,discovered,yes,required fields complete; captured pass
+DC007,equity_pledge,needs_review,needs_review_accepted,needs_review_accepted,found,needs_review,needs_review,yes,needs_review accepted per quality policy

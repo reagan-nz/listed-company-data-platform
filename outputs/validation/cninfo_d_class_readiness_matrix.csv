@@ -1,0 +1,13 @@
+component,purpose,source_candidate,field_count_estimate,risk_level,priority,status
+margin_trading,融资融券日度余额与买卖额,margin_trading/detailList,14,medium,P0,DESIGN_STARTED
+block_trade,大宗交易成交汇总,block_trade/ints/statistics,8,medium,P0,DESIGN_STARTED
+restricted_shares_unlock,限售股解禁日程与规模,restricted_shares_unlock/liftBan/detail,8,low,P0,DESIGN_STARTED
+equity_pledge,股权质押风险事件,equity_pledge/equityPledge/list,10,medium,P1,DESIGN_STARTED
+shareholder_change,股东增减持事件,shareholder_change/shareholeder/detail,8,low,P1,DESIGN_STARTED
+executive_shareholding,高管持股变动事件,executive_shareholding/leader/detail,12,medium,P1,DESIGN_STARTED
+disclosure_schedule,预约披露与变更日历,disclosure_schedule/getPrbookInfo,10,medium,P0,DESIGN_STARTED
+company_event_timeline,公司市场行为时间线读模型,all_7_sources_aggregated,0,medium,P1,DESIGN_STARTED
+field_semantics_freeze,产品字段与 raw 字段语义冻结,registry_yaml+phase2_ui_notes,70,medium,P0,DESIGN_STARTED
+harvest_architecture,D-class harvest 输出结构与 runner 设计,future_harvest_runner,0,medium,P1,DESIGN_STARTED
+c_class_identity_linkage,company_code/org_id 与 C-class 画像关联,eval_yaml+snapshot_863,4,low,P1,DESIGN_STARTED
+b_class_evidence_linkage,事件与公告 PDF 证据挂接,event_document_link,6,low,P2,DESIGN_STARTED

@@ -1,0 +1,37 @@
+{
+  "case_id": "DLC004",
+  "company_code": "600000",
+  "component": "disclosure_schedule",
+  "endpoint": "https://www.cninfo.com.cn/new/information/getPrbookInfo",
+  "params": {
+    "sectionTime": "2025-12-31",
+    "firstTime": "",
+    "lastTime": "",
+    "market": "szsh",
+    "stockCode": "600000",
+    "orderClos": "",
+    "isDesc": "",
+    "pagesize": 20,
+    "pagenum": 1
+  },
+  "http_status": 200,
+  "record_count": 1,
+  "sample_records": [
+    {
+      "seccode": "600000",
+      "secname": "浦发银行",
+      "f002d_0102": "2026-03-31",
+      "f006d_0102": "2026-03-31",
+      "f003d_0102": "",
+      "f004d_0102": "",
+      "f005d_0102": "",
+      "f001d_0102": "2025-12-31",
+      "latest_time": null,
+      "orgId": "gssh0600000"
+    }
+  ],
+  "cninfo_called": true,
+  "db_write": false,
+  "minio_write": false,
+  "rag_run": false
+}

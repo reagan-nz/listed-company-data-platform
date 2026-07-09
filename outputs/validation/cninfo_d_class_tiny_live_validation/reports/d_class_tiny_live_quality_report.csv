@@ -1,0 +1,8 @@
+case_id,component,expected_behavior,retrieval_status,quality_status,lineage_status,acceptable,notes
+DLC001,margin_trading,captured_normal,found,pass,discovered,yes,found 1 row(s) for company
+DLC002,block_trade,empty_but_valid,empty_but_valid,pass,discovered,yes,company-level zero rows; legal empty per quality policy
+DLC003,restricted_shares_unlock,captured_normal,empty_but_valid,pass,discovered,no,company-level zero rows; legal empty per quality policy
+DLC004,disclosure_schedule,captured_normal,found,pass,discovered,yes,found 1 row(s) for company
+DLC005,equity_pledge,empty_but_valid,empty_but_valid,pass,discovered,yes,company-level zero rows; legal empty per quality policy
+DLC006,shareholder_change,captured_normal,empty_but_valid,pass,discovered,no,company-level zero rows; legal empty per quality policy
+DLC007,executive_shareholding,needs_review_candidate,found,needs_review,needs_review,yes,executive position/amount mapping medium confidence

@@ -1,0 +1,8 @@
+case_id,company_code,company_name,component,market,risk_level,expected_behavior,reason,requires_human_candidate,v1_reference,calibration_status
+DLC001,000895,双汇发展,margin_trading,szse_main,low,captured_normal,SZSE主板活跃蓝筹；融资融券detailList公司级过滤预期有行；v1 acceptable 保持不变,false,DLC001,unchanged_from_v1
+DLC002,601988,中国银行,block_trade,sse_main,low,empty_but_valid,SSE主板大型金融；大宗交易稀疏日预期零行合法空态；v1 acceptable 保持不变,false,DLC002,unchanged_from_v1
+DLC003_V2_CANDIDATE_REQUIRED,,,restricted_shares_unlock,chinext,low,captured_normal,人工选定已知解禁事件公司；禁止自动发明代码；v1 DLC003(300009) expectation mismatch 待替换,true,DLC003,pending_human_candidate
+DLC004,600000,浦发银行,disclosure_schedule,sse_main,low,captured_normal,SSE主板金融；getPrbookInfo预约披露行预期可捕获；v1 acceptable 保持不变,false,DLC004,unchanged_from_v1
+DLC005,688981,中芯国际,equity_pledge,star,low,empty_but_valid,科创板大型半导体；特定查询日无质押行属合法空态；v1 acceptable 保持不变,false,DLC005,unchanged_from_v1
+DLC006_V2_CANDIDATE_REQUIRED,,,shareholder_change,szse_main,low,captured_normal,人工选定已知股东增减持事件公司；禁止自动发明代码；v1 DLC006(000550) expectation mismatch 待替换,true,DLC006,pending_human_candidate
+DLC007,002415,海康威视,executive_shareholding,szse_main,low,needs_review_candidate,SZSE主板龙头；高管持股needs_review；v1 acceptable 保持不变,false,DLC007,unchanged_from_v1

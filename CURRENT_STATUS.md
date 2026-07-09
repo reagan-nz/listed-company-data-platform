@@ -463,7 +463,8 @@ flowchart TD
 | 163 | ~~Phase 3 success-subset snapshot QA review~~ → **完成**（[QA summary](outputs/validation/cninfo_c_class_phase3_batch_500_success_snapshot_qa_summary.md) · test **6/6 PASS** · gate **`PASS_WITH_CAVEAT`**） |
 | 164 | ~~Phase 3 batch 500 closure review~~ → **完成**（[closure review](plans/cninfo_c_class_phase3_batch_500_closure_review.md) · [closure metrics](outputs/validation/cninfo_c_class_phase3_batch_500_closure_metrics.csv) · [closure summary](outputs/validation/cninfo_c_class_phase3_batch_500_closure_summary.md) · gate **`PASS_WITH_CAVEAT`**） |
 | 165 | ~~Phase 3.5 batch planning~~ → **完成**（[planning doc](plans/cninfo_c_class_phase35_batch_planning.md) · [universe draft](outputs/validation/cninfo_c_class_phase35_batch_universe_draft.csv) · draft **500** · eligible **3645** · gate **`READY_FOR_REVIEW`** · **未批准**） |
-| 166 | Phase 3.5 harvest dry-run + approval extension → **待启动** |
+| 166 | ~~Phase 3.5 harvest dry-run + approval extension~~ → **完成**（[YAML](lab/eval_companies_c_class_phase35_batch_500_001.yaml) · [dry-run report](outputs/validation/cninfo_c_class_phase35_harvest_dryrun_report.csv) · [extension summary](outputs/validation/cninfo_c_class_phase35_harvest_approval_extension_summary.md) · dry-run gate **`PASS_OFFLINE`** · approval gate **`READY_FOR_APPROVAL`** · test **11/11 PASS** · **未批准 live**） |
+| 167 | Phase 3.5 live harvest（用户批准后） → **待启动** |
 | 100 | dividend_history YAML backfill → **GO（决策 only）** · **不执行** |
 | 101 | BSE legacy / hold / abnormal side-track → **待文档化** |
 | 102 | **暂不入库** · **C-class 未整体完成**
