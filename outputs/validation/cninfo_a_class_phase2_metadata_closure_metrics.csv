@@ -1,0 +1,26 @@
+metric_group,metric_name,value,gate_impact,notes
+phase2,phase2_cases,20,closure_input,universe A2M001-A2M020
+phase2,accepted_original_success,12,closure_positive,title_match=pass period_match=pass wrong_report_type=0
+phase2,unresolved_network_failures,8,closure_caveat,orgId resolution network_error; not schema failure
+original_live,success,12,execution_gate_input,a_class_phase2_metadata_execution_gate=FAIL_REVIEW_REQUIRED
+original_live,failed,8,execution_gate_input,below 18/20 threshold
+original_live,wrong_report_type,0,closure_positive,no report-type mismatch on retrievable cases
+original_live,title_mismatch,2,execution_caveat,both not_found proxy cases; not matching logic failure
+original_live,period_mismatch,0,closure_positive,
+original_live,cninfo_requests,28,execution_record,original Phase 2 live only
+retry,retry_cases,8,retry_input,isolated failed-case retry
+retry,retry_success,0,retry_gate_input,a_class_phase2_failed_retry_execution_gate=FAIL_REVIEW_REQUIRED
+retry,retry_failed,8,retry_gate_input,all orgId network_error
+retry,cninfo_requests,0,retry_record,retry window network outage
+retry,wrong_report_type,0,closure_positive,
+safety,pdf_downloaded,0,red_line,metadata only
+safety,pdf_parsed,0,red_line,
+safety,ocr,0,red_line,
+safety,extraction,0,red_line,
+safety,db_write,0,red_line,
+safety,minio_write,0,red_line,
+safety,rag_run,0,red_line,
+status,verified,false,red_line,not marked
+status,production_ready,false,red_line,not marked
+status,testing_stable_sample_upgrade,false,red_line,not upgraded
+closure,a_class_phase2_metadata_closure_gate,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,closure_gate,12 accepted + 8 unresolved network

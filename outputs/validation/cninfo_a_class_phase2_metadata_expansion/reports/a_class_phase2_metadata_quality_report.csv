@@ -1,0 +1,21 @@
+case_id,company_code,report_type,expected_period,retrieval_status,title_match_status,period_match_status,quality_status,lineage_status,pdf_url_present,adjunct_url_present,pdf_downloaded,pdf_parsed,notes
+A2M001,600036,annual_report,2024-12-31,found,pass,pass,pass,discovered,yes,yes,0,0,v2 live metadata; storage_status=not_attempted; matching_logic=v2; PDF not downloaded
+A2M002,601318,annual_report,2024-12-31,found,pass,pass,pass,discovered,yes,yes,0,0,v2 live metadata; storage_status=not_attempted; matching_logic=v2; PDF not downloaded
+A2M003,000333,annual_report,2024-12-31,found,pass,pass,pass,discovered,yes,yes,0,0,v2 live metadata; storage_status=not_attempted; matching_logic=v2; PDF not downloaded
+A2M004,002415,annual_report,2024-12-31,found,pass,pass,pass,discovered,yes,yes,0,0,v2 live metadata; storage_status=not_attempted; matching_logic=v2; PDF not downloaded
+A2M005,601012,annual_report,2024-12-31,network_error,n/a,n/a,needs_review,needs_review,no,no,0,0,orgId resolution failed: network_error
+A2M006,600276,annual_report,2024-12-31,found,pass,pass,pass,discovered,yes,yes,0,0,v2 live metadata; storage_status=not_attempted; matching_logic=v2; PDF not downloaded
+A2M007,000002,annual_report,2024-12-31,found,pass,pass,pass,discovered,yes,yes,0,0,v2 live metadata; storage_status=not_attempted; matching_logic=v2; PDF not downloaded
+A2M008,601888,annual_report,2024-12-31,found,pass,pass,pass,discovered,yes,yes,0,0,v2 live metadata; storage_status=not_attempted; matching_logic=v2; PDF not downloaded
+A2M009,300014,semi_annual_report,2024-06-30,found,pass,pass,pass,discovered,yes,yes,0,0,v2 live metadata; storage_status=not_attempted; matching_logic=v2; PDF not downloaded
+A2M010,300750,semi_annual_report,2024-06-30,not_found,fail,n/a,needs_review,not_found,no,no,0,0,"no v2 matching periodic report; records=0; last_err=HTTPSConnectionPool(host='www.cninfo.com.cn', port=443): Max retries exceeded with url: /new/hisAnnouncement/query (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 503 Service Unavailable'))); matching_logic=v2"
+A2M011,600887,semi_annual_report,2024-06-30,network_error,n/a,n/a,needs_review,needs_review,no,no,0,0,orgId resolution failed: network_error
+A2M012,601166,semi_annual_report,2024-06-30,network_error,n/a,n/a,needs_review,needs_review,no,no,0,0,orgId resolution failed: network_error
+A2M013,688599,quarterly_report_q1,2025-03-31,network_error,n/a,n/a,needs_review,needs_review,no,no,0,0,orgId resolution failed: network_error
+A2M014,688036,quarterly_report_q1,2025-03-31,found,pass,pass,pass,discovered,yes,yes,0,0,v2 live metadata; storage_status=not_attempted; matching_logic=v2; PDF not downloaded
+A2M015,000725,quarterly_report_q1,2025-03-31,found,pass,pass,pass,discovered,yes,yes,0,0,v2 live metadata; storage_status=not_attempted; matching_logic=v2; PDF not downloaded
+A2M016,601899,quarterly_report_q1,2025-03-31,found,pass,pass,pass,discovered,yes,yes,0,0,v2 live metadata; storage_status=not_attempted; matching_logic=v2; PDF not downloaded
+A2M017,300059,quarterly_report_q3,2024-09-30,found,pass,pass,pass,discovered,yes,yes,0,0,v2 live metadata; storage_status=not_attempted; matching_logic=v2; PDF not downloaded
+A2M018,688111,quarterly_report_q3,2024-09-30,not_found,fail,n/a,needs_review,not_found,no,no,0,0,"no v2 matching periodic report; records=0; last_err=HTTPSConnectionPool(host='www.cninfo.com.cn', port=443): Max retries exceeded with url: /new/hisAnnouncement/query (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 503 Service Unavailable'))); matching_logic=v2"
+A2M019,600309,quarterly_report_q3,2024-09-30,network_error,n/a,n/a,needs_review,needs_review,no,no,0,0,orgId resolution failed: network_error
+A2M020,002594,quarterly_report_q3,2024-09-30,network_error,n/a,n/a,needs_review,needs_review,no,no,0,0,orgId resolution failed: network_error

@@ -1,0 +1,9 @@
+case_id,company_code,company_name,report_type,expected_period,original_failure_type,retry_failure_type,failure_stage,cninfo_request_count,schema_impact,matching_impact,recommended_action,notes
+A2M005,601012,隆基绿能,annual_report,2024-12-31,network_error,network_error,orgId_resolution,0,none,none,retry_after_network_recovery,original live orgId failed; isolated retry orgId failed; CNINFO unreachable
+A2M010,300750,宁德时代,semi_annual_report,2024-06-30,not_found,network_error,orgId_resolution,0,none,none,retry_after_network_recovery,original proxy 503 at query; retry blocked at orgId; not matching failure
+A2M011,600887,伊利股份,semi_annual_report,2024-06-30,network_error,network_error,orgId_resolution,0,none,none,retry_after_network_recovery,original live orgId failed; isolated retry orgId failed
+A2M012,601166,兴业银行,semi_annual_report,2024-06-30,network_error,network_error,orgId_resolution,0,none,none,retry_after_network_recovery,original live orgId failed; isolated retry orgId failed
+A2M013,688599,天合光能,quarterly_report_q1,2025-03-31,network_error,network_error,orgId_resolution,0,none,none,retry_after_network_recovery,original live orgId failed; isolated retry orgId failed
+A2M018,688111,金山办公,quarterly_report_q3,2024-09-30,not_found,network_error,orgId_resolution,0,none,none,retry_after_network_recovery,original proxy 503 at query; retry blocked at orgId; not matching failure
+A2M019,600309,万华化学,quarterly_report_q3,2024-09-30,network_error,network_error,orgId_resolution,0,none,none,retry_after_network_recovery,original live orgId failed; isolated retry orgId failed
+A2M020,002594,比亚迪,quarterly_report_q3,2024-09-30,network_error,network_error,orgId_resolution,0,none,none,retry_after_network_recovery,original live orgId failed; isolated retry orgId failed

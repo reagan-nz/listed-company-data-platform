@@ -1,0 +1,9 @@
+case_id,company_code,company_name,market,report_type,expected_period,original_failure_type,original_failure_reason,retry_include,retry_strategy,notes
+A2M005,601012,隆基绿能,SSE,annual_report,2024-12-31,network_error,orgId resolution failed: network_error,yes,isolated_orgId_retry_then_announcement_query,Phase2 live orgId瞬态失败；保留annual_report与2024-12-31
+A2M010,300750,宁德时代,ChiNext,semi_annual_report,2024-06-30,not_found,CNINFO proxy 503 during hisAnnouncement/query,yes,isolated_announcement_query_retry_with_backoff,orgId已解析但query遇proxy 503；保留semi_annual与2024-06-30
+A2M011,600887,伊利股份,SSE,semi_annual_report,2024-06-30,network_error,orgId resolution failed: network_error,yes,isolated_orgId_retry_then_announcement_query,Phase2 live orgId瞬态失败
+A2M012,601166,兴业银行,SSE,semi_annual_report,2024-06-30,network_error,orgId resolution failed: network_error,yes,isolated_orgId_retry_then_announcement_query,Phase2 live orgId瞬态失败
+A2M013,688599,天合光能,STAR,quarterly_report_q1,2025-03-31,network_error,orgId resolution failed: network_error,yes,isolated_orgId_retry_then_announcement_query,Phase2 live orgId瞬态失败
+A2M018,688111,金山办公,STAR,quarterly_report_q3,2024-09-30,not_found,CNINFO proxy 503 during hisAnnouncement/query,yes,isolated_announcement_query_retry_with_backoff,orgId已解析但query遇proxy 503
+A2M019,600309,万华化学,SSE,quarterly_report_q3,2024-09-30,network_error,orgId resolution failed: network_error,yes,isolated_orgId_retry_then_announcement_query,Phase2 live orgId瞬态失败
+A2M020,002594,比亚迪,SZSE,quarterly_report_q3,2024-09-30,network_error,orgId resolution failed: network_error,yes,isolated_orgId_retry_then_announcement_query,Phase2 live orgId瞬态失败

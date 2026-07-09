@@ -1,0 +1,21 @@
+case_id,company_code,company_name,market,report_type,expected_period,expected_title_keywords,excluded_title_keywords,risk_level,phase1_overlap,phase2_include,reason
+A2M001,600036,招商银行,SSE,annual_report,2024-12-31,年度报告,半年度报告|一季度报告|三季度报告|英文|English,low,no,yes,SSE主板大型银行；annual metadata；避开Phase1 ALM001浦发银行
+A2M002,601318,中国平安,SSE,annual_report,2024-12-31,年度报告,半年度报告|一季度报告|三季度报告|英文|English,low,no,yes,SSE主板保险金融龙头；annual对照；高密度披露
+A2M003,000333,美的集团,SZSE,annual_report,2024-12-31,年度报告,半年度报告|一季度报告|三季度报告|英文|English,low,no,yes,SZSE主板消费制造龙头；annual metadata
+A2M004,002415,海康威视,SZSE,annual_report,2024-12-31,年度报告,半年度报告|一季度报告|三季度报告|英文|English,low,no,yes,SZSE主板科技龙头；annual metadata
+A2M005,601012,隆基绿能,SSE,annual_report,2024-12-31,年度报告,半年度报告|一季度报告|三季度报告|英文|English,low,no,yes,SSE主板新能源科技；annual metadata
+A2M006,600276,恒瑞医药,SSE,annual_report,2024-12-31,年度报告,半年度报告|一季度报告|三季度报告|英文|English,low,no,yes,SSE主板医药龙头；annual metadata
+A2M007,000002,万科A,SZSE,annual_report,2024-12-31,年度报告,半年度报告|一季度报告|三季度报告|英文|English,low,no,yes,SZSE主板地产蓝筹；annual metadata
+A2M008,601888,中国中免,SSE,annual_report,2024-12-31,年度报告,半年度报告|一季度报告|三季度报告|英文|English,low,no,yes,SSE主板消费零售龙头；annual metadata
+A2M009,300014,亿纬锂能,ChiNext,semi_annual_report,2024-06-30,半年度报告,英文|English,low,no,yes,创业板新能源科技；semi-annual metadata
+A2M010,300750,宁德时代,ChiNext,semi_annual_report,2024-06-30,半年度报告,英文|English,low,no,yes,创业板电池科技龙头；semi-annual metadata
+A2M011,600887,伊利股份,SSE,semi_annual_report,2024-06-30,半年度报告,英文|English,low,no,yes,SSE主板消费食品；semi-annual metadata
+A2M012,601166,兴业银行,SSE,semi_annual_report,2024-06-30,半年度报告,英文|English,low,no,yes,SSE主板银行金融；semi-annual metadata
+A2M013,688599,天合光能,STAR,quarterly_report_q1,2025-03-31,一季度报告|第一季度报告|Q1,英文|English,low,no,yes,科创板光伏科技；Q1 metadata
+A2M014,688036,传音控股,STAR,quarterly_report_q1,2025-03-31,一季度报告|第一季度报告|Q1,英文|English,low,no,yes,科创板消费电子；Q1 metadata
+A2M015,000725,京东方A,SZSE,quarterly_report_q1,2025-03-31,一季度报告|第一季度报告|Q1,英文|English,low,no,yes,SZSE主板显示科技；Q1 metadata
+A2M016,601899,紫金矿业,SSE,quarterly_report_q1,2025-03-31,一季度报告|第一季度报告|Q1,英文|English,low,no,yes,SSE主板矿业制造；Q1 metadata
+A2M017,300059,东方财富,ChiNext,quarterly_report_q3,2024-09-30,三季度报告|第三季度报告|Q3,英文|English,low,no,yes,创业板金融科技；Q3 metadata；观测English拒绝
+A2M018,688111,金山办公,STAR,quarterly_report_q3,2024-09-30,三季度报告|第三季度报告|Q3,英文|English,low,no,yes,科创板软件科技；Q3 metadata
+A2M019,600309,万华化学,SSE,quarterly_report_q3,2024-09-30,三季度报告|第三季度报告|Q3,英文|English,low,no,yes,SSE主板化工制造；Q3 metadata
+A2M020,002594,比亚迪,SZSE,quarterly_report_q3,2024-09-30,三季度报告|第三季度报告|Q3,英文|English,low,no,yes,SZSE主板新能源汽车制造；Q3 metadata

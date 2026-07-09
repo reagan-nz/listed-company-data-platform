@@ -1,0 +1,13 @@
+bucket,selection_rule,target_count,reason,risk_level,include_in_phase2
+annual report metadata,SSE/SZSE活跃上市；近一年有年度报告公告；非ST非退市非BSE legacy；代码以000/001/002/600/601/603开头；优先大型蓝筹与金融龙头,8,覆盖annual_report metadata主路径；验证v2年度报告专用标题过滤与期间匹配,low,yes
+semi-annual report metadata,活跃上市；近一年有半年度报告公告；非ST非退市；主板与创业板混合,4,覆盖semi_annual_report metadata路径；验证半年度报告互斥过滤,low,yes
+Q1 quarterly report metadata,活跃上市；近一年有一季度报告公告；非ST非退市；含科创板与主板,4,覆盖quarterly_report_q1路径；验证Q1标题变体（一季度/第一季度/Q1）,low,yes
+Q3 quarterly report metadata,活跃上市；近一年有三季度报告公告；非ST非退市；重点观测English标题拒绝,4,覆盖quarterly_report_q3路径；验证Q3标题变体与English exclusion,low,yes
+SSE mainboard,上交所主板600/601/603开头活跃公司；非ST非退市,10,压测SSE板块metadata检索与orgId解析稳定性,low,yes
+SZSE mainboard,深交所主板000/001/002开头活跃公司；非ST非退市,6,压测SZSE主板板块；补充Phase 1仅五粮液1家SZSE主板样本,low,yes
+ChiNext,创业板300开头活跃公司；非ST非退市,4,覆盖创业板report-type多样性；Phase 1仅特锐德1家ChiNext,low,yes
+STAR board,科创板688开头活跃公司；非ST非退市,4,覆盖科创板季报路径；Phase 1仅华兴源创1家STAR,low,yes
+financial companies,银行保险券商及金融科技龙头；SSE/SZSE主板或创业板；非ST,4,金融类公告标题规范；压测大型金融机构metadata,low,yes
+consumer companies,食品饮料家电白酒零售消费龙头；非ST,3,消费板块披露规范度高；利于title matching观察,low,yes
+manufacturing companies,汽车机械化工矿业等制造业龙头；非ST,3,制造业定期报告混合；补充制造板块覆盖,low,yes
+technology companies,半导体软件新能源科技龙头；含创业板与科创板；非ST,6,科技板块公告类型多样；pdf_url lineage需观察但不下载,low,yes
