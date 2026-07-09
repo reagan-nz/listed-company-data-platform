@@ -1,0 +1,38 @@
+{
+  "_fixture_meta": {
+    "purpose": "B-class Phase1 freeze v1 in-scope registry source mapping example",
+    "phase1_freeze": "v1",
+    "cninfo_called": false
+  },
+  "phase1_in_scope_sources": [
+    {
+      "endpoint_id": "EP004",
+      "source_id": "cninfo_periodic_report_pdf",
+      "phase1_status": "phase1_in_scope",
+      "query_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "recommended_status": "testing"
+    },
+    {
+      "endpoint_id": "EP005",
+      "source_id": "cninfo_general_announcement_pdf",
+      "phase1_status": "phase1_in_scope",
+      "query_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+      "recommended_status": "candidate"
+    }
+  ],
+  "linkage_helper": {
+    "endpoint_id": "EP002",
+    "source_name": "topSearch/query",
+    "phase1_status": "phase1_in_scope",
+    "purpose": "org_id_discovery"
+  },
+  "deferred_phase2_sources": [
+    "cninfo_inquiry_reply_pdf",
+    "cninfo_meeting_notice_pdf"
+  ],
+  "removed_ui_hint": {
+    "endpoint_id": "EP003",
+    "source_name": "disclosure/list/notice UI hint",
+    "phase1_status": "removed_ui_hint"
+  }
+}

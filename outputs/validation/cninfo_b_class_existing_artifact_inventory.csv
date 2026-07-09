@@ -1,0 +1,78 @@
+artifact_path,artifact_type,class_guess,relevance,contains_endpoint_hint,contains_pdf_url_logic,contains_company_universe_logic,contains_quality_logic,risk,notes
+plans/cninfo_b_class_announcement_metadata_architecture_plan.md,plan,B-class,high,no,yes,no,no,low,New Phase0 architecture entry; defines objects minimum fields and Phase1 boundary
+plans/cninfo_b_class_source_discovery_plan.md,plan,B-class,high,yes,yes,no,no,low,New offline discovery strategy; lists candidate source types and 5-step sequence
+outputs/validation/cninfo_b_class_readiness_matrix.csv,matrix,B-class,high,no,yes,no,yes,low,12-component readiness view for Phase1
+outputs/validation/cninfo_b_class_initial_planning_summary.md,summary,B-class,high,no,no,no,no,low,Planning gate DESIGN_STARTED; parallel C-class note
+plans/cninfo_b_class_corpus_design.md,plan,B-class,high,no,yes,no,yes,low,Original B-class corpus scope document_type status model
+plans/cninfo_b_class_document_model_draft.md,plan,B-class,high,no,yes,no,no,low,Logical objects raw_file document chunk citation parse_run
+plans/cninfo_b_class_source_registry_design.md,plan,B-class,high,yes,yes,no,yes,low,Registry field spec for document_corpus layer
+plans/cninfo_b_class_source_registry_draft_notes.md,plan,B-class,medium,yes,yes,no,no,low,YAML draft notes Phase1 inheritance title routing principles
+plans/cninfo_b_vs_d_class_boundary.md,plan,B-class,medium,no,no,no,no,low,B vs D anti-patterns and linkage keys
+plans/cninfo_c_vs_b_vs_d_boundary.md,plan,shared,medium,no,no,no,no,low,C B D three-way boundary reference
+plans/cninfo_b_class_validation_design.md,plan,B-class,high,no,yes,no,yes,low,expected-period known-document category-sample validation口径
+plans/cninfo_b_class_category_routing_rules.md,plan,B-class,high,no,no,no,yes,low,Title to source routing rules
+plans/cninfo_b_class_json_schema_draft_notes.md,plan,B-class,medium,no,yes,no,yes,low,8 logical b_class JSON schemas notes
+plans/cninfo_b_class_parser_chunker_plan.md,plan,B-class,medium,no,yes,no,yes,low,Future parse pipeline design deferred in Phase0
+plans/cninfo_b_class_chunking_strategy.md,plan,B-class,low,no,no,no,no,low,Future RAG chunking deferred
+plans/cninfo_b_class_parse_quality_model.md,plan,B-class,medium,no,no,no,yes,low,Parse quality flags model design only
+plans/cninfo_b_class_registry_lint_design.md,plan,B-class,medium,no,no,no,yes,low,23 lint rules R001-R023
+plans/cninfo_b_class_corpus_retrieval_validation_design.md,plan,B-class,high,yes,yes,no,yes,low,Known-document and guard audit validation design
+plans/cninfo_b_class_retrieval_ready_case_rules.md,plan,B-class,high,no,yes,no,yes,low,Ready-case intake and case_status rules
+plans/cninfo_b_class_ready_case_intake_template.md,plan,B-class,medium,no,yes,no,no,low,Manual ready-case template
+plans/cninfo_b_class_ready_case_review_checklist.md,plan,B-class,medium,no,no,no,yes,low,Human review checklist for ready cases
+plans/cninfo_b_class_corpus_retrieval_script_skeleton_notes.md,plan,B-class,medium,yes,yes,no,no,low,Dry-run script skeleton notes
+plans/cninfo_b_class_retrieval_validation_next_steps.md,plan,B-class,medium,no,no,no,no,low,Preconditions before broader live validation
+config/cninfo_b_class_source_registry_draft.yaml,config,B-class,high,yes,yes,yes,no,medium,4 B-class sources; hisAnnouncement/query; adjunctUrl mapping; 2 sources endpoint null
+config/cninfo_announcement_categories.yaml,config,B-class,high,no,no,no,yes,medium,4 routing groups + legacy mapping draft
+config/cninfo_announcement_retrieval_strategies.yaml,config,shared,medium,no,no,no,yes,low,Keyword retrieval strategies for announcement categories
+schemas/b_class/b_document.schema.json,schema,B-class,high,no,yes,no,yes,low,Core document metadata JSON schema draft-07
+schemas/b_class/b_raw_file.schema.json,schema,B-class,high,no,yes,no,yes,low,PDF URL and download_status metadata schema
+schemas/b_class/b_document_version.schema.json,schema,B-class,medium,no,yes,no,no,low,Document version lineage schema
+schemas/b_class/b_document_section.schema.json,schema,B-class,low,no,no,no,no,low,Future parse section schema
+schemas/b_class/b_document_chunk.schema.json,schema,B-class,low,no,no,no,no,low,Future RAG chunk schema
+schemas/b_class/b_document_citation_span.schema.json,schema,B-class,low,no,no,no,no,low,Future citation schema
+schemas/b_class/b_event_document_link.schema.json,schema,B-class,medium,no,yes,no,no,low,Link to D-class events evidence
+schemas/b_class/b_document_parse_run.schema.json,schema,B-class,medium,no,no,no,yes,low,Parse run status schema dry-run only
+fixtures/b_class/document/periodic_report_document_fixtures.jsonl,fixture,B-class,high,no,yes,yes,no,low,20 periodic document metadata rows from Phase1 found
+fixtures/b_class/document/non_periodic_document_fixtures.jsonl,fixture,B-class,high,no,yes,yes,no,low,13 non-periodic document metadata rows
+fixtures/b_class/raw_file/periodic_report_raw_file_fixtures.jsonl,fixture,B-class,high,no,yes,no,no,low,20 raw_file metadata rows pdf_url lineage
+fixtures/b_class/parse_run/document_parse_run_dry_run_fixtures.jsonl,fixture,B-class,medium,no,no,no,yes,low,33 parse_run dry-run rows not_started/skipped
+fixtures/b_class/known_documents/known_document_benchmark.yaml,fixture,B-class,high,no,no,no,yes,low,16 title routing benchmarks
+fixtures/b_class/retrieval_validation/known_document_retrieval_cases.yaml,fixture,B-class,high,yes,yes,yes,yes,medium,5 ready + placeholders for corpus retrieval validation
+fixtures/b_class/retrieval_validation/category_sample_cases.yaml,fixture,B-class,medium,no,no,no,yes,low,Category sample cases design_only
+fixtures/b_class/retrieval_validation/ready_case_examples_do_not_run.yaml,fixture,B-class,low,no,no,no,no,low,Example-only cases marked do not run
+lab/validate_cninfo_b_class_corpus_retrieval.py,script,B-class,high,yes,yes,yes,yes,high,Live metadata v1 script; TOPSEARCH + hisAnnouncement/query; do not execute this round
+lab/validate_cninfo_b_class_category_routing.py,script,B-class,high,no,no,no,yes,low,Offline title routing validation 16 benchmarks
+lab/select_cninfo_b_class_retrieval_ready_cases.py,script,B-class,medium,no,no,no,yes,low,Ready-case selector no CNINFO
+lab/lint_cninfo_b_class_registry.py,script,B-class,medium,no,no,no,yes,low,Registry/category/schema/fixture offline lint
+lab/seed_cninfo_b_class_document_fixtures.py,script,B-class,medium,no,yes,yes,no,low,Phase1 found to document fixture seeder offline
+lab/validate_cninfo_b_class_document_schema.py,script,B-class,medium,no,yes,no,yes,low,Document fixture schema validation 20/20 PASS
+lab/seed_cninfo_b_class_raw_file_fixtures.py,script,B-class,medium,no,yes,no,no,low,Document to raw_file fixture seeder offline
+lab/validate_cninfo_b_class_raw_file_schema.py,script,B-class,medium,no,yes,no,yes,low,Raw file schema validation 20/20 PASS
+lab/seed_cninfo_b_class_non_periodic_document_fixtures.py,script,B-class,medium,no,yes,no,no,low,Non-periodic document seed offline
+lab/validate_cninfo_b_class_non_periodic_document_schema.py,script,B-class,medium,no,yes,no,yes,low,Non-periodic schema validation 13/13 PASS
+lab/seed_cninfo_b_class_parse_run_dry_run_fixtures.py,script,B-class,low,no,no,no,yes,low,Parse run dry-run fixture seeder
+lab/validate_cninfo_b_class_parse_run_schema.py,script,B-class,low,no,no,no,yes,low,Parse run schema validation 33/33 PASS
+outputs/validation/cninfo_b_class_corpus_retrieval_live_summary.md,summary,B-class,high,yes,yes,yes,yes,medium,5/5 LIVE_PASS metadata v1 evidence; historical do not rerun
+outputs/validation/cninfo_b_class_corpus_retrieval_live_report.csv,report,B-class,high,yes,yes,yes,yes,medium,Live metadata v1 per-case report
+outputs/validation/cninfo_b_class_corpus_retrieval_dry_run_summary.md,summary,B-class,medium,no,yes,yes,yes,low,Dry-run retrieval validation summary
+outputs/validation/cninfo_b_class_category_routing_summary.md,summary,B-class,high,no,no,no,yes,low,16 benchmark PASS routing summary
+outputs/validation/cninfo_b_class_document_schema_validation_summary.md,summary,B-class,medium,no,yes,no,yes,low,20/20 document schema PASS
+outputs/validation/cninfo_b_class_raw_file_schema_validation_summary.md,summary,B-class,medium,no,yes,no,yes,low,20/20 raw_file schema PASS
+outputs/validation/cninfo_b_class_registry_lint_summary.md,summary,B-class,medium,no,no,no,yes,low,23 rules PASS
+outputs/validation/cninfo_b_class_document_seed_summary.md,summary,B-class,medium,no,yes,yes,no,low,20 document seed from Phase1 found
+outputs/validation/cninfo_b_class_retrieval_ready_case_summary.md,summary,B-class,medium,no,yes,yes,yes,low,Ready-case selector summary
+lab/validate_cninfo_report_coverage.py,script,A-class,high,yes,yes,yes,yes,high,A-class Phase1 hisAnnouncement/query coverage; primary reuse base for B-class periodic source
+lab/build_cninfo_report_p1_identity_mapping.py,script,A-class,high,yes,no,yes,no,medium,company_code org_id exchange mapping for announcement query
+lab/build_cninfo_report_p1_sample_companies.py,script,A-class,medium,no,no,yes,no,low,P1 sample company list builder offline
+lab/validate_cninfo_report_announcements.py,script,A-class,medium,yes,yes,no,no,low,Deprecated A-class strategy probe reference
+outputs/validation/cninfo_report_phase1_final_summary.md,summary,A-class,high,yes,yes,yes,yes,low,Phase1 A-class 749/796 94.10% testing usable candidate
+outputs/validation/cninfo_report_p1_coverage_validation.csv,report,A-class,high,yes,yes,yes,yes,low,P1 per-company coverage detail rows
+outputs/validation/cninfo_report_p1_coverage_validation_summary.md,summary,A-class,high,yes,yes,yes,yes,low,P1 coverage summary and diagnostics pointers
+lab/validate_cninfo_pdf_metadata.py,script,shared,medium,yes,yes,no,yes,medium,PDF URL hash rules validation no download body
+lab/validate_cninfo_latest_announcements.py,script,shared,medium,yes,yes,no,no,medium,Latest announcement list column validation script
+lab/validate_cninfo_announcement_categories.py,script,shared,medium,no,no,no,yes,low,Legacy 14-category validation pending migration to new YAML
+lab/test_cninfo_announcement_retrieval_rules.py,script,shared,medium,no,no,no,yes,low,Retrieval rule replay tests offline
+utils/fetcher.py,utility,shared,medium,no,no,no,yes,low,Polite HTTP fetcher prototype for future validation scripts
+lab/probe_cninfo.py,script,shared,low,yes,yes,yes,no,high,Era B frozen CNINFO probe; not current B-class execution path
+lab/extract_annual_report.py,script,shared,low,yes,yes,yes,yes,high,Era B frozen PDF download and extraction; out of B-class Phase0 scope

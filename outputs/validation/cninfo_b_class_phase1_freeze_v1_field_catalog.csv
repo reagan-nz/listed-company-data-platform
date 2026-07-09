@@ -1,0 +1,47 @@
+field_name,object_name,required_level,source_field_hint,normalized_name,data_type,lineage_required,quality_rule,dedup_role,freeze_status,notes
+company_code,announcement_record,required,secCode,company_code,string,yes,must_match_universe,primary_key_part,frozen_required,Signoff required field 1
+org_id,announcement_record,required,orgId,org_id,string,yes,must_resolve_for_live_query,primary_key_part,frozen_required,Signoff required field 2
+announcement_id,announcement_record,required,announcementId,announcement_id,string,yes,must_be_non_empty,primary_key,frozen_required,Signoff required field 3
+announcement_title,announcement_record,required,announcementTitle,announcement_title,string,yes,must_be_non_empty,none,frozen_required,Signoff required field 4
+announcement_time,announcement_record,required,announcementTime,announcement_time,datetime,yes,must_parse_datetime,none,frozen_required,Signoff required field 5
+announcement_date,announcement_record,required,announcementTime,announcement_date,date,yes,must_parse_date,none,frozen_required,Signoff required field 6
+document_id,document_metadata,required,derived,document_id,string,yes,must_be_unique_per_record,primary_key,frozen_required,Signoff required field 7
+retrieval_time,document_metadata,required,harvest runner,retrieval_time,datetime,yes,must_be_iso8601,none,frozen_required,Signoff required field 8
+raw_hash,document_metadata,required,hash of raw_metadata_json,raw_hash,string,yes,must_be_non_empty,dedup_helper,frozen_required,Signoff required field 9
+quality_status,document_metadata,required,QA rules,quality_status,string,yes,must_be_valid_enum,none,frozen_required,Signoff required field 10
+pdf_url,pdf_reference,required,adjunctUrl normalized,pdf_url,uri,yes,must_be_absolute_uri_if_found,none,frozen_required,Signoff required field 11
+adjunct_url,pdf_reference,required,adjunctUrl,adjunct_url,string,yes,preserve_raw_value,none,frozen_required,Signoff required field 12
+source_endpoint,pdf_reference,required,registry query_endpoint,source_endpoint,uri,yes,must_match_endpoint_catalog,none,frozen_required,Signoff required field 13
+lineage_status,document_evidence,required,lineage policy,lineage_status,string,yes,must_be_valid_enum,none,frozen_required,Signoff required field 14
+announcement_category,announcement_category,required,category routing,announcement_category,string,yes,must_map_to_routing_group,none,frozen_required,Signoff required field 15
+company_name,announcement_record,recommended,secName,company_name,string,no,nullable_if_missing,none,frozen_recommended,Phase1 recommended not required
+source_id,document_metadata,recommended,registry source_id,source_id,string,yes,must_exist_in_registry,none,frozen_recommended,Links record to registry source_id
+document_type,document_metadata,recommended,title routing,document_type,string,no,must_be_valid_enum_if_present,none,frozen_recommended,Routing enum when present
+retrieval_status,document_metadata,recommended,retrieval logic,retrieval_status,string,yes,must_be_valid_enum,none,frozen_recommended,found / not_found operational status
+raw_metadata_json,document_metadata,raw_only,CNINFO announcement object,raw_metadata_json,object,yes,must_preserve_lineage,none,frozen_raw_only,Lineage payload not normalized core
+created_from,document_metadata,recommended,provenance tag,created_from,string,yes,must_be_non_empty,none,frozen_recommended,Harvest provenance tag
+file_type,pdf_reference,recommended,assumed pdf,file_type,string,no,default_pdf_if_url_present,none,frozen_recommended,Assume pdf without content inspection
+source_url,pdf_reference,recommended,page_url or referer,source_url,uri,no,nullable,none,frozen_recommended,Optional referer lineage
+download_status,pdf_reference,recommended,fixed not_attempted,download_status,string,no,must_be_not_attempted_phase1,none,frozen_recommended,Phase1 boundary no download
+linked_document_id,document_evidence,recommended,document_metadata,document_id,string,yes,must_reference_document,none,frozen_recommended,Parent document pointer
+category,announcement_category,recommended,cninfo category param,category,string,no,official_code_alignment_pending,none,frozen_recommended,Official code alignment pending
+category_route_group,announcement_category,recommended,routing yaml,category_route_group,string,no,must_exist_in_yaml_if_routed,none,frozen_recommended,Routing group label
+title_route_source_id,announcement_category,recommended,routing output,title_route_source_id,string,no,must_match_registry_if_classified,none,frozen_recommended,Target registry source_id
+timeline_company_code,company_document_timeline,recommended,announcement_record,company_code,string,yes,must_match_parent,group_key,frozen_recommended,Downgraded from required per signoff
+timeline_announcement_date,company_document_timeline,recommended,announcement_date,announcement_date,date,yes,must_sortable,none,frozen_recommended,Downgraded from required per signoff
+timeline_document_id,company_document_timeline,recommended,document_id,document_id,string,yes,must_reference_document,none,frozen_recommended,Timeline read model pointer
+timeline_announcement_id,company_document_timeline,recommended,announcement_id,announcement_id,string,yes,must_reference_announcement,dedup_helper,frozen_recommended,Timeline dedup helper
+announcement_type,announcement_record,review_later,unknown,announcement_type,string,no,defer_taxonomy,none,deferred_phase2,Use document_type instead in Phase1
+report_period,document_metadata,review_later,derived,report_period,date,no,required_only_for_periodic_source,none,deferred_phase2,Periodic source only
+classification_status,document_metadata,review_later,routing rules,classification_status,string,no,defer_until_taxonomy_frozen,none,deferred_phase2,Not Phase1 gate
+classification_confidence,document_metadata,review_later,routing rules,classification_confidence,string,no,defer,none,deferred_phase2,Not Phase1 gate
+sha256_candidate,pdf_reference,review_later,file hash,sha256_candidate,string,no,defer_until_download,none,deferred_phase2,Requires PDF download
+storage_uri_candidate,pdf_reference,review_later,object storage,storage_uri_candidate,string,no,defer_minio,none,deferred_phase2,MinIO deferred
+evidence_role,document_evidence,review_later,product policy,evidence_role,string,no,defer,none,deferred_phase2,D-class linkage deferred
+linked_event_id,document_evidence,review_later,D-class linkage,linked_event_id,string,no,defer,none,deferred_phase2,D-class event link deferred
+source_confidence,document_evidence,review_later,registry status,source_confidence,string,no,defer,none,deferred_phase2,Registry status mirror deferred
+sub_category,announcement_category,review_later,routing rules,sub_category,string,no,defer,none,deferred_phase2,Finer taxonomy deferred
+notes,document_metadata,optional,manual,notes,string,no,free_text,none,excluded_from_phase1,Moved outside Phase1 per signoff
+mime_type,pdf_reference,optional,assumed,mime_type,string,no,default_application_pdf,none,excluded_from_phase1,Moved outside Phase1 per signoff
+timeline_entry_id,company_document_timeline,optional,derived,timeline_entry_id,string,no,unique_per_entry,primary_key_part,excluded_from_phase1,Moved outside Phase1 per signoff
+timeline_pdf_url,company_document_timeline,optional,pdf_url,pdf_url,uri,no,nullable_if_not_found,none,excluded_from_phase1,Moved outside Phase1 per signoff

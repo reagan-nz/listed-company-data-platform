@@ -1,0 +1,6 @@
+case_id,company_code,quality_status,lineage_status,error_type,retrieval_status,notes
+TLC001,000895,pass,discovered,,found,live metadata retrieved; PDF not downloaded; quality_checks_pass
+TLC002,300009,needs_review,needs_review,network_error,network_error,EP002 orgId resolution failed
+TLC003,601988,pass,discovered,,found,live metadata retrieved; PDF not downloaded; quality_checks_pass
+TLC004,000550,pass,discovered,,found,live metadata retrieved; PDF not downloaded; quality_checks_pass
+TLC005,688981,pass,discovered,,found,live metadata retrieved; PDF not downloaded; quality_checks_pass

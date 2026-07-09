@@ -1,18 +1,25 @@
 # CNINFO B 类 Source Registry YAML Draft
 # 设计草案 — document_corpus layer；非生产配置；不入库；不写 verified。
+# Phase1 freeze v1 对齐：outputs/validation/cninfo_b_class_phase1_freeze_v1_endpoint_catalog.csv
 # 权威设计：plans/cninfo_b_class_source_registry_design.md
 # 说明文档：plans/cninfo_b_class_source_registry_draft_notes.md
 # 边界：plans/cninfo_b_vs_d_class_boundary.md
 # 勿与 config/cninfo_d_class_source_registry_draft.yaml 混用。
 
-version: "draft-0.1"
+version: "draft-0.2-phase1-freeze-v1"
 status: design_only
 generated_from:
   - outputs/validation/cninfo_report_phase1_final_summary.md
+  - outputs/validation/cninfo_b_class_phase1_freeze_v1_field_catalog.csv
+  - outputs/validation/cninfo_b_class_phase1_freeze_v1_endpoint_catalog.csv
+  - plans/cninfo_b_class_phase1_schema_freeze_approval_draft.md
   - plans/cninfo_b_class_corpus_design.md
   - plans/cninfo_b_class_document_model_draft.md
   - plans/cninfo_b_vs_d_class_boundary.md
   - lab/validate_cninfo_report_coverage.py
+
+# EP003 disclosure/list/notice UI hint is removed_ui_hint — not a registry source.
+# page_url below on periodic source is referer only; do not use as Phase1 harvest endpoint.
 
 defaults:
   source_site: cninfo.com.cn
@@ -86,12 +93,17 @@ phase1_report_title_exclusions_shared:
 sources:
   - source_id: cninfo_periodic_report_pdf
     source_name: 巨潮定期报告 PDF
+    endpoint_id: EP004
+    phase1_status: phase1_in_scope
+    deferred_phase2: false
     source_layer: document_corpus
     source_category: periodic_report_pdf
     source_site: cninfo.com.cn
     discovery_method: cninfo_announcement_search
     query_endpoint: https://www.cninfo.com.cn/new/hisAnnouncement/query
     page_url: https://www.cninfo.com.cn/new/commonUrl?url=disclosure/list/notice
+    page_url_role: referer_only
+    page_url_phase1_status: removed_ui_hint
     params_template:
       stock: "<company_code>,<org_id>"
       column: "<sse|szse|bj>"
@@ -164,7 +176,7 @@ sources:
       - not_started
       - skipped
     status:
-      recommended_status: testing_stable_sample
+      recommended_status: testing
       verified: false
       blocked: false
       stability_status: phase1_p1_effective_coverage_94_10_pct
@@ -192,6 +204,9 @@ sources:
 
   - source_id: cninfo_general_announcement_pdf
     source_name: 巨潮普通公告 PDF
+    endpoint_id: EP005
+    phase1_status: phase1_in_scope
+    deferred_phase2: false
     source_layer: document_corpus
     source_category: announcement_pdf
     source_site: cninfo.com.cn
@@ -246,10 +261,14 @@ sources:
     notes: >-
       Broad announcement PDF corpus. Titles excluded from periodic_report_pdf may be
       re-routed here with document_type != annual_report. Official CNINFO category codes
-      to be aligned with cninfo_announcement_categories.yaml in next step. Not yet validated.
+      TODO: align with cninfo_announcement_categories.yaml before tiny live sample.
+      Phase1 freeze v1 in_scope; not yet live validated.
 
   - source_id: cninfo_inquiry_reply_pdf
     source_name: 巨潮问询函及回复 PDF
+    endpoint_id: EP006
+    phase1_status: deferred_phase2
+    deferred_phase2: true
     source_layer: document_corpus
     source_category: inquiry_reply_pdf
     source_site: cninfo.com.cn
@@ -299,10 +318,13 @@ sources:
       MUST NOT be classified as annual_report or quarterly_report. Phase 1 periodic
       exclusion patterns for 问询函/回复公告 are POSITIVE here. query_endpoint expected
       same as hisAnnouncement/query but not independently validated; left null until
-      category/title probe completes.
+      Phase2 probe completes. deferred_phase2=true.
 
   - source_id: cninfo_meeting_notice_pdf
     source_name: 巨潮说明会/会议通知 PDF
+    endpoint_id: EP007
+    phase1_status: deferred_phase2
+    deferred_phase2: true
     source_layer: document_corpus
     source_category: meeting_notice_pdf
     source_site: cninfo.com.cn
@@ -351,4 +373,5 @@ sources:
     validation_artifacts: []
     notes: >-
       Meeting / IR activity corpus. Phase 1 periodic exclusions for 说明会/业绩说明会 are
-      POSITIVE here. Not a substitute for periodic reports. Endpoint TBD; null until validated.
+      POSITIVE here. Not a substitute for periodic reports. query_endpoint null until
+      Phase2 probe. deferred_phase2=true.

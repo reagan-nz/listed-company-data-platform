@@ -1,0 +1,47 @@
+field_name,object_name,required_level,source_field_hint,normalized_name,data_type,lineage_required,quality_rule,dedup_role,notes
+company_code,announcement_record,required,secCode,company_code,string,yes,must_match_universe,primary_key_part,Security code from CNINFO response or input universe
+company_name,announcement_record,recommended,secName,company_name,string,no,nullable_if_missing,none,Company short name; may be absent in some responses
+org_id,announcement_record,required,orgId,org_id,string,yes,must_resolve_for_live_query,primary_key_part,Required for hisAnnouncement stock param per A-class experience
+announcement_id,announcement_record,required,announcementId,announcement_id,string,yes,must_be_non_empty,primary_key,CNINFO announcement primary identifier
+announcement_title,announcement_record,required,announcementTitle,announcement_title,string,yes,must_be_non_empty,none,Raw announcement title from API
+announcement_time,announcement_record,required,announcementTime,announcement_time,datetime,yes,must_parse_datetime,none,Raw disclosure timestamp from API before date normalization
+announcement_date,announcement_record,required,announcementTime,announcement_date,date,yes,must_parse_date,none,Normalized disclosure date derived from announcement_time
+announcement_type,announcement_record,review_later,unknown,announcement_type,string,no,defer_taxonomy,none,Coarse type not frozen; use document_type + category routing instead in Phase1
+source_id,document_metadata,recommended,registry source_id,source_id,string,yes,must_exist_in_registry,none,Links record to cninfo_b_class_source_registry_draft.yaml entry
+document_id,document_metadata,required,derived,document_id,string,yes,must_be_unique_per_record,primary_key,Logical document key; may equal announcement_id or derived composite in Phase1 prototype
+document_type,document_metadata,recommended,title routing / registry,document_type,string,no,must_be_valid_enum_if_present,none,Maps to b_document.schema.json document_type enum; not frozen for all non-periodic cases
+report_period,document_metadata,review_later,derived from title/date,report_period,date,no,required_only_for_periodic_source,none,Periodic reports only; defer strict freeze for general announcements
+retrieval_time,document_metadata,required,harvest runner,retrieval_time,datetime,yes,must_be_iso8601,none,Metadata capture timestamp
+raw_hash,document_metadata,required,hash of raw_metadata_json,raw_hash,string,yes,must_be_non_empty,dedup_helper,Hash of lineage payload for change detection; not PDF file hash
+quality_status,document_metadata,required,QA rules,quality_status,string,yes,must_be_valid_enum,none,Phase1 values e.g. pass / caveat / blocked / needs_review
+retrieval_status,document_metadata,recommended,retrieval logic,retrieval_status,string,yes,must_be_valid_enum,none,found / not_found / title_excluded / empty_response etc.
+classification_status,document_metadata,review_later,routing rules,classification_status,string,no,defer_until_taxonomy_frozen,none,Title routing outcome; present in b_document schema but not Phase1 gate
+classification_confidence,document_metadata,review_later,routing rules,classification_confidence,string,no,defer,none,high / medium / low; not required for Phase1 metadata capture
+raw_metadata_json,document_metadata,raw_only,CNINFO announcement object,raw_metadata_json,object,yes,must_preserve_lineage,none,Full raw announcement object for audit; not promoted to normalized core yet
+created_from,document_metadata,recommended,provenance tag,created_from,string,yes,must_be_non_empty,none,e.g. phase1_report_retrieval / b_class_metadata_harvest
+notes,document_metadata,optional,manual,notes,string,no,free_text,none,Free-text QA or intake notes
+pdf_url,pdf_reference,required,adjunctUrl normalized,pdf_url,uri,yes,must_be_absolute_uri_if_found,none,Full static PDF URL; null allowed when not_found
+adjunct_url,pdf_reference,required,adjunctUrl,adjunct_url,string,yes,preserve_raw_value,none,Raw CNINFO adjunctUrl field before host normalization
+file_type,pdf_reference,recommended,assumed pdf,file_type,string,no,default_pdf_if_url_present,none,Phase1 assumes pdf; do not inspect file content
+source_endpoint,pdf_reference,required,registry query_endpoint,source_endpoint,uri,yes,must_match_candidate_table,none,e.g. hisAnnouncement/query URL used for retrieval
+source_url,pdf_reference,recommended,page_url or referer,source_url,uri,no,nullable,none,UI page or referer URL; optional lineage
+download_status,pdf_reference,recommended,fixed not_attempted,download_status,string,no,must_be_not_attempted_phase1,none,Phase1 boundary: no PDF download
+mime_type,pdf_reference,optional,assumed,mime_type,string,no,default_application_pdf,none,Not verified without download
+sha256_candidate,pdf_reference,review_later,file hash,sha256_candidate,string,no,defer_until_download,none,File content hash; explicitly out of Phase1 scope
+storage_uri_candidate,pdf_reference,review_later,object storage,storage_uri_candidate,string,no,defer_minio,none,MinIO/object storage URI deferred
+lineage_status,document_evidence,required,lineage policy,lineage_status,string,yes,must_be_valid_enum,none,discovered / linked / needs_review / orphan
+evidence_role,document_evidence,review_later,product policy,evidence_role,string,no,defer,none,Role when linking to D-class events or RAG citations
+linked_event_id,document_evidence,review_later,D-class linkage,linked_event_id,string,no,defer,none,Future link to d_company_event; not Phase1
+linked_document_id,document_evidence,recommended,document_metadata,document_id,string,yes,must_reference_document,none,Parent document for evidence record
+source_confidence,document_evidence,review_later,registry status,source_confidence,string,no,defer,none,Mirrors registry recommended_status; not upgraded this round
+announcement_category,announcement_category,required,category routing / registry,announcement_category,string,yes,must_map_to_routing_group,none,Phase1 normalized main category label
+category,announcement_category,recommended,cninfo category param,category,string,no,official_code_alignment_pending,none,Official CNINFO category code if available; alignment incomplete
+sub_category,announcement_category,review_later,routing rules,sub_category,string,no,defer,none,Finer taxonomy deferred
+category_route_group,announcement_category,recommended,cninfo_announcement_categories.yaml,category_route_group,string,no,must_exist_in_yaml_if_routed,none,e.g. periodic_report / board_meeting / inquiry_reply
+title_route_source_id,announcement_category,recommended,routing output,title_route_source_id,string,no,must_match_registry_if_classified,none,Target B-class source_id from title routing
+timeline_entry_id,company_document_timeline,optional,derived,timeline_entry_id,string,no,unique_per_entry,primary_key_part,Logical timeline row id; optional in Phase1 file output
+timeline_company_code,company_document_timeline,required,announcement_record,company_code,string,yes,must_match_parent,group_key,Company code for timeline aggregation view
+timeline_announcement_date,company_document_timeline,required,announcement_date,announcement_date,date,yes,must_sortable,none,Sort key for per-company document timeline
+timeline_document_id,company_document_timeline,recommended,document_id,document_id,string,yes,must_reference_document,none,Pointer to document_metadata record
+timeline_announcement_id,company_document_timeline,recommended,announcement_id,announcement_id,string,yes,must_reference_announcement,dedup_helper,Duplicate detection helper in timeline view
+timeline_pdf_url,company_document_timeline,optional,pdf_url,pdf_url,uri,no,nullable_if_not_found,none,Denormalized convenience field for timeline reads only

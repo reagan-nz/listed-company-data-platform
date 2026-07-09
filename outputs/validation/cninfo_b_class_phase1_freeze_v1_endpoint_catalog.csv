@@ -1,0 +1,8 @@
+endpoint_id,source_name,endpoint_hint,method,phase1_status,source_registry_status,live_validation_status,priority,risk_level,notes
+EP001,hisAnnouncement/query,https://www.cninfo.com.cn/new/hisAnnouncement/query,POST,phase1_in_scope,in_registry_defaults,not_run,high,medium,Primary announcement list API; shared by EP004 and EP005
+EP002,topSearch/query,https://www.cninfo.com.cn/new/information/topSearch/query,POST,phase1_in_scope,referenced_in_b_class_script,not_run,high,medium,OrgId linkage helper only; not document list endpoint
+EP003,disclosure/list/notice UI hint,https://www.cninfo.com.cn/new/commonUrl?url=disclosure/list/notice,GET,removed_ui_hint,page_url_on_periodic_source,not_run,medium,high,UI/Referer only; removed from Phase1 harvest path
+EP004,cninfo_periodic_report_pdf,https://www.cninfo.com.cn/new/hisAnnouncement/query,POST,phase1_in_scope,in_registry_source,not_run,high,medium,Registry source periodic_report_pdf maps to EP001
+EP005,cninfo_general_announcement_pdf,https://www.cninfo.com.cn/new/hisAnnouncement/query,POST,phase1_in_scope,in_registry_source,not_run,high,medium,Registry source general_announcement_pdf; category alignment TODO
+EP006,cninfo_inquiry_reply_pdf,null,null,deferred_phase2,in_registry_source_endpoint_null,not_run,medium,high,Deferred Phase2; query_endpoint null until probe
+EP007,cninfo_meeting_notice_pdf,null,null,deferred_phase2,in_registry_source_endpoint_null,not_run,medium,high,Deferred Phase2; query_endpoint null until probe

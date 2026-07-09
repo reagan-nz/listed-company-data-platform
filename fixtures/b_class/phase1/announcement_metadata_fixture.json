@@ -1,0 +1,35 @@
+{
+  "_fixture_meta": {
+    "purpose": "B-class Phase1 freeze v1 synthetic announcement metadata example",
+    "phase1_freeze": "v1",
+    "cninfo_called": false,
+    "pdf_downloaded": false
+  },
+  "announcement_record": {
+    "company_code": "999001",
+    "company_name": "示例公司A",
+    "org_id": "gssz0999001",
+    "announcement_id": "fixture_ann_999001_001",
+    "announcement_title": "2024年年度报告",
+    "announcement_time": "2025-03-15T16:00:00+08:00",
+    "announcement_date": "2025-03-15"
+  },
+  "document_metadata": {
+    "document_id": "doc_fixture_999001_001",
+    "source_id": "cninfo_periodic_report_pdf",
+    "retrieval_time": "2026-07-09T03:00:00+08:00",
+    "raw_hash": "sha256:synthetic_fixture_hash_999001_001",
+    "quality_status": "pass",
+    "retrieval_status": "found",
+    "created_from": "phase1_freeze_v1_fixture"
+  },
+  "announcement_category": {
+    "announcement_category": "periodic_report",
+    "category_route_group": "periodic_report",
+    "title_route_source_id": "cninfo_periodic_report_pdf"
+  },
+  "document_evidence": {
+    "lineage_status": "discovered",
+    "linked_document_id": "doc_fixture_999001_001"
+  }
+}

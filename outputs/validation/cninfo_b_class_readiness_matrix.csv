@@ -1,0 +1,13 @@
+component,current_status,needed_for_phase1,risk,priority,notes
+source endpoint discovery,partial_design,A-class hisAnnouncement/query inherited; inquiry/meeting endpoint null,medium,P0,Step3 endpoint candidate table not created yet; no new live probe this round
+company universe linkage,partial,A-class P1 identity mapping + C-class eval YAML exist; no unified B-class universe,medium,P0,Reuse org_id mapping from A-class; defer full-market B-class universe design
+announcement metadata schema,draft_exists,8 b_class JSON schemas + document model draft; Phase1 minimum fields defined in architecture plan,low,P0,Freeze v1 field catalog CSV in next offline task
+PDF URL lineage,prototype_only,adjunctUrl mapping in registry; raw_file schema exists; no market-scale lineage test,medium,P0,Phase1 only capture URL + retrieval_time + raw_hash; no download
+document category taxonomy,partial_design,cninfo_announcement_categories.yaml + 16 routing benchmarks PASS,medium,P1,Official CNINFO category codes not fully aligned; inquiry/meeting routes pending
+raw storage policy,design_only,document/raw_file logical model; no object storage,low,P2,JSONL/file-based metadata only; MinIO explicitly out of scope
+quality checks,partial,registry lint 23 rules PASS; parse quality model draft; no B-class harvest QA runner,medium,P1,Reuse C-class QA report pattern for future metadata harvest
+deduplication,not_implemented,announcement_id uniqueness assumed; no dedup policy script,medium,P1,Define key: company_code + announcement_id; handle title/version variants offline first
+rate limit policy,inherited_draft,registry default sleep 0.6s; A/B scripts use SLEEP_SECONDS,low,P1,Document per-source backoff; do not run concurrent with C-class Phase3 live
+future PDF download,explicitly_deferred,not_started,low,P3,Era B frozen; B-class Phase0/1 boundary forbids download
+future document parsing,design_only,parser/chunker plans exist; parse_run dry-run fixtures only,low,P3,33 parse_run fixtures at not_started/skipped; no parser execution
+future RAG integration,explicitly_deferred,chunking strategy draft only,low,P3,No vector index; no embedding pipeline; linkage to D-class events deferred

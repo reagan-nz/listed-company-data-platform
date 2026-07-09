@@ -1,0 +1,77 @@
+{
+  "_fixture_meta": {
+    "case_id": "RC004",
+    "purpose": "duplicate announcement_id with different metadata candidates",
+    "phase1_freeze": "v1",
+    "cninfo_called": false,
+    "pdf_downloaded": false
+  },
+  "announcement_id": "fixture_ann_999004_dup",
+  "candidates": [
+    {
+      "candidate_rank": 1,
+      "announcement_record": {
+        "company_code": "999004",
+        "org_id": "gssz0999004",
+        "announcement_id": "fixture_ann_999004_dup",
+        "announcement_title": "2024年年度报告",
+        "announcement_time": "2025-03-28T16:00:00+08:00",
+        "announcement_date": "2025-03-28"
+      },
+      "document_metadata": {
+        "document_id": "doc_fixture_999004_dup_a",
+        "source_id": "cninfo_periodic_report_pdf",
+        "retrieval_time": "2026-07-09T04:10:00+08:00",
+        "raw_hash": "sha256:synthetic_fixture_hash_999004_dup_a",
+        "quality_status": "caveat",
+        "retrieval_status": "found"
+      },
+      "pdf_reference": {
+        "adjunct_url": "/finalpage/2025-03-29/fixture_ann_999004_dup_a.PDF",
+        "pdf_url": "http://static.cninfo.com.cn/finalpage/2025-03-29/fixture_ann_999004_dup_a.PDF",
+        "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query"
+      },
+      "announcement_category": {
+        "announcement_category": "periodic_report"
+      },
+      "document_evidence": {
+        "lineage_status": "discovered"
+      }
+    },
+    {
+      "candidate_rank": 2,
+      "announcement_record": {
+        "company_code": "999004",
+        "org_id": "gssz0999004",
+        "announcement_id": "fixture_ann_999004_dup",
+        "announcement_title": "2024年年度报告（修订稿）",
+        "announcement_time": "2025-04-02T16:00:00+08:00",
+        "announcement_date": "2025-04-02"
+      },
+      "document_metadata": {
+        "document_id": "doc_fixture_999004_dup_b",
+        "source_id": "cninfo_periodic_report_pdf",
+        "retrieval_time": "2026-07-09T04:11:00+08:00",
+        "raw_hash": "sha256:synthetic_fixture_hash_999004_dup_b",
+        "quality_status": "caveat",
+        "retrieval_status": "found"
+      },
+      "pdf_reference": {
+        "adjunct_url": "/finalpage/2025-04-03/fixture_ann_999004_dup_b.PDF",
+        "pdf_url": "http://static.cninfo.com.cn/finalpage/2025-04-03/fixture_ann_999004_dup_b.PDF",
+        "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query"
+      },
+      "announcement_category": {
+        "announcement_category": "periodic_report"
+      },
+      "document_evidence": {
+        "lineage_status": "needs_review"
+      }
+    }
+  ],
+  "expected_behavior": {
+    "same_announcement_id": true,
+    "dedup_decision_required": true,
+    "automatic_merge": false
+  }
+}

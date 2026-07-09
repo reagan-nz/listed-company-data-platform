@@ -8,7 +8,7 @@ _最后更新：2026-07-09_
 
 ## 当前阶段（一句话）
 
-**Era C Phase 1（A 类）已收口**。**Phase 2 D 类已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通。**Phase 4 C 类** **863 snapshot 已生成**；**状态 `SNAPSHOT_GENERATED_QA_REVIEW`**；**Phase 3 batch 500 harvest dry-run 已执行**（**500** 家 · **3500** HTTP · gate **PASS**）；**Phase 3 approval flag 扩展已完成**（`--approve-phase3-batch-500-harvest` · test **10/10 PASS**）；**Live approval plan 已完成**（gate **`READY_FOR_APPROVAL`**）；**Live harvest 未执行**；**显式批准仍待用户**；**Snapshot 未启动**；**C-class 未整体完成**；**下一步：等待用户显式批准 Phase 3 batch 500 live harvest**；**无 verified**；**不入库**。
+**Era C Phase 1（A 类）已收口**。**Phase 2 D 类 endpoint 验证已收口**。**Phase 3 B 类** corpus + live metadata v1 已打通；**B-class Phase 1 tiny live 收口完成**（**5/5 resolved** · closure gate **`PASS_WITH_CAVEAT`** · **无 verified**）；**D-class Phase 0 市场行为层规划已启动**（offline only · **无 D-class live**）；**D-class Phase 1 schema freeze review 已准备**（gate **`READY_FOR_APPROVAL`** · lint **10/10 PASS** · **无 D-class live**）；**D-class Phase 1 schema freeze approval package 已准备**（**未 signoff** · **无 D-class live**）。**Phase 4 C 类** **863 snapshot 已生成**；**状态 `SNAPSHOT_GENERATED_QA_REVIEW`**；**Phase 3 success-subset snapshot approval extension 已完成**（**491** · flag **`--approve-phase3-success-snapshot-build`** · test **11/11 PASS** · build **未执行**）；**并行：A-class Report Metadata Phase 0 规划已启动**（offline only · **无 CNINFO** · **无 PDF** · **无解析** · **无 RAG** · **B/C 输出未触碰**）；**A-class Phase 1 freeze v1 已离线实现**（implementation gate **`PASS_OFFLINE`** · lint **14/14 PASS**）；**A-class ready-case benchmark 已完成**（**5/5 PASS** · gate **`READY_FOR_REVIEW`** · **无 CNINFO**）；**C-class 未整体完成**；**无 verified**；**不入库**。
 
 ---
 
@@ -66,6 +66,101 @@ _最后更新：2026-07-09_
 | **Retrieval ready + live v1** | **5** ready（4 known-document + 1 guard）；live **5/5 pass**（`LIVE_PASS`）；`query_executed=5` |
 | **Guard audit** | `periodic_guard_002` **ready**；2025-03-27~2025-04-02；29 条摘要未误入 `periodic_report` |
 | 性质 | 仅 metadata retrieval；**PDF 未下载/解析**；**未写 verified**；18 条 placeholder 未请求 |
+
+---
+
+## A 类 Phase 0 定期报告元数据规划（2026-07-09 启动）
+
+> **并行说明：** C-class Phase 3 batch 500 live harvest 可能在另一终端运行；本轮仅 A-class **离线规划**，**不调用 CNINFO**、**不 live**、**不 harvest**、**不下载 PDF**、**不解析**、**无 RAG**；**不修改 C-class / B-class 既有输出**。
+
+| 项 | 状态 |
+|----|------|
+| **架构计划** | [cninfo_a_class_report_metadata_architecture_plan.md](plans/cninfo_a_class_report_metadata_architecture_plan.md) |
+| **Source discovery 计划** | [cninfo_a_class_source_discovery_plan.md](plans/cninfo_a_class_source_discovery_plan.md) |
+| **Phase 1 minimum fields** | [cninfo_a_class_phase1_minimum_fields.csv](outputs/validation/cninfo_a_class_phase1_minimum_fields.csv)（**40** 字段 · required=**21** · future=**5**） |
+| **Readiness matrix** | [cninfo_a_class_readiness_matrix.csv](outputs/validation/cninfo_a_class_readiness_matrix.csv)（**6** 组件） |
+| **Planning summary** | [cninfo_a_class_initial_planning_summary.md](outputs/validation/cninfo_a_class_initial_planning_summary.md) |
+| **Schema freeze review** | [cninfo_a_class_phase1_schema_freeze_review.md](plans/cninfo_a_class_phase1_schema_freeze_review.md) · [summary](outputs/validation/cninfo_a_class_phase1_schema_freeze_review_summary.md) |
+| **Field decision matrix** | [cninfo_a_class_phase1_field_decision_matrix.csv](outputs/validation/cninfo_a_class_phase1_field_decision_matrix.csv)（**40** 行 · proposed required=**22** · removed=**2**） |
+| **Phase1 fixtures** | [fixtures/a_class/phase1/](fixtures/a_class/phase1/)（**3** 骨架 · 合成占位符） |
+| **Freeze v1 lint** | [lab/lint_cninfo_a_class_phase1_freeze_v1.py](lab/lint_cninfo_a_class_phase1_freeze_v1.py) · [lint summary](outputs/validation/cninfo_a_class_phase1_freeze_v1_lint_summary.md)（**10/10 PASS**） |
+| **Approval checklist** | [cninfo_a_class_phase1_schema_freeze_approval_checklist.md](outputs/validation/cninfo_a_class_phase1_schema_freeze_approval_checklist.md) |
+| **Approval summary** | [cninfo_a_class_phase1_schema_freeze_approval_summary.md](outputs/validation/cninfo_a_class_phase1_schema_freeze_approval_summary.md) |
+| **Implementation plan** | [cninfo_a_class_phase1_freeze_v1_implementation_plan.md](plans/cninfo_a_class_phase1_freeze_v1_implementation_plan.md) |
+| **Freeze v1 field catalog** | [cninfo_a_class_phase1_freeze_v1_field_catalog.csv](outputs/validation/cninfo_a_class_phase1_freeze_v1_field_catalog.csv)（**40** 行 · required=**22** · recommended=**12**） |
+| **Registry draft** | [cninfo_a_class_source_registry_draft.yaml](config/cninfo_a_class_source_registry_draft.yaml)（**3** sources · `live_validation_status=not_run`） |
+| **Freeze v1 lint** | [lab/lint_cninfo_a_class_freeze_v1.py](lab/lint_cninfo_a_class_freeze_v1.py) · [lint summary](outputs/validation/cninfo_a_class_phase1_freeze_v1_lint_summary.md)（**14/14 PASS**） |
+| **Implementation summary** | [cninfo_a_class_phase1_freeze_v1_implementation_summary.md](outputs/validation/cninfo_a_class_phase1_freeze_v1_implementation_summary.md) |
+| **Ready-case benchmark** | [cninfo_a_class_phase1_ready_case_benchmark.csv](outputs/validation/cninfo_a_class_phase1_ready_case_benchmark.csv) · [summary](outputs/validation/cninfo_a_class_phase1_ready_case_benchmark_summary.md)（**5/5 PASS**） |
+| **Benchmark runner** | [lab/run_cninfo_a_class_phase1_ready_case_benchmark.py](lab/run_cninfo_a_class_phase1_ready_case_benchmark.py) · [tests](lab/test_cninfo_a_class_phase1_ready_case_benchmark.py)（**11/11 PASS**） |
+| **Ready-case fixtures** | [fixtures/a_class/phase1/ready_cases/](fixtures/a_class/phase1/ready_cases/)（**AC001–AC005**） |
+| **Gate** | `a_class_phase1_freeze_v1_implementation_gate = PASS_OFFLINE` · `a_class_ready_case_benchmark_gate = READY_FOR_REVIEW` |
+| **下一步** | 人工 review benchmark → tiny live metadata 规划（**仍无 live · 无 PDF**） |
+| 性质 | **规划 only**；不接 DB/MinIO/RAG；不写 verified；不升级 testing_stable_sample；不 merge identity |
+
+---
+
+## B 类 Phase 0 公告元数据规划（2026-07-09 启动）
+
+> **并行说明：** C-class Phase 3 batch 500 live harvest 可能在另一终端运行；本轮仅 B-class **离线规划**，**不调用 CNINFO**、**不 live**、**不 harvest**、**不下载 PDF**；**不修改 C-class Phase 3 live 输出根**。
+
+| 项 | 状态 |
+|----|------|
+| **架构计划** | [cninfo_b_class_announcement_metadata_architecture_plan.md](plans/cninfo_b_class_announcement_metadata_architecture_plan.md) |
+| **Source discovery 计划** | [cninfo_b_class_source_discovery_plan.md](plans/cninfo_b_class_source_discovery_plan.md) |
+| **Readiness matrix** | [cninfo_b_class_readiness_matrix.csv](outputs/validation/cninfo_b_class_readiness_matrix.csv) |
+| **Planning summary** | [cninfo_b_class_initial_planning_summary.md](outputs/validation/cninfo_b_class_initial_planning_summary.md) |
+| **既有产物 inventory** | [cninfo_b_class_existing_artifact_inventory.csv](outputs/validation/cninfo_b_class_existing_artifact_inventory.csv) · [summary](outputs/validation/cninfo_b_class_existing_artifact_inventory_summary.md)（**72** 条 · high=**28**） |
+| **Endpoint candidate 表** | [cninfo_b_class_endpoint_candidate_table.csv](outputs/validation/cninfo_b_class_endpoint_candidate_table.csv)（**7** 候选 · high priority=**4** · endpoint null=**2**） |
+| **Phase 1 minimum fields** | [cninfo_b_class_phase1_minimum_fields.csv](outputs/validation/cninfo_b_class_phase1_minimum_fields.csv)（**46** 字段 · required=**17** · review_later=**12**） |
+| **Schema freeze review** | [cninfo_b_class_phase1_schema_freeze_review.md](plans/cninfo_b_class_phase1_schema_freeze_review.md) · [summary](outputs/validation/cninfo_b_class_phase1_schema_freeze_review_summary.md) |
+| **Registry alignment** | [cninfo_b_class_source_registry_alignment_report.csv](outputs/validation/cninfo_b_class_source_registry_alignment_report.csv) |
+| **Manual review checklist** | [cninfo_b_class_phase1_schema_freeze_manual_review_checklist.md](outputs/validation/cninfo_b_class_phase1_schema_freeze_manual_review_checklist.md) |
+| **Field decision matrix** | [cninfo_b_class_phase1_field_decision_matrix.csv](outputs/validation/cninfo_b_class_phase1_field_decision_matrix.csv) |
+| **Endpoint decision matrix** | [cninfo_b_class_phase1_endpoint_decision_matrix.csv](outputs/validation/cninfo_b_class_phase1_endpoint_decision_matrix.csv) |
+| **Approval draft** | [cninfo_b_class_phase1_schema_freeze_approval_draft.md](plans/cninfo_b_class_phase1_schema_freeze_approval_draft.md)（signoff 已记录） |
+| **Signoff summary** | [cninfo_b_class_phase1_schema_freeze_signoff_summary.md](outputs/validation/cninfo_b_class_phase1_schema_freeze_signoff_summary.md) |
+| **Implementation plan** | [cninfo_b_class_phase1_freeze_v1_implementation_plan.md](plans/cninfo_b_class_phase1_freeze_v1_implementation_plan.md) |
+| **Freeze v1 field catalog** | [cninfo_b_class_phase1_freeze_v1_field_catalog.csv](outputs/validation/cninfo_b_class_phase1_freeze_v1_field_catalog.csv)（**15** required） |
+| **Freeze v1 endpoint catalog** | [cninfo_b_class_phase1_freeze_v1_endpoint_catalog.csv](outputs/validation/cninfo_b_class_phase1_freeze_v1_endpoint_catalog.csv) |
+| **Freeze v1 fixtures** | [fixtures/b_class/phase1/](fixtures/b_class/phase1/)（**3** 基础 + **3** ready-case） |
+| **Freeze v1 lint** | [lab/lint_cninfo_b_class_phase1_freeze_v1.py](lab/lint_cninfo_b_class_phase1_freeze_v1.py) · [lint summary](outputs/validation/cninfo_b_class_phase1_freeze_v1_lint_summary.md)（**9/9 PASS**） |
+| **Ready-case benchmark** | [cninfo_b_class_phase1_ready_case_benchmark.csv](outputs/validation/cninfo_b_class_phase1_ready_case_benchmark.csv) · [summary](outputs/validation/cninfo_b_class_phase1_ready_case_benchmark_summary.md)（**RC001–RC005**） |
+| **Benchmark offline runner** | [lab/run_cninfo_b_class_phase1_ready_case_benchmark.py](lab/run_cninfo_b_class_phase1_ready_case_benchmark.py) · [execution report](outputs/validation/cninfo_b_class_phase1_ready_case_benchmark_execution_report.csv) · [execution summary](outputs/validation/cninfo_b_class_phase1_ready_case_benchmark_execution_summary.md)（**5/5 PASS** · executed endpoints **NONE**） |
+| **Tiny live approval package** | [approval checklist](outputs/validation/cninfo_b_class_phase1_tiny_live_validation_approval_checklist.md) · [tiny universe](outputs/validation/cninfo_b_class_phase1_tiny_live_validation_universe.csv) · [command draft](plans/cninfo_b_class_phase1_tiny_live_validation_command_draft.md) · [approval summary](outputs/validation/cninfo_b_class_phase1_tiny_live_validation_approval_summary.md) |
+| **Tiny live runner** | [lab/run_cninfo_b_class_tiny_live_validation.py](lab/run_cninfo_b_class_tiny_live_validation.py) · [tests](lab/test_cninfo_b_class_tiny_live_validation_runner.py) · [live summary](outputs/validation/cninfo_b_class_tiny_live_validation_summary.md)（**5 executed · 4 found** · CNINFO **8** reqs） |
+| **TLC002 failure triage** | [failure analysis](outputs/validation/cninfo_b_class_tlc002_failure_analysis.md) · [decision summary](outputs/validation/cninfo_b_class_tlc002_failure_decision_summary.md)（**retry_candidate** · gate **`READY_FOR_REVIEW`**） |
+| **TLC002 isolated retry package** | [retry plan](plans/cninfo_b_class_tlc002_isolated_retry_plan.md) · [retry checklist](outputs/validation/cninfo_b_class_tlc002_retry_checklist.md) · [command draft](plans/cninfo_b_class_tlc002_retry_command_draft.md) |
+| **TLC002 retry runner** | [lab/run_cninfo_b_class_tlc002_retry.py](lab/run_cninfo_b_class_tlc002_retry.py) · [execution summary](outputs/validation/cninfo_b_class_tlc002_retry_execution_summary.md)（**failure recovered**） |
+| **Phase 1 tiny live closure** | [closure review](plans/cninfo_b_class_phase1_tiny_live_closure_review.md) · [final metrics](outputs/validation/cninfo_b_class_phase1_tiny_live_final_metrics.csv) · [closure summary](outputs/validation/cninfo_b_class_phase1_tiny_live_closure_summary.md) |
+| **Live validation approval plan** | [cninfo_b_class_phase1_live_validation_approval_plan.md](plans/cninfo_b_class_phase1_live_validation_approval_plan.md) |
+| **Live validation checklist** | [cninfo_b_class_phase1_live_validation_checklist.md](outputs/validation/cninfo_b_class_phase1_live_validation_checklist.md) |
+| **Implementation summary** | [cninfo_b_class_phase1_freeze_v1_implementation_summary.md](outputs/validation/cninfo_b_class_phase1_freeze_v1_implementation_summary.md) |
+| **Gate** | `b_class_phase1_tiny_live_closure_gate = PASS_WITH_CAVEAT` · `b_class_tiny_live_validation_execution_gate = PASS_WITH_CAVEAT` |
+| **下一步** | B-class Phase 2 规划 / 扩大样本设计（**仍无 PDF** · **无 verified** · **无 production_ready**） |
+| 性质 | **规划 only**；不接 DB/MinIO/RAG；不写 verified；不升级 testing_stable_sample |
+
+---
+
+## D 类 Phase 0 市场行为层规划（2026-07-09 启动）
+
+> **并行说明：** C-class `SNAPSHOT_GENERATED_QA_REVIEW` 不变；B-class Phase 1 tiny live **已收口**（closure gate **`PASS_WITH_CAVEAT`**）；本轮仅 D-class **离线规划**，**不调用 CNINFO**、**不 live**、**不 harvest**；**不修改 C-class / B-class 输出**。
+
+| 项 | 状态 |
+|----|------|
+| **架构计划** | [cninfo_d_class_market_data_architecture_plan.md](plans/cninfo_d_class_market_data_architecture_plan.md) |
+| **Source discovery 计划** | [cninfo_d_class_source_discovery_plan.md](plans/cninfo_d_class_source_discovery_plan.md) |
+| **Readiness matrix** | [cninfo_d_class_readiness_matrix.csv](outputs/validation/cninfo_d_class_readiness_matrix.csv)（**12** 组件） |
+| **Planning summary** | [cninfo_d_class_initial_planning_summary.md](outputs/validation/cninfo_d_class_initial_planning_summary.md) |
+| **既有 Phase 2/3 参考** | [phase2 final summary](outputs/validation/cninfo_table_sources_phase2_current_final_summary.md) · [registry YAML](config/cninfo_d_class_source_registry_draft.yaml) · [schema validation](outputs/validation/cninfo_d_class_schema_validation_summary.md) |
+| **Gate** | `d_class_initial_planning_gate = DESIGN_STARTED` |
+| **Phase 1 schema freeze** | [cninfo_d_class_phase1_schema_freeze_review.md](plans/cninfo_d_class_phase1_schema_freeze_review.md) · [field matrix](outputs/validation/cninfo_d_class_phase1_field_decision_matrix.csv) · [event schema](plans/cninfo_d_class_event_object_schema.md) · [freeze summary](outputs/validation/cninfo_d_class_phase1_schema_freeze_summary.md) · lint **10/10 PASS** |
+| **Phase 1 gate** | `d_class_phase1_schema_freeze_gate = READY_FOR_APPROVAL`（**不是 PASS**） |
+| **Phase 1 approval package** | [approval checklist](outputs/validation/cninfo_d_class_phase1_schema_freeze_approval_checklist.md) · [approval summary](outputs/validation/cninfo_d_class_phase1_schema_freeze_approval_summary.md) · [implementation plan](plans/cninfo_d_class_phase1_freeze_v1_implementation_plan.md) · [quality policy](plans/cninfo_d_class_event_quality_policy.md) |
+| **Phase 1 freeze v1 implementation** | [field catalog](outputs/validation/cninfo_d_class_phase1_freeze_v1_field_catalog.csv) · [implementation summary](outputs/validation/cninfo_d_class_phase1_freeze_v1_implementation_summary.md) · lint **12/12 PASS** · fixtures **DC001–DC007** |
+| **Phase 1 implementation gate** | `d_class_phase1_freeze_v1_implementation_gate = PASS_OFFLINE`（**不是 PASS** · **不是 verified**） |
+| **下一步** | 人工 signoff schema freeze → harvest architecture 规划（**仍无 live**） |
+| 性质 | **规划 only**；7 源市场行为类别；不接 DB/MinIO/RAG；不写 verified；不升级 testing_stable_sample |
 
 ---
 
@@ -321,7 +416,13 @@ flowchart TD
 | 153 | ~~Phase 3 batch 500 harvest dry-run planning~~ → **完成**（[dry-run plan](plans/cninfo_c_class_phase3_batch_500_001_harvest_dryrun_plan.md) · [expected case matrix](outputs/validation/cninfo_c_class_phase3_batch_500_001_harvest_expected_case_matrix.csv) · [command checklist](plans/cninfo_c_class_phase3_batch_500_001_harvest_command_checklist.md) · gate **READY_FOR_DRYRUN** · dry-run **未执行**） |
 | 154 | ~~Phase 3 batch 500 harvest dry-run execution~~ → **完成**（[dry-run QA](outputs/validation/cninfo_c_class_phase3_batch_500_001_harvest_dryrun_qa_summary.md) · **500** · **3500** HTTP · gate **PASS** · live **未批准**） |
 | 155 | ~~Phase 3 harvest runner approval flag extension + live approval planning~~ → **完成**（[approval plan](plans/cninfo_c_class_phase3_batch_500_001_live_harvest_approval_plan.md) · [extension summary](outputs/validation/cninfo_c_class_phase3_batch_500_001_harvest_approval_extension_summary.md) · test **10/10 PASS** · gate **`READY_FOR_APPROVAL`** · live **未执行**） |
-| 156 | Phase 3 batch 500 live harvest（显式用户批准） → **待批准** |
+| 156 | ~~Phase 3 batch 500 live harvest~~ → **已执行**（**500** · **3500** HTTP · **487** complete · gate **FAIL**） |
+| 157 | ~~Phase 3 batch 500 failure identity triage~~ → **完成**（[caveat ledger](outputs/validation/cninfo_c_class_phase3_batch_500_failure_identity_caveat_ledger.csv) · [triage summary](outputs/validation/cninfo_c_class_phase3_batch_500_failure_identity_caveat_summary.md) · **9** all-direct-failure · gate **`READY_FOR_REVIEW`**） |
+| 158 | ~~Phase 3 batch 500 success-subset snapshot planning~~ → **完成**（[subset design](outputs/validation/cninfo_c_class_phase3_batch_500_success_snapshot_subset_design.csv) · [snapshot plan](plans/cninfo_c_class_phase3_batch_500_success_snapshot_plan.md) · **491** / **9** · gate **`DESIGN_COMPLETE`**） |
+| 159 | ~~Phase 3 batch 500 success-subset snapshot dry-run planning + execution~~ → **完成**（[dry-run plan](plans/cninfo_c_class_phase3_batch_500_success_snapshot_dryrun_plan.md) · [491 YAML](lab/eval_companies_c_class_phase3_batch_500_success_snapshot_491.yaml) · [planning summary](outputs/validation/cninfo_c_class_phase3_batch_500_success_snapshot_dryrun_planning_summary.md) · **491** · JSON **0** · gate **`READY_FOR_DRYRUN`**） |
+| 160 | ~~Phase 3 batch 500 success-subset snapshot build approval package~~ → **完成**（[approval checklist](outputs/validation/cninfo_c_class_phase3_batch_500_success_snapshot_build_approval_checklist.md) · [command draft](plans/cninfo_c_class_phase3_batch_500_success_snapshot_build_command_draft.md) · gate **`READY_FOR_APPROVAL`** · build **未执行**） |
+| 161 | ~~Phase 3 success-subset snapshot approval extension~~ → **完成**（[extension summary](outputs/validation/cninfo_c_class_phase3_success_snapshot_approval_extension_summary.md) · test **11/11 PASS** · flag **`--approve-phase3-success-snapshot-build`** · build **未执行**） |
+| 162 | Phase 3 batch 500 success-subset snapshot build（显式用户批准） → **待批准** |
 | 100 | dividend_history YAML backfill → **GO（决策 only）** · **不执行** |
 | 101 | BSE legacy / hold / abnormal side-track → **待文档化** |
 | 102 | **暂不入库** · **C-class 未整体完成**

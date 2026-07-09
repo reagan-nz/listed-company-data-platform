@@ -1,0 +1,63 @@
+{
+  "case": {
+    "case_id": "TLC002",
+    "company_code": "300009",
+    "company_name": "安科生物",
+    "source_type": "cninfo_general_announcement_pdf",
+    "endpoint_scope": [
+      "EP001",
+      "EP005"
+    ],
+    "expected_fields": "company_code;org_id;announcement_id;announcement_title;announcement_time;announcement_date;document_id;retrieval_time;raw_hash;quality_status;pdf_url;adjunct_url;source_endpoint;lineage_status;announcement_category",
+    "risk_level": "low",
+    "reason": "创业板活跃公司；一般公告metadata路径；对齐RC002 general_announcement；非ST非退市"
+  },
+  "mode": "live",
+  "retry": "tlc002_isolated",
+  "cninfo_called": true,
+  "pdf_download_enabled": false,
+  "pdf_parse_enabled": false,
+  "record": {
+    "case_id": "TLC002",
+    "company_code": "300009",
+    "company_name": "安科生物",
+    "endpoint_id": "EP005",
+    "announcement_id": "1223997045",
+    "announcement_title": "关于第3期员工持股计划非交易过户完成的公告",
+    "announcement_time": "2025-06-26T08:16:11+00:00",
+    "announcement_category": "general_announcement",
+    "pdf_url": "http://static.cninfo.com.cn/finalpage/2025-06-26/1223997045.PDF",
+    "adjunct_url": "finalpage/2025-06-26/1223997045.PDF",
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_status": "found",
+    "quality_status": "pass",
+    "lineage_status": "discovered",
+    "error_type": "",
+    "notes": "tlc002 isolated retry; live metadata retrieved; PDF not downloaded; quality_checks_pass"
+  },
+  "raw_announcement": {
+    "id": null,
+    "secCode": "300009",
+    "secName": "安科生物",
+    "orgId": "9900008310",
+    "announcementId": "1223997045",
+    "announcementTitle": "关于第3期员工持股计划非交易过户完成的公告",
+    "announcementTime": 1750925771000,
+    "adjunctUrl": "finalpage/2025-06-26/1223997045.PDF",
+    "adjunctSize": 224,
+    "adjunctType": "PDF",
+    "storageTime": null,
+    "columnId": "09020202||160203||250301||251302",
+    "pageColumn": "SZCY",
+    "announcementType": "01010503||010112||010115||011507||012399",
+    "associateAnnouncement": null,
+    "important": null,
+    "batchNum": null,
+    "announcementContent": "",
+    "orgName": null,
+    "tileSecName": "安科生物",
+    "shortTitle": "关于第3期员工持股计划非交易过户完成的公告",
+    "announcementTypeName": null,
+    "secNameList": null
+  }
+}

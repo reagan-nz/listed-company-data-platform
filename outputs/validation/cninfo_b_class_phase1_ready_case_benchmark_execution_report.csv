@@ -1,0 +1,6 @@
+case_id,fixture,execution_status,expected_result,actual_result,passed,failure_reason,notes
+RC001,fixtures/b_class/phase1/announcement_metadata_fixture.json,executed_offline,PASS,PASS,yes,,required complete; pdf lineage present; quality_status=pass; lineage_status=discovered
+RC002,fixtures/b_class/phase1/announcement_metadata_fixture.json,executed_offline,PASS,PASS,yes,,general metadata shape ok; required complete; category present
+RC003,fixtures/b_class/phase1/ready_cases/RC003_missing_pdf_url_case.json,executed_offline,PASS,PASS,yes,,missing pdf lineage; quality_status=needs_review; not verified
+RC004,fixtures/b_class/phase1/ready_cases/RC004_duplicate_announcement_case.json,executed_offline,PASS,PASS,yes,,duplicate detected; candidates preserved; dedup required; no auto merge
+RC005,fixtures/b_class/phase1/ready_cases/RC005_unknown_category_case.json,executed_offline,PASS,PASS,yes,,unknown category preserved; category_status=review_later; no forced mapping

@@ -1,0 +1,6 @@
+case_id,company_code,company_name,endpoint_used,initial_status,retry_status,final_status,quality_status,lineage_status,pdf_download,pdf_parse,notes
+TLC001,000895,双汇发展,EP001;EP002;EP004,found/pass/discovered,,resolved,pass,discovered,0,0,2024年年度报告; periodic_report; tiny live batch
+TLC002,300009,安科生物,EP001;EP002;EP005,network_error/needs_review/needs_review,found/pass/discovered,resolved,pass,discovered,0,0,EP002 transient network_error; isolated retry recovered; announcement 1223997045
+TLC003,601988,中国银行,EP001;EP002;EP004,found/pass/discovered,,resolved,pass,discovered,0,0,H股公告-2024年年度报告; periodic_report; tiny live batch
+TLC004,000550,江铃汽车,EP001;EP002;EP005,found/pass/discovered,,resolved,pass,discovered,0,0,股东大会决议公告; general_announcement; tiny live batch
+TLC005,688981,中芯国际,EP001;EP002;EP005,found/pass/discovered,,resolved,pass,discovered,0,0,股东周年大会决议公告; general_announcement; tiny live batch

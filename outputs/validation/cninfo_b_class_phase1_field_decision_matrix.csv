@@ -1,0 +1,47 @@
+field_name,object_name,current_required_level,review_decision,final_required_level,reason,source_confidence,notes
+company_code,announcement_record,required,keep_required,required,Core universe linkage key for all announcement rows,high,Maps secCode from CNINFO response
+company_name,announcement_record,recommended,downgrade_to_recommended,recommended,Useful display field but may be absent; not a Phase1 gate,medium,Affirm recommended level from minimum fields catalog
+org_id,announcement_record,required,keep_required,required,Required for hisAnnouncement stock param per A-class,high,Must resolve before live metadata query
+announcement_id,announcement_record,required,keep_required,required,Primary announcement identifier and dedup anchor,high,CNINFO announcementId
+announcement_title,announcement_record,required,keep_required,required,Essential metadata for routing and QA,high,CNINFO announcementTitle
+announcement_time,announcement_record,required,keep_required,required,Raw disclosure timestamp preserves API fidelity,high,CNINFO announcementTime
+announcement_date,announcement_record,required,keep_required,required,Normalized date needed for timeline and filtering,high,Derived from announcement_time
+announcement_type,announcement_record,review_later,move_to_review_later,review_later,Coarse type deferred; use document_type and category routing instead,low,Do not freeze in Phase1
+source_id,document_metadata,recommended,downgrade_to_recommended,recommended,Links to registry but can be inferred from routing in prototype,medium,Affirm recommended
+document_id,document_metadata,required,keep_required,required,Logical document primary key for lineage chain,high,May equal announcement_id in Phase1
+document_type,document_metadata,recommended,downgrade_to_recommended,recommended,Important for routing but not blocking metadata capture,medium,Enum from b_document schema when present
+report_period,document_metadata,review_later,move_to_review_later,review_later,Periodic-only field; defer for general announcements,medium,Required only for periodic_report source
+retrieval_time,document_metadata,required,keep_required,required,Capture timestamp for lineage audit,high,ISO8601 at metadata harvest time
+raw_hash,document_metadata,required,keep_required,required,Lineage change detection without PDF download,high,Hash of raw_metadata_json not file content
+quality_status,document_metadata,required,keep_required,required,Phase1 QA gate dimension,high,pass / caveat / blocked / needs_review
+retrieval_status,document_metadata,recommended,downgrade_to_recommended,recommended,Operational status useful but secondary to quality_status,medium,found / not_found / etc.
+classification_status,document_metadata,review_later,move_to_review_later,review_later,Taxonomy not frozen; defer until category alignment completes,low,Present in schema not Phase1 gate
+classification_confidence,document_metadata,review_later,move_to_review_later,review_later,Depends on frozen routing taxonomy,low,Defer with classification_status
+raw_metadata_json,document_metadata,raw_only,keep_required,raw_only,Full CNINFO object must be preserved for audit lineage,high,Not promoted to normalized core
+created_from,document_metadata,recommended,downgrade_to_recommended,recommended,Provenance tag valuable but derivable from harvest runner config,medium,e.g. b_class_metadata_harvest
+notes,document_metadata,optional,remove_from_phase1,optional,Free-text QA only; exclude from Phase1 normalized output contract,low,May exist in review artifacts only
+pdf_url,pdf_reference,required,keep_required,required,Core Phase1 deliverable: normalized PDF URL,high,From adjunctUrl with static host
+adjunct_url,pdf_reference,required,keep_required,required,Raw CNINFO field required for lineage and URL rebuild,high,Preserve before normalization
+file_type,pdf_reference,recommended,downgrade_to_recommended,recommended,Assume pdf without content inspection in Phase1,medium,Default application/pdf when url present
+source_endpoint,pdf_reference,required,keep_required,required,Mandatory source lineage for metadata-only harvest,high,e.g. hisAnnouncement/query URL
+source_url,pdf_reference,recommended,downgrade_to_recommended,recommended,Referer or page_url optional lineage enrichment,medium,Nullable UI referer
+download_status,pdf_reference,recommended,downgrade_to_recommended,recommended,Explicit not_attempted documents Phase1 boundary,high,Must remain not_attempted in Phase1
+mime_type,pdf_reference,optional,remove_from_phase1,optional,Cannot verify without download; out of Phase1 contract,low,Exclude from Phase1 normalized schema
+sha256_candidate,pdf_reference,review_later,move_to_review_later,review_later,File hash requires PDF download deferred,low,Explicitly post-Phase1
+storage_uri_candidate,pdf_reference,review_later,move_to_review_later,review_later,MinIO/object storage deferred,low,No MinIO in Phase1
+lineage_status,document_evidence,required,keep_required,required,Tracks discovered vs linked vs needs_review state,high,Core evidence lineage dimension
+evidence_role,document_evidence,review_later,move_to_review_later,review_later,D-class and RAG linkage deferred,low,Post-Phase1 product policy
+linked_event_id,document_evidence,review_later,move_to_review_later,review_later,D-class event link deferred,low,No D-class merge in Phase1
+linked_document_id,document_evidence,recommended,downgrade_to_recommended,recommended,Parent document pointer; can default from announcement_id,medium,Recommended for evidence object integrity
+source_confidence,document_evidence,review_later,move_to_review_later,review_later,Mirrors registry status; not upgraded this round,low,Defer with registry policy
+announcement_category,announcement_category,required,keep_required,required,Phase1 normalized main category label for routing QA,high,From category routing or registry
+category,announcement_category,recommended,downgrade_to_recommended,recommended,Official CNINFO code alignment still pending,medium,Keep recommended until YAML aligned
+sub_category,announcement_category,review_later,move_to_review_later,review_later,Finer taxonomy deferred,low,Defer
+category_route_group,announcement_category,recommended,downgrade_to_recommended,recommended,Routing group from cninfo_announcement_categories.yaml,medium,Useful for QA not blocking capture
+title_route_source_id,announcement_category,recommended,downgrade_to_recommended,recommended,Target registry source from title routing,medium,Supports misroute detection
+timeline_entry_id,company_document_timeline,optional,remove_from_phase1,optional,Derived read-model convenience id not needed for capture,low,Exclude from Phase1 harvest output
+timeline_company_code,company_document_timeline,required,downgrade_to_recommended,recommended,Timeline is derived view not primary capture object,medium,Downgrade from required in minimum catalog proposal
+timeline_announcement_date,company_document_timeline,required,downgrade_to_recommended,recommended,Sort key for timeline view; derivable from announcement_record,medium,Downgrade from required in minimum catalog proposal
+timeline_document_id,company_document_timeline,recommended,downgrade_to_recommended,recommended,Pointer for timeline aggregation,medium,Affirm recommended
+timeline_announcement_id,company_document_timeline,recommended,downgrade_to_recommended,recommended,Dedup helper in timeline view,medium,Affirm recommended
+timeline_pdf_url,company_document_timeline,optional,remove_from_phase1,optional,Denormalized convenience field; pdf_url already on pdf_reference,low,Exclude from Phase1 contract

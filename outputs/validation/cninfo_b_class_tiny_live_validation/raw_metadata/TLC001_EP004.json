@@ -1,0 +1,66 @@
+{
+  "case": {
+    "case_id": "TLC001",
+    "company_code": "000895",
+    "company_name": "双汇发展",
+    "source_type": "cninfo_periodic_report_pdf",
+    "endpoint_scope": [
+      "EP001",
+      "EP004"
+    ],
+    "expected_fields": "company_code;org_id;announcement_id;announcement_title;announcement_time;announcement_date;document_id;retrieval_time;raw_hash;quality_status;pdf_url;adjunct_url;source_endpoint;lineage_status;announcement_category",
+    "risk_level": "low",
+    "reason": "SZSE主板活跃蓝筹；定期报告metadata路径；对齐RC001 periodic_report；源自863 smoke universe已知稳定样本"
+  },
+  "mode": "live",
+  "cninfo_called": true,
+  "pdf_download_enabled": false,
+  "pdf_parse_enabled": false,
+  "planned_endpoints": [
+    "EP001",
+    "EP004"
+  ],
+  "record": {
+    "case_id": "TLC001",
+    "company_code": "000895",
+    "company_name": "双汇发展",
+    "endpoint_id": "EP004",
+    "announcement_id": "1222894646",
+    "announcement_title": "2024年年度报告",
+    "announcement_time": "2025-03-25T16:00:00+00:00",
+    "announcement_category": "periodic_report",
+    "pdf_url": "http://static.cninfo.com.cn/finalpage/2025-03-26/1222894646.PDF",
+    "adjunct_url": "finalpage/2025-03-26/1222894646.PDF",
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_status": "found",
+    "quality_status": "pass",
+    "lineage_status": "discovered",
+    "error_type": "",
+    "notes": "live metadata retrieved; PDF not downloaded; quality_checks_pass"
+  },
+  "raw_announcement": {
+    "id": null,
+    "secCode": "000895",
+    "secName": "双汇发展",
+    "orgId": "gssz0000895",
+    "announcementId": "1222894646",
+    "announcementTitle": "2024年<em>年度报告</em>",
+    "announcementTime": 1742918400000,
+    "adjunctUrl": "finalpage/2025-03-26/1222894646.PDF",
+    "adjunctSize": 7128,
+    "adjunctType": "PDF",
+    "storageTime": null,
+    "columnId": "09020202||250101||251302",
+    "pageColumn": "SZZB",
+    "announcementType": "01010503||010112||010301",
+    "associateAnnouncement": null,
+    "important": null,
+    "batchNum": null,
+    "announcementContent": "",
+    "orgName": null,
+    "tileSecName": "双汇发展",
+    "shortTitle": "2024年<em>年度报告</em>",
+    "announcementTypeName": null,
+    "secNameList": null
+  }
+}

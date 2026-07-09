@@ -1,0 +1,24 @@
+{
+  "_fixture_meta": {
+    "purpose": "B-class Phase1 freeze v1 synthetic PDF URL lineage example",
+    "phase1_freeze": "v1",
+    "cninfo_called": false,
+    "pdf_downloaded": false,
+    "notes": "URLs are synthetic placeholders; not fetched from CNINFO"
+  },
+  "pdf_reference": {
+    "document_id": "doc_fixture_999001_001",
+    "adjunct_url": "/finalpage/2025-03-15/fixture_ann_999001_001.PDF",
+    "pdf_url": "http://static.cninfo.com.cn/finalpage/2025-03-15/fixture_ann_999001_001.PDF",
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "source_url": null,
+    "file_type": "pdf",
+    "download_status": "not_attempted"
+  },
+  "lineage": {
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_time": "2026-07-09T03:00:00+08:00",
+    "raw_hash": "sha256:synthetic_fixture_hash_999001_001",
+    "lineage_status": "discovered"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "_fixture_meta": {
+    "case_id": "RC005",
+    "purpose": "unknown announcement category without forced taxonomy mapping",
+    "phase1_freeze": "v1",
+    "cninfo_called": false,
+    "pdf_downloaded": false
+  },
+  "announcement_record": {
+    "company_code": "999005",
+    "company_name": "示例公司E",
+    "org_id": "gssz0999005",
+    "announcement_id": "fixture_ann_999005_unknown_cat",
+    "announcement_title": "关于子公司完成工商变更登记的公告",
+    "announcement_time": "2025-05-20T16:00:00+08:00",
+    "announcement_date": "2025-05-20"
+  },
+  "document_metadata": {
+    "document_id": "doc_fixture_999005_unknown_cat",
+    "source_id": "cninfo_general_announcement_pdf",
+    "retrieval_time": "2026-07-09T04:20:00+08:00",
+    "raw_hash": "sha256:synthetic_fixture_hash_999005_unknown_cat",
+    "quality_status": "needs_review",
+    "retrieval_status": "found",
+    "created_from": "phase1_freeze_v1_ready_case"
+  },
+  "pdf_reference": {
+    "adjunct_url": "/finalpage/2025-05-21/fixture_ann_999005_unknown_cat.PDF",
+    "pdf_url": "http://static.cninfo.com.cn/finalpage/2025-05-21/fixture_ann_999005_unknown_cat.PDF",
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "download_status": "not_attempted"
+  },
+  "announcement_category": {
+    "announcement_category": "unknown",
+    "category_status": "review_later",
+    "category_route_group": null,
+    "title_route_source_id": "cninfo_general_announcement_pdf",
+    "forced_taxonomy_mapping": false
+  },
+  "document_evidence": {
+    "lineage_status": "discovered",
+    "linked_document_id": "doc_fixture_999005_unknown_cat"
+  },
+  "expected_behavior": {
+    "announcement_metadata_accepted": true,
+    "category_status": "review_later",
+    "forced_taxonomy_mapping": false
+  }
+}

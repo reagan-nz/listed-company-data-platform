@@ -1,0 +1,48 @@
+{
+  "_fixture_meta": {
+    "case_id": "RC003",
+    "purpose": "announcement metadata exists but PDF URL lineage is missing",
+    "phase1_freeze": "v1",
+    "cninfo_called": false,
+    "pdf_downloaded": false
+  },
+  "announcement_record": {
+    "company_code": "999003",
+    "company_name": "示例公司C",
+    "org_id": "gssz0999003",
+    "announcement_id": "fixture_ann_999003_missing_pdf",
+    "announcement_title": "关于召开临时股东大会的通知",
+    "announcement_time": "2025-06-10T16:00:00+08:00",
+    "announcement_date": "2025-06-10"
+  },
+  "document_metadata": {
+    "document_id": "doc_fixture_999003_missing_pdf",
+    "source_id": "cninfo_general_announcement_pdf",
+    "retrieval_time": "2026-07-09T04:00:00+08:00",
+    "raw_hash": "sha256:synthetic_fixture_hash_999003_missing_pdf",
+    "quality_status": "needs_review",
+    "retrieval_status": "found",
+    "created_from": "phase1_freeze_v1_ready_case"
+  },
+  "pdf_reference": {
+    "adjunct_url": null,
+    "pdf_url": null,
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "download_status": "not_attempted"
+  },
+  "announcement_category": {
+    "announcement_category": "shareholder_meeting",
+    "category_route_group": "shareholder_meeting",
+    "title_route_source_id": "cninfo_general_announcement_pdf"
+  },
+  "document_evidence": {
+    "lineage_status": "needs_review",
+    "linked_document_id": "doc_fixture_999003_missing_pdf"
+  },
+  "expected_behavior": {
+    "announcement_id_present": true,
+    "announcement_title_present": true,
+    "pdf_url_present": false,
+    "quality_status_must_not_be": "verified"
+  }
+}

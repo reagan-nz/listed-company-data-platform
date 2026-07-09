@@ -1,0 +1,6 @@
+case_id,case_type,source_name,input_fixture,expected_required_fields_present,expected_pdf_url_lineage_present,expected_quality_status,status,notes
+RC001,periodic_report_metadata,cninfo_periodic_report_pdf,fixtures/b_class/phase1/announcement_metadata_fixture.json,yes,yes,pass,not_run,Synthetic periodic report metadata; all 15 required fields expected present
+RC002,general_announcement_metadata,cninfo_general_announcement_pdf,fixtures/b_class/phase1/announcement_metadata_fixture.json,yes,yes,pass,not_run,General announcement variant reuses base fixture; category alignment TODO in registry
+RC003,missing_pdf_url,cninfo_general_announcement_pdf,fixtures/b_class/phase1/ready_cases/RC003_missing_pdf_url_case.json,yes,no,needs_review,not_run,Announcement found but adjunctUrl/pdf_url missing; quality_status must not become verified
+RC004,duplicate_announcement_id,cninfo_periodic_report_pdf,fixtures/b_class/phase1/ready_cases/RC004_duplicate_announcement_case.json,yes,yes,caveat,not_run,Same announcement_id with two metadata candidates; dedup decision required; no automatic merge
+RC005,unknown_category,cninfo_general_announcement_pdf,fixtures/b_class/phase1/ready_cases/RC005_unknown_category_case.json,yes,yes,needs_review,not_run,Announcement metadata accepted; category_status review_later; no forced taxonomy mapping

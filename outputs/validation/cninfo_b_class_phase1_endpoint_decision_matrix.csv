@@ -1,0 +1,8 @@
+endpoint_id,endpoint_name,current_priority,review_decision,phase1_status,reason,next_action
+EP001,hisAnnouncement/query,high,keep_phase1_candidate,in_scope,Primary announcement list and PDF metadata API; inherits A-class evidence,Document in harvest architecture; live validation deferred to separate approval
+EP002,topSearch/query,high,keep_phase1_candidate,in_scope,OrgId discovery helper required before hisAnnouncement stock param,Keep as linkage helper only; not a document corpus endpoint
+EP003,disclosure/list/notice UI hint,medium,remove,out_of_scope,UI/Referer hint only; risk high; not a validated retrieval API,Retain as registry page_url reference only; do not use as Phase1 harvest path
+EP004,cninfo_periodic_report_pdf,high,keep_phase1_candidate,in_scope,Primary Phase1 registry source for periodic reports; endpoint mapped to EP001,Keep registry entry; revise only if title/period rules change
+EP005,cninfo_general_announcement_pdf,high,keep_phase1_candidate,in_scope,Broad non-periodic corpus; shares EP001 endpoint; category alignment pending,Revise registry category param alignment before tiny live sample
+EP006,cninfo_inquiry_reply_pdf,medium,defer_phase2,deferred,Registry endpoint null; title patterns documented but API not independently confirmed,Add missing endpoint to registry or explicit defer note; needs fixture before live
+EP007,cninfo_meeting_notice_pdf,medium,defer_phase2,deferred,Registry endpoint null; shareholder meeting vs IR overlap unresolved,Add missing endpoint; clarify taxonomy; needs_live_validation_later after Phase1 core sources
