@@ -1,0 +1,10 @@
+case_id,company_code,company_name,pattern,retrieval_status,disposition,live_needed,retry_again,notes
+BD2E201,000043,中航善达,not_found,not_found,accept_with_caveat,no,no,Era D slice1 edge-case triage; no matching title in 7 records; not a failed blocker; CNINFO=0
+BD2E203,000562,宏源证券,empty_response,empty_response,accept_with_caveat,no,no,Era D slice1 edge-case triage; no announcements in response; not a failed blocker; CNINFO=0
+BD2E204,000569,长城股份,empty_response,empty_response,accept_with_caveat,no,no,Era D slice1 edge-case triage; no announcements in response; not a failed blocker; CNINFO=0
+BD2E245,001233,海安集团,empty_response,empty_response,accept_with_caveat,no,no,Era D slice1 edge-case triage; no announcements in response; not a failed blocker; CNINFO=0
+BD2E249,001285,瑞立科密,empty_response,empty_response,accept_with_caveat,no,no,Era D slice1 edge-case triage; no announcements in response; not a failed blocker; CNINFO=0
+BD2E377,600253,天方药业,empty_response,empty_response,accept_with_caveat,no,no,Era D slice1 edge-case triage; no announcements in response; not a failed blocker; CNINFO=0
+BD2E388,600357,承德钒钛,empty_response,empty_response,accept_with_caveat,no,no,Era D slice1 edge-case triage; no announcements in response; not a failed blocker; CNINFO=0
+BD2E445,600842,中西药业,empty_response,empty_response,accept_with_caveat,no,no,Era D slice1 edge-case triage; no announcements in response; not a failed blocker; CNINFO=0
+BD2E463,601026,道生天合,empty_response,empty_response,accept_with_caveat,no,no,Era D slice1 edge-case triage; no announcements in response; not a failed blocker; CNINFO=0

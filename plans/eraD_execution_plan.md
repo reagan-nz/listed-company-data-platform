@@ -377,20 +377,21 @@ planning (offline)
 
 ---
 
-### 9.5a B 类 Era D — Next-Scale Slice1 Live（2026-07-10）
+### 9.5a B 类 Era D — Next-Scale Slice1 Merge Closure（2026-07-10）
 
-> **live execution complete** · **300/300 acceptable** · CNINFO **600** · **NOT verified** · **NOT pushed**
+> **merge closure complete** · **300/300 effective** · cumulative **498** · **NOT verified** · **NOT pushed**
 
 | 项 | 内容 |
 |----|------|
-| sessions | S1 BD2E201–350 **150/150** · S2 BD2E351–500 **150/150** |
-| live execution | [summary](../outputs/validation/cninfo_b_class_erad_next_scale_slice1_live_execution_summary.md) |
-| effective | **300/300 acceptable** · **0 failed** · **0 network_error** |
-| CNINFO | **600**（cap **≤720**） |
+| live | S1+S2 **300/300** · CNINFO **600** · [execution summary](../outputs/validation/cninfo_b_class_erad_next_scale_slice1_live_execution_summary.md) |
+| merge closure | [summary](../outputs/validation/cninfo_b_class_erad_next_scale_slice1_merge_closure_summary.md) · effective **300/300** · edge **9** |
+| cumulative | scale-200 **198** + slice1 **300** → **498** toward ~500 |
 | execution gate | **`b_class_erad_next_scale_slice1_execution_gate = PASS_WITH_CAVEAT`** |
-| scale-200 lineage | **198/200 effective** · **no rerun** · BD2E090/092 side-track only |
+| merge closure gate | **`b_class_erad_next_scale_slice1_merge_closure_gate = PASS_WITH_CAVEAT`** |
+| commit boundary gate | **`b_class_erad_next_scale_slice1_commit_boundary_gate = READY_FOR_COMMIT_REVIEW`** |
+| scale-200 lineage | **198/200** · **no rerun** · BD2E090/092 side-track only |
 
-**下一步：** offline merge closure / triage package · or push `e738fa9`（separate phrase）
+**下一步：** human approve slice1 explicit-path commit · or hold closed-with-caveat
 
 ---
 
@@ -692,7 +693,43 @@ planning (offline)
 | boundary review | [cninfo_d_class_restricted_shares_unlock_first_slice_commit_boundary_review.md](cninfo_d_class_restricted_shares_unlock_first_slice_commit_boundary_review.md) |
 | post-closure | [cninfo_d_class_restricted_shares_unlock_first_slice_post_closure_next_step_recommendation.md](../outputs/validation/cninfo_d_class_restricted_shares_unlock_first_slice_post_closure_next_step_recommendation.md) |
 
-**下一步：** human-approved explicit-path commit（separate gate）· 或 commit 后 **`equity_pledge`** planning
+**下一步：** human-approved explicit-path commit — **已完成** §9.22
+
+---
+
+### 9.22 D 类 restricted_shares_unlock First-Slice Explicit-Path Commit（2026-07-10）
+
+> **explicit-path commit only** · **NOT pushed** · **NOT verified** · CNINFO **0**
+
+| 项 | 内容 |
+|----|------|
+| approval | **I approve D-class restricted_shares_unlock first-slice explicit-path commit.** |
+| commit | **`aa087b5`** · **32 files** |
+| commit gate | **`d_class_restricted_shares_unlock_first_slice_commit_gate = PASS_WITH_CAVEAT`** |
+| acceptable | **5/5** · empty_but_valid **×5** · sparse anchor **2026-06-08** |
+| live_snapshots | **not committed**（5 JSON · local-only） |
+| push | **no** |
+
+**下一步：** **`equity_pledge`** next-component planning package — **已完成** §9.23
+
+---
+
+### 9.23 D 类 equity_pledge Next-Component Planning（2026-07-10）
+
+> **offline only** · **CNINFO = 0** · **NOT verified** · **无 runner** · **无 commit** · **无 push**
+
+| 项 | 内容 |
+|----|------|
+| planning gate | **`d_class_equity_pledge_next_component_planning_gate = READY_FOR_APPROVAL`** |
+| primary | **`equity_pledge`** |
+| runner-up | **`shareholder_change`** |
+| first-slice sketch | **5** · DEP001–DEP005 · anchor **`tdate=2026-07-03`**（offline only） |
+| threshold | **≥ 3/5 acceptable** → `PASS_WITH_CAVEAT` |
+| planning plan | [cninfo_d_class_equity_pledge_next_component_planning.md](cninfo_d_class_equity_pledge_next_component_planning.md) |
+| first-slice draft | [cninfo_d_class_equity_pledge_first_slice_plan_draft.md](cninfo_d_class_equity_pledge_first_slice_plan_draft.md) |
+| next step | [cninfo_d_class_equity_pledge_next_component_next_step_recommendation.md](../outputs/validation/cninfo_d_class_equity_pledge_next_component_next_step_recommendation.md) |
+
+**下一步：** human approve component → equity_pledge first-slice approval package（offline）
 
 ---
 
@@ -733,6 +770,8 @@ planning (offline)
 | ED-013d | D-class restricted_shares_unlock first-slice isolated live | D | D2 | **完成**（§9.20 · CNINFO **15** · **5/5** · execution gate **`PASS_WITH_CAVEAT`** · **无 commit**） |
 | ED-013e | D-class restricted_shares_unlock first-slice closure review | D | D2 | **完成**（§9.21 · **5/5** · closure gate **`PASS_WITH_CAVEAT`** · CNINFO **0** · **无 commit**） |
 | ED-013f | D-class restricted_shares_unlock first-slice commit boundary review | D | D2 | **完成**（§9.21 · safe **~32** · boundary gate **`READY_FOR_COMMIT_REVIEW`** · **NOT_APPROVED**） |
+| ED-013g | D-class restricted_shares_unlock first-slice explicit-path commit | D | D2 | **完成**（§9.22 · commit **`aa087b5`** · **32 files** · gate **`PASS_WITH_CAVEAT`** · **无 push** · **NOT verified**） |
+| ED-015 | D-class equity_pledge next-component planning | D | D2 | **完成**（§9.23 · primary **`equity_pledge`** · planning gate **`READY_FOR_APPROVAL`** · CNINFO **0**） |
 | ED-014 | portrait_ontology P0–P3（catalog + coverage + schema + pilot） | 横切 | D0/D2 | **完成**（§9.10 · **715** fields · pilot **000009** · gates **`PASS_OFFLINE`** · **无 live**） |
 | ED-012 | MVP 四线 closure 汇总 | 横切 | D2 | 未开始 |
 | ED-012 | D3 完整规模（分线） | A/B/C/D | D3 | 未开始 |

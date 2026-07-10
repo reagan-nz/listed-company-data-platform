@@ -806,6 +806,13 @@ _最后更新：2026-07-10_
 - `outputs/validation/cninfo_d_class_restricted_shares_unlock_first_slice_safe_to_commit_list.md` — RSU safe-to-commit 清单（**~32**）
 - `outputs/validation/cninfo_d_class_restricted_shares_unlock_first_slice_do_not_commit_list.md` — RSU do-not-commit 清单
 - `outputs/validation/cninfo_d_class_restricted_shares_unlock_first_slice_commit_message_draft.md` — RSU commit message 草案
+- `plans/cninfo_d_class_equity_pledge_next_component_planning.md` — equity_pledge 下一组件规划（gate **READY_FOR_APPROVAL**）
+- `outputs/validation/cninfo_d_class_equity_pledge_next_component_candidate_matrix.csv` — equity_pledge 候选矩阵（post RSU）
+- `outputs/validation/cninfo_d_class_equity_pledge_next_component_recommendation.md` — equity_pledge 推荐（primary **equity_pledge**）
+- `plans/cninfo_d_class_equity_pledge_first_slice_plan_draft.md` — equity_pledge 第一切片草案（DEP001–DEP005 · **NOT APPROVED**）
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice_universe_draft_sketch.csv` — equity_pledge universe sketch（**5** 行）
+- `outputs/validation/cninfo_d_class_equity_pledge_next_component_planning_summary.md` — equity_pledge 规划摘要
+- `outputs/validation/cninfo_d_class_equity_pledge_next_component_next_step_recommendation.md` — equity_pledge 下一步建议
 - `outputs/validation/cninfo_d_class_erad_next_component_candidate_matrix.csv` — Era D 候选矩阵
 - `outputs/validation/cninfo_d_class_erad_next_component_recommendation.md` — Era D 推荐
 - `outputs/validation/cninfo_d_class_erad_next_component_planning_summary.md` — Era D 规划摘要
@@ -1028,6 +1035,17 @@ _最后更新：2026-07-10_
 - `outputs/validation/cninfo_b_class_erad_next_scale_slice1_unresolved_case_ledger.csv` — unresolved ledger（**0 failed**）
 - `outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/b_class_erad_next_scale_slice1_report.csv` — combined live report（**300** rows）
 - `lab/test_cninfo_b_class_erad_next_scale_slice1_live_path.py` — slice1 live-path 测试（**15/15 PASS** · mock CNINFO **0**）
+- `outputs/validation/cninfo_b_class_erad_next_scale_slice1_live_path_summary.md` — slice1 live-path summary
+- **Era D B-class next-scale slice1 merge closure** — [summary](outputs/validation/cninfo_b_class_erad_next_scale_slice1_merge_closure_summary.md) · [decision](outputs/validation/cninfo_b_class_erad_next_scale_slice1_merge_closure_decision.md) · effective **300/300** · edge **9** · gate **`PASS_WITH_CAVEAT`** · CNINFO **0**
+- `outputs/validation/cninfo_b_class_erad_next_scale_slice1_effective_accepted_ledger.csv` — effective accepted ledger（**300** rows）
+- `outputs/validation/cninfo_b_class_erad_next_scale_slice1_edge_case_triage_ledger.csv` — edge-case triage（**9** rows）
+- `outputs/validation/cninfo_b_class_erad_next_scale_slice1_cumulative_lineage_summary.md` — cumulative lineage（**498** toward ~500）
+- `plans/cninfo_b_class_erad_next_scale_slice1_commit_boundary_review.md` — slice1 commit boundary review
+- `outputs/validation/cninfo_b_class_erad_next_scale_slice1_commit_boundary_summary.md` — boundary summary（gate **`READY_FOR_COMMIT_REVIEW`**）
+- `outputs/validation/cninfo_b_class_erad_next_scale_slice1_safe_to_commit_list.md` — explicit-path safe list（**~48** paths）
+- `outputs/validation/cninfo_b_class_erad_next_scale_slice1_do_not_commit_list.md` — bulk raw_metadata/quality excluded
+- `outputs/validation/cninfo_b_class_erad_next_scale_slice1_commit_message_draft.md` — commit message draft
+- `outputs/validation/cninfo_b_class_erad_next_scale_slice1_next_step_recommendation.md` — slice1 next-step
 - `plans/cninfo_b_class_phase3_100_post_commit_inventory_gap_review.md` — Phase 3 post-commit inventory gap review（gate **`READY_FOR_HUMAN_DECISION`** · primary **Option A**）
 - `outputs/validation/cninfo_b_class_phase3_100_post_commit_missing_artifact_ledger.csv` — missing artifact ledger（**185** paths）
 - `outputs/validation/cninfo_b_class_phase3_100_post_commit_gap_metrics.csv` — gap metrics
