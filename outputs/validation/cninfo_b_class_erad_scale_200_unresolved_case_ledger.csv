@@ -1,0 +1,3 @@
+case_id,company_code,company_name,cohort,phase3_source_case_id,failure_class,retry_recommended,notes
+BD2E090,000807,云铝股份,retained_phase3,B3E090,network_error,yes,EP002 orgId resolution failed during live_refresh; general_announcement EP001;EP005
+BD2E092,300033,同花顺,retained_phase3,B3E092,network_error,yes,network_timeout during live_refresh; general_announcement EP001;EP005
