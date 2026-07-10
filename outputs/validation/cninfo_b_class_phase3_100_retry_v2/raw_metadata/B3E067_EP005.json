@@ -1,0 +1,28 @@
+{
+  "case": {
+    "case_id": "B3E067",
+    "company_code": "000519",
+    "company_name": "中兵红箭",
+    "market": "SZSE主板",
+    "announcement_type": "general_announcement",
+    "target_endpoint": [
+      "EP001",
+      "EP005"
+    ],
+    "expected_lineage_type": "cninfo_general_announcement_pdf",
+    "risk_level": "low",
+    "phase1_overlap": "no",
+    "phase2_overlap": "no",
+    "phase25_include": "yes",
+    "reason": "not retry_v1 universe; isolated retry_v2 only; no PDF; schema unchanged"
+  },
+  "mode": "dry_run",
+  "cninfo_called": false,
+  "pdf_download_enabled": false,
+  "pdf_parse_enabled": false,
+  "planned_endpoints": [
+    "EP001",
+    "EP005"
+  ],
+  "validation_issues": []
+}

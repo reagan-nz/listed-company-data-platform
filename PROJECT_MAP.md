@@ -552,6 +552,12 @@ _最后更新：2026-07-09_
 - `outputs/validation/cninfo_a_class_phase3_50_company_final_caveat_ledger.csv` — Phase 3 final caveat ledger
 - `outputs/validation/cninfo_a_class_phase3_50_company_safe_to_commit_list.md` — Phase 3 safe-to-commit list
 - `outputs/validation/cninfo_a_class_phase3_50_company_commit_boundary_summary.md` — Phase 3 commit boundary summary
+- `plans/cninfo_a_class_phase3_a3m017_isolated_retry_plan.md` — A3M017 isolated retry plan（gate **READY_FOR_APPROVAL**）
+- `outputs/validation/cninfo_a_class_phase3_a3m017_isolated_retry_universe.csv` — A3M017 retry universe（**1** row）
+- `outputs/validation/cninfo_a_class_phase3_a3m017_isolated_retry_approval_checklist.md` — A3M017 retry approval checklist（**NOT APPROVED**）
+- `plans/cninfo_a_class_phase3_a3m017_isolated_retry_command_draft.md` — A3M017 retry command draft（**NOT APPROVED**）
+- `outputs/validation/cninfo_a_class_phase3_a3m017_isolated_retry_planning_summary.md` — A3M017 retry planning summary
+- `outputs/validation/cninfo_a_class_phase3_a3m017_isolated_retry_next_step_recommendation.md` — A3M017 retry next-step recommendation
 - `outputs/validation/cninfo_a_class_phase2_retry_v3_planning_summary.md` — retry v3 规划摘要（gate **READY_FOR_APPROVAL**）
 - `outputs/validation/cninfo_d_class_phase1_schema_freeze_approval_checklist.md` — Phase 1 schema freeze 人工批准检查清单
 - `outputs/validation/cninfo_d_class_phase1_schema_freeze_approval_summary.md` — Phase 1 批准摘要（gate **READY_FOR_APPROVAL**）
@@ -669,6 +675,11 @@ _最后更新：2026-07-09_
 - `outputs/validation/cninfo_d_class_margin_trading_first_slice_effective_result.csv` — margin_trading first-slice effective result（**5 rows**）
 - `outputs/validation/cninfo_d_class_margin_trading_first_slice_final_caveat_ledger.csv` — margin_trading first-slice caveat 台账
 - `outputs/validation/cninfo_d_class_margin_trading_first_slice_post_closure_next_step_recommendation.md` — margin_trading post-closure 下一步建议
+- `plans/cninfo_d_class_margin_trading_first_slice_commit_boundary_review.md` — margin_trading first-slice commit boundary 评审（gate **READY_FOR_COMMIT_REVIEW**）
+- `outputs/validation/cninfo_d_class_margin_trading_first_slice_commit_boundary_summary.md` — margin_trading commit boundary 摘要
+- `outputs/validation/cninfo_d_class_margin_trading_first_slice_final_artifact_inventory.csv` — margin_trading artifact 清单（**34 yes / 15 no**）
+- `outputs/validation/cninfo_d_class_margin_trading_first_slice_commit_caveat_ledger.csv` — margin_trading commit caveat 台账
+- `outputs/validation/cninfo_d_class_margin_trading_first_slice_safe_to_commit_list.md` — margin_trading safe-to-commit 清单
 - `lab/test_cninfo_d_class_known_event_targeted_probe_runner.py` — targeted probe runner 测试（**27/27**）
 - `lab/test_cninfo_d_class_known_event_targeted_probe_live_path.py` — targeted probe live-path 测试（**29/29** · mock only）
 - `lab/test_cninfo_d_class_known_event_replacement_live_path.py` — replacement live-path 测试（**22/22**）
@@ -835,7 +846,15 @@ _最后更新：2026-07-09_
 - `outputs/validation/cninfo_b_class_phase3_100_final_caveat_ledger.csv` — Phase 3 final caveat ledger
 - `outputs/validation/cninfo_b_class_phase3_100_safe_to_commit_list.md` — Phase 3 safe-to-commit list
 - `outputs/validation/cninfo_b_class_phase3_100_commit_boundary_summary.md` — Phase 3 commit boundary summary
-- **Phase 3 commit** — **`f3f6077`** · **578 files** · explicit-path only · **B-class Phase 3 commit complete** · review gate **`READY_FOR_HUMAN_DECISION`** · **无 push** · **不是 verified**（inventory gap **185** retry_v2 live metadata files absent on disk）
+- **Phase 3 commit** — **`f3f6077`** · **578 files**
+- `outputs/validation/cninfo_b_class_phase3_100_retry_v2_test_cleanup_hardening_summary.md` — test cleanup hardening
+- `outputs/validation/cninfo_b_class_phase3_100_retry_v2_missing_artifact_recovery_summary.md` — recovery live **185/185**
+- `outputs/validation/cninfo_b_class_phase3_100_retry_v2_supplemental_commit_path_list.csv` — supplemental path list
+- `plans/cninfo_b_class_phase3_100_post_commit_inventory_gap_review.md` — Phase 3 post-commit inventory gap review（gate **`READY_FOR_HUMAN_DECISION`** · primary **Option A**）
+- `outputs/validation/cninfo_b_class_phase3_100_post_commit_missing_artifact_ledger.csv` — missing artifact ledger（**185** paths）
+- `outputs/validation/cninfo_b_class_phase3_100_post_commit_gap_metrics.csv` — gap metrics
+- `outputs/validation/cninfo_b_class_phase3_100_post_commit_gap_summary.md` — gap summary
+- `outputs/validation/cninfo_b_class_phase3_100_post_commit_next_step_recommendation.md` — next-step recommendation
 - `outputs/validation/cninfo_b_class_phase3_100_failed_retry/reports/b_class_phase3_100_failed_retry_summary.md` — Phase 3 failed retry live summary（execution gate **FAIL_REVIEW_REQUIRED**）
 - `outputs/validation/cninfo_b_class_phase3_100_failed_retry/reports/b_class_phase3_100_failed_retry_quality_report.csv` — Phase 3 failed retry quality report
 - `plans/cninfo_b_class_phase3_100_failed_retry_plan.md` — Phase 3 failed retry 规划（**NOT APPROVED**）
@@ -972,7 +991,7 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 2. **Phase 2 已收口**；**Phase 3 D 类设计**见 [registry YAML](config/cninfo_d_class_source_registry_draft.yaml) / [schema validation summary](outputs/validation/cninfo_d_class_schema_validation_summary.md)。
 3. **Phase 3 B 类**见 [validation design](plans/cninfo_b_class_validation_design.md) / [category routing](plans/cninfo_b_class_category_routing_rules.md) / [categories YAML](config/cninfo_announcement_categories.yaml) / [document seed summary](outputs/validation/cninfo_b_class_document_seed_summary.md) / [B schema validation](outputs/validation/cninfo_b_class_document_schema_validation_summary.md)。
 4. **Phase 4 C 类**见 [registry lint](outputs/validation/cninfo_c_class_registry_lint_summary.md) / [fixture validation](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md) / [active 30 smoke summary](outputs/validation/cninfo_c_class_scale_smoke_30_active_summary.md) / [candidates YAML](config/cninfo_c_class_source_candidates.yaml)。
-5. **C 类**状态 **`SNAPSHOT_GENERATED_QA_REVIEW`**；Phase 3.5 expanded snapshot commit **完成**（**`a12d5fb`** cherry-pick of **`8662eaa`** · **40 files**）；Phase 3.5 holdout signoff commit **完成**（[signoff](plans/cninfo_c_class_phase35_holdout_closed_with_caveat_signoff.md) · [ledger](outputs/validation/cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv) · triage + signoff **11 files** · gate **`phase35_holdout_closed_with_caveat_commit_review_gate = READY_FOR_HUMAN_DECISION`** · **491 track closed-with-caveat** · clean branch **`c-class-phase35-clean-push`** · **no push**）。
+5. **C 类**状态 **`SNAPSHOT_GENERATED_QA_REVIEW`**；Phase 3.5 expanded snapshot commit **完成**（**`8662eaa`** · **40 files**）；Phase 3.5 holdout signoff commit **完成**（[signoff](plans/cninfo_c_class_phase35_holdout_closed_with_caveat_signoff.md) · [ledger](outputs/validation/cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv) · triage + signoff **11 files** · gate **`phase35_holdout_closed_with_caveat_commit_review_gate = READY_FOR_HUMAN_DECISION`** · **491 track closed-with-caveat** · **no push**）。
 6. **A 类 Report Metadata Phase 0 规划已启动**（[planning summary](outputs/validation/cninfo_a_class_initial_planning_summary.md) · **无 CNINFO · 无 PDF**）。
 7. **A 类 Phase 1 freeze v1 已离线实现**（[implementation summary](outputs/validation/cninfo_a_class_phase1_freeze_v1_implementation_summary.md) · gate **`PASS_OFFLINE`**）。
 8. **A 类 ready-case benchmark 已完成**（[benchmark summary](outputs/validation/cninfo_a_class_phase1_ready_case_benchmark_summary.md) · **5/5 PASS** · gate **`READY_FOR_REVIEW`** · **无 CNINFO**）。
@@ -997,7 +1016,9 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 32. **A 类 Phase 3 live path 已离线实现**（[live path summary](outputs/validation/cninfo_a_class_phase3_50_company_live_path_summary.md) · test **28/28 PASS** · gate **`READY_FOR_APPROVAL`** · mock CNINFO **0** · **不是 verified**）。
 33. **A 类 Phase 3 50-company isolated live 已执行**（[expansion summary](outputs/validation/cninfo_a_class_phase3_50_company_expansion/reports/a_class_phase3_50_company_expansion_summary.md) · **49/50 acceptable** · CNINFO **104** · execution gate **`PASS_WITH_CAVEAT`** · **不是 verified**）。
 34. **A 类 Phase 3 50-company merge closure 已完成**（[closure summary](outputs/validation/cninfo_a_class_phase3_50_company_closure_summary.md) · **49/50 effective** · A3M017 unresolved · closure gate **`PASS_WITH_CAVEAT`** · CNINFO **0** · **不是 verified**）。
-35. **A 类 Phase 3 50-company final commit boundary review 已完成**（[boundary summary](outputs/validation/cninfo_a_class_phase3_50_company_commit_boundary_summary.md) · **80 yes / 9 no** · boundary gate **`READY_FOR_COMMIT_REVIEW`** · A3M017 caveat retained · **无 commit** · **不是 verified**）。
+35. **A 类 Phase 3 50-company final commit boundary review 已完成**（[boundary summary](outputs/validation/cninfo_a_class_phase3_50_company_commit_boundary_summary.md) · **80 yes / 9 no** · boundary gate **`READY_FOR_COMMIT_REVIEW`** · A3M017 caveat retained · **不是 verified**）。
+36. **A 类 Phase 3 explicit-path commit 已完成**（commit **`bbc15c3`** · **77 files** · test **54/54 PASS** · review gate **`READY_FOR_HUMAN_DECISION`** · **无 push** · **不是 verified**）· A3M017 caveat retained。
+37. **A 类 Phase 3 A3M017 isolated retry planning package 已离线准备**（[planning summary](outputs/validation/cninfo_a_class_phase3_a3m017_isolated_retry_planning_summary.md) · universe **1** · planning gate **`READY_FOR_APPROVAL`** · CNINFO **0** · **NOT APPROVED live** · **不是 verified**）。
 8. **B 类 Phase 1 tiny live 收口完成**（[closure summary](outputs/validation/cninfo_b_class_phase1_tiny_live_closure_summary.md) · **5/5 resolved** · **无 verified**）。
 9. **B 类 Phase 2 expansion 批准包已准备**（[approval summary](outputs/validation/cninfo_b_class_phase2_expansion_approval_summary.md) · universe draft **20** · gate **`READY_FOR_APPROVAL`** · **无 B-class live**）。
 10. **B 类 Phase 2 expansion runner 已离线准备**（[extension summary](outputs/validation/cninfo_b_class_phase2_expansion_runner_extension_summary.md) · dry-run **20/20** · test **12/12 PASS** · **无 CNINFO**）。
@@ -1047,4 +1068,6 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 43. **D 类 margin_trading first-slice live path 已离线实现**（[live-path summary](outputs/validation/cninfo_d_class_margin_trading_first_slice_live_path_summary.md) · tests **40/40** · live-path gate **`READY_FOR_APPROVAL`**）。
 44. **D 类 margin_trading first-slice isolated live 已执行**（[live summary](outputs/validation/cninfo_d_class_margin_trading_first_slice/reports/d_class_margin_trading_first_slice_live_summary.md) · CNINFO **5** · acceptable **5/5** · execution gate **`PASS_WITH_CAVEAT`** · **不是 verified** · **无 commit**）。
 45. **D 类 margin_trading first-slice closure review 已完成**（[closure summary](outputs/validation/cninfo_d_class_margin_trading_first_slice_closure_summary.md) · effective **5/5** · unresolved **0** · closure gate **`PASS_WITH_CAVEAT`** · CNINFO **0** · **无 commit**）。
+46. **D 类 margin_trading first-slice commit boundary review 已完成**（[boundary summary](outputs/validation/cninfo_d_class_margin_trading_first_slice_commit_boundary_summary.md) · should_commit **34/15** · boundary gate **`READY_FOR_COMMIT_REVIEW`**）。
+47. **D 类 margin_trading first-slice commit 已完成**（commit **`116f875`** · explicit-path **34** artifacts · tests **40/40** · commit review gate **`READY_FOR_HUMAN_DECISION`** · **不是 verified** · **无 push**）。
 12. **每完成一个 Phase**：更新分层表状态 + `outputs/validation/` 留 summary；不做数据库接入。

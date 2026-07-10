@@ -1,0 +1,28 @@
+{
+  "case": {
+    "case_id": "B3E019",
+    "company_code": "600054",
+    "company_name": "黄山旅游",
+    "market": "SSE主板",
+    "announcement_type": "periodic_report",
+    "target_endpoint": [
+      "EP001",
+      "EP004"
+    ],
+    "expected_lineage_type": "cninfo_periodic_report_pdf",
+    "risk_level": "low",
+    "phase1_overlap": "no",
+    "phase2_overlap": "no",
+    "phase25_include": "yes",
+    "reason": "not retry_v1 universe; isolated retry_v2 only; no PDF; schema unchanged"
+  },
+  "mode": "dry_run",
+  "cninfo_called": false,
+  "pdf_download_enabled": false,
+  "pdf_parse_enabled": false,
+  "planned_endpoints": [
+    "EP001",
+    "EP004"
+  ],
+  "validation_issues": []
+}
