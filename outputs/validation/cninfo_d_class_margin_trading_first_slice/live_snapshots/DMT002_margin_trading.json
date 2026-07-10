@@ -1,0 +1,22 @@
+{
+  "case_id": "DMT002",
+  "company_code": "600000",
+  "component": "margin_trading",
+  "endpoint": "https://www.cninfo.com.cn/data20/marginTrading/detailList",
+  "params": {},
+  "http_status": 200,
+  "record_count": 1,
+  "sample_records": [
+    {
+      "SECCODE": "600000",
+      "SECNAME": "mock",
+      "TRADEDATE": "2026-07-08"
+    }
+  ],
+  "cninfo_called": true,
+  "early_stop": true,
+  "bounded_probe_v2": true,
+  "db_write": false,
+  "minio_write": false,
+  "rag_run": false
+}

@@ -1,0 +1,24 @@
+metric_group,metric_name,value,gate_impact,notes
+first_slice,total_cases,5,closure,DMT001-DMT005 only
+first_slice,acceptable,5,closure,all cases acceptable=yes
+first_slice,found,5,closure,retrieval_status=found on all rows
+first_slice,failed,0,closure,no failure_type populated
+first_slice,empty_but_valid,0,closure,branch not exercised this slice
+first_slice,needs_review,0,closure,branch not exercised this slice
+first_slice,unresolved_final,0,closure,no blocking unresolved cases
+cninfo,CNINFO_during_live,5,execution,prior isolated live run; cap 20
+cninfo,CNINFO_during_closure,0,closure,this offline review round
+cninfo,request_cap,20,planning,total cap limit
+cninfo,requests_used,5,execution,25% of cap consumed
+safety,pdf_download,0,red_line,no PDF
+safety,ocr,0,red_line,no OCR
+safety,extraction,0,red_line,no extraction
+safety,db_write,0,red_line,no DB
+safety,minio_write,0,red_line,no MinIO
+safety,rag_run,0,red_line,no RAG
+exclusion,688671_excluded,yes,universe,DLC003R not in first-slice primary cases
+exclusion,301259_excluded,yes,universe,DLC006R not in first-slice primary cases
+track,known_event_track_closed,yes,closure,d_class_known_event_replacement_final_closure_gate=PASS_WITH_CAVEAT
+promotion,disclosure_to_captured_normal,no,red_line,no upgrade from disclosure-only evidence
+gate,execution_gate,PASS_WITH_CAVEAT,preserved,d_class_margin_trading_first_slice_execution_gate
+gate,closure_gate,PASS_WITH_CAVEAT,closure,5/5 closed with documented caveats only; never bare PASS

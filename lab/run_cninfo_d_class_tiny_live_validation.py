@@ -361,6 +361,180 @@ TARGETED_PROBE_DRYRUN_REPORT_COLUMNS = [
     "notes",
 ]
 
+DEFAULT_MARGIN_TRADING_FIRST_SLICE_OUTPUT_ROOT = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_d_class_margin_trading_first_slice",
+)
+DEFAULT_MARGIN_TRADING_FIRST_SLICE_UNIVERSE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_d_class_margin_trading_first_slice_universe_draft.csv",
+)
+MARGIN_TRADING_FIRST_SLICE_DRYRUN_REPORT_CSV = os.path.join(
+    DEFAULT_MARGIN_TRADING_FIRST_SLICE_OUTPUT_ROOT,
+    "reports",
+    "d_class_margin_trading_first_slice_dryrun_report.csv",
+)
+MARGIN_TRADING_FIRST_SLICE_DRYRUN_SUMMARY_MD = os.path.join(
+    DEFAULT_MARGIN_TRADING_FIRST_SLICE_OUTPUT_ROOT,
+    "reports",
+    "d_class_margin_trading_first_slice_dryrun_summary.md",
+)
+
+MARGIN_TRADING_FIRST_SLICE_RUNNER_GATE = "READY_FOR_APPROVAL"
+MARGIN_TRADING_FIRST_SLICE_LIVE_PATH_GATE = "READY_FOR_APPROVAL"
+MARGIN_TRADING_FIRST_SLICE_EXECUTION_GATE_PASS = "PASS_WITH_CAVEAT"
+MARGIN_TRADING_FIRST_SLICE_EXECUTION_GATE_FAIL = "FAIL_REVIEW_REQUIRED"
+MARGIN_TRADING_FIRST_SLICE_EXPECTED_UNIVERSE_SIZE = 5
+MARGIN_TRADING_FIRST_SLICE_ALLOWED_CASE_IDS: Set[str] = {
+    "DMT001",
+    "DMT002",
+    "DMT003",
+    "DMT004",
+    "DMT005",
+}
+MARGIN_TRADING_FIRST_SLICE_EXPECTED_COMPANY_CODES: Dict[str, str] = {
+    "DMT001": "000895",
+    "DMT002": "600000",
+    "DMT003": "601988",
+    "DMT004": "002415",
+    "DMT005": "688981",
+}
+MARGIN_TRADING_FIRST_SLICE_FORBIDDEN_COMPANY_CODES: Set[str] = {"688671", "301259"}
+MARGIN_TRADING_FIRST_SLICE_COMPONENT = "margin_trading"
+MARGIN_TRADING_FIRST_SLICE_ANCHOR_TDATE = "2026-07-08"
+MARGIN_TRADING_FIRST_SLICE_ENDPOINT = (
+    "https://www.cninfo.com.cn/data20/marginTrading/detailList"
+)
+MARGIN_TRADING_FIRST_SLICE_PER_CASE_MAX_REQUESTS = 4
+MARGIN_TRADING_FIRST_SLICE_TOTAL_MAX_REQUESTS = 20
+
+MARGIN_TRADING_FIRST_SLICE_APPROVAL_REQUIRED = (
+    "approve_d_class_margin_trading_first_slice_required"
+)
+MARGIN_TRADING_FIRST_SLICE_WRONG_APPROVAL_FLAG = (
+    "wrong_approval_flag_for_margin_trading_first_slice"
+)
+MARGIN_TRADING_FIRST_SLICE_MIXED_MODE_BLOCKED = (
+    "margin_trading_first_slice_incompatible_with_other_modes"
+)
+MARGIN_TRADING_FIRST_SLICE_UNIVERSE_CSV_REQUIRED = (
+    "margin_trading_first_slice_requires_explicit_universe_csv"
+)
+MARGIN_TRADING_FIRST_SLICE_OUTPUT_ROOT_REQUIRED = (
+    "margin_trading_first_slice_output_root_must_be_cninfo_d_class_margin_trading_first_slice"
+)
+MARGIN_TRADING_FIRST_SLICE_V1_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "v1_output_root_write_blocked_for_margin_trading_first_slice"
+)
+MARGIN_TRADING_FIRST_SLICE_V2_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "v2_output_root_write_blocked_for_margin_trading_first_slice"
+)
+MARGIN_TRADING_FIRST_SLICE_REPLACEMENT_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "replacement_output_root_write_blocked_for_margin_trading_first_slice"
+)
+MARGIN_TRADING_FIRST_SLICE_TARGETED_PROBE_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "targeted_probe_output_root_write_blocked_for_margin_trading_first_slice"
+)
+MARGIN_TRADING_FIRST_SLICE_UNIVERSE_SIZE_MISMATCH = (
+    "margin_trading_first_slice_universe_size_must_equal_5"
+)
+MARGIN_TRADING_FIRST_SLICE_FORBIDDEN_CASE_ID = (
+    "forbidden_case_id_in_margin_trading_first_slice_universe"
+)
+MARGIN_TRADING_FIRST_SLICE_WRONG_COMPONENT = (
+    "margin_trading_first_slice_component_must_be_margin_trading"
+)
+MARGIN_TRADING_FIRST_SLICE_INCLUDE_REQUIRED = (
+    "first_slice_include_must_be_yes"
+)
+MARGIN_TRADING_FIRST_SLICE_FORBIDDEN_COMPANY_CODE = (
+    "forbidden_company_code_in_margin_trading_first_slice_universe"
+)
+MARGIN_TRADING_FIRST_SLICE_WRONG_COMPANY_CODE = (
+    "margin_trading_first_slice_company_code_mismatch"
+)
+MARGIN_TRADING_FIRST_SLICE_WRONG_ANCHOR_TDATE = (
+    "margin_trading_first_slice_anchor_tdate_mismatch"
+)
+MARGIN_TRADING_FIRST_SLICE_PER_CASE_CAP_EXCEEDED = (
+    "margin_trading_first_slice_per_case_request_cap_exceeded"
+)
+MARGIN_TRADING_FIRST_SLICE_TOTAL_CAP_EXCEEDED = (
+    "margin_trading_first_slice_total_request_cap_exceeded"
+)
+MARGIN_TRADING_FIRST_SLICE_LIVE_NOT_IMPLEMENTED = (
+    "margin_trading_first_slice_live_not_implemented"
+)
+
+MARGIN_TRADING_FIRST_SLICE_DRYRUN_REPORT_COLUMNS = [
+    "case_id",
+    "company_code",
+    "company_name",
+    "component",
+    "market",
+    "anchor_tdate",
+    "first_slice_include",
+    "expected_behavior",
+    "planned_request_count",
+    "planned_output_root",
+    "planned_endpoint",
+    "cninfo_call_planned",
+    "pdf_download",
+    "ocr",
+    "extraction",
+    "db_write",
+    "minio_write",
+    "rag_run",
+    "dryrun_status",
+    "notes",
+]
+
+MARGIN_TRADING_FIRST_SLICE_LIVE_REPORT_COLUMNS = [
+    "case_id",
+    "company_code",
+    "company_name",
+    "component",
+    "market",
+    "anchor_tdate",
+    "expected_behavior",
+    "retrieval_status",
+    "quality_status",
+    "lineage_status",
+    "record_count",
+    "empty_but_valid",
+    "needs_review",
+    "endpoint_used",
+    "cninfo_request_count",
+    "early_stop_triggered",
+    "acceptable",
+    "failure_type",
+    "pdf_download",
+    "ocr",
+    "extraction",
+    "db_write",
+    "minio_write",
+    "rag_run",
+    "notes",
+]
+
+MARGIN_TRADING_FIRST_SLICE_QUALITY_REPORT_COLUMNS = [
+    "case_id",
+    "component",
+    "anchor_tdate",
+    "expected_behavior",
+    "retrieval_status",
+    "record_count",
+    "quality_status",
+    "acceptable",
+    "failure_type",
+    "cninfo_request_count",
+    "notes",
+]
+
 REPLACEMENT_DRYRUN_REPORT_COLUMNS = [
     "case_id",
     "company_code",
@@ -608,6 +782,20 @@ class TargetedProbeUniverseRow:
     request_cap: str
     expected_behavior: str
     notes: str
+
+
+@dataclass
+class MarginTradingFirstSliceRow:
+    case_id: str
+    company_code: str
+    company_name: str
+    component: str
+    market: str
+    anchor_tdate: str
+    first_slice_include: str
+    expected_behavior: str
+    reason: str
+    dlc001_reference: str
 
 
 @dataclass
@@ -1763,6 +1951,705 @@ def run_known_event_targeted_probe(args: argparse.Namespace) -> int:
     print(
         f"gate=d_class_known_event_targeted_probe_runner_extension_gate="
         f"{TARGETED_PROBE_RUNNER_GATE}"
+    )
+    print(f"dryrun_report={report_path}")
+    print(f"dryrun_summary={summary_path}")
+    return 0
+
+
+def load_margin_trading_first_slice_universe(
+    path: str,
+) -> List[MarginTradingFirstSliceRow]:
+    rows: List[MarginTradingFirstSliceRow] = []
+    with open(path, newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            rows.append(
+                MarginTradingFirstSliceRow(
+                    case_id=str(row.get("case_id", "")).strip(),
+                    company_code=str(row.get("company_code", "")).strip(),
+                    company_name=str(row.get("company_name", "")).strip(),
+                    component=str(row.get("component", "")).strip(),
+                    market=str(row.get("market", "")).strip(),
+                    anchor_tdate=str(row.get("anchor_tdate", "")).strip(),
+                    first_slice_include=str(
+                        row.get("first_slice_include", "")
+                    ).strip(),
+                    expected_behavior=str(
+                        row.get("expected_behavior", "")
+                    ).strip(),
+                    reason=str(row.get("reason", "")).strip(),
+                    dlc001_reference=str(row.get("dlc001_reference", "")).strip(),
+                )
+            )
+    return rows
+
+
+def build_margin_trading_first_slice_plan(
+    anchor_tdate: str, max_requests: int = MARGIN_TRADING_FIRST_SLICE_PER_CASE_MAX_REQUESTS
+) -> List[str]:
+    """margin_trading 第一切片 dry-run 请求计划（仅计数，不执行）。"""
+    anchor = date.fromisoformat(anchor_tdate)
+    steps = ["detailList_primary"]
+    for offset in (-1, 1):
+        probe_date = (anchor + timedelta(days=offset)).strftime("%Y-%m-%d")
+        steps.append(f"optional_tdate_probe_{probe_date}")
+    while len(steps) < max_requests:
+        steps.append("budget_reserve")
+    return steps[:max_requests]
+
+
+def compute_margin_trading_first_slice_planned_requests(
+    row: MarginTradingFirstSliceRow,
+) -> int:
+    plan = build_margin_trading_first_slice_plan(row.anchor_tdate)
+    return len(plan)
+
+
+def validate_margin_trading_first_slice_universe(
+    rows: List[MarginTradingFirstSliceRow],
+) -> List[str]:
+    issues: List[str] = []
+    if len(rows) != MARGIN_TRADING_FIRST_SLICE_EXPECTED_UNIVERSE_SIZE:
+        issues.append(
+            f"{MARGIN_TRADING_FIRST_SLICE_UNIVERSE_SIZE_MISMATCH}:got={len(rows)}"
+        )
+    seen_ids: Set[str] = set()
+    total_planned = 0
+    for row in rows:
+        case_id = row.case_id
+        if case_id in seen_ids:
+            issues.append(f"duplicate_case_id:{case_id}")
+        seen_ids.add(case_id)
+        if case_id not in MARGIN_TRADING_FIRST_SLICE_ALLOWED_CASE_IDS:
+            issues.append(f"{MARGIN_TRADING_FIRST_SLICE_FORBIDDEN_CASE_ID}:{case_id}")
+        if row.company_code in MARGIN_TRADING_FIRST_SLICE_FORBIDDEN_COMPANY_CODES:
+            issues.append(
+                f"{MARGIN_TRADING_FIRST_SLICE_FORBIDDEN_COMPANY_CODE}:{row.company_code}"
+            )
+        expected_code = MARGIN_TRADING_FIRST_SLICE_EXPECTED_COMPANY_CODES.get(case_id)
+        if expected_code and row.company_code != expected_code:
+            issues.append(
+                f"{MARGIN_TRADING_FIRST_SLICE_WRONG_COMPANY_CODE}:{case_id}={row.company_code}"
+            )
+        if row.component != MARGIN_TRADING_FIRST_SLICE_COMPONENT:
+            issues.append(f"{MARGIN_TRADING_FIRST_SLICE_WRONG_COMPONENT}:{case_id}")
+        if row.first_slice_include.lower() != "yes":
+            issues.append(f"{MARGIN_TRADING_FIRST_SLICE_INCLUDE_REQUIRED}:{case_id}")
+        if row.anchor_tdate != MARGIN_TRADING_FIRST_SLICE_ANCHOR_TDATE:
+            issues.append(
+                f"{MARGIN_TRADING_FIRST_SLICE_WRONG_ANCHOR_TDATE}:{case_id}={row.anchor_tdate}"
+            )
+        planned = compute_margin_trading_first_slice_planned_requests(row)
+        if planned > MARGIN_TRADING_FIRST_SLICE_PER_CASE_MAX_REQUESTS:
+            issues.append(
+                f"{MARGIN_TRADING_FIRST_SLICE_PER_CASE_CAP_EXCEEDED}:{case_id}={planned}"
+            )
+        total_planned += planned
+    for required_id in sorted(MARGIN_TRADING_FIRST_SLICE_ALLOWED_CASE_IDS):
+        if required_id not in seen_ids:
+            issues.append(f"missing_case_id:{required_id}")
+    if total_planned > MARGIN_TRADING_FIRST_SLICE_TOTAL_MAX_REQUESTS:
+        issues.append(
+            f"{MARGIN_TRADING_FIRST_SLICE_TOTAL_CAP_EXCEEDED}:{total_planned}"
+        )
+    return issues
+
+
+def validate_margin_trading_first_slice_output_root(
+    output_root: str,
+) -> Tuple[bool, str]:
+    root = _normalize_output_root(output_root)
+    allowed = _normalize_output_root(DEFAULT_MARGIN_TRADING_FIRST_SLICE_OUTPUT_ROOT)
+    v1_root = _normalize_output_root(DEFAULT_OUTPUT_ROOT)
+    v2_root = _normalize_output_root(DEFAULT_V2_OUTPUT_ROOT)
+    replacement_root = _normalize_output_root(DEFAULT_REPLACEMENT_OUTPUT_ROOT)
+    targeted_root = _normalize_output_root(DEFAULT_TARGETED_PROBE_OUTPUT_ROOT)
+    if root == v1_root or root.startswith(v1_root + os.sep):
+        return False, MARGIN_TRADING_FIRST_SLICE_V1_OUTPUT_ROOT_WRITE_BLOCKED
+    if root == v2_root or root.startswith(v2_root + os.sep):
+        return False, MARGIN_TRADING_FIRST_SLICE_V2_OUTPUT_ROOT_WRITE_BLOCKED
+    if root == replacement_root or root.startswith(replacement_root + os.sep):
+        return False, MARGIN_TRADING_FIRST_SLICE_REPLACEMENT_OUTPUT_ROOT_WRITE_BLOCKED
+    if root == targeted_root or root.startswith(targeted_root + os.sep):
+        return False, MARGIN_TRADING_FIRST_SLICE_TARGETED_PROBE_OUTPUT_ROOT_WRITE_BLOCKED
+    if root == allowed or root.startswith(allowed + os.sep):
+        return True, ""
+    return False, MARGIN_TRADING_FIRST_SLICE_OUTPUT_ROOT_REQUIRED
+
+
+def enforce_margin_trading_first_slice_write_block_targets(
+    output_paths: Dict[str, str],
+) -> None:
+    protected = [
+        _normalize_output_root(DEFAULT_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_V2_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_REPLACEMENT_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_TARGETED_PROBE_OUTPUT_ROOT),
+        _normalize_output_root(CALIBRATED_UNIVERSE_CSV),
+        _normalize_output_root(DEFAULT_UNIVERSE_CSV),
+    ]
+    for key in ("root", "reports"):
+        target = _normalize_output_root(output_paths[key])
+        for blocked in protected:
+            if target == blocked or target.startswith(blocked + os.sep):
+                print(
+                    f"ERROR: {MARGIN_TRADING_FIRST_SLICE_V1_OUTPUT_ROOT_WRITE_BLOCKED}:{key}",
+                    file=sys.stderr,
+                )
+                sys.exit(2)
+
+
+def enforce_margin_trading_first_slice_forbidden_options(
+    args: argparse.Namespace,
+) -> None:
+    enforce_forbidden_options(args)
+    mixed_modes = [
+        ("known_event_replacement", args.known_event_replacement),
+        ("known_event_targeted_probe", args.known_event_targeted_probe),
+        ("bounded_probe_v2", args.bounded_probe_v2),
+    ]
+    for name, enabled in mixed_modes:
+        if args.margin_trading_first_slice and enabled:
+            print(
+                f"ERROR: {MARGIN_TRADING_FIRST_SLICE_MIXED_MODE_BLOCKED}:{name}",
+                file=sys.stderr,
+            )
+            sys.exit(2)
+    wrong_flags = [
+        ("approve_d_class_tiny_live_validation", args.approve_d_class_tiny_live_validation),
+        (
+            "approve_d_class_tiny_live_v2_bounded_probe",
+            args.approve_d_class_tiny_live_v2_bounded_probe,
+        ),
+        (
+            "approve_d_class_known_event_replacement_validation",
+            args.approve_d_class_known_event_replacement_validation,
+        ),
+        (
+            "approve_d_class_known_event_targeted_probe",
+            args.approve_d_class_known_event_targeted_probe,
+        ),
+    ]
+    for name, enabled in wrong_flags:
+        if args.margin_trading_first_slice and enabled:
+            print(
+                f"ERROR: {MARGIN_TRADING_FIRST_SLICE_WRONG_APPROVAL_FLAG}:{name}",
+                file=sys.stderr,
+            )
+            sys.exit(2)
+    if (
+        not args.margin_trading_first_slice
+        and args.approve_d_class_margin_trading_first_slice
+    ):
+        print(
+            f"ERROR: {MARGIN_TRADING_FIRST_SLICE_WRONG_APPROVAL_FLAG}:"
+            "margin_trading_first_slice_flag_without_mode",
+            file=sys.stderr,
+        )
+        sys.exit(2)
+    for flag_name in ("pdf_download", "ocr", "extraction"):
+        if getattr(args, flag_name, False):
+            token = {
+                "pdf_download": PDF_DOWNLOAD_BLOCKED,
+                "ocr": OCR_BLOCKED,
+                "extraction": EXTRACTION_BLOCKED,
+            }[flag_name]
+            print(f"ERROR: {token}", file=sys.stderr)
+            sys.exit(2)
+
+
+def enforce_margin_trading_first_slice_live_approval_gate(
+    args: argparse.Namespace,
+) -> None:
+    if args.mode == "live" and args.margin_trading_first_slice:
+        if not args.approve_d_class_margin_trading_first_slice:
+            print(
+                f"ERROR: {MARGIN_TRADING_FIRST_SLICE_APPROVAL_REQUIRED}",
+                file=sys.stderr,
+            )
+            sys.exit(2)
+
+
+def build_margin_trading_first_slice_dryrun_rows(
+    rows: List[MarginTradingFirstSliceRow],
+    output_root: str,
+) -> List[Dict[str, str]]:
+    dry_rows: List[Dict[str, str]] = []
+    for row in rows:
+        planned_requests = compute_margin_trading_first_slice_planned_requests(row)
+        plan = build_margin_trading_first_slice_plan(row.anchor_tdate)
+        dry_rows.append(
+            {
+                "case_id": row.case_id,
+                "company_code": row.company_code,
+                "company_name": row.company_name,
+                "component": row.component,
+                "market": row.market,
+                "anchor_tdate": row.anchor_tdate,
+                "first_slice_include": row.first_slice_include,
+                "expected_behavior": row.expected_behavior,
+                "planned_request_count": str(planned_requests),
+                "planned_output_root": output_root,
+                "planned_endpoint": MARGIN_TRADING_FIRST_SLICE_ENDPOINT,
+                "cninfo_call_planned": (
+                    "yes" if row.first_slice_include.lower() == "yes" else "no"
+                ),
+                "pdf_download": "no",
+                "ocr": "no",
+                "extraction": "no",
+                "db_write": "no",
+                "minio_write": "no",
+                "rag_run": "no",
+                "dryrun_status": "planned_ok",
+                "notes": (
+                    f"anchor={row.anchor_tdate}; plan={','.join(plan)}; "
+                    f"max_per_case={MARGIN_TRADING_FIRST_SLICE_PER_CASE_MAX_REQUESTS}"
+                ),
+            }
+        )
+    return dry_rows
+
+
+def write_margin_trading_first_slice_dryrun_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"],
+        "d_class_margin_trading_first_slice_dryrun_report.csv",
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(
+            f, fieldnames=MARGIN_TRADING_FIRST_SLICE_DRYRUN_REPORT_COLUMNS
+        )
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_margin_trading_first_slice_dryrun_summary(
+    rows: List[Dict[str, str]],
+    output_paths: Dict[str, str],
+    universe_csv: str,
+) -> str:
+    planned_ok = sum(1 for r in rows if r["dryrun_status"] == "planned_ok")
+    planned_total = sum(int(r["planned_request_count"]) for r in rows)
+    lines = [
+        "# CNINFO D 类 margin_trading First-Slice Dry-run Summary",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** margin_trading first-slice dry-run only · **CNINFO calls = 0** · **NOT APPROVED**",
+        "",
+        "## Result",
+        "",
+        f"| 项 | 值 |",
+        f"|----|-----|",
+        f"| cases | **{len(rows)}** |",
+        f"| planned_ok | **{planned_ok}/{len(rows)}** |",
+        f"| planned_request_count_total | **{planned_total}** |",
+        f"| CNINFO calls | **0** |",
+        f"| universe_csv | `{universe_csv}` |",
+        "",
+        "## Gate",
+        "",
+        "```text",
+        f"d_class_margin_trading_first_slice_runner_extension_gate = {MARGIN_TRADING_FIRST_SLICE_RUNNER_GATE}",
+        "approval_status = NOT_APPROVED",
+        "approved_for_live = false",
+        "```",
+        "",
+        "**NOT PASS** · **NOT live_ready** · **NOT verified** · **NOT production_ready**",
+        "",
+        "## Known-Event Track",
+        "",
+        "known-event replacement track **remains closed** · no DLC003R/DLC006R rerun",
+        "",
+    ]
+    summary_path = os.path.join(
+        output_paths["reports"],
+        "d_class_margin_trading_first_slice_dryrun_summary.md",
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    return summary_path
+
+
+def margin_trading_first_slice_row_to_universe_case(
+    row: MarginTradingFirstSliceRow,
+) -> UniverseCase:
+    """将 margin_trading 第一切片 universe 行转为探测用 UniverseCase。"""
+    return UniverseCase(
+        case_id=row.case_id,
+        company_code=row.company_code,
+        company_name=row.company_name,
+        component=row.component,
+        market=row.market,
+        risk_level="",
+        expected_behavior=row.expected_behavior,
+        reason=row.reason,
+    )
+
+
+def build_margin_trading_first_slice_live_probe_plan(
+    anchor_tdate: str,
+) -> List[Tuple[str, Dict[str, Any]]]:
+    """margin_trading 第一切片 live 探测计划（detailList + 可选邻近探测占位）。"""
+    items: List[Tuple[str, Dict[str, Any]]] = []
+    for step in build_margin_trading_first_slice_plan(anchor_tdate):
+        if step == "budget_reserve":
+            continue
+        items.append((step, {}))
+    return items[:MARGIN_TRADING_FIRST_SLICE_PER_CASE_MAX_REQUESTS]
+
+
+def is_margin_trading_first_slice_acceptable(
+    row: MarginTradingFirstSliceRow,
+    summary: Dict[str, str],
+) -> bool:
+    """第一切片 acceptable 判定；禁止 disclosure-only 升级为 captured_normal。"""
+    rs = summary.get("retrieval_status", "")
+    qs = summary.get("quality_status", "")
+    try:
+        rc = int(summary.get("record_count", "0"))
+    except ValueError:
+        rc = 0
+    if rs in ("http_error", "blocked") or qs == "blocked":
+        return False
+    if qs == "verified":
+        return False
+    if "disclosure" in row.reason.lower() and rs != "found":
+        return False
+    if rs == "found" and rc >= 1:
+        return True
+    if rs == "empty_but_valid" and rc == 0:
+        return True
+    if qs == "needs_review" and rc >= 0:
+        return True
+    return False
+
+
+def assess_margin_trading_first_slice_failure_type(
+    row: MarginTradingFirstSliceRow,
+    summary: Dict[str, str],
+) -> str:
+    if is_margin_trading_first_slice_acceptable(row, summary):
+        return ""
+    rs = summary.get("retrieval_status", "")
+    if rs in ("http_error", "blocked"):
+        return "network_or_http_error"
+    if rs == "empty_but_valid":
+        return "empty_but_valid_only"
+    return "expectation_mismatch"
+
+
+def validate_margin_trading_first_slice_request_caps(stats: LiveStats) -> List[str]:
+    issues: List[str] = []
+    for case_id in sorted(MARGIN_TRADING_FIRST_SLICE_ALLOWED_CASE_IDS):
+        cnt = stats.case_request_counts.get(case_id, 0)
+        if cnt > MARGIN_TRADING_FIRST_SLICE_PER_CASE_MAX_REQUESTS:
+            issues.append(
+                f"{MARGIN_TRADING_FIRST_SLICE_PER_CASE_CAP_EXCEEDED}:{case_id}={cnt}"
+            )
+    if stats.cninfo_requests > MARGIN_TRADING_FIRST_SLICE_TOTAL_MAX_REQUESTS:
+        issues.append(
+            f"{MARGIN_TRADING_FIRST_SLICE_TOTAL_CAP_EXCEEDED}:{stats.cninfo_requests}"
+        )
+    return issues
+
+
+def compute_margin_trading_first_slice_execution_gate(
+    universe_rows: List[MarginTradingFirstSliceRow],
+    case_summaries: Dict[str, Dict[str, str]],
+) -> str:
+    """margin_trading 第一切片 live 执行 gate；≥3/5 acceptable → PASS_WITH_CAVEAT。"""
+    acceptable = sum(
+        1
+        for row in universe_rows
+        if is_margin_trading_first_slice_acceptable(
+            row, case_summaries.get(row.case_id, {})
+        )
+    )
+    if acceptable >= 3:
+        return MARGIN_TRADING_FIRST_SLICE_EXECUTION_GATE_PASS
+    return MARGIN_TRADING_FIRST_SLICE_EXECUTION_GATE_FAIL
+
+
+def build_margin_trading_first_slice_live_row(
+    row: MarginTradingFirstSliceRow,
+    summary: Dict[str, str],
+) -> Dict[str, str]:
+    acceptable = is_margin_trading_first_slice_acceptable(row, summary)
+    failure_type = assess_margin_trading_first_slice_failure_type(row, summary)
+    return {
+        "case_id": row.case_id,
+        "company_code": row.company_code,
+        "company_name": row.company_name,
+        "component": row.component,
+        "market": row.market,
+        "anchor_tdate": row.anchor_tdate,
+        "expected_behavior": row.expected_behavior,
+        "retrieval_status": summary.get("retrieval_status", ""),
+        "quality_status": summary.get("quality_status", ""),
+        "lineage_status": summary.get("lineage_status", ""),
+        "record_count": summary.get("record_count", "0"),
+        "empty_but_valid": summary.get("empty_but_valid", "no"),
+        "needs_review": summary.get("needs_review", "no"),
+        "endpoint_used": summary.get("endpoint_used", ""),
+        "cninfo_request_count": summary.get("cninfo_request_count", "0"),
+        "early_stop_triggered": summary.get("early_stop_triggered", "no"),
+        "acceptable": "yes" if acceptable else "no",
+        "failure_type": failure_type,
+        "pdf_download": "no",
+        "ocr": "no",
+        "extraction": "no",
+        "db_write": "no",
+        "minio_write": "no",
+        "rag_run": "no",
+        "notes": summary.get("notes", ""),
+    }
+
+
+def write_margin_trading_first_slice_live_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"],
+        "d_class_margin_trading_first_slice_live_report.csv",
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(
+            f, fieldnames=MARGIN_TRADING_FIRST_SLICE_LIVE_REPORT_COLUMNS
+        )
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_margin_trading_first_slice_quality_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    quality_rows = [
+        {
+            "case_id": row["case_id"],
+            "component": row["component"],
+            "anchor_tdate": row["anchor_tdate"],
+            "expected_behavior": row["expected_behavior"],
+            "retrieval_status": row["retrieval_status"],
+            "record_count": row["record_count"],
+            "quality_status": row["quality_status"],
+            "acceptable": row["acceptable"],
+            "failure_type": row["failure_type"],
+            "cninfo_request_count": row["cninfo_request_count"],
+            "notes": row["notes"],
+        }
+        for row in rows
+    ]
+    report_path = os.path.join(
+        output_paths["reports"],
+        "d_class_margin_trading_first_slice_quality_report.csv",
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(
+            f, fieldnames=MARGIN_TRADING_FIRST_SLICE_QUALITY_REPORT_COLUMNS
+        )
+        writer.writeheader()
+        writer.writerows(quality_rows)
+    return report_path
+
+
+def write_margin_trading_first_slice_live_summary(
+    rows: List[Dict[str, str]],
+    stats: LiveStats,
+    gate: str,
+    output_paths: Dict[str, str],
+) -> str:
+    acceptable = sum(1 for r in rows if r.get("acceptable") == "yes")
+    lines = [
+        "# CNINFO D 类 margin_trading First-Slice Live Summary",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** margin_trading first-slice live summary · **NOT APPROVED for production**",
+        "",
+        "## Result",
+        "",
+        f"| 项 | 值 |",
+        f"|----|-----|",
+        f"| cases | **{len(rows)}** |",
+        f"| acceptable | **{acceptable}/{len(rows)}** |",
+        f"| CNINFO requests | **{stats.cninfo_requests}** |",
+        f"| execution gate | **{gate}** |",
+        "",
+        "## Gates",
+        "",
+        "```text",
+        f"d_class_margin_trading_first_slice_live_path_gate = {MARGIN_TRADING_FIRST_SLICE_LIVE_PATH_GATE}",
+        f"d_class_margin_trading_first_slice_execution_gate = {gate}",
+        "approval_status = NOT_APPROVED",
+        "```",
+        "",
+        "**NOT PASS** · **NOT live_ready** · **NOT verified** · **NOT production_ready**",
+        "",
+        "Future acceptance threshold: **≥3/5 acceptable → PASS_WITH_CAVEAT**",
+        "",
+    ]
+    summary_path = os.path.join(
+        output_paths["reports"],
+        "d_class_margin_trading_first_slice_live_summary.md",
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    return summary_path
+
+
+def execute_margin_trading_first_slice_live(
+    universe_rows: List[MarginTradingFirstSliceRow],
+    output_paths: Dict[str, str],
+) -> int:
+    """margin_trading 第一切片 live 探针；仅 DMT001–DMT005 调用 CNINFO。"""
+    endpoints = load_registry_endpoints()
+    source_configs = load_table_source_configs()
+    component_cfg = source_configs.get(MARGIN_TRADING_FIRST_SLICE_COMPONENT, {})
+    endpoint = endpoints.get(
+        MARGIN_TRADING_FIRST_SLICE_COMPONENT,
+        component_cfg.get("api_url", MARGIN_TRADING_FIRST_SLICE_ENDPOINT),
+    )
+
+    for row in universe_rows:
+        plan = build_margin_trading_first_slice_live_probe_plan(row.anchor_tdate)
+        if len(plan) > MARGIN_TRADING_FIRST_SLICE_PER_CASE_MAX_REQUESTS:
+            print(
+                f"ERROR: {MARGIN_TRADING_FIRST_SLICE_PER_CASE_CAP_EXCEEDED}:"
+                f"planned={len(plan)}",
+                file=sys.stderr,
+            )
+            return 2
+
+    session = requests.Session()
+    stats = LiveStats()
+    case_summaries: Dict[str, Dict[str, str]] = {}
+    early_stop_count = 0
+
+    for row in sorted(universe_rows, key=lambda r: r.case_id):
+        case = margin_trading_first_slice_row_to_universe_case(row)
+        plan = build_margin_trading_first_slice_live_probe_plan(row.anchor_tdate)
+        _, summary, stopped = execute_v2_bounded_probe_case(
+            case,
+            plan,
+            "margin_trading_first_slice",
+            MARGIN_TRADING_FIRST_SLICE_PER_CASE_MAX_REQUESTS,
+            component_cfg,
+            endpoint,
+            session,
+            stats,
+            output_paths,
+        )
+        case_summaries[row.case_id] = summary
+        if stopped:
+            early_stop_count += 1
+        print(
+            f"{row.case_id} {summary['retrieval_status']}: "
+            f"records={summary['record_count']} "
+            f"requests={summary['cninfo_request_count']} "
+            f"early_stop={summary['early_stop_triggered']}",
+            flush=True,
+        )
+
+    cap_issues = validate_margin_trading_first_slice_request_caps(stats)
+    if cap_issues:
+        print(
+            "ERROR: margin_trading first-slice request cap validation failed: "
+            f"{cap_issues}",
+            file=sys.stderr,
+        )
+        return 2
+
+    gate = compute_margin_trading_first_slice_execution_gate(
+        universe_rows, case_summaries
+    )
+    if stats.db_writes or stats.minio_writes or stats.rag_runs:
+        gate = MARGIN_TRADING_FIRST_SLICE_EXECUTION_GATE_FAIL
+
+    live_rows = [
+        build_margin_trading_first_slice_live_row(row, case_summaries[row.case_id])
+        for row in sorted(universe_rows, key=lambda r: r.case_id)
+        if row.case_id in case_summaries
+    ]
+
+    report_path = write_margin_trading_first_slice_live_report(live_rows, output_paths)
+    quality_path = write_margin_trading_first_slice_quality_report(
+        live_rows, output_paths
+    )
+    summary_path = write_margin_trading_first_slice_live_summary(
+        live_rows, stats, gate, output_paths
+    )
+
+    print(
+        f"mode=margin_trading_first_slice_live cases={len(live_rows)} "
+        f"acceptable={sum(1 for r in live_rows if r['acceptable'] == 'yes')} "
+        f"total_requests={stats.cninfo_requests} early_stop_count={early_stop_count}"
+    )
+    print(f"gate=d_class_margin_trading_first_slice_execution_gate={gate}")
+    print(f"live_report={report_path}")
+    print(f"quality_report={quality_path}")
+    print(f"live_summary={summary_path}")
+    return 0 if gate == MARGIN_TRADING_FIRST_SLICE_EXECUTION_GATE_PASS else 1
+
+
+def run_margin_trading_first_slice(args: argparse.Namespace) -> int:
+    enforce_margin_trading_first_slice_forbidden_options(args)
+    enforce_margin_trading_first_slice_live_approval_gate(args)
+
+    if args.universe_csv == DEFAULT_UNIVERSE_CSV:
+        print(
+            f"ERROR: {MARGIN_TRADING_FIRST_SLICE_UNIVERSE_CSV_REQUIRED}",
+            file=sys.stderr,
+        )
+        return 2
+
+    if not os.path.isfile(args.universe_csv):
+        print(f"ERROR: universe not found: {args.universe_csv}", file=sys.stderr)
+        return 2
+
+    ok_root, root_err = validate_margin_trading_first_slice_output_root(
+        args.output_root
+    )
+    if not ok_root:
+        print(f"ERROR: {root_err}", file=sys.stderr)
+        return 2
+
+    universe_rows = load_margin_trading_first_slice_universe(args.universe_csv)
+    universe_issues = validate_margin_trading_first_slice_universe(universe_rows)
+    if universe_issues:
+        print(
+            "ERROR: margin_trading first-slice universe validation failed: "
+            f"{universe_issues}",
+            file=sys.stderr,
+        )
+        return 2
+
+    output_root = _normalize_output_root(args.output_root)
+    output_paths = ensure_output_layout(output_root, args.mode)
+    enforce_margin_trading_first_slice_write_block_targets(output_paths)
+
+    if args.mode == "live":
+        return execute_margin_trading_first_slice_live(universe_rows, output_paths)
+
+    dry_rows = build_margin_trading_first_slice_dryrun_rows(universe_rows, output_root)
+    report_path = write_margin_trading_first_slice_dryrun_report(
+        dry_rows, output_paths
+    )
+    summary_path = write_margin_trading_first_slice_dryrun_summary(
+        dry_rows, output_paths, args.universe_csv
+    )
+    planned_total = sum(int(r["planned_request_count"]) for r in dry_rows)
+    print(
+        f"mode=margin_trading_first_slice_dry_run cases={len(dry_rows)} "
+        f"planned_request_count_total={planned_total} cninfo_calls=0"
+    )
+    print(
+        "gate=d_class_margin_trading_first_slice_runner_extension_gate="
+        f"{MARGIN_TRADING_FIRST_SLICE_RUNNER_GATE}"
     )
     print(f"dryrun_report={report_path}")
     print(f"dryrun_summary={summary_path}")
@@ -3651,11 +4538,26 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="显式批准 known-event targeted probe live（本扩展 live 尚未实现）",
     )
+    parser.add_argument(
+        "--margin-trading-first-slice",
+        action="store_true",
+        help="启用 margin_trading 第一切片模式（仅 DMT001–DMT005）",
+    )
+    parser.add_argument(
+        "--approve-d-class-margin-trading-first-slice",
+        action="store_true",
+        help="显式批准 margin_trading first-slice live（须人工批准 · 本任务不执行 live）",
+    )
     return parser
 
 
 def main(argv: Optional[List[str]] = None) -> int:
     args = build_parser().parse_args(argv)
+
+    if args.margin_trading_first_slice:
+        if args.output_root is None:
+            args.output_root = DEFAULT_MARGIN_TRADING_FIRST_SLICE_OUTPUT_ROOT
+        return run_margin_trading_first_slice(args)
 
     if args.known_event_targeted_probe:
         if args.output_root is None:

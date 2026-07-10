@@ -1,0 +1,6 @@
+case_id,component,anchor_tdate,expected_behavior,retrieval_status,record_count,quality_status,acceptable,failure_type,cninfo_request_count,notes
+DMT001,margin_trading,2026-07-08,captured_normal_candidate,found,1,pass,yes,,1,early stop after 1 requests; found 1 row(s)
+DMT002,margin_trading,2026-07-08,captured_normal_or_empty_but_valid,found,1,pass,yes,,1,early stop after 1 requests; found 1 row(s)
+DMT003,margin_trading,2026-07-08,captured_normal_or_empty_but_valid,found,1,pass,yes,,1,early stop after 1 requests; found 1 row(s)
+DMT004,margin_trading,2026-07-08,captured_normal_or_needs_review,found,1,pass,yes,,1,early stop after 1 requests; found 1 row(s)
+DMT005,margin_trading,2026-07-08,captured_normal_or_empty_but_valid,found,1,pass,yes,,1,early stop after 1 requests; found 1 row(s)
