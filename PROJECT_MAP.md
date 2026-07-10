@@ -374,6 +374,10 @@ _最后更新：2026-07-10_
 - `lab/test_cninfo_c_class_erad_harvest_resume_audit.py` — **Era D** harvest resume 审计测试（**7/7 PASS**）
 - `outputs/validation/cninfo_c_class_erad_harvest_resume_audit/` — **Era D** Slice-C-EraD-02 审计报告根
 - `outputs/validation/cninfo_c_class_erad_harvest_resume_audit_summary.md` — **Era D** Slice-C-EraD-02 审计摘要（gate **`PASS_OFFLINE`**）
+- `outputs/validation/cninfo_c_class_erad_harvest_resume_audit_post_fix8/` — **Era D** post status-fix-8 审计报告根（**813+50**）
+- `outputs/validation/cninfo_c_class_erad_harvest_resume_audit_post_fix8_summary.md` — **Era D** post-fix8 审计摘要（gate **`PASS_OFFLINE`**）
+- `outputs/validation/cninfo_c_class_erad_harvest_resume_audit_post_fix8_delta.csv` — **Era D** post-fix8 prior/new 逐公司 delta
+- `outputs/validation/cninfo_c_class_erad_harvest_resume_audit_post_fix8_next_step_recommendation.md` — **Era D** post-fix8 下一步（**HOLD**）
 - `plans/cninfo_c_class_erad_snapshot_rebuild_readiness_plan.md` — **Era D** Slice-C-EraD-03 snapshot rebuild readiness 规划
 - `outputs/validation/cninfo_c_class_erad_snapshot_rebuild_readiness_checklist.md` — **Era D** rebuild readiness 批准清单（**NOT APPROVED**）
 - `outputs/validation/cninfo_c_class_erad_snapshot_rebuild_candidate_matrix.csv` — **Era D** rebuild 候选 cohort 矩阵
@@ -600,8 +604,8 @@ _最后更新：2026-07-10_
 - `outputs/validation/cninfo_a_class_erad_scale_200_failed_case_triage_summary.md` — Era D triage summary（gate **`PASS_OFFLINE`**）
 - `outputs/validation/cninfo_a_class_erad_scale_200_isolated_retry_universe_draft.csv` — Era D isolated retry universe（**7** cases）
 - `plans/cninfo_a_class_erad_scale_200_isolated_retry_plan.md` — Era D isolated retry plan
-- `plans/cninfo_a_class_erad_scale_200_isolated_retry_command_draft.md` — Era D isolated retry command draft（**NOT APPROVED live**）
-- `outputs/validation/cninfo_a_class_erad_scale_200_isolated_retry_approval_checklist.md` — Era D retry approval checklist
+- `plans/cninfo_a_class_erad_scale_200_isolated_retry_command_draft.md` — Era D isolated retry command draft（**executed**）
+- `outputs/validation/cninfo_a_class_erad_scale_200_isolated_retry_approval_checklist.md` — Era D retry approval checklist（**APPROVED** · live executed）
 - `outputs/validation/cninfo_a_class_erad_scale_200_failed_case_triage_next_step_recommendation.md` — Era D triage next-step
 - `outputs/validation/cninfo_a_class_erad_scale_200_isolated_retry_runner_extension_summary.md` — Era D isolated retry runner summary（**21/21 PASS** · **7/7 planned_ok**）
 - `lab/test_cninfo_a_class_erad_scale_200_isolated_retry_runner.py` — Era D isolated retry runner tests
@@ -609,6 +613,20 @@ _最后更新：2026-07-10_
 - `outputs/validation/cninfo_a_class_erad_scale_200_failed_retry/reports/a_class_erad_scale_200_failed_retry_dryrun_summary.md` — Era D failed-retry dry-run summary
 - `outputs/validation/cninfo_a_class_erad_scale_200_isolated_retry_live_path_summary.md` — Era D isolated retry live path summary（**18/18 PASS** · mock CNINFO **0**）
 - `lab/test_cninfo_a_class_erad_scale_200_isolated_retry_live_path.py` — Era D isolated retry live path tests
+- `outputs/validation/cninfo_a_class_erad_scale_200_failed_retry/reports/a_class_erad_scale_200_failed_retry_live_report.csv` — Era D failed-retry live report（**0/7 acceptable**）
+- `outputs/validation/cninfo_a_class_erad_scale_200_failed_retry/reports/a_class_erad_scale_200_failed_retry_live_quality_report.csv` — Era D failed-retry quality report
+- `outputs/validation/cninfo_a_class_erad_scale_200_failed_retry/reports/a_class_erad_scale_200_failed_retry_live_summary.md` — Era D failed-retry live summary
+- `outputs/validation/cninfo_a_class_erad_scale_200_isolated_retry_live_execution_summary.md` — Era D isolated retry live execution summary（CNINFO **21** · gate **`FAIL_REVIEW_REQUIRED`**）
+- `outputs/validation/cninfo_a_class_erad_scale_200_isolated_retry_next_step_recommendation.md` — Era D isolated retry next-step（→ commit boundary review）
+- `outputs/validation/cninfo_a_class_erad_scale_200_merge_closure_summary.md` — Era D merge closure summary（effective **192/200** · gate **`PASS_WITH_CAVEAT`**）
+- `outputs/validation/cninfo_a_class_erad_scale_200_merge_closure_decision.md` — Era D merge closure decision（track **closed with caveat**）
+- `outputs/validation/cninfo_a_class_erad_scale_200_effective_accepted_ledger.csv` — Era D effective accepted ledger（**192** rows）
+- `outputs/validation/cninfo_a_class_erad_scale_200_unresolved_final_ledger.csv` — Era D unresolved final ledger（**8** rows）
+- `plans/cninfo_a_class_erad_scale_200_commit_boundary_review.md` — Era D commit boundary review
+- `outputs/validation/cninfo_a_class_erad_scale_200_commit_boundary_summary.md` — Era D commit boundary summary（gate **`READY_FOR_COMMIT_REVIEW`**）
+- `outputs/validation/cninfo_a_class_erad_scale_200_safe_to_commit_list.md` — Era D safe-to-commit list（**~47** paths）
+- `outputs/validation/cninfo_a_class_erad_scale_200_do_not_commit_list.md` — Era D do-not-commit list
+- `outputs/validation/cninfo_a_class_erad_scale_200_commit_message_draft.md` — Era D commit message draft
 - `outputs/validation/cninfo_a_class_phase2_retry_v3_planning_summary.md` — retry v3 规划摘要（gate **READY_FOR_APPROVAL**）
 - `outputs/validation/cninfo_d_class_phase1_schema_freeze_approval_checklist.md` — Phase 1 schema freeze 人工批准检查清单
 - `outputs/validation/cninfo_d_class_phase1_schema_freeze_approval_summary.md` — Phase 1 批准摘要（gate **READY_FOR_APPROVAL**）
@@ -733,7 +751,17 @@ _最后更新：2026-07-10_
 - `outputs/validation/cninfo_d_class_margin_trading_first_slice_safe_to_commit_list.md` — margin_trading safe-to-commit 清单
 - `plans/cninfo_d_class_disclosure_schedule_first_slice_closure_review.md` — disclosure_schedule first-slice closure（commit **`d37ce0a`**）
 - `outputs/validation/cninfo_d_class_disclosure_schedule_first_slice_commit_review_summary.md` — disclosure_schedule post-commit 摘要
-- `plans/cninfo_d_class_erad_next_component_planning.md` — Era D 下一组件规划（primary **`block_trade`**）
+- `plans/cninfo_d_class_erad_next_component_planning.md` — Era D 下一组件规划 v1（primary **`block_trade`** · done）
+- `plans/cninfo_d_class_erad_next_component_planning_refresh.md` — Era D 规划刷新（primary **`restricted_shares_unlock`** · gate **READY_FOR_APPROVAL**）
+- `outputs/validation/cninfo_d_class_erad_next_component_candidate_matrix_v2.csv` — 候选矩阵 v2
+- `outputs/validation/cninfo_d_class_erad_next_component_recommendation_v2.md` — 推荐 v2
+- `outputs/validation/cninfo_d_class_erad_next_component_planning_refresh_summary.md` — 规划刷新摘要
+- `plans/cninfo_d_class_restricted_shares_unlock_first_slice_plan_draft.md` — RSU 第一切片草案（superseded）
+- `plans/cninfo_d_class_restricted_shares_unlock_first_slice_plan.md` — RSU 第一切片正式规划（gate **READY_FOR_APPROVAL**）
+- `outputs/validation/cninfo_d_class_restricted_shares_unlock_first_slice_universe_draft.csv` — RSU universe（**5** 行 · DRU001–DRU005）
+- `outputs/validation/cninfo_d_class_restricted_shares_unlock_first_slice_approval_checklist.md` — RSU 批准清单（**NOT APPROVED for live**）
+- `plans/cninfo_d_class_restricted_shares_unlock_first_slice_command_draft.md` — RSU 命令草案（**DO NOT RUN**）
+- `outputs/validation/cninfo_d_class_restricted_shares_unlock_first_slice_approval_summary.md` — RSU 批准包摘要
 - `outputs/validation/cninfo_d_class_erad_next_component_candidate_matrix.csv` — Era D 候选矩阵
 - `outputs/validation/cninfo_d_class_erad_next_component_recommendation.md` — Era D 推荐
 - `outputs/validation/cninfo_d_class_erad_next_component_planning_summary.md` — Era D 规划摘要
@@ -941,6 +969,17 @@ _最后更新：2026-07-10_
 - `outputs/validation/cninfo_b_class_erad_scale_200/reports/b_class_erad_scale_200_report.csv` — Era D live 报告（**198/200 acceptable** · CNINFO **397**）
 - `plans/cninfo_b_class_erad_scale_200_command_draft.md` — Era D 命令草案
 - `outputs/validation/cninfo_b_class_erad_scale_200_approval_checklist.md` — Era D 批准检查清单（commit complete · **NOT pushed**）
+- **Era D B-class next-scale planning** — [plan](plans/cninfo_b_class_erad_next_scale_plan.md) · [planning summary](outputs/validation/cninfo_b_class_erad_next_scale_planning_summary.md) · slice1 **+300**（BD2E201–500）· gate **`READY_FOR_APPROVAL`** · CNINFO **0**
+- `outputs/validation/cninfo_b_class_erad_next_scale_universe_strategy.md` — next-scale overlap / hold 策略
+- `outputs/validation/cninfo_b_class_erad_next_scale_request_budget.md` — request budget（est. **~460–600** · cap **≤720**）
+- `outputs/validation/cninfo_b_class_erad_next_scale_candidate_universe_draft.csv` — slice1 候选 universe（**300** rows）
+- `outputs/validation/cninfo_b_class_erad_next_scale_approval_checklist.md` — next-scale approval checklist（**NOT APPROVED**）
+- `plans/cninfo_b_class_erad_next_scale_command_draft.md` — next-scale command draft（**NOT IMPLEMENTED**）
+- `outputs/validation/cninfo_b_class_erad_next_scale_next_step_recommendation.md` — next-scale next-step
+- **Era D B-class next-scale slice1 runner** — `--erad-b-scale-500-slice1` · [runner extension summary](outputs/validation/cninfo_b_class_erad_next_scale_slice1_runner_extension_summary.md) · dry-run **300/300** · CNINFO **0** · gate **`READY_FOR_APPROVAL`**
+- `lab/test_cninfo_b_class_erad_next_scale_slice1_runner.py` — slice1 runner 测试（**14/14 PASS**）
+- `outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/b_class_erad_next_scale_slice1_dryrun_report.csv` — slice1 dry-run 报告
+- `outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/b_class_erad_next_scale_slice1_dryrun_summary.md` — slice1 dry-run 摘要
 - `plans/cninfo_b_class_phase3_100_post_commit_inventory_gap_review.md` — Phase 3 post-commit inventory gap review（gate **`READY_FOR_HUMAN_DECISION`** · primary **Option A**）
 - `outputs/validation/cninfo_b_class_phase3_100_post_commit_missing_artifact_ledger.csv` — missing artifact ledger（**185** paths）
 - `outputs/validation/cninfo_b_class_phase3_100_post_commit_gap_metrics.csv` — gap metrics
@@ -1095,7 +1134,7 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 2. **Phase 2 已收口**；**Phase 3 D 类设计**见 [registry YAML](config/cninfo_d_class_source_registry_draft.yaml) / [schema validation summary](outputs/validation/cninfo_d_class_schema_validation_summary.md)。
 3. **Phase 3 B 类**见 [validation design](plans/cninfo_b_class_validation_design.md) / [category routing](plans/cninfo_b_class_category_routing_rules.md) / [categories YAML](config/cninfo_announcement_categories.yaml) / [document seed summary](outputs/validation/cninfo_b_class_document_seed_summary.md) / [B schema validation](outputs/validation/cninfo_b_class_document_schema_validation_summary.md)。
 4. **Phase 4 C 类**见 [registry lint](outputs/validation/cninfo_c_class_registry_lint_summary.md) / [fixture validation](outputs/validation/cninfo_c_class_profile_schema_validation_summary.md) / [active 30 smoke summary](outputs/validation/cninfo_c_class_scale_smoke_30_active_summary.md) / [candidates YAML](config/cninfo_c_class_source_candidates.yaml)。
-5. **C 类** · **Era D** [local retention summary](outputs/validation/cninfo_c_class_erad_local_retention_summary.md) · gate **`PASS_OFFLINE`** · C-line **continues** · 下一步 **post-fix8 harvest audit 重跑** 或 **hold**。
+5. **C 类** · **Era D** [post-fix8 audit summary](outputs/validation/cninfo_c_class_erad_harvest_resume_audit_post_fix8_summary.md) · **813+50** · gate **`PASS_OFFLINE`** · **HOLD** live/rebuild · C-line **continues**。
 6. **A 类 Report Metadata Phase 0 规划已启动**（[planning summary](outputs/validation/cninfo_a_class_initial_planning_summary.md) · **无 CNINFO · 无 PDF**）。
 7. **A 类 Phase 1 freeze v1 已离线实现**（[implementation summary](outputs/validation/cninfo_a_class_phase1_freeze_v1_implementation_summary.md) · gate **`PASS_OFFLINE`**）。
 8. **A 类 ready-case benchmark 已完成**（[benchmark summary](outputs/validation/cninfo_a_class_phase1_ready_case_benchmark_summary.md) · **5/5 PASS** · gate **`READY_FOR_REVIEW`** · **无 CNINFO**）。
@@ -1129,7 +1168,10 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 41. **A 类 Era D ~200 isolated live 已执行**（[execution summary](outputs/validation/cninfo_a_class_erad_scale_200_execution_summary.md) · **192/200 acceptable** · CNINFO **423** · execution gate **`PASS_WITH_CAVEAT`** · **8 not_found** · **不是 verified**）。
 42. **A 类 Era D ~200 failed-case triage + isolated retry planning 已完成**（[triage summary](outputs/validation/cninfo_a_class_erad_scale_200_failed_case_triage_summary.md) · **7 retry / 1 defer** · triage gate **`PASS_OFFLINE`** · retry planning gate **`READY_FOR_APPROVAL`** · CNINFO **0** · **不是 verified**）。
 43. **A 类 Era D ~200 isolated retry runner extension + dry-run 已完成**（[runner extension summary](outputs/validation/cninfo_a_class_erad_scale_200_isolated_retry_runner_extension_summary.md) · **7/7 planned_ok** · tests **21/21 PASS** · runner gate **`READY_FOR_APPROVAL`** · CNINFO **0** · **NOT APPROVED live** · **不是 verified**）。
-44. **A 类 Era D ~200 isolated retry live path 已离线实现**（[live path summary](outputs/validation/cninfo_a_class_erad_scale_200_isolated_retry_live_path_summary.md) · live-path tests **18/18 PASS** · live path gate **`READY_FOR_APPROVAL`** · mock CNINFO **0** · **无 live 执行** · **不是 verified**）。
+44. **A 类 Era D ~200 isolated retry live path 已离线实现**（[live path summary](outputs/validation/cninfo_a_class_erad_scale_200_isolated_retry_live_path_summary.md) · live-path tests **18/18 PASS** · live path gate **`READY_FOR_APPROVAL`** · mock CNINFO **0** · **不是 verified**）。
+45. **A 类 Era D ~200 isolated retry live 已执行**（[execution summary](outputs/validation/cninfo_a_class_erad_scale_200_isolated_retry_live_execution_summary.md) · **0/7 acceptable** · recovered **0** · CNINFO **21** · execution gate **`FAIL_REVIEW_REQUIRED`** · merge effective **192/200** · AD2E146 excluded · **不是 verified**）。
+46. **A 类 Era D ~200 merge closure 已完成**（[closure summary](outputs/validation/cninfo_a_class_erad_scale_200_merge_closure_summary.md) · effective **192/200** · unresolved **8** · closure gate **`PASS_WITH_CAVEAT`** · track **closed with caveat** · CNINFO **0** · **不是 verified**）。
+47. **A 类 Era D ~200 commit boundary review 已完成**（[boundary summary](outputs/validation/cninfo_a_class_erad_scale_200_commit_boundary_summary.md) · safe **~47** · boundary gate **`READY_FOR_COMMIT_REVIEW`** · CNINFO **0** · **NOT committed** · **不是 verified**）。
 8. **B 类 Phase 1 tiny live 收口完成**（[closure summary](outputs/validation/cninfo_b_class_phase1_tiny_live_closure_summary.md) · **5/5 resolved** · **无 verified**）。
 9. **B 类 Phase 2 expansion 批准包已准备**（[approval summary](outputs/validation/cninfo_b_class_phase2_expansion_approval_summary.md) · universe draft **20** · gate **`READY_FOR_APPROVAL`** · **无 B-class live**）。
 10. **B 类 Phase 2 expansion runner 已离线准备**（[extension summary](outputs/validation/cninfo_b_class_phase2_expansion_runner_extension_summary.md) · dry-run **20/20** · test **12/12 PASS** · **无 CNINFO**）。
@@ -1189,5 +1231,7 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 53. **D 类 block_trade first-slice isolated live 已执行**（[isolated live summary](outputs/validation/cninfo_d_class_block_trade_first_slice_isolated_live_validation_summary.md) · CNINFO **5** · acceptable **4/5** · execution gate **`PASS_WITH_CAVEAT`** · caveat DBT002 · **无 commit**）。
 54. **D 类 block_trade first-slice closure review 已完成**（[closure summary](outputs/validation/cninfo_d_class_block_trade_first_slice_closure_summary.md) · **4/5** · sparse-day **5/5** · closure gate **`PASS_WITH_CAVEAT`** · CNINFO **0** · **无 commit**）。
 55. **D 类 block_trade first-slice commit boundary review 已完成**（[boundary summary](outputs/validation/cninfo_d_class_block_trade_first_slice_commit_boundary_summary.md) · safe **~27** · boundary gate **`READY_FOR_COMMIT_REVIEW`** · CNINFO **0**）。
-56. **D 类 block_trade first-slice explicit-path commit 已完成**（commit **`a12298b`** · **24 files** · [commit status](outputs/validation/cninfo_d_class_block_trade_first_slice_commit_status.md) · gate **`PASS_WITH_CAVEAT`** · DBT002 caveat retained · **无 push**）。
+56. **D 类 block_trade first-slice explicit-path commit 已完成**（commit **`403472d`** · **28 files** · [commit status](outputs/validation/cninfo_d_class_block_trade_first_slice_commit_status.md) · gate **`PASS_WITH_CAVEAT`** · DBT002 caveat retained · **无 push** · **NOT verified**）。
+57. **D 类 Era D next-component planning refresh 已完成**（[refresh summary](outputs/validation/cninfo_d_class_erad_next_component_planning_refresh_summary.md) · primary **`restricted_shares_unlock`** · runner-up **`equity_pledge`** · refresh gate **`PASS_WITH_CAVEAT`** · CNINFO **0**）。
+58. **D 类 restricted_shares_unlock first-slice approval package 已准备**（[approval summary](outputs/validation/cninfo_d_class_restricted_shares_unlock_first_slice_approval_summary.md) · universe **5** · DRU001–DRU005 · approval gate **`READY_FOR_APPROVAL`** · **NOT APPROVED for live** · **无 runner** · CNINFO **0**）。
 12. **每完成一个 Phase**：更新分层表状态 + `outputs/validation/` 留 summary；不做数据库接入。

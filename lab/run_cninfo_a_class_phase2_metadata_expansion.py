@@ -84,6 +84,27 @@ PHASE1_OUTPUT_ROOT = os.path.join(
     BASE_DIR, "outputs", "validation", "cninfo_a_class_tiny_live_metadata"
 )
 C_CLASS_HARVEST_ROOT = os.path.join(BASE_DIR, "outputs", "harvest", "cninfo_c_class")
+DEFAULT_ERAD_SCALE_200_UNIVERSE_CSV = os.path.join(
+    BASE_DIR, "outputs", "validation", "cninfo_a_class_erad_scale_200_universe_draft.csv"
+)
+DEFAULT_ERAD_SCALE_200_OUTPUT_ROOT = os.path.join(
+    BASE_DIR, "outputs", "validation", "cninfo_a_class_erad_scale_200"
+)
+DEFAULT_ERAD_FAILED_RETRY_UNIVERSE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_erad_scale_200_isolated_retry_universe_draft.csv",
+)
+DEFAULT_ERAD_FAILED_RETRY_OUTPUT_ROOT = os.path.join(
+    BASE_DIR, "outputs", "validation", "cninfo_a_class_erad_scale_200_failed_retry"
+)
+DEFAULT_A3M017_RETRY_OUTPUT_ROOT = os.path.join(
+    BASE_DIR, "outputs", "validation", "cninfo_a_class_phase3_a3m017_isolated_retry"
+)
+B_CLASS_VALIDATION_PREFIX = os.path.join(BASE_DIR, "outputs", "validation", "cninfo_b_class")
+C_CLASS_VALIDATION_PREFIX = os.path.join(BASE_DIR, "outputs", "validation", "cninfo_c_class")
+D_CLASS_VALIDATION_PREFIX = os.path.join(BASE_DIR, "outputs", "validation", "cninfo_d_class")
 
 DRYRUN_REPORT_CSV = os.path.join(
     DEFAULT_OUTPUT_ROOT, "reports", "a_class_phase2_metadata_dryrun_report.csv"
@@ -172,6 +193,85 @@ EXPECTED_REPORT_TYPE_MIX: Dict[str, int] = {
     "quarterly_report_q1": 4,
     "quarterly_report_q3": 4,
 }
+
+ERAD_SCALE_200_CASE_ID_PATTERN = re.compile(r"^AD2E\d{3}$")
+ERAD_SCALE_200_ALLOWED_CASE_IDS: Set[str] = {f"AD2E{i:03d}" for i in range(1, 201)}
+ERAD_SCALE_200_REQUIRED_UNIVERSE_SIZE = 200
+ERAD_SCALE_200_RETAINED_COUNT = 50
+ERAD_SCALE_200_NEW_COUNT = 150
+ERAD_SCALE_200_PLANNED_REQUESTS_PER_CASE = 2
+ERAD_SCALE_200_REQUEST_CAP = 480
+ERAD_SCALE_200_ACCEPTABLE_THRESHOLD = 180
+ERAD_SCALE_200_RUNNER_GATE = "READY_FOR_APPROVAL"
+ERAD_SCALE_200_LIVE_PATH_GATE = "READY_FOR_APPROVAL"
+ERAD_SCALE_200_EXECUTION_GATE_PASS = "PASS_WITH_CAVEAT"
+ERAD_SCALE_200_APPROVAL_REQUIRED = "approve_a_class_erad_scale_200_required"
+ERAD_SCALE_200_WRONG_APPROVAL = "approve_a_class_erad_scale_200_wrong_flag"
+ERAD_SCALE_200_UNIVERSE_CSV_REQUIRED = "erad_a_scale_200_universe_csv_required"
+ERAD_SCALE_200_OUTPUT_ROOT_VIOLATION = "output_root_must_be_under_cninfo_a_class_erad_scale_200"
+ERAD_SCALE_200_UNIVERSE_SIZE_VIOLATION = "erad_a_scale_200_universe_size_must_equal_200"
+ERAD_SCALE_200_INCLUDE_REQUIRED = "erad_include_must_be_yes"
+ERAD_SCALE_200_REQUEST_CAP_EXCEEDED = "erad_a_scale_200_request_cap_exceeded"
+ERAD_SCALE_200_COHORT_VIOLATION = "erad_a_scale_200_cohort_validation_failed"
+ERAD_SCALE_200_NEW_COHORT_OVERLAP = "erad_a_scale_200_new_cohort_overlap_not_allowed"
+ERAD_SCALE_200_INCOMPATIBLE_WITH_PHASE3 = "erad_a_scale_200_incompatible_with_phase3_50"
+ERAD_SCALE_200_INCOMPATIBLE_WITH_RETRY = "erad_a_scale_200_incompatible_with_retry_modes"
+ERAD_SCALE_200_REPORT_TYPE_MIX_VIOLATION = "erad_a_scale_200_report_type_mix_violation"
+ERAD_SCALE_200_EXPECTED_REPORT_TYPE_MIX: Dict[str, int] = {
+    "annual_report": 140,
+    "semi_annual_report": 20,
+    "quarterly_report_q1": 20,
+    "quarterly_report_q3": 20,
+}
+
+ERAD_FAILED_RETRY_REQUIRED_UNIVERSE_SIZE = 7
+ERAD_FAILED_RETRY_ALLOWED_CASE_IDS: Set[str] = {
+    "AD2E066",
+    "AD2E088",
+    "AD2E119",
+    "AD2E121",
+    "AD2E122",
+    "AD2E185",
+    "AD2E190",
+}
+ERAD_FAILED_RETRY_DEFERRED_CASE_ID = "AD2E146"
+ERAD_FAILED_RETRY_PLANNED_REQUESTS_PER_CASE = 2
+ERAD_FAILED_RETRY_REQUEST_CAP = 24
+ERAD_FAILED_RETRY_ACCEPTABLE_THRESHOLD = 6
+ERAD_FAILED_RETRY_RUNNER_GATE = "READY_FOR_APPROVAL"
+ERAD_FAILED_RETRY_LIVE_PATH_GATE = "READY_FOR_APPROVAL"
+ERAD_FAILED_RETRY_EXECUTION_GATE_PASS = "PASS_WITH_CAVEAT"
+ERAD_FAILED_RETRY_APPROVAL_REQUIRED = "approve_a_class_erad_scale_200_failed_retry_required"
+ERAD_FAILED_RETRY_WRONG_APPROVAL = "approve_a_class_erad_scale_200_failed_retry_wrong_flag"
+ERAD_FAILED_RETRY_UNIVERSE_CSV_REQUIRED = "erad_a_scale_200_failed_retry_universe_csv_required"
+ERAD_FAILED_RETRY_OUTPUT_ROOT_VIOLATION = (
+    "output_root_must_be_under_cninfo_a_class_erad_scale_200_failed_retry"
+)
+ERAD_FAILED_RETRY_UNIVERSE_SIZE_VIOLATION = "erad_a_scale_200_failed_retry_universe_size_must_equal_7"
+ERAD_FAILED_RETRY_INCLUDE_REQUIRED = "retry_include_must_be_yes"
+ERAD_FAILED_RETRY_DEFERRED_CASE_REJECTED = "ad2e146_deferred_case_not_allowed_in_retry_universe"
+ERAD_FAILED_RETRY_NON_RETRY_CASE_REJECTED = "non_erad_failed_retry_case_not_allowed"
+ERAD_FAILED_RETRY_INCOMPATIBLE_WITH_ERAD_MAIN = "erad_a_scale_200_failed_retry_incompatible_with_erad_main"
+ERAD_FAILED_RETRY_INCOMPATIBLE_WITH_OTHER_MODES = "erad_a_scale_200_failed_retry_incompatible_with_other_modes"
+ERAD_FAILED_RETRY_MAIN_ERAD_ROOT_FORBIDDEN = "erad_scale_200_main_live_root_write_forbidden"
+ERAD_FAILED_RETRY_REQUEST_CAP_EXCEEDED = "erad_a_scale_200_failed_retry_request_cap_exceeded"
+ERAD_FAILED_RETRY_UNIVERSE_CASE_SET_VIOLATION = "erad_failed_retry_universe_case_set_must_match_allowed_7"
+ERAD_FAILED_RETRY_COHORT_VIOLATION = "erad_failed_retry_cohort_must_be_new_erad"
+ERAD_FAILED_RETRY_DRYRUN_COLUMNS = [
+    "case_id", "company_code", "company_name", "market", "report_type", "expected_period",
+    "cohort", "original_failure_class", "likely_cause", "retry_strategy", "retry_include",
+    "planned_source", "planned_endpoint", "planned_output_root",
+    "pdf_download", "pdf_parse", "ocr", "extraction", "db_write", "minio_write", "rag_run",
+    "cninfo_call_planned", "planned_request_count_case", "dryrun_status", "notes",
+]
+ERAD_SCALE_200_DRYRUN_COLUMNS = [
+    "case_id", "company_code", "company_name", "market", "report_type", "expected_period",
+    "cohort", "phase3_source_case_id", "erad_include", "phase1_overlap", "phase2_overlap",
+    "phase3_overlap", "planned_source", "planned_endpoint", "planned_output_root",
+    "pdf_download", "pdf_parse", "ocr", "extraction", "db_write", "minio_write", "rag_run",
+    "cninfo_call_planned", "planned_request_count_case", "dryrun_status", "notes",
+]
+
 PHASE3_EXPECTED_REPORT_TYPE_MIX: Dict[str, int] = {
     "annual_report": 20,
     "semi_annual_report": 10,
@@ -424,6 +524,27 @@ LIVE_QUALITY_COLUMNS = [
     "notes",
 ]
 
+ERAD_SCALE_200_LIVE_REPORT_COLUMNS = LIVE_REPORT_COLUMNS + [
+    "cohort",
+    "phase3_source_case_id",
+]
+ERAD_SCALE_200_LIVE_QUALITY_COLUMNS = LIVE_QUALITY_COLUMNS + [
+    "cohort",
+    "phase3_source_case_id",
+]
+
+ERAD_FAILED_RETRY_LIVE_REPORT_COLUMNS = LIVE_REPORT_COLUMNS + [
+    "cohort",
+    "original_failure_class",
+    "likely_cause",
+    "retry_strategy",
+]
+ERAD_FAILED_RETRY_LIVE_QUALITY_COLUMNS = LIVE_QUALITY_COLUMNS + [
+    "cohort",
+    "likely_cause",
+    "retry_strategy",
+]
+
 RETRY_DRYRUN_COLUMNS = [
     "case_id",
     "company_code",
@@ -604,6 +725,46 @@ class Phase3UniverseCase:
     phase2_overlap: str
     phase3_include: str
     reason: str
+
+
+@dataclass
+class EraDFailedRetryUniverseCase:
+    case_id: str
+    company_code: str
+    company_name: str
+    market: str
+    report_type: str
+    expected_period: str
+    expected_title_keywords: str
+    excluded_title_keywords: str
+    cohort: str
+    original_failure_class: str
+    likely_cause: str
+    retry_include: str
+    retry_strategy: str
+    notes: str
+
+
+@dataclass
+class EraDScale200UniverseCase:
+    case_id: str
+    company_code: str
+    company_name: str
+    market: str
+    report_type: str
+    expected_period: str
+    expected_title_keywords: str
+    excluded_title_keywords: str
+    cohort: str
+    phase3_source_case_id: str
+    erad_include: str
+    phase1_overlap: str
+    phase2_overlap: str
+    phase3_overlap: str
+    prior_a_phase_overlap: str
+    selection_bucket: str
+    risk_level: str
+    notes: str
 
 
 @dataclass
@@ -3100,6 +3261,1068 @@ def write_phase3_live_summary(
     return summary_path
 
 
+
+def _is_under_prefix(root: str, prefix: str) -> bool:
+    p = _normalize_output_root(prefix)
+    return root == p or root.startswith(p + os.sep)
+
+
+def validate_erad_scale_200_output_root(output_root: str) -> Tuple[bool, str]:
+    root = _normalize_output_root(output_root)
+    allowed = _normalize_output_root(DEFAULT_ERAD_SCALE_200_OUTPUT_ROOT)
+    blocked = (
+        (PHASE1_OUTPUT_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
+        (DEFAULT_OUTPUT_ROOT, PHASE2_EXPANSION_WRITE_FORBIDDEN),
+        (DEFAULT_RETRY_OUTPUT_ROOT, RETRY_V1_WRITE_FORBIDDEN),
+        (DEFAULT_RETRY_V2_OUTPUT_ROOT, RETRY_V2_WRITE_FORBIDDEN),
+        (DEFAULT_RETRY_V3_OUTPUT_ROOT, RETRY_V3_OUTPUT_ROOT_VIOLATION),
+        (PRECHECK_OUTPUT_ROOT, PRECHECK_WRITE_FORBIDDEN),
+        (DEFAULT_PHASE3_OUTPUT_ROOT, PHASE3_OUTPUT_ROOT_VIOLATION),
+        (DEFAULT_A3M017_RETRY_OUTPUT_ROOT, "a3m017_isolated_retry_output_root_forbidden"),
+        (C_CLASS_HARVEST_ROOT, "c_class_harvest_output_root_forbidden"),
+        (B_CLASS_VALIDATION_PREFIX, "b_class_validation_output_root_forbidden"),
+        (C_CLASS_VALIDATION_PREFIX, "c_class_validation_output_root_forbidden"),
+        (D_CLASS_VALIDATION_PREFIX, "d_class_validation_output_root_forbidden"),
+    )
+    for path, err in blocked:
+        p = _normalize_output_root(path)
+        if root == p or root.startswith(p + os.sep):
+            return False, err
+    if root == allowed or root.startswith(allowed + os.sep):
+        return True, ""
+    return False, ERAD_SCALE_200_OUTPUT_ROOT_VIOLATION
+
+
+def load_erad_scale_200_universe(path: str) -> List[EraDScale200UniverseCase]:
+    cases: List[EraDScale200UniverseCase] = []
+    with open(path, newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            cases.append(
+                EraDScale200UniverseCase(
+                    case_id=str(row.get("case_id", "")).strip(),
+                    company_code=str(row.get("company_code", "")).strip(),
+                    company_name=str(row.get("company_name", "")).strip(),
+                    market=str(row.get("market", "")).strip(),
+                    report_type=str(row.get("report_type", "")).strip(),
+                    expected_period=str(row.get("expected_period", "")).strip(),
+                    expected_title_keywords=str(row.get("expected_title_keywords", "")).strip(),
+                    excluded_title_keywords=str(row.get("excluded_title_keywords", "")).strip(),
+                    cohort=str(row.get("cohort", "")).strip(),
+                    phase3_source_case_id=str(row.get("phase3_source_case_id", "")).strip(),
+                    erad_include=str(row.get("erad_include", "")).strip().lower(),
+                    phase1_overlap=str(row.get("phase1_overlap", "")).strip().lower(),
+                    phase2_overlap=str(row.get("phase2_overlap", "")).strip().lower(),
+                    phase3_overlap=str(row.get("phase3_overlap", "")).strip().lower(),
+                    prior_a_phase_overlap=str(row.get("prior_a_phase_overlap", "")).strip().lower(),
+                    selection_bucket=str(row.get("selection_bucket", "")).strip(),
+                    risk_level=str(row.get("risk_level", "")).strip(),
+                    notes=str(row.get("notes", "")).strip(),
+                )
+            )
+    return cases
+
+
+def erad_to_phase2_case(case: EraDScale200UniverseCase) -> Phase2UniverseCase:
+    return Phase2UniverseCase(
+        case_id=case.case_id,
+        company_code=case.company_code,
+        company_name=case.company_name,
+        market=case.market,
+        report_type=case.report_type,
+        expected_period=case.expected_period,
+        expected_title_keywords=case.expected_title_keywords,
+        excluded_title_keywords=case.excluded_title_keywords,
+        risk_level=case.risk_level or "medium",
+        phase1_overlap=case.phase1_overlap,
+        phase2_include="yes",
+        reason=case.notes,
+    )
+
+
+def validate_erad_scale_200_case(case: EraDScale200UniverseCase) -> List[str]:
+    issues: List[str] = []
+    if not ERAD_SCALE_200_CASE_ID_PATTERN.match(case.case_id or ""):
+        issues.append("non_ad2e_case_not_allowed")
+    if case.case_id not in ERAD_SCALE_200_ALLOWED_CASE_IDS:
+        issues.append("non_ad2e_case_not_allowed")
+    if case.erad_include != "yes":
+        issues.append(ERAD_SCALE_200_INCLUDE_REQUIRED)
+    if case.report_type not in tiny_live.VALID_REPORT_TYPES:
+        issues.append(f"invalid_report_type:{case.report_type}")
+    if not case.expected_period:
+        issues.append("expected_period_missing")
+    if case.cohort == "retained_phase3":
+        if case.phase3_overlap not in ("yes",):
+            issues.append(f"{ERAD_SCALE_200_COHORT_VIOLATION}:retained_missing_phase3_overlap")
+        if not case.phase3_source_case_id:
+            issues.append(f"{ERAD_SCALE_200_COHORT_VIOLATION}:retained_missing_phase3_source_case_id")
+    elif case.cohort == "new_erad":
+        if case.phase1_overlap not in ("", "no") or case.company_code in PHASE1_COMPANY_CODES:
+            issues.append(ERAD_SCALE_200_NEW_COHORT_OVERLAP)
+        if case.phase2_overlap not in ("", "no") or case.company_code in PHASE2_EXCLUDED_COMPANY_CODES:
+            issues.append(ERAD_SCALE_200_NEW_COHORT_OVERLAP)
+        if case.phase3_overlap not in ("", "no"):
+            issues.append(ERAD_SCALE_200_NEW_COHORT_OVERLAP)
+    else:
+        issues.append(f"{ERAD_SCALE_200_COHORT_VIOLATION}:unknown_cohort")
+    issues.extend(validate_universe_code_name(erad_to_phase2_case(case)))
+    return issues
+
+
+def validate_erad_scale_200_universe_size(cases: List[EraDScale200UniverseCase]) -> Tuple[bool, str]:
+    included = [c for c in cases if c.erad_include == "yes"]
+    if len(included) != ERAD_SCALE_200_REQUIRED_UNIVERSE_SIZE:
+        return False, f"{ERAD_SCALE_200_UNIVERSE_SIZE_VIOLATION}: got {len(included)} expected {ERAD_SCALE_200_REQUIRED_UNIVERSE_SIZE}"
+    return True, ""
+
+
+def validate_erad_scale_200_report_type_mix(cases: List[EraDScale200UniverseCase]) -> Tuple[bool, str]:
+    counts: Dict[str, int] = {}
+    for case in cases:
+        if case.erad_include != "yes":
+            continue
+        counts[case.report_type] = counts.get(case.report_type, 0) + 1
+    for report_type, expected in ERAD_SCALE_200_EXPECTED_REPORT_TYPE_MIX.items():
+        if counts.get(report_type, 0) != expected:
+            return False, f"{ERAD_SCALE_200_REPORT_TYPE_MIX_VIOLATION}: {report_type}={counts.get(report_type, 0)} expected {expected}"
+    return True, ""
+
+
+def validate_erad_scale_200_duplicate_company_codes(cases: List[EraDScale200UniverseCase]) -> Tuple[bool, str]:
+    seen: Set[str] = set()
+    for case in cases:
+        if case.erad_include != "yes":
+            continue
+        if case.company_code in seen:
+            return False, f"{DUPLICATE_COMPANY_CODE_REJECTED}:{case.company_code}"
+        seen.add(case.company_code)
+    return True, ""
+
+
+def validate_erad_scale_200_cohort_counts(cases: List[EraDScale200UniverseCase]) -> Tuple[bool, str]:
+    retained = sum(1 for c in cases if c.erad_include == "yes" and c.cohort == "retained_phase3")
+    new = sum(1 for c in cases if c.erad_include == "yes" and c.cohort == "new_erad")
+    if retained != ERAD_SCALE_200_RETAINED_COUNT or new != ERAD_SCALE_200_NEW_COUNT:
+        return False, f"{ERAD_SCALE_200_COHORT_VIOLATION}: retained={retained} new={new}"
+    return True, ""
+
+
+def validate_erad_scale_200_new_cohort_overlap(cases: List[EraDScale200UniverseCase]) -> Tuple[bool, str]:
+    for case in cases:
+        if case.erad_include != "yes" or case.cohort != "new_erad":
+            continue
+        if case.phase1_overlap not in ("", "no") or case.phase2_overlap not in ("", "no") or case.phase3_overlap not in ("", "no"):
+            return False, ERAD_SCALE_200_NEW_COHORT_OVERLAP
+        if case.company_code in PHASE1_COMPANY_CODES or case.company_code in PHASE2_EXCLUDED_COMPANY_CODES:
+            return False, ERAD_SCALE_200_NEW_COHORT_OVERLAP
+    return True, ""
+
+
+def validate_erad_scale_200_request_cap(case_count: int) -> Tuple[bool, str]:
+    planned = case_count * ERAD_SCALE_200_PLANNED_REQUESTS_PER_CASE
+    if planned > ERAD_SCALE_200_REQUEST_CAP:
+        return False, f"{ERAD_SCALE_200_REQUEST_CAP_EXCEEDED}: planned={planned} cap={ERAD_SCALE_200_REQUEST_CAP}"
+    return True, ""
+
+
+def enforce_erad_scale_200_approval_gate(args: argparse.Namespace) -> None:
+    wrong = (
+        (args.approve_a_class_phase2_metadata_expansion, ERAD_SCALE_200_WRONG_APPROVAL),
+        (args.approve_a_class_phase2_failed_retry, ERAD_SCALE_200_WRONG_APPROVAL),
+        (args.approve_a_class_phase2_network_recovery_retry_v2, ERAD_SCALE_200_WRONG_APPROVAL),
+        (args.approve_a_class_phase2_retry_v3, ERAD_SCALE_200_WRONG_APPROVAL),
+        (getattr(args, "approve_a_class_phase3_50_company_expansion", False), ERAD_SCALE_200_WRONG_APPROVAL),
+        (getattr(args, "approve_a_class_phase3_a3m017_isolated_retry", False), ERAD_SCALE_200_WRONG_APPROVAL),
+        (args.approve_a_class_tiny_live_metadata, ERAD_SCALE_200_WRONG_APPROVAL),
+        (args.approve_phase1_tiny_live_metadata, ERAD_SCALE_200_WRONG_APPROVAL),
+    )
+    for enabled, code in wrong:
+        if enabled:
+            print(f"ERROR: {code}", file=sys.stderr)
+            sys.exit(2)
+    if args.mode == "live" and not getattr(args, "approve_a_class_erad_scale_200", False):
+        print(f"ERROR: {ERAD_SCALE_200_APPROVAL_REQUIRED}", file=sys.stderr)
+        sys.exit(2)
+
+
+def build_erad_scale_200_dryrun_row(case: EraDScale200UniverseCase, issues: List[str], output_root: str) -> Dict[str, str]:
+    source_id = REPORT_TYPE_SOURCE_ID.get(case.report_type, "unknown_source")
+    status = "planned_ok" if not issues else "universe_invalid"
+    cohort_note = "retained_phase3_lineage_only_no_phase3_root_write" if case.cohort == "retained_phase3" else "new_erad_cohort"
+    notes = (
+        f"erad-a-scale-200 dry-run; CNINFO not called; metadata only; matching_logic={MATCHING_LOGIC_VERSION}; "
+        f"planned_requests={ERAD_SCALE_200_PLANNED_REQUESTS_PER_CASE}; {cohort_note}"
+        if not issues else "; ".join(issues)
+    )
+    return {
+        "case_id": case.case_id,
+        "company_code": case.company_code,
+        "company_name": case.company_name,
+        "market": case.market,
+        "report_type": case.report_type,
+        "expected_period": case.expected_period,
+        "cohort": case.cohort,
+        "phase3_source_case_id": case.phase3_source_case_id,
+        "erad_include": case.erad_include,
+        "phase1_overlap": case.phase1_overlap,
+        "phase2_overlap": case.phase2_overlap,
+        "phase3_overlap": case.phase3_overlap,
+        "planned_source": source_id,
+        "planned_endpoint": planned_endpoints_for_case(erad_to_phase2_case(case)),
+        "planned_output_root": output_root,
+        "pdf_download": "0",
+        "pdf_parse": "0",
+        "ocr": "0",
+        "extraction": "0",
+        "db_write": "0",
+        "minio_write": "0",
+        "rag_run": "0",
+        "cninfo_call_planned": "0",
+        "planned_request_count_case": str(ERAD_SCALE_200_PLANNED_REQUESTS_PER_CASE),
+        "dryrun_status": status,
+        "notes": notes,
+    }
+
+
+def process_erad_scale_200_dry_run(cases: List[EraDScale200UniverseCase], output_root: str) -> Tuple[List[Dict[str, str]], List[str]]:
+    rows: List[Dict[str, str]] = []
+    universe_issues: List[str] = []
+    for case in cases:
+        if case.erad_include != "yes":
+            continue
+        issues = validate_erad_scale_200_case(case)
+        if issues:
+            universe_issues.append(f"{case.case_id}:{';'.join(issues)}")
+        rows.append(build_erad_scale_200_dryrun_row(case, issues, output_root))
+    return rows, universe_issues
+
+
+def write_erad_scale_200_dryrun_report(rows: List[Dict[str, str]], output_paths: Dict[str, str]) -> str:
+    report_path = os.path.join(output_paths["reports"], "a_class_erad_scale_200_dryrun_report.csv")
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=ERAD_SCALE_200_DRYRUN_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_erad_scale_200_dryrun_summary(
+    rows: List[Dict[str, str]],
+    output_paths: Dict[str, str],
+    universe_issues: List[str],
+    report_type_mix: Dict[str, int],
+    retained_count: int,
+    new_count: int,
+) -> str:
+    planned_ok = sum(1 for row in rows if row["dryrun_status"] == "planned_ok")
+    total = len(rows)
+    planned_requests = total * ERAD_SCALE_200_PLANNED_REQUESTS_PER_CASE
+    mix_line = " / ".join(f"{k}={v}" for k, v in sorted(report_type_mix.items()))
+    lines = [
+        "# CNINFO A 类 Era D ~200 Metadata Expansion — Dry-run 摘要",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** Era D runner dry-run · **无 CNINFO** · **无 live** · **无 PDF**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        "| mode | erad_a_scale_200_dry_run |",
+        f"| universe size | {total} |",
+        f"| planned_ok | {planned_ok} |",
+        f"| retained_phase3 | {retained_count} |",
+        f"| new_erad | {new_count} |",
+        f"| report-type mix | {mix_line} |",
+        f"| planned_requests_total | {planned_requests} (cap ≤ {ERAD_SCALE_200_REQUEST_CAP}) |",
+        f"| matching_logic | **{MATCHING_LOGIC_VERSION}** |",
+        "| CNINFO calls | **0** |",
+        "",
+        "## Retained cohort note",
+        "",
+        "Retained 50 cases reference Phase 3 post-retry effective lineage via `phase3_source_case_id`. "
+        "Dry-run writes **only** under Era D root; **does not rewrite** Phase 3 expansion or A3M017 retry production roots.",
+        "",
+        "## Safety",
+        "",
+        "- metadata only: **yes**",
+        f"- output isolation: `{output_paths['root']}`",
+        "- Phase 1/2/Phase3/A3M017/B/C/D roots untouched: **yes**",
+        "- verified: **no**",
+        "- production_ready: **no**",
+        "",
+        "## Gate",
+        "",
+        "```text",
+        f"a_class_erad_scale_200_runner_extension_gate = {ERAD_SCALE_200_RUNNER_GATE}",
+        "```",
+        "",
+        "**不是 PASS** · **不是 live_ready** · **不是 verified** · **Approval status: NOT_APPROVED**",
+        "",
+    ]
+    if universe_issues:
+        lines.extend(["## Universe issues", ""] + [f"- {item}" for item in universe_issues] + [""])
+    summary_path = os.path.join(output_paths["reports"], "a_class_erad_scale_200_dryrun_summary.md")
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+    return summary_path
+
+
+def build_erad_scale_200_live_report_row(
+    case: EraDScale200UniverseCase,
+    record: Dict[str, Any],
+    cninfo_request_count: int,
+) -> Dict[str, str]:
+    row = build_live_report_row(erad_to_phase2_case(case), record, cninfo_request_count)
+    cohort_note = (
+        "retained_phase3_lineage_only_no_phase3_root_write"
+        if case.cohort == "retained_phase3"
+        else "new_erad_cohort"
+    )
+    phase3_ref = ""
+    if case.cohort == "retained_phase3" and case.phase3_source_case_id:
+        phase3_ref = f"phase3_source={case.phase3_source_case_id}; "
+    notes = str(record.get("notes") or "")
+    row["notes"] = (
+        f"erad-a-scale-200 live; matching_logic={MATCHING_LOGIC_VERSION}; "
+        f"PDF not downloaded; {phase3_ref}{cohort_note}; {notes}"
+    ).strip()
+    row["cohort"] = case.cohort
+    row["phase3_source_case_id"] = case.phase3_source_case_id
+    return row
+
+
+def is_erad_scale_200_case_acceptable(row: Dict[str, str]) -> bool:
+    if row.get("pdf_downloaded") not in ("0", "no", ""):
+        return False
+    if row.get("pdf_parsed") not in ("0", "no", ""):
+        return False
+    status = row.get("retrieval_status", "")
+    quality = row.get("quality_status", "")
+    lineage = row.get("lineage_status", "")
+    if status in ("network_error", "not_found", "universe_invalid"):
+        return False
+    if status == "found":
+        return True
+    if status in ("discovered", "matching_pass"):
+        return True
+    if lineage == "discovered":
+        return True
+    if status == "needs_review" or quality == "needs_review":
+        return bool(lineage)
+    return False
+
+
+def compute_erad_scale_200_execution_gate(
+    stats: tiny_live.LiveStats,
+    rows: List[Dict[str, str]],
+    universe_issues: List[str],
+    case_count: int,
+) -> str:
+    if has_red_line_violation(stats, rows):
+        return "FAIL_REVIEW_REQUIRED"
+    if universe_issues or case_count != ERAD_SCALE_200_REQUIRED_UNIVERSE_SIZE:
+        return "FAIL_REVIEW_REQUIRED"
+    if stats.cninfo_requests > ERAD_SCALE_200_REQUEST_CAP:
+        return "FAIL_REVIEW_REQUIRED"
+    acceptable_count = sum(1 for row in rows if is_erad_scale_200_case_acceptable(row))
+    if acceptable_count >= ERAD_SCALE_200_ACCEPTABLE_THRESHOLD:
+        return ERAD_SCALE_200_EXECUTION_GATE_PASS
+    return "FAIL_REVIEW_REQUIRED"
+
+
+def process_erad_scale_200_live(
+    cases: List[EraDScale200UniverseCase],
+    output_paths: Dict[str, str],
+    stats: tiny_live.LiveStats,
+) -> Tuple[List[Dict[str, str]], List[str]]:
+    rows: List[Dict[str, str]] = []
+    universe_issues: List[str] = []
+    for case in cases:
+        if case.erad_include != "yes":
+            continue
+        issues = validate_erad_scale_200_case(case)
+        if issues:
+            universe_issues.append(f"{case.case_id}:{';'.join(issues)}")
+            rows.append(
+                build_erad_scale_200_live_report_row(
+                    case,
+                    {
+                        "retrieval_status": "universe_invalid",
+                        "quality_status": "blocked",
+                        "lineage_status": "needs_review",
+                        "announcement_id": "",
+                        "announcement_title": "",
+                        "announcement_time": "",
+                        "title_match_status": "fail",
+                        "period_match_status": "fail",
+                        "pdf_url_present": "no",
+                        "adjunct_url_present": "no",
+                        "notes": "; ".join(issues),
+                    },
+                    0,
+                )
+            )
+            stats.failure_count += 1
+            continue
+
+        tl_case = to_tiny_live_case(erad_to_phase2_case(case))
+        before_requests = stats.cninfo_requests
+        record = tiny_live.execute_live_case(tl_case, stats)
+        case_cninfo_requests = stats.cninfo_requests - before_requests
+        live_row = build_erad_scale_200_live_report_row(case, record, case_cninfo_requests)
+        snapshot_path = os.path.join(output_paths["raw_metadata"], f"{case.case_id}.json")
+        with open(snapshot_path, "w", encoding="utf-8") as f:
+            json.dump(
+                {
+                    "case": case.__dict__,
+                    "mode": "erad_a_scale_200_live",
+                    "cohort": case.cohort,
+                    "phase3_source_case_id": case.phase3_source_case_id,
+                    "cninfo_called": True,
+                    "cninfo_request_count": case_cninfo_requests,
+                    "pdf_download_enabled": False,
+                    "pdf_parse_enabled": False,
+                    "matching_logic": MATCHING_LOGIC_VERSION,
+                    "record": live_row,
+                    "raw_announcement": record.get("_raw_announcement"),
+                    "org_id": record.get("_org_id"),
+                },
+                f,
+                ensure_ascii=False,
+                indent=2,
+            )
+        rows.append(live_row)
+        print(
+            f"case_id={case.case_id} cohort={case.cohort} company_code={case.company_code} "
+            f"retrieval_status={live_row['retrieval_status']} "
+            f"quality={live_row.get('quality_status', 'n/a')}",
+            flush=True,
+        )
+    return rows, universe_issues
+
+
+def write_erad_scale_200_live_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "a_class_erad_scale_200_live_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=ERAD_SCALE_200_LIVE_REPORT_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_erad_scale_200_live_quality_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "a_class_erad_scale_200_live_quality_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=ERAD_SCALE_200_LIVE_QUALITY_COLUMNS)
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({k: row.get(k, "") for k in ERAD_SCALE_200_LIVE_QUALITY_COLUMNS})
+    return report_path
+
+
+def write_erad_scale_200_live_summary(
+    output_paths: Dict[str, str],
+    stats: tiny_live.LiveStats,
+    rows: List[Dict[str, str]],
+    universe_issues: List[str],
+    gate: str,
+    retained_count: int,
+    new_count: int,
+) -> str:
+    acceptable_count = sum(1 for row in rows if is_erad_scale_200_case_acceptable(row))
+    failed_count = sum(
+        1
+        for row in rows
+        if row.get("retrieval_status")
+        in ("network_error", "not_found", "universe_invalid")
+    )
+    needs_review_count = sum(
+        1 for row in rows if row.get("quality_status") == "needs_review"
+    )
+    lines = [
+        "# CNINFO A 类 Era D ~200 Metadata Expansion — Live 执行摘要",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** Era D live metadata validation · **200 cases** · **无 PDF** · **不是 verified**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        "| mode | erad_a_scale_200_live |",
+        f"| universe size | {len(rows)} |",
+        f"| acceptable | {acceptable_count} |",
+        f"| failed | {failed_count} |",
+        f"| needs_review | {needs_review_count} |",
+        f"| retained_phase3 | {retained_count} |",
+        f"| new_erad | {new_count} |",
+        f"| CNINFO requests | {stats.cninfo_requests} (cap ≤ {ERAD_SCALE_200_REQUEST_CAP}) |",
+        f"| matching_logic | **{MATCHING_LOGIC_VERSION}** |",
+        f"| execution gate | `{gate}` |",
+        "",
+        "## Retained cohort note",
+        "",
+        "Retained 50 cases reference Phase 3 post-retry effective lineage via `phase3_source_case_id`. "
+        "Live writes **only** under Era D root; **does not rewrite** Phase 3 expansion or A3M017 retry production roots.",
+        "",
+        "## Safety",
+        "",
+        "- metadata only: **yes**",
+        f"- output isolation: `{output_paths['root']}`",
+        "- Phase 1/2/Phase3/A3M017/B/C/D roots untouched: **yes**",
+        "- verified: **no**",
+        "- production_ready: **no**",
+        "",
+        "## Gate",
+        "",
+        "```text",
+        f"a_class_erad_scale_200_live_path_gate = {ERAD_SCALE_200_LIVE_PATH_GATE}",
+        "```",
+        "",
+        "**不是 PASS** · **不是 live_ready** · **不是 verified** · **Approval status: NOT_APPROVED**",
+        "",
+    ]
+    if universe_issues:
+        lines.extend(["## Universe issues", ""] + [f"- {item}" for item in universe_issues] + [""])
+    summary_path = os.path.join(
+        output_paths["reports"], "a_class_erad_scale_200_live_summary.md"
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+    return summary_path
+
+
+def validate_erad_failed_retry_output_root(output_root: str) -> Tuple[bool, str]:
+    root = _normalize_output_root(output_root)
+    allowed = _normalize_output_root(DEFAULT_ERAD_FAILED_RETRY_OUTPUT_ROOT)
+    blocked = (
+        (PHASE1_OUTPUT_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
+        (DEFAULT_OUTPUT_ROOT, PHASE2_EXPANSION_WRITE_FORBIDDEN),
+        (DEFAULT_RETRY_OUTPUT_ROOT, RETRY_V1_WRITE_FORBIDDEN),
+        (DEFAULT_RETRY_V2_OUTPUT_ROOT, RETRY_V2_WRITE_FORBIDDEN),
+        (DEFAULT_RETRY_V3_OUTPUT_ROOT, RETRY_V3_OUTPUT_ROOT_VIOLATION),
+        (PRECHECK_OUTPUT_ROOT, PRECHECK_WRITE_FORBIDDEN),
+        (DEFAULT_PHASE3_OUTPUT_ROOT, PHASE3_OUTPUT_ROOT_VIOLATION),
+        (DEFAULT_A3M017_RETRY_OUTPUT_ROOT, "a3m017_isolated_retry_output_root_forbidden"),
+        (DEFAULT_ERAD_SCALE_200_OUTPUT_ROOT, ERAD_FAILED_RETRY_MAIN_ERAD_ROOT_FORBIDDEN),
+        (C_CLASS_HARVEST_ROOT, "c_class_harvest_output_root_forbidden"),
+        (B_CLASS_VALIDATION_PREFIX, "b_class_validation_output_root_forbidden"),
+        (C_CLASS_VALIDATION_PREFIX, "c_class_validation_output_root_forbidden"),
+        (D_CLASS_VALIDATION_PREFIX, "d_class_validation_output_root_forbidden"),
+    )
+    for path, err in blocked:
+        p = _normalize_output_root(path)
+        if root == p or root.startswith(p + os.sep):
+            return False, err
+    if root == allowed or root.startswith(allowed + os.sep):
+        return True, ""
+    return False, ERAD_FAILED_RETRY_OUTPUT_ROOT_VIOLATION
+
+
+def load_erad_failed_retry_universe(path: str) -> List[EraDFailedRetryUniverseCase]:
+    cases: List[EraDFailedRetryUniverseCase] = []
+    with open(path, newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            cases.append(
+                EraDFailedRetryUniverseCase(
+                    case_id=str(row.get("case_id", "")).strip(),
+                    company_code=str(row.get("company_code", "")).strip(),
+                    company_name=str(row.get("company_name", "")).strip(),
+                    market=str(row.get("market", "")).strip(),
+                    report_type=str(row.get("report_type", "")).strip(),
+                    expected_period=str(row.get("expected_period", "")).strip(),
+                    expected_title_keywords=str(row.get("expected_title_keywords", "")).strip(),
+                    excluded_title_keywords=str(row.get("excluded_title_keywords", "")).strip(),
+                    cohort=str(row.get("cohort", "")).strip(),
+                    original_failure_class=str(row.get("original_failure_class", "")).strip(),
+                    likely_cause=str(row.get("likely_cause", "")).strip(),
+                    retry_include=str(row.get("retry_include", "")).strip().lower(),
+                    retry_strategy=str(row.get("retry_strategy", "")).strip(),
+                    notes=str(row.get("notes", "")).strip(),
+                )
+            )
+    return cases
+
+
+def failed_retry_to_phase2_case(case: EraDFailedRetryUniverseCase) -> Phase2UniverseCase:
+    return Phase2UniverseCase(
+        case_id=case.case_id,
+        company_code=case.company_code,
+        company_name=case.company_name,
+        market=case.market,
+        report_type=case.report_type,
+        expected_period=case.expected_period,
+        expected_title_keywords=case.expected_title_keywords,
+        excluded_title_keywords=case.excluded_title_keywords,
+        risk_level="medium",
+        phase1_overlap="no",
+        phase2_include="yes",
+        reason=case.notes,
+    )
+
+
+def validate_erad_failed_retry_case(case: EraDFailedRetryUniverseCase) -> List[str]:
+    issues: List[str] = []
+    if case.case_id == ERAD_FAILED_RETRY_DEFERRED_CASE_ID:
+        issues.append(ERAD_FAILED_RETRY_DEFERRED_CASE_REJECTED)
+    if case.case_id not in ERAD_FAILED_RETRY_ALLOWED_CASE_IDS:
+        issues.append(ERAD_FAILED_RETRY_NON_RETRY_CASE_REJECTED)
+    if case.retry_include != "yes":
+        issues.append(ERAD_FAILED_RETRY_INCLUDE_REQUIRED)
+    if case.cohort != "new_erad":
+        issues.append(ERAD_FAILED_RETRY_COHORT_VIOLATION)
+    if case.report_type not in tiny_live.VALID_REPORT_TYPES:
+        issues.append(f"invalid_report_type:{case.report_type}")
+    if not case.expected_period:
+        issues.append("expected_period_missing")
+    if not case.retry_strategy:
+        issues.append("retry_strategy_missing")
+    issues.extend(validate_universe_code_name(failed_retry_to_phase2_case(case)))
+    return issues
+
+
+def validate_erad_failed_retry_universe_size(cases: List[EraDFailedRetryUniverseCase]) -> Tuple[bool, str]:
+    included = [c for c in cases if c.retry_include == "yes"]
+    if len(included) != ERAD_FAILED_RETRY_REQUIRED_UNIVERSE_SIZE:
+        return False, (
+            f"{ERAD_FAILED_RETRY_UNIVERSE_SIZE_VIOLATION}: got {len(included)} "
+            f"expected {ERAD_FAILED_RETRY_REQUIRED_UNIVERSE_SIZE}"
+        )
+    return True, ""
+
+
+def validate_erad_failed_retry_universe_case_set(cases: List[EraDFailedRetryUniverseCase]) -> Tuple[bool, str]:
+    if ERAD_FAILED_RETRY_DEFERRED_CASE_ID in {c.case_id for c in cases}:
+        return False, ERAD_FAILED_RETRY_DEFERRED_CASE_REJECTED
+    included_ids = {c.case_id for c in cases if c.retry_include == "yes"}
+    if included_ids != ERAD_FAILED_RETRY_ALLOWED_CASE_IDS:
+        missing = ERAD_FAILED_RETRY_ALLOWED_CASE_IDS - included_ids
+        extra = included_ids - ERAD_FAILED_RETRY_ALLOWED_CASE_IDS
+        return False, (
+            f"{ERAD_FAILED_RETRY_UNIVERSE_CASE_SET_VIOLATION}: "
+            f"missing={sorted(missing)} extra={sorted(extra)}"
+        )
+    return True, ""
+
+
+def validate_erad_failed_retry_duplicate_company_codes(
+    cases: List[EraDFailedRetryUniverseCase],
+) -> Tuple[bool, str]:
+    seen: Set[str] = set()
+    for case in cases:
+        if case.retry_include != "yes":
+            continue
+        if case.company_code in seen:
+            return False, f"{DUPLICATE_COMPANY_CODE_REJECTED}:{case.company_code}"
+        seen.add(case.company_code)
+    return True, ""
+
+
+def validate_erad_failed_retry_request_cap(case_count: int) -> Tuple[bool, str]:
+    planned = case_count * ERAD_FAILED_RETRY_PLANNED_REQUESTS_PER_CASE
+    if planned > ERAD_FAILED_RETRY_REQUEST_CAP:
+        return False, (
+            f"{ERAD_FAILED_RETRY_REQUEST_CAP_EXCEEDED}: planned={planned} "
+            f"cap={ERAD_FAILED_RETRY_REQUEST_CAP}"
+        )
+    return True, ""
+
+
+def enforce_erad_failed_retry_approval_gate(args: argparse.Namespace) -> None:
+    wrong = (
+        (args.approve_a_class_phase2_metadata_expansion, ERAD_FAILED_RETRY_WRONG_APPROVAL),
+        (args.approve_a_class_phase2_failed_retry, ERAD_FAILED_RETRY_WRONG_APPROVAL),
+        (args.approve_a_class_phase2_network_recovery_retry_v2, ERAD_FAILED_RETRY_WRONG_APPROVAL),
+        (args.approve_a_class_phase2_retry_v3, ERAD_FAILED_RETRY_WRONG_APPROVAL),
+        (getattr(args, "approve_a_class_phase3_50_company_expansion", False), ERAD_FAILED_RETRY_WRONG_APPROVAL),
+        (getattr(args, "approve_a_class_phase3_a3m017_isolated_retry", False), ERAD_FAILED_RETRY_WRONG_APPROVAL),
+        (getattr(args, "approve_a_class_erad_scale_200", False), ERAD_FAILED_RETRY_WRONG_APPROVAL),
+        (args.approve_a_class_tiny_live_metadata, ERAD_FAILED_RETRY_WRONG_APPROVAL),
+        (args.approve_phase1_tiny_live_metadata, ERAD_FAILED_RETRY_WRONG_APPROVAL),
+    )
+    for enabled, code in wrong:
+        if enabled:
+            print(f"ERROR: {code}", file=sys.stderr)
+            sys.exit(2)
+    if args.mode == "live" and not getattr(args, "approve_a_class_erad_scale_200_failed_retry", False):
+        print(f"ERROR: {ERAD_FAILED_RETRY_APPROVAL_REQUIRED}", file=sys.stderr)
+        sys.exit(2)
+
+
+def build_erad_failed_retry_dryrun_row(
+    case: EraDFailedRetryUniverseCase,
+    issues: List[str],
+    output_root: str,
+) -> Dict[str, str]:
+    source_id = REPORT_TYPE_SOURCE_ID.get(case.report_type, "unknown_source")
+    status = "planned_ok" if not issues else "universe_invalid"
+    notes = (
+        f"erad-a-scale-200-failed-retry dry-run; CNINFO not called; metadata only; "
+        f"matching_logic={MATCHING_LOGIC_VERSION}; "
+        f"planned_requests={ERAD_FAILED_RETRY_PLANNED_REQUESTS_PER_CASE}; "
+        f"retry_strategy={case.retry_strategy}; likely_cause={case.likely_cause}; "
+        f"main_erad_root_write_forbidden"
+        if not issues
+        else "; ".join(issues)
+    )
+    return {
+        "case_id": case.case_id,
+        "company_code": case.company_code,
+        "company_name": case.company_name,
+        "market": case.market,
+        "report_type": case.report_type,
+        "expected_period": case.expected_period,
+        "cohort": case.cohort,
+        "original_failure_class": case.original_failure_class,
+        "likely_cause": case.likely_cause,
+        "retry_strategy": case.retry_strategy,
+        "retry_include": case.retry_include,
+        "planned_source": source_id,
+        "planned_endpoint": planned_endpoints_for_case(failed_retry_to_phase2_case(case)),
+        "planned_output_root": output_root,
+        "pdf_download": "0",
+        "pdf_parse": "0",
+        "ocr": "0",
+        "extraction": "0",
+        "db_write": "0",
+        "minio_write": "0",
+        "rag_run": "0",
+        "cninfo_call_planned": "0",
+        "planned_request_count_case": str(ERAD_FAILED_RETRY_PLANNED_REQUESTS_PER_CASE),
+        "dryrun_status": status,
+        "notes": notes,
+    }
+
+
+def process_erad_failed_retry_dry_run(
+    cases: List[EraDFailedRetryUniverseCase],
+    output_root: str,
+) -> Tuple[List[Dict[str, str]], List[str]]:
+    rows: List[Dict[str, str]] = []
+    universe_issues: List[str] = []
+    for case in cases:
+        if case.retry_include != "yes":
+            continue
+        issues = validate_erad_failed_retry_case(case)
+        if issues:
+            universe_issues.append(f"{case.case_id}:{';'.join(issues)}")
+        rows.append(build_erad_failed_retry_dryrun_row(case, issues, output_root))
+    return rows, universe_issues
+
+
+def write_erad_failed_retry_dryrun_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "a_class_erad_scale_200_failed_retry_dryrun_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=ERAD_FAILED_RETRY_DRYRUN_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_erad_failed_retry_dryrun_summary(
+    rows: List[Dict[str, str]],
+    output_paths: Dict[str, str],
+    universe_issues: List[str],
+) -> str:
+    planned_ok = sum(1 for row in rows if row["dryrun_status"] == "planned_ok")
+    total = len(rows)
+    planned_requests = total * ERAD_FAILED_RETRY_PLANNED_REQUESTS_PER_CASE
+    cause_counts: Dict[str, int] = {}
+    for row in rows:
+        cause_counts[row["likely_cause"]] = cause_counts.get(row["likely_cause"], 0) + 1
+    cause_line = " / ".join(f"{k}={v}" for k, v in sorted(cause_counts.items()))
+    lines = [
+        "# CNINFO A 类 Era D ~200 Failed Retry — Dry-run 摘要",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** Era D isolated failed-retry dry-run · **无 CNINFO** · **无 live** · **无 PDF**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        "| mode | erad_a_scale_200_failed_retry_dry_run |",
+        f"| universe size | {total} |",
+        f"| planned_ok | {planned_ok} |",
+        f"| deferred excluded | AD2E146 |",
+        f"| likely_cause mix | {cause_line} |",
+        f"| planned_requests_total | {planned_requests} (cap ≤ {ERAD_FAILED_RETRY_REQUEST_CAP}) |",
+        f"| matching_logic | **{MATCHING_LOGIC_VERSION}** |",
+        "| CNINFO calls | **0** |",
+        "",
+        "## Isolation",
+        "",
+        "Writes **only** under failed-retry root; **does not mutate** main Era D live root, Phase 3, or A3M017.",
+        "",
+        "## Safety",
+        "",
+        "- metadata only: **yes**",
+        f"- output isolation: `{output_paths['root']}`",
+        "- main Era D live root untouched: **yes**",
+        "- verified: **no**",
+        "- production_ready: **no**",
+        "",
+        "## Gate",
+        "",
+        "```text",
+        f"a_class_erad_scale_200_isolated_retry_runner_extension_gate = {ERAD_FAILED_RETRY_RUNNER_GATE}",
+        "```",
+        "",
+        "**不是 PASS** · **不是 live_ready** · **Approval status: NOT_APPROVED**",
+        "",
+    ]
+    if universe_issues:
+        lines.extend(["## Universe issues", ""] + [f"- {item}" for item in universe_issues] + [""])
+    summary_path = os.path.join(
+        output_paths["reports"], "a_class_erad_scale_200_failed_retry_dryrun_summary.md"
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+    return summary_path
+
+
+def build_erad_failed_retry_live_report_row(
+    case: EraDFailedRetryUniverseCase,
+    record: Dict[str, Any],
+    cninfo_request_count: int,
+) -> Dict[str, str]:
+    row = build_live_report_row(failed_retry_to_phase2_case(case), record, cninfo_request_count)
+    notes = str(record.get("notes") or "")
+    row["notes"] = (
+        f"erad-a-scale-200-failed-retry live; matching_logic={MATCHING_LOGIC_VERSION}; "
+        f"PDF not downloaded; retry_strategy={case.retry_strategy}; "
+        f"likely_cause={case.likely_cause}; main_erad_root_write_forbidden; {notes}"
+    ).strip()
+    row["cohort"] = case.cohort
+    row["original_failure_class"] = case.original_failure_class
+    row["likely_cause"] = case.likely_cause
+    row["retry_strategy"] = case.retry_strategy
+    return row
+
+
+def is_erad_failed_retry_case_acceptable(row: Dict[str, str]) -> bool:
+    if row.get("pdf_downloaded") not in ("0", "no", ""):
+        return False
+    if row.get("pdf_parsed") not in ("0", "no", ""):
+        return False
+    status = row.get("retrieval_status", "")
+    quality = row.get("quality_status", "")
+    lineage = row.get("lineage_status", "")
+    if status in ("network_error", "not_found", "universe_invalid"):
+        return False
+    if status == "found":
+        return True
+    if status in ("discovered", "matching_pass"):
+        return True
+    if lineage == "discovered":
+        return True
+    if status == "needs_review" or quality == "needs_review":
+        return bool(lineage)
+    return False
+
+
+def compute_erad_failed_retry_execution_gate(
+    stats: tiny_live.LiveStats,
+    rows: List[Dict[str, str]],
+    universe_issues: List[str],
+    case_count: int,
+) -> str:
+    if has_red_line_violation(stats, rows):
+        return "FAIL_REVIEW_REQUIRED"
+    if universe_issues or case_count != ERAD_FAILED_RETRY_REQUIRED_UNIVERSE_SIZE:
+        return "FAIL_REVIEW_REQUIRED"
+    if stats.cninfo_requests > ERAD_FAILED_RETRY_REQUEST_CAP:
+        return "FAIL_REVIEW_REQUIRED"
+    acceptable_count = sum(1 for row in rows if is_erad_failed_retry_case_acceptable(row))
+    if acceptable_count >= ERAD_FAILED_RETRY_ACCEPTABLE_THRESHOLD:
+        return ERAD_FAILED_RETRY_EXECUTION_GATE_PASS
+    return "FAIL_REVIEW_REQUIRED"
+
+
+def process_erad_failed_retry_live(
+    cases: List[EraDFailedRetryUniverseCase],
+    output_paths: Dict[str, str],
+    stats: tiny_live.LiveStats,
+) -> Tuple[List[Dict[str, str]], List[str]]:
+    rows: List[Dict[str, str]] = []
+    universe_issues: List[str] = []
+    for case in cases:
+        if case.retry_include != "yes":
+            continue
+        issues = validate_erad_failed_retry_case(case)
+        if issues:
+            universe_issues.append(f"{case.case_id}:{';'.join(issues)}")
+            rows.append(
+                build_erad_failed_retry_live_report_row(
+                    case,
+                    {
+                        "retrieval_status": "universe_invalid",
+                        "quality_status": "blocked",
+                        "lineage_status": "needs_review",
+                        "announcement_id": "",
+                        "announcement_title": "",
+                        "announcement_time": "",
+                        "title_match_status": "fail",
+                        "period_match_status": "fail",
+                        "pdf_url_present": "no",
+                        "adjunct_url_present": "no",
+                        "notes": "; ".join(issues),
+                    },
+                    0,
+                )
+            )
+            stats.failure_count += 1
+            continue
+
+        tl_case = to_tiny_live_case(failed_retry_to_phase2_case(case))
+        before_requests = stats.cninfo_requests
+        record = tiny_live.execute_live_case(tl_case, stats)
+        case_cninfo_requests = stats.cninfo_requests - before_requests
+        live_row = build_erad_failed_retry_live_report_row(case, record, case_cninfo_requests)
+        snapshot_path = os.path.join(output_paths["raw_metadata"], f"{case.case_id}.json")
+        with open(snapshot_path, "w", encoding="utf-8") as f:
+            json.dump(
+                {
+                    "case": case.__dict__,
+                    "mode": "erad_a_scale_200_failed_retry_live",
+                    "original_failure_class": case.original_failure_class,
+                    "likely_cause": case.likely_cause,
+                    "retry_strategy": case.retry_strategy,
+                    "cninfo_called": True,
+                    "cninfo_request_count": case_cninfo_requests,
+                    "pdf_download_enabled": False,
+                    "pdf_parse_enabled": False,
+                    "matching_logic": MATCHING_LOGIC_VERSION,
+                    "record": live_row,
+                    "raw_announcement": record.get("_raw_announcement"),
+                    "org_id": record.get("_org_id"),
+                },
+                f,
+                ensure_ascii=False,
+                indent=2,
+            )
+        rows.append(live_row)
+        print(
+            f"case_id={case.case_id} likely_cause={case.likely_cause} "
+            f"company_code={case.company_code} "
+            f"retrieval_status={live_row['retrieval_status']} "
+            f"quality={live_row.get('quality_status', 'n/a')}",
+            flush=True,
+        )
+    return rows, universe_issues
+
+
+def write_erad_failed_retry_live_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "a_class_erad_scale_200_failed_retry_live_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=ERAD_FAILED_RETRY_LIVE_REPORT_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_erad_failed_retry_live_quality_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "a_class_erad_scale_200_failed_retry_live_quality_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=ERAD_FAILED_RETRY_LIVE_QUALITY_COLUMNS)
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({k: row.get(k, "") for k in ERAD_FAILED_RETRY_LIVE_QUALITY_COLUMNS})
+    return report_path
+
+
+def write_erad_failed_retry_live_summary(
+    output_paths: Dict[str, str],
+    stats: tiny_live.LiveStats,
+    rows: List[Dict[str, str]],
+    universe_issues: List[str],
+    gate: str,
+) -> str:
+    acceptable_count = sum(1 for row in rows if is_erad_failed_retry_case_acceptable(row))
+    failed_count = sum(
+        1
+        for row in rows
+        if row.get("retrieval_status")
+        in ("network_error", "not_found", "universe_invalid")
+    )
+    needs_review_count = sum(
+        1 for row in rows if row.get("quality_status") == "needs_review"
+    )
+    lines = [
+        "# CNINFO A 类 Era D ~200 Failed Retry — Live 执行摘要",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** Era D isolated failed-retry live · **7 cases** · **无 PDF** · **不是 verified**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        "| mode | erad_a_scale_200_failed_retry_live |",
+        f"| universe size | {len(rows)} |",
+        f"| acceptable | {acceptable_count} |",
+        f"| failed | {failed_count} |",
+        f"| needs_review | {needs_review_count} |",
+        f"| deferred excluded | AD2E146 |",
+        f"| CNINFO requests | {stats.cninfo_requests} (cap ≤ {ERAD_FAILED_RETRY_REQUEST_CAP}) |",
+        f"| matching_logic | **{MATCHING_LOGIC_VERSION}** |",
+        f"| execution gate | `{gate}` |",
+        "",
+        "## Isolation",
+        "",
+        "Writes **only** under failed-retry root; **does not mutate** main Era D live root, Phase 3, or A3M017.",
+        "",
+        "## Safety",
+        "",
+        "- metadata only: **yes**",
+        f"- output isolation: `{output_paths['root']}`",
+        "- verified: **no**",
+        "- production_ready: **no**",
+        "",
+        "## Gate",
+        "",
+        "```text",
+        f"a_class_erad_scale_200_isolated_retry_live_path_gate = {ERAD_FAILED_RETRY_LIVE_PATH_GATE}",
+        "```",
+        "",
+        "**不是 PASS** · **不是 live_ready** · **Approval status: NOT_APPROVED**",
+        "",
+    ]
+    if universe_issues:
+        lines.extend(["## Universe issues", ""] + [f"- {item}" for item in universe_issues] + [""])
+    summary_path = os.path.join(
+        output_paths["reports"], "a_class_erad_scale_200_failed_retry_live_summary.md"
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+    return summary_path
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="CNINFO A-class Phase2 metadata expansion（dry-run default）"
@@ -3148,6 +4371,30 @@ def build_parser() -> argparse.ArgumentParser:
         help="Phase 3 50-company metadata expansion 模式",
     )
     parser.add_argument(
+        "--erad-a-scale-200",
+        dest="erad_a_scale_200",
+        action="store_true",
+        help="Era D A-class ~200 metadata expansion 模式",
+    )
+    parser.add_argument(
+        "--approve-a-class-erad-scale-200",
+        dest="approve_a_class_erad_scale_200",
+        action="store_true",
+        help="显式批准 A-class Era D ~200 live expansion",
+    )
+    parser.add_argument(
+        "--erad-a-scale-200-failed-retry",
+        dest="erad_a_scale_200_failed_retry",
+        action="store_true",
+        help="Era D A-class ~200 isolated failed-case retry 模式",
+    )
+    parser.add_argument(
+        "--approve-a-class-erad-scale-200-failed-retry",
+        dest="approve_a_class_erad_scale_200_failed_retry",
+        action="store_true",
+        help="显式批准 A-class Era D ~200 isolated failed-retry live",
+    )
+    parser.add_argument(
         "--approve-a-class-phase3-50-company-expansion",
         dest="approve_a_class_phase3_50_company_expansion",
         action="store_true",
@@ -3188,6 +4435,250 @@ def main(argv: Optional[List[str]] = None) -> int:
             file=sys.stderr,
         )
         return 2
+
+
+    if getattr(args, "erad_a_scale_200_failed_retry", False):
+        if (
+            getattr(args, "erad_a_scale_200", False)
+            or args.phase3_50
+            or args.retry_v3
+            or args.retry_failed_only
+        ):
+            print(f"ERROR: {ERAD_FAILED_RETRY_INCOMPATIBLE_WITH_OTHER_MODES}", file=sys.stderr)
+            return 2
+        if args.universe_csv is None:
+            print(f"ERROR: {ERAD_FAILED_RETRY_UNIVERSE_CSV_REQUIRED}", file=sys.stderr)
+            return 2
+        if args.output_root is None:
+            args.output_root = DEFAULT_ERAD_FAILED_RETRY_OUTPUT_ROOT
+        enforce_forbidden_options(args)
+        if args.mode == "live":
+            enforce_erad_failed_retry_approval_gate(args)
+        ok_root, root_err = validate_erad_failed_retry_output_root(args.output_root)
+        if not ok_root:
+            print(f"ERROR: {root_err}", file=sys.stderr)
+            return 2
+        if not os.path.isfile(args.universe_csv):
+            print(f"ERROR: universe not found: {args.universe_csv}", file=sys.stderr)
+            return 2
+        retry_cases = load_erad_failed_retry_universe(args.universe_csv)
+        if args.limit is not None:
+            retry_cases = retry_cases[: args.limit]
+        for validator in (
+            validate_erad_failed_retry_universe_size,
+            validate_erad_failed_retry_universe_case_set,
+            validate_erad_failed_retry_duplicate_company_codes,
+        ):
+            ok, err = validator(retry_cases)
+            if not ok:
+                print(f"ERROR: {err}", file=sys.stderr)
+                return 2
+        included = [c for c in retry_cases if c.retry_include == "yes"]
+        ok_cap, cap_err = validate_erad_failed_retry_request_cap(len(included))
+        if not ok_cap:
+            print(f"ERROR: {cap_err}", file=sys.stderr)
+            return 2
+        normalized_root = _normalize_output_root(args.output_root)
+        output_paths = ensure_output_layout(normalized_root)
+        if args.mode == "live":
+            stats = tiny_live.LiveStats()
+            rows, universe_issues = process_erad_failed_retry_live(included, output_paths, stats)
+            if stats.cninfo_requests > ERAD_FAILED_RETRY_REQUEST_CAP:
+                print(
+                    f"ERROR: {ERAD_FAILED_RETRY_REQUEST_CAP_EXCEEDED}: "
+                    f"actual={stats.cninfo_requests} cap={ERAD_FAILED_RETRY_REQUEST_CAP}",
+                    file=sys.stderr,
+                )
+                return 2
+            gate = compute_erad_failed_retry_execution_gate(
+                stats, rows, universe_issues, len(included)
+            )
+            report_path = write_erad_failed_retry_live_report(rows, output_paths)
+            quality_path = write_erad_failed_retry_live_quality_report(rows, output_paths)
+            summary_path = write_erad_failed_retry_live_summary(
+                output_paths, stats, rows, universe_issues, gate
+            )
+            acceptable_count = sum(
+                1 for row in rows if is_erad_failed_retry_case_acceptable(row)
+            )
+            failed_count = sum(
+                1
+                for row in rows
+                if row.get("retrieval_status")
+                in ("network_error", "not_found", "universe_invalid")
+            )
+            needs_review_count = sum(
+                1 for row in rows if row.get("quality_status") == "needs_review"
+            )
+            print(
+                f"mode=erad_a_scale_200_failed_retry_live cases={len(included)} "
+                f"cninfo_calls={stats.cninfo_requests}"
+            )
+            print(f"acceptable={acceptable_count} failed={failed_count}")
+            print(f"needs_review={needs_review_count}")
+            print(f"success={stats.success_count} failure={stats.failure_count}")
+            print(
+                f"pdf_downloaded={stats.pdf_downloaded_count} "
+                f"pdf_parsed={stats.pdf_parsed_count}"
+            )
+            print(
+                "gate=a_class_erad_scale_200_isolated_retry_live_path_gate="
+                f"{ERAD_FAILED_RETRY_LIVE_PATH_GATE}"
+            )
+            print(f"execution_gate=a_class_erad_scale_200_failed_retry_execution_gate={gate}")
+            print(f"erad_failed_retry_live_report={report_path}")
+            print(f"erad_failed_retry_live_quality={quality_path}")
+            print(f"erad_failed_retry_live_summary={summary_path}")
+            if universe_issues or gate == "FAIL_REVIEW_REQUIRED":
+                return 1
+            return 0
+        rows, universe_issues = process_erad_failed_retry_dry_run(retry_cases, normalized_root)
+        report_path = write_erad_failed_retry_dryrun_report(rows, output_paths)
+        summary_path = write_erad_failed_retry_dryrun_summary(rows, output_paths, universe_issues)
+        planned_ok = sum(1 for row in rows if row["dryrun_status"] == "planned_ok")
+        print(
+            f"mode=erad_a_scale_200_failed_retry_dry_run cases={len(included)} "
+            f"planned_ok={planned_ok} cninfo_calls=0"
+        )
+        print(
+            "gate=a_class_erad_scale_200_isolated_retry_runner_extension_gate="
+            f"{ERAD_FAILED_RETRY_RUNNER_GATE}"
+        )
+        print(f"erad_failed_retry_dryrun_report={report_path}")
+        print(f"erad_failed_retry_dryrun_summary={summary_path}")
+        if universe_issues:
+            return 1
+        return 0
+
+    if getattr(args, "erad_a_scale_200", False):
+        if args.phase3_50 or args.retry_v3 or args.retry_failed_only:
+            print(f"ERROR: {ERAD_SCALE_200_INCOMPATIBLE_WITH_RETRY}", file=sys.stderr)
+            return 2
+        if getattr(args, "erad_a_scale_200_failed_retry", False):
+            print(f"ERROR: {ERAD_FAILED_RETRY_INCOMPATIBLE_WITH_ERAD_MAIN}", file=sys.stderr)
+            return 2
+        if args.universe_csv is None:
+            print(f"ERROR: {ERAD_SCALE_200_UNIVERSE_CSV_REQUIRED}", file=sys.stderr)
+            return 2
+        if args.output_root is None:
+            args.output_root = DEFAULT_ERAD_SCALE_200_OUTPUT_ROOT
+        enforce_forbidden_options(args)
+        if args.mode == "live":
+            enforce_erad_scale_200_approval_gate(args)
+        ok_root, root_err = validate_erad_scale_200_output_root(args.output_root)
+        if not ok_root:
+            print(f"ERROR: {root_err}", file=sys.stderr)
+            return 2
+        if not os.path.isfile(args.universe_csv):
+            print(f"ERROR: universe not found: {args.universe_csv}", file=sys.stderr)
+            return 2
+        erad_cases = load_erad_scale_200_universe(args.universe_csv)
+        if args.limit is not None:
+            erad_cases = erad_cases[: args.limit]
+        for validator in (
+            validate_erad_scale_200_universe_size,
+            validate_erad_scale_200_report_type_mix,
+            validate_erad_scale_200_duplicate_company_codes,
+            validate_erad_scale_200_cohort_counts,
+        ):
+            ok, err = validator(erad_cases)
+            if not ok:
+                print(f"ERROR: {err}", file=sys.stderr)
+                return 2
+        ok_new, new_err = validate_erad_scale_200_new_cohort_overlap(erad_cases)
+        if not ok_new:
+            print(f"ERROR: {new_err}", file=sys.stderr)
+            return 2
+        included = [c for c in erad_cases if c.erad_include == "yes"]
+        ok_cap, cap_err = validate_erad_scale_200_request_cap(len(included))
+        if not ok_cap:
+            print(f"ERROR: {cap_err}", file=sys.stderr)
+            return 2
+        normalized_root = _normalize_output_root(args.output_root)
+        output_paths = ensure_output_layout(normalized_root)
+        report_type_mix: Dict[str, int] = {}
+        retained_count = 0
+        new_count = 0
+        for case in included:
+            report_type_mix[case.report_type] = report_type_mix.get(case.report_type, 0) + 1
+            if case.cohort == "retained_phase3":
+                retained_count += 1
+            elif case.cohort == "new_erad":
+                new_count += 1
+        if args.mode == "live":
+            stats = tiny_live.LiveStats()
+            rows, universe_issues = process_erad_scale_200_live(included, output_paths, stats)
+            if stats.cninfo_requests > ERAD_SCALE_200_REQUEST_CAP:
+                print(
+                    f"ERROR: {ERAD_SCALE_200_REQUEST_CAP_EXCEEDED}: "
+                    f"actual={stats.cninfo_requests} cap={ERAD_SCALE_200_REQUEST_CAP}",
+                    file=sys.stderr,
+                )
+                return 2
+            gate = compute_erad_scale_200_execution_gate(
+                stats, rows, universe_issues, len(included)
+            )
+            report_path = write_erad_scale_200_live_report(rows, output_paths)
+            quality_path = write_erad_scale_200_live_quality_report(rows, output_paths)
+            summary_path = write_erad_scale_200_live_summary(
+                output_paths,
+                stats,
+                rows,
+                universe_issues,
+                gate,
+                retained_count,
+                new_count,
+            )
+            acceptable_count = sum(
+                1 for row in rows if is_erad_scale_200_case_acceptable(row)
+            )
+            failed_count = sum(
+                1
+                for row in rows
+                if row.get("retrieval_status")
+                in ("network_error", "not_found", "universe_invalid")
+            )
+            needs_review_count = sum(
+                1 for row in rows if row.get("quality_status") == "needs_review"
+            )
+            print(
+                f"mode=erad_a_scale_200_live cases={len(included)} "
+                f"cninfo_calls={stats.cninfo_requests}"
+            )
+            print(f"acceptable={acceptable_count} failed={failed_count}")
+            print(f"needs_review={needs_review_count}")
+            print(f"retained_phase3={retained_count} new_erad={new_count}")
+            print(f"success={stats.success_count} failure={stats.failure_count}")
+            print(
+                f"pdf_downloaded={stats.pdf_downloaded_count} "
+                f"pdf_parsed={stats.pdf_parsed_count}"
+            )
+            print(
+                f"gate=a_class_erad_scale_200_live_path_gate={ERAD_SCALE_200_LIVE_PATH_GATE}"
+            )
+            print(f"execution_gate=a_class_erad_scale_200_execution_gate={gate}")
+            print(f"erad_live_report={report_path}")
+            print(f"erad_live_quality={quality_path}")
+            print(f"erad_live_summary={summary_path}")
+            if universe_issues or gate == "FAIL_REVIEW_REQUIRED":
+                return 1
+            return 0
+        rows, universe_issues = process_erad_scale_200_dry_run(erad_cases, normalized_root)
+        report_path = write_erad_scale_200_dryrun_report(rows, output_paths)
+        summary_path = write_erad_scale_200_dryrun_summary(
+            rows, output_paths, universe_issues, report_type_mix, retained_count, new_count
+        )
+        planned_ok = sum(1 for row in rows if row["dryrun_status"] == "planned_ok")
+        print(
+            f"mode=erad_a_scale_200_dry_run cases={len(included)} "
+            f"planned_ok={planned_ok} cninfo_calls=0"
+        )
+        print(f"gate=a_class_erad_scale_200_runner_extension_gate={ERAD_SCALE_200_RUNNER_GATE}")
+        print(f"erad_dryrun_report={report_path}")
+        print(f"erad_dryrun_summary={summary_path}")
+        if universe_issues:
+            return 1
+        return 0
 
     if args.phase3_50:
         if args.universe_csv is None:
