@@ -284,7 +284,13 @@ _最后更新：2026-07-09_
 175. ~~Phase 3.5 isolated resume runner extension + dry-run~~ → **完成**（§7dqc · dry-run **29/29** · test **27/27 PASS** · gate **`READY_FOR_APPROVAL`** · CNINFO **0** · **NOT APPROVED live**）
 176. ~~Phase 3.5 isolated resume live~~ → **完成**（§7dqd · CNINFO **120** · complete **28** · partial **1** · failed **0** · gate **`PASS_WITH_CAVEAT`** · **无 snapshot**）
 177. ~~Phase 3.5 isolated resume QA + merge planning~~ → **完成**（§7dqe · recovered **28** · updated success **491** · holdout **9** · gate **`PASS_WITH_CAVEAT`** · CNINFO **0**）
-178. **Phase 3.5 expanded success-subset snapshot planning 或 C35R016 retry review** → **待启动**
+178. ~~Phase 3.5 expanded success-subset snapshot planning~~ → **完成**（§7dqf · universe **491** · gate **`READY_FOR_APPROVAL`** · CNINFO **0** · **NOT APPROVED**）
+179. ~~Phase 3.5 expanded snapshot builder extension + dry-run~~ → **完成**（§7dqg · dry-run **491/491** · test **17/17 PASS** · gate **`READY_FOR_APPROVAL`** · CNINFO **0** · snapshot JSON **0** · **NOT APPROVED build**）
+180. ~~Phase 3.5 expanded success-subset snapshot build~~ → **完成**（§7dqh · snapshot JSON **491** · gate **`PASS_WITH_CAVEAT`** · CNINFO **0** · harvest roots **unchanged**）
+181. ~~Phase 3.5 expanded snapshot QA review（offline）~~ → **完成**（§7dqi · QA **491/491** · test **10/10 PASS** · gate **`PASS_WITH_CAVEAT`** · CNINFO **0**）
+182. ~~Phase 3.5 expanded snapshot closure review（offline）~~ → **完成**（§7dqj · closure gate **`PASS_WITH_CAVEAT`** · CNINFO **0** · **no commit**）
+183. ~~C-class Phase 3.5 expanded snapshot commit boundary review~~ → **完成**（§7dqk · gate **`READY_FOR_COMMIT_REVIEW`** · CNINFO **0** · **no commit**）
+184. ~~C-class Phase 3.5 expanded snapshot commit~~ → **完成**（§7dql · **40 files** · explicit-path only · gate **`READY_FOR_HUMAN_DECISION`** · snapshot JSON **未入库** · **no push**）
 172. ~~B 类 Phase 1 endpoint candidate 表 + minimum fields freeze review~~ → **完成**（§7dp · gate **`READY_FOR_APPROVAL`** · **无 B-class live**）
 164. ~~B 类 Phase 1 schema review package 准备~~ → **完成**（§7dq · gate **`READY_FOR_APPROVAL`** · **无 B-class live**）
 165. ~~B 类 Phase 1 schema signoff 准备~~ → **完成**（§7dr · signoff gate **`READY_FOR_IMPLEMENTATION`** · **无 B-class live**）
@@ -345,7 +351,13 @@ _最后更新：2026-07-09_
 205. ~~D 类 known-event targeted probe closure + DLC006R failure review~~ → **完成**（§7dzae · closure gate **`READY_FOR_HUMAN_DECISION`** · **无 CNINFO** · **无 rerun**）
 206. ~~D 类 DLC006R 人工决策 + replacement 最终收口~~ → **完成**（§7dzaf · Option **A+C** · final closure gate **`PASS_WITH_CAVEAT`** · **不是 verified**）
 207. ~~D 类 known-event replacement boundary review~~ → **完成**（§7dzag · boundary gate **`READY_FOR_COMMIT_REVIEW`** · safe-to-commit list · commit **`389cd9c`**）
-208. ~~D 类 known-event replacement post-push status closure~~ → **完成**（§7dzah · commit **`389cd9c`** on **`origin/main`** · push gate **`READY_FOR_HUMAN_DECISION`** · **无新 commit**）
+208. ~~D 类 known-event replacement post-push status closure~~ → **完成**（§7dzah · commit **`389cd9c`** on **`origin/main`** · push gate **`READY_FOR_HUMAN_DECISION`** · status-doc commit **`b7575fd`**）
+209. ~~D 类 next component planning package~~ → **完成**（§7dzai · primary **`margin_trading`** · planning gate **`READY_FOR_HUMAN_DECISION`** · **无 CNINFO** · **无 live**）
+210. ~~D 类 margin_trading first-slice approval package~~ → **完成**（§7dzaj · universe **5** · approval gate **`READY_FOR_APPROVAL`** · **NOT APPROVED** · **无 live**）
+211. ~~D 类 margin_trading first-slice runner 扩展 + dry-run~~ → **完成**（§7dzak · dry-run **5/5** · planned **20** · tests **21/21** · extension gate **`READY_FOR_APPROVAL`** · **无 live**）
+212. ~~D 类 margin_trading first-slice live path 离线实现~~ → **完成**（§7dzal · tests **40/40** · live-path gate **`READY_FOR_APPROVAL`** · **无 live**）
+213. ~~D 类 margin_trading first-slice isolated live 执行~~ → **完成**（§7dzam · CNINFO **5** · acceptable **5/5** · execution gate **`PASS_WITH_CAVEAT`** · **不是 verified**）
+214. ~~D 类 margin_trading first-slice closure review~~ → **完成**（§7dzan · **5/5 effective** · closure gate **`PASS_WITH_CAVEAT`** · CNINFO **0** · **无 commit**）
 194. ~~A 类 Phase 2 merge closure review~~ → **完成**（§7dzt · **12 accepted** · **8 unresolved network** · closure gate **`PASS_WITH_CAVEAT_NETWORK_UNRESOLVED`** · **无 CNINFO**）
 195. ~~A 类 Phase 2 network recovery retry_v2 planning~~ → **完成**（§7dzu · universe **8** · planning gate **`READY_FOR_APPROVAL`** · **无 CNINFO**）
 196. ~~A 类 Phase 2 retry_v2 runner extension + dry-run~~ → **完成**（§7dzv · **8/8 planned_ok** · test **18/18 PASS** · runner gate **`READY_FOR_APPROVAL`** · **无 live**）
@@ -361,6 +373,13 @@ _最后更新：2026-07-09_
 208. ~~A 类 Phase 2 retry_v3 merge closure 更新~~ → **完成**（§7dzxh · **20/20 effective accepted** · final closure gate **`PASS_WITH_CAVEAT`** · **无 CNINFO**）
 209. ~~A 类 Phase 2 final commit boundary review~~ → **完成**（§7dzxi · gate **`READY_FOR_COMMIT_REVIEW`** · **无 CNINFO**）
 210. ~~A 类 Phase 2 explicit-path commit~~ → **完成**（§7dzxj · commit **`cad5ed1`** · **80 files** · test **117/117 PASS** · gate **`READY_FOR_HUMAN_DECISION`** · **无 push** · **无 CNINFO**）
+211. ~~A 类 Phase 3 50-company expansion planning package~~ → **完成**（§7dzxk · universe **50** · overlap **0/0** · planning gate **`READY_FOR_APPROVAL`** · **无 CNINFO** · **无 live**）
+212. ~~A 类 Phase 3 runner extension + dry-run~~ → **完成**（§7dzxl · **50/50 planned_ok** · test **26/26 PASS** · runner extension gate **`READY_FOR_APPROVAL`** · **无 live**）
+213. ~~A 类 Phase 3 live path implementation~~ → **完成**（§7dzxm · live-path test **28/28 PASS** · live path gate **`READY_FOR_APPROVAL`** · mock CNINFO **0** · **NOT APPROVED live**）
+214. ~~A 类 Phase 3 50-company isolated live 执行~~ → **完成**（§7dzxn · **49/50 acceptable** · CNINFO **104** · failed **1** · needs_review **1** · execution gate **`PASS_WITH_CAVEAT`** · PDF **0** · **无 commit** · **无 push** · **不是 verified**）
+215. ~~A 类 Phase 3 50-company merge closure review~~ → **完成**（§7dzxo · **49/50 effective** · A3M017 unresolved · closure gate **`PASS_WITH_CAVEAT`** · CNINFO **0** · **不是 verified**）
+216. ~~A 类 Phase 3 commit boundary review offline~~ → **完成**（§7dzxp · **80 yes / 9 no** · A3M017 caveat retained · boundary gate **`READY_FOR_COMMIT_REVIEW`** · CNINFO **0** · **无 commit** · **不是 verified**）
+217. **A 类 Phase 3 explicit-path commit** → **待启动**（须单独人工批准 · A3M017 caveat retained · **无 verified**）
 105. review_later / raw_only 复判 → **待启动**（31 + 25）
 106. company_snapshot planning → **待启动**（P2）
 107. dividend_history YAML backfill → **GO（决策 only）** · **不执行**
@@ -2641,7 +2660,132 @@ a_class_phase2_failed_retry_execution_gate = FAIL_REVIEW_REQUIRED
 
 ### Next immediate task
 
-人工决策 → A-class Phase 3 50-company planning package（**offline · separate approval · NOT APPROVED**）。
+~~人工决策 Phase 3 planning~~ → **planning package 完成**（§7dzxk）。
+
+---
+
+## 7dzxk. A 类 Phase 3 50-Company Expansion Planning Package（2026-07-10）
+
+> **离线 planning only** · **无 CNINFO** · **无 live** · **无 runner 实现** · **无 commit**。
+
+| 项 | 内容 |
+|----|------|
+| expansion plan | [cninfo_a_class_phase3_50_company_expansion_plan.md](cninfo_a_class_phase3_50_company_expansion_plan.md) |
+| universe draft | [cninfo_a_class_phase3_50_company_universe_draft.csv](../outputs/validation/cninfo_a_class_phase3_50_company_universe_draft.csv)（**50** · A3M001–A3M050） |
+| approval checklist | [cninfo_a_class_phase3_50_company_approval_checklist.md](../outputs/validation/cninfo_a_class_phase3_50_company_approval_checklist.md) |
+| command draft | [cninfo_a_class_phase3_50_company_command_draft.md](cninfo_a_class_phase3_50_company_command_draft.md)（**NOT APPROVED**） |
+| runner design | [cninfo_a_class_phase3_50_company_runner_extension_design.md](cninfo_a_class_phase3_50_company_runner_extension_design.md)（**design only**） |
+| planning summary | [cninfo_a_class_phase3_50_company_planning_summary.md](../outputs/validation/cninfo_a_class_phase3_50_company_planning_summary.md) |
+| **planning gate** | **`a_class_phase3_50_company_planning_gate = READY_FOR_APPROVAL`** |
+
+### 执行结论
+
+- Phase 2 prerequisite：**20/20** · commit **`cad5ed1`**
+- universe **50** · report-type **20/10/10/10** · Phase 1/2 overlap **0**
+- metadata-only · no PDF/OCR/DB/MinIO/RAG
+- **不是 verified** · **不是 production_ready** · **NOT APPROVED live**
+
+### Next immediate task
+
+人工审阅 dry-run → live path implementation（**NOT APPROVED live**）。
+
+---
+
+## 7dzxl. A 类 Phase 3 Runner Extension + Dry-run（2026-07-10）
+
+> **offline runner extension only** · **无 CNINFO** · **无 live** · **无 commit**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_a_class_phase2_metadata_expansion.py](../lab/run_cninfo_a_class_phase2_metadata_expansion.py)（`--phase3-50`） |
+| tests | [test_cninfo_a_class_phase3_50_company_runner.py](../lab/test_cninfo_a_class_phase3_50_company_runner.py)（**26/26 PASS**） |
+| dry-run report | [a_class_phase3_50_company_dryrun_report.csv](../outputs/validation/cninfo_a_class_phase3_50_company_expansion/reports/a_class_phase3_50_company_dryrun_report.csv) |
+| dry-run summary | [a_class_phase3_50_company_dryrun_summary.md](../outputs/validation/cninfo_a_class_phase3_50_company_expansion/reports/a_class_phase3_50_company_dryrun_summary.md) |
+| runner extension summary | [cninfo_a_class_phase3_50_company_runner_extension_summary.md](../outputs/validation/cninfo_a_class_phase3_50_company_runner_extension_summary.md) |
+| **runner extension gate** | **`a_class_phase3_50_company_runner_extension_gate = READY_FOR_APPROVAL`** |
+
+### 执行结论
+
+- dry-run **50/50 planned_ok** · Phase 1/2 overlap **0** · CNINFO **0**
+- approval guard implemented · live path **未实现**
+- metadata-only · no PDF/OCR/DB/MinIO/RAG
+- **不是 verified** · **不是 production_ready** · **NOT APPROVED live**
+
+### Next immediate task
+
+人工审阅 live path → 人工批准 isolated live execution（**NOT APPROVED**）。
+
+---
+
+## 7dzxm. A 类 Phase 3 Live Path Implementation（2026-07-10）
+
+> **offline implementation + mock tests only** · **无真实 CNINFO** · **NOT APPROVED live** · **无 commit**。
+
+| 项 | 内容 |
+|----|------|
+| live function | `process_phase3_50_live()` in [run_cninfo_a_class_phase2_metadata_expansion.py](../lab/run_cninfo_a_class_phase2_metadata_expansion.py) |
+| live-path tests | [test_cninfo_a_class_phase3_50_company_live_path.py](../lab/test_cninfo_a_class_phase3_50_company_live_path.py)（**28/28 PASS**） |
+| live path summary | [cninfo_a_class_phase3_50_company_live_path_summary.md](../outputs/validation/cninfo_a_class_phase3_50_company_live_path_summary.md) |
+| **live path gate** | **`a_class_phase3_50_company_live_path_gate = READY_FOR_APPROVAL`** |
+
+### 执行结论
+
+- `phase3_50_live_not_implemented_in_this_runner` **removed**
+- approval guard + 50-case constraints + write-blocks **implemented**
+- mock tests CNINFO **0** · dry-run still **50/50**
+- **NOT APPROVED live** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task
+
+人工批准 → Phase 3 isolated 50-company live execution（**separate gate · NOT APPROVED**）。
+
+---
+
+## 7dzxn. A 类 Phase 3 50-Company Isolated Live Execution（2026-07-10）
+
+> **metadata + URL lineage only** · **无 PDF** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| acceptable / total | **49 / 50** |
+| failed | **1**（A3M017 · orgId network_error） |
+| CNINFO requests | **104** |
+| execution gate | **`a_class_phase3_50_company_execution_gate = PASS_WITH_CAVEAT`** |
+
+---
+
+## 7dzxo. A 类 Phase 3 50-Company Merge Closure Review（2026-07-10）
+
+> **offline merge/closure only** · **无 CNINFO** · **无 rerun** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| effective accepted final | **49 / 50** |
+| unresolved final | **1**（A3M017） |
+| closure gate | **`a_class_phase3_50_company_closure_gate = PASS_WITH_CAVEAT`** |
+| CNINFO during closure | **0** |
+
+---
+
+## 7dzxp. A 类 Phase 3 Final Commit Boundary Review（2026-07-10）
+
+> **offline commit boundary review only** · **无 CNINFO** · **无 commit** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| boundary review | [cninfo_a_class_phase3_50_company_final_commit_boundary_review.md](cninfo_a_class_phase3_50_company_final_commit_boundary_review.md) |
+| artifact inventory | [cninfo_a_class_phase3_50_company_final_artifact_inventory.csv](../outputs/validation/cninfo_a_class_phase3_50_company_final_artifact_inventory.csv)（**80 yes / 9 no**） |
+| caveat ledger | [cninfo_a_class_phase3_50_company_final_caveat_ledger.csv](../outputs/validation/cninfo_a_class_phase3_50_company_final_caveat_ledger.csv) |
+| safe-to-commit list | [cninfo_a_class_phase3_50_company_safe_to_commit_list.md](../outputs/validation/cninfo_a_class_phase3_50_company_safe_to_commit_list.md) |
+| boundary summary | [cninfo_a_class_phase3_50_company_commit_boundary_summary.md](../outputs/validation/cninfo_a_class_phase3_50_company_commit_boundary_summary.md) |
+| effective accepted final | **49 / 50** |
+| A3M017 caveat | **retained** · `unresolved_network_orgid_failure` |
+| CNINFO during review | **0** |
+| boundary gate | **`a_class_phase3_50_company_commit_boundary_review_gate = READY_FOR_COMMIT_REVIEW`** |
+
+### Next immediate task
+
+**Human commit approval** — explicit-path Phase 3 commit if approved（A3M017 caveat retained · **NOT started**）。
 
 ---
 
@@ -3168,6 +3312,91 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 ---
 
+---
+
+## 7dqj. C 类 Phase 3.5 Expanded Snapshot Closure Review（2026-07-10）
+
+> **并行约束：** offline closure only；**无 CNINFO** · **无 rebuild** · **无 commit** · **schema 不变**。
+
+| 项 | 内容 |
+|----|------|
+| closure review | [cninfo_c_class_phase35_expanded_snapshot_closure_review.md](cninfo_c_class_phase35_expanded_snapshot_closure_review.md) |
+| closure script | [review_cninfo_c_class_phase35_expanded_snapshot_closure.py](../lab/review_cninfo_c_class_phase35_expanded_snapshot_closure.py) |
+| closure metrics | [cninfo_c_class_phase35_expanded_snapshot_closure_metrics.csv](../outputs/validation/cninfo_c_class_phase35_expanded_snapshot_closure_metrics.csv) |
+| closure summary | [cninfo_c_class_phase35_expanded_snapshot_closure_summary.md](../outputs/validation/cninfo_c_class_phase35_expanded_snapshot_closure_summary.md) |
+| final caveat ledger | [cninfo_c_class_phase35_expanded_snapshot_final_caveat_ledger.csv](../outputs/validation/cninfo_c_class_phase35_expanded_snapshot_final_caveat_ledger.csv) |
+| next-step recommendation | [cninfo_c_class_phase35_expanded_snapshot_post_closure_next_step_recommendation.md](../outputs/validation/cninfo_c_class_phase35_expanded_snapshot_post_closure_next_step_recommendation.md) |
+| snapshot JSON | **491/491** |
+| qa_ok_with_caveat | **491** |
+| qa_review_required | **0** |
+| holdout remaining | **9** |
+| C35R016 excluded | **yes** |
+| hold_for_review excluded | **8** |
+| CNINFO calls（closure） | **0** |
+| rebuild | **0** |
+| closure gate | **`phase35_expanded_success_subset_snapshot_closure_gate = PASS_WITH_CAVEAT`** |
+| build gate（preserved） | **`PASS_WITH_CAVEAT`** |
+| QA gate（preserved） | **`PASS_WITH_CAVEAT`** |
+| commit / push | **no** |
+
+### 执行结论
+
+- expanded 491 success-subset snapshot track **formally closed with caveat**
+- harvest roots **untouched** · snapshot JSON **read-only inputs**
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+- commit **须单独批准**（commit boundary review next）
+
+### Next immediate task（C-class）
+
+~~C-class Phase 3.5 expanded snapshot commit boundary review~~ → **完成**（§7dqk）
+
+---
+
+## 7dqk. C 类 Phase 3.5 Expanded Snapshot Commit Boundary Review（2026-07-10）
+
+> **offline commit boundary review only** · **无 CNINFO** · **无 commit** · **schema 不变**。
+
+| 项 | 内容 |
+|----|------|
+| boundary review | [cninfo_c_class_phase35_expanded_snapshot_commit_boundary_review.md](cninfo_c_class_phase35_expanded_snapshot_commit_boundary_review.md) |
+| artifact inventory | [cninfo_c_class_phase35_expanded_snapshot_final_artifact_inventory.csv](../outputs/validation/cninfo_c_class_phase35_expanded_snapshot_final_artifact_inventory.csv)（**40 yes / 15 no**） |
+| safe-to-commit list | [cninfo_c_class_phase35_expanded_snapshot_safe_to_commit_list.md](../outputs/validation/cninfo_c_class_phase35_expanded_snapshot_safe_to_commit_list.md) |
+| boundary summary | [cninfo_c_class_phase35_expanded_snapshot_commit_boundary_summary.md](../outputs/validation/cninfo_c_class_phase35_expanded_snapshot_commit_boundary_summary.md) |
+| snapshot JSON policy | **491 files · should_commit=no**（`.gitignore` · offline reproducible） |
+| boundary gate | **`phase35_expanded_success_subset_snapshot_commit_boundary_review_gate = READY_FOR_COMMIT_REVIEW`** |
+| build / QA / closure gates | **unchanged · `PASS_WITH_CAVEAT`** |
+
+### Next immediate task（C-class）
+
+~~C-class Phase 3.5 expanded snapshot commit（须单独批准）~~ → **完成**（§7dql）
+
+---
+
+## 7dql. C 类 Phase 3.5 Expanded Snapshot Commit（2026-07-10）
+
+> **explicit-path git commit only** · **无 CNINFO** · **无 push** · **snapshot JSON 未入库**。
+
+| 项 | 内容 |
+|----|------|
+| safe-to-commit list | [cninfo_c_class_phase35_expanded_snapshot_safe_to_commit_list.md](../outputs/validation/cninfo_c_class_phase35_expanded_snapshot_safe_to_commit_list.md) |
+| committed files | **40**（docs + tooling + validation ledgers） |
+| snapshot JSON | **未 commit**（491 · local reproducible） |
+| holdout remaining | **9** |
+| commit review gate | **`phase35_expanded_success_subset_snapshot_commit_review_gate = READY_FOR_HUMAN_DECISION`** |
+| build / QA / closure / boundary gates | **unchanged** |
+| push | **no** |
+
+### 执行结论
+
+- C-class Phase 3.5 expanded snapshot commit **complete**
+- **不是 verified** · **不是 production_ready** · **不是 testing_stable_sample**
+
+### Next immediate task（C-class）
+
+Human decision on commit review gate · holdout triage / next C-class track planning（offline）
+
+---
+
 ## 7dq. B 类 Phase 1 Schema Review Package（2026-07-09）
 
 > **并行约束：** C-class Phase 3 live harvest 可能在另一终端运行；本轮 **不调用 CNINFO**、**不 live**；**不读写在跑输出根** `outputs/harvest/cninfo_c_class/phase3_batch_500_001/`；**gate 不改为 PASS**。
@@ -3367,7 +3596,17 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 ~~B 类 Phase 3 retry_v2 runner extension + dry-run~~ → **已完成**（§7dxzc）
 
-**B-class Phase 3 retry_v2 live path implementation + human approval review**（**NOT APPROVED**）
+~~B 类 Phase 3 retry_v2 live path implementation~~ → **已完成**（§7dxzd）
+
+~~B 类 Phase 3 retry_v2 isolated live execution~~ → **已完成**（§7dxze）
+
+~~B 类 Phase 3 retry_v2 merge closure review~~ → **已完成**（§7dxf）
+
+~~B 类 Phase 3 final commit boundary review~~ → **已完成**（§7dxg）
+
+~~B 类 Phase 3 explicit-path commit~~ → **已完成**（§7dxgl · **`f3f6077`** · **578 files** · review gate **`READY_FOR_HUMAN_DECISION`** · **无 push**）
+
+**B-class Phase 3 human decision**（retry_v2 live metadata artifact recovery / supplemental commit vs hold closed-with-caveat）
 
 ---
 
@@ -3403,7 +3642,7 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 | approval flag | `--approve-b-class-phase3-100-retry-v2` |
 | runner extension gate | **`b_class_phase3_100_retry_v2_runner_extension_gate = READY_FOR_APPROVAL`** |
 | planning gate | **`b_class_phase3_100_retry_v2_planning_gate = READY_FOR_APPROVAL`** |
-| live path | **not implemented** |
+| live path | **implemented offline**（`process_phase3_retry_v2_live`） |
 | CNINFO calls | **0** |
 | C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
 
@@ -3416,7 +3655,164 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 ### Next immediate task（B-class）
 
-**B-class Phase 3 retry_v2 live path implementation + human approval review**
+**B-class Phase 3 human commit approval**（review safe-to-commit list）
+
+---
+
+## 7dxzd. B 类 Phase 3 Retry v2 Live Path Implementation（2026-07-10）
+
+> **并行约束：** offline live-path implementation only；**无 CNINFO live** · **无 retry_v2 执行** · **schema 不变**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_b_class_phase25_expansion_validation.py](../lab/run_cninfo_b_class_phase25_expansion_validation.py)（`process_phase3_retry_v2_live`） |
+| live-path tests | [test_cninfo_b_class_phase3_100_retry_v2_live_path.py](../lab/test_cninfo_b_class_phase3_100_retry_v2_live_path.py)（**24/24 PASS**） |
+| live path summary | [cninfo_b_class_phase3_100_retry_v2_live_path_summary.md](../outputs/validation/cninfo_b_class_phase3_100_retry_v2_live_path_summary.md) |
+| approval checklist | [cninfo_b_class_phase3_100_retry_v2_approval_checklist.md](../outputs/validation/cninfo_b_class_phase3_100_retry_v2_approval_checklist.md) |
+| command draft | [cninfo_b_class_phase3_100_retry_v2_command_draft.md](cninfo_b_class_phase3_100_retry_v2_command_draft.md) |
+| universe | **91**（B3R2_001–B3R2_091） |
+| acceptance threshold | **≥82/91** → `PASS_WITH_CAVEAT` |
+| approval flag | `--approve-b-class-phase3-100-retry-v2` |
+| live path gate | **`b_class_phase3_100_retry_v2_live_path_gate = READY_FOR_APPROVAL`** |
+| approval_status | **NOT_APPROVED** |
+| CNINFO calls | **0** |
+
+### 执行结论
+
+- live path stub **已替换**为 gated implementation
+- approval guard · universe **91** · exclusions · output isolation · write-blocks **已测试**
+- dry-run **91/91** · CNINFO **0**（reconfirmed）
+- **未执行 live** · **未生成 live report**
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task（B-class）
+
+**B-class Phase 3 human commit approval**（review safe-to-commit list）
+
+---
+
+## 7dxze. B 类 Phase 3 Retry v2 Isolated Live Execution（2026-07-10）
+
+> **并行约束：** isolated live only；**metadata + URL lineage** · **无 PDF** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| approval | **`APPROVED_FOR_THIS_LIVE_ONLY`**（in-session human approval） |
+| live report | [b_class_phase3_100_retry_v2_report.csv](../outputs/validation/cninfo_b_class_phase3_100_retry_v2/reports/b_class_phase3_100_retry_v2_report.csv) |
+| live summary | [b_class_phase3_100_retry_v2_summary.md](../outputs/validation/cninfo_b_class_phase3_100_retry_v2/reports/b_class_phase3_100_retry_v2_summary.md) |
+| quality report | [b_class_phase3_100_retry_v2_quality_report.csv](../outputs/validation/cninfo_b_class_phase3_100_retry_v2/reports/b_class_phase3_100_retry_v2_quality_report.csv) |
+| cases executed | **91/91** |
+| acceptable | **91/91** |
+| failed | **0** |
+| CNINFO requests | **182** |
+| PDF / OCR / extraction / DB / MinIO / RAG | **0** |
+| execution gate | **`b_class_phase3_100_retry_v2_execution_gate = PASS_WITH_CAVEAT`** |
+| commit / push | **no** |
+
+### 执行结论
+
+- persistent **91** unresolved cases **全部 acceptable**
+- B3E087 + 8 recovered + prior phases **未 rerun**
+- original / failed-retry / EP002 precheck / Phase 2.5 reports **未触碰**
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task（B-class）
+
+**B-class Phase 3 human commit approval**（review safe-to-commit list）
+
+---
+
+## 7dxf. B 类 Phase 3 Retry v2 Merge Closure Review（2026-07-10）
+
+> **并行约束：** offline merge closure only；**无 CNINFO** · **无 live** · **无 rerun** · **schema 不变**。
+
+| 项 | 内容 |
+|----|------|
+| closure review | [cninfo_b_class_phase3_100_retry_v2_merge_closure_review.md](cninfo_b_class_phase3_100_retry_v2_merge_closure_review.md) |
+| effective merged result v2 | [cninfo_b_class_phase3_100_effective_merged_result_v2.csv](../outputs/validation/cninfo_b_class_phase3_100_effective_merged_result_v2.csv) |
+| retry_v2 recovered ledger | [cninfo_b_class_phase3_100_retry_v2_recovered_case_ledger.csv](../outputs/validation/cninfo_b_class_phase3_100_retry_v2_recovered_case_ledger.csv) |
+| closure metrics | [cninfo_b_class_phase3_100_retry_v2_closure_metrics.csv](../outputs/validation/cninfo_b_class_phase3_100_retry_v2_closure_metrics.csv) |
+| closure summary | [cninfo_b_class_phase3_100_retry_v2_closure_summary.md](../outputs/validation/cninfo_b_class_phase3_100_retry_v2_closure_summary.md) |
+| next-step recommendation | [cninfo_b_class_phase3_100_post_retry_v2_next_step_recommendation.md](cninfo_b_class_phase3_100_post_retry_v2_next_step_recommendation.md) |
+| pre-merge effective | **9/100** |
+| post-merge effective | **100/100** |
+| effective unresolved final | **0/100** |
+| merge conflicts | **0** |
+| CNINFO calls（closure round） | **0** |
+| closure gate | **`b_class_phase3_100_retry_v2_closure_gate = PASS_WITH_CAVEAT`** |
+| commit / push | **no** |
+
+### 执行结论
+
+- 1 hold + 8 failed-retry recovered + 91 retry_v2 recovered → **100/100 effective accepted**
+- 历史 execution gates **保持** FAIL_REVIEW_REQUIRED（original + failed-retry）
+- prior live reports **read-only** · **未修改**
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task（B-class）
+
+**B-class Phase 3 human commit approval**（review safe-to-commit list）
+
+---
+
+## 7dxg. B 类 Phase 3 Final Commit Boundary Review（2026-07-10）
+
+> **并行约束：** offline commit boundary review only；**无 CNINFO** · **无 live** · **无 commit** · **schema 不变**。
+
+| 项 | 内容 |
+|----|------|
+| boundary review | [cninfo_b_class_phase3_100_final_commit_boundary_review.md](cninfo_b_class_phase3_100_final_commit_boundary_review.md) |
+| artifact inventory | [cninfo_b_class_phase3_100_final_artifact_inventory.csv](../outputs/validation/cninfo_b_class_phase3_100_final_artifact_inventory.csv) |
+| caveat ledger | [cninfo_b_class_phase3_100_final_caveat_ledger.csv](../outputs/validation/cninfo_b_class_phase3_100_final_caveat_ledger.csv) |
+| safe-to-commit list | [cninfo_b_class_phase3_100_safe_to_commit_list.md](../outputs/validation/cninfo_b_class_phase3_100_safe_to_commit_list.md) |
+| boundary summary | [cninfo_b_class_phase3_100_commit_boundary_summary.md](../outputs/validation/cninfo_b_class_phase3_100_commit_boundary_summary.md) |
+| effective merged result v2 | [cninfo_b_class_phase3_100_effective_merged_result_v2.csv](../outputs/validation/cninfo_b_class_phase3_100_effective_merged_result_v2.csv) |
+| effective accepted final | **100/100** |
+| should_commit | **763 yes · 12 no** |
+| CNINFO calls（boundary review） | **0** |
+| boundary review gate | **`b_class_phase3_100_commit_boundary_review_gate = READY_FOR_COMMIT_REVIEW`** |
+| commit / push | **no** |
+
+### 执行结论
+
+- artifact inventory · caveat ledger · safe-to-commit list **已生成**
+- 历史 FAIL_REVIEW_REQUIRED execution gates **保持**
+- prior live reports **未修改**
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+- commit **须单独批准**
+
+### Next immediate task（B-class）
+
+**B-class Phase 3 human decision**（retry_v2 live metadata artifact recovery / supplemental commit vs hold closed-with-caveat）
+
+---
+
+## 7dxgl. B 类 Phase 3 Explicit-Path Commit（2026-07-10）
+
+> **并行约束：** explicit-path git commit only；**无 CNINFO** · **无 live** · **无 rerun** · **无 push** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| commit hash | **`f3f6077`** |
+| committed files | **578**（inventory **763 yes**；**185** retry_v2 live metadata paths absent on disk） |
+| staging | explicit-path only（no `git add .` / `-A`） |
+| tests | retry_v2 runner **26/26 PASS** · live-path **24/24 PASS** |
+| CNINFO（commit round） | **0** |
+| commit review gate | **`b_class_phase3_100_commit_review_gate = READY_FOR_HUMAN_DECISION`** |
+| prior B-class gates | **unchanged** |
+| push | **no** |
+
+### 执行结论
+
+- safe-to-commit list followed for all paths present on disk
+- no A/C/D unrelated files committed
+- no PDF / DB / MinIO / RAG committed
+- **不是 verified** · **不是 production_ready** · **不是 testing_stable_sample**
+- **185** retry_v2 live report / raw_metadata / quality files listed in inventory but missing at commit time → human decision on supplemental recovery commit
+
+### Next immediate task（B-class）
+
+**B-class Phase 3 human decision**（artifact recovery vs hold closed-with-caveat）
 
 ---
 
@@ -3489,7 +3885,7 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 ~~B-class Phase 3 retry_v2 runner extension + dry-run~~ → **已完成**（§7dxzc）
 
-**B-class Phase 3 retry_v2 live path implementation + human approval review**（**NOT APPROVED**）
+**B-class Phase 3 human commit approval**（review safe-to-commit list）
 
 ---
 
@@ -3568,7 +3964,7 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 ~~B-class Phase 3 retry_v2 runner extension + dry-run~~ → **已完成**（§7dxzc）
 
-**B-class Phase 3 retry_v2 live path implementation + human approval review**（**NOT APPROVED**）
+**B-class Phase 3 human commit approval**（review safe-to-commit list）
 
 ---
 
@@ -3617,7 +4013,7 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 ~~B-class Phase 3 retry_v2 runner extension + dry-run~~ → **已完成**（§7dxzc）
 
-**B-class Phase 3 retry_v2 live path implementation + human approval review**（**NOT APPROVED**）
+**B-class Phase 3 human commit approval**（review safe-to-commit list）
 
 ---
 
@@ -5377,6 +5773,175 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 - **无 DLC006R rerun** · track 保持 closed-with-caveat
 
 **红线：** **不是 verified** · **不是 production_ready**
+
+---
+
+## 7dzai. D 类 Next Component Planning Package（2026-07-10）
+
+> **并行约束：** 离线规划 only · **无 CNINFO** · **无 live** · **无 commit** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| planning | [cninfo_d_class_next_component_planning.md](cninfo_d_class_next_component_planning.md) |
+| candidate matrix | [cninfo_d_class_next_component_candidate_matrix.csv](../outputs/validation/cninfo_d_class_next_component_candidate_matrix.csv)（**7** 组件） |
+| recommendation | [cninfo_d_class_next_component_recommendation.md](../outputs/validation/cninfo_d_class_next_component_recommendation.md) |
+| planning summary | [cninfo_d_class_next_component_planning_summary.md](../outputs/validation/cninfo_d_class_next_component_planning_summary.md) |
+| primary recommendation | **`margin_trading`** |
+| planning gate | **`d_class_next_component_planning_gate = READY_FOR_HUMAN_DECISION`** |
+| future live approval | **`NOT_APPROVED`** |
+| known-event closure gate | **`PASS_WITH_CAVEAT`**（保持） |
+| CNINFO calls（本回合） | **0** |
+
+### 执行结论
+
+- known-event replacement track **保持 closed-with-caveat**
+- **禁止** DLC003R/DLC006R rerun · **禁止** disclosure→captured_normal
+- 推荐下一组件 **`margin_trading`** · 第一切片 universe **5** · request cap **≤20**（未来规划值）
+- runner 已存在 · extension **后续任务** · 本任务 **不实现**
+- 下一步：人工决策 → margin_trading approval package 准备
+
+**红线：** **不是 verified** · **不是 production_ready**
+
+---
+
+## 7dzaj. D 类 margin_trading First-Slice Approval Package（2026-07-10）
+
+> **并行约束：** 离线 approval package only · **无 CNINFO** · **无 live** · **无 runner extension** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| first-slice plan | [cninfo_d_class_margin_trading_first_slice_plan.md](cninfo_d_class_margin_trading_first_slice_plan.md) |
+| universe draft | [cninfo_d_class_margin_trading_first_slice_universe_draft.csv](../outputs/validation/cninfo_d_class_margin_trading_first_slice_universe_draft.csv)（**5** 行 · DMT001–DMT005） |
+| approval checklist | [cninfo_d_class_margin_trading_first_slice_approval_checklist.md](../outputs/validation/cninfo_d_class_margin_trading_first_slice_approval_checklist.md) |
+| command draft | [cninfo_d_class_margin_trading_first_slice_command_draft.md](cninfo_d_class_margin_trading_first_slice_command_draft.md)（**NOT APPROVED**） |
+| approval summary | [cninfo_d_class_margin_trading_first_slice_approval_summary.md](../outputs/validation/cninfo_d_class_margin_trading_first_slice_approval_summary.md) |
+| component | **`margin_trading`** · `company_metric_daily` |
+| request cap (future) | **≤ 20** |
+| success criteria (future) | **≥ 3/5** acceptable |
+| excluded primary cases | **688671** · **301259** |
+| approval gate | **`d_class_margin_trading_first_slice_approval_gate = READY_FOR_APPROVAL`** |
+| known-event closure gate | **`PASS_WITH_CAVEAT`**（保持） |
+| CNINFO calls（本回合） | **0** |
+
+### 执行结论
+
+- approval package 齐备 · **NOT APPROVED live**
+- known-event track **保持 closed-with-caveat** · **无 DLC003R/DLC006R rerun**
+- runner first-slice extension **后续任务** · 本任务 **不实现**
+- 下一步：人工 approval → runner extension design + dry-run
+
+**红线：** **不是 PASS** · **不是 live_ready** · **不是 verified** · **不是 production_ready**
+
+---
+
+## 7dzak. D 类 margin_trading First-Slice Runner 扩展 + Dry-run（2026-07-10）
+
+> **并行约束：** offline runner extension + dry-run only · **无 CNINFO** · **无 live** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| runner | `lab/run_cninfo_d_class_tiny_live_validation.py` |
+| tests | `lab/test_cninfo_d_class_margin_trading_first_slice_runner.py`（**21/21 PASS**） |
+| extension summary | [cninfo_d_class_margin_trading_first_slice_runner_extension_summary.md](../outputs/validation/cninfo_d_class_margin_trading_first_slice_runner_extension_summary.md) |
+| dry-run report | [d_class_margin_trading_first_slice_dryrun_report.csv](../outputs/validation/cninfo_d_class_margin_trading_first_slice/reports/d_class_margin_trading_first_slice_dryrun_report.csv) |
+| dry-run summary | [d_class_margin_trading_first_slice_dryrun_summary.md](../outputs/validation/cninfo_d_class_margin_trading_first_slice/reports/d_class_margin_trading_first_slice_dryrun_summary.md) |
+| flags | `--margin-trading-first-slice` · `--approve-d-class-margin-trading-first-slice` |
+| dry-run result | **5/5 planned_ok** · planned **20** · CNINFO **0** |
+| runner extension gate | **`d_class_margin_trading_first_slice_runner_extension_gate = READY_FOR_APPROVAL`** |
+| approval gate | **`READY_FOR_APPROVAL`**（保持 · **NOT APPROVED live**） |
+| known-event closure gate | **`PASS_WITH_CAVEAT`**（保持） |
+
+### 执行结论
+
+- approval guard 已实现 · dry-run **5/5** · CNINFO **0**
+- **688671 / 301259** rejected · output root isolated
+- 下一步：live path implementation（mock tests + 单独 live 批准）
+
+**红线：** **不是 PASS** · **不是 live_ready** · **不是 verified**
+
+---
+
+## 7dzal. D 类 margin_trading First-Slice Live Path 离线实现（2026-07-10）
+
+> **并行约束：** offline live-path implementation + mock tests only · **无 CNINFO** · **无 live** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| runner | `lab/run_cninfo_d_class_tiny_live_validation.py` |
+| live function | `execute_margin_trading_first_slice_live()` |
+| tests | `lab/test_cninfo_d_class_margin_trading_first_slice_live_path.py`（**19/19 PASS** · mock only） |
+| combined tests | runner **21/21** + live-path **19/19** = **40/40 PASS** |
+| live-path summary | [cninfo_d_class_margin_trading_first_slice_live_path_summary.md](../outputs/validation/cninfo_d_class_margin_trading_first_slice_live_path_summary.md) |
+| dry-run reconfirm | **5/5 planned_ok** · planned **20** · CNINFO **0** |
+| live-path gate | **`d_class_margin_trading_first_slice_live_path_gate = READY_FOR_APPROVAL`** |
+| approval gate | **`READY_FOR_APPROVAL`**（保持 · **NOT APPROVED live**） |
+| known-event closure gate | **`PASS_WITH_CAVEAT`**（保持） |
+
+### 执行结论
+
+- live path **已实现** · approval guard 仍必需 · **未执行 live**
+- **688671 / 301259** excluded · output root isolated · write-blocks enforced
+- request cap ≤ **20** · PDF/OCR/extraction/DB/MinIO/RAG blocked
+- 下一步：人工批准 live path gate → 隔离 margin_trading first-slice live（≥3/5 acceptable → `PASS_WITH_CAVEAT`）
+
+**红线：** **不是 PASS** · **不是 live_ready** · **不是 verified**
+
+---
+
+## 7dzam. D 类 margin_trading First-Slice Isolated Live 执行（2026-07-10）
+
+> **并行约束：** human-approved in-session isolated live · metadata / structured-table only · **不是 verified** · **无 commit** · **无 push**。
+
+| 项 | 内容 |
+|----|------|
+| runner | `lab/run_cninfo_d_class_tiny_live_validation.py` |
+| approval | human in-session · `--approve-d-class-margin-trading-first-slice` |
+| universe | **5** · DMT001–DMT005 · **688671 / 301259 excluded** |
+| CNINFO requests | **5**（cap ≤ **20**） |
+| acceptable | **5/5** |
+| retrieval_status | **found ×5** · failed **0** · empty_but_valid **0** · needs_review **0** |
+| live report | [d_class_margin_trading_first_slice_live_report.csv](../outputs/validation/cninfo_d_class_margin_trading_first_slice/reports/d_class_margin_trading_first_slice_live_report.csv) |
+| live summary | [d_class_margin_trading_first_slice_live_summary.md](../outputs/validation/cninfo_d_class_margin_trading_first_slice/reports/d_class_margin_trading_first_slice_live_summary.md) |
+| quality report | [d_class_margin_trading_first_slice_quality_report.csv](../outputs/validation/cninfo_d_class_margin_trading_first_slice/reports/d_class_margin_trading_first_slice_quality_report.csv) |
+| execution gate | **`d_class_margin_trading_first_slice_execution_gate = PASS_WITH_CAVEAT`** |
+| known-event closure gate | **`PASS_WITH_CAVEAT`**（保持） |
+
+### 执行结论
+
+- isolated live **已执行** · all **5/5 found/acceptable** · early stop per case
+- no PDF/OCR/extraction/DB/MinIO/RAG · no disclosure→captured_normal
+- known-event track **保持 closed-with-caveat**
+- 下一步：margin_trading first-slice closure review（offline）
+
+**红线：** **不是 bare PASS** · **不是 verified** · **不是 production_ready** · **无 commit**
+
+---
+
+## 7dzan. D 类 margin_trading First-Slice Closure Review（2026-07-10）
+
+> **并行约束：** offline closure review only · **无 CNINFO** · **无 live** · **无 rerun** · **不是 verified** · **无 commit**。
+
+| 项 | 内容 |
+|----|------|
+| closure review | [cninfo_d_class_margin_trading_first_slice_closure_review.md](cninfo_d_class_margin_trading_first_slice_closure_review.md) |
+| closure summary | [cninfo_d_class_margin_trading_first_slice_closure_summary.md](../outputs/validation/cninfo_d_class_margin_trading_first_slice_closure_summary.md) |
+| closure metrics | [cninfo_d_class_margin_trading_first_slice_closure_metrics.csv](../outputs/validation/cninfo_d_class_margin_trading_first_slice_closure_metrics.csv) |
+| effective result | [cninfo_d_class_margin_trading_first_slice_effective_result.csv](../outputs/validation/cninfo_d_class_margin_trading_first_slice_effective_result.csv) |
+| caveat ledger | [cninfo_d_class_margin_trading_first_slice_final_caveat_ledger.csv](../outputs/validation/cninfo_d_class_margin_trading_first_slice_final_caveat_ledger.csv) |
+| next-step recommendation | [cninfo_d_class_margin_trading_first_slice_post_closure_next_step_recommendation.md](../outputs/validation/cninfo_d_class_margin_trading_first_slice_post_closure_next_step_recommendation.md) |
+| acceptable / found | **5/5** · failed **0** · unresolved **0** |
+| CNINFO（本回合） | **0** |
+| closure gate | **`d_class_margin_trading_first_slice_closure_gate = PASS_WITH_CAVEAT`** |
+| execution gate | **`PASS_WITH_CAVEAT`**（保持） |
+| known-event closure gate | **`PASS_WITH_CAVEAT`**（保持） |
+
+### 执行结论
+
+- first-slice **closed with documented caveats only** · **688671 / 301259** excluded
+- no PDF/OCR/extraction/DB/MinIO/RAG · no disclosure→captured_normal
+- 下一步：**commit boundary review**（offline · 推荐优先）
+
+**红线：** **不是 bare PASS** · **不是 verified** · **无 commit**
 
 ---
 
@@ -7513,7 +8078,7 @@ P0 duplicate → P1 BSE legacy → P2 rename → P3 high risk manual → P4 low 
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **863 snapshot 已生成**（§7cc）；**`SNAPSHOT_GENERATED_QA_REVIEW`**；Phase 3.5 isolated resume QA + merge planning **完成**（§7dqe · updated success **491** · holdout **9** · gate **`PASS_WITH_CAVEAT`**）；**下一步** expanded success-subset snapshot planning 或 C35R016 retry review。**并行：A 类 Phase 2 explicit-path commit 已完成**（§7dzxj · commit **`cad5ed1`** · gate **`READY_FOR_HUMAN_DECISION`** · CNINFO **0** · **无 push** · **不是 verified**）。**BSE legacy** HOLD。
+当前 Phase：C 类 **863 snapshot 已生成**（§7cc）+ Phase 3.5 expanded **491** snapshot commit **完成**（§7dql · gate **`READY_FOR_HUMAN_DECISION`** · snapshot JSON **未入库**）；**`SNAPSHOT_GENERATED_QA_REVIEW`**。**并行：B 类 Phase 3 explicit-path commit 已完成**（§7dxgl · **`f3f6077`** · **578 files** · review gate **`READY_FOR_HUMAN_DECISION`** · **无 push** · **不是 verified**）；**下一步** retry_v2 live metadata artifact recovery human decision。**A 类 Phase 3 50-company final commit boundary review 已完成**（§7dzxp · boundary gate **`READY_FOR_COMMIT_REVIEW`** · **无 commit** · **不是 verified**）。**BSE legacy** HOLD。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

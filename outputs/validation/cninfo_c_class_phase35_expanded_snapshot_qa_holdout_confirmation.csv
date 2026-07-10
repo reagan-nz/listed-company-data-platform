@@ -1,0 +1,10 @@
+company_code,company_name,holdout_reason,resume_case_id,resume_qa_classification,snapshot_include,snapshot_json_present,qa_outcome,recommended_next_action,notes
+000003,PT金田A,hold_for_review,,hold_for_review,no,false,excluded_holdout_confirmed,identity_review_needed,hold_for_review excluded; not silently promoted
+000578,盐湖集团,hold_for_review,,hold_for_review,no,false,excluded_holdout_confirmed,identity_review_needed,hold_for_review excluded; not silently promoted
+000666,经纬纺机,hold_for_review,,hold_for_review,no,false,excluded_holdout_confirmed,identity_review_needed,hold_for_review excluded; not silently promoted
+000689,ST宏业,hold_for_review,,hold_for_review,no,false,excluded_holdout_confirmed,identity_review_needed,hold_for_review excluded; not silently promoted
+000861,海印股份,hold_for_review,,hold_for_review,no,false,excluded_holdout_confirmed,identity_review_needed,hold_for_review excluded; not silently promoted
+000961,ST中南,hold_for_review,,hold_for_review,no,false,excluded_holdout_confirmed,identity_review_needed,hold_for_review excluded; not silently promoted
+002280,ST联络,hold_for_review,,hold_for_review,no,false,excluded_holdout_confirmed,identity_review_needed,hold_for_review excluded; not silently promoted
+301212,联盛化学,retry_before_snapshot,C35R016,still_partial,no,false,excluded_holdout_confirmed,human_review_c35r016_executive_retry,C35R016 not promoted; still_partial holdout
+600220,ST阳光,hold_for_review,,hold_for_review,no,false,excluded_holdout_confirmed,identity_review_needed,hold_for_review excluded; not silently promoted

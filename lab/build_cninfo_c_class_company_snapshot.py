@@ -232,9 +232,26 @@ def _pick_scalar_fields(
 
 def _load_source_records(company_code: str) -> Dict[str, Any]:
     """加载该公司全部 normalized 源。"""
+    return load_source_records_at_paths(
+        company_code,
+        lambda source_id: _norm_path(source_id, company_code),
+    )
+
+
+def load_source_records_at_paths(
+    company_code: str,
+    resolve_path: Any,
+) -> Dict[str, Any]:
+    """按 source_id 从自定义路径加载 normalized 源。"""
     loaded: Dict[str, Any] = {}
     for source_id in SOURCE_TO_SUBDIR:
-        path = _norm_path(source_id, company_code)
+        path = resolve_path(source_id)
+        if not path or not os.path.isfile(path):
+            if source_id in ARRAY_SOURCES:
+                loaded[source_id] = []
+            else:
+                loaded[source_id] = None
+            continue
         if source_id in ARRAY_SOURCES:
             rows = _load_jsonl(path)
             for row in rows:
@@ -246,6 +263,35 @@ def _load_source_records(company_code: str) -> Dict[str, Any]:
                 obj["_source_id"] = source_id
             loaded[source_id] = obj
     return loaded
+
+
+def _load_harvest_status_at_root(
+    company_code: str,
+    harvest_root: str,
+) -> Optional[Dict[str, str]]:
+    path = os.path.join(harvest_root, "quality", "company_harvest_status.csv")
+    if not os.path.isfile(path):
+        return None
+    with open(path, encoding="utf-8") as fh:
+        for row in csv.DictReader(fh):
+            if row["company_code"] == company_code:
+                return row
+    return None
+
+
+def _load_source_quality_at_root(harvest_root: str) -> Dict[str, str]:
+    path = os.path.join(harvest_root, "quality", "source_quality.csv")
+    out: Dict[str, str] = {}
+    if not os.path.isfile(path):
+        return out
+    with open(path, encoding="utf-8") as fh:
+        for row in csv.DictReader(fh):
+            key = row["source_status_key"]
+            if ":" in key:
+                sid, status = key.split(":", 1)
+                if sid not in out:
+                    out[sid] = status
+    return out
 
 
 def _flat_scalar_records(loaded: Dict[str, Any]) -> List[Dict[str, Any]]:
@@ -490,22 +536,47 @@ def build_snapshot(
     mapping_rows: List[Dict[str, str]],
 ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     """构建单公司 snapshot；返回 (snapshot, build_stats)。"""
-    by_module = _mapping_by_module(mapping_rows)
     loaded = _load_source_records(company_code)
+    return build_snapshot_from_loaded(
+        company_code,
+        mapping_rows,
+        loaded,
+        harvest_row=_load_harvest_status(company_code),
+        source_quality=_load_source_quality_map(),
+        input_path_resolver=lambda source_id: _norm_path(source_id, company_code),
+    )
+
+
+def build_snapshot_from_loaded(
+    company_code: str,
+    mapping_rows: List[Dict[str, str]],
+    loaded: Dict[str, Any],
+    harvest_row: Optional[Dict[str, str]] = None,
+    source_quality: Optional[Dict[str, str]] = None,
+    input_path_resolver: Optional[Any] = None,
+) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+    """从已加载 normalized 源构建 snapshot。"""
+    by_module = _mapping_by_module(mapping_rows)
     scalar_records = _flat_scalar_records(loaded)
 
     basic = loaded.get("cninfo_company_basic_profile") or {}
     company_name = basic.get("company_name", "") if isinstance(basic, dict) else ""
 
-    harvest_row = _load_harvest_status(company_code)
-    source_quality = _load_source_quality_map()
+    if harvest_row is None:
+        harvest_row = _load_harvest_status(company_code)
+    if source_quality is None:
+        source_quality = _load_source_quality_map()
 
     modules: Dict[str, Any] = {}
     input_files: List[str] = []
 
     for source_id in SOURCE_TO_SUBDIR:
-        path = _norm_path(source_id, company_code)
-        if os.path.isfile(path):
+        path = (
+            input_path_resolver(source_id)
+            if input_path_resolver is not None
+            else _norm_path(source_id, company_code)
+        )
+        if path and os.path.isfile(path):
             input_files.append(os.path.relpath(path, BASE_DIR))
 
     array_modules = {

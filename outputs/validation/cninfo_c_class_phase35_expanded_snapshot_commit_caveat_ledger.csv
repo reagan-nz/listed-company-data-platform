@@ -1,0 +1,34 @@
+caveat_id,caveat_category,scope,severity,affected_count,commit_boundary_status,notes
+CAV001,module,technology_profile,expected,491,documented_accepted,not_modeled_no_rd_source; expected not_available across expanded subset
+CAV002,module,shareholder_profile,expected,491,documented_accepted,source_partial_top_n; partial expected for all companies
+CAV003,module,capital_action_profile,expected,491,documented_accepted,share_capital_source_partial; partial expected
+CAV004,module,risk_profile,expected,491,documented_accepted,security_observe_only; partial expected
+CAV005,module,market_behavior,expected,491,documented_accepted,security_observe_only; partial expected
+CAV006,module,investor_relation,expected,491,documented_accepted,overlaps organization_profile; partial expected
+CAV007,module,dividend_profile,low,17,documented_accepted,dividend_valid_empty_or_parse_partial; 17 companies with extra partial signals
+CAV008,module,executive_profile,low,6,documented_accepted,empty_but_valid_or_sparse; 6 companies
+CAV009,module,financial_snapshot,low,9,documented_accepted,share_capital_empty_but_valid; 9 companies
+CAV010,module,industry_profile,low,2,documented_accepted,expected_partial_mix; 2 companies
+CAV011,module,event_timeline,low,2,documented_accepted,derived_from_dividend_share_capital; 2 companies
+CAV012,module,organization_profile,low,2,documented_accepted,partial_or_sparse_expected; 2 companies
+CAV020,planning,universe_planning_caveat_low,low,35,documented_accepted,prior harvest QA caveat_level=low; accepted at closure
+CAV021,planning,universe_planning_caveat_medium,medium,37,documented_accepted,prior harvest QA caveat_level=medium; accepted at closure
+CAV022,planning,included_with_caveat_status,low,44,documented_accepted,snapshot_candidate_status=included_with_caveat in universe CSV
+CAV023,merge_routing,resume_merged_companies,informational,28,documented_accepted,28 resume-merged companies; merge-manifest primary/fallback routing applied
+CAV024,snapshot_status,complete_with_caveat,expected,491,documented_accepted,all 491 snapshots complete_with_caveat; no qa_review_required
+HOLD001,holdout,000003,excluded,0,excluded_confirmed,hold_for_review excluded; not silently promoted
+HOLD002,holdout,000578,excluded,0,excluded_confirmed,hold_for_review excluded; not silently promoted
+HOLD003,holdout,000666,excluded,0,excluded_confirmed,hold_for_review excluded; not silently promoted
+HOLD004,holdout,000689,excluded,0,excluded_confirmed,hold_for_review excluded; not silently promoted
+HOLD005,holdout,000861,excluded,0,excluded_confirmed,hold_for_review excluded; not silently promoted
+HOLD006,holdout,000961,excluded,0,excluded_confirmed,hold_for_review excluded; not silently promoted
+HOLD007,holdout,002280,excluded,0,excluded_confirmed,hold_for_review excluded; not silently promoted
+HOLD008,holdout,301212,excluded,0,excluded_confirmed,C35R016 not promoted; still_partial holdout
+HOLD009,holdout,600220,excluded,0,excluded_confirmed,hold_for_review excluded; not silently promoted
+CBV001,commit_boundary,all_491_snapshots,expected,491,carry_forward,all complete_with_caveat / qa_ok_with_caveat; safe to reference not verified
+CBV002,holdout,holdout_remaining,excluded,9,excluded_confirmed,8 hold_for_review + C35R016; not in commit scope
+CBV003,holdout,301212,excluded,0,still_partial_excluded,C35R016 executive http_error; not promoted at commit boundary
+CBV004,merge_routing,resume_merged,informational,28,documented_accepted,28 resume companies included via merge-manifest routing
+CBV005,signoff,verified,not_applicable,0,not_marked,not verified at commit boundary
+CBV006,signoff,production_ready,not_applicable,0,not_marked,not production_ready at commit boundary
+CBV007,snapshot_output_policy,snapshot_json_tree,policy,491,commit_excluded_regenerate,JSON under outputs/snapshot/ gitignored; regenerate offline from harvest+manifest
