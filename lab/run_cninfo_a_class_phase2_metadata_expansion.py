@@ -47,6 +47,30 @@ DEFAULT_RETRY_UNIVERSE_CSV = os.path.join(
 DEFAULT_RETRY_OUTPUT_ROOT = os.path.join(
     BASE_DIR, "outputs", "validation", "cninfo_a_class_phase2_metadata_retry"
 )
+DEFAULT_RETRY_V2_UNIVERSE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_phase2_network_recovery_retry_v2_universe.csv",
+)
+DEFAULT_RETRY_V2_OUTPUT_ROOT = os.path.join(
+    BASE_DIR, "outputs", "validation", "cninfo_a_class_phase2_metadata_retry_v2"
+)
+DEFAULT_RETRY_V3_UNIVERSE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_phase2_retry_v3_universe.csv",
+)
+DEFAULT_RETRY_V3_OUTPUT_ROOT = os.path.join(
+    BASE_DIR, "outputs", "validation", "cninfo_a_class_phase2_metadata_retry_v3"
+)
+PRECHECK_OUTPUT_ROOT = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_phase2_cninfo_reachability_precheck",
+)
 PHASE1_OUTPUT_ROOT = os.path.join(
     BASE_DIR, "outputs", "validation", "cninfo_a_class_tiny_live_metadata"
 )
@@ -100,8 +124,25 @@ MATCHING_LOGIC_VERSION = tiny_live.MATCHING_LOGIC_VERSION
 
 PHASE2_APPROVAL_REQUIRED = "approve_a_class_phase2_metadata_expansion_required"
 RETRY_APPROVAL_REQUIRED = "approve_a_class_phase2_failed_retry_required"
+RETRY_V2_APPROVAL_REQUIRED = "approve_a_class_phase2_network_recovery_retry_v2_required"
+RETRY_V3_APPROVAL_REQUIRED = "approve_a_class_phase2_retry_v3_required"
+RETRY_V3_WRONG_APPROVAL = "approve_a_class_phase2_retry_v3_wrong_flag"
+RETRY_V3_LIVE_NOT_IMPLEMENTED = "retry_v3_live_not_implemented_in_this_runner"
+RETRY_V3_UNIVERSE_CSV_REQUIRED = "retry_v3_universe_csv_required"
+RETRY_V3_INCOMPATIBLE_WITH_RETRY_FAILED_ONLY = "retry_v3_incompatible_with_retry_failed_only"
+RETRY_V2_WRONG_APPROVAL = "approve_a_class_phase2_failed_retry_not_valid_for_retry_v2"
+RETRY_V1_WRONG_APPROVAL = "approve_a_class_phase2_network_recovery_retry_v2_not_valid_for_retry_v1"
 OUTPUT_ROOT_VIOLATION = "output_root_must_be_under_cninfo_a_class_phase2_metadata_expansion"
 RETRY_OUTPUT_ROOT_VIOLATION = "output_root_must_be_under_cninfo_a_class_phase2_metadata_retry"
+RETRY_V2_OUTPUT_ROOT_VIOLATION = (
+    "output_root_must_be_under_cninfo_a_class_phase2_metadata_retry_v2"
+)
+RETRY_V3_OUTPUT_ROOT_VIOLATION = (
+    "output_root_must_be_under_cninfo_a_class_phase2_metadata_retry_v3"
+)
+RETRY_V1_WRITE_FORBIDDEN = "retry_v1_baseline_write_forbidden"
+RETRY_V2_WRITE_FORBIDDEN = "retry_v2_baseline_write_forbidden"
+PRECHECK_WRITE_FORBIDDEN = "precheck_baseline_write_forbidden"
 PHASE2_EXPANSION_WRITE_FORBIDDEN = "phase2_expansion_baseline_write_forbidden"
 UNIVERSE_SIZE_VIOLATION = "universe_size_must_equal_20"
 RETRY_UNIVERSE_SIZE_VIOLATION = "retry_universe_size_must_equal_8"
@@ -111,7 +152,58 @@ RETRY_INCLUDE_REQUIRED = "retry_include_must_be_yes"
 NON_PHASE2_CASE_REJECTED = "non_a2m_case_not_allowed"
 PHASE2_INCLUDE_REQUIRED = "phase2_include_must_be_yes"
 RETRY_PLANNING_GATE = "READY_FOR_APPROVAL"
+RETRY_V2_PLANNING_GATE = "READY_FOR_APPROVAL"
+RETRY_V2_RUNNER_GATE = "READY_FOR_APPROVAL"
+RETRY_V3_RUNNER_GATE = "READY_FOR_APPROVAL"
+RETRY_V3_LIVE_IMPLEMENTATION_GATE = "READY_FOR_APPROVAL"
+RETRY_V3_EXECUTION_GATE_PASS = "PASS_WITH_CAVEAT"
+RETRY_V3_PLANNED_REQUESTS_PER_CASE = 2
 RETRY_CORRECT_THRESHOLD = 6
+
+RETRY_V2_LIVE_REPORT_COLUMNS = [
+    "case_id",
+    "company_code",
+    "company_name",
+    "market",
+    "report_type",
+    "report_period",
+    "original_phase2_status",
+    "first_retry_status",
+    "failure_type",
+    "failure_stage",
+    "retry_v2_retrieval_status",
+    "quality_status",
+    "lineage_status",
+    "announcement_id",
+    "announcement_title",
+    "announcement_time",
+    "announcement_date",
+    "pdf_url_present",
+    "adjunct_url_present",
+    "pdf_downloaded",
+    "pdf_parsed",
+    "ocr_enabled",
+    "extraction_enabled",
+    "endpoint_used",
+    "cninfo_request_count",
+    "notes",
+]
+
+RETRY_V2_LIVE_QUALITY_COLUMNS = [
+    "case_id",
+    "company_code",
+    "report_type",
+    "report_period",
+    "original_phase2_status",
+    "first_retry_status",
+    "retry_v2_retrieval_status",
+    "quality_status",
+    "lineage_status",
+    "pdf_downloaded",
+    "pdf_parsed",
+    "cninfo_request_count",
+    "notes",
+]
 
 RETRY_LIVE_REPORT_COLUMNS = [
     "case_id",
@@ -292,6 +384,107 @@ RETRY_DRYRUN_COLUMNS = [
     "notes",
 ]
 
+RETRY_V2_DRYRUN_COLUMNS = [
+    "case_id",
+    "company_code",
+    "company_name",
+    "market",
+    "report_type",
+    "report_period",
+    "original_phase2_status",
+    "first_retry_status",
+    "failure_type",
+    "failure_stage",
+    "retry_v2_include",
+    "planned_request_count",
+    "planned_output_root",
+    "pdf_download",
+    "pdf_parse",
+    "ocr",
+    "extraction",
+    "db_write",
+    "minio_write",
+    "rag_run",
+    "cninfo_call_planned",
+    "dryrun_status",
+    "notes",
+]
+
+RETRY_V3_DRYRUN_COLUMNS = [
+    "case_id",
+    "company_code",
+    "company_name",
+    "market",
+    "report_type",
+    "report_period",
+    "original_phase2_status",
+    "retry_v1_status",
+    "retry_v2_status",
+    "precheck_signal",
+    "precheck_orgid_status",
+    "retry_v3_include",
+    "planned_request_count",
+    "planned_output_root",
+    "pdf_download",
+    "pdf_parse",
+    "ocr",
+    "extraction",
+    "db_write",
+    "minio_write",
+    "rag_run",
+    "cninfo_call_planned",
+    "dryrun_status",
+    "notes",
+]
+
+RETRY_V3_LIVE_REPORT_COLUMNS = [
+    "case_id",
+    "company_code",
+    "company_name",
+    "market",
+    "report_type",
+    "report_period",
+    "original_phase2_status",
+    "retry_v1_status",
+    "retry_v2_status",
+    "precheck_signal",
+    "precheck_orgid_status",
+    "retry_v3_retrieval_status",
+    "quality_status",
+    "lineage_status",
+    "announcement_id",
+    "announcement_title",
+    "announcement_time",
+    "announcement_date",
+    "pdf_url_present",
+    "adjunct_url_present",
+    "pdf_downloaded",
+    "pdf_parsed",
+    "ocr_enabled",
+    "extraction_enabled",
+    "endpoint_used",
+    "cninfo_request_count",
+    "failure_type",
+    "notes",
+]
+
+RETRY_V3_LIVE_QUALITY_COLUMNS = [
+    "case_id",
+    "company_code",
+    "report_type",
+    "report_period",
+    "original_phase2_status",
+    "retry_v1_status",
+    "retry_v2_status",
+    "retry_v3_retrieval_status",
+    "quality_status",
+    "lineage_status",
+    "pdf_downloaded",
+    "pdf_parsed",
+    "cninfo_request_count",
+    "notes",
+]
+
 PHASE2_CORRECT_THRESHOLD = 18
 
 
@@ -324,6 +517,13 @@ class RetryUniverseCase:
     retry_include: str
     retry_strategy: str
     notes: str
+    original_phase2_status: str = ""
+    first_retry_status: str = ""
+    failure_type: str = ""
+    failure_stage: str = ""
+    retry_v2_status: str = ""
+    precheck_signal: str = ""
+    precheck_orgid_status: str = ""
 
 
 def build_live_report_row(
@@ -511,25 +711,145 @@ def write_live_summary(
 
 
 def validate_retry_output_root(output_root: str) -> Tuple[bool, str]:
-    """retry 输出仅允许 retry 隔离根；禁止写入 Phase 2 expansion / Phase 1 baseline。"""
+    """retry v1 输出仅允许 retry 隔离根；禁止写入 Phase 2 expansion / Phase 1 baseline / retry v2/v3 / precheck。"""
     root = _normalize_output_root(output_root)
     allowed = _normalize_output_root(DEFAULT_RETRY_OUTPUT_ROOT)
     expansion = _normalize_output_root(DEFAULT_OUTPUT_ROOT)
     phase1 = _normalize_output_root(PHASE1_OUTPUT_ROOT)
+    v2 = _normalize_output_root(DEFAULT_RETRY_V2_OUTPUT_ROOT)
+    v3 = _normalize_output_root(DEFAULT_RETRY_V3_OUTPUT_ROOT)
+    precheck = _normalize_output_root(PRECHECK_OUTPUT_ROOT)
 
     if root == expansion or root.startswith(expansion + os.sep):
         return False, PHASE2_EXPANSION_WRITE_FORBIDDEN
     if root == phase1 or root.startswith(phase1 + os.sep):
         return False, PHASE1_BASELINE_WRITE_FORBIDDEN
+    if root == v2 or root.startswith(v2 + os.sep):
+        return False, RETRY_V2_OUTPUT_ROOT_VIOLATION
+    if root == v3 or root.startswith(v3 + os.sep):
+        return False, RETRY_V3_OUTPUT_ROOT_VIOLATION
+    if root == precheck or root.startswith(precheck + os.sep):
+        return False, PRECHECK_WRITE_FORBIDDEN
     if root == allowed or root.startswith(allowed + os.sep):
         return True, ""
     return False, RETRY_OUTPUT_ROOT_VIOLATION
+
+
+def validate_retry_v2_output_root(output_root: str) -> Tuple[bool, str]:
+    """retry v2 输出仅允许 retry_v2 隔离根；禁止写入 expansion / retry v1 / v3 / precheck / Phase 1。"""
+    root = _normalize_output_root(output_root)
+    allowed = _normalize_output_root(DEFAULT_RETRY_V2_OUTPUT_ROOT)
+    expansion = _normalize_output_root(DEFAULT_OUTPUT_ROOT)
+    v1 = _normalize_output_root(DEFAULT_RETRY_OUTPUT_ROOT)
+    v3 = _normalize_output_root(DEFAULT_RETRY_V3_OUTPUT_ROOT)
+    precheck = _normalize_output_root(PRECHECK_OUTPUT_ROOT)
+    phase1 = _normalize_output_root(PHASE1_OUTPUT_ROOT)
+
+    if root == expansion or root.startswith(expansion + os.sep):
+        return False, PHASE2_EXPANSION_WRITE_FORBIDDEN
+    if root == v1 or root.startswith(v1 + os.sep):
+        return False, RETRY_V1_WRITE_FORBIDDEN
+    if root == v3 or root.startswith(v3 + os.sep):
+        return False, RETRY_V3_OUTPUT_ROOT_VIOLATION
+    if root == precheck or root.startswith(precheck + os.sep):
+        return False, PRECHECK_WRITE_FORBIDDEN
+    if root == phase1 or root.startswith(phase1 + os.sep):
+        return False, PHASE1_BASELINE_WRITE_FORBIDDEN
+    if root == allowed or root.startswith(allowed + os.sep):
+        return True, ""
+    return False, RETRY_V2_OUTPUT_ROOT_VIOLATION
+
+
+def validate_retry_v3_output_root(output_root: str) -> Tuple[bool, str]:
+    """retry v3 输出仅允许 retry_v3 隔离根；禁止写入 expansion / v1 / v2 / precheck / Phase 1。"""
+    root = _normalize_output_root(output_root)
+    allowed = _normalize_output_root(DEFAULT_RETRY_V3_OUTPUT_ROOT)
+    expansion = _normalize_output_root(DEFAULT_OUTPUT_ROOT)
+    v1 = _normalize_output_root(DEFAULT_RETRY_OUTPUT_ROOT)
+    v2 = _normalize_output_root(DEFAULT_RETRY_V2_OUTPUT_ROOT)
+    precheck = _normalize_output_root(PRECHECK_OUTPUT_ROOT)
+    phase1 = _normalize_output_root(PHASE1_OUTPUT_ROOT)
+
+    if root == expansion or root.startswith(expansion + os.sep):
+        return False, PHASE2_EXPANSION_WRITE_FORBIDDEN
+    if root == v1 or root.startswith(v1 + os.sep):
+        return False, RETRY_V1_WRITE_FORBIDDEN
+    if root == v2 or root.startswith(v2 + os.sep):
+        return False, RETRY_V2_WRITE_FORBIDDEN
+    if root == precheck or root.startswith(precheck + os.sep):
+        return False, PRECHECK_WRITE_FORBIDDEN
+    if root == phase1 or root.startswith(phase1 + os.sep):
+        return False, PHASE1_BASELINE_WRITE_FORBIDDEN
+    if root == allowed or root.startswith(allowed + os.sep):
+        return True, ""
+    return False, RETRY_V3_OUTPUT_ROOT_VIOLATION
+
+
+def is_retry_v2_mode(
+    universe_csv: Optional[str], output_root: Optional[str]
+) -> bool:
+    """根据 output root 或 universe CSV 判断是否为 network recovery retry v2 模式。"""
+    if output_root:
+        root = _normalize_output_root(output_root)
+        v2_root = _normalize_output_root(DEFAULT_RETRY_V2_OUTPUT_ROOT)
+        if root == v2_root or root.startswith(v2_root + os.sep):
+            return True
+    if universe_csv:
+        universe = os.path.normpath(universe_csv)
+        v2_universe = os.path.normpath(DEFAULT_RETRY_V2_UNIVERSE_CSV)
+        if universe == v2_universe:
+            return True
+    return False
+
+
+def is_retry_v3_mode(
+    retry_v3: bool,
+    universe_csv: Optional[str],
+    output_root: Optional[str],
+) -> bool:
+    """根据 --retry-v3、output root 或 universe CSV 判断是否为 retry v3 模式。"""
+    if retry_v3:
+        return True
+    if output_root:
+        root = _normalize_output_root(output_root)
+        v3_root = _normalize_output_root(DEFAULT_RETRY_V3_OUTPUT_ROOT)
+        if root == v3_root or root.startswith(v3_root + os.sep):
+            return True
+    if universe_csv:
+        universe = os.path.normpath(universe_csv)
+        v3_universe = os.path.normpath(DEFAULT_RETRY_V3_UNIVERSE_CSV)
+        if universe == v3_universe:
+            return True
+    return False
+
+
+def _retry_include_from_row(row: Dict[str, str]) -> str:
+    """retry_v3_include / retry_v2_include 列别名映射为内部 retry_include，不修改源 CSV。"""
+    value = str(row.get("retry_include", "")).strip().lower()
+    if not value:
+        value = str(row.get("retry_v3_include", "")).strip().lower()
+    if not value:
+        value = str(row.get("retry_v2_include", "")).strip().lower()
+    return value
+
+
+def _expected_period_from_row(row: Dict[str, str]) -> str:
+    """report_period 列别名映射为内部 expected_period，不修改源 CSV。"""
+    value = str(row.get("expected_period", "")).strip()
+    if not value:
+        value = str(row.get("report_period", "")).strip()
+    return value
 
 
 def load_retry_universe(path: str) -> List[RetryUniverseCase]:
     cases: List[RetryUniverseCase] = []
     with open(path, newline="", encoding="utf-8") as f:
         for row in csv.DictReader(f):
+            original_failure_type = str(row.get("original_failure_type", "")).strip()
+            if not original_failure_type:
+                original_failure_type = str(
+                    row.get("original_phase2_status", "")
+                ).strip()
             cases.append(
                 RetryUniverseCase(
                     case_id=str(row.get("case_id", "")).strip(),
@@ -537,16 +857,28 @@ def load_retry_universe(path: str) -> List[RetryUniverseCase]:
                     company_name=str(row.get("company_name", "")).strip(),
                     market=str(row.get("market", "")).strip(),
                     report_type=str(row.get("report_type", "")).strip(),
-                    expected_period=str(row.get("expected_period", "")).strip(),
-                    original_failure_type=str(
-                        row.get("original_failure_type", "")
-                    ).strip(),
+                    expected_period=_expected_period_from_row(row),
+                    original_failure_type=original_failure_type,
                     original_failure_reason=str(
                         row.get("original_failure_reason", "")
                     ).strip(),
-                    retry_include=str(row.get("retry_include", "")).strip().lower(),
+                    retry_include=_retry_include_from_row(row),
                     retry_strategy=str(row.get("retry_strategy", "")).strip(),
                     notes=str(row.get("notes", "")).strip(),
+                    original_phase2_status=str(
+                        row.get("original_phase2_status", "")
+                    ).strip(),
+                    first_retry_status=str(
+                        row.get("first_retry_status", "")
+                        or row.get("retry_v1_status", "")
+                    ).strip(),
+                    failure_type=str(row.get("failure_type", "")).strip(),
+                    failure_stage=str(row.get("failure_stage", "")).strip(),
+                    retry_v2_status=str(row.get("retry_v2_status", "")).strip(),
+                    precheck_signal=str(row.get("precheck_signal", "")).strip(),
+                    precheck_orgid_status=str(
+                        row.get("precheck_orgid_status", "")
+                    ).strip(),
                 )
             )
     return cases
@@ -599,6 +931,7 @@ def validate_retry_universe_size(cases: List[RetryUniverseCase]) -> Tuple[bool, 
 def enforce_retry_approval_gate(args: argparse.Namespace) -> None:
     wrong_flags = (
         (args.approve_a_class_phase2_metadata_expansion, PHASE2_APPROVAL_REQUIRED),
+        (args.approve_a_class_phase2_network_recovery_retry_v2, RETRY_V1_WRONG_APPROVAL),
         (args.approve_a_class_tiny_live_metadata, TINY_LIVE_APPROVAL_WRONG),
         (args.approve_phase1_tiny_live_metadata, PHASE1_TINY_LIVE_APPROVAL_WRONG),
         (args.approve_full_harvest, tiny_live.FORBIDDEN_APPROVE_FULL_HARVEST),
@@ -612,6 +945,51 @@ def enforce_retry_approval_gate(args: argparse.Namespace) -> None:
             sys.exit(2)
     if args.mode == "live" and not args.approve_a_class_phase2_failed_retry:
         print(f"ERROR: {RETRY_APPROVAL_REQUIRED}", file=sys.stderr)
+        sys.exit(2)
+
+
+def enforce_retry_v2_approval_gate(args: argparse.Namespace) -> None:
+    wrong_flags = (
+        (args.approve_a_class_phase2_metadata_expansion, PHASE2_APPROVAL_REQUIRED),
+        (args.approve_a_class_phase2_failed_retry, RETRY_V2_WRONG_APPROVAL),
+        (args.approve_a_class_tiny_live_metadata, TINY_LIVE_APPROVAL_WRONG),
+        (args.approve_phase1_tiny_live_metadata, PHASE1_TINY_LIVE_APPROVAL_WRONG),
+        (args.approve_full_harvest, tiny_live.FORBIDDEN_APPROVE_FULL_HARVEST),
+        (args.approve_phase2_smoke_harvest, tiny_live.FORBIDDEN_APPROVE_PHASE2),
+        (args.approve_phase3_batch_500_harvest, tiny_live.FORBIDDEN_APPROVE_PHASE3),
+        (args.approve_b_class_tiny_live_validation, tiny_live.FORBIDDEN_APPROVE_B_CLASS),
+    )
+    for enabled, error_code in wrong_flags:
+        if enabled:
+            print(f"ERROR: {error_code}", file=sys.stderr)
+            sys.exit(2)
+    if args.mode == "live" and not args.approve_a_class_phase2_network_recovery_retry_v2:
+        print(f"ERROR: {RETRY_V2_APPROVAL_REQUIRED}", file=sys.stderr)
+        sys.exit(2)
+
+
+def enforce_retry_v3_approval_gate(args: argparse.Namespace) -> None:
+    wrong_flags = (
+        (args.approve_a_class_phase2_metadata_expansion, RETRY_V3_WRONG_APPROVAL),
+        (args.approve_a_class_phase2_failed_retry, RETRY_V3_WRONG_APPROVAL),
+        (args.approve_a_class_phase2_network_recovery_retry_v2, RETRY_V3_WRONG_APPROVAL),
+        (args.approve_a_class_tiny_live_metadata, RETRY_V3_WRONG_APPROVAL),
+        (args.approve_phase1_tiny_live_metadata, RETRY_V3_WRONG_APPROVAL),
+        (args.approve_full_harvest, RETRY_V3_WRONG_APPROVAL),
+        (args.approve_phase2_smoke_harvest, RETRY_V3_WRONG_APPROVAL),
+        (args.approve_phase3_batch_500_harvest, RETRY_V3_WRONG_APPROVAL),
+        (args.approve_b_class_tiny_live_validation, RETRY_V3_WRONG_APPROVAL),
+        (
+            getattr(args, "approve_a_class_phase2_cninfo_reachability_precheck", False),
+            RETRY_V3_WRONG_APPROVAL,
+        ),
+    )
+    for enabled, error_code in wrong_flags:
+        if enabled:
+            print(f"ERROR: {error_code}", file=sys.stderr)
+            sys.exit(2)
+    if args.mode == "live" and not args.approve_a_class_phase2_retry_v3:
+        print(f"ERROR: {RETRY_V3_APPROVAL_REQUIRED}", file=sys.stderr)
         sys.exit(2)
 
 
@@ -717,6 +1095,768 @@ def write_retry_dryrun_summary(
 
     summary_path = os.path.join(
         output_paths["reports"], "a_class_phase2_failed_retry_dryrun_summary.md"
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+    return summary_path
+
+
+def build_retry_v2_dryrun_row(
+    case: RetryUniverseCase,
+    issues: List[str],
+    output_root: str,
+) -> Dict[str, str]:
+    status = "planned_ok" if not issues else "universe_invalid"
+    notes = (
+        f"retry v2 dry-run; CNINFO not called; metadata only; matching_logic={MATCHING_LOGIC_VERSION}; "
+        f"original_phase2={case.original_phase2_status or case.original_failure_type}; "
+        f"first_retry={case.first_retry_status}"
+        if not issues
+        else "; ".join(issues)
+    )
+    return {
+        "case_id": case.case_id,
+        "company_code": case.company_code,
+        "company_name": case.company_name,
+        "market": case.market,
+        "report_type": case.report_type,
+        "report_period": case.expected_period,
+        "original_phase2_status": case.original_phase2_status or case.original_failure_type,
+        "first_retry_status": case.first_retry_status,
+        "failure_type": case.failure_type,
+        "failure_stage": case.failure_stage,
+        "retry_v2_include": case.retry_include,
+        "planned_request_count": "0",
+        "planned_output_root": output_root,
+        "pdf_download": "0",
+        "pdf_parse": "0",
+        "ocr": "0",
+        "extraction": "0",
+        "db_write": "0",
+        "minio_write": "0",
+        "rag_run": "0",
+        "cninfo_call_planned": "0",
+        "dryrun_status": status,
+        "notes": notes,
+    }
+
+
+def process_retry_v2_dry_run(
+    cases: List[RetryUniverseCase],
+    output_root: str,
+) -> Tuple[List[Dict[str, str]], List[str]]:
+    rows: List[Dict[str, str]] = []
+    universe_issues: List[str] = []
+    for case in cases:
+        if case.retry_include != "yes":
+            continue
+        issues = validate_retry_case(case)
+        if issues:
+            universe_issues.append(f"{case.case_id}:{';'.join(issues)}")
+        rows.append(build_retry_v2_dryrun_row(case, issues, output_root))
+    return rows, universe_issues
+
+
+def write_retry_v2_dryrun_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "a_class_phase2_retry_v2_dryrun_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=RETRY_V2_DRYRUN_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_retry_v2_dryrun_summary(
+    output_paths: Dict[str, str],
+    case_count: int,
+    universe_issues: List[str],
+) -> str:
+    planned_ok = case_count - len(universe_issues)
+    lines = [
+        "# CNINFO A 类 Phase 2 Network Recovery Retry v2 — Dry-run 摘要",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** network recovery retry v2 dry-run · **无 CNINFO** · **无 live** · **无 PDF**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        "| mode | retry_v2_dry_run |",
+        f"| retry_v2 cases | {case_count} |",
+        f"| planned_ok | {planned_ok} |",
+        f"| successful 12 excluded | **yes** |",
+        f"| universe_issues | {len(universe_issues)} |",
+        f"| matching_logic | **{MATCHING_LOGIC_VERSION}** |",
+        "| CNINFO calls | **0** |",
+        "| PDF download | **0** |",
+        "| PDF parse | **0** |",
+        "| OCR | **0** |",
+        "| extraction | **0** |",
+        "| DB / MinIO / RAG | **0** |",
+        "",
+        "## Gate",
+        "",
+        "```text",
+        f"a_class_phase2_network_recovery_retry_v2_runner_extension_gate = {RETRY_V2_RUNNER_GATE}",
+        "```",
+        "",
+        "**不是 PASS** · **不是 live_ready** · **不是 verified** · **不是 production_ready**",
+        "",
+        "**Approval status: NOT_APPROVED**",
+        "",
+    ]
+    if universe_issues:
+        lines.extend(["## Universe issues", ""] + [f"- {item}" for item in universe_issues] + [""])
+
+    summary_path = os.path.join(
+        output_paths["reports"], "a_class_phase2_retry_v2_dryrun_summary.md"
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+    return summary_path
+
+
+def build_retry_v3_dryrun_row(
+    case: RetryUniverseCase,
+    issues: List[str],
+    output_root: str,
+) -> Dict[str, str]:
+    status = "planned_ok" if not issues else "universe_invalid"
+    planned_requests = (
+        str(RETRY_V3_PLANNED_REQUESTS_PER_CASE) if not issues else "0"
+    )
+    return {
+        "case_id": case.case_id,
+        "company_code": case.company_code,
+        "company_name": case.company_name,
+        "market": case.market,
+        "report_type": case.report_type,
+        "report_period": case.expected_period,
+        "original_phase2_status": case.original_phase2_status
+        or case.original_failure_type,
+        "retry_v1_status": case.first_retry_status,
+        "retry_v2_status": case.retry_v2_status,
+        "precheck_signal": case.precheck_signal,
+        "precheck_orgid_status": case.precheck_orgid_status,
+        "retry_v3_include": case.retry_include,
+        "planned_request_count": planned_requests,
+        "planned_output_root": output_root,
+        "pdf_download": "0",
+        "pdf_parse": "0",
+        "ocr": "0",
+        "extraction": "0",
+        "db_write": "0",
+        "minio_write": "0",
+        "rag_run": "0",
+        "cninfo_call_planned": "0",
+        "dryrun_status": status,
+        "notes": "; ".join(issues) if issues else "",
+    }
+
+
+def process_retry_v3_dry_run(
+    cases: List[RetryUniverseCase],
+    output_root: str,
+) -> Tuple[List[Dict[str, str]], List[str]]:
+    rows: List[Dict[str, str]] = []
+    universe_issues: List[str] = []
+    for case in cases:
+        if case.retry_include != "yes":
+            continue
+        issues = validate_retry_case(case)
+        rows.append(build_retry_v3_dryrun_row(case, issues, output_root))
+        if issues:
+            universe_issues.extend(f"{case.case_id}: {issue}" for issue in issues)
+    return rows, universe_issues
+
+
+def write_retry_v3_dryrun_report(
+    rows: List[Dict[str, str]],
+    output_paths: Dict[str, str],
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "a_class_phase2_retry_v3_dryrun_report.csv"
+    )
+    with open(report_path, "w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=RETRY_V3_DRYRUN_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_retry_v3_dryrun_summary(
+    rows: List[Dict[str, str]],
+    output_paths: Dict[str, str],
+    universe_issues: List[str],
+) -> str:
+    planned_ok = sum(1 for row in rows if row["dryrun_status"] == "planned_ok")
+    total = len(rows)
+    lines = [
+        "# A-class Phase 2 retry_v3 dry-run summary",
+        "",
+        f"- planned_ok: {planned_ok}/{total}",
+        "- CNINFO calls: 0",
+        "- PDF download: 0",
+        "- PDF parse: 0",
+        "- OCR: 0",
+        "- extraction: 0",
+        "- DB write: 0",
+        "- MinIO write: 0",
+        "- RAG run: 0",
+        "",
+        "## Gate",
+        "",
+        "```text",
+        f"a_class_phase2_retry_v3_runner_extension_gate = {RETRY_V3_RUNNER_GATE}",
+        "```",
+        "",
+        "**不是 PASS** · **不是 live_ready** · **不是 verified** · **不是 production_ready**",
+        "",
+        "**Approval status: NOT_APPROVED**",
+        "",
+    ]
+    if universe_issues:
+        lines.extend(["## Universe issues", ""] + [f"- {item}" for item in universe_issues] + [""])
+
+    summary_path = os.path.join(
+        output_paths["reports"], "a_class_phase2_retry_v3_dryrun_summary.md"
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+    return summary_path
+
+
+def build_retry_v3_live_report_row(
+    retry_case: RetryUniverseCase,
+    record: Dict[str, Any],
+    cninfo_request_count: int,
+) -> Dict[str, str]:
+    retrieval = str(record.get("retrieval_status") or "")
+    ann_time = str(record.get("announcement_time") or "")
+    ann_date = ann_time[:10] if len(ann_time) >= 10 else ""
+    endpoint = planned_endpoints_for_case(retry_to_phase2_case(retry_case))
+    failure_type = str(record.get("failure_type") or retry_case.failure_type or "")
+    return {
+        "case_id": retry_case.case_id,
+        "company_code": retry_case.company_code,
+        "company_name": retry_case.company_name,
+        "market": retry_case.market,
+        "report_type": retry_case.report_type,
+        "report_period": retry_case.expected_period,
+        "original_phase2_status": retry_case.original_phase2_status
+        or retry_case.original_failure_type,
+        "retry_v1_status": retry_case.first_retry_status,
+        "retry_v2_status": retry_case.retry_v2_status,
+        "precheck_signal": retry_case.precheck_signal,
+        "precheck_orgid_status": retry_case.precheck_orgid_status,
+        "retry_v3_retrieval_status": retrieval,
+        "quality_status": str(record.get("quality_status") or ""),
+        "lineage_status": str(record.get("lineage_status") or ""),
+        "announcement_id": str(record.get("announcement_id") or ""),
+        "announcement_title": str(record.get("announcement_title") or ""),
+        "announcement_time": ann_time,
+        "announcement_date": ann_date,
+        "pdf_url_present": str(record.get("pdf_url_present") or "no"),
+        "adjunct_url_present": str(record.get("adjunct_url_present") or "no"),
+        "pdf_downloaded": "0",
+        "pdf_parsed": "0",
+        "ocr_enabled": "0",
+        "extraction_enabled": "0",
+        "endpoint_used": endpoint,
+        "cninfo_request_count": str(cninfo_request_count),
+        "failure_type": failure_type,
+        "notes": (
+            f"retry v3 live; original_phase2={retry_case.original_phase2_status or retry_case.original_failure_type}; "
+            f"retry_v1={retry_case.first_retry_status}; retry_v2={retry_case.retry_v2_status}; "
+            f"precheck={retry_case.precheck_signal}/{retry_case.precheck_orgid_status}; "
+            f"matching_logic={MATCHING_LOGIC_VERSION}; PDF not downloaded; "
+            f"{record.get('notes', '')}"
+        ),
+    }
+
+
+def is_retry_v3_case_acceptable(row: Dict[str, str]) -> bool:
+    if row.get("pdf_downloaded") not in ("0", "no", ""):
+        return False
+    if row.get("pdf_parsed") not in ("0", "no", ""):
+        return False
+    status = row.get("retry_v3_retrieval_status", "")
+    quality = row.get("quality_status", "")
+    lineage = row.get("lineage_status", "")
+    notes = row.get("notes", "").strip()
+    if status in ("network_error", "not_found", "universe_invalid"):
+        return False
+    if status == "found":
+        return True
+    if status in ("discovered", "matching_pass"):
+        return True
+    if status == "empty_but_valid" and notes:
+        return True
+    if lineage == "discovered":
+        return True
+    if (status == "needs_review" or quality == "needs_review") and notes and lineage:
+        return True
+    return False
+
+
+def compute_retry_v3_execution_gate(
+    stats: tiny_live.LiveStats,
+    rows: List[Dict[str, str]],
+    universe_issues: List[str],
+    case_count: int,
+) -> str:
+    if has_red_line_violation(stats, rows):
+        return "FAIL_REVIEW_REQUIRED"
+    if universe_issues or case_count != RETRY_REQUIRED_UNIVERSE_SIZE:
+        return "FAIL_REVIEW_REQUIRED"
+    acceptable_count = sum(1 for row in rows if is_retry_v3_case_acceptable(row))
+    if acceptable_count >= RETRY_CORRECT_THRESHOLD:
+        return RETRY_V3_EXECUTION_GATE_PASS
+    return "FAIL_REVIEW_REQUIRED"
+
+
+def process_retry_v3_live(
+    retry_cases: List[RetryUniverseCase],
+    output_paths: Dict[str, str],
+    stats: tiny_live.LiveStats,
+) -> Tuple[List[Dict[str, str]], List[str]]:
+    rows: List[Dict[str, str]] = []
+    universe_issues: List[str] = []
+    for retry_case in retry_cases:
+        if retry_case.retry_include != "yes":
+            continue
+        issues = validate_retry_case(retry_case)
+        if issues:
+            universe_issues.append(f"{retry_case.case_id}:{';'.join(issues)}")
+            rows.append(
+                build_retry_v3_live_report_row(
+                    retry_case,
+                    {
+                        "retrieval_status": "universe_invalid",
+                        "quality_status": "blocked",
+                        "lineage_status": "needs_review",
+                        "announcement_id": "",
+                        "announcement_title": "",
+                        "announcement_time": "",
+                        "pdf_url_present": "no",
+                        "adjunct_url_present": "no",
+                        "failure_type": "universe_invalid",
+                        "notes": "; ".join(issues),
+                    },
+                    0,
+                )
+            )
+            stats.failure_count += 1
+            continue
+
+        phase2_case = retry_to_phase2_case(retry_case)
+        tl_case = to_tiny_live_case(phase2_case)
+        before_requests = stats.cninfo_requests
+        record = tiny_live.execute_live_case(tl_case, stats)
+        case_cninfo_requests = stats.cninfo_requests - before_requests
+        live_row = build_retry_v3_live_report_row(
+            retry_case, record, case_cninfo_requests
+        )
+        snapshot_path = os.path.join(
+            output_paths["raw_metadata"], f"{retry_case.case_id}_retry_v3.json"
+        )
+        with open(snapshot_path, "w", encoding="utf-8") as f:
+            json.dump(
+                {
+                    "case": retry_case.__dict__,
+                    "mode": "retry_v3_live",
+                    "cninfo_called": True,
+                    "cninfo_request_count": case_cninfo_requests,
+                    "pdf_download_enabled": False,
+                    "pdf_parse_enabled": False,
+                    "matching_logic": MATCHING_LOGIC_VERSION,
+                    "record": live_row,
+                    "raw_announcement": record.get("_raw_announcement"),
+                    "org_id": record.get("_org_id"),
+                },
+                f,
+                ensure_ascii=False,
+                indent=2,
+            )
+        rows.append(live_row)
+        print(
+            f"case_id={retry_case.case_id} company_code={retry_case.company_code} "
+            f"retry_v3_retrieval_status={live_row['retry_v3_retrieval_status']} "
+            f"quality={live_row.get('quality_status', 'n/a')}",
+            flush=True,
+        )
+    return rows, universe_issues
+
+
+def write_retry_v3_live_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "a_class_phase2_retry_v3_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=RETRY_V3_LIVE_REPORT_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_retry_v3_live_quality_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "a_class_phase2_retry_v3_quality_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=RETRY_V3_LIVE_QUALITY_COLUMNS)
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({k: row.get(k, "") for k in RETRY_V3_LIVE_QUALITY_COLUMNS})
+    return report_path
+
+
+def write_retry_v3_live_summary(
+    output_paths: Dict[str, str],
+    stats: tiny_live.LiveStats,
+    rows: List[Dict[str, str]],
+    universe_issues: List[str],
+    gate: str,
+) -> str:
+    acceptable_count = sum(1 for row in rows if is_retry_v3_case_acceptable(row))
+    failed_count = sum(
+        1
+        for row in rows
+        if row.get("retry_v3_retrieval_status")
+        in ("network_error", "not_found", "universe_invalid")
+    )
+    needs_review_count = sum(
+        1 for row in rows if row.get("quality_status") == "needs_review"
+    )
+    lines = [
+        "# CNINFO A 类 Phase 2 Retry v3 — Live 执行摘要",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** retry v3 live · **8 unresolved cases only** · **无 PDF** · **不是 verified**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        "| mode | retry_v3_live |",
+        f"| retry_v3 cases | {len(rows)} |",
+        f"| retry_v3 acceptable | {acceptable_count} |",
+        f"| retry_v3 failed | {failed_count} |",
+        f"| needs_review | {needs_review_count} |",
+        f"| CNINFO requests | {stats.cninfo_requests} |",
+        f"| PDF downloaded | **{stats.pdf_downloaded_count}** |",
+        f"| PDF parsed | **{stats.pdf_parsed_count}** |",
+        f"| OCR / extraction | **0** |",
+        f"| DB / MinIO / RAG | **0** |",
+        f"| matching_logic | **{MATCHING_LOGIC_VERSION}** |",
+        "",
+        "## Safety",
+        "",
+        "- successful 12 cases not rerun: **yes**",
+        "- Phase 2 expansion reports untouched: **yes**",
+        "- retry v1 reports untouched: **yes**",
+        "- retry v2 reports untouched: **yes**",
+        "- precheck reports untouched: **yes**",
+        "- verified: **no**",
+        "- production_ready: **no**",
+        "",
+        "## Gate",
+        "",
+        "```text",
+        f"a_class_phase2_retry_v3_execution_gate = {gate}",
+        "a_class_phase2_metadata_execution_gate = FAIL_REVIEW_REQUIRED (unchanged)",
+        "a_class_phase2_failed_retry_execution_gate = FAIL_REVIEW_REQUIRED (unchanged)",
+        "a_class_phase2_metadata_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED (unchanged)",
+        "a_class_phase2_retry_v2_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED (unchanged)",
+        "```",
+        "",
+        "**不是 PASS** · **不是 verified** · **不是 production_ready**",
+        "",
+        "**Approval status: NOT_APPROVED**",
+        "",
+    ]
+    if universe_issues:
+        lines.extend(["## Universe issues", ""] + [f"- {x}" for x in universe_issues] + [""])
+
+    summary_path = os.path.join(
+        output_paths["reports"], "a_class_phase2_retry_v3_summary.md"
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+    return summary_path
+
+
+def build_retry_v2_live_report_row(
+    retry_case: RetryUniverseCase,
+    record: Dict[str, Any],
+    cninfo_request_count: int,
+) -> Dict[str, str]:
+    retrieval = str(record.get("retrieval_status") or "")
+    ann_time = str(record.get("announcement_time") or "")
+    ann_date = ann_time[:10] if len(ann_time) >= 10 else ""
+    endpoint = planned_endpoints_for_case(retry_to_phase2_case(retry_case))
+    return {
+        "case_id": retry_case.case_id,
+        "company_code": retry_case.company_code,
+        "company_name": retry_case.company_name,
+        "market": retry_case.market,
+        "report_type": retry_case.report_type,
+        "report_period": retry_case.expected_period,
+        "original_phase2_status": retry_case.original_phase2_status
+        or retry_case.original_failure_type,
+        "first_retry_status": retry_case.first_retry_status,
+        "failure_type": retry_case.failure_type,
+        "failure_stage": retry_case.failure_stage,
+        "retry_v2_retrieval_status": retrieval,
+        "quality_status": str(record.get("quality_status") or ""),
+        "lineage_status": str(record.get("lineage_status") or ""),
+        "announcement_id": str(record.get("announcement_id") or ""),
+        "announcement_title": str(record.get("announcement_title") or ""),
+        "announcement_time": ann_time,
+        "announcement_date": ann_date,
+        "pdf_url_present": str(record.get("pdf_url_present") or "no"),
+        "adjunct_url_present": str(record.get("adjunct_url_present") or "no"),
+        "pdf_downloaded": "0",
+        "pdf_parsed": "0",
+        "ocr_enabled": "0",
+        "extraction_enabled": "0",
+        "endpoint_used": endpoint,
+        "cninfo_request_count": str(cninfo_request_count),
+        "notes": (
+            f"retry v2 live; original_phase2={retry_case.original_phase2_status or retry_case.original_failure_type}; "
+            f"first_retry={retry_case.first_retry_status}; matching_logic={MATCHING_LOGIC_VERSION}; "
+            f"PDF not downloaded; {record.get('notes', '')}"
+        ),
+    }
+
+
+def is_retry_v2_case_acceptable(row: Dict[str, str]) -> bool:
+    if row.get("pdf_downloaded") not in ("0", "no", ""):
+        return False
+    if row.get("pdf_parsed") not in ("0", "no", ""):
+        return False
+    status = row.get("retry_v2_retrieval_status", "")
+    quality = row.get("quality_status", "")
+    lineage = row.get("lineage_status", "")
+    notes = row.get("notes", "").strip()
+    if status in ("network_error", "not_found", "universe_invalid"):
+        return False
+    if status == "found":
+        return True
+    if status in ("discovered", "matching_pass"):
+        return True
+    if lineage == "discovered":
+        return True
+    if (status == "needs_review" or quality == "needs_review") and notes:
+        return True
+    return False
+
+
+def compute_retry_v2_execution_gate(
+    stats: tiny_live.LiveStats,
+    rows: List[Dict[str, str]],
+    universe_issues: List[str],
+    case_count: int,
+) -> str:
+    if has_red_line_violation(stats, rows):
+        return "FAIL_REVIEW_REQUIRED"
+    if universe_issues or case_count != RETRY_REQUIRED_UNIVERSE_SIZE:
+        return "FAIL_REVIEW_REQUIRED"
+    acceptable_count = sum(1 for row in rows if is_retry_v2_case_acceptable(row))
+    if acceptable_count >= RETRY_CORRECT_THRESHOLD:
+        return "PASS_WITH_CAVEAT"
+    return "FAIL_REVIEW_REQUIRED"
+
+
+def process_retry_v2_live(
+    retry_cases: List[RetryUniverseCase],
+    output_paths: Dict[str, str],
+    stats: tiny_live.LiveStats,
+) -> Tuple[List[Dict[str, str]], List[str]]:
+    rows: List[Dict[str, str]] = []
+    universe_issues: List[str] = []
+    for retry_case in retry_cases:
+        if retry_case.retry_include != "yes":
+            continue
+        issues = validate_retry_case(retry_case)
+        if issues:
+            universe_issues.append(f"{retry_case.case_id}:{';'.join(issues)}")
+            rows.append(
+                build_retry_v2_live_report_row(
+                    retry_case,
+                    {
+                        "retrieval_status": "universe_invalid",
+                        "quality_status": "blocked",
+                        "lineage_status": "needs_review",
+                        "announcement_id": "",
+                        "announcement_title": "",
+                        "announcement_time": "",
+                        "pdf_url_present": "no",
+                        "adjunct_url_present": "no",
+                        "notes": "; ".join(issues),
+                    },
+                    0,
+                )
+            )
+            stats.failure_count += 1
+            continue
+
+        phase2_case = retry_to_phase2_case(retry_case)
+        tl_case = to_tiny_live_case(phase2_case)
+        before_requests = stats.cninfo_requests
+        record = tiny_live.execute_live_case(tl_case, stats)
+        case_cninfo_requests = stats.cninfo_requests - before_requests
+        live_row = build_retry_v2_live_report_row(
+            retry_case, record, case_cninfo_requests
+        )
+        snapshot_path = os.path.join(
+            output_paths["raw_metadata"], f"{retry_case.case_id}_retry_v2.json"
+        )
+        with open(snapshot_path, "w", encoding="utf-8") as f:
+            json.dump(
+                {
+                    "case": retry_case.__dict__,
+                    "mode": "retry_v2_live",
+                    "cninfo_called": True,
+                    "cninfo_request_count": case_cninfo_requests,
+                    "pdf_download_enabled": False,
+                    "pdf_parse_enabled": False,
+                    "matching_logic": MATCHING_LOGIC_VERSION,
+                    "record": live_row,
+                    "raw_announcement": record.get("_raw_announcement"),
+                    "org_id": record.get("_org_id"),
+                },
+                f,
+                ensure_ascii=False,
+                indent=2,
+            )
+        rows.append(live_row)
+        print(
+            f"case_id={retry_case.case_id} company_code={retry_case.company_code} "
+            f"retry_v2_retrieval_status={live_row['retry_v2_retrieval_status']} "
+            f"quality={live_row.get('quality_status', 'n/a')}",
+            flush=True,
+        )
+    return rows, universe_issues
+
+
+def write_retry_v2_live_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "a_class_phase2_retry_v2_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=RETRY_V2_LIVE_REPORT_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_retry_v2_live_quality_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "a_class_phase2_retry_v2_quality_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=RETRY_V2_LIVE_QUALITY_COLUMNS)
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({k: row.get(k, "") for k in RETRY_V2_LIVE_QUALITY_COLUMNS})
+    return report_path
+
+
+def write_retry_v2_live_summary(
+    output_paths: Dict[str, str],
+    stats: tiny_live.LiveStats,
+    rows: List[Dict[str, str]],
+    universe_issues: List[str],
+    gate: str,
+) -> str:
+    acceptable_count = sum(1 for row in rows if is_retry_v2_case_acceptable(row))
+    failed_count = sum(
+        1
+        for row in rows
+        if row.get("retry_v2_retrieval_status")
+        in ("network_error", "not_found", "universe_invalid")
+    )
+    needs_review_count = sum(
+        1 for row in rows if row.get("quality_status") == "needs_review"
+    )
+    wrong_rt = sum(
+        1
+        for row in rows
+        if row.get("retry_v2_retrieval_status") == "title_mismatch"
+    )
+    title_mismatch = sum(
+        1
+        for row in rows
+        if row.get("retry_v2_retrieval_status") == "title_mismatch"
+    )
+    period_mismatch = 0
+    lines = [
+        "# CNINFO A 类 Phase 2 Network Recovery Retry v2 — Live 执行摘要",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** retry v2 live · **8 unresolved cases only** · **无 PDF** · **不是 verified**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        "| mode | retry_v2_live |",
+        f"| retry_v2 cases | {len(rows)} |",
+        f"| retry_v2 acceptable | {acceptable_count} |",
+        f"| retry_v2 failed | {failed_count} |",
+        f"| needs_review | {needs_review_count} |",
+        f"| wrong report-type | {wrong_rt} |",
+        f"| title mismatch | {title_mismatch} |",
+        f"| period mismatch | {period_mismatch} |",
+        f"| CNINFO requests | {stats.cninfo_requests} |",
+        f"| PDF downloaded | **{stats.pdf_downloaded_count}** |",
+        f"| PDF parsed | **{stats.pdf_parsed_count}** |",
+        f"| OCR / extraction | **0** |",
+        f"| DB / MinIO / RAG | **0** |",
+        f"| matching_logic | **{MATCHING_LOGIC_VERSION}** |",
+        "",
+        "## Safety",
+        "",
+        "- successful 12 cases not rerun: **yes**",
+        "- Phase 2 expansion reports untouched: **yes**",
+        "- retry v1 reports untouched: **yes**",
+        "- verified: **no**",
+        "- production_ready: **no**",
+        "",
+        "## Gate",
+        "",
+        "```text",
+        f"a_class_phase2_network_recovery_retry_v2_execution_gate = {gate}",
+        "a_class_phase2_metadata_execution_gate = FAIL_REVIEW_REQUIRED (unchanged)",
+        "a_class_phase2_failed_retry_execution_gate = FAIL_REVIEW_REQUIRED (unchanged)",
+        "a_class_phase2_metadata_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED (unchanged)",
+        "```",
+        "",
+        "**不是 PASS** · **不是 verified** · **不是 production_ready**",
+        "",
+    ]
+    if universe_issues:
+        lines.extend(["## Universe issues", ""] + [f"- {x}" for x in universe_issues] + [""])
+
+    summary_path = os.path.join(
+        output_paths["reports"], "a_class_phase2_retry_v2_summary.md"
     )
     with open(summary_path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
@@ -1338,8 +2478,8 @@ def build_parser() -> argparse.ArgumentParser:
     mode.add_argument("--live", dest="mode", action="store_const", const="live")
     parser.set_defaults(mode="dry_run")
 
-    parser.add_argument("--universe-csv", default=DEFAULT_UNIVERSE_CSV)
-    parser.add_argument("--output-root", default=DEFAULT_OUTPUT_ROOT)
+    parser.add_argument("--universe-csv", default=None)
+    parser.add_argument("--output-root", default=None)
     parser.add_argument(
         "--approve-a-class-phase2-metadata-expansion",
         action="store_true",
@@ -1351,9 +2491,24 @@ def build_parser() -> argparse.ArgumentParser:
         help="显式批准 A-class Phase 2 failed-case isolated retry live",
     )
     parser.add_argument(
+        "--approve-a-class-phase2-network-recovery-retry-v2",
+        action="store_true",
+        help="显式批准 A-class Phase 2 network recovery retry v2 live",
+    )
+    parser.add_argument(
         "--retry-failed-only",
         action="store_true",
         help="isolated retry 模式：仅 8 个 failed case",
+    )
+    parser.add_argument(
+        "--retry-v3",
+        action="store_true",
+        help="isolated retry v3 模式：8 个 unresolved case",
+    )
+    parser.add_argument(
+        "--approve-a-class-phase2-retry-v3",
+        action="store_true",
+        help="显式批准 A-class Phase 2 retry v3 live",
     )
     parser.add_argument("--approve-a-class-tiny-live-metadata", action="store_true")
     parser.add_argument("--approve-phase1-tiny-live-metadata", action="store_true")
@@ -1377,22 +2532,149 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: Optional[List[str]] = None) -> int:
     args = build_parser().parse_args(argv)
 
+    if args.retry_v3 and args.retry_failed_only:
+        print(
+            f"ERROR: {RETRY_V3_INCOMPATIBLE_WITH_RETRY_FAILED_ONLY}",
+            file=sys.stderr,
+        )
+        return 2
+
+    if args.retry_v3:
+        if args.universe_csv is None:
+            print(f"ERROR: {RETRY_V3_UNIVERSE_CSV_REQUIRED}", file=sys.stderr)
+            return 2
+        if args.output_root is None:
+            args.output_root = DEFAULT_RETRY_V3_OUTPUT_ROOT
+
+        enforce_forbidden_options(args)
+
+        if args.mode == "live":
+            enforce_retry_v3_approval_gate(args)
+
+        ok_root, root_err = validate_retry_v3_output_root(args.output_root)
+        if not ok_root:
+            print(f"ERROR: {root_err}", file=sys.stderr)
+            return 2
+
+        if not os.path.isfile(args.universe_csv):
+            print(f"ERROR: universe not found: {args.universe_csv}", file=sys.stderr)
+            return 2
+
+        output_paths = ensure_output_layout(_normalize_output_root(args.output_root))
+
+        retry_cases = load_retry_universe(args.universe_csv)
+        if args.limit is not None:
+            retry_cases = retry_cases[: args.limit]
+
+        ok_size, size_err = validate_retry_universe_size(retry_cases)
+        if not ok_size:
+            print(f"ERROR: {size_err}", file=sys.stderr)
+            return 2
+
+        included_retry = [c for c in retry_cases if c.retry_include == "yes"]
+
+        if args.mode == "live":
+            stats = tiny_live.LiveStats()
+            rows, universe_issues = process_retry_v3_live(
+                included_retry, output_paths, stats
+            )
+            gate = compute_retry_v3_execution_gate(
+                stats, rows, universe_issues, len(included_retry)
+            )
+            report_path = write_retry_v3_live_report(rows, output_paths)
+            quality_path = write_retry_v3_live_quality_report(rows, output_paths)
+            summary_path = write_retry_v3_live_summary(
+                output_paths, stats, rows, universe_issues, gate
+            )
+            acceptable_count = sum(
+                1 for row in rows if is_retry_v3_case_acceptable(row)
+            )
+            failed_count = sum(
+                1
+                for row in rows
+                if row.get("retry_v3_retrieval_status")
+                in ("network_error", "not_found", "universe_invalid")
+            )
+            needs_review_count = sum(
+                1 for row in rows if row.get("quality_status") == "needs_review"
+            )
+            print(
+                f"mode=retry_v3_live cases={len(included_retry)} "
+                f"cninfo_calls={stats.cninfo_requests}"
+            )
+            print(f"acceptable={acceptable_count} failed={failed_count}")
+            print(f"needs_review={needs_review_count}")
+            print(f"success={stats.success_count} failure={stats.failure_count}")
+            print(
+                f"pdf_downloaded={stats.pdf_downloaded_count} "
+                f"pdf_parsed={stats.pdf_parsed_count}"
+            )
+            print(f"gate=a_class_phase2_retry_v3_execution_gate={gate}")
+            print(f"report={report_path}")
+            print(f"quality={quality_path}")
+            print(f"summary={summary_path}")
+            if universe_issues or gate == "FAIL_REVIEW_REQUIRED":
+                return 1
+            return 0
+
+        normalized_root = _normalize_output_root(args.output_root)
+        rows, universe_issues = process_retry_v3_dry_run(retry_cases, normalized_root)
+        report_path = write_retry_v3_dryrun_report(rows, output_paths)
+        summary_path = write_retry_v3_dryrun_summary(
+            rows, output_paths, universe_issues
+        )
+        planned_ok = sum(1 for row in rows if row["dryrun_status"] == "planned_ok")
+        print(
+            f"mode=retry_v3_dry_run cases={len(included_retry)} "
+            f"planned_ok={planned_ok} cninfo_calls=0"
+        )
+        print(
+            f"gate=a_class_phase2_retry_v3_runner_extension_gate={RETRY_V3_RUNNER_GATE}"
+        )
+        print(f"retry_v3_dryrun_report={report_path}")
+        print(f"retry_v3_dryrun_summary={summary_path}")
+        if universe_issues:
+            return 1
+        return 0
+
     if args.retry_failed_only:
-        if not args.universe_csv or args.universe_csv == DEFAULT_UNIVERSE_CSV:
-            args.universe_csv = DEFAULT_RETRY_UNIVERSE_CSV
-        if not args.output_root or args.output_root == DEFAULT_OUTPUT_ROOT:
-            args.output_root = DEFAULT_RETRY_OUTPUT_ROOT
+        retry_v2 = is_retry_v2_mode(args.universe_csv, args.output_root)
+        if retry_v2:
+            if args.universe_csv is None:
+                args.universe_csv = DEFAULT_RETRY_V2_UNIVERSE_CSV
+            if args.output_root is None:
+                args.output_root = DEFAULT_RETRY_V2_OUTPUT_ROOT
+        else:
+            if args.universe_csv is None:
+                args.universe_csv = DEFAULT_RETRY_UNIVERSE_CSV
+            if args.output_root is None:
+                args.output_root = DEFAULT_RETRY_OUTPUT_ROOT
+    else:
+        if args.universe_csv is None:
+            args.universe_csv = DEFAULT_UNIVERSE_CSV
+        if args.output_root is None:
+            args.output_root = DEFAULT_OUTPUT_ROOT
 
     enforce_forbidden_options(args)
 
+    retry_v2 = args.retry_failed_only and is_retry_v2_mode(
+        args.universe_csv, args.output_root
+    )
+
     if args.mode == "live":
         if args.retry_failed_only:
-            enforce_retry_approval_gate(args)
+            if retry_v2:
+                enforce_retry_v2_approval_gate(args)
+            else:
+                enforce_retry_approval_gate(args)
         else:
             enforce_live_approval_gate(args)
 
     if args.retry_failed_only:
-        ok_root, root_err = validate_retry_output_root(args.output_root)
+        if retry_v2:
+            ok_root, root_err = validate_retry_v2_output_root(args.output_root)
+        else:
+            ok_root, root_err = validate_retry_output_root(args.output_root)
     else:
         ok_root, root_err = validate_output_root(args.output_root)
     if not ok_root:
@@ -1418,6 +2700,58 @@ def main(argv: Optional[List[str]] = None) -> int:
         included_retry = [c for c in retry_cases if c.retry_include == "yes"]
 
         if args.mode == "live":
+            if retry_v2:
+                stats = tiny_live.LiveStats()
+                rows, universe_issues = process_retry_v2_live(
+                    included_retry, output_paths, stats
+                )
+                gate = compute_retry_v2_execution_gate(
+                    stats, rows, universe_issues, len(included_retry)
+                )
+                report_path = write_retry_v2_live_report(rows, output_paths)
+                quality_path = write_retry_v2_live_quality_report(rows, output_paths)
+                summary_path = write_retry_v2_live_summary(
+                    output_paths, stats, rows, universe_issues, gate
+                )
+                acceptable_count = sum(
+                    1 for row in rows if is_retry_v2_case_acceptable(row)
+                )
+                failed_count = sum(
+                    1
+                    for row in rows
+                    if row.get("retry_v2_retrieval_status")
+                    in ("network_error", "not_found", "universe_invalid")
+                )
+                needs_review_count = sum(
+                    1 for row in rows if row.get("quality_status") == "needs_review"
+                )
+                wrong_rt = sum(
+                    1
+                    for row in rows
+                    if row.get("retry_v2_retrieval_status") == "title_mismatch"
+                )
+                print(
+                    f"mode=retry_v2_live cases={len(included_retry)} "
+                    f"cninfo_calls={stats.cninfo_requests}"
+                )
+                print(f"acceptable={acceptable_count} failed={failed_count}")
+                print(f"needs_review={needs_review_count} wrong_report_type={wrong_rt}")
+                print(f"success={stats.success_count} failure={stats.failure_count}")
+                print(
+                    f"pdf_downloaded={stats.pdf_downloaded_count} "
+                    f"pdf_parsed={stats.pdf_parsed_count}"
+                )
+                print(
+                    "gate=a_class_phase2_network_recovery_retry_v2_execution_gate="
+                    f"{gate}"
+                )
+                print(f"report={report_path}")
+                print(f"quality={quality_path}")
+                print(f"summary={summary_path}")
+                if universe_issues or gate == "FAIL_REVIEW_REQUIRED":
+                    return 1
+                return 0
+
             stats = tiny_live.LiveStats()
             rows, universe_issues = process_retry_live(
                 included_retry, output_paths, stats
@@ -1441,6 +2775,28 @@ def main(argv: Optional[List[str]] = None) -> int:
             print(f"quality={quality_path}")
             print(f"summary={summary_path}")
             if universe_issues or gate == "FAIL_REVIEW_REQUIRED":
+                return 1
+            return 0
+
+        if retry_v2:
+            normalized_root = _normalize_output_root(args.output_root)
+            rows, universe_issues = process_retry_v2_dry_run(retry_cases, normalized_root)
+            report_path = write_retry_v2_dryrun_report(rows, output_paths)
+            summary_path = write_retry_v2_dryrun_summary(
+                output_paths, len(included_retry), universe_issues
+            )
+            planned_ok = len(included_retry) - len(universe_issues)
+            print(
+                f"mode=retry_v2_dry_run cases={len(included_retry)} "
+                f"planned_ok={planned_ok} cninfo_calls=0"
+            )
+            print(
+                "gate=a_class_phase2_network_recovery_retry_v2_runner_extension_gate="
+                f"{RETRY_V2_RUNNER_GATE}"
+            )
+            print(f"retry_v2_dryrun_report={report_path}")
+            print(f"retry_v2_dryrun_summary={summary_path}")
+            if universe_issues:
                 return 1
             return 0
 

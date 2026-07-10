@@ -1,15 +1,15 @@
-# CNINFO A 类 Phase 2 Failed Retry — Dry-run 摘要
+# CNINFO A 类 Phase 2 Network Recovery Retry v2 — Dry-run 摘要
 
-_生成时间：2026-07-09 09:27:17 UTC_
+_生成时间：2026-07-09 09:27:15 UTC_
 
-> **性质：** isolated retry dry-run · **无 CNINFO** · **无 live** · **无 PDF**
+> **性质：** network recovery retry v2 dry-run · **无 CNINFO** · **无 live** · **无 PDF**
 
 ## Counts
 
 | 指标 | 值 |
 |------|-----|
-| mode | retry_dry_run |
-| retry cases | 8 |
+| mode | retry_v2_dry_run |
+| retry_v2 cases | 8 |
 | planned_ok | 8 |
 | successful 12 excluded | **yes** |
 | universe_issues | 0 |
@@ -24,7 +24,9 @@ _生成时间：2026-07-09 09:27:17 UTC_
 ## Gate
 
 ```text
-a_class_phase2_failed_retry_planning_gate = READY_FOR_APPROVAL
+a_class_phase2_network_recovery_retry_v2_runner_extension_gate = READY_FOR_APPROVAL
 ```
 
 **不是 PASS** · **不是 live_ready** · **不是 verified** · **不是 production_ready**
+
+**Approval status: NOT_APPROVED**

@@ -730,6 +730,10 @@ _最后更新：2026-07-09_
 - `plans/cninfo_b_class_phase3_100_retry_v2_command_draft.md` — retry_v2 命令草案（**NOT APPROVED**）
 - `plans/cninfo_b_class_phase3_100_retry_v2_runner_extension_design.md` — retry_v2 runner extension 设计（design only）
 - `outputs/validation/cninfo_b_class_phase3_100_retry_v2_planning_summary.md` — retry_v2 规划摘要（planning gate **READY_FOR_APPROVAL**）
+- `lab/test_cninfo_b_class_phase3_100_retry_v2_runner.py` — retry_v2 runner 测试（**26/26 PASS**）
+- `outputs/validation/cninfo_b_class_phase3_100_retry_v2_runner_extension_summary.md` — retry_v2 runner extension 摘要（runner extension gate **READY_FOR_APPROVAL**）
+- `outputs/validation/cninfo_b_class_phase3_100_retry_v2/reports/b_class_phase3_100_retry_v2_dryrun_report.csv` — retry_v2 dry-run 报告（**91/91 planned_ok**）
+- `outputs/validation/cninfo_b_class_phase3_100_retry_v2/reports/b_class_phase3_100_retry_v2_dryrun_summary.md` — retry_v2 dry-run 摘要（CNINFO **0**）
 - `outputs/validation/cninfo_b_class_phase3_100_failed_retry/reports/b_class_phase3_100_failed_retry_summary.md` — Phase 3 failed retry live summary（execution gate **FAIL_REVIEW_REQUIRED**）
 - `outputs/validation/cninfo_b_class_phase3_100_failed_retry/reports/b_class_phase3_100_failed_retry_quality_report.csv` — Phase 3 failed retry quality report
 - `plans/cninfo_b_class_phase3_100_failed_retry_plan.md` — Phase 3 failed retry 规划（**NOT APPROVED**）

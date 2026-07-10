@@ -3338,11 +3338,60 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 ~~B 类 Phase 3 retry_v2 isolated planning package~~ → **已完成**（§7dxzb）
 
-**B-class Phase 3 retry_v2 runner extension + dry-run**（91 cases · NOT APPROVED live）
+~~B 类 Phase 3 retry_v2 runner extension + dry-run~~ → **已完成**（§7dxzc）
+
+**B-class Phase 3 retry_v2 live path implementation + human approval review**（**NOT APPROVED**）
 
 ---
 
 ## 7dxzb. B 类 Phase 3 Retry v2 Isolated Planning Package（2026-07-10）
+
+> **并行约束：** 离线规划 only；**无 CNINFO** · **无 live** · **无 retry_v2 执行** · **schema 不变**。
+
+| 项 | 内容 |
+|----|------|
+| isolated plan | [cninfo_b_class_phase3_100_retry_v2_isolated_plan.md](cninfo_b_class_phase3_100_retry_v2_isolated_plan.md) |
+| retry_v2 universe | [cninfo_b_class_phase3_100_retry_v2_universe.csv](../outputs/validation/cninfo_b_class_phase3_100_retry_v2_universe.csv)（**91** 例） |
+| planning summary | [cninfo_b_class_phase3_100_retry_v2_planning_summary.md](../outputs/validation/cninfo_b_class_phase3_100_retry_v2_planning_summary.md) |
+| EP002 precheck gate | **`PASS_WITH_CAVEAT`**（8/8 orgId resolved） |
+| planning gate | **`b_class_phase3_100_retry_v2_planning_gate = READY_FOR_APPROVAL`** |
+| CNINFO calls | **0** |
+
+---
+
+## 7dxzc. B 类 Phase 3 Retry v2 Runner Extension + Dry-run（2026-07-10）
+
+> **并行约束：** offline runner extension only；**无 CNINFO live** · **无 retry_v2 执行** · **schema 不变**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_b_class_phase25_expansion_validation.py](../lab/run_cninfo_b_class_phase25_expansion_validation.py)（`--phase3-100-retry-v2`） |
+| tests | [test_cninfo_b_class_phase3_100_retry_v2_runner.py](../lab/test_cninfo_b_class_phase3_100_retry_v2_runner.py)（**26/26 PASS**） |
+| extension summary | [cninfo_b_class_phase3_100_retry_v2_runner_extension_summary.md](../outputs/validation/cninfo_b_class_phase3_100_retry_v2_runner_extension_summary.md) |
+| dry-run report | [b_class_phase3_100_retry_v2_dryrun_report.csv](../outputs/validation/cninfo_b_class_phase3_100_retry_v2/reports/b_class_phase3_100_retry_v2_dryrun_report.csv) |
+| dry-run summary | [b_class_phase3_100_retry_v2_dryrun_summary.md](../outputs/validation/cninfo_b_class_phase3_100_retry_v2/reports/b_class_phase3_100_retry_v2_dryrun_summary.md) |
+| universe | **91**（B3R2_001–B3R2_091） |
+| planned_ok | **91/91** |
+| planned_request_count_total | **182** |
+| approval flag | `--approve-b-class-phase3-100-retry-v2` |
+| runner extension gate | **`b_class_phase3_100_retry_v2_runner_extension_gate = READY_FOR_APPROVAL`** |
+| planning gate | **`b_class_phase3_100_retry_v2_planning_gate = READY_FOR_APPROVAL`** |
+| live path | **not implemented** |
+| CNINFO calls | **0** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- `--phase3-100-retry-v2` + dry-run **已完成**
+- B3E087 + 8 recovered + prior phases + replacement **excluded**
+- original / failed-retry / EP002 precheck / Phase 2.5 reports **未触碰**
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task（B-class）
+
+**B-class Phase 3 retry_v2 live path implementation + human approval review**
+
+---
 
 > **并行约束：** 离线规划 only；**无 CNINFO** · **无 live** · **无 retry_v2 执行** · **schema 不变**。
 
@@ -3411,7 +3460,9 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 ~~B-class Phase 3 retry_v2 isolated planning package~~ → **已完成**（§7dxzb）
 
-**B-class Phase 3 retry_v2 runner extension + dry-run**（91 cases · NOT APPROVED live）
+~~B-class Phase 3 retry_v2 runner extension + dry-run~~ → **已完成**（§7dxzc）
+
+**B-class Phase 3 retry_v2 live path implementation + human approval review**（**NOT APPROVED**）
 
 ---
 
@@ -3488,7 +3539,9 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 ~~B-class Phase 3 retry_v2 isolated planning package~~ → **已完成**（§7dxzb）
 
-**B-class Phase 3 retry_v2 runner extension + dry-run**（91 cases · NOT APPROVED live）
+~~B-class Phase 3 retry_v2 runner extension + dry-run~~ → **已完成**（§7dxzc）
+
+**B-class Phase 3 retry_v2 live path implementation + human approval review**（**NOT APPROVED**）
 
 ---
 
@@ -3535,7 +3588,9 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 ~~B-class Phase 3 retry_v2 isolated planning package~~ → **已完成**（§7dxzb）
 
-**B-class Phase 3 retry_v2 runner extension + dry-run**（91 cases · NOT APPROVED live）
+~~B-class Phase 3 retry_v2 runner extension + dry-run~~ → **已完成**（§7dxzc）
+
+**B-class Phase 3 retry_v2 live path implementation + human approval review**（**NOT APPROVED**）
 
 ---
 

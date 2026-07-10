@@ -1,0 +1,28 @@
+metric_group,metric_name,value,gate_impact,notes
+phase2,phase2_total_cases,20,closure_input,universe A2M001-A2M020
+phase2,accepted_original_success,12,closure_positive,unchanged after retry_v2
+phase2,unresolved_after_original,8,closure_caveat,same 8 cases through v1 and v2
+retry_v1,retry_v1_cases,8,retry_v1_input,isolated failed-case retry
+retry_v1,retry_v1_acceptable,0,retry_v1_gate_input,a_class_phase2_failed_retry_execution_gate=FAIL_REVIEW_REQUIRED
+retry_v1,retry_v1_failed,8,retry_v1_gate_input,orgId network_error
+retry_v2,retry_v2_cases,8,retry_v2_input,network recovery retry_v2 live
+retry_v2,retry_v2_acceptable,0,retry_v2_gate_input,a_class_phase2_network_recovery_retry_v2_execution_gate=FAIL_REVIEW_REQUIRED
+retry_v2,retry_v2_failed,8,retry_v2_gate_input,orgId network_error before counted CNINFO
+retry_v2,retry_v2_needs_review,8,retry_v2_caveat,quality needs_review on infrastructure failure
+retry_v2,retry_v2_cninfo_requests,0,retry_v2_record,CNINFO unreachable at orgId
+quality,wrong_report_type,0,closure_positive,no report-type mismatch on retrievable cases
+quality,title_mismatch,0,closure_positive,
+quality,period_mismatch,0,closure_positive,
+effective,effective_accepted_cases,12,closure_positive,original_phase2_live only
+effective,effective_unresolved_cases,8,closure_caveat,original+v1+v2 infrastructure
+safety,pdf_downloaded,0,red_line,metadata only
+safety,pdf_parsed,0,red_line,
+safety,ocr,0,red_line,
+safety,extraction,0,red_line,
+safety,db_write,0,red_line,
+safety,minio_write,0,red_line,
+safety,rag_run,0,red_line,
+status,verified,false,red_line,not marked
+status,production_ready,false,red_line,not marked
+status,testing_stable_sample_upgrade,false,red_line,not upgraded
+closure,a_class_phase2_retry_v2_closure_gate,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,closure_gate,12 effective accepted + 8 unresolved orgId caveat

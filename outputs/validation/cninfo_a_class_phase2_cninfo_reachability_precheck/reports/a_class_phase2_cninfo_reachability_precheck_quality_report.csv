@@ -1,0 +1,4 @@
+precheck_id,case_id,company_code,market,reachability_status,orgid_resolution_status,resolved_org_id,failure_type,cninfo_request_count,notes
+APC001,A2M005,601012,SSE,reachable,resolved,9900022338,,1,live precheck; orgId only; not metadata retry; not retry_v3; err=
+APC002,A2M010,300750,ChiNext,unreachable,failed,,network_error,0,live precheck; orgId only; not metadata retry; not retry_v3; err=network_error
+APC003,A2M018,688111,STAR,reachable,resolved,9900035303,,1,live precheck; orgId only; not metadata retry; not retry_v3; err=

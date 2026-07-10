@@ -1,6 +1,6 @@
 # CNINFO A 类 Phase 2 Metadata Expansion — Dry-run 摘要
 
-_生成时间：2026-07-09 07:39:04 UTC_
+_生成时间：2026-07-09 09:27:19 UTC_
 
 > **性质：** Phase 2 runner dry-run · **无 CNINFO** · **无 live** · **无 PDF**
 
