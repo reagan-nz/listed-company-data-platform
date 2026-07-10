@@ -1,0 +1,90 @@
+path,artifact_type,phase_track,should_commit,reason,notes
+lab/run_cninfo_a_class_phase2_metadata_expansion.py,python,a_class_phase3_50,yes,source reproducibility,Phase 3 extension in shared A-class runner
+lab/test_cninfo_a_class_phase3_50_company_runner.py,python,a_class_phase3_50,yes,source reproducibility,26/26 PASS
+lab/test_cninfo_a_class_phase3_50_company_live_path.py,python,a_class_phase3_50,yes,source reproducibility,28/28 PASS mock CNINFO
+plans/cninfo_a_class_phase3_50_company_command_draft.md,plan,a_class_phase3_50,yes,reproducibility,
+plans/cninfo_a_class_phase3_50_company_expansion_plan.md,plan,a_class_phase3_50,yes,reproducibility,
+plans/cninfo_a_class_phase3_50_company_merge_closure_review.md,plan,a_class_phase3_50,yes,reproducibility,
+plans/cninfo_a_class_phase3_50_company_runner_extension_design.md,plan,a_class_phase3_50,yes,reproducibility,
+outputs/validation/cninfo_a_class_phase3_50_company_approval_checklist.md,summary,a_class_phase3_50,yes,reproducibility,
+outputs/validation/cninfo_a_class_phase3_50_company_closure_metrics.csv,csv,a_class_phase3_50,yes,reproducibility,
+outputs/validation/cninfo_a_class_phase3_50_company_closure_summary.md,summary,a_class_phase3_50,yes,reproducibility,
+outputs/validation/cninfo_a_class_phase3_50_company_effective_merged_result.csv,csv,a_class_phase3_50,yes,reproducibility,
+outputs/validation/cninfo_a_class_phase3_50_company_live_path_summary.md,summary,a_class_phase3_50,yes,reproducibility,
+outputs/validation/cninfo_a_class_phase3_50_company_planning_summary.md,summary,a_class_phase3_50,yes,reproducibility,
+outputs/validation/cninfo_a_class_phase3_50_company_post_closure_next_step_recommendation.md,summary,a_class_phase3_50,yes,reproducibility,
+outputs/validation/cninfo_a_class_phase3_50_company_runner_extension_summary.md,summary,a_class_phase3_50,yes,reproducibility,
+outputs/validation/cninfo_a_class_phase3_50_company_universe_draft.csv,csv,a_class_phase3_50,yes,reproducibility,
+outputs/validation/cninfo_a_class_phase3_50_company_unresolved_case_ledger.csv,csv,a_class_phase3_50,yes,reproducibility,
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/reports/a_class_phase3_50_company_dryrun_report.csv,report,a_class_phase3_50,yes,reproducibility,metadata-only validation report
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/reports/a_class_phase3_50_company_dryrun_summary.md,report,a_class_phase3_50,yes,reproducibility,metadata-only validation report
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/reports/a_class_phase3_50_company_expansion_quality_report.csv,report,a_class_phase3_50,yes,reproducibility,metadata-only validation report
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/reports/a_class_phase3_50_company_expansion_report.csv,report,a_class_phase3_50,yes,reproducibility,metadata-only validation report
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/reports/a_class_phase3_50_company_expansion_summary.md,report,a_class_phase3_50,yes,reproducibility,metadata-only validation report
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M001.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M002.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M003.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M004.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M005.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M006.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M007.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M008.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M009.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M010.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M011.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M012.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M013.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M014.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M015.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M016.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M017.json,json_snapshot,a_class_phase3_50,yes,reproducibility,failed case metadata snapshot; orgId network_error; retain as caveat
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M018.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M019.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M020.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M021.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M022.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M023.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M024.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M025.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M026.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M027.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M028.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M029.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M030.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M031.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M032.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M033.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M034.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M035.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M036.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M037.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M038.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M039.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M040.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M041.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M042.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M043.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M044.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M045.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M046.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M047.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M048.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M049.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+outputs/validation/cninfo_a_class_phase3_50_company_expansion/raw_metadata/A3M050.json,json_snapshot,a_class_phase3_50,yes,reproducibility,metadata only; no PDF
+plans/cninfo_a_class_phase3_50_company_final_commit_boundary_review.md,summary,a_class_phase3_50,yes,commit boundary review,
+outputs/validation/cninfo_a_class_phase3_50_company_final_artifact_inventory.csv,csv,a_class_phase3_50,yes,commit boundary review,
+outputs/validation/cninfo_a_class_phase3_50_company_final_caveat_ledger.csv,csv,a_class_phase3_50,yes,commit boundary review,
+outputs/validation/cninfo_a_class_phase3_50_company_safe_to_commit_list.md,summary,a_class_phase3_50,yes,commit boundary review,
+outputs/validation/cninfo_a_class_phase3_50_company_commit_boundary_summary.md,summary,a_class_phase3_50,yes,commit boundary review,
+CURRENT_STATUS.md,markdown,a_class_phase3_50,yes,project status tracking,Phase 3 section updates
+PROJECT_MAP.md,markdown,a_class_phase3_50,yes,project status tracking,Phase 3 section updates
+plans/eraC_execution_plan.md,markdown,a_class_phase3_50,yes,project status tracking,Phase 3 section updates
+outputs/harvest/cninfo_c_class/**,harvest,excluded,no,unrelated artifact,not A-class Phase 3
+outputs/validation/cninfo_b_class_**,validation,excluded,no,unrelated artifact,not A-class Phase 3
+outputs/validation/cninfo_c_class_**,validation,excluded,no,unrelated artifact,not A-class Phase 3
+outputs/validation/cninfo_d_class_**,validation,excluded,no,unrelated artifact,not A-class Phase 3
+**/*.pdf,pdf,excluded,no,red line,no PDF in Phase 3
+**/minio/**,minio,excluded,no,red line,no MinIO
+**/rag/**,rag,excluded,no,red line,no RAG
+outputs/validation/cninfo_a_class_phase1_**,validation,excluded,no,out of scope,Phase 1 not in Phase 3 commit track
+outputs/validation/cninfo_a_class_phase2_**,validation,excluded,no,out of scope,Phase 2 already committed cad5ed1; separate track

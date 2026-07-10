@@ -65,6 +65,15 @@ DEFAULT_RETRY_V3_UNIVERSE_CSV = os.path.join(
 DEFAULT_RETRY_V3_OUTPUT_ROOT = os.path.join(
     BASE_DIR, "outputs", "validation", "cninfo_a_class_phase2_metadata_retry_v3"
 )
+DEFAULT_PHASE3_UNIVERSE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_phase3_50_company_universe_draft.csv",
+)
+DEFAULT_PHASE3_OUTPUT_ROOT = os.path.join(
+    BASE_DIR, "outputs", "validation", "cninfo_a_class_phase3_50_company_expansion"
+)
 PRECHECK_OUTPUT_ROOT = os.path.join(
     BASE_DIR,
     "outputs",
@@ -110,13 +119,64 @@ SUCCESSFUL_CASE_IDS: Set[str] = {
     "A2M017",
 }
 PHASE2_CASE_ID_PATTERN = re.compile(r"^A2M\d{3}$")
+PHASE3_CASE_ID_PATTERN = re.compile(r"^A3M\d{3}$")
+PHASE3_ALLOWED_CASE_IDS: Set[str] = {f"A3M{i:03d}" for i in range(1, 51)}
 PHASE1_COMPANY_CODES: Set[str] = {"600000", "300001", "688001", "000858", "600519"}
+PHASE2_EXCLUDED_COMPANY_CODES: Set[str] = {
+    "600036",
+    "601318",
+    "000333",
+    "002415",
+    "601012",
+    "600276",
+    "000002",
+    "601888",
+    "300014",
+    "300750",
+    "600887",
+    "601166",
+    "688599",
+    "688036",
+    "000725",
+    "601899",
+    "300059",
+    "688111",
+    "600309",
+    "002594",
+}
+
+PHASE3_REQUIRED_UNIVERSE_SIZE = 50
+PHASE3_ACCEPTABLE_THRESHOLD = 40
+PHASE3_PLANNED_REQUESTS_PER_CASE = 2
+PHASE3_RUNNER_GATE = "READY_FOR_APPROVAL"
+PHASE3_LIVE_PATH_GATE = "READY_FOR_APPROVAL"
+PHASE3_EXECUTION_GATE_PASS = "PASS_WITH_CAVEAT"
+PHASE3_APPROVAL_REQUIRED = "approve_a_class_phase3_50_company_expansion_required"
+PHASE3_WRONG_APPROVAL = "approve_a_class_phase3_50_company_expansion_wrong_flag"
+PHASE3_UNIVERSE_CSV_REQUIRED = "phase3_universe_csv_required"
+PHASE3_INCOMPATIBLE_WITH_RETRY_V3 = "phase3_incompatible_with_retry_v3"
+PHASE3_INCOMPATIBLE_WITH_RETRY_FAILED_ONLY = "phase3_incompatible_with_retry_failed_only"
+PHASE3_OUTPUT_ROOT_VIOLATION = (
+    "output_root_must_be_under_cninfo_a_class_phase3_50_company_expansion"
+)
+PHASE3_UNIVERSE_SIZE_VIOLATION = "universe_size_must_equal_50"
+PHASE3_INCLUDE_REQUIRED = "phase3_include_must_be_yes"
+NON_PHASE3_CASE_REJECTED = "non_a3m_case_not_allowed"
+PHASE2_OVERLAP_REJECTED = "phase2_overlap_not_allowed"
+DUPLICATE_COMPANY_CODE_REJECTED = "duplicate_company_code_not_allowed"
+PHASE3_REPORT_TYPE_MIX_VIOLATION = "report_type_mix_must_be_20_10_10_10"
 
 EXPECTED_REPORT_TYPE_MIX: Dict[str, int] = {
     "annual_report": 8,
     "semi_annual_report": 4,
     "quarterly_report_q1": 4,
     "quarterly_report_q3": 4,
+}
+PHASE3_EXPECTED_REPORT_TYPE_MIX: Dict[str, int] = {
+    "annual_report": 20,
+    "semi_annual_report": 10,
+    "quarterly_report_q1": 10,
+    "quarterly_report_q3": 10,
 }
 
 RUNNER_GATE = "READY_FOR_APPROVAL"
@@ -410,6 +470,31 @@ RETRY_V2_DRYRUN_COLUMNS = [
     "notes",
 ]
 
+PHASE3_DRYRUN_COLUMNS = [
+    "case_id",
+    "company_code",
+    "company_name",
+    "market",
+    "report_type",
+    "expected_period",
+    "expected_title_keywords",
+    "excluded_title_keywords",
+    "phase3_include",
+    "planned_source",
+    "planned_endpoint",
+    "planned_output_root",
+    "pdf_download",
+    "pdf_parse",
+    "ocr",
+    "extraction",
+    "db_write",
+    "minio_write",
+    "rag_run",
+    "cninfo_call_planned",
+    "dryrun_status",
+    "notes",
+]
+
 RETRY_V3_DRYRUN_COLUMNS = [
     "case_id",
     "company_code",
@@ -501,6 +586,23 @@ class Phase2UniverseCase:
     risk_level: str
     phase1_overlap: str
     phase2_include: str
+    reason: str
+
+
+@dataclass
+class Phase3UniverseCase:
+    case_id: str
+    company_code: str
+    company_name: str
+    market: str
+    report_type: str
+    expected_period: str
+    expected_title_keywords: str
+    excluded_title_keywords: str
+    risk_level: str
+    phase1_overlap: str
+    phase2_overlap: str
+    phase3_include: str
     reason: str
 
 
@@ -694,20 +796,6 @@ def write_live_summary(
     with open(summary_path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
     return summary_path
-
-
-    case_id: str
-    company_code: str
-    company_name: str
-    market: str
-    report_type: str
-    expected_period: str
-    expected_title_keywords: str
-    excluded_title_keywords: str
-    risk_level: str
-    phase1_overlap: str
-    phase2_include: str
-    reason: str
 
 
 def validate_retry_output_root(output_root: str) -> Tuple[bool, str]:
@@ -938,6 +1026,7 @@ def enforce_retry_approval_gate(args: argparse.Namespace) -> None:
         (args.approve_phase2_smoke_harvest, tiny_live.FORBIDDEN_APPROVE_PHASE2),
         (args.approve_phase3_batch_500_harvest, tiny_live.FORBIDDEN_APPROVE_PHASE3),
         (args.approve_b_class_tiny_live_validation, tiny_live.FORBIDDEN_APPROVE_B_CLASS),
+        (getattr(args, "approve_a_class_phase3_50_company_expansion", False), PHASE3_WRONG_APPROVAL),
     )
     for enabled, error_code in wrong_flags:
         if enabled:
@@ -958,6 +1047,7 @@ def enforce_retry_v2_approval_gate(args: argparse.Namespace) -> None:
         (args.approve_phase2_smoke_harvest, tiny_live.FORBIDDEN_APPROVE_PHASE2),
         (args.approve_phase3_batch_500_harvest, tiny_live.FORBIDDEN_APPROVE_PHASE3),
         (args.approve_b_class_tiny_live_validation, tiny_live.FORBIDDEN_APPROVE_B_CLASS),
+        (getattr(args, "approve_a_class_phase3_50_company_expansion", False), PHASE3_WRONG_APPROVAL),
     )
     for enabled, error_code in wrong_flags:
         if enabled:
@@ -983,6 +1073,7 @@ def enforce_retry_v3_approval_gate(args: argparse.Namespace) -> None:
             getattr(args, "approve_a_class_phase2_cninfo_reachability_precheck", False),
             RETRY_V3_WRONG_APPROVAL,
         ),
+        (getattr(args, "approve_a_class_phase3_50_company_expansion", False), RETRY_V3_WRONG_APPROVAL),
     )
     for enabled, error_code in wrong_flags:
         if enabled:
@@ -990,6 +1081,32 @@ def enforce_retry_v3_approval_gate(args: argparse.Namespace) -> None:
             sys.exit(2)
     if args.mode == "live" and not args.approve_a_class_phase2_retry_v3:
         print(f"ERROR: {RETRY_V3_APPROVAL_REQUIRED}", file=sys.stderr)
+        sys.exit(2)
+
+
+def enforce_phase3_approval_gate(args: argparse.Namespace) -> None:
+    wrong_flags = (
+        (args.approve_a_class_phase2_metadata_expansion, PHASE3_WRONG_APPROVAL),
+        (args.approve_a_class_phase2_failed_retry, PHASE3_WRONG_APPROVAL),
+        (args.approve_a_class_phase2_network_recovery_retry_v2, PHASE3_WRONG_APPROVAL),
+        (args.approve_a_class_phase2_retry_v3, PHASE3_WRONG_APPROVAL),
+        (args.approve_a_class_tiny_live_metadata, PHASE3_WRONG_APPROVAL),
+        (args.approve_phase1_tiny_live_metadata, PHASE3_WRONG_APPROVAL),
+        (args.approve_full_harvest, PHASE3_WRONG_APPROVAL),
+        (args.approve_phase2_smoke_harvest, PHASE3_WRONG_APPROVAL),
+        (args.approve_phase3_batch_500_harvest, PHASE3_WRONG_APPROVAL),
+        (args.approve_b_class_tiny_live_validation, PHASE3_WRONG_APPROVAL),
+        (
+            getattr(args, "approve_a_class_phase2_cninfo_reachability_precheck", False),
+            PHASE3_WRONG_APPROVAL,
+        ),
+    )
+    for enabled, error_code in wrong_flags:
+        if enabled:
+            print(f"ERROR: {error_code}", file=sys.stderr)
+            sys.exit(2)
+    if args.mode == "live" and not args.approve_a_class_phase3_50_company_expansion:
+        print(f"ERROR: {PHASE3_APPROVAL_REQUIRED}", file=sys.stderr)
         sys.exit(2)
 
 
@@ -2112,7 +2229,10 @@ def validate_output_root(output_root: str) -> Tuple[bool, str]:
     allowed = _normalize_output_root(DEFAULT_OUTPUT_ROOT)
     phase1 = _normalize_output_root(PHASE1_OUTPUT_ROOT)
     c_harvest = _normalize_output_root(C_CLASS_HARVEST_ROOT)
+    phase3 = _normalize_output_root(DEFAULT_PHASE3_OUTPUT_ROOT)
 
+    if root == phase3 or root.startswith(phase3 + os.sep):
+        return False, PHASE3_OUTPUT_ROOT_VIOLATION
     if root == phase1 or root.startswith(phase1 + os.sep):
         return False, PHASE1_BASELINE_WRITE_FORBIDDEN
     if root == c_harvest or root.startswith(c_harvest + os.sep):
@@ -2120,6 +2240,37 @@ def validate_output_root(output_root: str) -> Tuple[bool, str]:
     if root == allowed or root.startswith(allowed + os.sep):
         return True, ""
     return False, OUTPUT_ROOT_VIOLATION
+
+
+def validate_phase3_output_root(output_root: str) -> Tuple[bool, str]:
+    """Phase 3 输出仅允许 phase3 隔离根；禁止写入 Phase 1/2/retry/precheck/harvest。"""
+    root = _normalize_output_root(output_root)
+    allowed = _normalize_output_root(DEFAULT_PHASE3_OUTPUT_ROOT)
+    phase1 = _normalize_output_root(PHASE1_OUTPUT_ROOT)
+    expansion = _normalize_output_root(DEFAULT_OUTPUT_ROOT)
+    v1 = _normalize_output_root(DEFAULT_RETRY_OUTPUT_ROOT)
+    v2 = _normalize_output_root(DEFAULT_RETRY_V2_OUTPUT_ROOT)
+    v3 = _normalize_output_root(DEFAULT_RETRY_V3_OUTPUT_ROOT)
+    precheck = _normalize_output_root(PRECHECK_OUTPUT_ROOT)
+    c_harvest = _normalize_output_root(C_CLASS_HARVEST_ROOT)
+
+    if root == phase1 or root.startswith(phase1 + os.sep):
+        return False, PHASE1_BASELINE_WRITE_FORBIDDEN
+    if root == expansion or root.startswith(expansion + os.sep):
+        return False, PHASE2_EXPANSION_WRITE_FORBIDDEN
+    if root == v1 or root.startswith(v1 + os.sep):
+        return False, RETRY_V1_WRITE_FORBIDDEN
+    if root == v2 or root.startswith(v2 + os.sep):
+        return False, RETRY_V2_WRITE_FORBIDDEN
+    if root == v3 or root.startswith(v3 + os.sep):
+        return False, RETRY_V3_OUTPUT_ROOT_VIOLATION
+    if root == precheck or root.startswith(precheck + os.sep):
+        return False, PRECHECK_WRITE_FORBIDDEN
+    if root == c_harvest or root.startswith(c_harvest + os.sep):
+        return False, "c_class_harvest_output_root_forbidden"
+    if root == allowed or root.startswith(allowed + os.sep):
+        return True, ""
+    return False, PHASE3_OUTPUT_ROOT_VIOLATION
 
 
 def ensure_output_layout(output_root: str) -> Dict[str, str]:
@@ -2158,6 +2309,131 @@ def load_universe(path: str) -> List[Phase2UniverseCase]:
                 )
             )
     return cases
+
+
+def load_phase3_universe(path: str) -> List[Phase3UniverseCase]:
+    cases: List[Phase3UniverseCase] = []
+    with open(path, newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            cases.append(
+                Phase3UniverseCase(
+                    case_id=str(row.get("case_id", "")).strip(),
+                    company_code=str(row.get("company_code", "")).strip(),
+                    company_name=str(row.get("company_name", "")).strip(),
+                    market=str(row.get("market", "")).strip(),
+                    report_type=str(row.get("report_type", "")).strip(),
+                    expected_period=str(row.get("expected_period", "")).strip(),
+                    expected_title_keywords=str(
+                        row.get("expected_title_keywords", "")
+                    ).strip(),
+                    excluded_title_keywords=str(
+                        row.get("excluded_title_keywords", "")
+                    ).strip(),
+                    risk_level=str(row.get("risk_level", "")).strip(),
+                    phase1_overlap=str(row.get("phase1_overlap", "")).strip().lower(),
+                    phase2_overlap=str(row.get("phase2_overlap", "")).strip().lower(),
+                    phase3_include=str(row.get("phase3_include", "")).strip().lower(),
+                    reason=str(row.get("reason", "")).strip(),
+                )
+            )
+    return cases
+
+
+def phase3_to_phase2_case(case: Phase3UniverseCase) -> Phase2UniverseCase:
+    return Phase2UniverseCase(
+        case_id=case.case_id,
+        company_code=case.company_code,
+        company_name=case.company_name,
+        market=case.market,
+        report_type=case.report_type,
+        expected_period=case.expected_period,
+        expected_title_keywords=case.expected_title_keywords,
+        excluded_title_keywords=case.excluded_title_keywords,
+        risk_level=case.risk_level,
+        phase1_overlap=case.phase1_overlap,
+        phase2_include="yes",
+        reason=case.reason,
+    )
+
+
+def validate_phase3_case(case: Phase3UniverseCase) -> List[str]:
+    issues: List[str] = []
+    if not PHASE3_CASE_ID_PATTERN.match(case.case_id or ""):
+        issues.append(NON_PHASE3_CASE_REJECTED)
+    if case.case_id not in PHASE3_ALLOWED_CASE_IDS:
+        issues.append(NON_PHASE3_CASE_REJECTED)
+    if case.phase3_include != "yes":
+        issues.append(PHASE3_INCLUDE_REQUIRED)
+    if case.phase1_overlap not in ("", "no"):
+        issues.append(PHASE1_OVERLAP_REJECTED)
+    if case.phase2_overlap not in ("", "no"):
+        issues.append(PHASE2_OVERLAP_REJECTED)
+    if case.company_code in PHASE1_COMPANY_CODES:
+        issues.append(f"{PHASE1_OVERLAP_REJECTED}:code:{case.company_code}")
+    if case.company_code in PHASE2_EXCLUDED_COMPANY_CODES:
+        issues.append(f"{PHASE2_OVERLAP_REJECTED}:code:{case.company_code}")
+    if not case.company_code:
+        issues.append("company_code_missing")
+    if not case.company_name:
+        issues.append("company_name_missing")
+    if case.report_type not in tiny_live.VALID_REPORT_TYPES:
+        issues.append(f"invalid_report_type:{case.report_type}")
+    if not case.expected_period:
+        issues.append("expected_period_missing")
+    issues.extend(validate_universe_code_name(phase3_to_phase2_case(case)))
+    return issues
+
+
+def validate_phase3_universe_size(cases: List[Phase3UniverseCase]) -> Tuple[bool, str]:
+    included = [c for c in cases if c.phase3_include == "yes"]
+    if len(included) != PHASE3_REQUIRED_UNIVERSE_SIZE:
+        return (
+            False,
+            f"{PHASE3_UNIVERSE_SIZE_VIOLATION}: got {len(included)} "
+            f"expected {PHASE3_REQUIRED_UNIVERSE_SIZE}",
+        )
+    return True, ""
+
+
+def validate_phase3_report_type_mix(cases: List[Phase3UniverseCase]) -> Tuple[bool, str]:
+    included = [c for c in cases if c.phase3_include == "yes"]
+    counts: Dict[str, int] = {}
+    for case in included:
+        counts[case.report_type] = counts.get(case.report_type, 0) + 1
+    for report_type, expected in PHASE3_EXPECTED_REPORT_TYPE_MIX.items():
+        if counts.get(report_type, 0) != expected:
+            return (
+                False,
+                f"{PHASE3_REPORT_TYPE_MIX_VIOLATION}: {report_type}="
+                f"{counts.get(report_type, 0)} expected {expected}",
+            )
+    return True, ""
+
+
+def validate_phase3_duplicate_company_codes(cases: List[Phase3UniverseCase]) -> Tuple[bool, str]:
+    seen: Set[str] = set()
+    for case in cases:
+        if case.phase3_include != "yes":
+            continue
+        if case.company_code in seen:
+            return False, f"{DUPLICATE_COMPANY_CODE_REJECTED}:{case.company_code}"
+        seen.add(case.company_code)
+    return True, ""
+
+
+def count_phase3_overlap(cases: List[Phase3UniverseCase]) -> Tuple[int, int]:
+    phase1_count = 0
+    phase2_count = 0
+    for case in cases:
+        if case.phase1_overlap not in ("", "no"):
+            phase1_count += 1
+        if case.company_code in PHASE1_COMPANY_CODES:
+            phase1_count += 1
+        if case.phase2_overlap not in ("", "no"):
+            phase2_count += 1
+        if case.company_code in PHASE2_EXCLUDED_COMPANY_CODES:
+            phase2_count += 1
+    return phase1_count, phase2_count
 
 
 def validate_universe_code_name(case: Phase2UniverseCase) -> List[str]:
@@ -2469,6 +2745,361 @@ def write_dryrun_summary(
     return summary_path
 
 
+def build_phase3_dryrun_row(
+    case: Phase3UniverseCase,
+    issues: List[str],
+    output_root: str,
+) -> Dict[str, str]:
+    source_id = REPORT_TYPE_SOURCE_ID.get(case.report_type, "unknown_source")
+    status = "planned_ok" if not issues else "universe_invalid"
+    notes = (
+        f"phase3 dry-run; CNINFO not called; metadata only; matching_logic={MATCHING_LOGIC_VERSION}; "
+        f"planned_requests={PHASE3_PLANNED_REQUESTS_PER_CASE}"
+        if not issues
+        else "; ".join(issues)
+    )
+    return {
+        "case_id": case.case_id,
+        "company_code": case.company_code,
+        "company_name": case.company_name,
+        "market": case.market,
+        "report_type": case.report_type,
+        "expected_period": case.expected_period,
+        "expected_title_keywords": case.expected_title_keywords,
+        "excluded_title_keywords": case.excluded_title_keywords,
+        "phase3_include": case.phase3_include,
+        "planned_source": source_id,
+        "planned_endpoint": planned_endpoints_for_case(phase3_to_phase2_case(case)),
+        "planned_output_root": output_root,
+        "pdf_download": "0",
+        "pdf_parse": "0",
+        "ocr": "0",
+        "extraction": "0",
+        "db_write": "0",
+        "minio_write": "0",
+        "rag_run": "0",
+        "cninfo_call_planned": "0",
+        "dryrun_status": status,
+        "notes": notes,
+    }
+
+
+def process_phase3_dry_run(
+    cases: List[Phase3UniverseCase],
+    output_root: str,
+) -> Tuple[List[Dict[str, str]], List[str]]:
+    rows: List[Dict[str, str]] = []
+    universe_issues: List[str] = []
+    for case in cases:
+        if case.phase3_include != "yes":
+            continue
+        issues = validate_phase3_case(case)
+        if issues:
+            universe_issues.append(f"{case.case_id}:{';'.join(issues)}")
+        rows.append(build_phase3_dryrun_row(case, issues, output_root))
+    return rows, universe_issues
+
+
+def write_phase3_dryrun_report(
+    rows: List[Dict[str, str]],
+    output_paths: Dict[str, str],
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "a_class_phase3_50_company_dryrun_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=PHASE3_DRYRUN_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_phase3_dryrun_summary(
+    rows: List[Dict[str, str]],
+    output_paths: Dict[str, str],
+    universe_issues: List[str],
+    report_type_mix: Dict[str, int],
+    phase1_overlap_count: int,
+    phase2_overlap_count: int,
+) -> str:
+    planned_ok = sum(1 for row in rows if row["dryrun_status"] == "planned_ok")
+    total = len(rows)
+    mix_line = " / ".join(f"{k}={v}" for k, v in sorted(report_type_mix.items()))
+    lines = [
+        "# CNINFO A 类 Phase 3 50-Company Expansion — Dry-run 摘要",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** Phase 3 runner dry-run · **无 CNINFO** · **无 live** · **无 PDF**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        "| mode | phase3_dry_run |",
+        f"| universe size | {total} |",
+        f"| planned_ok | {planned_ok} |",
+        f"| universe_issues | {len(universe_issues)} |",
+        f"| report-type mix | {mix_line} |",
+        f"| phase1_overlap | **{phase1_overlap_count}** |",
+        f"| phase2_overlap | **{phase2_overlap_count}** |",
+        f"| matching_logic | **{MATCHING_LOGIC_VERSION}** |",
+        "| CNINFO calls | **0** |",
+        "| PDF download | **0** |",
+        "| PDF parse | **0** |",
+        "| OCR | **0** |",
+        "| extraction | **0** |",
+        "| DB write | **0** |",
+        "| MinIO write | **0** |",
+        "| RAG run | **0** |",
+        "",
+        "## Safety",
+        "",
+        "- metadata only: **yes**",
+        f"- output isolation: `{output_paths['root']}`",
+        "- Phase 1 / Phase 2 / retry / precheck baseline untouched: **yes**",
+        "- verified: **no**",
+        "- production_ready: **no**",
+        "",
+        "## Gate",
+        "",
+        "```text",
+        f"a_class_phase3_50_company_runner_extension_gate = {PHASE3_RUNNER_GATE}",
+        "```",
+        "",
+        "**不是 PASS** · **不是 live_ready** · **不是 verified** · **不是 production_ready**",
+        "",
+        "**Approval status: NOT_APPROVED**",
+        "",
+    ]
+    if universe_issues:
+        lines.extend(["## Universe issues", ""] + [f"- {item}" for item in universe_issues] + [""])
+
+    summary_path = os.path.join(
+        output_paths["reports"], "a_class_phase3_50_company_dryrun_summary.md"
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+    return summary_path
+
+
+def build_phase3_live_report_row(
+    case: Phase3UniverseCase,
+    record: Dict[str, Any],
+    cninfo_request_count: int,
+) -> Dict[str, str]:
+    row = build_live_report_row(
+        phase3_to_phase2_case(case), record, cninfo_request_count
+    )
+    notes = str(record.get("notes") or "")
+    row["notes"] = (
+        f"phase3 live; matching_logic={MATCHING_LOGIC_VERSION}; "
+        f"PDF not downloaded; {notes}"
+    ).strip()
+    return row
+
+
+def is_phase3_case_acceptable(row: Dict[str, str]) -> bool:
+    if row.get("pdf_downloaded") not in ("0", "no", ""):
+        return False
+    if row.get("pdf_parsed") not in ("0", "no", ""):
+        return False
+    status = row.get("retrieval_status", "")
+    quality = row.get("quality_status", "")
+    lineage = row.get("lineage_status", "")
+    if status in ("network_error", "not_found", "universe_invalid"):
+        return False
+    if status == "found":
+        return True
+    if status in ("discovered", "matching_pass"):
+        return True
+    if lineage == "discovered":
+        return True
+    if status == "needs_review" or quality == "needs_review":
+        return bool(lineage)
+    return False
+
+
+def compute_phase3_execution_gate(
+    stats: tiny_live.LiveStats,
+    rows: List[Dict[str, str]],
+    universe_issues: List[str],
+    case_count: int,
+) -> str:
+    if has_red_line_violation(stats, rows):
+        return "FAIL_REVIEW_REQUIRED"
+    if universe_issues or case_count != PHASE3_REQUIRED_UNIVERSE_SIZE:
+        return "FAIL_REVIEW_REQUIRED"
+    acceptable_count = sum(1 for row in rows if is_phase3_case_acceptable(row))
+    if acceptable_count >= PHASE3_ACCEPTABLE_THRESHOLD:
+        return PHASE3_EXECUTION_GATE_PASS
+    return "FAIL_REVIEW_REQUIRED"
+
+
+def process_phase3_50_live(
+    phase3_cases: List[Phase3UniverseCase],
+    output_paths: Dict[str, str],
+    stats: tiny_live.LiveStats,
+) -> Tuple[List[Dict[str, str]], List[str]]:
+    rows: List[Dict[str, str]] = []
+    universe_issues: List[str] = []
+    for case in phase3_cases:
+        if case.phase3_include != "yes":
+            continue
+        issues = validate_phase3_case(case)
+        if issues:
+            universe_issues.append(f"{case.case_id}:{';'.join(issues)}")
+            rows.append(
+                build_phase3_live_report_row(
+                    case,
+                    {
+                        "retrieval_status": "universe_invalid",
+                        "quality_status": "blocked",
+                        "lineage_status": "needs_review",
+                        "announcement_id": "",
+                        "announcement_title": "",
+                        "announcement_time": "",
+                        "title_match_status": "fail",
+                        "period_match_status": "fail",
+                        "pdf_url_present": "no",
+                        "adjunct_url_present": "no",
+                        "notes": "; ".join(issues),
+                    },
+                    0,
+                )
+            )
+            stats.failure_count += 1
+            continue
+
+        tl_case = to_tiny_live_case(phase3_to_phase2_case(case))
+        before_requests = stats.cninfo_requests
+        record = tiny_live.execute_live_case(tl_case, stats)
+        case_cninfo_requests = stats.cninfo_requests - before_requests
+        live_row = build_phase3_live_report_row(case, record, case_cninfo_requests)
+        snapshot_path = os.path.join(output_paths["raw_metadata"], f"{case.case_id}.json")
+        with open(snapshot_path, "w", encoding="utf-8") as f:
+            json.dump(
+                {
+                    "case": case.__dict__,
+                    "mode": "phase3_live",
+                    "cninfo_called": True,
+                    "cninfo_request_count": case_cninfo_requests,
+                    "pdf_download_enabled": False,
+                    "pdf_parse_enabled": False,
+                    "matching_logic": MATCHING_LOGIC_VERSION,
+                    "record": live_row,
+                    "raw_announcement": record.get("_raw_announcement"),
+                    "org_id": record.get("_org_id"),
+                },
+                f,
+                ensure_ascii=False,
+                indent=2,
+            )
+        rows.append(live_row)
+        print(
+            f"case_id={case.case_id} company_code={case.company_code} "
+            f"retrieval_status={live_row['retrieval_status']} "
+            f"quality={live_row.get('quality_status', 'n/a')}",
+            flush=True,
+        )
+    return rows, universe_issues
+
+
+def write_phase3_live_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "a_class_phase3_50_company_expansion_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=LIVE_REPORT_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_phase3_live_quality_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "a_class_phase3_50_company_expansion_quality_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=LIVE_QUALITY_COLUMNS)
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({k: row.get(k, "") for k in LIVE_QUALITY_COLUMNS})
+    return report_path
+
+
+def write_phase3_live_summary(
+    output_paths: Dict[str, str],
+    stats: tiny_live.LiveStats,
+    rows: List[Dict[str, str]],
+    universe_issues: List[str],
+    gate: str,
+) -> str:
+    acceptable_count = sum(1 for row in rows if is_phase3_case_acceptable(row))
+    failed_count = sum(
+        1
+        for row in rows
+        if row.get("retrieval_status")
+        in ("network_error", "not_found", "universe_invalid")
+    )
+    needs_review_count = sum(
+        1 for row in rows if row.get("quality_status") == "needs_review"
+    )
+    lines = [
+        "# CNINFO A 类 Phase 3 50-Company Expansion — Live 执行摘要",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** Phase 3 live metadata validation · **50 cases** · **无 PDF** · **不是 verified**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        "| mode | phase3_live |",
+        f"| universe size | {len(rows)} |",
+        f"| acceptable | {acceptable_count} |",
+        f"| failed | {failed_count} |",
+        f"| needs_review | {needs_review_count} |",
+        f"| CNINFO requests | {stats.cninfo_requests} |",
+        f"| PDF downloaded | **{stats.pdf_downloaded_count}** |",
+        f"| PDF parsed | **{stats.pdf_parsed_count}** |",
+        f"| OCR / extraction | **0** |",
+        f"| DB / MinIO / RAG | **0** |",
+        f"| matching_logic | **{MATCHING_LOGIC_VERSION}** |",
+        "",
+        "## Safety",
+        "",
+        "- metadata only: **yes**",
+        f"- output isolation: `{output_paths['root']}`",
+        "- Phase 1 / Phase 2 / retry / precheck baseline untouched: **yes**",
+        "- verified: **no**",
+        "- production_ready: **no**",
+        "",
+        "## Gate",
+        "",
+        "```text",
+        f"a_class_phase3_50_company_execution_gate = {gate}",
+        "```",
+        "",
+        "**不是 PASS** · **不是 verified** · **不是 production_ready**",
+        "",
+    ]
+    if universe_issues:
+        lines.extend(["## Universe issues", ""] + [f"- {item}" for item in universe_issues] + [""])
+
+    summary_path = os.path.join(
+        output_paths["reports"], "a_class_phase3_50_company_expansion_summary.md"
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+    return summary_path
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="CNINFO A-class Phase2 metadata expansion（dry-run default）"
@@ -2510,6 +3141,18 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="显式批准 A-class Phase 2 retry v3 live",
     )
+    parser.add_argument(
+        "--phase3-50",
+        dest="phase3_50",
+        action="store_true",
+        help="Phase 3 50-company metadata expansion 模式",
+    )
+    parser.add_argument(
+        "--approve-a-class-phase3-50-company-expansion",
+        dest="approve_a_class_phase3_50_company_expansion",
+        action="store_true",
+        help="显式批准 A-class Phase 3 50-company live expansion",
+    )
     parser.add_argument("--approve-a-class-tiny-live-metadata", action="store_true")
     parser.add_argument("--approve-phase1-tiny-live-metadata", action="store_true")
     parser.add_argument("--approve-full-harvest", action="store_true")
@@ -2538,6 +3181,143 @@ def main(argv: Optional[List[str]] = None) -> int:
             file=sys.stderr,
         )
         return 2
+
+    if args.phase3_50 and (args.retry_v3 or args.retry_failed_only):
+        print(
+            f"ERROR: {PHASE3_INCOMPATIBLE_WITH_RETRY_V3 if args.retry_v3 else PHASE3_INCOMPATIBLE_WITH_RETRY_FAILED_ONLY}",
+            file=sys.stderr,
+        )
+        return 2
+
+    if args.phase3_50:
+        if args.universe_csv is None:
+            print(f"ERROR: {PHASE3_UNIVERSE_CSV_REQUIRED}", file=sys.stderr)
+            return 2
+        if args.output_root is None:
+            args.output_root = DEFAULT_PHASE3_OUTPUT_ROOT
+
+        enforce_forbidden_options(args)
+
+        if args.mode == "live":
+            enforce_phase3_approval_gate(args)
+
+        ok_root, root_err = validate_phase3_output_root(args.output_root)
+        if not ok_root:
+            print(f"ERROR: {root_err}", file=sys.stderr)
+            return 2
+
+        if not os.path.isfile(args.universe_csv):
+            print(f"ERROR: universe not found: {args.universe_csv}", file=sys.stderr)
+            return 2
+
+        phase3_cases = load_phase3_universe(args.universe_csv)
+        if args.limit is not None:
+            phase3_cases = phase3_cases[: args.limit]
+
+        ok_size, size_err = validate_phase3_universe_size(phase3_cases)
+        if not ok_size:
+            print(f"ERROR: {size_err}", file=sys.stderr)
+            return 2
+
+        ok_mix, mix_err = validate_phase3_report_type_mix(phase3_cases)
+        if not ok_mix:
+            print(f"ERROR: {mix_err}", file=sys.stderr)
+            return 2
+
+        ok_dup, dup_err = validate_phase3_duplicate_company_codes(phase3_cases)
+        if not ok_dup:
+            print(f"ERROR: {dup_err}", file=sys.stderr)
+            return 2
+
+        phase1_overlap_count, phase2_overlap_count = count_phase3_overlap(phase3_cases)
+        if phase1_overlap_count > 0:
+            print(
+                f"ERROR: {PHASE1_OVERLAP_REJECTED}: count={phase1_overlap_count}",
+                file=sys.stderr,
+            )
+            return 2
+        if phase2_overlap_count > 0:
+            print(
+                f"ERROR: {PHASE2_OVERLAP_REJECTED}: count={phase2_overlap_count}",
+                file=sys.stderr,
+            )
+            return 2
+
+        normalized_root = _normalize_output_root(args.output_root)
+        output_paths = ensure_output_layout(normalized_root)
+
+        included_phase3 = [c for c in phase3_cases if c.phase3_include == "yes"]
+        report_type_mix: Dict[str, int] = {}
+        for case in included_phase3:
+            report_type_mix[case.report_type] = (
+                report_type_mix.get(case.report_type, 0) + 1
+            )
+
+        if args.mode == "live":
+            stats = tiny_live.LiveStats()
+            rows, universe_issues = process_phase3_50_live(
+                included_phase3, output_paths, stats
+            )
+            gate = compute_phase3_execution_gate(
+                stats, rows, universe_issues, len(included_phase3)
+            )
+            report_path = write_phase3_live_report(rows, output_paths)
+            quality_path = write_phase3_live_quality_report(rows, output_paths)
+            summary_path = write_phase3_live_summary(
+                output_paths, stats, rows, universe_issues, gate
+            )
+            acceptable_count = sum(1 for row in rows if is_phase3_case_acceptable(row))
+            failed_count = sum(
+                1
+                for row in rows
+                if row.get("retrieval_status")
+                in ("network_error", "not_found", "universe_invalid")
+            )
+            needs_review_count = sum(
+                1 for row in rows if row.get("quality_status") == "needs_review"
+            )
+            print(
+                f"mode=phase3_live cases={len(included_phase3)} "
+                f"cninfo_calls={stats.cninfo_requests}"
+            )
+            print(f"acceptable={acceptable_count} failed={failed_count}")
+            print(f"needs_review={needs_review_count}")
+            print(f"success={stats.success_count} failure={stats.failure_count}")
+            print(
+                f"pdf_downloaded={stats.pdf_downloaded_count} "
+                f"pdf_parsed={stats.pdf_parsed_count}"
+            )
+            print(f"gate=a_class_phase3_50_company_execution_gate={gate}")
+            print(f"report={report_path}")
+            print(f"quality={quality_path}")
+            print(f"summary={summary_path}")
+            if universe_issues or gate == "FAIL_REVIEW_REQUIRED":
+                return 1
+            return 0
+
+        rows, universe_issues = process_phase3_dry_run(phase3_cases, normalized_root)
+        report_path = write_phase3_dryrun_report(rows, output_paths)
+        summary_path = write_phase3_dryrun_summary(
+            rows,
+            output_paths,
+            universe_issues,
+            report_type_mix,
+            phase1_overlap_count,
+            phase2_overlap_count,
+        )
+        planned_ok = sum(1 for row in rows if row["dryrun_status"] == "planned_ok")
+        print(
+            f"mode=phase3_dry_run cases={len(included_phase3)} "
+            f"planned_ok={planned_ok} cninfo_calls=0"
+        )
+        print(
+            f"gate=a_class_phase3_50_company_runner_extension_gate={PHASE3_RUNNER_GATE}"
+        )
+        print(f"phase3_dryrun_report={report_path}")
+        print(f"phase3_dryrun_summary={summary_path}")
+        if universe_issues:
+            return 1
+        return 0
 
     if args.retry_v3:
         if args.universe_csv is None:

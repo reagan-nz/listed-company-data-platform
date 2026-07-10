@@ -1,0 +1,24 @@
+metric_group,metric_name,value,gate_impact,notes
+phase3,phase3_total_cases,50,closure_input,universe A3M001-A3M050
+phase3,accepted_live,49,closure_positive,found/pass/discovered metadata lineage
+phase3,unresolved_final,1,closure_caveat,A3M017 only
+phase3,needs_review_final,1,closure_caveat,same as unresolved
+phase3,A3M017_status,unresolved_network_orgid_failure,closure_caveat,orgId resolution network_error
+phase3,effective_accepted_final,49,closure_gate_positive,49/50 effective metadata coverage
+phase3,effective_acceptance_rate,49/50,closure_gate_positive,98%
+phase3,phase3_live_cninfo_requests,104,live_record,live execution only; closure task CNINFO=0
+phase3,closure_cninfo_requests,0,closure_safety,offline merge only
+overlap,phase1_overlap,0/50,closure_input,unchanged
+overlap,phase2_overlap,0/50,closure_input,unchanged
+execution,a_class_phase3_50_company_execution_gate,PASS_WITH_CAVEAT,preserved,49/50 acceptable
+closure,a_class_phase3_50_company_closure_gate,PASS_WITH_CAVEAT,closure_gate,49/50 with documented A3M017 network caveat
+safety,pdf_downloaded,0,red_line,metadata only
+safety,pdf_parsed,0,red_line,
+safety,ocr,0,red_line,
+safety,extraction,0,red_line,
+safety,db_write,0,red_line,
+safety,minio_write,0,red_line,
+safety,rag_run,0,red_line,
+status,verified,false,red_line,not marked
+status,production_ready,false,red_line,not marked
+status,testing_stable_sample,false,red_line,not marked
