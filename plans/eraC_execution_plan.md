@@ -283,7 +283,8 @@ _最后更新：2026-07-09_
 174. ~~Phase 3.5 isolated resume planning~~ → **完成**（§7dqb · universe **29** · gate **`READY_FOR_APPROVAL`** · **NOT APPROVED**）
 175. ~~Phase 3.5 isolated resume runner extension + dry-run~~ → **完成**（§7dqc · dry-run **29/29** · test **27/27 PASS** · gate **`READY_FOR_APPROVAL`** · CNINFO **0** · **NOT APPROVED live**）
 176. ~~Phase 3.5 isolated resume live~~ → **完成**（§7dqd · CNINFO **120** · complete **28** · partial **1** · failed **0** · gate **`PASS_WITH_CAVEAT`** · **无 snapshot**）
-177. **Phase 3.5 resume QA merge 或 success-subset snapshot planning** → **待启动**
+177. ~~Phase 3.5 isolated resume QA + merge planning~~ → **完成**（§7dqe · recovered **28** · updated success **491** · holdout **9** · gate **`PASS_WITH_CAVEAT`** · CNINFO **0**）
+178. **Phase 3.5 expanded success-subset snapshot planning 或 C35R016 retry review** → **待启动**
 172. ~~B 类 Phase 1 endpoint candidate 表 + minimum fields freeze review~~ → **完成**（§7dp · gate **`READY_FOR_APPROVAL`** · **无 B-class live**）
 164. ~~B 类 Phase 1 schema review package 准备~~ → **完成**（§7dq · gate **`READY_FOR_APPROVAL`** · **无 B-class live**）
 165. ~~B 类 Phase 1 schema signoff 准备~~ → **完成**（§7dr · signoff gate **`READY_FOR_IMPLEMENTATION`** · **无 B-class live**）
@@ -343,7 +344,8 @@ _最后更新：2026-07-09_
 204. ~~D 类 known-event targeted probe isolated live 执行~~ → **完成**（§7dzad · CNINFO **13** · execution gate **`FAIL_REVIEW_REQUIRED`** · **不是 verified**）
 205. ~~D 类 known-event targeted probe closure + DLC006R failure review~~ → **完成**（§7dzae · closure gate **`READY_FOR_HUMAN_DECISION`** · **无 CNINFO** · **无 rerun**）
 206. ~~D 类 DLC006R 人工决策 + replacement 最终收口~~ → **完成**（§7dzaf · Option **A+C** · final closure gate **`PASS_WITH_CAVEAT`** · **不是 verified**）
-207. ~~D 类 known-event replacement boundary review~~ → **完成**（§7dzag · boundary gate **`READY_FOR_COMMIT_REVIEW`** · safe-to-commit list · **无 commit**）
+207. ~~D 类 known-event replacement boundary review~~ → **完成**（§7dzag · boundary gate **`READY_FOR_COMMIT_REVIEW`** · safe-to-commit list · commit **`389cd9c`**）
+208. ~~D 类 known-event replacement post-push status closure~~ → **完成**（§7dzah · commit **`389cd9c`** on **`origin/main`** · push gate **`READY_FOR_HUMAN_DECISION`** · **无新 commit**）
 194. ~~A 类 Phase 2 merge closure review~~ → **完成**（§7dzt · **12 accepted** · **8 unresolved network** · closure gate **`PASS_WITH_CAVEAT_NETWORK_UNRESOLVED`** · **无 CNINFO**）
 195. ~~A 类 Phase 2 network recovery retry_v2 planning~~ → **完成**（§7dzu · universe **8** · planning gate **`READY_FOR_APPROVAL`** · **无 CNINFO**）
 196. ~~A 类 Phase 2 retry_v2 runner extension + dry-run~~ → **完成**（§7dzv · **8/8 planned_ok** · test **18/18 PASS** · runner gate **`READY_FOR_APPROVAL`** · **无 live**）
@@ -357,7 +359,8 @@ _最后更新：2026-07-09_
 206. ~~A 类 Phase 2 retry_v3 live path implementation~~ → **完成**（§7dzxf · live-path test **25/25 PASS** · live implementation gate **`READY_FOR_APPROVAL`** · **无真实 CNINFO** · **无 live**）
 207. ~~A 类 Phase 2 retry_v3 isolated live 执行~~ → **完成**（§7dzxg · **8/8 acceptable** · CNINFO **18** · execution gate **`PASS_WITH_CAVEAT`** · **不是 verified**）
 208. ~~A 类 Phase 2 retry_v3 merge closure 更新~~ → **完成**（§7dzxh · **20/20 effective accepted** · final closure gate **`PASS_WITH_CAVEAT`** · **无 CNINFO**）
-209. ~~A 类 Phase 2 final commit boundary review~~ → **完成**（§7dzxi · gate **`READY_FOR_COMMIT_REVIEW`** · **无 commit** · **无 CNINFO**）
+209. ~~A 类 Phase 2 final commit boundary review~~ → **完成**（§7dzxi · gate **`READY_FOR_COMMIT_REVIEW`** · **无 CNINFO**）
+210. ~~A 类 Phase 2 explicit-path commit~~ → **完成**（§7dzxj · commit **`cad5ed1`** · **80 files** · test **117/117 PASS** · gate **`READY_FOR_HUMAN_DECISION`** · **无 push** · **无 CNINFO**）
 105. review_later / raw_only 复判 → **待启动**（31 + 25）
 106. company_snapshot planning → **待启动**（P2）
 107. dividend_history YAML backfill → **GO（决策 only）** · **不执行**
@@ -2589,7 +2592,7 @@ a_class_phase2_failed_retry_execution_gate = FAIL_REVIEW_REQUIRED
 
 ### Next immediate task
 
-~~retry_v3 merge closure update v3~~ → **完成**（§7dzxh）。~~commit boundary review~~ → **完成**（§7dzxi）。下一步：人工 commit 批准 · Phase 3 50-company planning（**NOT APPROVED**）。
+~~retry_v3 merge closure update v3~~ → **完成**（§7dzxh）。~~commit boundary review~~ → **完成**（§7dzxi）。~~explicit-path commit~~ → **完成**（§7dzxj）。
 
 ---
 
@@ -2614,7 +2617,31 @@ a_class_phase2_failed_retry_execution_gate = FAIL_REVIEW_REQUIRED
 
 ### Next immediate task
 
-人工 commit 批准 → A-class Phase 3 50-company planning package（**offline · separate approval**）。
+~~人工 commit 批准~~ → **commit 完成**（§7dzxj）。
+
+---
+
+## 7dzxj. A 类 Phase 2 Explicit-path Commit（2026-07-10）
+
+> **explicit-path only** · **无 CNINFO** · **无 live** · **无 push** · **original/v1/v2/precheck/retry_v3 报告 untouched**。
+
+| 项 | 内容 |
+|----|------|
+| commit | **`cad5ed1`** |
+| files | **80**（136 inventory yes 中已有 **56** 此前已跟踪无 diff） |
+| safe-to-commit list | [cninfo_a_class_phase2_safe_to_commit_list.md](../outputs/validation/cninfo_a_class_phase2_safe_to_commit_list.md) |
+| tests | **117/117 PASS**（6 runner/live-path suites · CNINFO **0**） |
+| **commit review gate** | **`a_class_phase2_commit_review_gate = READY_FOR_HUMAN_DECISION`** |
+
+### 执行结论
+
+- effective **20/20** · unresolved **0** · accepted_original_success **12** · accepted_retry_v3_recovered **8**
+- metadata-only closure · no PDF/OCR/DB/MinIO/RAG
+- **不是 verified** · **不是 production_ready** · **无 push**
+
+### Next immediate task
+
+人工决策 → A-class Phase 3 50-company planning package（**offline · separate approval · NOT APPROVED**）。
 
 ---
 
@@ -5330,6 +5357,29 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 ---
 
+## 7dzah. D 类 Known-Event Replacement Post-Push Status Closure（2026-07-10）
+
+> **并行约束：** 离线 status closure only · **无 CNINFO** · **无新 commit** · **无 push** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| commit | **`389cd9cf371b704adb606eea151c1c0d193e736c`** |
+| push status | [cninfo_d_class_known_event_replacement_push_status.md](../outputs/validation/cninfo_d_class_known_event_replacement_push_status.md) |
+| remote evidence | `389cd9c` contained in **`origin/main`** · `origin/main..HEAD` **empty** |
+| final closure gate | **`PASS_WITH_CAVEAT`**（保持） |
+| push gate | **`d_class_known_event_replacement_push_gate = READY_FOR_HUMAN_DECISION`** |
+| CNINFO calls（本回合） | **0** |
+
+### 执行结论
+
+- D-class known-event replacement commit **已确认在 remote**
+- status docs 已更新 · **无新 commit**
+- **无 DLC006R rerun** · track 保持 closed-with-caveat
+
+**红线：** **不是 verified** · **不是 production_ready**
+
+---
+
 ## 7dv. B 类 Tiny Live Validation 批准包准备（2026-07-09）
 
 > **并行约束：** C-class Phase 3 live harvest 可能在另一终端运行；本轮 **不调用 CNINFO**、**不 live**；**不读写在跑输出根** `outputs/harvest/cninfo_c_class/phase3_batch_500_001/`。
@@ -7463,7 +7513,7 @@ P0 duplicate → P1 BSE legacy → P2 rename → P3 high risk manual → P4 low 
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **863 snapshot 已生成**（§7cc）；**`SNAPSHOT_GENERATED_QA_REVIEW`**；Phase 3.5 isolated resume live **完成**（§7dqd · **29** · CNINFO **120** · gate **`PASS_WITH_CAVEAT`**）；**下一步** resume QA merge 或 success-subset snapshot planning。**并行：A 类 Phase 2 final commit boundary review 已完成**（§7dzxi · gate **`READY_FOR_COMMIT_REVIEW`** · CNINFO **0** · **无 commit** · **不是 verified**）。**BSE legacy** HOLD。
+当前 Phase：C 类 **863 snapshot 已生成**（§7cc）；**`SNAPSHOT_GENERATED_QA_REVIEW`**；Phase 3.5 isolated resume QA + merge planning **完成**（§7dqe · updated success **491** · holdout **9** · gate **`PASS_WITH_CAVEAT`**）；**下一步** expanded success-subset snapshot planning 或 C35R016 retry review。**并行：A 类 Phase 2 explicit-path commit 已完成**（§7dzxj · commit **`cad5ed1`** · gate **`READY_FOR_HUMAN_DECISION`** · CNINFO **0** · **无 push** · **不是 verified**）。**BSE legacy** HOLD。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
