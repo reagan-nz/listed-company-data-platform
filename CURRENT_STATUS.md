@@ -374,7 +374,7 @@ _最后更新：2026-07-10_
 | **Snapshot Full Batch** | [full snapshots](outputs/snapshot/cninfo_c_class/full/) · **863** JSON · status **complete_with_caveat=863** |
 | **Snapshot Full QA Review** | [review script](lab/review_cninfo_c_class_snapshot_full_quality.py) · [quality summary](outputs/validation/cninfo_c_class_snapshot_full_quality_summary.md) · [module coverage](outputs/validation/cninfo_c_class_snapshot_full_module_coverage.csv) · test **5/5 PASS** |
 | **Full Market Expansion Planning** | [registry plan](plans/cninfo_c_class_full_market_universe_registry_plan.md) · [universe design](outputs/validation/cninfo_c_class_full_market_universe_design.md) · [BSE strategy](plans/cninfo_c_class_bse_expansion_strategy.md) · [hold policy](plans/cninfo_c_class_hold_company_policy.md) · [harvest architecture](plans/cninfo_c_class_full_market_harvest_architecture.md) · [expansion summary](outputs/validation/cninfo_c_class_full_market_expansion_planning_summary.md) |
-| 性质 | **863 snapshot 已生成 · QA review 完成 · Phase 3.5 expanded 491 snapshot track commit 完成**（build/QA/closure gates **`PASS_WITH_CAVEAT`** · commit review gate **`READY_FOR_HUMAN_DECISION`**）；状态 **`SNAPSHOT_GENERATED_QA_REVIEW`** · 不入库 · 不写 verified · snapshot JSON **本地可复现** |
+| 性质 | **863 snapshot 已生成 · QA review 完成 · Phase 3.5 expanded 491 track commit 完成** · **holdout signoff commit 完成**（Option 1 · 9 holdout · commit review gate **`READY_FOR_HUMAN_DECISION`**）；状态 **`SNAPSHOT_GENERATED_QA_REVIEW`** · 不入库 · 不写 verified · 491 track **closed-with-caveat** |
 
 ---
 
@@ -592,6 +592,9 @@ flowchart TD
 | 177 | ~~Phase 3.5 expanded snapshot closure review（offline）~~ → **完成**（[closure review](plans/cninfo_c_class_phase35_expanded_snapshot_closure_review.md) · [closure summary](outputs/validation/cninfo_c_class_phase35_expanded_snapshot_closure_summary.md) · gate **`PASS_WITH_CAVEAT`** · CNINFO **0** · **no commit**） |
 | 178 | ~~C-class Phase 3.5 expanded snapshot commit boundary review~~ → **完成**（[boundary review](plans/cninfo_c_class_phase35_expanded_snapshot_commit_boundary_review.md) · [boundary summary](outputs/validation/cninfo_c_class_phase35_expanded_snapshot_commit_boundary_summary.md) · gate **`READY_FOR_COMMIT_REVIEW`** · CNINFO **0** · **no commit**） |
 | 179 | ~~C-class Phase 3.5 expanded snapshot commit~~ → **完成**（[safe-to-commit list](outputs/validation/cninfo_c_class_phase35_expanded_snapshot_safe_to_commit_list.md) · **40 files** · explicit-path only · gate **`READY_FOR_HUMAN_DECISION`** · snapshot JSON **未入库** · **no push**） |
+| 180 | ~~C-class Phase 3.5 holdout + C35R016 triage planning~~ → **完成**（[triage plan](plans/cninfo_c_class_phase35_holdout_c35r016_triage_plan.md) · [triage matrix](outputs/validation/cninfo_c_class_phase35_holdout_triage_matrix.csv) · [C35R016 brief](outputs/validation/cninfo_c_class_phase35_c35r016_case_brief.md) · holdout **9** · gate **`READY_FOR_HUMAN_DECISION`** · CNINFO **0** · **no promotion**） |
+| 181 | ~~C-class Phase 3.5 holdout closed-with-caveat signoff~~ → **完成**（[signoff](plans/cninfo_c_class_phase35_holdout_closed_with_caveat_signoff.md) · [ledger](outputs/validation/cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv) · Option 1 accepted · gate **`PASS_WITH_CAVEAT`** · CNINFO **0** · **no live**） |
+| 182 | ~~C-class Phase 3.5 holdout signoff commit~~ → **完成**（triage + signoff **11 files** · explicit-path only · gate **`READY_FOR_HUMAN_DECISION`** · **no push**） |
 | 100 | dividend_history YAML backfill → **GO（决策 only）** · **不执行** |
 | 101 | BSE legacy / hold / abnormal side-track → **待文档化** |
 | 102 | **暂不入库** · **C-class 未整体完成**

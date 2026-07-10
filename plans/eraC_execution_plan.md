@@ -291,6 +291,9 @@ _最后更新：2026-07-09_
 182. ~~Phase 3.5 expanded snapshot closure review（offline）~~ → **完成**（§7dqj · closure gate **`PASS_WITH_CAVEAT`** · CNINFO **0** · **no commit**）
 183. ~~C-class Phase 3.5 expanded snapshot commit boundary review~~ → **完成**（§7dqk · gate **`READY_FOR_COMMIT_REVIEW`** · CNINFO **0** · **no commit**）
 184. ~~C-class Phase 3.5 expanded snapshot commit~~ → **完成**（§7dql · **40 files** · explicit-path only · gate **`READY_FOR_HUMAN_DECISION`** · snapshot JSON **未入库** · **no push**）
+185. ~~C-class Phase 3.5 holdout + C35R016 triage planning~~ → **完成**（§7dqm · holdout **9** · gate **`READY_FOR_HUMAN_DECISION`** · CNINFO **0** · **no promotion** · **no commit**）
+186. ~~C-class Phase 3.5 holdout closed-with-caveat signoff~~ → **完成**（§7dqn · Option 1 · holdout **9** · gate **`PASS_WITH_CAVEAT`** · CNINFO **0** · **no live**）
+187. ~~C-class Phase 3.5 holdout signoff commit~~ → **完成**（§7dqo · **11 files** · explicit-path only · gate **`READY_FOR_HUMAN_DECISION`** · **no push**）
 172. ~~B 类 Phase 1 endpoint candidate 表 + minimum fields freeze review~~ → **完成**（§7dp · gate **`READY_FOR_APPROVAL`** · **无 B-class live**）
 164. ~~B 类 Phase 1 schema review package 准备~~ → **完成**（§7dq · gate **`READY_FOR_APPROVAL`** · **无 B-class live**）
 165. ~~B 类 Phase 1 schema signoff 准备~~ → **完成**（§7dr · signoff gate **`READY_FOR_IMPLEMENTATION`** · **无 B-class live**）
@@ -3393,7 +3396,101 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 ### Next immediate task（C-class）
 
-Human decision on commit review gate · holdout triage / next C-class track planning（offline）
+~~Human decision on commit review gate · holdout triage / next C-class track planning（offline）~~ → **holdout triage planning 完成**（§7dqm）
+
+**Human decision:** approve Option 1（hold 9 closed-with-caveat）or spawn optional C35R016 / hold_for_review side tracks.
+
+---
+
+## 7dqm. C 类 Phase 3.5 Holdout + C35R016 Triage Planning（2026-07-10）
+
+> **offline triage planning only** · **无 CNINFO** · **无 live** · **无 promotion** · **无 commit** · **无 push**
+
+| 项 | 内容 |
+|----|------|
+| triage plan | [cninfo_c_class_phase35_holdout_c35r016_triage_plan.md](cninfo_c_class_phase35_holdout_c35r016_triage_plan.md) |
+| triage matrix | [cninfo_c_class_phase35_holdout_triage_matrix.csv](../outputs/validation/cninfo_c_class_phase35_holdout_triage_matrix.csv)（**9 rows** · all `promotion_allowed_now=no`） |
+| C35R016 case brief | [cninfo_c_class_phase35_c35r016_case_brief.md](../outputs/validation/cninfo_c_class_phase35_c35r016_case_brief.md) |
+| planning summary | [cninfo_c_class_phase35_holdout_triage_planning_summary.md](../outputs/validation/cninfo_c_class_phase35_holdout_triage_planning_summary.md) |
+| next-step recommendation | [cninfo_c_class_phase35_holdout_triage_next_step_recommendation.md](../outputs/validation/cninfo_c_class_phase35_holdout_triage_next_step_recommendation.md) |
+| holdout count | **9**（8 hold_for_review + C35R016） |
+| 491 track | **closed-with-caveat**（expanded snapshot commit unchanged） |
+| CNINFO | **0** |
+| planning gate | **`phase35_holdout_c35r016_triage_planning_gate = READY_FOR_HUMAN_DECISION`** |
+| expanded commit review gate | **`READY_FOR_HUMAN_DECISION`**（preserved） |
+| build / QA / closure gates | **unchanged · `PASS_WITH_CAVEAT`** |
+
+### 执行结论
+
+- C-class Phase 3.5 holdout + C35R016 triage planning **complete**
+- **Primary recommendation:** hold all 9 closed-with-caveat; 491 track stays closed
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task（C-class）
+
+~~Human decision on holdout triage recommendation（Option 1 default）~~ → **Option 1 signoff 完成**（§7dqn）
+
+**Stop Phase 3.5 holdout work** · optional C35R016 / push decisions only if separately requested
+
+---
+
+## 7dqn. C 类 Phase 3.5 Holdout Closed-with-Caveat Signoff（2026-07-10）
+
+> **offline signoff only** · **Option 1 accepted** · **无 CNINFO** · **无 live** · **无 commit** · **无 push**
+
+| 项 | 内容 |
+|----|------|
+| signoff | [cninfo_c_class_phase35_holdout_closed_with_caveat_signoff.md](cninfo_c_class_phase35_holdout_closed_with_caveat_signoff.md) |
+| ledger | [cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv](../outputs/validation/cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv)（**9 rows** · all `promotion_allowed_now=no`） |
+| summary | [cninfo_c_class_phase35_holdout_closed_with_caveat_summary.md](../outputs/validation/cninfo_c_class_phase35_holdout_closed_with_caveat_summary.md) |
+| decision | **Option 1** — hold all 9 closed-with-caveat |
+| hold_for_review | **8** → `closed_with_caveat` |
+| C35R016 | **1** → `closed_with_caveat_still_partial` · not promoted |
+| 491 track | **unchanged**（491 local JSON） |
+| CNINFO | **0** |
+| signoff gate | **`phase35_holdout_closed_with_caveat_signoff_gate = PASS_WITH_CAVEAT`** |
+| triage planning gate | **`READY_FOR_HUMAN_DECISION`**（Option 1 accepted per signoff） |
+| expanded commit review gate | **`READY_FOR_HUMAN_DECISION`**（preserved） |
+
+### 执行结论
+
+- C-class Phase 3.5 holdout closed-with-caveat signoff **complete**
+- **不是 bare PASS** · **不是 verified** · **不是 production_ready**
+- C35R016 executive retry **not opened**
+
+### Next immediate task（C-class）
+
+~~Stop Phase 3.5 holdout work · optional push or C35R016 planning only if separately requested~~ → **holdout signoff commit 完成**（§7dqo）
+
+**Human decision:** holdout signoff commit review gate · optional clean-branch push
+
+---
+
+## 7dqo. C 类 Phase 3.5 Holdout Signoff Commit（2026-07-10）
+
+> **explicit-path git commit only** · **无 CNINFO** · **无 push** · **no holdout reopening**
+
+| 项 | 内容 |
+|----|------|
+| signoff | [cninfo_c_class_phase35_holdout_closed_with_caveat_signoff.md](cninfo_c_class_phase35_holdout_closed_with_caveat_signoff.md) |
+| ledger | [cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv](../outputs/validation/cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv)（**9 rows** · all `promotion_allowed_now=no`） |
+| summary | [cninfo_c_class_phase35_holdout_closed_with_caveat_summary.md](../outputs/validation/cninfo_c_class_phase35_holdout_closed_with_caveat_summary.md) |
+| triage package | [triage plan](cninfo_c_class_phase35_holdout_c35r016_triage_plan.md) + matrix + brief + planning summary + next-step |
+| committed files | **11**（triage + signoff + status docs） |
+| holdout disposition | **9 closed-with-caveat**（Option 1） |
+| 491 track | **unchanged** |
+| commit review gate | **`phase35_holdout_closed_with_caveat_commit_review_gate = READY_FOR_HUMAN_DECISION`** |
+| signoff gate | **`PASS_WITH_CAVEAT`**（preserved） |
+| push | **no** |
+
+### 执行结论
+
+- C-class Phase 3.5 holdout signoff commit **complete**
+- **不是 verified** · **不是 production_ready** · **no promotion** · **no live**
+
+### Next immediate task（C-class）
+
+Human decision on holdout signoff commit review gate · optional clean-branch push（`c-class-phase35-clean-push`）
 
 ---
 
@@ -8078,7 +8175,7 @@ P0 duplicate → P1 BSE legacy → P2 rename → P3 high risk manual → P4 low 
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **863 snapshot 已生成**（§7cc）+ Phase 3.5 expanded **491** snapshot commit **完成**（§7dql · gate **`READY_FOR_HUMAN_DECISION`** · snapshot JSON **未入库**）；**`SNAPSHOT_GENERATED_QA_REVIEW`**。**并行：B 类 Phase 3 explicit-path commit 已完成**（§7dxgl · **`f3f6077`** · **578 files** · review gate **`READY_FOR_HUMAN_DECISION`** · **无 push** · **不是 verified**）；**下一步** retry_v2 live metadata artifact recovery human decision。**A 类 Phase 3 50-company final commit boundary review 已完成**（§7dzxp · boundary gate **`READY_FOR_COMMIT_REVIEW`** · **无 commit** · **不是 verified**）。**BSE legacy** HOLD。
+当前 Phase：C 类 Phase 3.5 expanded **491** + holdout signoff on branch **c-class-phase35-clean-push**（§7dql · §7dqo · **`SNAPSHOT_GENERATED_QA_REVIEW`** · **491 + 9 holdout closed-with-caveat** · **awaiting push approval**）。**BSE legacy** HOLD。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```
