@@ -1,0 +1,776 @@
+path,artifact_type,phase_track,should_commit,reason,notes
+lab/run_cninfo_b_class_phase25_expansion_validation.py,runner,phase3_shared_runner,yes,reproducibility,Phase 3 / failed-retry / retry_v2 runner surface
+lab/run_cninfo_b_class_phase3_100_ep002_reachability_precheck.py,runner,phase3_shared_runner,yes,reproducibility,Phase 3 / failed-retry / retry_v2 runner surface
+lab/test_cninfo_b_class_phase3_100_ep002_reachability_precheck_runner.py,test,phase3_tests,yes,reproducibility,offline runner / live-path tests
+lab/test_cninfo_b_class_phase3_100_failed_retry_live_path.py,test,phase3_tests,yes,reproducibility,offline runner / live-path tests
+lab/test_cninfo_b_class_phase3_100_failed_retry_runner.py,test,phase3_tests,yes,reproducibility,offline runner / live-path tests
+lab/test_cninfo_b_class_phase3_100_retry_v2_live_path.py,test,phase3_tests,yes,reproducibility,offline runner / live-path tests
+lab/test_cninfo_b_class_phase3_100_retry_v2_runner.py,test,phase3_tests,yes,reproducibility,offline runner / live-path tests
+lab/test_cninfo_b_class_phase3_100_runner.py,test,phase3_tests,yes,reproducibility,offline runner / live-path tests
+plans/cninfo_b_class_phase3_100_command_draft.md,plan,phase3_planning,yes,reproducibility,
+plans/cninfo_b_class_phase3_100_ep002_reachability_precheck_command_draft.md,plan,phase3_ep002_precheck,yes,reproducibility,
+plans/cninfo_b_class_phase3_100_ep002_reachability_precheck_plan.md,plan,phase3_ep002_precheck,yes,reproducibility,
+plans/cninfo_b_class_phase3_100_ep002_reachability_precheck_runner_design.md,plan,phase3_ep002_precheck,yes,reproducibility,
+plans/cninfo_b_class_phase3_100_expansion_plan.md,plan,phase3_planning,yes,reproducibility,
+plans/cninfo_b_class_phase3_100_failed_case_triage_review.md,plan,phase3_planning,yes,reproducibility,
+plans/cninfo_b_class_phase3_100_failed_retry_closure_review.md,plan,phase3_failed_retry,yes,reproducibility,
+plans/cninfo_b_class_phase3_100_failed_retry_command_draft.md,plan,phase3_failed_retry,yes,reproducibility,
+plans/cninfo_b_class_phase3_100_failed_retry_plan.md,plan,phase3_failed_retry,yes,reproducibility,
+plans/cninfo_b_class_phase3_100_post_failed_retry_next_step_recommendation.md,plan,phase3_failed_retry,yes,reproducibility,
+plans/cninfo_b_class_phase3_100_post_retry_v2_next_step_recommendation.md,plan,phase3_retry_v2,yes,reproducibility,
+plans/cninfo_b_class_phase3_100_retry_v2_command_draft.md,plan,phase3_retry_v2,yes,reproducibility,
+plans/cninfo_b_class_phase3_100_retry_v2_isolated_plan.md,plan,phase3_retry_v2,yes,reproducibility,
+plans/cninfo_b_class_phase3_100_retry_v2_merge_closure_review.md,plan,phase3_retry_v2,yes,reproducibility,
+plans/cninfo_b_class_phase3_100_retry_v2_runner_extension_design.md,plan,phase3_retry_v2,yes,reproducibility,
+plans/cninfo_b_class_phase3_100_final_commit_boundary_review.md,commit_boundary,phase3_commit_boundary,yes,reproducibility,created by boundary review task
+outputs/validation/cninfo_b_class_phase3_100_final_artifact_inventory.csv,commit_boundary,phase3_commit_boundary,yes,reproducibility,created by boundary review task
+outputs/validation/cninfo_b_class_phase3_100_final_caveat_ledger.csv,commit_boundary,phase3_commit_boundary,yes,reproducibility,created by boundary review task
+outputs/validation/cninfo_b_class_phase3_100_safe_to_commit_list.md,commit_boundary,phase3_commit_boundary,yes,reproducibility,created by boundary review task
+outputs/validation/cninfo_b_class_phase3_100_commit_boundary_summary.md,commit_boundary,phase3_commit_boundary,yes,reproducibility,created by boundary review task
+outputs/validation/cninfo_b_class_phase3_100_approval_checklist.md,summary_or_metrics,phase3_validation,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_candidate_universe_design.csv,csv,phase3_validation,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_effective_merged_result.csv,csv,phase3_validation,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_effective_merged_result_v2.csv,csv,phase3_validation,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_ep002_orgid_failure_analysis.csv,csv,phase3_ep002_precheck,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck_approval_checklist.md,summary_or_metrics,phase3_ep002_precheck,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck_candidates.csv,csv,phase3_ep002_precheck,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck_planning_summary.md,summary_or_metrics,phase3_ep002_precheck,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck_runner_summary.md,summary_or_metrics,phase3_ep002_precheck,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_failed_case_triage.csv,csv,phase3_validation,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_failed_retry_approval_checklist.md,summary_or_metrics,phase3_failed_retry,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_failed_retry_closure_metrics.csv,csv,phase3_failed_retry,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_failed_retry_closure_summary.md,summary_or_metrics,phase3_failed_retry,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_failed_retry_live_implementation_summary.md,summary_or_metrics,phase3_failed_retry,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_failed_retry_live_path_test_summary.md,summary_or_metrics,phase3_failed_retry,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_failed_retry_planning_summary.md,summary_or_metrics,phase3_failed_retry,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_failed_retry_runner_extension_summary.md,summary_or_metrics,phase3_failed_retry,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_failed_retry_runner_test_summary.md,summary_or_metrics,phase3_failed_retry,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_failed_retry_universe.csv,csv,phase3_failed_retry,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_persistent_failure_ledger.csv,csv,phase3_validation,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_planning_summary.md,summary_or_metrics,phase3_validation,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_retry_recovered_case_ledger.csv,csv,phase3_validation,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_retry_v2_approval_checklist.md,summary_or_metrics,phase3_retry_v2,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_retry_v2_closure_metrics.csv,csv,phase3_retry_v2,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_retry_v2_closure_summary.md,summary_or_metrics,phase3_retry_v2,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_retry_v2_live_path_summary.md,summary_or_metrics,phase3_retry_v2,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_retry_v2_live_path_test_summary.md,summary_or_metrics,phase3_retry_v2,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_retry_v2_planning_summary.md,summary_or_metrics,phase3_retry_v2,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_retry_v2_recovered_case_ledger.csv,csv,phase3_retry_v2,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_retry_v2_runner_extension_summary.md,summary_or_metrics,phase3_retry_v2,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_retry_v2_universe.csv,csv,phase3_retry_v2,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_runner_extension_summary.md,summary_or_metrics,phase3_validation,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_runner_test_summary.md,summary_or_metrics,phase3_validation,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_success_hold_ledger.csv,csv,phase3_validation,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_universe_draft.csv,csv,phase3_validation,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E001.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E002.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E003.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E004.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E005.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E006.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E007.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E008.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E009.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E010.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E011.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E012.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E013.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E014.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E015.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E016.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E017.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E018.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E019.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E020.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E021.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E022.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E023.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E024.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E025.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E026.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E027.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E028.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E029.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E030.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E031.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E032.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E033.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E034.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E035.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E036.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E037.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E038.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E039.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E040.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E041.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E042.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E043.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E044.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E045.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E046.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E047.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E048.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E049.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E050.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E051.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E052.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E053.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E054.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E055.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E056.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E057.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E058.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E059.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E060.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E061.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E062.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E063.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E064.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E065.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E066.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E067.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E068.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E069.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E070.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E071.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E072.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E073.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E074.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E075.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E076.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E077.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E078.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E079.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E080.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E081.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E082.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E083.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E084.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E085.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E086.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E087.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E088.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E089.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E090.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E091.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E092.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E093.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E094.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E095.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E096.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E097.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E098.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E099.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/quality/B3E100.json,json_quality,phase3_expansion,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E001_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E002_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E003_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E004_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E005_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E006_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E007_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E008_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E009_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E010_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E011_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E012_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E013_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E014_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E015_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E016_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E017_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E018_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E019_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E020_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E021_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E022_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E023_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E024_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E025_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E026_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E027_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E028_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E029_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E030_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E031_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E032_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E033_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E034_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E035_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E036_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E037_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E038_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E039_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E040_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E041_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E042_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E043_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E044_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E045_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E046_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E047_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E048_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E049_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E050_EP004.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E051_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E052_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E053_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E054_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E055_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E056_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E057_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E058_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E059_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E060_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E061_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E062_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E063_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E064_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E065_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E066_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E067_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E068_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E069_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E070_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E071_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E072_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E073_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E074_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E075_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E076_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E077_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E078_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E079_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E080_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E081_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E082_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E083_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E084_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E085_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E086_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E087_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E088_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E089_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E090_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E091_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E092_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E093_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E094_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E095_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E096_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E097_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E098_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E099_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/raw_metadata/B3E100_EP005.json,json_snapshot,phase3_expansion,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_expansion/reports/b_class_phase3_100_dryrun_report.csv,report,phase3_expansion,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_expansion/reports/b_class_phase3_100_dryrun_summary.md,report,phase3_expansion,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_expansion/reports/b_class_phase3_100_quality_report.csv,report,phase3_expansion,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_expansion/reports/b_class_phase3_100_report.csv,report,phase3_expansion,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_expansion/reports/b_class_phase3_100_summary.md,report,phase3_expansion,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_expansion/reports/phase3_live_run.log,log,phase3_expansion,yes,reproducibility,execution log only
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E001.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E002.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E003.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E004.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E005.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E006.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E007.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E008.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E009.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E010.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E011.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E012.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E013.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E014.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E015.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E016.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E017.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E018.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E019.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E020.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E021.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E022.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E023.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E024.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E025.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E026.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E027.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E028.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E029.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E030.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E031.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E032.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E033.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E034.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E035.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E036.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E037.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E038.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E039.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E040.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E041.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E042.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E043.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E044.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E045.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E046.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E047.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E048.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E049.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E050.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E051.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E052.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E053.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E054.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E055.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E056.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E057.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E058.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E059.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E060.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E061.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E062.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E063.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E064.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E065.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E066.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E067.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E068.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E069.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E070.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E071.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E072.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E073.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E074.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E075.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E076.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E077.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E078.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E079.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E080.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E081.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E082.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E083.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E084.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E085.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E086.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E088.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E089.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E090.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E091.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E092.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E093.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E094.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E095.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E096.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E097.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E098.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E099.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/quality/B3E100.json,json_quality,phase3_failed_retry,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E001_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E001_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E002_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E002_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E003_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E003_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E004_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E004_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E005_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E005_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E006_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E006_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E007_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E007_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E008_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E008_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E009_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E009_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E010_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E010_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E011_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E011_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E012_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E012_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E013_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E013_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E014_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E014_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E015_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E015_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E016_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E016_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E017_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E017_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E018_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E018_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E019_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E019_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E020_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E020_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E021_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E021_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E022_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E022_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E023_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E023_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E024_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E024_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E025_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E025_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E026_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E026_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E027_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E027_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E028_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E028_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E029_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E029_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E030_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E030_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E031_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E031_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E032_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E032_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E033_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E033_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E034_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E034_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E035_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E035_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E036_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E036_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E037_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E037_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E038_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E038_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E039_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E039_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E040_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E040_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E041_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E041_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E042_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E042_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E043_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E043_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E044_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E044_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E045_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E045_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E046_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E046_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E047_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E047_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E048_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E048_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E049_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E049_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E050_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E050_EP004.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E051_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E051_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E052_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E052_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E053_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E053_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E054_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E054_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E055_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E055_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E056_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E056_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E057_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E057_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E058_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E058_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E059_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E059_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E060_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E060_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E061_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E061_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E062_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E062_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E063_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E063_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E064_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E064_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E065_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E065_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E066_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E066_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E067_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E067_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E068_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E068_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E069_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E069_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E070_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E070_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E071_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E071_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E072_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E072_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E073_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E073_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E074_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E074_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E075_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E075_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E076_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E076_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E077_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E077_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E078_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E078_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E079_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E079_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E080_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E080_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E081_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E081_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E082_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E082_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E083_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E083_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E084_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E084_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E085_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E085_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E086_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E086_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E088_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E088_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E089_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E089_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E090_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E090_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E091_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E091_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E092_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E092_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E093_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E093_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E094_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E094_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E095_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E095_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E096_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E096_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E097_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E097_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E098_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E098_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E099_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E099_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E100_EP001.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/raw_metadata/B3E100_EP005.json,json_snapshot,phase3_failed_retry,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/reports/b_class_phase3_100_failed_retry_dryrun_report.csv,report,phase3_failed_retry,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/reports/b_class_phase3_100_failed_retry_dryrun_summary.md,report,phase3_failed_retry,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/reports/b_class_phase3_100_failed_retry_quality_report.csv,report,phase3_failed_retry,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/reports/b_class_phase3_100_failed_retry_report.csv,report,phase3_failed_retry,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_failed_retry/reports/b_class_phase3_100_failed_retry_summary.md,report,phase3_failed_retry,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck/reports/b_class_phase3_100_ep002_reachability_precheck_dryrun_report.csv,report,phase3_ep002_precheck,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck/reports/b_class_phase3_100_ep002_reachability_precheck_dryrun_summary.md,report,phase3_ep002_precheck,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck/reports/b_class_phase3_100_ep002_reachability_precheck_quality_report.csv,report,phase3_ep002_precheck,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck/reports/b_class_phase3_100_ep002_reachability_precheck_report.csv,report,phase3_ep002_precheck,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck/reports/b_class_phase3_100_ep002_reachability_precheck_summary.md,report,phase3_ep002_precheck,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E001.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E002.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E010.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E012.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E013.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E014.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E015.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E016.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E017.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E018.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E019.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E020.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E021.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E022.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E023.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E024.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E025.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E026.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E027.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E028.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E029.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E030.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E031.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E032.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E033.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E034.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E035.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E036.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E037.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E038.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E039.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E040.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E041.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E042.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E043.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E044.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E045.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E046.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E047.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E048.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E049.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E050.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E051.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E052.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E053.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E054.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E055.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E056.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E057.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E058.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E059.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E060.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E061.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E062.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E063.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E064.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E065.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E066.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E067.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E068.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E069.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E070.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E071.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E072.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E073.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E074.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E075.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E076.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E077.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E078.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E079.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E080.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E081.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E082.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E083.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E084.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E085.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E086.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E088.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E089.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E090.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E091.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E092.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E093.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E094.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E095.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E096.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E097.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E098.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E099.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/quality/B3E100.json,json_quality,phase3_retry_v2,yes,reproducibility,quality sidecar; no PDF
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E001_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E002_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E010_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E012_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E013_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E014_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E015_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E016_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E017_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E018_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E019_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E020_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E021_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E022_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E023_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E024_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E025_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E026_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E027_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E028_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E029_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E030_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E031_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E032_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E033_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E034_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E035_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E036_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E037_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E038_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E039_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E040_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E041_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E042_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E043_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E044_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E045_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E046_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E047_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E048_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E049_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E050_EP004.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E051_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E052_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E053_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E054_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E055_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E056_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E057_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E058_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E059_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E060_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E061_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E062_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E063_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E064_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E065_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E066_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E067_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E068_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E069_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E070_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E071_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E072_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E073_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E074_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E075_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E076_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E077_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E078_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E079_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E080_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E081_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E082_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E083_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E084_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E085_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E086_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E088_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E089_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E090_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E091_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E092_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E093_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E094_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E095_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E096_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E097_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E098_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E099_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/raw_metadata/B3E100_EP005.json,json_snapshot,phase3_retry_v2,yes,reproducibility,metadata only; no PDF content
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/reports/b_class_phase3_100_retry_v2_dryrun_report.csv,report,phase3_retry_v2,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/reports/b_class_phase3_100_retry_v2_dryrun_summary.md,report,phase3_retry_v2,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/reports/b_class_phase3_100_retry_v2_quality_report.csv,report,phase3_retry_v2,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/reports/b_class_phase3_100_retry_v2_report.csv,report,phase3_retry_v2,yes,reproducibility,
+outputs/validation/cninfo_b_class_phase3_100_retry_v2/reports/b_class_phase3_100_retry_v2_summary.md,report,phase3_retry_v2,yes,reproducibility,
+outputs/harvest/cninfo_c_class/**,harvest_output,unrelated_c_class,no,outside_phase3_b_track,explicit exclusion pattern
+outputs/validation/cninfo_a_class_**,validation_output,unrelated_a_class,no,outside_phase3_b_track,explicit exclusion pattern
+outputs/validation/cninfo_c_class_**,validation_output,unrelated_c_class,no,outside_phase3_b_track,explicit exclusion pattern
+outputs/validation/cninfo_d_class_**,validation_output,unrelated_d_class,no,outside_phase3_b_track,explicit exclusion pattern
+outputs/validation/cninfo_b_class_phase1_**,validation_output,unrelated_b_phase1,no,outside_phase3_track,explicit exclusion pattern
+outputs/validation/cninfo_b_class_phase2_**,validation_output,unrelated_b_phase2,no,outside_phase3_track,explicit exclusion pattern
+outputs/validation/cninfo_b_class_phase25_**,validation_output,unrelated_b_phase25,no,outside_phase3_track,explicit exclusion pattern
+**/*.pdf,pdf,any,no,red_line_no_pdf,explicit exclusion pattern
+**/minio/**,minio,any,no,red_line_no_minio,explicit exclusion pattern
+**/rag/**,rag,any,no,red_line_no_rag,explicit exclusion pattern
+/tmp/**,temp,any,no,local_temp,explicit exclusion pattern
+**/__pycache__/**,cache,any,no,local_cache,explicit exclusion pattern

@@ -1,0 +1,41 @@
+{
+  "case": {
+    "case_id": "B3E091",
+    "company_code": "300017",
+    "company_name": "网宿科技",
+    "market": "创业板",
+    "announcement_type": "general_announcement",
+    "target_endpoint": [
+      "EP001",
+      "EP005"
+    ],
+    "phase3_include": "yes",
+    "selection_reason": "创业板一般公告；EP005；growth board bucket",
+    "expected_behavior": "validate retrieval_status=found; general_announcement metadata; pdf_url lineage discovered",
+    "prior_phase_overlap": "no",
+    "notes": "metadata only; no PDF download"
+  },
+  "mode": "phase3_live",
+  "cninfo_called": true,
+  "pdf_download_enabled": false,
+  "pdf_parse_enabled": false,
+  "record": {
+    "case_id": "B3E091",
+    "company_code": "300017",
+    "company_name": "网宿科技",
+    "endpoint_id": "EP005",
+    "announcement_id": "",
+    "announcement_title": "",
+    "announcement_time": "",
+    "announcement_category": "",
+    "pdf_url": "",
+    "adjunct_url": "",
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_status": "network_error",
+    "quality_status": "needs_review",
+    "lineage_status": "needs_review",
+    "error_type": "network_error",
+    "notes": "phase3 expansion live; EP002 orgId resolution failed"
+  },
+  "raw_announcement": null
+}

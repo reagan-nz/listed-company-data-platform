@@ -1,0 +1,42 @@
+{
+  "case": {
+    "case_id": "B3E004",
+    "company_code": "600016",
+    "company_name": "民生银行",
+    "market": "SSE主板",
+    "announcement_type": "periodic_report",
+    "target_endpoint": [
+      "EP001",
+      "EP002",
+      "EP004"
+    ],
+    "phase3_include": "yes",
+    "selection_reason": "金融样本；EP002+EP004；financial bucket",
+    "expected_behavior": "validate retrieval_status=found; periodic_report metadata; pdf_url lineage discovered",
+    "prior_phase_overlap": "no",
+    "notes": "metadata only; no PDF download"
+  },
+  "mode": "phase3_live",
+  "cninfo_called": true,
+  "pdf_download_enabled": false,
+  "pdf_parse_enabled": false,
+  "record": {
+    "case_id": "B3E004",
+    "company_code": "600016",
+    "company_name": "民生银行",
+    "endpoint_id": "EP004",
+    "announcement_id": "",
+    "announcement_title": "",
+    "announcement_time": "",
+    "announcement_category": "",
+    "pdf_url": "",
+    "adjunct_url": "",
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_status": "network_error",
+    "quality_status": "needs_review",
+    "lineage_status": "needs_review",
+    "error_type": "network_error",
+    "notes": "phase3 expansion live; EP002 orgId resolution failed"
+  },
+  "raw_announcement": null
+}

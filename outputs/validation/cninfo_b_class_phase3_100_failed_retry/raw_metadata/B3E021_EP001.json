@@ -1,0 +1,42 @@
+{
+  "case": {
+    "case_id": "B3E021",
+    "company_code": "600057",
+    "company_name": "厦门象屿",
+    "market": "SSE主板",
+    "announcement_type": "periodic_report",
+    "target_endpoint": [
+      "EP001",
+      "EP004"
+    ],
+    "original_phase3_status": "network_error",
+    "original_failure_type": "ep002_orgid_resolution_failed",
+    "original_failure_stage": "EP002_topSearch_orgId",
+    "retry_include": "yes",
+    "retry_strategy": "isolated_metadata_retry",
+    "notes": "same endpoints as Phase 3 batch; schema_impact=none; EP002 orgId retry then EP001"
+  },
+  "mode": "phase3_failed_retry_live",
+  "cninfo_called": true,
+  "pdf_download_enabled": false,
+  "pdf_parse_enabled": false,
+  "record": {
+    "case_id": "B3E021",
+    "company_code": "600057",
+    "company_name": null,
+    "endpoint_id": "EP001",
+    "announcement_id": "ann-001",
+    "announcement_title": "测试公告",
+    "announcement_time": "2024-01-01 00:00:00",
+    "announcement_category": null,
+    "pdf_url": "http://example.com/a.pdf",
+    "adjunct_url": "",
+    "source_endpoint": null,
+    "retrieval_status": "found",
+    "quality_status": "pass",
+    "lineage_status": "discovered",
+    "error_type": null,
+    "notes": "phase3 failed retry live; mock"
+  },
+  "raw_announcement": null
+}
