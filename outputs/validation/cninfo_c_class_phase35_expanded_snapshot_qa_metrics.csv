@@ -1,0 +1,42 @@
+metric_name,metric_value,notes
+snapshot_json_count,491,under expanded output root
+valid_json_count,491,
+invalid_json_count,0,
+universe_company_count,491,expected 491
+universe_original_count,463,expected 463
+universe_resume_count,28,expected 28
+universe_coverage_pct,100.0,
+c35r016_present,false,must be false
+hold_for_review_present_count,0,must be 0
+holdout_ledger_rows,9,expected 9
+holdout_all_excluded_confirmed,true,
+merge_manifest_rows,4910,expected 4910
+qa_ok_count,0,
+qa_ok_with_caveat_count,491,
+qa_review_required_count,0,
+excluded_holdout_confirmed_count,9,
+quality_flag_total,13132,
+snapshot_complete_with_caveat,491,
+harvest_roots_unchanged,true,
+cninfo_calls,0,offline QA only
+db_writes,0,
+minio_writes,0,
+rag_runs,0,
+module_company_identity_gate,PASS,
+module_securities_profile_gate,PASS,
+module_business_profile_gate,PASS,
+module_industry_profile_gate,PASS_WITH_CAVEAT,expected_partial_mix
+module_financial_snapshot_gate,PASS_WITH_CAVEAT,share_capital_empty_but_valid
+module_technology_profile_gate,PASS_WITH_CAVEAT,not_modeled_no_rd_source
+module_organization_profile_gate,PASS_WITH_CAVEAT,partial_or_sparse_expected
+module_shareholder_profile_gate,PASS_WITH_CAVEAT,source_partial_top_n
+module_executive_profile_gate,PASS_WITH_CAVEAT,empty_but_valid_or_sparse
+module_governance_profile_gate,PASS,
+module_dividend_profile_gate,PASS_WITH_CAVEAT,dividend_valid_empty_or_parse_partial
+module_capital_action_profile_gate,PASS_WITH_CAVEAT,share_capital_source_partial
+module_risk_profile_gate,PASS_WITH_CAVEAT,security_observe_only
+module_event_timeline_gate,PASS_WITH_CAVEAT,derived_from_dividend_share_capital
+module_market_behavior_gate,PASS_WITH_CAVEAT,security_observe_only
+module_investor_relation_gate,PASS_WITH_CAVEAT,overlaps_organization_profile
+module_document_evidence_gate,PASS,
+module_data_quality_gate,PASS,

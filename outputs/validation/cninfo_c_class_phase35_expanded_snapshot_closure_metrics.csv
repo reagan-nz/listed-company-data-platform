@@ -1,0 +1,17 @@
+metric_name,metric_value,notes
+snapshot_json_count,491,expected 491
+qa_ok_with_caveat,491,
+qa_review_required,0,must be 0
+holdout_remaining,9,8 hold_for_review + C35R016
+C35R016_excluded,yes,301212 not in snapshot root
+hold_for_review_excluded,8,all 8 absent from snapshots
+CNINFO_during_closure,0,offline closure only
+rebuild,0,no snapshot rebuild
+db_writes,0,
+minio_writes,0,
+rag_runs,0,
+harvest_roots_unchanged,true,
+commit_executed,0,closure precedes commit boundary
+push_executed,0,
+verified,false,not marked
+production_ready,false,not marked
