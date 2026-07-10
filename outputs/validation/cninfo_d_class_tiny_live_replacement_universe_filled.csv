@@ -1,0 +1,8 @@
+case_id,replaces_case_id,replacement_for,component,company_code,company_name,expected_behavior,candidate_source,candidate_validation_status,candidate_status,requires_human_candidate,event_evidence_required,include_in_future_validation,notes
+DLC001,,,margin_trading,000895,双汇发展,captured_normal,baseline_reference,,unchanged_from_calibrated,false,false,false,baseline reference only; no replacement validation CNINFO
+DLC002,,,block_trade,601988,中国银行,empty_but_valid,baseline_reference,,unchanged_from_calibrated,false,false,false,baseline reference only; no replacement validation CNINFO
+DLC004,,,disclosure_schedule,600000,浦发银行,captured_normal,baseline_reference,,unchanged_from_calibrated,false,false,false,baseline reference only; no replacement validation CNINFO
+DLC005,,,equity_pledge,688981,中芯国际,empty_but_valid,baseline_reference,,unchanged_from_calibrated,false,false,false,baseline reference only; no replacement validation CNINFO
+DLC007,,,executive_shareholding,002415,海康威视,needs_review_candidate,baseline_reference,,unchanged_from_calibrated,false,false,false,baseline reference only; no replacement validation CNINFO
+DLC003R,DLC003,DLC003,restricted_shares_unlock,688671,碧兴物联,captured_normal,human_approved_candidate,HUMAN_CANDIDATE_VALIDATED,human_candidate_validated,false,true,true,replaces DLC003; known unlock event 2024-02-19; original CNINFO label preserved in candidate template description
+DLC006R,DLC006,DLC006,shareholder_change,301259,艾布鲁,captured_normal,human_approved_candidate,HUMAN_CANDIDATE_VALIDATED,human_candidate_validated,false,true,true,replaces DLC006; known shareholder change event 2024-07-16; original CNINFO label preserved in candidate template description

@@ -1,0 +1,17 @@
+metric_group,metric_name,value,gate_impact,notes
+replacement,replacement_cases_total,2,closure,DLC003R and DLC006R only
+replacement,structured_capture_success,1,closure,DLC003R targeted probe found 1 record
+replacement,component_gap_accepted_with_caveat,1,closure,DLC006R Option A human decision
+dlc003r,dlc003r_final_status,captured_normal_structured_evidence,ledger,from targeted_probe_live; not verified
+dlc006r,dlc006r_final_status,accepted_component_gap_with_separate_disclosure_evidence,ledger,Option A+C; not captured_normal
+dlc006r,dlc006r_captured_normal_allowed,false,red_line,disclosure separate track only
+safety,schema_failure_evidence,none,review,no schema break for DLC006R
+safety,pdf_downloaded,0,red_line,no PDF
+safety,ocr,0,red_line,no OCR
+safety,extraction,0,red_line,no extraction
+safety,db_write,0,red_line,no DB
+safety,minio_write,0,red_line,no MinIO
+safety,rag_run,0,red_line,no RAG
+gate,final_closure_gate,PASS_WITH_CAVEAT,closure,not PASS not verified
+gate,verified,false,red_line,explicitly false
+gate,production_ready,false,red_line,explicitly false

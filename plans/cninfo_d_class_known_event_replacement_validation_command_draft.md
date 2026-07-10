@@ -2,24 +2,25 @@
 
 _生成时间：2026-07-09_
 
-> **状态：NOT APPROVED** — 未来命令草案 only · **本回合不执行**
+> **状态：NOT APPROVED** — 未来命令草案 only · **本回合不执行** · **Do not execute**
 
 ---
 
 ## 1. Purpose
 
-在用户显式批准且 **人工填码完成** 后，对 DLC003R · DLC006R replacement cases 执行 isolated metadata/event validation，补全组件级 `captured_normal` 覆盖。
+在用户显式批准且 candidate intake 校验通过后，对 DLC003R · DLC006R replacement cases 执行 isolated metadata/event validation，补全组件级 `captured_normal` 覆盖。
 
 ---
 
 ## 2. Prerequisites
 
-- [ ] `d_class_known_event_replacement_case_planning_gate = READY_FOR_HUMAN_CANDIDATES` 已完成填码
-- [ ] [candidate template](../outputs/validation/cninfo_d_class_known_event_replacement_candidate_template.csv) 中 `human_provided=true`
-- [ ] [replacement universe draft](../outputs/validation/cninfo_d_class_tiny_live_replacement_universe_draft.csv) placeholders **已替换**为人工公司
-- [ ] [approval checklist](../outputs/validation/cninfo_d_class_known_event_replacement_approval_checklist.md) 全部勾选
-- [ ] runner 实现（**未实现**）
-- [ ] calibrated / original universe **未修改**
+- [x] `d_class_known_event_candidate_intake_gate = HUMAN_CANDIDATE_VALIDATED`
+- [x] [candidate template](../outputs/validation/cninfo_d_class_known_event_replacement_candidate_template.csv) 中 `human_provided=true`
+- [x] [filled replacement universe](../outputs/validation/cninfo_d_class_tiny_live_replacement_universe_filled.csv) placeholders **已替换**为人工公司
+- [x] [approval checklist](../outputs/validation/cninfo_d_class_known_event_replacement_approval_checklist.md) 准备完成（**approval_status = NOT_APPROVED**）
+- [x] runner dry-run + live path 已实现（见 [live implementation summary](../outputs/validation/cninfo_d_class_known_event_replacement_live_implementation_summary.md)）
+- [x] live-path tests **22/22 PASS**（mock CNINFO only）
+- [x] calibrated / original universe **未修改**
 
 ---
 
@@ -39,13 +40,19 @@ outputs/validation/cninfo_d_class_known_event_replacement_validation/
 ## 4. Universe
 
 ```text
-outputs/validation/cninfo_d_class_tiny_live_replacement_universe_draft.csv
+outputs/validation/cninfo_d_class_tiny_live_replacement_universe_filled.csv
 ```
+
+| case_id | company | component | expected_behavior | include_in_future_validation |
+|---------|---------|-----------|-------------------|------------------------------|
+| DLC003R | 688671 碧兴物联 | restricted_shares_unlock | captured_normal | **yes** |
+| DLC006R | 301259 艾布鲁 | shareholder_change | captured_normal | **yes** |
+| DLC001/002/004/005/007 | baseline | various | reference only | **no** · 0 CNINFO |
 
 | 规则 | 说明 |
 |------|------|
-| DLC003R · DLC006R | 仅 `human_provided=true` 且非 placeholder 行可执行 |
-| `*_CANDIDATE_REQUIRED` | **skip** · 0 CNINFO |
+| DLC003R · DLC006R | 仅 `candidate_validation_status=HUMAN_CANDIDATE_VALIDATED` 行可执行 |
+| `*_CANDIDATE_REQUIRED` | **不存在于 filled universe** |
 | DLC001/002/004/005/007 | baseline reference · **0 CNINFO** |
 | invented company codes | **禁止** |
 
@@ -59,38 +66,39 @@ outputs/validation/cninfo_d_class_tiny_live_replacement_universe_draft.csv
 
 无此 flag → runner **拒绝 live**。
 
+**live 路径已实现** · **本回合未执行真实 live** · **需人工 approval 后方可执行**。
+
 ---
 
-## 6. Proposed Command（NOT APPROVED）
+## 6. Proposed Command（NOT APPROVED · Do not execute）
 
 ```bash
 cd listed_company_data_collector
 
 python lab/run_cninfo_d_class_tiny_live_validation.py \
-  --live \
   --known-event-replacement \
-  --universe outputs/validation/cninfo_d_class_tiny_live_replacement_universe_draft.csv \
+  --live \
+  --universe-csv outputs/validation/cninfo_d_class_tiny_live_replacement_universe_filled.csv \
   --output-root outputs/validation/cninfo_d_class_known_event_replacement_validation/ \
-  --approve-d-class-known-event-replacement-validation \
-  --cases DLC003R,DLC006R
+  --approve-d-class-known-event-replacement-validation
 ```
 
-> **注：** `--known-event-replacement` 为 **未来 runner 参数**；当前 runner **尚未实现**。
+> **注：** live 路径已实现 · mock 测试 **22/22 PASS** · **本草案 NOT APPROVED · Do not execute**
 
 ---
 
-## 7. Dry-run Command（未来 · NOT APPROVED）
+## 7. Dry-run Command（未来 · NOT APPROVED · Do not execute）
 
 ```bash
 python lab/run_cninfo_d_class_tiny_live_validation.py \
   --dry-run \
   --known-event-replacement \
-  --universe outputs/validation/cninfo_d_class_tiny_live_replacement_universe_draft.csv \
+  --universe-csv outputs/validation/cninfo_d_class_tiny_live_replacement_universe_filled.csv \
   --output-root outputs/validation/cninfo_d_class_known_event_replacement_validation/ \
   --cases DLC003R,DLC006R
 ```
 
-预期：`cninfo_calls=0` until human candidates filled and approved.
+预期：`cninfo_calls=0` · 输出 planned case list · preflight PASS · **不调用 CNINFO**
 
 ---
 
@@ -115,9 +123,10 @@ python lab/run_cninfo_d_class_tiny_live_validation.py \
 ## 9. Gate
 
 ```text
-d_class_known_event_replacement_validation_gate = NOT_APPROVED
+approval_status = NOT_APPROVED
+d_class_known_event_replacement_validation_package_gate = READY_FOR_APPROVAL
 ```
 
-（未来执行 gate — **本草案不设定为 PASS**）
+（未来执行 gate — **本草案不设定为 PASS** · **不是 live_ready**）
 
-**CNINFO calls（本回合）：0**
+**CNINFO calls（本回合）：0** · **web lookup = 0** · **live/rerun/harvest = 0**

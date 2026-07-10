@@ -278,7 +278,12 @@ _最后更新：2026-07-09_
 169. ~~Phase 3 batch 500 closure review~~ → **完成**（§7dpw · gate **`PASS_WITH_CAVEAT`**）
 170. ~~Phase 3.5 batch planning~~ → **完成**（§7dpx · draft **500** · eligible **3645** · gate **`READY_FOR_REVIEW`** · **未批准**）
 171. ~~Phase 3.5 harvest dry-run + approval extension~~ → **完成**（§7dpy · dry-run gate **`PASS_OFFLINE`** · approval gate **`READY_FOR_APPROVAL`** · test **11/11 PASS** · **未批准 live**）
-172. **Phase 3.5 live harvest**（用户批准后） → **待启动**
+172. ~~Phase 3.5 live harvest~~ → **完成**（§7dpz · raw **3500** · complete **419** · partial **75** · failed **6** · execution gate **`PASS_WITH_CAVEAT`**）
+173. ~~Phase 3.5 harvest QA + failure triage~~ → **完成**（§7dqa · success subset **463** · holdout **37** · triage gate **`PASS_WITH_CAVEAT`**）
+174. ~~Phase 3.5 isolated resume planning~~ → **完成**（§7dqb · universe **29** · gate **`READY_FOR_APPROVAL`** · **NOT APPROVED**）
+175. ~~Phase 3.5 isolated resume runner extension + dry-run~~ → **完成**（§7dqc · dry-run **29/29** · test **27/27 PASS** · gate **`READY_FOR_APPROVAL`** · CNINFO **0** · **NOT APPROVED live**）
+176. ~~Phase 3.5 isolated resume live~~ → **完成**（§7dqd · CNINFO **120** · complete **28** · partial **1** · failed **0** · gate **`PASS_WITH_CAVEAT`** · **无 snapshot**）
+177. **Phase 3.5 resume QA merge 或 success-subset snapshot planning** → **待启动**
 172. ~~B 类 Phase 1 endpoint candidate 表 + minimum fields freeze review~~ → **完成**（§7dp · gate **`READY_FOR_APPROVAL`** · **无 B-class live**）
 164. ~~B 类 Phase 1 schema review package 准备~~ → **完成**（§7dq · gate **`READY_FOR_APPROVAL`** · **无 B-class live**）
 165. ~~B 类 Phase 1 schema signoff 准备~~ → **完成**（§7dr · signoff gate **`READY_FOR_IMPLEMENTATION`** · **无 B-class live**）
@@ -304,7 +309,11 @@ _最后更新：2026-07-09_
 185. ~~B 类 Phase 2.5 failed-case isolated retry 批准包准备~~ → **完成**（§7dxn · retry **5** · dry-run **5/5** · test **14/14 PASS** · package gate **`READY_FOR_APPROVAL`** · **无 CNINFO**）
 186. ~~B 类 Phase 2.5 failed-case isolated retry 执行~~ → **完成**（§7dxo · **5/5 found** · CNINFO **10** · execution gate **`PASS_WITH_CAVEAT`** · **无 PDF**）
 187. ~~B 类 Phase 2.5 failed retry closure review~~ → **完成**（§7dxp · **50/50 effective** · closure gate **`PASS_WITH_CAVEAT`** · **无 verified**）
-188. ~~D 类 Phase 0 市场行为层架构规划 + source discovery~~ → **完成**（§7dz · gate **`DESIGN_STARTED`** · **无 D-class live** · **C-class 不变**）
+188. ~~B 类 Phase 3 100-company expansion planning package~~ → **完成**（§7dxq · universe **100** · overlap **0** · planning gate **`READY_FOR_APPROVAL`** · **无 B-class live**）
+189. ~~B 类 Phase 3 100-company runner 离线扩展 + dry-run~~ → **完成**（§7dxr · dry-run **100/100** · test **20/20 PASS** · runner gate **`READY_FOR_APPROVAL`** · **无 CNINFO**）
+190. ~~B 类 Phase 3 100-company live metadata validation 执行~~ → **完成**（§7dxs · **1/100 acceptable** · CNINFO **3** · execution gate **`FAIL_REVIEW_REQUIRED`** · **无 PDF**）
+191. ~~B 类 Phase 3 failed-case triage + isolated retry 规划~~ → **完成**（§7dxt · retry **99** · hold **1** · triage gate **`READY_FOR_REVIEW`** · retry planning gate **`READY_FOR_APPROVAL`** · **无 CNINFO**）
+192. ~~D 类 Phase 0 市场行为层架构规划 + source discovery~~ → **完成**（§7dz · gate **`DESIGN_STARTED`** · **无 D-class live** · **C-class 不变**）
 179. ~~D 类 Phase 1 schema freeze review + offline lint~~ → **完成**（§7dza · gate **`READY_FOR_APPROVAL`** · lint **10/10 PASS** · **无 D-class live**）
 180. ~~D 类 Phase 1 schema freeze approval package~~ → **完成**（§7dzb · gate **`READY_FOR_APPROVAL`** · **未 signoff** · **无 D-class live**）
 180. ~~D 类 Phase 1 freeze v1 offline implementation~~ → **完成**（§7dzc · implementation gate **`PASS_OFFLINE`** · lint **12/12 PASS** · **无 D-class live**）
@@ -323,7 +332,32 @@ _最后更新：2026-07-09_
 193. ~~D 类 known event replacement case 规划~~ → **完成**（§7dzp · planning gate **`READY_FOR_HUMAN_CANDIDATES`** · **无 CNINFO**）
 194. ~~D 类 known event candidate intake 校验准备~~ → **完成**（§7dzq · intake gate **`WAITING_FOR_HUMAN_INPUT`** · tests **10/10** · **无 CNINFO**）
 195. ~~D 类 known event candidate evidence type 规范化 + intake 校验~~ → **完成**（§7dzr · intake gate **`HUMAN_CANDIDATE_VALIDATED`** · DLC003R/DLC006R validated · **无 CNINFO**）
+196. ~~D 类 known-event replacement validation approval package 准备~~ → **完成**（§7dzs · package gate **`READY_FOR_APPROVAL`** · filled universe · runner design · **无 CNINFO**）
+197. ~~D 类 known-event replacement runner 扩展 + dry-run~~ → **完成**（§7dzu · extension gate **`READY_FOR_APPROVAL`** · tests **20/20** · dry-run **7/7** · **无 CNINFO**）
+198. ~~D 类 known-event replacement live 探针路径实现~~ → **完成**（§7dzv · live implementation gate **`READY_FOR_APPROVAL`** · live-path tests **22/22** · **无 CNINFO**）
+199. ~~D 类 known-event replacement isolated live 执行~~ → **完成**（§7dzy · CNINFO **40** · execution gate **`FAIL_REVIEW_REQUIRED`** · **不是 verified**）
+200. ~~D 类 known-event replacement live failure review + targeted probe 决策包~~ → **完成**（§7dzz · failure review gate **`READY_FOR_HUMAN_DECISION`** · **无 CNINFO**）
+201. ~~D 类 known-event targeted probe planning package 准备~~ → **完成**（§7dzaa · planning gate **`READY_FOR_APPROVAL`** · universe **2** · cap **≤24** · **无 CNINFO** · **无 live** · **无实现**）
+202. ~~D 类 known-event targeted probe runner 扩展 + dry-run~~ → **完成**（§7dzab · extension gate **`READY_FOR_APPROVAL`** · tests **27/27** · dry-run **2/2** · planned **24** · **无 CNINFO** · **无 live**）
+203. ~~D 类 known-event targeted probe live 路径实现~~ → **完成**（§7dzac · live implementation gate **`READY_FOR_APPROVAL`** · live-path tests **29/29** · **无真实 CNINFO** · **无 live**）
+204. ~~D 类 known-event targeted probe isolated live 执行~~ → **完成**（§7dzad · CNINFO **13** · execution gate **`FAIL_REVIEW_REQUIRED`** · **不是 verified**）
+205. ~~D 类 known-event targeted probe closure + DLC006R failure review~~ → **完成**（§7dzae · closure gate **`READY_FOR_HUMAN_DECISION`** · **无 CNINFO** · **无 rerun**）
+206. ~~D 类 DLC006R 人工决策 + replacement 最终收口~~ → **完成**（§7dzaf · Option **A+C** · final closure gate **`PASS_WITH_CAVEAT`** · **不是 verified**）
+207. ~~D 类 known-event replacement boundary review~~ → **完成**（§7dzag · boundary gate **`READY_FOR_COMMIT_REVIEW`** · safe-to-commit list · **无 commit**）
 194. ~~A 类 Phase 2 merge closure review~~ → **完成**（§7dzt · **12 accepted** · **8 unresolved network** · closure gate **`PASS_WITH_CAVEAT_NETWORK_UNRESOLVED`** · **无 CNINFO**）
+195. ~~A 类 Phase 2 network recovery retry_v2 planning~~ → **完成**（§7dzu · universe **8** · planning gate **`READY_FOR_APPROVAL`** · **无 CNINFO**）
+196. ~~A 类 Phase 2 retry_v2 runner extension + dry-run~~ → **完成**（§7dzv · **8/8 planned_ok** · test **18/18 PASS** · runner gate **`READY_FOR_APPROVAL`** · **无 live**）
+197. ~~A 类 Phase 2 retry_v2 live execution~~ → **完成**（§7dzw · **0/8 acceptable** · CNINFO **0** · execution gate **`FAIL_REVIEW_REQUIRED`**）
+198. ~~A 类 Phase 2 retry_v2 merge closure 更新~~ → **完成**（§7dzx · **12 effective accepted** · **8 effective unresolved** · retry_v2 closure gate **`PASS_WITH_CAVEAT_NETWORK_UNRESOLVED`** · **无 CNINFO**）
+201. ~~A 类 Phase 2 CNINFO reachability precheck 规划包~~ → **完成**（§7dzxa · candidates **3** · cap **≤6** · planning gate **`READY_FOR_APPROVAL`** · **无 CNINFO**）
+202. ~~A 类 Phase 2 CNINFO reachability precheck runner + dry-run~~ → **完成**（§7dzxb · **3/3 planned_ok** · test **23/23 PASS** · runner gate **`READY_FOR_APPROVAL`** · **无 live**）
+203. ~~A 类 Phase 2 CNINFO reachability precheck live 执行~~ → **完成**（§7dzxc · **2/3 orgId resolved** · CNINFO **2** · execution gate **`PASS_WITH_CAVEAT`** · **不是 verified**）
+204. ~~A 类 Phase 2 retry_v3 isolated 规划包~~ → **完成**（§7dzxd · universe **8** · planning gate **`READY_FOR_APPROVAL`** · **无 CNINFO**）
+205. ~~A 类 Phase 2 retry_v3 runner extension + dry-run~~ → **完成**（§7dzxe · **8/8 planned_ok** · test **23/23 PASS** · runner extension gate **`READY_FOR_APPROVAL`** · **无 live**）
+206. ~~A 类 Phase 2 retry_v3 live path implementation~~ → **完成**（§7dzxf · live-path test **25/25 PASS** · live implementation gate **`READY_FOR_APPROVAL`** · **无真实 CNINFO** · **无 live**）
+207. ~~A 类 Phase 2 retry_v3 isolated live 执行~~ → **完成**（§7dzxg · **8/8 acceptable** · CNINFO **18** · execution gate **`PASS_WITH_CAVEAT`** · **不是 verified**）
+208. ~~A 类 Phase 2 retry_v3 merge closure 更新~~ → **完成**（§7dzxh · **20/20 effective accepted** · final closure gate **`PASS_WITH_CAVEAT`** · **无 CNINFO**）
+209. ~~A 类 Phase 2 final commit boundary review~~ → **完成**（§7dzxi · gate **`READY_FOR_COMMIT_REVIEW`** · **无 commit** · **无 CNINFO**）
 105. review_later / raw_only 复判 → **待启动**（31 + 25）
 106. company_snapshot planning → **待启动**（P2）
 107. dividend_history YAML backfill → **GO（决策 only）** · **不执行**
@@ -2149,7 +2183,438 @@ _最后更新：2026-07-09_
 
 ### Next immediate task
 
-网络恢复后 Option A/B retry 8 unresolved cases（**不推荐 50-company expansion 直至 8 resolved**）。
+~~网络恢复后 Option A/B retry 8 unresolved cases~~ → **retry_v2 planning 完成**（§7dzu）。
+
+---
+
+## 7dzu. A 类 Phase 2 Network Recovery Retry v2 Planning（2026-07-09）
+
+> **并行约束：** 本轮 **不调用 CNINFO** · **无 live** · **无 retry 执行** · **successful 12 不重跑** · **不扩展 50 家**。
+
+| 项 | 内容 |
+|----|------|
+| retry v2 plan | [cninfo_a_class_phase2_network_recovery_retry_v2_plan.md](cninfo_a_class_phase2_network_recovery_retry_v2_plan.md) |
+| universe | [cninfo_a_class_phase2_network_recovery_retry_v2_universe.csv](../outputs/validation/cninfo_a_class_phase2_network_recovery_retry_v2_universe.csv)（**8** 行） |
+| approval checklist | [cninfo_a_class_phase2_network_recovery_retry_v2_approval_checklist.md](../outputs/validation/cninfo_a_class_phase2_network_recovery_retry_v2_approval_checklist.md) |
+| command draft | [cninfo_a_class_phase2_network_recovery_retry_v2_command_draft.md](cninfo_a_class_phase2_network_recovery_retry_v2_command_draft.md)（**NOT APPROVED**） |
+| runner extension plan | [cninfo_a_class_phase2_network_recovery_retry_v2_runner_extension_plan.md](cninfo_a_class_phase2_network_recovery_retry_v2_runner_extension_plan.md) |
+| planning summary | [cninfo_a_class_phase2_network_recovery_retry_v2_planning_summary.md](../outputs/validation/cninfo_a_class_phase2_network_recovery_retry_v2_planning_summary.md) |
+| output root | `outputs/validation/cninfo_a_class_phase2_metadata_retry_v2/` |
+| approval flag | `--approve-a-class-phase2-network-recovery-retry-v2`（**未实现**） |
+| retry_v2 cases | **8** |
+| successful 12 excluded | **yes** |
+| CNINFO calls（本回合） | **0** |
+| Phase 2 execution gate | **`FAIL_REVIEW_REQUIRED`**（不变） |
+| retry execution gate | **`FAIL_REVIEW_REQUIRED`**（不变） |
+| closure gate | **`PASS_WITH_CAVEAT_NETWORK_UNRESOLVED`**（不变） |
+| **planning gate** | **`a_class_phase2_network_recovery_retry_v2_planning_gate = READY_FOR_APPROVAL`** |
+
+### 执行结论
+
+- Schema change: **No** · Matching change: **No** · Universe replacement: **No**
+- Runner gap: v2 approval flag + retry_v2 output-root validation **待实现**
+- **不是 verified** · **不是 production_ready** · **不是 live_ready**
+
+### Next immediate task
+
+Runner extension + dry-run retry v2（**8 case only** · **不推荐 50-company expansion**）。
+
+---
+
+## 7dzv. A 类 Phase 2 Retry v2 Runner Extension + Dry-run（2026-07-09）
+
+> **并行约束：** 本轮 **不调用 CNINFO** · **无 live** · **successful 12 不重跑** · **original/v1 报告 untouched**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_a_class_phase2_metadata_expansion.py](../lab/run_cninfo_a_class_phase2_metadata_expansion.py) |
+| tests | [test_cninfo_a_class_phase2_network_recovery_retry_v2_runner.py](../lab/test_cninfo_a_class_phase2_network_recovery_retry_v2_runner.py) · **18/18 PASS** |
+| extension summary | [cninfo_a_class_phase2_network_recovery_retry_v2_runner_extension_summary.md](../outputs/validation/cninfo_a_class_phase2_network_recovery_retry_v2_runner_extension_summary.md) |
+| dry-run report | [a_class_phase2_retry_v2_dryrun_report.csv](../outputs/validation/cninfo_a_class_phase2_metadata_retry_v2/reports/a_class_phase2_retry_v2_dryrun_report.csv) |
+| approval flag | `--approve-a-class-phase2-network-recovery-retry-v2` |
+| dry-run | **8/8 planned_ok** · CNINFO **0** |
+| PDF / OCR / DB / MinIO / RAG | **0** |
+| **runner extension gate** | **`a_class_phase2_network_recovery_retry_v2_runner_extension_gate = READY_FOR_APPROVAL`** |
+| approval status | **NOT_APPROVED** |
+
+### 执行结论
+
+- retry_v2 output-root isolation · column aliases · successful 12 rejection — **implemented**
+- **不是 verified** · **不是 production_ready** · **不是 live_ready**
+
+### Next immediate task
+
+人工批准 + 网络恢复后 retry v2 live（**8 case only**）。
+
+---
+
+## 7dzw. A 类 Phase 2 Retry v2 Live Execution（2026-07-09）
+
+> **用户已批准** · **8 unresolved only** · **successful 12 不重跑** · **original/v1 报告 untouched**。
+
+| 项 | 内容 |
+|----|------|
+| live report | [a_class_phase2_retry_v2_report.csv](../outputs/validation/cninfo_a_class_phase2_metadata_retry_v2/reports/a_class_phase2_retry_v2_report.csv) |
+| live summary | [a_class_phase2_retry_v2_summary.md](../outputs/validation/cninfo_a_class_phase2_metadata_retry_v2/reports/a_class_phase2_retry_v2_summary.md) |
+| quality report | [a_class_phase2_retry_v2_quality_report.csv](../outputs/validation/cninfo_a_class_phase2_metadata_retry_v2/reports/a_class_phase2_retry_v2_quality_report.csv) |
+| retry_v2 acceptable / total | **0 / 8** |
+| retry_v2 failed | **8**（orgId network_error） |
+| CNINFO requests | **0** |
+| wrong_report_type | **0** |
+| PDF download / parse | **0 / 0** |
+| **execution gate** | **`a_class_phase2_network_recovery_retry_v2_execution_gate = FAIL_REVIEW_REQUIRED`** |
+| closure gate | **`a_class_phase2_metadata_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED`**（unchanged） |
+
+### 执行结论
+
+- 网络仍未恢复；全部 8 case orgId resolution network_error
+- 非 schema / 非 matching logic failure
+- **不是 verified** · **不是 production_ready**
+
+### Next immediate task
+
+~~merge closure update review~~ → **retry_v2 closure 完成**（§7dzx）。下一步：CNINFO reachability precheck（Option B）后 retry_v3 isolated package（**不推荐 50-company expansion**）。
+
+---
+
+## 7dzx. A 类 Phase 2 Retry v2 Merge Closure 更新（2026-07-09）
+
+> **离线 closure 文档 only** · **无 CNINFO** · **无 live** · **无 retry 执行** · **original/v1/v2 执行报告 untouched**。
+
+| 项 | 内容 |
+|----|------|
+| closure review | [cninfo_a_class_phase2_retry_v2_closure_review.md](cninfo_a_class_phase2_retry_v2_closure_review.md) |
+| ledger v2 | [cninfo_a_class_phase2_unresolved_network_failure_ledger_v2.csv](../outputs/validation/cninfo_a_class_phase2_unresolved_network_failure_ledger_v2.csv)（**8** 行） |
+| merged result v2 | [cninfo_a_class_phase2_metadata_merged_result_v2.csv](../outputs/validation/cninfo_a_class_phase2_metadata_merged_result_v2.csv)（**20** 行） |
+| closure metrics | [cninfo_a_class_phase2_retry_v2_closure_metrics.csv](../outputs/validation/cninfo_a_class_phase2_retry_v2_closure_metrics.csv) |
+| closure summary | [cninfo_a_class_phase2_retry_v2_closure_summary.md](../outputs/validation/cninfo_a_class_phase2_retry_v2_closure_summary.md) |
+| next-step recommendation | [cninfo_a_class_phase2_post_retry_v2_next_step_recommendation.md](cninfo_a_class_phase2_post_retry_v2_next_step_recommendation.md) |
+| effective accepted / unresolved | **12 / 8** |
+| retry_v2 CNINFO requests | **0** |
+| wrong_report_type / period_mismatch | **0 / 0** |
+| **retry_v2 closure gate** | **`a_class_phase2_retry_v2_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED`** |
+
+**保持：**
+
+```text
+a_class_phase2_metadata_execution_gate = FAIL_REVIEW_REQUIRED
+a_class_phase2_failed_retry_execution_gate = FAIL_REVIEW_REQUIRED
+a_class_phase2_metadata_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED
+a_class_phase2_network_recovery_retry_v2_execution_gate = FAIL_REVIEW_REQUIRED
+```
+
+### Closure 结论
+
+- original **12/20** accepted 不变；retry_v1 + retry_v2 均 **0/8** acceptable
+- 8 case 仍为 `unresolved_network_orgid_failure`；非 schema / 非 matching logic failure
+- **不是 verified** · **不是 production_ready** · **不升级 testing_stable_sample**
+
+### Next immediate task
+
+~~CNINFO reachability precheck 规划~~ → **precheck 规划包完成**（§7dzxa）。~~runner + dry-run~~ → **完成**（§7dzxb）。下一步：人工批准 live precheck → retry_v3 isolated package（**8 case only** · **NOT APPROVED**）。
+
+---
+
+## 7dzxa. A 类 Phase 2 CNINFO Reachability Precheck 规划包（2026-07-09）
+
+> **离线规划 only** · **无 CNINFO** · **无 live** · **无 precheck 执行** · **original/v1/v2 报告 untouched**。
+
+| 项 | 内容 |
+|----|------|
+| precheck plan | [cninfo_a_class_phase2_cninfo_reachability_precheck_plan.md](cninfo_a_class_phase2_cninfo_reachability_precheck_plan.md) |
+| candidates | [cninfo_a_class_phase2_cninfo_reachability_precheck_candidates.csv](../outputs/validation/cninfo_a_class_phase2_cninfo_reachability_precheck_candidates.csv)（**3** 行） |
+| approval checklist | [cninfo_a_class_phase2_cninfo_reachability_precheck_approval_checklist.md](../outputs/validation/cninfo_a_class_phase2_cninfo_reachability_precheck_approval_checklist.md) |
+| command draft | [cninfo_a_class_phase2_cninfo_reachability_precheck_command_draft.md](cninfo_a_class_phase2_cninfo_reachability_precheck_command_draft.md)（**NOT APPROVED**） |
+| runner design | [cninfo_a_class_phase2_cninfo_reachability_precheck_runner_design.md](cninfo_a_class_phase2_cninfo_reachability_precheck_runner_design.md) |
+| planning summary | [cninfo_a_class_phase2_cninfo_reachability_precheck_planning_summary.md](../outputs/validation/cninfo_a_class_phase2_cninfo_reachability_precheck_planning_summary.md) |
+| output root | `outputs/validation/cninfo_a_class_phase2_cninfo_reachability_precheck/` |
+| candidate count | **3**（A2M005 · A2M010 · A2M018） |
+| future request cap | **≤ 6** |
+| approval status | **NOT_APPROVED** · `approved_for_live = false` |
+| **planning gate** | **`a_class_phase2_cninfo_reachability_precheck_planning_gate = READY_FOR_APPROVAL`** |
+
+**保持：**
+
+```text
+a_class_phase2_metadata_execution_gate = FAIL_REVIEW_REQUIRED
+a_class_phase2_failed_retry_execution_gate = FAIL_REVIEW_REQUIRED
+a_class_phase2_metadata_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED
+a_class_phase2_network_recovery_retry_v2_execution_gate = FAIL_REVIEW_REQUIRED
+a_class_phase2_retry_v2_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED
+```
+
+### 规划结论
+
+- precheck 仅 orgId reachability · 非 metadata retry · 非 retry_v3 universe
+- successful 12 excluded · unresolved ledger v2 未修改
+- runner **已实现** · dry-run **3/3 planned_ok**（§7dzxb）
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task
+
+~~precheck runner implementation + dry-run~~ → **完成**（§7dzxb）。下一步：人工批准 live precheck。
+
+---
+
+## 7dzxb. A 类 Phase 2 CNINFO Reachability Precheck Runner + Dry-run（2026-07-09）
+
+> **离线 runner + dry-run only** · **无 CNINFO** · **无 live** · **original/v1/v2 报告 untouched**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_a_class_phase2_cninfo_reachability_precheck.py](../lab/run_cninfo_a_class_phase2_cninfo_reachability_precheck.py) |
+| tests | [test_cninfo_a_class_phase2_cninfo_reachability_precheck_runner.py](../lab/test_cninfo_a_class_phase2_cninfo_reachability_precheck_runner.py) · **23/23 PASS** |
+| runner summary | [cninfo_a_class_phase2_cninfo_reachability_precheck_runner_summary.md](../outputs/validation/cninfo_a_class_phase2_cninfo_reachability_precheck_runner_summary.md) |
+| dry-run report | [a_class_phase2_cninfo_reachability_precheck_dryrun_report.csv](../outputs/validation/cninfo_a_class_phase2_cninfo_reachability_precheck/reports/a_class_phase2_cninfo_reachability_precheck_dryrun_report.csv) |
+| dry-run summary | [a_class_phase2_cninfo_reachability_precheck_dryrun_summary.md](../outputs/validation/cninfo_a_class_phase2_cninfo_reachability_precheck/reports/a_class_phase2_cninfo_reachability_precheck_dryrun_summary.md) |
+| planned_ok / candidates | **3 / 3** |
+| planned_request_count_total | **3** |
+| CNINFO calls | **0** |
+| **runner gate** | **`a_class_phase2_cninfo_reachability_precheck_runner_gate = READY_FOR_APPROVAL`** |
+
+**保持：**
+
+```text
+a_class_phase2_cninfo_reachability_precheck_planning_gate = READY_FOR_APPROVAL
+a_class_phase2_retry_v2_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED
+a_class_phase2_network_recovery_retry_v2_execution_gate = FAIL_REVIEW_REQUIRED
+a_class_phase2_metadata_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED
+a_class_phase2_metadata_execution_gate = FAIL_REVIEW_REQUIRED
+a_class_phase2_failed_retry_execution_gate = FAIL_REVIEW_REQUIRED
+```
+
+### 结论
+
+- approval guard 已实现 · live 未执行
+- successful 12 excluded · retry_v3 universe 未创建
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task
+
+~~人工批准 live precheck~~ → **live precheck 完成**（§7dzxc · gate **`PASS_WITH_CAVEAT`**）。下一步：retry_v3 isolated **planning** package（**8 case only** · **NOT APPROVED live**）。
+
+---
+
+## 7dzxc. A 类 Phase 2 CNINFO Reachability Precheck Live 执行（2026-07-09）
+
+> **用户已批准** · **3 candidates only** · **orgId reachability only** · **不是 retry_v3** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| live report | [a_class_phase2_cninfo_reachability_precheck_report.csv](../outputs/validation/cninfo_a_class_phase2_cninfo_reachability_precheck/reports/a_class_phase2_cninfo_reachability_precheck_report.csv) |
+| live summary | [a_class_phase2_cninfo_reachability_precheck_summary.md](../outputs/validation/cninfo_a_class_phase2_cninfo_reachability_precheck/reports/a_class_phase2_cninfo_reachability_precheck_summary.md) |
+| quality report | [a_class_phase2_cninfo_reachability_precheck_quality_report.csv](../outputs/validation/cninfo_a_class_phase2_cninfo_reachability_precheck/reports/a_class_phase2_cninfo_reachability_precheck_quality_report.csv) |
+| candidates | **3**（APC001 A2M005 · APC002 A2M010 · APC003 A2M018） |
+| orgId resolved / failed | **2 / 1** |
+| CNINFO requests | **2** |
+| PDF / OCR / extraction / DB / MinIO / RAG | **0** |
+| **execution gate** | **`a_class_phase2_cninfo_reachability_precheck_execution_gate = PASS_WITH_CAVEAT`** |
+
+**保持：**
+
+```text
+a_class_phase2_metadata_execution_gate = FAIL_REVIEW_REQUIRED
+a_class_phase2_failed_retry_execution_gate = FAIL_REVIEW_REQUIRED
+a_class_phase2_metadata_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED
+a_class_phase2_network_recovery_retry_v2_execution_gate = FAIL_REVIEW_REQUIRED
+a_class_phase2_retry_v2_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED
+a_class_phase2_cninfo_reachability_precheck_planning_gate = READY_FOR_APPROVAL
+a_class_phase2_cninfo_reachability_precheck_runner_gate = READY_FOR_APPROVAL
+```
+
+### Per-Candidate
+
+| precheck_id | case_id | market | reachability | orgId |
+|-------------|---------|--------|--------------|-------|
+| APC001 | A2M005 | SSE | reachable | resolved |
+| APC002 | A2M010 | ChiNext | unreachable | failed (network_error) |
+| APC003 | A2M018 | STAR | reachable | resolved |
+
+### 结论
+
+- CNINFO/orgId **partially recovered**（≥2/3）
+- original / retry_v1 / retry_v2 报告 **未修改**
+- retry_v3 **未创建**
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task
+
+~~retry_v3 isolated planning package~~ → **retry_v3 规划包完成**（§7dzxd）。~~runner extension + dry-run~~ → **完成**（§7dzxe）。~~live path implementation~~ → **完成**（§7dzxf）。~~live 执行~~ → **完成**（§7dzxg）。~~merge closure~~ → **完成**（§7dzxh · **20/20 effective**）。~~commit boundary review~~ → **完成**（§7dzxi）。
+
+---
+
+## 7dzxd. A 类 Phase 2 Retry v3 Isolated 规划包（2026-07-09）
+
+> **离线规划 only** · **无 CNINFO** · **无 live** · **无 retry_v3 执行** · **original/v1/v2/precheck 报告 untouched**。
+
+| 项 | 内容 |
+|----|------|
+| retry v3 plan | [cninfo_a_class_phase2_retry_v3_isolated_plan.md](cninfo_a_class_phase2_retry_v3_isolated_plan.md) |
+| universe | [cninfo_a_class_phase2_retry_v3_universe.csv](../outputs/validation/cninfo_a_class_phase2_retry_v3_universe.csv)（**8** 行） |
+| approval checklist | [cninfo_a_class_phase2_retry_v3_approval_checklist.md](../outputs/validation/cninfo_a_class_phase2_retry_v3_approval_checklist.md) |
+| command draft | [cninfo_a_class_phase2_retry_v3_command_draft.md](cninfo_a_class_phase2_retry_v3_command_draft.md)（**NOT APPROVED**） |
+| runner design | [cninfo_a_class_phase2_retry_v3_runner_extension_design.md](cninfo_a_class_phase2_retry_v3_runner_extension_design.md) |
+| planning summary | [cninfo_a_class_phase2_retry_v3_planning_summary.md](../outputs/validation/cninfo_a_class_phase2_retry_v3_planning_summary.md) |
+| output root | `outputs/validation/cninfo_a_class_phase2_metadata_retry_v3/` |
+| precheck prerequisite | `a_class_phase2_cninfo_reachability_precheck_execution_gate = PASS_WITH_CAVEAT` |
+| **planning gate** | **`a_class_phase2_retry_v3_planning_gate = READY_FOR_APPROVAL`** |
+
+**保持：**
+
+```text
+a_class_phase2_cninfo_reachability_precheck_execution_gate = PASS_WITH_CAVEAT
+a_class_phase2_retry_v2_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED
+a_class_phase2_network_recovery_retry_v2_execution_gate = FAIL_REVIEW_REQUIRED
+a_class_phase2_metadata_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED
+a_class_phase2_metadata_execution_gate = FAIL_REVIEW_REQUIRED
+a_class_phase2_failed_retry_execution_gate = FAIL_REVIEW_REQUIRED
+```
+
+### 规划结论
+
+- universe **8** unresolved only · successful **12** excluded
+- ChiNext residual risk（A2M010 precheck failed）
+- runner `--retry-v3` / `--approve-a-class-phase2-retry-v3` **已实现**（§7dzxe）
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task
+
+~~retry_v3 runner extension + dry-run + tests~~ → **完成**（§7dzxe）。~~live 执行~~ → **完成**（§7dzxg）。
+
+---
+
+## 7dzxe. A 类 Phase 2 Retry v3 Runner Extension + Dry-run（2026-07-10）
+
+> **离线 only** · **无 CNINFO** · **无 live** · **无 retry_v3 执行** · **original/v1/v2/precheck 报告 untouched**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_a_class_phase2_metadata_expansion.py](../lab/run_cninfo_a_class_phase2_metadata_expansion.py) |
+| tests | [test_cninfo_a_class_phase2_retry_v3_runner.py](../lab/test_cninfo_a_class_phase2_retry_v3_runner.py)（**23/23 PASS**） |
+| dry-run report | [a_class_phase2_retry_v3_dryrun_report.csv](../outputs/validation/cninfo_a_class_phase2_metadata_retry_v3/reports/a_class_phase2_retry_v3_dryrun_report.csv) |
+| dry-run summary | [a_class_phase2_retry_v3_dryrun_summary.md](../outputs/validation/cninfo_a_class_phase2_metadata_retry_v3/reports/a_class_phase2_retry_v3_dryrun_summary.md) |
+| extension summary | [cninfo_a_class_phase2_retry_v3_runner_extension_summary.md](../outputs/validation/cninfo_a_class_phase2_retry_v3_runner_extension_summary.md) |
+| command draft | [cninfo_a_class_phase2_retry_v3_command_draft.md](cninfo_a_class_phase2_retry_v3_command_draft.md)（**NOT APPROVED live**） |
+| approval checklist | [cninfo_a_class_phase2_retry_v3_approval_checklist.md](../outputs/validation/cninfo_a_class_phase2_retry_v3_approval_checklist.md) |
+| output root | `outputs/validation/cninfo_a_class_phase2_metadata_retry_v3/` |
+| **runner extension gate** | **`a_class_phase2_retry_v3_runner_extension_gate = READY_FOR_APPROVAL`** |
+
+### 执行结论
+
+- dry-run **8/8 planned_ok** · CNINFO **0**
+- approval guard：`--retry-v3` + `--live` 须 `--approve-a-class-phase2-retry-v3`；live 路径 **已实现**（§7dzxf · mock tests only）
+- successful **12** excluded · universe **8** only
+- report_type / report_period preserved · universe CSV not mutated
+- original / retry_v1 / retry_v2 / precheck output roots write-blocked
+- PDF / OCR / extraction / DB / MinIO / RAG **disabled**
+- **不是 PASS** · **不是 live_ready** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task
+
+~~retry_v3 live path implementation~~ → **完成**（§7dzxf）。~~live 执行~~ → **完成**（§7dzxg）。
+
+---
+
+## 7dzxf. A 类 Phase 2 Retry v3 Live Path Implementation（2026-07-10）
+
+> **离线实现 + mock tests only** · **无真实 CNINFO** · **无 live 执行** · **original/v1/v2/precheck 报告 untouched**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_a_class_phase2_metadata_expansion.py](../lab/run_cninfo_a_class_phase2_metadata_expansion.py) |
+| live-path tests | [test_cninfo_a_class_phase2_retry_v3_live_path.py](../lab/test_cninfo_a_class_phase2_retry_v3_live_path.py)（**25/25 PASS**） |
+| live implementation summary | [cninfo_a_class_phase2_retry_v3_live_implementation_summary.md](../outputs/validation/cninfo_a_class_phase2_retry_v3_live_implementation_summary.md) |
+| future live report | `reports/a_class_phase2_retry_v3_report.csv` |
+| future live summary | `reports/a_class_phase2_retry_v3_summary.md` |
+| future quality report | `reports/a_class_phase2_retry_v3_quality_report.csv` |
+| **live implementation gate** | **`a_class_phase2_retry_v3_live_implementation_gate = READY_FOR_APPROVAL`** |
+
+### 执行结论
+
+- live path **implemented** · approval guard enforced · execution gate ≥6/8 → `PASS_WITH_CAVEAT`
+- live-path tests **25/25 PASS** · mock CNINFO **0**
+- **不是 PASS** · **不是 live_ready** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task
+
+~~人工批准 live retry_v3~~ → **live 执行完成**（§7dzxg）。~~merge closure~~ → **完成**（§7dzxh）。
+
+---
+
+## 7dzxg. A 类 Phase 2 Retry v3 Isolated Live 执行（2026-07-10）
+
+> **用户已批准** · **8 unresolved cases only** · **metadata only** · **无 PDF** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| live report | [a_class_phase2_retry_v3_report.csv](../outputs/validation/cninfo_a_class_phase2_metadata_retry_v3/reports/a_class_phase2_retry_v3_report.csv) |
+| live summary | [a_class_phase2_retry_v3_summary.md](../outputs/validation/cninfo_a_class_phase2_metadata_retry_v3/reports/a_class_phase2_retry_v3_summary.md) |
+| quality report | [a_class_phase2_retry_v3_quality_report.csv](../outputs/validation/cninfo_a_class_phase2_metadata_retry_v3/reports/a_class_phase2_retry_v3_quality_report.csv) |
+| output root | `outputs/validation/cninfo_a_class_phase2_metadata_retry_v3/` |
+| **execution gate** | **`a_class_phase2_retry_v3_execution_gate = PASS_WITH_CAVEAT`** |
+
+### 执行结论
+
+- **8/8 acceptable** · all `found` · CNINFO **18** · PDF **0**
+- successful **12** not rerun · original / v1 / v2 / precheck reports **untouched**
+- per-case: A2M005–A2M013 · A2M018–A2M020 all **found** / **pass** / **discovered**
+- A2M019 · A2M020 used **3** CNINFO requests each; others **2** each
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task
+
+~~retry_v3 merge closure update v3~~ → **完成**（§7dzxh）。~~commit boundary review~~ → **完成**（§7dzxi）。
+
+---
+
+## 7dzxh. A 类 Phase 2 Retry v3 Merge Closure 更新（2026-07-10）
+
+> **离线 merge only** · **无 CNINFO** · **无 live** · **无 rerun** · **original/v1/v2/precheck/retry_v3 报告 untouched**。
+
+| 项 | 内容 |
+|----|------|
+| closure review | [cninfo_a_class_phase2_retry_v3_merge_closure_review.md](cninfo_a_class_phase2_retry_v3_merge_closure_review.md) |
+| merged result v3 | [cninfo_a_class_phase2_metadata_merged_result_v3.csv](../outputs/validation/cninfo_a_class_phase2_metadata_merged_result_v3.csv) |
+| recovered ledger | [cninfo_a_class_phase2_retry_v3_recovered_case_ledger.csv](../outputs/validation/cninfo_a_class_phase2_retry_v3_recovered_case_ledger.csv) |
+| final closure metrics | [cninfo_a_class_phase2_retry_v3_final_closure_metrics.csv](../outputs/validation/cninfo_a_class_phase2_retry_v3_final_closure_metrics.csv) |
+| final closure summary | [cninfo_a_class_phase2_retry_v3_final_closure_summary.md](../outputs/validation/cninfo_a_class_phase2_retry_v3_final_closure_summary.md) |
+| next-step recommendation | [cninfo_a_class_phase2_post_retry_v3_next_step_recommendation.md](cninfo_a_class_phase2_post_retry_v3_next_step_recommendation.md) |
+| **final closure gate** | **`a_class_phase2_metadata_final_closure_gate = PASS_WITH_CAVEAT`** |
+
+### 执行结论
+
+- **20/20 effective accepted** · **12** original + **8** retry_v3 recovered · **0** unresolved
+- CNINFO during closure **0** · PDF **0** · schema/matching **unchanged**
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task
+
+~~retry_v3 merge closure update v3~~ → **完成**（§7dzxh）。~~commit boundary review~~ → **完成**（§7dzxi）。下一步：人工 commit 批准 · Phase 3 50-company planning（**NOT APPROVED**）。
+
+---
+
+## 7dzxi. A 类 Phase 2 Final Commit Boundary Review（2026-07-10）
+
+> **离线 review only** · **无 CNINFO** · **无 commit** · **original/v1/v2/precheck/retry_v3 报告 untouched**。
+
+| 项 | 内容 |
+|----|------|
+| boundary review | [cninfo_a_class_phase2_final_commit_boundary_review.md](cninfo_a_class_phase2_final_commit_boundary_review.md) |
+| artifact inventory | [cninfo_a_class_phase2_final_artifact_inventory.csv](../outputs/validation/cninfo_a_class_phase2_final_artifact_inventory.csv)（**136 yes · 8 no**） |
+| caveat ledger | [cninfo_a_class_phase2_final_caveat_ledger.csv](../outputs/validation/cninfo_a_class_phase2_final_caveat_ledger.csv) |
+| safe-to-commit list | [cninfo_a_class_phase2_safe_to_commit_list.md](../outputs/validation/cninfo_a_class_phase2_safe_to_commit_list.md) |
+| boundary summary | [cninfo_a_class_phase2_commit_boundary_summary.md](../outputs/validation/cninfo_a_class_phase2_commit_boundary_summary.md) |
+| **boundary review gate** | **`a_class_phase2_commit_boundary_review_gate = READY_FOR_COMMIT_REVIEW`** |
+
+### 执行结论
+
+- effective **20/20** · unresolved **0** · CNINFO **0**
+- metadata-only closure · no PDF/OCR/DB/MinIO/RAG
+- **不是 verified** · **不是 production_ready** · **无 commit**
+
+### Next immediate task
+
+人工 commit 批准 → A-class Phase 3 50-company planning package（**offline · separate approval**）。
 
 ---
 
@@ -2843,7 +3308,497 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 ~~B 类 Phase 2.5 failed retry closure review~~ → **已完成**（§7dxp）
 
-**B-class Phase 2.5 commit boundary**（50/50 effective · 仍无 PDF · 无 verified）
+~~B 类 Phase 3 100-company expansion planning package~~ → **已完成**（§7dxq）
+
+~~B 类 Phase 3 100-company expansion planning package~~ → **已完成**（§7dxq）
+
+~~B 类 Phase 3 100-company runner 离线扩展 + dry-run~~ → **已完成**（§7dxr）
+
+~~B 类 Phase 3 100-company runner 离线扩展 + dry-run~~ → **已完成**（§7dxr）
+
+~~B 类 Phase 3 100-company live metadata validation 执行~~ → **已完成**（§7dxs）
+
+~~B 类 Phase 3 100-company live metadata validation 执行~~ → **已完成**（§7dxs）
+
+~~B 类 Phase 3 failed-case triage + isolated retry 规划~~ → **已完成**（§7dxt）
+
+~~B 类 Phase 3 failed-case isolated retry runner extension + dry-run~~ → **已完成**（§7dxu）
+
+~~B 类 Phase 3 failed-case isolated retry live path implementation~~ → **已完成**（§7dxv）
+
+~~B 类 Phase 3 failed-case isolated retry live execution~~ → **已完成**（§7dxw）
+
+~~B 类 Phase 3 failed retry closure + EP002 orgId failure triage~~ → **已完成**（§7dxx）
+
+~~B 类 Phase 3 EP002/orgId reachability precheck package~~ → **已完成**（§7dxy）
+
+~~B 类 Phase 3 EP002 reachability precheck runner extension + dry-run~~ → **已完成**（§7dxz）
+
+~~B 类 Phase 3 EP002 reachability precheck live execution~~ → **已完成**（§7dxza）
+
+~~B 类 Phase 3 retry_v2 isolated planning package~~ → **已完成**（§7dxzb）
+
+**B-class Phase 3 retry_v2 runner extension + dry-run**（91 cases · NOT APPROVED live）
+
+---
+
+## 7dxzb. B 类 Phase 3 Retry v2 Isolated Planning Package（2026-07-10）
+
+> **并行约束：** 离线规划 only；**无 CNINFO** · **无 live** · **无 retry_v2 执行** · **schema 不变**。
+
+| 项 | 内容 |
+|----|------|
+| isolated plan | [cninfo_b_class_phase3_100_retry_v2_isolated_plan.md](cninfo_b_class_phase3_100_retry_v2_isolated_plan.md) |
+| retry_v2 universe | [cninfo_b_class_phase3_100_retry_v2_universe.csv](../outputs/validation/cninfo_b_class_phase3_100_retry_v2_universe.csv)（**91** 例） |
+| approval checklist | [cninfo_b_class_phase3_100_retry_v2_approval_checklist.md](../outputs/validation/cninfo_b_class_phase3_100_retry_v2_approval_checklist.md) |
+| command draft | [cninfo_b_class_phase3_100_retry_v2_command_draft.md](cninfo_b_class_phase3_100_retry_v2_command_draft.md) |
+| runner design | [cninfo_b_class_phase3_100_retry_v2_runner_extension_design.md](cninfo_b_class_phase3_100_retry_v2_runner_extension_design.md) |
+| planning summary | [cninfo_b_class_phase3_100_retry_v2_planning_summary.md](../outputs/validation/cninfo_b_class_phase3_100_retry_v2_planning_summary.md) |
+| EP002 precheck gate | **`PASS_WITH_CAVEAT`**（8/8 orgId resolved） |
+| retry_v2 case count | **91**（B3R2_001–B3R2_091） |
+| B3E087 | **excluded** |
+| 8 recovered | **excluded** |
+| runner support | **`--phase3-100-retry-v2` 未实现**（design only） |
+| planning gate | **`b_class_phase3_100_retry_v2_planning_gate = READY_FOR_APPROVAL`** |
+| approval_status | **NOT_APPROVED** |
+| CNINFO calls | **0** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- 91 persistent case retry_v2 universe **已生成**
+- EP002 precheck 8/8 为 retry_v2 提供 go-signal · **不自动 live**
+- original / failed-retry / EP002 precheck / Phase 2.5 reports **未触碰**
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task（B-class）
+
+**B-class Phase 3 retry_v2 runner extension + dry-run**
+
+---
+
+## 7dxza. B 类 Phase 3 EP002 Reachability Precheck Live Execution（2026-07-10）
+
+> **并行约束：** 用户批准 live precheck；**EP002 orgId only** · **无 metadata retry** · **无 PDF** · **schema 不变**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_b_class_phase3_100_ep002_reachability_precheck.py](../lab/run_cninfo_b_class_phase3_100_ep002_reachability_precheck.py)（`--live`） |
+| candidates | [cninfo_b_class_phase3_100_ep002_reachability_precheck_candidates.csv](../outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck_candidates.csv)（**8** 例） |
+| live report | [b_class_phase3_100_ep002_reachability_precheck_report.csv](../outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck/reports/b_class_phase3_100_ep002_reachability_precheck_report.csv) |
+| live summary | [b_class_phase3_100_ep002_reachability_precheck_summary.md](../outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck/reports/b_class_phase3_100_ep002_reachability_precheck_summary.md) |
+| quality report | [b_class_phase3_100_ep002_reachability_precheck_quality_report.csv](../outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck/reports/b_class_phase3_100_ep002_reachability_precheck_quality_report.csv) |
+| orgId resolved | **8/8** |
+| orgId failed | **0** |
+| CNINFO requests | **8** |
+| PDF / OCR / extraction / DB / MinIO / RAG | **0** |
+| execution gate | **`b_class_phase3_100_ep002_reachability_precheck_execution_gate = PASS_WITH_CAVEAT`** |
+| runner gate | **`b_class_phase3_100_ep002_reachability_precheck_runner_gate = READY_FOR_APPROVAL`**（unchanged） |
+| planning gate | **`b_class_phase3_100_ep002_reachability_precheck_planning_gate = READY_FOR_APPROVAL`**（unchanged） |
+| closure gate | **`b_class_phase3_100_failed_retry_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED`**（unchanged） |
+| retry_v2 universe | **not created** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- EP002 orgId reachability **recovered for all 8 representative candidates**（100%）
+- prior Phase 3 / failed-retry / Phase 2.5 reports **未触碰**
+- dry-run reports **未覆盖**
+- infrastructure caveat **partially lifted** for sampled markets（SSE/SZSE/创业板/科创板）
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task（B-class）
+
+~~B-class Phase 3 retry_v2 isolated planning package~~ → **已完成**（§7dxzb）
+
+**B-class Phase 3 retry_v2 runner extension + dry-run**（91 cases · NOT APPROVED live）
+
+---
+
+## 7dxz. B 类 Phase 3 EP002 Reachability Precheck Runner + Dry-run（2026-07-10）
+
+> **并行约束：** offline runner prep only；**无 CNINFO live** · **无 precheck 执行** · **schema 不变**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_b_class_phase3_100_ep002_reachability_precheck.py](../lab/run_cninfo_b_class_phase3_100_ep002_reachability_precheck.py) |
+| tests | [test_cninfo_b_class_phase3_100_ep002_reachability_precheck_runner.py](../lab/test_cninfo_b_class_phase3_100_ep002_reachability_precheck_runner.py)（**26/26 PASS**） |
+| runner summary | [cninfo_b_class_phase3_100_ep002_reachability_precheck_runner_summary.md](../outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck_runner_summary.md) |
+| dry-run report | [b_class_phase3_100_ep002_reachability_precheck_dryrun_report.csv](../outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck/reports/b_class_phase3_100_ep002_reachability_precheck_dryrun_report.csv) |
+| dry-run summary | [b_class_phase3_100_ep002_reachability_precheck_dryrun_summary.md](../outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck/reports/b_class_phase3_100_ep002_reachability_precheck_dryrun_summary.md) |
+| candidates | **8** |
+| planned_ok | **8/8** |
+| planned_request_count_total | **8** |
+| request cap | **≤ 16** |
+| approval flag | `--approve-b-class-phase3-100-ep002-reachability-precheck` |
+| runner gate | **`b_class_phase3_100_ep002_reachability_precheck_runner_gate = READY_FOR_APPROVAL`** |
+| planning gate | **`b_class_phase3_100_ep002_reachability_precheck_planning_gate = READY_FOR_APPROVAL`** |
+| approval_status | **NOT_APPROVED** |
+| CNINFO calls | **0** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- runner + approval guard + dry-run **已完成**
+- B3E087 + 8 recovered + prior phases **excluded**
+- retry_v2 universe **not created**
+- EP001/EP004/EP005 · PDF/OCR/extraction · DB/MinIO/RAG **blocked**
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task（B-class）
+
+**B-class Phase 3 EP002 reachability precheck human approval review** → future live precheck（**NOT APPROVED**）
+
+---
+
+## 7dxy. B 类 Phase 3 EP002/orgId Reachability Precheck Package（2026-07-09）
+
+> **并行约束：** 离线规划 only；**无 CNINFO** · **无 live** · **无 precheck 执行** · **schema 不变**。
+
+| 项 | 内容 |
+|----|------|
+| precheck plan | [cninfo_b_class_phase3_100_ep002_reachability_precheck_plan.md](cninfo_b_class_phase3_100_ep002_reachability_precheck_plan.md) |
+| candidates | [cninfo_b_class_phase3_100_ep002_reachability_precheck_candidates.csv](../outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck_candidates.csv)（**8** 例） |
+| approval checklist | [cninfo_b_class_phase3_100_ep002_reachability_precheck_approval_checklist.md](../outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck_approval_checklist.md) |
+| command draft | [cninfo_b_class_phase3_100_ep002_reachability_precheck_command_draft.md](cninfo_b_class_phase3_100_ep002_reachability_precheck_command_draft.md) |
+| runner design | [cninfo_b_class_phase3_100_ep002_reachability_precheck_runner_design.md](cninfo_b_class_phase3_100_ep002_reachability_precheck_runner_design.md) |
+| planning summary | [cninfo_b_class_phase3_100_ep002_reachability_precheck_planning_summary.md](../outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck_planning_summary.md) |
+| candidate count | **8** |
+| request cap | **≤ 16** |
+| check type | `ep002_orgid_reachability` only |
+| output root | `outputs/validation/cninfo_b_class_phase3_100_ep002_reachability_precheck/` |
+| planning gate | **`b_class_phase3_100_ep002_reachability_precheck_planning_gate = READY_FOR_APPROVAL`** |
+| approval_status | **NOT_APPROVED** |
+| runner | **design only** |
+| CNINFO calls | **0** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- 8 例代表性候选自 persistent **91** 选取
+- B3E087 + 8 recovered + prior phases **excluded**
+- lightweight EP002 orgId probe only — no metadata retry
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task（B-class）
+
+~~Option A：B-class Phase 3 EP002 reachability precheck runner extension + dry-run~~ → **已完成**（§7dxz）
+
+~~B-class Phase 3 EP002 reachability precheck live execution~~ → **已完成**（§7dxza）
+
+~~B-class Phase 3 retry_v2 isolated planning package~~ → **已完成**（§7dxzb）
+
+**B-class Phase 3 retry_v2 runner extension + dry-run**（91 cases · NOT APPROVED live）
+
+---
+
+## 7dxx. B 类 Phase 3 Failed Retry Closure + EP002 OrgId Failure Triage（2026-07-09）
+
+> **并行约束：** 离线收口评审 only；**无 CNINFO** · **无 live** · **无 rerun** · **schema 不变**。
+
+| 项 | 内容 |
+|----|------|
+| closure review | [cninfo_b_class_phase3_100_failed_retry_closure_review.md](cninfo_b_class_phase3_100_failed_retry_closure_review.md) |
+| effective merged result | [cninfo_b_class_phase3_100_effective_merged_result.csv](../outputs/validation/cninfo_b_class_phase3_100_effective_merged_result.csv)（**100** rows） |
+| recovered ledger | [cninfo_b_class_phase3_100_retry_recovered_case_ledger.csv](../outputs/validation/cninfo_b_class_phase3_100_retry_recovered_case_ledger.csv)（**8** rows） |
+| persistent ledger | [cninfo_b_class_phase3_100_persistent_failure_ledger.csv](../outputs/validation/cninfo_b_class_phase3_100_persistent_failure_ledger.csv)（**91** rows） |
+| EP002 analysis | [cninfo_b_class_phase3_100_ep002_orgid_failure_analysis.csv](../outputs/validation/cninfo_b_class_phase3_100_ep002_orgid_failure_analysis.csv) |
+| closure metrics | [cninfo_b_class_phase3_100_failed_retry_closure_metrics.csv](../outputs/validation/cninfo_b_class_phase3_100_failed_retry_closure_metrics.csv) |
+| closure summary | [cninfo_b_class_phase3_100_failed_retry_closure_summary.md](../outputs/validation/cninfo_b_class_phase3_100_failed_retry_closure_summary.md) |
+| next-step recommendation | [cninfo_b_class_phase3_100_post_failed_retry_next_step_recommendation.md](cninfo_b_class_phase3_100_post_failed_retry_next_step_recommendation.md) |
+| original accepted | **1**（B3E087 hold） |
+| retry recovered | **8** |
+| effective accepted | **9/100** |
+| persistent unresolved | **91/100** |
+| dominant failure | EP002 orgId/network |
+| schema_failure_evidence | **none** |
+| closure gate | **`b_class_phase3_100_failed_retry_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED`** |
+| execution gates | **FAIL_REVIEW_REQUIRED**（unchanged） |
+| CNINFO calls（closure round） | **0** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- original **1** + retry recovered **8** = **9/100** effective accepted
+- **91/100** persistent EP002 orgId/network — infrastructure caveat
+- **非 schema failure** · **不推荐 immediate retry**
+- original / retry / Phase 2.5 reports **未触碰**
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task（B-class）
+
+~~Option A：B-class EP002/orgId reachability precheck package~~ → **已完成**（§7dxy）
+
+~~Option A：B-class Phase 3 EP002 reachability precheck runner extension + dry-run~~ → **已完成**（§7dxz）
+
+~~B-class Phase 3 EP002 reachability precheck live execution~~ → **已完成**（§7dxza）
+
+~~B-class Phase 3 retry_v2 isolated planning package~~ → **已完成**（§7dxzb）
+
+**B-class Phase 3 retry_v2 runner extension + dry-run**（91 cases · NOT APPROVED live）
+
+---
+
+## 7dxw. B 类 Phase 3 Failed-case Isolated Retry Live Execution（2026-07-09）
+
+> **并行约束：** 用户批准 live retry；**metadata + URL lineage only** · **无 PDF** · **schema 不变** · **C-class 不变**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_b_class_phase25_expansion_validation.py](../lab/run_cninfo_b_class_phase25_expansion_validation.py)（`--phase3-100-failed-retry --live`） |
+| universe | [cninfo_b_class_phase3_100_failed_retry_universe.csv](../outputs/validation/cninfo_b_class_phase3_100_failed_retry_universe.csv)（**99** 家 · B3E087 excluded） |
+| report | [b_class_phase3_100_failed_retry_report.csv](../outputs/validation/cninfo_b_class_phase3_100_failed_retry/reports/b_class_phase3_100_failed_retry_report.csv) |
+| summary | [b_class_phase3_100_failed_retry_summary.md](../outputs/validation/cninfo_b_class_phase3_100_failed_retry/reports/b_class_phase3_100_failed_retry_summary.md) |
+| quality report | [b_class_phase3_100_failed_retry_quality_report.csv](../outputs/validation/cninfo_b_class_phase3_100_failed_retry/reports/b_class_phase3_100_failed_retry_quality_report.csv) |
+| approval flag | `--approve-b-class-phase3-100-failed-retry` |
+| output root | `outputs/validation/cninfo_b_class_phase3_100_failed_retry/` |
+| CNINFO requests | **18** |
+| found | **8** |
+| acceptable | **8** |
+| failed | **91** |
+| needs_review | **91** |
+| empty_but_valid | **0** |
+| dominant failure | **network_error** at EP002 orgId resolution |
+| PDF downloaded / parsed | **0** |
+| retry execution gate | **`b_class_phase3_100_failed_retry_execution_gate = FAIL_REVIEW_REQUIRED`** |
+| Phase 3 original gate | **`b_class_phase3_100_execution_gate = FAIL_REVIEW_REQUIRED`**（unchanged） |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- 99 failed-case isolated retry executed（B3E087 hold · 无 prior-phase rerun）
+- **8/99 acceptable** · **91/99 network_error**（EP002 orgId resolution；与 Phase 3 原始 live 同型）
+- acceptable **8 < 90** threshold → **FAIL_REVIEW_REQUIRED**
+- Phase 3 expansion / Phase 2.5 reports **未触碰**
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task（B-class）
+
+~~Option A：B-class Phase 3 failed retry closure / EP002 orgId failure triage~~ → **已完成**（§7dxx）
+
+**Option A：B-class EP002/orgId reachability precheck package**
+
+---
+
+## 7dxv. B 类 Phase 3 Failed-case Isolated Retry Live Path Implementation（2026-07-09）
+
+> **并行约束：** live path 离线实现 + mock tests only；**无真实 CNINFO** · **无 live 执行** · **schema 不变**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_b_class_phase25_expansion_validation.py](../lab/run_cninfo_b_class_phase25_expansion_validation.py)（`--phase3-100-failed-retry --live`） |
+| live-path tests | [test_cninfo_b_class_phase3_100_failed_retry_live_path.py](../lab/test_cninfo_b_class_phase3_100_failed_retry_live_path.py)（**24/24 PASS**） |
+| runner tests | [test_cninfo_b_class_phase3_100_failed_retry_runner.py](../lab/test_cninfo_b_class_phase3_100_failed_retry_runner.py)（**20/20 PASS**） |
+| implementation summary | [cninfo_b_class_phase3_100_failed_retry_live_implementation_summary.md](../outputs/validation/cninfo_b_class_phase3_100_failed_retry_live_implementation_summary.md) |
+| live report path | `reports/b_class_phase3_100_failed_retry_report.csv` |
+| live summary path | `reports/b_class_phase3_100_failed_retry_summary.md` |
+| quality report path | `reports/b_class_phase3_100_failed_retry_quality_report.csv` |
+| approval flag | `--approve-b-class-phase3-100-failed-retry` |
+| max CNINFO requests | **198** |
+| execution gate threshold | **>= 90/99** → PASS_WITH_CAVEAT |
+| live implementation gate | **`b_class_phase3_100_failed_retry_live_implementation_gate = READY_FOR_APPROVAL`** |
+| real CNINFO calls | **0** |
+| approval_status | **NOT_APPROVED** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- live path：`process_phase3_retry_live` + `write_live_phase3_retry_reports`
+- approval guard enforced before CNINFO
+- execution gate：**>= 90/99** PASS_WITH_CAVEAT · **< 90/99** FAIL_REVIEW_REQUIRED
+- **无真实 live** · **无 retry execution**
+- **NOT APPROVED** · **不是 PASS** · **不是 verified**
+
+### Next immediate task（B-class）
+
+~~Option A：B-class Phase 3 failed-case isolated retry human approval review~~ → live path ready（§7dxv）
+
+**Option A：B-class Phase 3 failed-case isolated retry human approval review → approved live execution**
+
+---
+
+## 7dxu. B 类 Phase 3 Failed-case Isolated Retry Runner Extension + Dry-run（2026-07-09）
+
+> **并行约束：** 离线 runner 扩展 + dry-run only；**无 CNINFO** · **无 live** · **无 retry** · **schema 不变**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_b_class_phase25_expansion_validation.py](../lab/run_cninfo_b_class_phase25_expansion_validation.py)（`--phase3-100-failed-retry`） |
+| tests | [test_cninfo_b_class_phase3_100_failed_retry_runner.py](../lab/test_cninfo_b_class_phase3_100_failed_retry_runner.py)（**20/20 PASS**） |
+| retry universe | [cninfo_b_class_phase3_100_failed_retry_universe.csv](../outputs/validation/cninfo_b_class_phase3_100_failed_retry_universe.csv)（**99** 家） |
+| dry-run report | [b_class_phase3_100_failed_retry_dryrun_report.csv](../outputs/validation/cninfo_b_class_phase3_100_failed_retry/reports/b_class_phase3_100_failed_retry_dryrun_report.csv) |
+| dry-run summary | [b_class_phase3_100_failed_retry_dryrun_summary.md](../outputs/validation/cninfo_b_class_phase3_100_failed_retry/reports/b_class_phase3_100_failed_retry_dryrun_summary.md) |
+| extension summary | [cninfo_b_class_phase3_100_failed_retry_runner_extension_summary.md](../outputs/validation/cninfo_b_class_phase3_100_failed_retry_runner_extension_summary.md) |
+| approval flag | `--approve-b-class-phase3-100-failed-retry`（本回合未使用） |
+| output root | `outputs/validation/cninfo_b_class_phase3_100_failed_retry/` |
+| planned_ok | **99/99** |
+| planned_request_count | **198** |
+| CNINFO calls | **0** |
+| B3E087 excluded | **yes** |
+| runner extension gate | **`b_class_phase3_100_failed_retry_runner_extension_gate = READY_FOR_APPROVAL`** |
+| approval_status | **NOT_APPROVED** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- runner 支持 `--phase3-100-failed-retry` + approval guard
+- dry-run **99/99 planned_ok** · planned_request_count **198**
+- Phase 3 expansion / Phase 2.5 roots write-blocked
+- PDF / OCR / extraction / DB / MinIO / RAG **disabled**
+- **无 live** · **无 retry execution**
+- **NOT APPROVED** · **不是 PASS** · **不是 verified**
+
+### Next immediate task（B-class）
+
+~~Option A：B-class Phase 3 failed-case isolated retry human approval review~~ → live path ready（§7dxv）
+
+**Option A：B-class Phase 3 failed-case isolated retry human approval review → approved live execution**
+
+---
+
+## 7dxt. B 类 Phase 3 Failed-case Triage + Isolated Retry Planning（2026-07-09）
+
+> **并行约束：** 离线 triage + retry 规划 only；**无 CNINFO** · **无 live** · **无 retry** · **schema 不变**。
+
+| 项 | 内容 |
+|----|------|
+| triage review | [cninfo_b_class_phase3_100_failed_case_triage_review.md](cninfo_b_class_phase3_100_failed_case_triage_review.md) |
+| failed triage | [cninfo_b_class_phase3_100_failed_case_triage.csv](../outputs/validation/cninfo_b_class_phase3_100_failed_case_triage.csv)（**99** 例） |
+| success hold ledger | [cninfo_b_class_phase3_100_success_hold_ledger.csv](../outputs/validation/cninfo_b_class_phase3_100_success_hold_ledger.csv)（B3E087） |
+| retry universe | [cninfo_b_class_phase3_100_failed_retry_universe.csv](../outputs/validation/cninfo_b_class_phase3_100_failed_retry_universe.csv)（**99** 家） |
+| retry plan | [cninfo_b_class_phase3_100_failed_retry_plan.md](cninfo_b_class_phase3_100_failed_retry_plan.md) |
+| approval checklist | [cninfo_b_class_phase3_100_failed_retry_approval_checklist.md](../outputs/validation/cninfo_b_class_phase3_100_failed_retry_approval_checklist.md) |
+| command draft | [cninfo_b_class_phase3_100_failed_retry_command_draft.md](cninfo_b_class_phase3_100_failed_retry_command_draft.md) |
+| planning summary | [cninfo_b_class_phase3_100_failed_retry_planning_summary.md](../outputs/validation/cninfo_b_class_phase3_100_failed_retry_planning_summary.md) |
+| original acceptable | **1**（B3E087） |
+| retry candidates | **99** |
+| dominant failure | EP002 orgId resolution / network_error |
+| schema_impact | **none** |
+| triage gate | **`b_class_phase3_100_failed_case_triage_gate = READY_FOR_REVIEW`** |
+| retry planning gate | **`b_class_phase3_100_failed_retry_planning_gate = READY_FOR_APPROVAL`** |
+| CNINFO calls | **0** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- **99/100** failed at EP002 orgId resolution · **非 schema failure**
+- B3E087 hold · **不 rerun**
+- retry universe **99** · prior phases excluded
+- runner `--phase3-100-failed-retry` **已实现**（见 §7dxu）
+- **NOT APPROVED** · **不是 PASS** · **不是 verified**
+
+### Next immediate task（B-class）
+
+~~Option A：B-class Phase 3 failed-case isolated retry runner extension + dry-run~~ → **已完成**（§7dxu）
+
+---
+
+## 7dxs. B 类 Phase 3 100-Company Live Metadata Validation（2026-07-09）
+
+> **并行约束：** 用户批准 live 执行；**metadata + URL lineage only** · **无 PDF** · **schema 不变** · **C-class 不变**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_b_class_phase25_expansion_validation.py](../lab/run_cninfo_b_class_phase25_expansion_validation.py)（`--phase3-100 --live`） |
+| universe | [cninfo_b_class_phase3_100_universe_draft.csv](../outputs/validation/cninfo_b_class_phase3_100_universe_draft.csv)（**100** 家 · B3E001–B3E100） |
+| report | [b_class_phase3_100_report.csv](../outputs/validation/cninfo_b_class_phase3_100_expansion/reports/b_class_phase3_100_report.csv) |
+| summary | [b_class_phase3_100_summary.md](../outputs/validation/cninfo_b_class_phase3_100_expansion/reports/b_class_phase3_100_summary.md) |
+| quality report | [b_class_phase3_100_quality_report.csv](../outputs/validation/cninfo_b_class_phase3_100_expansion/reports/b_class_phase3_100_quality_report.csv) |
+| approval flag | `--approve-b-class-phase3-100-expansion` |
+| output root | `outputs/validation/cninfo_b_class_phase3_100_expansion/` |
+| CNINFO requests | **3** |
+| found | **1** |
+| acceptable | **1** |
+| failed | **99** |
+| needs_review | **99** |
+| empty_but_valid | **0** |
+| PDF downloaded / parsed | **0** |
+| execution gate | **`b_class_phase3_100_execution_gate = FAIL_REVIEW_REQUIRED`** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- 100 Phase 3 cases executed（B3E001–B3E100 only；无 prior-phase rerun）
+- **99/100 network_error**（EP002 orgId resolution failed；网络/代理瞬态故障）
+- **1/100 found/pass/discovered**（B3E087 北新建材）
+- acceptable **1 < 90** threshold → **FAIL_REVIEW_REQUIRED**
+- Phase 2.5 expansion / failed retry 输出根未触碰
+- **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task（B-class）
+
+**Option A：B-class Phase 3 failed-case triage + isolated retry planning**
+
+---
+
+## 7dxr. B 类 Phase 3 100-Company Runner Extension + Dry-Run（2026-07-09）
+
+> **并行约束：** 离线 runner 扩展 + dry-run only；**无 CNINFO** · **无 live** · **无 PDF** · **schema 不变** · **C-class 不变**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_b_class_phase25_expansion_validation.py](../lab/run_cninfo_b_class_phase25_expansion_validation.py)（`--phase3-100`） |
+| tests | [test_cninfo_b_class_phase3_100_runner.py](../lab/test_cninfo_b_class_phase3_100_runner.py)（**20/20 PASS**） |
+| extension summary | [cninfo_b_class_phase3_100_runner_extension_summary.md](../outputs/validation/cninfo_b_class_phase3_100_runner_extension_summary.md) |
+| dry-run report | [b_class_phase3_100_dryrun_report.csv](../outputs/validation/cninfo_b_class_phase3_100_expansion/reports/b_class_phase3_100_dryrun_report.csv) |
+| dry-run summary | [b_class_phase3_100_dryrun_summary.md](../outputs/validation/cninfo_b_class_phase3_100_expansion/reports/b_class_phase3_100_dryrun_summary.md) |
+| approval flag | `--approve-b-class-phase3-100-expansion` |
+| output root | `outputs/validation/cninfo_b_class_phase3_100_expansion/` |
+| planned_ok | **100/100** |
+| planned_request_count | **200** |
+| runner gate | **`b_class_phase3_100_runner_extension_gate = READY_FOR_APPROVAL`** |
+| CNINFO calls | **0** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- `--phase3-100` 与 approval guard 已实现
+- dry-run **100/100 planned_ok** · CNINFO **0**
+- Phase 2.5 / retry 输出根 write-blocked
+- **NOT APPROVED** · **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task（B-class）
+
+**Option A：B-class Phase 3 live metadata validation**（须用户显式批准）
+
+---
+
+## 7dxq. B 类 Phase 3 100-Company Expansion Planning Package（2026-07-09）
+
+> **并行约束：** 离线规划 only；**无 CNINFO** · **无 live** · **无 PDF** · **schema 不变** · **C-class 不变**。
+
+| 项 | 内容 |
+|----|------|
+| expansion plan | [cninfo_b_class_phase3_100_expansion_plan.md](cninfo_b_class_phase3_100_expansion_plan.md) |
+| candidate design | [cninfo_b_class_phase3_100_candidate_universe_design.csv](../outputs/validation/cninfo_b_class_phase3_100_candidate_universe_design.csv) |
+| universe draft | [cninfo_b_class_phase3_100_universe_draft.csv](../outputs/validation/cninfo_b_class_phase3_100_universe_draft.csv) |
+| command draft | [cninfo_b_class_phase3_100_command_draft.md](cninfo_b_class_phase3_100_command_draft.md) |
+| approval checklist | [cninfo_b_class_phase3_100_approval_checklist.md](../outputs/validation/cninfo_b_class_phase3_100_approval_checklist.md) |
+| planning summary | [cninfo_b_class_phase3_100_planning_summary.md](../outputs/validation/cninfo_b_class_phase3_100_planning_summary.md) |
+| sample size | **100**（B3E001–B3E100） |
+| endpoint mix | EP004 **50** · EP005 **50** · EP001 **100** |
+| prior-phase overlap | **0** |
+| duplicate company_code | **0** |
+| planning gate | **`b_class_phase3_100_planning_gate = READY_FOR_APPROVAL`** |
+| CNINFO calls | **0** |
+| C-class status | **`SNAPSHOT_GENERATED_QA_REVIEW`** |
+
+### 执行结论
+
+- Phase 2.5 **50/50 effective** 后进入 100 家扩大样本离线规划
+- universe 校验通过：100 rows · 0 overlap · 0 duplicate · 50/50 endpoint mix
+- runner `--phase3-100` **未实现**；仅 command draft 文档化
+- **NOT APPROVED** · **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+### Next immediate task（B-class）
+
+~~B-class Phase 3 runner 离线扩展 + dry-run~~ → **已完成**（见 §7dxr）
+
+~~B-class Phase 3 live metadata validation~~ → **已完成**（见 §7dxs · **FAIL_REVIEW_REQUIRED**）
+
+~~B-class Phase 3 failed-case triage + isolated retry planning~~ → **已完成**（见 §7dxt）
+
+**Option A：B-class Phase 3 failed-case isolated retry runner extension + dry-run**
 
 ---
 
@@ -2874,7 +3829,9 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 
 ### Next immediate task（B-class）
 
-**Option A：B-class Phase 2.5 commit boundary**
+~~B-class Phase 2.5 commit boundary~~ → **已完成**（`812ad54`）
+
+**Option A：B-class Phase 3 runner 离线扩展 + dry-run**（见 §7dxq）
 
 ---
 
@@ -3962,7 +4919,359 @@ A-class Phase 1 schema freeze review + 从 P1 coverage CSV 派生 offline `repor
 - DLC003R / DLC006R 全部 intake checks **PASS**（24/24）
 - **下一步：** replacement approval package 评审（**NOT APPROVED** · **不是 verified**）
 
-**红线：** **不是 ready_for_live** · **不是 verified**
+---
+
+## 7dzs. D 类 Known-Event Replacement Validation Approval Package（2026-07-09）
+
+> **并行约束：** filled universe + approval checklist + command draft · **不调用 CNINFO** · **无 live** · **runner 未实现**。
+
+| 项 | 内容 |
+|----|------|
+| filled universe | [cninfo_d_class_tiny_live_replacement_universe_filled.csv](../outputs/validation/cninfo_d_class_tiny_live_replacement_universe_filled.csv) |
+| approval checklist | [cninfo_d_class_known_event_replacement_approval_checklist.md](../outputs/validation/cninfo_d_class_known_event_replacement_approval_checklist.md) |
+| command draft | [cninfo_d_class_known_event_replacement_validation_command_draft.md](cninfo_d_class_known_event_replacement_validation_command_draft.md)（**NOT APPROVED**） |
+| runner extension design | [cninfo_d_class_known_event_replacement_runner_extension_design.md](cninfo_d_class_known_event_replacement_runner_extension_design.md) |
+| approval summary | [cninfo_d_class_known_event_replacement_validation_approval_summary.md](../outputs/validation/cninfo_d_class_known_event_replacement_validation_approval_summary.md) |
+| DLC003R | **688671** 碧兴物联 · `unlock_schedule_record` |
+| DLC006R | **301259** 艾布鲁 · `shareholder_change_announcement` |
+| approval_status | **`NOT_APPROVED`** |
+| package gate | **`d_class_known_event_replacement_validation_package_gate = READY_FOR_APPROVAL`** |
+| intake gate | **`HUMAN_CANDIDATE_VALIDATED`**（保持） |
+| planning gate | **`READY_FOR_HUMAN_CANDIDATES`**（保持） |
+| final calibration gate | **`HUMAN_SIGNED_OFF_WITH_CAVEAT`**（保持） |
+| boundary gate | **`PASS_WITH_CAVEAT`**（保持） |
+| runner support | **`--known-event-replacement` 未实现** |
+| CNINFO calls（本回合） | **0** |
+| web lookup | **0** |
+| live / rerun / harvest | **0** |
+
+### 执行结论
+
+- filled replacement universe 已生成 · baseline DLC001/002/004/005/007 保持 reference only
+- approval checklist 已勾选（**approval_status = NOT_APPROVED** · **approved_for_live = false**）
+- command draft 指向 filled universe · **Do not execute**
+- runner extension design 已准备 · **下一步：离线实现 + dry-run**
+- original / calibrated universe · v1/v2 reports **未修改**
+
+---
+
+## 7dzu. D 类 Known-Event Replacement Runner 扩展 + Dry-run（2026-07-09）
+
+> **并行约束：** CLI flags + preflight + dry-run only · **不调用 CNINFO** · **live 未实现** · **无 harvest**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_d_class_tiny_live_validation.py](../lab/run_cninfo_d_class_tiny_live_validation.py) |
+| tests | [test_cninfo_d_class_known_event_replacement_runner.py](../lab/test_cninfo_d_class_known_event_replacement_runner.py) · **20/20 PASS** |
+| extension summary | [cninfo_d_class_known_event_replacement_runner_extension_summary.md](../outputs/validation/cninfo_d_class_known_event_replacement_runner_extension_summary.md) |
+| dry-run report | [d_class_known_event_replacement_dryrun_report.csv](../outputs/validation/cninfo_d_class_known_event_replacement_validation/reports/d_class_known_event_replacement_dryrun_report.csv) |
+| dry-run summary | [d_class_known_event_replacement_dryrun_summary.md](../outputs/validation/cninfo_d_class_known_event_replacement_validation/reports/d_class_known_event_replacement_dryrun_summary.md) |
+| flags | `--known-event-replacement` · `--approve-d-class-known-event-replacement-validation` |
+| dry-run result | **7/7 planned_ok** · probe budget **44** · CNINFO **0** |
+| extension gate | **`d_class_known_event_replacement_runner_extension_gate = READY_FOR_APPROVAL`** |
+| package gate | **`READY_FOR_APPROVAL`**（保持） |
+| approval_status | **`NOT_APPROVED`** |
+| live execution | **未实现** |
+| CNINFO calls（本回合） | **0** |
+
+### 执行结论
+
+- runner 扩展：preflight · approval guard · write-block · dry-run report
+- live 路径：approval flag 校验后返回 `not_implemented` · **0 CNINFO**
+- **下一步：** 人工评审 live implementation → 显式 approval 后 isolated 真实 live（**NOT APPROVED**）
+
+---
+
+## 7dzv. D 类 Known-Event Replacement Live 探针路径实现（2026-07-09）
+
+> **并行约束：** live 逻辑实现 + mock 测试 only · **未执行真实 live** · **无 CNINFO（本回合）**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_d_class_tiny_live_validation.py](../lab/run_cninfo_d_class_tiny_live_validation.py) |
+| live-path tests | [test_cninfo_d_class_known_event_replacement_live_path.py](../lab/test_cninfo_d_class_known_event_replacement_live_path.py) · **22/22 PASS** |
+| runner tests | **20/20 PASS**（保持） |
+| live implementation summary | [cninfo_d_class_known_event_replacement_live_implementation_summary.md](../outputs/validation/cninfo_d_class_known_event_replacement_live_implementation_summary.md) |
+| probe cases | DLC003R（≤24）· DLC006R（≤20）· total ≤44 |
+| execution gate | `PASS_WITH_CAVEAT` / `FAIL_REVIEW_REQUIRED`（**不是 PASS**） |
+| live implementation gate | **`d_class_known_event_replacement_live_implementation_gate = READY_FOR_APPROVAL`** |
+| approval_status | **`NOT_APPROVED`** |
+| 真实 live 执行 | **未执行** |
+| CNINFO calls（本回合） | **0** |
+
+### 执行结论
+
+- bounded live probe 逻辑已实现（复用 v2 `execute_v2_bounded_probe_case`）
+- live report / quality report / summary writers 已就绪
+- mock live-path 测试全部通过 · **0 真实 CNINFO**
+- **下一步：** 人工评审 replacement live 结果（**FAIL_REVIEW_REQUIRED**）
+
+---
+
+## 7dzy. D 类 Known-Event Replacement Isolated Live 执行（2026-07-09）
+
+> **并行约束：** 仅 DLC003R/DLC006R · **不 rerun** 旧 DLC003/DLC006 · **无 PDF/OCR/DB/MinIO/RAG** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| live report | [d_class_known_event_replacement_live_report.csv](../outputs/validation/cninfo_d_class_known_event_replacement_validation/reports/d_class_known_event_replacement_live_report.csv) |
+| live summary | [d_class_known_event_replacement_live_summary.md](../outputs/validation/cninfo_d_class_known_event_replacement_validation/reports/d_class_known_event_replacement_live_summary.md) |
+| quality report | [d_class_known_event_replacement_quality_report.csv](../outputs/validation/cninfo_d_class_known_event_replacement_validation/reports/d_class_known_event_replacement_quality_report.csv) |
+| DLC003R | **688671** 碧兴物联 · requests **21** · `empty_but_valid` · records **0** · acceptable **no** |
+| DLC006R | **301259** 艾布鲁 · requests **19** · `empty_but_valid` · records **0** · acceptable **no** |
+| baseline | DLC001/002/004/005/007 · **0 CNINFO** · `reference_only` |
+| total CNINFO | **40** |
+| execution gate | **`d_class_known_event_replacement_validation_execution_gate = FAIL_REVIEW_REQUIRED`** |
+| implementation gate | **`READY_FOR_APPROVAL`**（保持） |
+| package gate | **`READY_FOR_APPROVAL`**（保持） |
+| boundary gate | **`PASS_WITH_CAVEAT`**（保持） |
+
+### 执行结论
+
+- 双 replacement case 耗尽 bounded probe 预算后均为 company-level 零行
+- 人工 known-event 证据与 metadata API 探针结果 **未对齐** — 需人工评审
+- original / calibrated universe · v1/v2 reports **未修改**
+- **下一步：** event-date 定向 probe 扩展评审或接受组件级 `captured_normal` 缺口（**无自动 rerun**）
+
+**红线：** **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+---
+
+## 7dzz. D 类 Known-Event Replacement Live Failure Review + Targeted Probe 决策包（2026-07-09）
+
+> **并行约束：** 离线 review only · **无 CNINFO** · **无 live** · **无 rerun** · **无 targeted probe 实现**。
+
+| 项 | 内容 |
+|----|------|
+| failure review | [cninfo_d_class_known_event_replacement_live_failure_review.md](cninfo_d_class_known_event_replacement_live_failure_review.md) |
+| review summary | [cninfo_d_class_known_event_replacement_live_failure_review_summary.md](../outputs/validation/cninfo_d_class_known_event_replacement_live_failure_review_summary.md) |
+| reconciliation matrix | [cninfo_d_class_known_event_replacement_evidence_reconciliation_matrix.csv](../outputs/validation/cninfo_d_class_known_event_replacement_evidence_reconciliation_matrix.csv) |
+| targeted probe design | [cninfo_d_class_known_event_targeted_probe_option_design.md](cninfo_d_class_known_event_targeted_probe_option_design.md) |
+| risk ledger | [cninfo_d_class_known_event_targeted_probe_risk_ledger.csv](../outputs/validation/cninfo_d_class_known_event_targeted_probe_risk_ledger.csv) |
+| planning checklist | [cninfo_d_class_known_event_targeted_probe_planning_checklist.md](../outputs/validation/cninfo_d_class_known_event_targeted_probe_planning_checklist.md) |
+| live result | **2/2 failed** · `empty_but_valid_after_budget` · CNINFO **40**（prior live） |
+| human evidence | exists · **≠** component captured_normal |
+| recommended | **Option A** planning first — not live |
+| failure review gate | **`d_class_known_event_replacement_live_failure_review_gate = READY_FOR_HUMAN_DECISION`** |
+| execution gate | **`FAIL_REVIEW_REQUIRED`**（保持） |
+| CNINFO calls（本回合） | **0** |
+
+### 执行结论
+
+- 人工披露证据与 metadata 探针结果已 reconcile · **不得**推断 captured_normal
+- Option A/B/C 已文档化 · 推荐 targeted probe **规划包**优先
+- replacement live reports · universes · v1/v2 **未修改**
+- **下一步：** 人工决策 Option A/B/C（**无自动 live**）
+
+---
+
+## 7dzaa. D 类 Known-Event Targeted Probe Planning Package（2026-07-09）
+
+> **并行约束：** Option A planning only · **无 CNINFO** · **无 live** · **无 runner 实现** · **无 PDF/OCR/DB/MinIO/RAG** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| plan | [cninfo_d_class_known_event_targeted_probe_plan.md](cninfo_d_class_known_event_targeted_probe_plan.md) |
+| universe draft | [cninfo_d_class_known_event_targeted_probe_universe_draft.csv](../outputs/validation/cninfo_d_class_known_event_targeted_probe_universe_draft.csv)（**2 rows**） |
+| approval checklist | [cninfo_d_class_known_event_targeted_probe_approval_checklist.md](../outputs/validation/cninfo_d_class_known_event_targeted_probe_approval_checklist.md) |
+| command draft | [cninfo_d_class_known_event_targeted_probe_command_draft.md](cninfo_d_class_known_event_targeted_probe_command_draft.md)（**NOT APPROVED**） |
+| runner design | [cninfo_d_class_known_event_targeted_probe_runner_extension_design.md](cninfo_d_class_known_event_targeted_probe_runner_extension_design.md)（**未实现**） |
+| planning summary | [cninfo_d_class_known_event_targeted_probe_planning_summary.md](../outputs/validation/cninfo_d_class_known_event_targeted_probe_planning_summary.md) |
+| DLC003R-T01 | **688671** 碧兴物联 · `restricted_shares_unlock` · anchor **2024-02-19** · cap **≤12** |
+| DLC006R-T01 | **301259** 艾布鲁 · `shareholder_change` · anchor **2024-07-16** · cap **≤12** |
+| total cap | **≤24** |
+| output root (planned) | `outputs/validation/cninfo_d_class_known_event_targeted_probe/` |
+| approval flag (future) | `--approve-d-class-known-event-targeted-probe` |
+| runner flag (future) | `--known-event-targeted-probe`（**未实现**） |
+| approval status | **NOT_APPROVED** · **approved_for_implementation = false** · **approved_for_live = false** |
+| planning gate | **`d_class_known_event_targeted_probe_planning_gate = READY_FOR_APPROVAL`** |
+| replacement execution gate | **`FAIL_REVIEW_REQUIRED`**（保持） |
+| failure review gate | **`READY_FOR_HUMAN_DECISION`**（保持） |
+| CNINFO calls（本回合） | **0** |
+
+### 执行结论
+
+- Option A planning package 已完整准备 · **不实现** · **不 live**
+- 仅 DLC003R/DLC006R · 排除旧 DLC003/DLC006 · baseline · full tiny-live
+- original / calibrated universe · v1/v2 reports · replacement live reports **未修改**
+- **下一步：** 人工评审 → 批准后 **离线实现** runner extension + dry-run（**无 live**）
+
+**红线：** **不是 PASS** · **不是 live_ready** · **不是 verified** · **不是 production_ready**
+
+---
+
+## 7dzab. D 类 Known-Event Targeted Probe Runner Extension + Dry-run（2026-07-09）
+
+> **并行约束：** offline runner extension + dry-run only · **无 CNINFO** · **无 live** · **live 路径未实现** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_d_class_tiny_live_validation.py](../lab/run_cninfo_d_class_tiny_live_validation.py) |
+| tests | [test_cninfo_d_class_known_event_targeted_probe_runner.py](../lab/test_cninfo_d_class_known_event_targeted_probe_runner.py)（**27/27 PASS**） |
+| extension summary | [cninfo_d_class_known_event_targeted_probe_runner_extension_summary.md](../outputs/validation/cninfo_d_class_known_event_targeted_probe_runner_extension_summary.md) |
+| dry-run report | [d_class_known_event_targeted_probe_dryrun_report.csv](../outputs/validation/cninfo_d_class_known_event_targeted_probe/reports/d_class_known_event_targeted_probe_dryrun_report.csv) |
+| dry-run summary | [d_class_known_event_targeted_probe_dryrun_summary.md](../outputs/validation/cninfo_d_class_known_event_targeted_probe/reports/d_class_known_event_targeted_probe_dryrun_summary.md) |
+| flags | `--known-event-targeted-probe` · `--approve-d-class-known-event-targeted-probe` |
+| dry-run result | **2/2 planned_ok** · planned_request_count_total **24** |
+| CNINFO calls | **0** |
+| extension gate | **`d_class_known_event_targeted_probe_runner_extension_gate = READY_FOR_APPROVAL`** |
+| planning gate | **`READY_FOR_APPROVAL`**（保持） |
+| replacement execution gate | **`FAIL_REVIEW_REQUIRED`**（保持） |
+| approval status | **NOT_APPROVED** · **approved_for_live = false** |
+
+### 执行结论
+
+- runner dry-run 路径已实现 · approval guard 已实现 · live 路径返回 `known_event_targeted_probe_live_not_implemented`
+- original / calibrated universe · v1/v2 reports · replacement live reports **未修改**
+- **下一步：** 人工评审 extension gate → 批准后实现 targeted probe live 路径 + mock tests（**无 live 直至显式 approve**）
+
+**红线：** **不是 PASS** · **不是 live_ready** · **不是 verified** · **不是 production_ready**
+
+---
+
+## 7dzac. D 类 Known-Event Targeted Probe Live Path Implementation（2026-07-09）
+
+> **并行约束：** offline live path implementation + mock tests only · **无真实 CNINFO** · **无 live 执行** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| runner | [run_cninfo_d_class_tiny_live_validation.py](../lab/run_cninfo_d_class_tiny_live_validation.py) |
+| live-path tests | [test_cninfo_d_class_known_event_targeted_probe_live_path.py](../lab/test_cninfo_d_class_known_event_targeted_probe_live_path.py)（**29/29 PASS**） |
+| implementation summary | [cninfo_d_class_known_event_targeted_probe_live_implementation_summary.md](../outputs/validation/cninfo_d_class_known_event_targeted_probe_live_implementation_summary.md) |
+| anchor probe | DLC003R-T01 **2024-02-19** · DLC006R-T01 **2024-07-16** |
+| request cap | per row ≤ **12** · total ≤ **24** |
+| execution gate | both acceptable → **`PASS_WITH_CAVEAT`** · else **`FAIL_REVIEW_REQUIRED`** · **never PASS** |
+| live implementation gate | **`d_class_known_event_targeted_probe_live_implementation_gate = READY_FOR_APPROVAL`** |
+| runner extension gate | **`READY_FOR_APPROVAL`**（保持） |
+| replacement execution gate | **`FAIL_REVIEW_REQUIRED`**（保持） |
+| approval status | **NOT_APPROVED** · **approved_for_live = false** |
+| CNINFO calls（本回合） | **0** |
+
+### 执行结论
+
+- live 路径已实现：`execute_known_event_targeted_probe_live()` · live report writers · execution gate
+- mock live-path tests **29/29** · runner tests **27/27** · dry-run reports **未覆盖**
+- original / calibrated universe · v1/v2 reports · replacement live reports **未修改**
+- **下一步：** 人工评审 live implementation gate → 批准后 isolated targeted probe live（**cap ≤24**）
+
+**红线：** **不是 PASS** · **不是 live_ready** · **不是 verified** · **不是 production_ready**
+
+---
+
+## 7dzad. D 类 Known-Event Targeted Probe Isolated Live 执行（2026-07-10）
+
+> **并行约束：** 仅 DLC003R-T01/DLC006R-T01 · anchor-date targeted probe · **无 PDF/OCR/DB/MinIO/RAG** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| live report | [d_class_known_event_targeted_probe_live_report.csv](../outputs/validation/cninfo_d_class_known_event_targeted_probe/reports/d_class_known_event_targeted_probe_live_report.csv) |
+| live summary | [d_class_known_event_targeted_probe_live_summary.md](../outputs/validation/cninfo_d_class_known_event_targeted_probe/reports/d_class_known_event_targeted_probe_live_summary.md) |
+| quality report | [d_class_known_event_targeted_probe_quality_report.csv](../outputs/validation/cninfo_d_class_known_event_targeted_probe/reports/d_class_known_event_targeted_probe_quality_report.csv) |
+| DLC003R-T01 | **688671** 碧兴物联 · anchor **2024-02-19** · requests **1** · `found` · records **1** · acceptable **yes** · structured evidence **yes** |
+| DLC006R-T01 | **301259** 艾布鲁 · anchor **2024-07-16** · requests **12** · `empty_but_valid` · records **0** · acceptable **no** · `empty_but_valid_after_budget` |
+| total CNINFO | **13** |
+| PDF/OCR/extraction | **0** |
+| DB/MinIO/RAG | **0** |
+| execution gate | **`d_class_known_event_targeted_probe_execution_gate = FAIL_REVIEW_REQUIRED`** |
+| dry-run reports | **未覆盖**（hash 不变） |
+| replacement execution gate | **`FAIL_REVIEW_REQUIRED`**（保持） |
+| planning/implementation gates | **`READY_FOR_APPROVAL`**（保持） |
+
+### 执行结论
+
+- DLC003R-T01 anchor-date targeted probe **成功 surfacing** 公司级行（early stop · 1 request）
+- DLC006R-T01 anchor ±7d 耗尽 cap 后仍 company-level 零行 — 需人工评审
+- original / calibrated universe · v1/v2 reports · replacement live reports · dry-run reports **未修改**
+- **下一步：** DLC006R-T01 targeted probe failure review · 评估 anchor 窗口扩展或接受组件级缺口
+
+**红线：** **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+---
+
+## 7dzae. D 类 Known-Event Targeted Probe Closure + DLC006R Failure Review（2026-07-10）
+
+> **并行约束：** 离线 closure only · **无 CNINFO** · **无 live** · **无 rerun** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| closure review | [cninfo_d_class_known_event_targeted_probe_closure_review.md](cninfo_d_class_known_event_targeted_probe_closure_review.md) |
+| closure summary | [cninfo_d_class_known_event_targeted_probe_closure_summary.md](../outputs/validation/cninfo_d_class_known_event_targeted_probe_closure_summary.md) |
+| effective ledger | [cninfo_d_class_known_event_targeted_probe_effective_result_ledger.csv](../outputs/validation/cninfo_d_class_known_event_targeted_probe_effective_result_ledger.csv) |
+| DLC006R failure ledger | [cninfo_d_class_dlc006r_targeted_probe_failure_review_ledger.csv](../outputs/validation/cninfo_d_class_dlc006r_targeted_probe_failure_review_ledger.csv) |
+| DLC003R evidence note | [cninfo_d_class_dlc003r_positive_structured_evidence_note.md](cninfo_d_class_dlc003r_positive_structured_evidence_note.md) |
+| human decision package | [cninfo_d_class_dlc006r_human_decision_package.md](cninfo_d_class_dlc006r_human_decision_package.md) |
+| closure metrics | [cninfo_d_class_known_event_targeted_probe_closure_metrics.csv](../outputs/validation/cninfo_d_class_known_event_targeted_probe_closure_metrics.csv) |
+| DLC003R-T01 final | **captured_normal_structured_evidence** |
+| DLC006R-T01 final | **unresolved_empty_but_valid_after_budget** |
+| execution gate | **`FAIL_REVIEW_REQUIRED`**（保持） |
+| closure gate | **`d_class_known_event_targeted_probe_closure_gate = READY_FOR_HUMAN_DECISION`** |
+| CNINFO calls（本回合） | **0** |
+
+### 执行结论
+
+- DLC003R-T01 正向结构化证据已保留 · DLC006R-T01 缺口未解
+- 人工披露与 metadata 探针 **不合并** · **不** 推断 captured_normal
+- live / dry-run / replacement reports **未修改**
+- **下一步：** 人工选择 Option A（accept gap）或 Option C（offline reconcile）· **无立即 rerun**
+
+**红线：** **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+---
+
+## 7dzaf. D 类 DLC006R 人工决策 + Known-Event Replacement 最终收口（2026-07-10）
+
+> **并行约束：** 离线决策记录 only · **无 CNINFO** · **无 live** · **无 rerun** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| decision record | [cninfo_d_class_dlc006r_human_decision_record.md](cninfo_d_class_dlc006r_human_decision_record.md) |
+| final effective ledger | [cninfo_d_class_known_event_replacement_final_effective_status_ledger.csv](../outputs/validation/cninfo_d_class_known_event_replacement_final_effective_status_ledger.csv) |
+| disclosure reconcile note | [cninfo_d_class_dlc006r_disclosure_evidence_reconciliation_note.md](cninfo_d_class_dlc006r_disclosure_evidence_reconciliation_note.md) |
+| final closure summary | [cninfo_d_class_known_event_replacement_final_closure_summary.md](../outputs/validation/cninfo_d_class_known_event_replacement_final_closure_summary.md) |
+| human decision | **Option A + Option C** |
+| DLC003R final | **captured_normal_structured_evidence** |
+| DLC006R final | **accepted_component_gap_with_separate_disclosure_evidence** |
+| DLC006R captured_normal_allowed | **no** |
+| final closure gate | **`d_class_known_event_replacement_final_closure_gate = PASS_WITH_CAVEAT`** |
+| execution gates | **FAIL_REVIEW_REQUIRED**（保持） |
+| closure gate | **READY_FOR_HUMAN_DECISION**（保持） |
+| CNINFO calls（本回合） | **0** |
+
+### 执行结论
+
+- DLC006R component gap **接受并附 caveat** · 披露证据 **单独谱系保留**
+- DLC003R 正向结构化证据 **保留**
+- **不** 推断 captured_normal · **不** merge 披露至 structured result
+- live / dry-run / replacement reports **未修改**
+- D-class known-event replacement path **收口（caveat）**
+
+**红线：** **不是 PASS** · **不是 verified** · **不是 production_ready**
+
+---
+
+## 7dzag. D 类 Known-Event Replacement Boundary Review（2026-07-10）
+
+> **并行约束：** 离线 boundary review only · **无 CNINFO** · **无 commit** · **不是 verified**。
+
+| 项 | 内容 |
+|----|------|
+| boundary review | [cninfo_d_class_known_event_replacement_boundary_review.md](cninfo_d_class_known_event_replacement_boundary_review.md) |
+| boundary summary | [cninfo_d_class_known_event_replacement_boundary_summary.md](../outputs/validation/cninfo_d_class_known_event_replacement_boundary_summary.md) |
+| artifact inventory | [cninfo_d_class_known_event_replacement_final_artifact_inventory.csv](../outputs/validation/cninfo_d_class_known_event_replacement_final_artifact_inventory.csv)（**58** 条） |
+| caveat ledger | [cninfo_d_class_known_event_replacement_final_caveat_ledger.csv](../outputs/validation/cninfo_d_class_known_event_replacement_final_caveat_ledger.csv) |
+| safe-to-commit list | [cninfo_d_class_known_event_replacement_safe_to_commit_list.md](../outputs/validation/cninfo_d_class_known_event_replacement_safe_to_commit_list.md) |
+| final closure gate | **`PASS_WITH_CAVEAT`**（保持） |
+| boundary review gate | **`d_class_known_event_replacement_boundary_review_gate = READY_FOR_COMMIT_REVIEW`** |
+| CNINFO calls（本回合） | **0** |
+
+### 执行结论
+
+- caveat 已文档化 · artifact inventory 齐备 · safe-to-commit list 已准备
+- 无关 A/B/C unstaged artifacts **排除**
+- **commit 需单独人工批准** · 本任务 **不 commit**
+- D-class known-event replacement track **已收口** — 下一步 commit review 或转入其他 D-class phase
+
+**红线：** **不是 PASS** · **不是 verified** · **不是 production_ready**
 
 ---
 
@@ -6099,7 +7408,7 @@ P0 duplicate → P1 BSE legacy → P2 rename → P3 high risk manual → P4 low 
 - PROJECT_MAP.md
 - plans/cninfo_data_source_layered_inventory.md
 - plans/eraC_execution_plan.md
-当前 Phase：C 类 **863 snapshot 已生成**（§7cc）；**`SNAPSHOT_GENERATED_QA_REVIEW`**；Phase 3.5 harvest dry-run **完成**（§7dpy · approval **`READY_FOR_APPROVAL`**）；**下一步** 用户批准后 Phase 3.5 live harvest。**并行：A 类 Phase 2 merge closure 已完成**（§7dzt · **12 accepted** · **8 unresolved network** · closure gate **`PASS_WITH_CAVEAT_NETWORK_UNRESOLVED`** · execution/retry gates **`FAIL_REVIEW_REQUIRED`** · CNINFO **0** · **无 PDF** · **不是 verified**）。**BSE legacy** HOLD。
+当前 Phase：C 类 **863 snapshot 已生成**（§7cc）；**`SNAPSHOT_GENERATED_QA_REVIEW`**；Phase 3.5 isolated resume live **完成**（§7dqd · **29** · CNINFO **120** · gate **`PASS_WITH_CAVEAT`**）；**下一步** resume QA merge 或 success-subset snapshot planning。**并行：A 类 Phase 2 final commit boundary review 已完成**（§7dzxi · gate **`READY_FOR_COMMIT_REVIEW`** · CNINFO **0** · **无 commit** · **不是 verified**）。**BSE legacy** HOLD。
 红线见 eraC_execution_plan 第 1 节。recommended_status 不写 verified。
 我要做的是：<具体任务>
 ```

@@ -1,0 +1,11 @@
+risk_id,risk_area,description,severity,mitigation,status
+R001,endpoint_indexing,human disclosure evidence may not be indexed by component metadata endpoint,high,do not infer captured_normal from disclosure; use targeted probe only as hypothesis test,open
+R002,probe_outcome,component endpoint may return zero rows even for date-known cases,high,cap requests at 24; early stop; accept FAIL_REVIEW_REQUIRED if still empty,open
+R003,probe_outcome,targeted date query may still yield empty_but_valid_after_budget,medium,document anchor dates; do not expand budget without approval,open
+R004,overclaim,overclaiming human evidence as live captured_normal,critical,strict reconciliation matrix; execution gate never PASS; no verified,open
+R005,scope_creep,accidental rerun of old DLC003/DLC006,high,block original case IDs; only DLC003R/DLC006R eligible,open
+R006,scope_creep,full D-class tiny-live rerun,high,replacement/targeted tracks isolated; no v1 universe mutation,open
+R007,budget,request budget expansion beyond targeted cap 24,medium,hard cap in runner preflight; reject over-budget plans,open
+R008,governance,verified or production_ready overclaim,critical,red-line checks in checklist; gate never PASS,open
+R009,isolation,writing to v1/v2 or replacement live report paths,high,dedicated output root cninfo_d_class_known_event_targeted_probe,open
+R010,evidence_type,confusing PDF finalpage evidence with metadata API rows,high,separate human_evidence vs live_probe columns in reconciliation matrix,open

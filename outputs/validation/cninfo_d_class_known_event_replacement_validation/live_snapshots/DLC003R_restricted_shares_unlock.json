@@ -1,0 +1,18 @@
+{
+  "case_id": "DLC003R",
+  "company_code": "688671",
+  "component": "restricted_shares_unlock",
+  "endpoint": "https://www.cninfo.com.cn/data20/liftBan/detail",
+  "params": {
+    "tdate": "2025-03-31"
+  },
+  "http_status": 200,
+  "record_count": 0,
+  "sample_records": [],
+  "cninfo_called": true,
+  "early_stop": false,
+  "bounded_probe_v2": true,
+  "db_write": false,
+  "minio_write": false,
+  "rag_run": false
+}

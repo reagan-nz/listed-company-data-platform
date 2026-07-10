@@ -22,7 +22,7 @@ import sys
 import time
 from dataclasses import dataclass, field
 import calendar
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from typing import Any, Dict, List, Optional, Set, Tuple
 
 import requests
@@ -66,6 +66,56 @@ V2_DRYRUN_SUMMARY_MD = os.path.join(
     DEFAULT_V2_OUTPUT_ROOT,
     "reports",
     "d_class_tiny_live_v2_bounded_probe_dryrun_summary.md",
+)
+DEFAULT_REPLACEMENT_OUTPUT_ROOT = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_d_class_known_event_replacement_validation",
+)
+DEFAULT_REPLACEMENT_UNIVERSE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_d_class_tiny_live_replacement_universe_filled.csv",
+)
+CALIBRATED_UNIVERSE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_d_class_phase1_tiny_live_universe_calibrated.csv",
+)
+REPLACEMENT_DRYRUN_REPORT_CSV = os.path.join(
+    DEFAULT_REPLACEMENT_OUTPUT_ROOT,
+    "reports",
+    "d_class_known_event_replacement_dryrun_report.csv",
+)
+REPLACEMENT_DRYRUN_SUMMARY_MD = os.path.join(
+    DEFAULT_REPLACEMENT_OUTPUT_ROOT,
+    "reports",
+    "d_class_known_event_replacement_dryrun_summary.md",
+)
+DEFAULT_TARGETED_PROBE_OUTPUT_ROOT = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_d_class_known_event_targeted_probe",
+)
+DEFAULT_TARGETED_PROBE_UNIVERSE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_d_class_known_event_targeted_probe_universe_draft.csv",
+)
+TARGETED_PROBE_DRYRUN_REPORT_CSV = os.path.join(
+    DEFAULT_TARGETED_PROBE_OUTPUT_ROOT,
+    "reports",
+    "d_class_known_event_targeted_probe_dryrun_report.csv",
+)
+TARGETED_PROBE_DRYRUN_SUMMARY_MD = os.path.join(
+    DEFAULT_TARGETED_PROBE_OUTPUT_ROOT,
+    "reports",
+    "d_class_known_event_targeted_probe_dryrun_summary.md",
 )
 V2_COMPARISON_REPORT_CSV = os.path.join(
     DEFAULT_V2_OUTPUT_ROOT,
@@ -136,6 +186,241 @@ V2_DLC006_CAP_EXCEEDED = "dlc006_request_cap_exceeded"
 V2_TOTAL_CAP_EXCEEDED = "v2_total_request_cap_exceeded"
 V2_INVENTED_COMPANY_CODE = "invented_or_placeholder_company_code_not_allowed"
 V2_MIXED_MODE_BLOCKED = "bounded_probe_v2_incompatible_with_v1_live_approval"
+
+REPLACEMENT_RUNNER_GATE = "READY_FOR_APPROVAL"
+REPLACEMENT_PROBE_CASE_IDS: Set[str] = {"DLC003R", "DLC006R"}
+REPLACEMENT_BASELINE_CASE_IDS: Set[str] = {"DLC001", "DLC002", "DLC004", "DLC005", "DLC007"}
+REPLACEMENT_ALLOWED_CASE_IDS: Set[str] = REPLACEMENT_PROBE_CASE_IDS | REPLACEMENT_BASELINE_CASE_IDS
+REPLACEMENT_PLACEHOLDER_CASE_IDS: Set[str] = {
+    "DLC003R_CANDIDATE_REQUIRED",
+    "DLC006R_CANDIDATE_REQUIRED",
+}
+REPLACEMENT_FORBIDDEN_ORIGINAL_CASE_IDS: Set[str] = {"DLC003", "DLC006"}
+REPLACEMENT_DLC003R_COMPANY_CODE = "688671"
+REPLACEMENT_DLC006R_COMPANY_CODE = "301259"
+REPLACEMENT_CANDIDATE_VALIDATED = "HUMAN_CANDIDATE_VALIDATED"
+REPLACEMENT_DLC003R_MAX_CAP = 24
+REPLACEMENT_DLC006R_MAX_CAP = 20
+REPLACEMENT_TOTAL_MAX_CAP = 44
+
+REPLACEMENT_APPROVAL_REQUIRED = "approve_d_class_known_event_replacement_validation_required"
+REPLACEMENT_WRONG_APPROVAL_FLAG = "wrong_approval_flag_for_known_event_replacement"
+REPLACEMENT_MIXED_MODE_BLOCKED = "known_event_replacement_incompatible_with_other_modes"
+REPLACEMENT_UNIVERSE_CSV_REQUIRED = "known_event_replacement_requires_explicit_universe_csv"
+REPLACEMENT_OUTPUT_ROOT_REQUIRED = (
+    "replacement_output_root_must_be_cninfo_d_class_known_event_replacement_validation"
+)
+REPLACEMENT_V1_OUTPUT_ROOT_WRITE_BLOCKED = "v1_output_root_write_blocked_for_known_event_replacement"
+REPLACEMENT_V2_OUTPUT_ROOT_WRITE_BLOCKED = "v2_output_root_write_blocked_for_known_event_replacement"
+REPLACEMENT_CALIBRATED_UNIVERSE_WRITE_BLOCKED = (
+    "calibrated_universe_write_blocked_for_known_event_replacement"
+)
+REPLACEMENT_ORIGINAL_UNIVERSE_WRITE_BLOCKED = (
+    "original_v1_universe_write_blocked_for_known_event_replacement"
+)
+REPLACEMENT_PLACEHOLDER_ROW_REJECTED = "placeholder_replacement_row_not_allowed"
+REPLACEMENT_ORIGINAL_CASE_IN_UNIVERSE = "original_dlc003_dlc006_not_allowed_in_replacement_universe"
+REPLACEMENT_WRONG_COMPANY_CODE = "replacement_company_code_mismatch"
+REPLACEMENT_INVALID_CANDIDATE_STATUS = "replacement_candidate_validation_status_invalid"
+REPLACEMENT_PROBE_CASE_ONLY = "only_dlc003r_dlc006r_may_execute_replacement_probes"
+REPLACEMENT_LIVE_IMPLEMENTATION_GATE = "READY_FOR_APPROVAL"
+REPLACEMENT_EXECUTION_GATE_PASS = "PASS_WITH_CAVEAT"
+REPLACEMENT_EXECUTION_GATE_FAIL = "FAIL_REVIEW_REQUIRED"
+REPLACEMENT_DLC003R_CAP_EXCEEDED = "dlc003r_request_cap_exceeded"
+REPLACEMENT_DLC006R_CAP_EXCEEDED = "dlc006r_request_cap_exceeded"
+REPLACEMENT_TOTAL_CAP_EXCEEDED = "replacement_total_request_cap_exceeded"
+PDF_DOWNLOAD_BLOCKED = "pdf_download_not_allowed"
+OCR_BLOCKED = "ocr_not_allowed"
+EXTRACTION_BLOCKED = "extraction_not_allowed"
+
+TARGETED_PROBE_RUNNER_GATE = "READY_FOR_APPROVAL"
+TARGETED_PROBE_EXPECTED_UNIVERSE_SIZE = 2
+TARGETED_PROBE_ALLOWED_IDS: Set[str] = {"DLC003R-T01", "DLC006R-T01"}
+TARGETED_PROBE_REPLACEMENT_IDS: Set[str] = {"DLC003R", "DLC006R"}
+TARGETED_PROBE_FORBIDDEN_ORIGINAL_IDS: Set[str] = {"DLC003", "DLC006"}
+TARGETED_PROBE_FORBIDDEN_BASELINE_IDS: Set[str] = {
+    "DLC001",
+    "DLC002",
+    "DLC004",
+    "DLC005",
+    "DLC007",
+}
+TARGETED_PROBE_DLC003R_T01_COMPANY_CODE = "688671"
+TARGETED_PROBE_DLC006R_T01_COMPANY_CODE = "301259"
+TARGETED_PROBE_DLC003R_T01_COMPONENT = "restricted_shares_unlock"
+TARGETED_PROBE_DLC006R_T01_COMPONENT = "shareholder_change"
+TARGETED_PROBE_DLC003R_T01_ANCHOR_DATE = "2024-02-19"
+TARGETED_PROBE_DLC006R_T01_ANCHOR_DATE = "2024-07-16"
+TARGETED_PROBE_PER_ROW_MAX_CAP = 12
+TARGETED_PROBE_TOTAL_MAX_CAP = 24
+
+TARGETED_PROBE_APPROVAL_REQUIRED = "approve_d_class_known_event_targeted_probe_required"
+TARGETED_PROBE_WRONG_APPROVAL_FLAG = "wrong_approval_flag_for_known_event_targeted_probe"
+TARGETED_PROBE_MIXED_MODE_BLOCKED = "known_event_targeted_probe_incompatible_with_other_modes"
+TARGETED_PROBE_UNIVERSE_CSV_REQUIRED = "known_event_targeted_probe_requires_explicit_universe_csv"
+TARGETED_PROBE_OUTPUT_ROOT_REQUIRED = (
+    "targeted_probe_output_root_must_be_cninfo_d_class_known_event_targeted_probe"
+)
+TARGETED_PROBE_V1_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "v1_output_root_write_blocked_for_known_event_targeted_probe"
+)
+TARGETED_PROBE_V2_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "v2_output_root_write_blocked_for_known_event_targeted_probe"
+)
+TARGETED_PROBE_REPLACEMENT_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "replacement_live_output_root_write_blocked_for_known_event_targeted_probe"
+)
+TARGETED_PROBE_CALIBRATED_UNIVERSE_WRITE_BLOCKED = (
+    "calibrated_universe_write_blocked_for_known_event_targeted_probe"
+)
+TARGETED_PROBE_ORIGINAL_UNIVERSE_WRITE_BLOCKED = (
+    "original_v1_universe_write_blocked_for_known_event_targeted_probe"
+)
+TARGETED_PROBE_UNIVERSE_SIZE_MISMATCH = "targeted_probe_universe_size_must_equal_2"
+TARGETED_PROBE_FORBIDDEN_CASE_ID = "forbidden_case_id_in_targeted_probe_universe"
+TARGETED_PROBE_ORIGINAL_CASE_IN_UNIVERSE = "original_dlc003_dlc006_not_allowed_in_targeted_probe_universe"
+TARGETED_PROBE_BASELINE_CASE_IN_UNIVERSE = "baseline_case_not_allowed_in_targeted_probe_universe"
+TARGETED_PROBE_WRONG_COMPANY_CODE = "targeted_probe_company_code_mismatch"
+TARGETED_PROBE_WRONG_COMPONENT = "targeted_probe_component_mismatch"
+TARGETED_PROBE_WRONG_ANCHOR_DATE = "targeted_probe_anchor_date_mismatch"
+TARGETED_PROBE_INCLUDE_REQUIRED = "targeted_probe_include_must_be_yes"
+TARGETED_PROBE_ROW_CAP_EXCEEDED = "targeted_probe_row_request_cap_exceeded"
+TARGETED_PROBE_TOTAL_CAP_EXCEEDED = "targeted_probe_total_request_cap_exceeded"
+TARGETED_PROBE_LIVE_IMPLEMENTATION_GATE = "READY_FOR_APPROVAL"
+TARGETED_PROBE_EXECUTION_GATE_PASS = "PASS_WITH_CAVEAT"
+TARGETED_PROBE_EXECUTION_GATE_FAIL = "FAIL_REVIEW_REQUIRED"
+
+TARGETED_PROBE_LIVE_REPORT_COLUMNS = [
+    "targeted_probe_id",
+    "replacement_case_id",
+    "company_code",
+    "company_name",
+    "component",
+    "anchor_date",
+    "expected_behavior",
+    "request_cap",
+    "cninfo_request_count",
+    "retrieval_status",
+    "record_count",
+    "quality_status",
+    "lineage_status",
+    "acceptable",
+    "failure_type",
+    "endpoint_used",
+    "structured_record_evidence",
+    "pdf_download",
+    "ocr",
+    "extraction",
+    "db_write",
+    "minio_write",
+    "rag_run",
+    "notes",
+]
+
+TARGETED_PROBE_QUALITY_REPORT_COLUMNS = [
+    "targeted_probe_id",
+    "replacement_case_id",
+    "component",
+    "anchor_date",
+    "expected_behavior",
+    "retrieval_status",
+    "record_count",
+    "quality_status",
+    "acceptable",
+    "failure_type",
+    "structured_record_evidence",
+    "cninfo_request_count",
+    "notes",
+]
+
+TARGETED_PROBE_DRYRUN_REPORT_COLUMNS = [
+    "targeted_probe_id",
+    "replacement_case_id",
+    "company_code",
+    "company_name",
+    "component",
+    "anchor_date",
+    "human_event_evidence_type",
+    "human_event_evidence_description",
+    "previous_replacement_live_status",
+    "previous_record_count",
+    "targeted_probe_include",
+    "targeted_probe_strategy",
+    "request_cap",
+    "expected_behavior",
+    "planned_request_count",
+    "planned_output_root",
+    "cninfo_call_planned",
+    "pdf_download",
+    "ocr",
+    "extraction",
+    "db_write",
+    "minio_write",
+    "rag_run",
+    "dryrun_status",
+    "notes",
+]
+
+REPLACEMENT_DRYRUN_REPORT_COLUMNS = [
+    "case_id",
+    "company_code",
+    "company_name",
+    "component",
+    "expected_behavior",
+    "replacement_for",
+    "candidate_validation_status",
+    "planned_request_count",
+    "planned_output_root",
+    "cninfo_call_planned",
+    "pdf_download",
+    "ocr",
+    "extraction",
+    "db_write",
+    "minio_write",
+    "rag_run",
+    "dryrun_status",
+    "notes",
+]
+
+REPLACEMENT_LIVE_REPORT_COLUMNS = [
+    "case_id",
+    "company_code",
+    "company_name",
+    "component",
+    "expected_behavior",
+    "replacement_for",
+    "candidate_validation_status",
+    "probe_budget",
+    "cninfo_request_count",
+    "retrieval_status",
+    "record_count",
+    "quality_status",
+    "lineage_status",
+    "acceptable",
+    "failure_type",
+    "endpoint_used",
+    "pdf_download",
+    "ocr",
+    "extraction",
+    "db_write",
+    "minio_write",
+    "rag_run",
+    "notes",
+]
+
+REPLACEMENT_QUALITY_REPORT_COLUMNS = [
+    "case_id",
+    "component",
+    "expected_behavior",
+    "replacement_for",
+    "retrieval_status",
+    "record_count",
+    "quality_status",
+    "acceptable",
+    "failure_type",
+    "cninfo_request_count",
+    "notes",
+]
 
 DRYRUN_REPORT_COLUMNS = [
     "case_id",
@@ -291,6 +576,41 @@ class ProbePlanEntry:
 
 
 @dataclass
+class ReplacementUniverseRow:
+    case_id: str
+    replaces_case_id: str
+    replacement_for: str
+    component: str
+    company_code: str
+    company_name: str
+    expected_behavior: str
+    candidate_source: str
+    candidate_validation_status: str
+    candidate_status: str
+    include_in_future_validation: str
+    notes: str
+
+
+@dataclass
+class TargetedProbeUniverseRow:
+    targeted_probe_id: str
+    replacement_case_id: str
+    company_code: str
+    company_name: str
+    component: str
+    anchor_date: str
+    human_event_evidence_type: str
+    human_event_evidence_description: str
+    previous_replacement_live_status: str
+    previous_record_count: str
+    targeted_probe_include: str
+    targeted_probe_strategy: str
+    request_cap: str
+    expected_behavior: str
+    notes: str
+
+
+@dataclass
 class UniverseCase:
     case_id: str
     company_code: str
@@ -332,6 +652,1430 @@ def validate_v2_output_root(output_root: str) -> Tuple[bool, str]:
     if root == v2_allowed or root.startswith(v2_allowed + os.sep):
         return True, ""
     return False, V2_OUTPUT_ROOT_REQUIRED
+
+
+def load_replacement_universe(path: str) -> List[ReplacementUniverseRow]:
+    rows: List[ReplacementUniverseRow] = []
+    with open(path, newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            rows.append(
+                ReplacementUniverseRow(
+                    case_id=str(row.get("case_id", "")).strip(),
+                    replaces_case_id=str(row.get("replaces_case_id", "")).strip(),
+                    replacement_for=str(row.get("replacement_for", "")).strip(),
+                    component=str(row.get("component", "")).strip(),
+                    company_code=str(row.get("company_code", "")).strip(),
+                    company_name=str(row.get("company_name", "")).strip(),
+                    expected_behavior=str(row.get("expected_behavior", "")).strip(),
+                    candidate_source=str(row.get("candidate_source", "")).strip(),
+                    candidate_validation_status=str(
+                        row.get("candidate_validation_status", "")
+                    ).strip(),
+                    candidate_status=str(row.get("candidate_status", "")).strip(),
+                    include_in_future_validation=str(
+                        row.get("include_in_future_validation", "")
+                    ).strip(),
+                    notes=str(row.get("notes", "")).strip(),
+                )
+            )
+    return rows
+
+
+def validate_replacement_universe(rows: List[ReplacementUniverseRow]) -> List[str]:
+    issues: List[str] = []
+    if len(rows) != EXPECTED_UNIVERSE_SIZE:
+        issues.append(f"{UNIVERSE_SIZE_MISMATCH}:got={len(rows)}")
+    seen_ids: Set[str] = set()
+    for row in rows:
+        if row.case_id in REPLACEMENT_PLACEHOLDER_CASE_IDS:
+            issues.append(f"{REPLACEMENT_PLACEHOLDER_ROW_REJECTED}:{row.case_id}")
+        if row.case_id in REPLACEMENT_FORBIDDEN_ORIGINAL_CASE_IDS:
+            issues.append(f"{REPLACEMENT_ORIGINAL_CASE_IN_UNIVERSE}:{row.case_id}")
+        if row.case_id not in REPLACEMENT_ALLOWED_CASE_IDS:
+            issues.append(f"{NON_DLC_CASE}:{row.case_id}")
+        if row.case_id in seen_ids:
+            issues.append(f"duplicate_case_id:{row.case_id}")
+        seen_ids.add(row.case_id)
+        if row.component not in ALLOWED_COMPONENTS:
+            issues.append(f"{COMPONENT_NOT_ALLOWED}:{row.component}")
+    if "DLC003R" not in seen_ids:
+        issues.append("missing_case:DLC003R")
+    if "DLC006R" not in seen_ids:
+        issues.append("missing_case:DLC006R")
+    for row in rows:
+        if row.case_id == "DLC003R":
+            if row.company_code != REPLACEMENT_DLC003R_COMPANY_CODE:
+                issues.append(
+                    f"{REPLACEMENT_WRONG_COMPANY_CODE}:DLC003R={row.company_code}"
+                )
+            if row.expected_behavior != "captured_normal":
+                issues.append(f"expected_behavior_mismatch:DLC003R={row.expected_behavior}")
+            if row.candidate_validation_status != REPLACEMENT_CANDIDATE_VALIDATED:
+                issues.append(
+                    f"{REPLACEMENT_INVALID_CANDIDATE_STATUS}:DLC003R="
+                    f"{row.candidate_validation_status}"
+                )
+        if row.case_id == "DLC006R":
+            if row.company_code != REPLACEMENT_DLC006R_COMPANY_CODE:
+                issues.append(
+                    f"{REPLACEMENT_WRONG_COMPANY_CODE}:DLC006R={row.company_code}"
+                )
+            if row.expected_behavior != "captured_normal":
+                issues.append(f"expected_behavior_mismatch:DLC006R={row.expected_behavior}")
+            if row.candidate_validation_status != REPLACEMENT_CANDIDATE_VALIDATED:
+                issues.append(
+                    f"{REPLACEMENT_INVALID_CANDIDATE_STATUS}:DLC006R="
+                    f"{row.candidate_validation_status}"
+                )
+    return issues
+
+
+def validate_replacement_output_root(output_root: str) -> Tuple[bool, str]:
+    root = _normalize_output_root(output_root)
+    replacement_allowed = _normalize_output_root(DEFAULT_REPLACEMENT_OUTPUT_ROOT)
+    v1_root = _normalize_output_root(DEFAULT_OUTPUT_ROOT)
+    v2_root = _normalize_output_root(DEFAULT_V2_OUTPUT_ROOT)
+    calibrated = _normalize_output_root(CALIBRATED_UNIVERSE_CSV)
+    original = _normalize_output_root(DEFAULT_UNIVERSE_CSV)
+    if root == v1_root or root.startswith(v1_root + os.sep):
+        return False, REPLACEMENT_V1_OUTPUT_ROOT_WRITE_BLOCKED
+    if root == v2_root or root.startswith(v2_root + os.sep):
+        return False, REPLACEMENT_V2_OUTPUT_ROOT_WRITE_BLOCKED
+    if root == calibrated or root.startswith(calibrated + os.sep):
+        return False, REPLACEMENT_CALIBRATED_UNIVERSE_WRITE_BLOCKED
+    if root == original or root.startswith(original + os.sep):
+        return False, REPLACEMENT_ORIGINAL_UNIVERSE_WRITE_BLOCKED
+    if root == replacement_allowed or root.startswith(replacement_allowed + os.sep):
+        return True, ""
+    return False, REPLACEMENT_OUTPUT_ROOT_REQUIRED
+
+
+def enforce_replacement_write_block_targets(output_paths: Dict[str, str]) -> None:
+    """确保输出路径不指向受保护的历史产物。"""
+    protected = [
+        _normalize_output_root(DEFAULT_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_V2_OUTPUT_ROOT),
+        _normalize_output_root(CALIBRATED_UNIVERSE_CSV),
+        _normalize_output_root(DEFAULT_UNIVERSE_CSV),
+    ]
+    for key in ("root", "reports"):
+        target = _normalize_output_root(output_paths[key])
+        for blocked in protected:
+            if target == blocked or target.startswith(blocked + os.sep):
+                print(f"ERROR: {REPLACEMENT_V1_OUTPUT_ROOT_WRITE_BLOCKED}:{key}", file=sys.stderr)
+                sys.exit(2)
+
+
+def parse_replacement_cases_filter(raw: str) -> Set[str]:
+    return {part.strip() for part in raw.split(",") if part.strip()}
+
+
+def validate_replacement_case_selection(selected: Set[str]) -> List[str]:
+    issues: List[str] = []
+    if not selected:
+        issues.append("empty_case_selection")
+    for case_id in selected:
+        if case_id not in REPLACEMENT_PROBE_CASE_IDS:
+            issues.append(f"{REPLACEMENT_PROBE_CASE_ONLY}:{case_id}")
+    return issues
+
+
+def enforce_replacement_forbidden_options(args: argparse.Namespace) -> None:
+    enforce_forbidden_options(args)
+    if args.known_event_replacement and args.bounded_probe_v2:
+        print(f"ERROR: {REPLACEMENT_MIXED_MODE_BLOCKED}:bounded_probe_v2", file=sys.stderr)
+        sys.exit(2)
+    if args.known_event_replacement and args.approve_d_class_tiny_live_validation:
+        print(
+            f"ERROR: {REPLACEMENT_WRONG_APPROVAL_FLAG}:approve_d_class_tiny_live_validation",
+            file=sys.stderr,
+        )
+        sys.exit(2)
+    if args.known_event_replacement and args.approve_d_class_tiny_live_v2_bounded_probe:
+        print(
+            f"ERROR: {REPLACEMENT_WRONG_APPROVAL_FLAG}:approve_d_class_tiny_live_v2_bounded_probe",
+            file=sys.stderr,
+        )
+        sys.exit(2)
+    if not args.known_event_replacement and args.approve_d_class_known_event_replacement_validation:
+        print(
+            f"ERROR: {REPLACEMENT_WRONG_APPROVAL_FLAG}:replacement_flag_without_mode",
+            file=sys.stderr,
+        )
+        sys.exit(2)
+    for flag_name in ("pdf_download", "ocr", "extraction"):
+        if getattr(args, flag_name, False):
+            token = {
+                "pdf_download": PDF_DOWNLOAD_BLOCKED,
+                "ocr": OCR_BLOCKED,
+                "extraction": EXTRACTION_BLOCKED,
+            }[flag_name]
+            print(f"ERROR: {token}", file=sys.stderr)
+            sys.exit(2)
+
+
+def enforce_replacement_live_approval_gate(args: argparse.Namespace) -> None:
+    if args.mode == "live" and args.known_event_replacement:
+        if not args.approve_d_class_known_event_replacement_validation:
+            print(f"ERROR: {REPLACEMENT_APPROVAL_REQUIRED}", file=sys.stderr)
+            sys.exit(2)
+
+
+def build_replacement_dryrun_rows(
+    rows: List[ReplacementUniverseRow],
+    output_root: str,
+) -> List[Dict[str, str]]:
+    dry_rows: List[Dict[str, str]] = []
+    for row in rows:
+        is_probe = row.case_id in REPLACEMENT_PROBE_CASE_IDS
+        if is_probe:
+            planned_requests = (
+                REPLACEMENT_DLC003R_MAX_CAP
+                if row.case_id == "DLC003R"
+                else REPLACEMENT_DLC006R_MAX_CAP
+            )
+            cninfo_planned = "yes" if row.include_in_future_validation.lower() == "true" else "no"
+            notes = (
+                f"replacement probe planned; max_requests={planned_requests}; "
+                "early stop on company-level hit"
+            )
+        else:
+            planned_requests = 0
+            cninfo_planned = "no"
+            notes = "baseline reference only; no replacement validation CNINFO"
+        dry_rows.append(
+            {
+                "case_id": row.case_id,
+                "company_code": row.company_code,
+                "company_name": row.company_name,
+                "component": row.component,
+                "expected_behavior": row.expected_behavior,
+                "replacement_for": row.replacement_for or row.replaces_case_id,
+                "candidate_validation_status": row.candidate_validation_status or "na",
+                "planned_request_count": str(planned_requests),
+                "planned_output_root": output_root,
+                "cninfo_call_planned": cninfo_planned,
+                "pdf_download": "no",
+                "ocr": "no",
+                "extraction": "no",
+                "db_write": "no",
+                "minio_write": "no",
+                "rag_run": "no",
+                "dryrun_status": "planned_ok",
+                "notes": notes,
+            }
+        )
+    return dry_rows
+
+
+def write_replacement_dryrun_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "d_class_known_event_replacement_dryrun_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=REPLACEMENT_DRYRUN_REPORT_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_replacement_dryrun_summary(
+    rows: List[Dict[str, str]],
+    output_paths: Dict[str, str],
+    universe_csv: str,
+) -> str:
+    probe_rows = [r for r in rows if r["case_id"] in REPLACEMENT_PROBE_CASE_IDS]
+    baseline_rows = [r for r in rows if r["case_id"] in REPLACEMENT_BASELINE_CASE_IDS]
+    planned_ok = sum(1 for r in rows if r["dryrun_status"] == "planned_ok")
+    lines = [
+        "# CNINFO D 类 Known Event Replacement Dry-run Summary",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** known-event replacement dry-run only · **CNINFO calls = 0** · **NOT APPROVED**",
+        "",
+        "## Result",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        f"| universe_csv | `{universe_csv}` |",
+        f"| total_rows | {len(rows)} |",
+        f"| planned_ok | {planned_ok}/{len(rows)} |",
+        f"| replacement_probe_cases | {len(probe_rows)} |",
+        f"| baseline_reference_cases | {len(baseline_rows)} |",
+        "| CNINFO calls | **0** |",
+        "| PDF / OCR / extraction | **0** |",
+        "| DB / MinIO / RAG | **0** |",
+        "",
+        "## Gate",
+        "",
+        "```text",
+        f"d_class_known_event_replacement_runner_extension_gate = {REPLACEMENT_RUNNER_GATE}",
+        "approval_status = NOT_APPROVED",
+        "```",
+        "",
+        "**不是 PASS** · **不是 live_ready** · **不是 verified**",
+        "",
+    ]
+    summary_path = os.path.join(
+        output_paths["reports"], "d_class_known_event_replacement_dryrun_summary.md"
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    return summary_path
+
+
+def replacement_row_to_universe_case(row: ReplacementUniverseRow) -> UniverseCase:
+    """将 replacement universe 行转为探测用 UniverseCase。"""
+    return UniverseCase(
+        case_id=row.case_id,
+        company_code=row.company_code,
+        company_name=row.company_name,
+        component=row.component,
+        market="",
+        risk_level="",
+        expected_behavior=row.expected_behavior,
+        reason=row.notes,
+    )
+
+
+def build_replacement_probe_plan(
+    case_id: str, max_requests: int
+) -> List[Tuple[str, Dict[str, Any]]]:
+    """复用既有 D-class bounded probe 策略。"""
+    if case_id == "DLC003R":
+        return build_bounded_probe_plan_dlc003(max_requests)
+    if case_id == "DLC006R":
+        return build_bounded_probe_plan_dlc006(max_requests)
+    return []
+
+
+def validate_replacement_request_caps(stats: LiveStats) -> List[str]:
+    issues: List[str] = []
+    dlc003r_used = stats.case_request_counts.get("DLC003R", 0)
+    dlc006r_used = stats.case_request_counts.get("DLC006R", 0)
+    if dlc003r_used > REPLACEMENT_DLC003R_MAX_CAP:
+        issues.append(f"{REPLACEMENT_DLC003R_CAP_EXCEEDED}:{dlc003r_used}")
+    if dlc006r_used > REPLACEMENT_DLC006R_MAX_CAP:
+        issues.append(f"{REPLACEMENT_DLC006R_CAP_EXCEEDED}:{dlc006r_used}")
+    if dlc003r_used + dlc006r_used > REPLACEMENT_TOTAL_MAX_CAP:
+        issues.append(f"{REPLACEMENT_TOTAL_CAP_EXCEEDED}:{dlc003r_used + dlc006r_used}")
+    return issues
+
+
+def assess_replacement_probe_outcome(row: Dict[str, str]) -> Tuple[bool, str]:
+    """replacement 探针结果评估；返回 (acceptable, failure_type)。"""
+    rs = row.get("retrieval_status", "")
+    qs = row.get("quality_status", "")
+    notes = row.get("notes", "")
+    try:
+        rc = int(row.get("record_count", "0"))
+    except ValueError:
+        rc = 0
+
+    if rs in ("http_error", "blocked") or qs == "blocked":
+        if "network_error" in notes:
+            return False, "network_error"
+        if "invalid_json" in notes or rs == "http_error":
+            return False, "schema_error"
+        return False, "network_error"
+    if rs == "found" and rc >= 1:
+        return True, ""
+    if qs == "needs_review" and rc >= 1:
+        return True, ""
+    if rs == "empty_but_valid" and rc == 0:
+        return False, "empty_but_valid_after_budget"
+    return False, "schema_error"
+
+
+def is_replacement_case_acceptable(row: Dict[str, str]) -> bool:
+    acceptable, _ = assess_replacement_probe_outcome(row)
+    return acceptable
+
+
+def compute_replacement_execution_gate(
+    case_summaries: Dict[str, Dict[str, str]],
+) -> str:
+    """replacement live 执行 gate；永不返回 PASS。"""
+    outcomes = []
+    for case_id in sorted(REPLACEMENT_PROBE_CASE_IDS):
+        summary = case_summaries.get(case_id, {})
+        acceptable, _ = assess_replacement_probe_outcome(summary)
+        outcomes.append(acceptable)
+    if all(outcomes):
+        return REPLACEMENT_EXECUTION_GATE_PASS
+    return REPLACEMENT_EXECUTION_GATE_FAIL
+
+
+def build_replacement_baseline_reference_row(
+    row: ReplacementUniverseRow,
+) -> Dict[str, str]:
+    return {
+        "case_id": row.case_id,
+        "company_code": row.company_code,
+        "company_name": row.company_name,
+        "component": row.component,
+        "expected_behavior": row.expected_behavior,
+        "replacement_for": row.replacement_for or row.replaces_case_id,
+        "candidate_validation_status": row.candidate_validation_status or "na",
+        "probe_budget": "0",
+        "cninfo_request_count": "0",
+        "retrieval_status": "reference_only",
+        "record_count": "0",
+        "quality_status": "na",
+        "lineage_status": "na",
+        "acceptable": "na",
+        "failure_type": "",
+        "endpoint_used": "",
+        "pdf_download": "no",
+        "ocr": "no",
+        "extraction": "no",
+        "db_write": "no",
+        "minio_write": "no",
+        "rag_run": "no",
+        "notes": "baseline reference only; no replacement validation CNINFO",
+    }
+
+
+def build_replacement_probe_live_row(
+    repl_row: ReplacementUniverseRow,
+    summary: Dict[str, str],
+    probe_budget: int,
+) -> Dict[str, str]:
+    acceptable, failure_type = assess_replacement_probe_outcome(summary)
+    return {
+        "case_id": repl_row.case_id,
+        "company_code": repl_row.company_code,
+        "company_name": repl_row.company_name,
+        "component": repl_row.component,
+        "expected_behavior": repl_row.expected_behavior,
+        "replacement_for": repl_row.replacement_for or repl_row.replaces_case_id,
+        "candidate_validation_status": repl_row.candidate_validation_status,
+        "probe_budget": str(probe_budget),
+        "cninfo_request_count": summary.get("cninfo_request_count", "0"),
+        "retrieval_status": summary.get("retrieval_status", ""),
+        "record_count": summary.get("record_count", "0"),
+        "quality_status": summary.get("quality_status", ""),
+        "lineage_status": summary.get("lineage_status", ""),
+        "acceptable": "yes" if acceptable else "no",
+        "failure_type": failure_type,
+        "endpoint_used": summary.get("endpoint_used", ""),
+        "pdf_download": "no",
+        "ocr": "no",
+        "extraction": "no",
+        "db_write": "no",
+        "minio_write": "no",
+        "rag_run": "no",
+        "notes": summary.get("notes", ""),
+    }
+
+
+def write_replacement_live_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "d_class_known_event_replacement_live_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=REPLACEMENT_LIVE_REPORT_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_replacement_quality_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    quality_rows = [
+        {
+            "case_id": row["case_id"],
+            "component": row["component"],
+            "expected_behavior": row["expected_behavior"],
+            "replacement_for": row["replacement_for"],
+            "retrieval_status": row["retrieval_status"],
+            "record_count": row["record_count"],
+            "quality_status": row["quality_status"],
+            "acceptable": row["acceptable"],
+            "failure_type": row["failure_type"],
+            "cninfo_request_count": row["cninfo_request_count"],
+            "notes": row["notes"],
+        }
+        for row in rows
+        if row["case_id"] in REPLACEMENT_PROBE_CASE_IDS
+    ]
+    path = os.path.join(
+        output_paths["reports"], "d_class_known_event_replacement_quality_report.csv"
+    )
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=REPLACEMENT_QUALITY_REPORT_COLUMNS)
+        writer.writeheader()
+        writer.writerows(quality_rows)
+    return path
+
+
+def write_replacement_live_summary(
+    live_rows: List[Dict[str, str]],
+    stats: LiveStats,
+    gate: str,
+    output_paths: Dict[str, str],
+) -> str:
+    probe_rows = [r for r in live_rows if r["case_id"] in REPLACEMENT_PROBE_CASE_IDS]
+    lines = [
+        "# CNINFO D 类 Known Event Replacement Live Summary",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** known-event replacement live · **无 DB/MinIO/RAG/PDF/OCR** · **不是 verified**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        f"| DLC003R CNINFO requests | **{stats.case_request_counts.get('DLC003R', 0)}** |",
+        f"| DLC006R CNINFO requests | **{stats.case_request_counts.get('DLC006R', 0)}** |",
+        f"| Total CNINFO requests | **{stats.cninfo_requests}** |",
+        f"| DB writes | **{stats.db_writes}** |",
+        f"| MinIO writes | **{stats.minio_writes}** |",
+        f"| RAG runs | **{stats.rag_runs}** |",
+        "",
+        "## Probe Results",
+        "",
+        "| case_id | retrieval | records | requests | acceptable | failure_type |",
+        "|---------|-----------|---------|----------|------------|--------------|",
+    ]
+    for row in probe_rows:
+        lines.append(
+            f"| {row['case_id']} | {row['retrieval_status']} | {row['record_count']} | "
+            f"{row['cninfo_request_count']} | {row['acceptable']} | {row['failure_type']} |"
+        )
+    lines.extend(
+        [
+            "",
+            "## Gate",
+            "",
+            "```text",
+            f"d_class_known_event_replacement_validation_execution_gate = {gate}",
+            "approval_status = NOT_APPROVED",
+            "```",
+            "",
+            "**不是 PASS** · **不是 live_ready** · **不是 verified** · **不是 production_ready**",
+            "",
+        ]
+    )
+    summary_path = os.path.join(
+        output_paths["reports"], "d_class_known_event_replacement_live_summary.md"
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    return summary_path
+
+
+def execute_known_event_replacement_live(
+    args: argparse.Namespace,
+    universe_rows: List[ReplacementUniverseRow],
+    selected: Set[str],
+    output_paths: Dict[str, str],
+) -> int:
+    """known-event replacement live 探针；仅 DLC003R/DLC006R 调用 CNINFO。"""
+    endpoints = load_registry_endpoints()
+    source_configs = load_table_source_configs()
+    probe_row_map = {r.case_id: r for r in universe_rows if r.case_id in REPLACEMENT_PROBE_CASE_IDS}
+
+    probe_specs = [
+        ("DLC003R", "tdate", REPLACEMENT_DLC003R_MAX_CAP),
+        ("DLC006R", "mode_date", REPLACEMENT_DLC006R_MAX_CAP),
+    ]
+
+    for case_id, _, max_cap in probe_specs:
+        if case_id not in selected:
+            continue
+        plan = build_replacement_probe_plan(case_id, max_cap)
+        if len(plan) > max_cap:
+            print(f"ERROR: {REPLACEMENT_DLC003R_CAP_EXCEEDED if case_id == 'DLC003R' else REPLACEMENT_DLC006R_CAP_EXCEEDED}:planned={len(plan)}", file=sys.stderr)
+            return 2
+
+    session = requests.Session()
+    stats = LiveStats()
+    case_summaries: Dict[str, Dict[str, str]] = {}
+    early_stop_count = 0
+
+    for case_id, probe_type, max_cap in probe_specs:
+        if case_id not in selected:
+            continue
+        repl_row = probe_row_map[case_id]
+        case = replacement_row_to_universe_case(repl_row)
+        plan = build_replacement_probe_plan(case_id, max_cap)
+        source_cfg = source_configs.get(case.component, {})
+        endpoint = endpoints.get(case.component, source_cfg.get("api_url", ""))
+        _, summary, stopped = execute_v2_bounded_probe_case(
+            case,
+            plan,
+            probe_type,
+            max_cap,
+            source_cfg,
+            endpoint,
+            session,
+            stats,
+            output_paths,
+        )
+        case_summaries[case_id] = summary
+        if stopped:
+            early_stop_count += 1
+        print(
+            f"{case_id} {summary['retrieval_status']}: records={summary['record_count']} "
+            f"requests={summary['cninfo_request_count']} early_stop={summary['early_stop_triggered']}",
+            flush=True,
+        )
+
+    cap_issues = validate_replacement_request_caps(stats)
+    if cap_issues:
+        print(f"ERROR: replacement request cap validation failed: {cap_issues}", file=sys.stderr)
+        return 2
+
+    gate = compute_replacement_execution_gate(case_summaries)
+    if stats.db_writes or stats.minio_writes or stats.rag_runs:
+        gate = REPLACEMENT_EXECUTION_GATE_FAIL
+
+    live_rows: List[Dict[str, str]] = []
+    for row in universe_rows:
+        if row.case_id in REPLACEMENT_BASELINE_CASE_IDS:
+            live_rows.append(build_replacement_baseline_reference_row(row))
+        elif row.case_id in REPLACEMENT_PROBE_CASE_IDS and row.case_id in case_summaries:
+            max_cap = (
+                REPLACEMENT_DLC003R_MAX_CAP
+                if row.case_id == "DLC003R"
+                else REPLACEMENT_DLC006R_MAX_CAP
+            )
+            live_rows.append(
+                build_replacement_probe_live_row(
+                    row, case_summaries[row.case_id], max_cap
+                )
+            )
+
+    report_path = write_replacement_live_report(live_rows, output_paths)
+    quality_path = write_replacement_quality_report(live_rows, output_paths)
+    summary_path = write_replacement_live_summary(live_rows, stats, gate, output_paths)
+
+    print(
+        f"mode=known_event_replacement_live dlc003r_requests="
+        f"{stats.case_request_counts.get('DLC003R', 0)} "
+        f"dlc006r_requests={stats.case_request_counts.get('DLC006R', 0)} "
+        f"total_requests={stats.cninfo_requests} early_stop_count={early_stop_count}"
+    )
+    print(f"gate=d_class_known_event_replacement_validation_execution_gate={gate}")
+    print(f"live_report={report_path}")
+    print(f"quality_report={quality_path}")
+    print(f"live_summary={summary_path}")
+    return 0 if gate == REPLACEMENT_EXECUTION_GATE_PASS else 1
+
+
+def run_known_event_replacement(args: argparse.Namespace) -> int:
+    enforce_replacement_forbidden_options(args)
+    enforce_replacement_live_approval_gate(args)
+
+    if args.universe_csv == DEFAULT_UNIVERSE_CSV:
+        print(f"ERROR: {REPLACEMENT_UNIVERSE_CSV_REQUIRED}", file=sys.stderr)
+        return 2
+
+    if not os.path.isfile(args.universe_csv):
+        print(f"ERROR: universe not found: {args.universe_csv}", file=sys.stderr)
+        return 2
+
+    ok_root, root_err = validate_replacement_output_root(args.output_root)
+    if not ok_root:
+        print(f"ERROR: {root_err}", file=sys.stderr)
+        return 2
+
+    universe_rows = load_replacement_universe(args.universe_csv)
+    universe_issues = validate_replacement_universe(universe_rows)
+    if universe_issues:
+        print(f"ERROR: replacement universe validation failed: {universe_issues}", file=sys.stderr)
+        return 2
+
+    selected = parse_replacement_cases_filter(args.cases)
+    selection_issues = validate_replacement_case_selection(selected)
+    if selection_issues:
+        print(f"ERROR: replacement case selection failed: {selection_issues}", file=sys.stderr)
+        return 2
+
+    output_root = _normalize_output_root(args.output_root)
+    output_paths = ensure_output_layout(output_root, args.mode)
+    enforce_replacement_write_block_targets(output_paths)
+
+    if args.mode != "live":
+        dry_rows = build_replacement_dryrun_rows(universe_rows, output_root)
+        report_path = write_replacement_dryrun_report(dry_rows, output_paths)
+        summary_path = write_replacement_dryrun_summary(
+            dry_rows, output_paths, args.universe_csv
+        )
+        probe_planned = sum(
+            int(r["planned_request_count"])
+            for r in dry_rows
+            if r["case_id"] in REPLACEMENT_PROBE_CASE_IDS
+        )
+        print(
+            f"mode=known_event_replacement_dry_run cases={len(dry_rows)} "
+            f"probe_planned_requests={probe_planned} cninfo_calls=0"
+        )
+        print(
+            f"gate=d_class_known_event_replacement_runner_extension_gate={REPLACEMENT_RUNNER_GATE}"
+        )
+        print(f"dryrun_report={report_path}")
+        print(f"dryrun_summary={summary_path}")
+        return 0
+
+    return execute_known_event_replacement_live(
+        args, universe_rows, selected, output_paths
+    )
+
+
+def load_targeted_probe_universe(path: str) -> List[TargetedProbeUniverseRow]:
+    rows: List[TargetedProbeUniverseRow] = []
+    with open(path, newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            rows.append(
+                TargetedProbeUniverseRow(
+                    targeted_probe_id=str(row.get("targeted_probe_id", "")).strip(),
+                    replacement_case_id=str(row.get("replacement_case_id", "")).strip(),
+                    company_code=str(row.get("company_code", "")).strip(),
+                    company_name=str(row.get("company_name", "")).strip(),
+                    component=str(row.get("component", "")).strip(),
+                    anchor_date=str(row.get("anchor_date", "")).strip(),
+                    human_event_evidence_type=str(
+                        row.get("human_event_evidence_type", "")
+                    ).strip(),
+                    human_event_evidence_description=str(
+                        row.get("human_event_evidence_description", "")
+                    ).strip(),
+                    previous_replacement_live_status=str(
+                        row.get("previous_replacement_live_status", "")
+                    ).strip(),
+                    previous_record_count=str(
+                        row.get("previous_record_count", "")
+                    ).strip(),
+                    targeted_probe_include=str(
+                        row.get("targeted_probe_include", "")
+                    ).strip(),
+                    targeted_probe_strategy=str(
+                        row.get("targeted_probe_strategy", "")
+                    ).strip(),
+                    request_cap=str(row.get("request_cap", "")).strip(),
+                    expected_behavior=str(row.get("expected_behavior", "")).strip(),
+                    notes=str(row.get("notes", "")).strip(),
+                )
+            )
+    return rows
+
+
+def _targeted_probe_row_cap(row: TargetedProbeUniverseRow) -> int:
+    try:
+        return int(row.request_cap)
+    except ValueError:
+        return -1
+
+
+def validate_targeted_probe_universe(rows: List[TargetedProbeUniverseRow]) -> List[str]:
+    issues: List[str] = []
+    if len(rows) != TARGETED_PROBE_EXPECTED_UNIVERSE_SIZE:
+        issues.append(f"{TARGETED_PROBE_UNIVERSE_SIZE_MISMATCH}:got={len(rows)}")
+    seen_ids: Set[str] = set()
+    total_cap = 0
+    for row in rows:
+        probe_id = row.targeted_probe_id
+        repl_id = row.replacement_case_id
+        if probe_id in TARGETED_PROBE_FORBIDDEN_ORIGINAL_IDS:
+            issues.append(f"{TARGETED_PROBE_ORIGINAL_CASE_IN_UNIVERSE}:{probe_id}")
+        if repl_id in TARGETED_PROBE_FORBIDDEN_ORIGINAL_IDS:
+            issues.append(f"{TARGETED_PROBE_ORIGINAL_CASE_IN_UNIVERSE}:{repl_id}")
+        if probe_id in TARGETED_PROBE_FORBIDDEN_BASELINE_IDS:
+            issues.append(f"{TARGETED_PROBE_BASELINE_CASE_IN_UNIVERSE}:{probe_id}")
+        if repl_id in TARGETED_PROBE_FORBIDDEN_BASELINE_IDS:
+            issues.append(f"{TARGETED_PROBE_BASELINE_CASE_IN_UNIVERSE}:{repl_id}")
+        if probe_id not in TARGETED_PROBE_ALLOWED_IDS:
+            issues.append(f"{TARGETED_PROBE_FORBIDDEN_CASE_ID}:{probe_id}")
+        if repl_id not in TARGETED_PROBE_REPLACEMENT_IDS:
+            issues.append(f"{TARGETED_PROBE_FORBIDDEN_CASE_ID}:replacement={repl_id}")
+        if probe_id in seen_ids:
+            issues.append(f"duplicate_targeted_probe_id:{probe_id}")
+        seen_ids.add(probe_id)
+        if row.targeted_probe_include.lower() != "yes":
+            issues.append(f"{TARGETED_PROBE_INCLUDE_REQUIRED}:{probe_id}")
+        if row.component not in ALLOWED_COMPONENTS:
+            issues.append(f"{COMPONENT_NOT_ALLOWED}:{row.component}")
+        row_cap = _targeted_probe_row_cap(row)
+        if row_cap < 0:
+            issues.append(f"invalid_request_cap:{probe_id}")
+        elif row_cap > TARGETED_PROBE_PER_ROW_MAX_CAP:
+            issues.append(f"{TARGETED_PROBE_ROW_CAP_EXCEEDED}:{probe_id}={row_cap}")
+        else:
+            total_cap += row_cap
+        if probe_id == "DLC003R-T01":
+            if row.replacement_case_id != "DLC003R":
+                issues.append(f"replacement_mismatch:{probe_id}={row.replacement_case_id}")
+            if row.company_code != TARGETED_PROBE_DLC003R_T01_COMPANY_CODE:
+                issues.append(
+                    f"{TARGETED_PROBE_WRONG_COMPANY_CODE}:DLC003R-T01={row.company_code}"
+                )
+            if row.component != TARGETED_PROBE_DLC003R_T01_COMPONENT:
+                issues.append(
+                    f"{TARGETED_PROBE_WRONG_COMPONENT}:DLC003R-T01={row.component}"
+                )
+            if row.anchor_date != TARGETED_PROBE_DLC003R_T01_ANCHOR_DATE:
+                issues.append(
+                    f"{TARGETED_PROBE_WRONG_ANCHOR_DATE}:DLC003R-T01={row.anchor_date}"
+                )
+        if probe_id == "DLC006R-T01":
+            if row.replacement_case_id != "DLC006R":
+                issues.append(f"replacement_mismatch:{probe_id}={row.replacement_case_id}")
+            if row.company_code != TARGETED_PROBE_DLC006R_T01_COMPANY_CODE:
+                issues.append(
+                    f"{TARGETED_PROBE_WRONG_COMPANY_CODE}:DLC006R-T01={row.company_code}"
+                )
+            if row.component != TARGETED_PROBE_DLC006R_T01_COMPONENT:
+                issues.append(
+                    f"{TARGETED_PROBE_WRONG_COMPONENT}:DLC006R-T01={row.component}"
+                )
+            if row.anchor_date != TARGETED_PROBE_DLC006R_T01_ANCHOR_DATE:
+                issues.append(
+                    f"{TARGETED_PROBE_WRONG_ANCHOR_DATE}:DLC006R-T01={row.anchor_date}"
+                )
+    if "DLC003R-T01" not in seen_ids:
+        issues.append("missing_targeted_probe:DLC003R-T01")
+    if "DLC006R-T01" not in seen_ids:
+        issues.append("missing_targeted_probe:DLC006R-T01")
+    if total_cap > TARGETED_PROBE_TOTAL_MAX_CAP:
+        issues.append(f"{TARGETED_PROBE_TOTAL_CAP_EXCEEDED}:{total_cap}")
+    return issues
+
+
+def validate_targeted_probe_output_root(output_root: str) -> Tuple[bool, str]:
+    root = _normalize_output_root(output_root)
+    targeted_allowed = _normalize_output_root(DEFAULT_TARGETED_PROBE_OUTPUT_ROOT)
+    v1_root = _normalize_output_root(DEFAULT_OUTPUT_ROOT)
+    v2_root = _normalize_output_root(DEFAULT_V2_OUTPUT_ROOT)
+    replacement_root = _normalize_output_root(DEFAULT_REPLACEMENT_OUTPUT_ROOT)
+    calibrated = _normalize_output_root(CALIBRATED_UNIVERSE_CSV)
+    original = _normalize_output_root(DEFAULT_UNIVERSE_CSV)
+    if root == v1_root or root.startswith(v1_root + os.sep):
+        return False, TARGETED_PROBE_V1_OUTPUT_ROOT_WRITE_BLOCKED
+    if root == v2_root or root.startswith(v2_root + os.sep):
+        return False, TARGETED_PROBE_V2_OUTPUT_ROOT_WRITE_BLOCKED
+    if root == replacement_root or root.startswith(replacement_root + os.sep):
+        return False, TARGETED_PROBE_REPLACEMENT_OUTPUT_ROOT_WRITE_BLOCKED
+    if root == calibrated or root.startswith(calibrated + os.sep):
+        return False, TARGETED_PROBE_CALIBRATED_UNIVERSE_WRITE_BLOCKED
+    if root == original or root.startswith(original + os.sep):
+        return False, TARGETED_PROBE_ORIGINAL_UNIVERSE_WRITE_BLOCKED
+    if root == targeted_allowed or root.startswith(targeted_allowed + os.sep):
+        return True, ""
+    return False, TARGETED_PROBE_OUTPUT_ROOT_REQUIRED
+
+
+def enforce_targeted_probe_write_block_targets(output_paths: Dict[str, str]) -> None:
+    """确保 targeted probe 输出路径不指向受保护的历史产物。"""
+    protected = [
+        _normalize_output_root(DEFAULT_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_V2_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_REPLACEMENT_OUTPUT_ROOT),
+        _normalize_output_root(CALIBRATED_UNIVERSE_CSV),
+        _normalize_output_root(DEFAULT_UNIVERSE_CSV),
+    ]
+    for key in ("root", "reports"):
+        target = _normalize_output_root(output_paths[key])
+        for blocked in protected:
+            if target == blocked or target.startswith(blocked + os.sep):
+                print(
+                    f"ERROR: {TARGETED_PROBE_V1_OUTPUT_ROOT_WRITE_BLOCKED}:{key}",
+                    file=sys.stderr,
+                )
+                sys.exit(2)
+
+
+def enforce_targeted_probe_forbidden_options(args: argparse.Namespace) -> None:
+    enforce_forbidden_options(args)
+    if args.known_event_targeted_probe and args.known_event_replacement:
+        print(
+            f"ERROR: {TARGETED_PROBE_MIXED_MODE_BLOCKED}:known_event_replacement",
+            file=sys.stderr,
+        )
+        sys.exit(2)
+    if args.known_event_targeted_probe and args.bounded_probe_v2:
+        print(
+            f"ERROR: {TARGETED_PROBE_MIXED_MODE_BLOCKED}:bounded_probe_v2",
+            file=sys.stderr,
+        )
+        sys.exit(2)
+    wrong_flags = [
+        ("approve_d_class_tiny_live_validation", args.approve_d_class_tiny_live_validation),
+        (
+            "approve_d_class_tiny_live_v2_bounded_probe",
+            args.approve_d_class_tiny_live_v2_bounded_probe,
+        ),
+        (
+            "approve_d_class_known_event_replacement_validation",
+            args.approve_d_class_known_event_replacement_validation,
+        ),
+    ]
+    for name, enabled in wrong_flags:
+        if args.known_event_targeted_probe and enabled:
+            print(f"ERROR: {TARGETED_PROBE_WRONG_APPROVAL_FLAG}:{name}", file=sys.stderr)
+            sys.exit(2)
+    if (
+        not args.known_event_targeted_probe
+        and args.approve_d_class_known_event_targeted_probe
+    ):
+        print(
+            f"ERROR: {TARGETED_PROBE_WRONG_APPROVAL_FLAG}:targeted_probe_flag_without_mode",
+            file=sys.stderr,
+        )
+        sys.exit(2)
+    for flag_name in ("pdf_download", "ocr", "extraction"):
+        if getattr(args, flag_name, False):
+            token = {
+                "pdf_download": PDF_DOWNLOAD_BLOCKED,
+                "ocr": OCR_BLOCKED,
+                "extraction": EXTRACTION_BLOCKED,
+            }[flag_name]
+            print(f"ERROR: {token}", file=sys.stderr)
+            sys.exit(2)
+
+
+def enforce_targeted_probe_live_approval_gate(args: argparse.Namespace) -> None:
+    if args.mode == "live" and args.known_event_targeted_probe:
+        if not args.approve_d_class_known_event_targeted_probe:
+            print(f"ERROR: {TARGETED_PROBE_APPROVAL_REQUIRED}", file=sys.stderr)
+            sys.exit(2)
+
+
+def build_targeted_probe_plan_dlc003r(
+    anchor_date: str, max_requests: int
+) -> List[Tuple[str, Dict[str, Any]]]:
+    """以 anchor_date 为中心的 liftBan/tdate 探针计划。"""
+    anchor = date.fromisoformat(anchor_date)
+    base = dict(
+        load_table_source_configs()
+        .get("restricted_shares_unlock", {})
+        .get("params_template") or {}
+    )
+    items: List[Tuple[str, Dict[str, Any]]] = []
+    items.append(("anchor_exact", {**base, "tdate": anchor_date}))
+    for offset in range(-7, 8):
+        if offset == 0:
+            continue
+        tdate = (anchor + timedelta(days=offset)).strftime("%Y-%m-%d")
+        items.append(("anchor_pm7d", {**base, "tdate": tdate}))
+    for offset in (-30, 30):
+        tdate = (anchor + timedelta(days=offset)).strftime("%Y-%m-%d")
+        items.append(("anchor_pm30d", {**base, "tdate": tdate}))
+    prev_month = anchor.replace(day=1) - timedelta(days=1)
+    month_candidates = [
+        (anchor.year, anchor.month),
+        (prev_month.year, prev_month.month),
+    ]
+    if anchor.month == 12:
+        month_candidates.append((anchor.year + 1, 1))
+    else:
+        month_candidates.append((anchor.year, anchor.month + 1))
+    for year, month in month_candidates:
+        items.append(
+            ("month_end_nearby", {**base, "tdate": _month_end_date(year, month)})
+        )
+    deduped = _dedupe_param_list(items)
+    return deduped[:max_requests]
+
+
+def build_targeted_probe_plan_dlc006r(
+    anchor_date: str, max_requests: int
+) -> List[Tuple[str, Dict[str, Any]]]:
+    """以 anchor_date 为中心的 shareholeder/type+tdate 探针计划。"""
+    anchor = date.fromisoformat(anchor_date)
+    items: List[Tuple[str, Dict[str, Any]]] = []
+    for offset in range(-7, 8):
+        tdate = (anchor + timedelta(days=offset)).strftime("%Y-%m-%d")
+        items.append(("anchor_pm7d_inc", {"type": "inc", "tdate": tdate}))
+        items.append(("anchor_pm7d_desc", {"type": "desc", "tdate": tdate}))
+    deduped = _dedupe_param_list(items)
+    return deduped[:max_requests]
+
+
+def compute_targeted_probe_planned_requests(row: TargetedProbeUniverseRow) -> int:
+    row_cap = _targeted_probe_row_cap(row)
+    if row_cap < 0:
+        return 0
+    if row.targeted_probe_id == "DLC003R-T01":
+        plan = build_targeted_probe_plan_dlc003r(row.anchor_date, row_cap)
+    elif row.targeted_probe_id == "DLC006R-T01":
+        plan = build_targeted_probe_plan_dlc006r(row.anchor_date, row_cap)
+    else:
+        return 0
+    return min(len(plan), row_cap)
+
+
+def build_targeted_probe_dryrun_rows(
+    rows: List[TargetedProbeUniverseRow],
+    output_root: str,
+) -> List[Dict[str, str]]:
+    dry_rows: List[Dict[str, str]] = []
+    for row in rows:
+        planned_requests = compute_targeted_probe_planned_requests(row)
+        cninfo_planned = (
+            "yes" if row.targeted_probe_include.lower() == "yes" else "no"
+        )
+        dry_rows.append(
+            {
+                "targeted_probe_id": row.targeted_probe_id,
+                "replacement_case_id": row.replacement_case_id,
+                "company_code": row.company_code,
+                "company_name": row.company_name,
+                "component": row.component,
+                "anchor_date": row.anchor_date,
+                "human_event_evidence_type": row.human_event_evidence_type,
+                "human_event_evidence_description": row.human_event_evidence_description,
+                "previous_replacement_live_status": row.previous_replacement_live_status,
+                "previous_record_count": row.previous_record_count,
+                "targeted_probe_include": row.targeted_probe_include,
+                "targeted_probe_strategy": row.targeted_probe_strategy,
+                "request_cap": row.request_cap,
+                "expected_behavior": row.expected_behavior,
+                "planned_request_count": str(planned_requests),
+                "planned_output_root": output_root,
+                "cninfo_call_planned": cninfo_planned,
+                "pdf_download": "no",
+                "ocr": "no",
+                "extraction": "no",
+                "db_write": "no",
+                "minio_write": "no",
+                "rag_run": "no",
+                "dryrun_status": "planned_ok",
+                "notes": (
+                    f"anchor={row.anchor_date}; strategy={row.targeted_probe_strategy}; "
+                    f"max_requests={row.request_cap}; early stop on company-level hit"
+                ),
+            }
+        )
+    return dry_rows
+
+
+def write_targeted_probe_dryrun_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"],
+        "d_class_known_event_targeted_probe_dryrun_report.csv",
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=TARGETED_PROBE_DRYRUN_REPORT_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_targeted_probe_dryrun_summary(
+    rows: List[Dict[str, str]],
+    output_paths: Dict[str, str],
+    universe_csv: str,
+) -> str:
+    planned_ok = sum(1 for r in rows if r["dryrun_status"] == "planned_ok")
+    planned_total = sum(int(r["planned_request_count"]) for r in rows)
+    lines = [
+        "# CNINFO D 类 Known Event Targeted Probe Dry-run Summary",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** known-event targeted probe dry-run only · **CNINFO calls = 0** · **NOT APPROVED**",
+        "",
+        "## Result",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        f"| universe_csv | `{universe_csv}` |",
+        f"| total_rows | {len(rows)} |",
+        f"| planned_ok | {planned_ok}/{len(rows)} |",
+        f"| planned_request_count_total | {planned_total} |",
+        "| CNINFO calls | **0** |",
+        "| PDF / OCR / extraction | **0** |",
+        "| DB / MinIO / RAG | **0** |",
+        "",
+        "## Gate",
+        "",
+        "```text",
+        f"d_class_known_event_targeted_probe_runner_extension_gate = {TARGETED_PROBE_RUNNER_GATE}",
+        "approval_status = NOT_APPROVED",
+        "```",
+        "",
+        "**不是 PASS** · **不是 live_ready** · **不是 verified**",
+        "",
+    ]
+    summary_path = os.path.join(
+        output_paths["reports"],
+        "d_class_known_event_targeted_probe_dryrun_summary.md",
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    return summary_path
+
+
+def run_known_event_targeted_probe(args: argparse.Namespace) -> int:
+    enforce_targeted_probe_forbidden_options(args)
+    enforce_targeted_probe_live_approval_gate(args)
+
+    if args.universe_csv == DEFAULT_UNIVERSE_CSV:
+        print(f"ERROR: {TARGETED_PROBE_UNIVERSE_CSV_REQUIRED}", file=sys.stderr)
+        return 2
+
+    if not os.path.isfile(args.universe_csv):
+        print(f"ERROR: universe not found: {args.universe_csv}", file=sys.stderr)
+        return 2
+
+    ok_root, root_err = validate_targeted_probe_output_root(args.output_root)
+    if not ok_root:
+        print(f"ERROR: {root_err}", file=sys.stderr)
+        return 2
+
+    universe_rows = load_targeted_probe_universe(args.universe_csv)
+    universe_issues = validate_targeted_probe_universe(universe_rows)
+    if universe_issues:
+        print(
+            f"ERROR: targeted probe universe validation failed: {universe_issues}",
+            file=sys.stderr,
+        )
+        return 2
+
+    output_root = _normalize_output_root(args.output_root)
+    output_paths = ensure_output_layout(output_root, args.mode)
+    enforce_targeted_probe_write_block_targets(output_paths)
+
+    if args.mode == "live":
+        return execute_known_event_targeted_probe_live(universe_rows, output_paths)
+
+    dry_rows = build_targeted_probe_dryrun_rows(universe_rows, output_root)
+    report_path = write_targeted_probe_dryrun_report(dry_rows, output_paths)
+    summary_path = write_targeted_probe_dryrun_summary(
+        dry_rows, output_paths, args.universe_csv
+    )
+    planned_total = sum(int(r["planned_request_count"]) for r in dry_rows)
+    print(
+        f"mode=known_event_targeted_probe_dry_run cases={len(dry_rows)} "
+        f"planned_request_count_total={planned_total} cninfo_calls=0"
+    )
+    print(
+        f"gate=d_class_known_event_targeted_probe_runner_extension_gate="
+        f"{TARGETED_PROBE_RUNNER_GATE}"
+    )
+    print(f"dryrun_report={report_path}")
+    print(f"dryrun_summary={summary_path}")
+    return 0
+
+
+def targeted_probe_row_to_universe_case(row: TargetedProbeUniverseRow) -> UniverseCase:
+    """将 targeted probe universe 行转为探测用 UniverseCase。"""
+    return UniverseCase(
+        case_id=row.targeted_probe_id,
+        company_code=row.company_code,
+        company_name=row.company_name,
+        component=row.component,
+        market="",
+        risk_level="",
+        expected_behavior=row.expected_behavior,
+        reason=row.notes,
+    )
+
+
+def build_targeted_probe_probe_plan(
+    row: TargetedProbeUniverseRow,
+) -> Tuple[str, List[Tuple[str, Dict[str, Any]]]]:
+    """返回 (probe_type, plan)。"""
+    row_cap = _targeted_probe_row_cap(row)
+    if row.targeted_probe_id == "DLC003R-T01":
+        return "tdate", build_targeted_probe_plan_dlc003r(row.anchor_date, row_cap)
+    if row.targeted_probe_id == "DLC006R-T01":
+        return "mode_date", build_targeted_probe_plan_dlc006r(row.anchor_date, row_cap)
+    return "", []
+
+
+def assess_targeted_probe_outcome(
+    summary: Dict[str, str],
+) -> Tuple[bool, str, str]:
+    """targeted probe 结果评估；返回 (acceptable, failure_type, structured_record_evidence)。"""
+    rs = summary.get("retrieval_status", "")
+    qs = summary.get("quality_status", "")
+    notes = summary.get("notes", "")
+    try:
+        rc = int(summary.get("record_count", "0"))
+    except ValueError:
+        rc = 0
+
+    if rs in ("http_error", "blocked") or qs == "blocked":
+        if "network_error" in notes:
+            return False, "network_error", "no"
+        if "invalid_json" in notes or rs == "http_error":
+            return False, "schema_error", "no"
+        return False, "network_error", "no"
+    if rs == "found" and rc >= 1:
+        return True, "", "yes"
+    if qs == "needs_review" and rc >= 1:
+        return True, "", "yes"
+    if rs == "empty_but_valid" and rc == 0:
+        return False, "empty_but_valid_after_budget", "no"
+    return False, "schema_error", "no"
+
+
+def compute_targeted_probe_execution_gate(
+    case_summaries: Dict[str, Dict[str, str]],
+) -> str:
+    """targeted probe live 执行 gate；永不返回 PASS。"""
+    outcomes = []
+    for probe_id in sorted(TARGETED_PROBE_ALLOWED_IDS):
+        summary = case_summaries.get(probe_id, {})
+        acceptable, _, _ = assess_targeted_probe_outcome(summary)
+        outcomes.append(acceptable)
+    if all(outcomes):
+        return TARGETED_PROBE_EXECUTION_GATE_PASS
+    return TARGETED_PROBE_EXECUTION_GATE_FAIL
+
+
+def validate_targeted_probe_request_caps(stats: LiveStats) -> List[str]:
+    issues: List[str] = []
+    dlc003 = stats.case_request_counts.get("DLC003R-T01", 0)
+    dlc006 = stats.case_request_counts.get("DLC006R-T01", 0)
+    if dlc003 > TARGETED_PROBE_PER_ROW_MAX_CAP:
+        issues.append(f"{TARGETED_PROBE_ROW_CAP_EXCEEDED}:DLC003R-T01={dlc003}")
+    if dlc006 > TARGETED_PROBE_PER_ROW_MAX_CAP:
+        issues.append(f"{TARGETED_PROBE_ROW_CAP_EXCEEDED}:DLC006R-T01={dlc006}")
+    if dlc003 + dlc006 > TARGETED_PROBE_TOTAL_MAX_CAP:
+        issues.append(f"{TARGETED_PROBE_TOTAL_CAP_EXCEEDED}:{dlc003 + dlc006}")
+    return issues
+
+
+def build_targeted_probe_live_row(
+    probe_row: TargetedProbeUniverseRow,
+    summary: Dict[str, str],
+    request_cap: int,
+) -> Dict[str, str]:
+    acceptable, failure_type, structured_evidence = assess_targeted_probe_outcome(summary)
+    return {
+        "targeted_probe_id": probe_row.targeted_probe_id,
+        "replacement_case_id": probe_row.replacement_case_id,
+        "company_code": probe_row.company_code,
+        "company_name": probe_row.company_name,
+        "component": probe_row.component,
+        "anchor_date": probe_row.anchor_date,
+        "expected_behavior": probe_row.expected_behavior,
+        "request_cap": str(request_cap),
+        "cninfo_request_count": summary.get("cninfo_request_count", "0"),
+        "retrieval_status": summary.get("retrieval_status", ""),
+        "record_count": summary.get("record_count", "0"),
+        "quality_status": summary.get("quality_status", ""),
+        "lineage_status": summary.get("lineage_status", ""),
+        "acceptable": "yes" if acceptable else "no",
+        "failure_type": failure_type,
+        "endpoint_used": summary.get("endpoint_used", ""),
+        "structured_record_evidence": structured_evidence,
+        "pdf_download": "no",
+        "ocr": "no",
+        "extraction": "no",
+        "db_write": "no",
+        "minio_write": "no",
+        "rag_run": "no",
+        "notes": summary.get("notes", ""),
+    }
+
+
+def write_targeted_probe_live_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"],
+        "d_class_known_event_targeted_probe_live_report.csv",
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=TARGETED_PROBE_LIVE_REPORT_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_targeted_probe_quality_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    quality_rows = [
+        {
+            "targeted_probe_id": row["targeted_probe_id"],
+            "replacement_case_id": row["replacement_case_id"],
+            "component": row["component"],
+            "anchor_date": row["anchor_date"],
+            "expected_behavior": row["expected_behavior"],
+            "retrieval_status": row["retrieval_status"],
+            "record_count": row["record_count"],
+            "quality_status": row["quality_status"],
+            "acceptable": row["acceptable"],
+            "failure_type": row["failure_type"],
+            "structured_record_evidence": row["structured_record_evidence"],
+            "cninfo_request_count": row["cninfo_request_count"],
+            "notes": row["notes"],
+        }
+        for row in rows
+    ]
+    path = os.path.join(
+        output_paths["reports"],
+        "d_class_known_event_targeted_probe_quality_report.csv",
+    )
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=TARGETED_PROBE_QUALITY_REPORT_COLUMNS)
+        writer.writeheader()
+        writer.writerows(quality_rows)
+    return path
+
+
+def write_targeted_probe_live_summary(
+    live_rows: List[Dict[str, str]],
+    stats: LiveStats,
+    gate: str,
+    output_paths: Dict[str, str],
+) -> str:
+    lines = [
+        "# CNINFO D 类 Known Event Targeted Probe Live Summary",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** known-event targeted probe live · **无 DB/MinIO/RAG/PDF/OCR** · **不是 verified**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        f"| DLC003R-T01 CNINFO requests | **{stats.case_request_counts.get('DLC003R-T01', 0)}** |",
+        f"| DLC006R-T01 CNINFO requests | **{stats.case_request_counts.get('DLC006R-T01', 0)}** |",
+        f"| Total CNINFO requests | **{stats.cninfo_requests}** |",
+        f"| DB writes | **{stats.db_writes}** |",
+        f"| MinIO writes | **{stats.minio_writes}** |",
+        f"| RAG runs | **{stats.rag_runs}** |",
+        "",
+        "## Probe Results",
+        "",
+        "| targeted_probe_id | anchor | retrieval | records | requests | acceptable | failure_type |",
+        "|-------------------|--------|-----------|---------|----------|------------|--------------|",
+    ]
+    for row in live_rows:
+        lines.append(
+            f"| {row['targeted_probe_id']} | {row['anchor_date']} | {row['retrieval_status']} | "
+            f"{row['record_count']} | {row['cninfo_request_count']} | {row['acceptable']} | "
+            f"{row['failure_type']} |"
+        )
+    lines.extend(
+        [
+            "",
+            "## Gate",
+            "",
+            "```text",
+            f"d_class_known_event_targeted_probe_execution_gate = {gate}",
+            "approval_status = NOT_APPROVED",
+            "```",
+            "",
+            "**不是 PASS** · **不是 live_ready** · **不是 verified** · **不是 production_ready**",
+            "",
+        ]
+    )
+    summary_path = os.path.join(
+        output_paths["reports"],
+        "d_class_known_event_targeted_probe_live_summary.md",
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    return summary_path
+
+
+def execute_known_event_targeted_probe_live(
+    universe_rows: List[TargetedProbeUniverseRow],
+    output_paths: Dict[str, str],
+) -> int:
+    """known-event targeted probe live 探针；仅 DLC003R-T01/DLC006R-T01 调用 CNINFO。"""
+    endpoints = load_registry_endpoints()
+    source_configs = load_table_source_configs()
+    probe_row_map = {r.targeted_probe_id: r for r in universe_rows}
+
+    for row in universe_rows:
+        _, plan = build_targeted_probe_probe_plan(row)
+        row_cap = _targeted_probe_row_cap(row)
+        if len(plan) > row_cap:
+            print(
+                f"ERROR: {TARGETED_PROBE_ROW_CAP_EXCEEDED}:planned={len(plan)}",
+                file=sys.stderr,
+            )
+            return 2
+
+    session = requests.Session()
+    stats = LiveStats()
+    case_summaries: Dict[str, Dict[str, str]] = {}
+    early_stop_count = 0
+
+    for row in universe_rows:
+        case = targeted_probe_row_to_universe_case(row)
+        probe_type, plan = build_targeted_probe_probe_plan(row)
+        row_cap = _targeted_probe_row_cap(row)
+        source_cfg = source_configs.get(case.component, {})
+        endpoint = endpoints.get(case.component, source_cfg.get("api_url", ""))
+        _, summary, stopped = execute_v2_bounded_probe_case(
+            case,
+            plan,
+            probe_type,
+            row_cap,
+            source_cfg,
+            endpoint,
+            session,
+            stats,
+            output_paths,
+        )
+        case_summaries[row.targeted_probe_id] = summary
+        if stopped:
+            early_stop_count += 1
+        print(
+            f"{row.targeted_probe_id} {summary['retrieval_status']}: "
+            f"records={summary['record_count']} "
+            f"requests={summary['cninfo_request_count']} "
+            f"early_stop={summary['early_stop_triggered']}",
+            flush=True,
+        )
+
+    cap_issues = validate_targeted_probe_request_caps(stats)
+    if cap_issues:
+        print(
+            f"ERROR: targeted probe request cap validation failed: {cap_issues}",
+            file=sys.stderr,
+        )
+        return 2
+
+    gate = compute_targeted_probe_execution_gate(case_summaries)
+    if stats.db_writes or stats.minio_writes or stats.rag_runs:
+        gate = TARGETED_PROBE_EXECUTION_GATE_FAIL
+
+    live_rows = [
+        build_targeted_probe_live_row(
+            probe_row_map[probe_id],
+            case_summaries[probe_id],
+            _targeted_probe_row_cap(probe_row_map[probe_id]),
+        )
+        for probe_id in sorted(TARGETED_PROBE_ALLOWED_IDS)
+        if probe_id in case_summaries
+    ]
+
+    report_path = write_targeted_probe_live_report(live_rows, output_paths)
+    quality_path = write_targeted_probe_quality_report(live_rows, output_paths)
+    summary_path = write_targeted_probe_live_summary(live_rows, stats, gate, output_paths)
+
+    print(
+        f"mode=known_event_targeted_probe_live dlc003r_t01_requests="
+        f"{stats.case_request_counts.get('DLC003R-T01', 0)} "
+        f"dlc006r_t01_requests={stats.case_request_counts.get('DLC006R-T01', 0)} "
+        f"total_requests={stats.cninfo_requests} early_stop_count={early_stop_count}"
+    )
+    print(f"gate=d_class_known_event_targeted_probe_execution_gate={gate}")
+    print(f"live_report={report_path}")
+    print(f"quality_report={quality_path}")
+    print(f"live_summary={summary_path}")
+    return 0 if gate == TARGETED_PROBE_EXECUTION_GATE_PASS else 1
 
 
 def _params_key(params: Dict[str, Any]) -> str:
@@ -1872,11 +3616,58 @@ def build_parser() -> argparse.ArgumentParser:
         default=V1_LIVE_REPORT_CSV,
         help="只读 v1 live 报告路径（comparison 用）",
     )
+    parser.add_argument(
+        "--known-event-replacement",
+        action="store_true",
+        help="启用 known-event replacement validation 模式（仅 DLC003R/DLC006R）",
+    )
+    parser.add_argument(
+        "--approve-d-class-known-event-replacement-validation",
+        action="store_true",
+        help="显式批准 known-event replacement live（本扩展 live 尚未实现）",
+    )
+    parser.add_argument(
+        "--pdf-download",
+        action="store_true",
+        help="禁止：replacement 模式不允许 PDF 下载",
+    )
+    parser.add_argument(
+        "--ocr",
+        action="store_true",
+        help="禁止：replacement 模式不允许 OCR",
+    )
+    parser.add_argument(
+        "--extraction",
+        action="store_true",
+        help="禁止：replacement / targeted probe 模式不允许 extraction",
+    )
+    parser.add_argument(
+        "--known-event-targeted-probe",
+        action="store_true",
+        help="启用 known-event targeted probe 模式（仅 DLC003R-T01/DLC006R-T01）",
+    )
+    parser.add_argument(
+        "--approve-d-class-known-event-targeted-probe",
+        action="store_true",
+        help="显式批准 known-event targeted probe live（本扩展 live 尚未实现）",
+    )
     return parser
 
 
 def main(argv: Optional[List[str]] = None) -> int:
     args = build_parser().parse_args(argv)
+
+    if args.known_event_targeted_probe:
+        if args.output_root is None:
+            args.output_root = DEFAULT_TARGETED_PROBE_OUTPUT_ROOT
+        return run_known_event_targeted_probe(args)
+
+    if args.known_event_replacement:
+        if args.output_root is None:
+            args.output_root = DEFAULT_REPLACEMENT_OUTPUT_ROOT
+        if args.cases == "DLC003,DLC006":
+            args.cases = "DLC003R,DLC006R"
+        return run_known_event_replacement(args)
 
     if args.bounded_probe_v2:
         if args.output_root is None:

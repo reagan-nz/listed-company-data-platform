@@ -1,0 +1,19 @@
+{
+  "case_id": "DLC006R",
+  "company_code": "301259",
+  "component": "shareholder_change",
+  "endpoint": "https://www.cninfo.com.cn/data20/shareholeder/detail",
+  "params": {
+    "type": "desc",
+    "tdate": "2024-12-31"
+  },
+  "http_status": 200,
+  "record_count": 0,
+  "sample_records": [],
+  "cninfo_called": true,
+  "early_stop": false,
+  "bounded_probe_v2": true,
+  "db_write": false,
+  "minio_write": false,
+  "rag_run": false
+}

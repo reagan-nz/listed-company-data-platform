@@ -1,0 +1,3 @@
+case_id,component,expected_behavior,replacement_for,retrieval_status,record_count,quality_status,acceptable,failure_type,cninfo_request_count,notes
+DLC003R,restricted_shares_unlock,captured_normal,DLC003,empty_but_valid,0,pass,no,empty_but_valid_after_budget,21,exhausted bounded probe cap (21 requests); company-level zero rows; legal empty per quality policy
+DLC006R,shareholder_change,captured_normal,DLC006,empty_but_valid,0,pass,no,empty_but_valid_after_budget,19,exhausted bounded probe cap (19 requests); company-level zero rows; legal empty per quality policy

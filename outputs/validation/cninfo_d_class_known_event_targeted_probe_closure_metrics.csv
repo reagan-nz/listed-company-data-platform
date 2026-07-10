@@ -1,0 +1,19 @@
+metric_group,metric_name,value,gate_impact,notes
+targeted_probe,targeted_probe_total_cases,2,closure,DLC003R-T01 and DLC006R-T01 only
+targeted_probe,targeted_probe_acceptable,1,execution,DLC003R-T01 found with 1 record
+targeted_probe,targeted_probe_failed,1,execution,DLC006R-T01 empty_but_valid_after_budget
+dlc003r_t01,dlc003r_t01_requests,1,evidence,early stop on first hit
+dlc003r_t01,dlc003r_t01_record_count,1,evidence,structured_record_evidence=yes
+dlc003r_t01,dlc003r_t01_final_status,captured_normal_structured_evidence,ledger,from targeted_probe_live; not verified
+dlc006r_t01,dlc006r_t01_requests,12,execution,full targeted cap exhausted
+dlc006r_t01,dlc006r_t01_record_count,0,execution,company-level zero rows
+dlc006r_t01,dlc006r_t01_final_status,unresolved_empty_but_valid_after_budget,ledger,replacement 19 + targeted 12; human evidence separate
+aggregate,total_cninfo_requests,13,execution,prior live run; not this closure round
+safety,pdf_downloaded,0,red_line,no PDF
+safety,ocr,0,red_line,no OCR
+safety,extraction,0,red_line,no extraction
+safety,db_write,0,red_line,no DB
+safety,minio_write,0,red_line,no MinIO
+safety,rag_run,0,red_line,no RAG
+gate,execution_gate,FAIL_REVIEW_REQUIRED,execution,one pass one fail; never PASS
+gate,schema_failure_evidence,none,review,no direct schema break evidence for DLC006R-T01
