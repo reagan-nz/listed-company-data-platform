@@ -1,0 +1,6 @@
+case_id,company_code,company_name,expected_behavior,retrieval_status,quality_status,acceptable,outcome_category,cninfo_request_count,early_stop_triggered,failure_type,notes
+DRU001,300009,安科生物,empty_but_valid,empty_but_valid,pass,yes,empty_but_valid,3,no,,DLC003-style control; sparse unlock-day zero rows legal
+DRU002,000895,双汇发展,captured_normal_or_empty_but_valid,empty_but_valid,pass,yes,empty_but_valid,3,no,,exhausted 3-probe cap; empty acceptable per expectation mix
+DRU003,600000,浦发银行,captured_normal_or_empty_but_valid,empty_but_valid,pass,yes,empty_but_valid,3,no,,exhausted 3-probe cap; empty acceptable per expectation mix
+DRU004,002415,海康威视,captured_normal_or_needs_review,empty_but_valid,pass,yes,empty_but_valid,3,no,,exhausted 3-probe cap; no found rows; empty acceptable
+DRU005,688981,中芯国际,captured_normal_or_empty_but_valid,empty_but_valid,pass,yes,empty_but_valid,3,no,,exhausted 3-probe cap; empty acceptable per expectation mix

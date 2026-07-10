@@ -289,7 +289,7 @@ planning (offline)
 | Agent | Era | 现行下一步 |
 |-------|-----|------------|
 | **B** | **D** | Human approve **explicit-path commit** · [boundary summary](../outputs/validation/cninfo_b_class_erad_scale_200_commit_boundary_summary.md) |
-| **C** | **D** | C-class Era D **continues** · [50 closure](../outputs/validation/cninfo_c_class_erad_needs_review_50_closure_summary.md) · [fuller-market plan](../plans/cninfo_c_class_erad_fuller_market_scale_plan.md) · slice1 **+200** |
+| **C** | **D** | C-class Era D **continues** · [slice1 live path](outputs/validation/cninfo_c_class_erad_fuller_market_slice1_live_path_summary.md) · gate **`READY_FOR_APPROVAL`** · 待人批 live |
 | **A** | **C** | A3M017 isolated-retry **commit boundary**（offline）→ 再 commit |
 | **D** | **C** | disclosure_schedule closure→boundary→commit **`d37ce0a`** → **Era D next-component planning**（**完成**） |
 
@@ -351,10 +351,12 @@ planning (offline)
 | post-fix8 harvest audit gate | **`PASS_OFFLINE`**（**813+50** · Δ needs_review **−8**） |
 | needs_review 50 closure gate | **`PASS_OFFLINE`**（live_needed **0/50** · scale-ready **863/863**） |
 | fuller-market planning gate | **`READY_FOR_APPROVAL`**（slice1 **+200** CE1E001–200 · **NOT APPROVED live**） |
+| slice1 dry-run prep gate | **`PASS_OFFLINE`**（YAML **200** · harvest dry-run **1400** HTTP · CNINFO **0**） |
+| slice1 live path gate | **`READY_FOR_APPROVAL`**（`_run_live_fuller_market_slice1` · tests **12/12** · **NOT executed live**） |
 
 **approved_for_snapshot_rebuild = false** · **approved_for_live_resume = false**
 
-**下一步：** slice1 harvest **dry-run prep**（offline）· 或人批 fuller-market planning gate · optional 000037/055 status align · Era D **not finished**
+**下一步：** 人批 slice1 live harvest（verbatim 短语）· 执行 session 1 `--limit 100` · Era D **not finished**
 
 ---
 
@@ -375,45 +377,64 @@ planning (offline)
 
 ---
 
-### 9.5a B 类 Era D — Next-Scale Planning + Slice1 Dry-Run（2026-07-10）
+### 9.5a B 类 Era D — Next-Scale Slice1 Live（2026-07-10）
 
-> **slice1 dry-run complete** · **300/300** · CNINFO **0** · **NOT APPROVED live** · **NOT verified**
+> **live execution complete** · **300/300 acceptable** · CNINFO **600** · **NOT verified** · **NOT pushed**
 
 | 项 | 内容 |
 |----|------|
-| primary path | **staged 200→500→fuller** · slice1 **+300**（BD2E201–500） |
-| plan | [cninfo_b_class_erad_next_scale_plan.md](cninfo_b_class_erad_next_scale_plan.md) |
-| runner | `--erad-b-scale-500-slice1` · [runner extension summary](../outputs/validation/cninfo_b_class_erad_next_scale_slice1_runner_extension_summary.md) |
-| dry-run | **300/300 planned_ok** · requests **600** · cap **≤720** |
-| slice1 runner gate | **`b_class_erad_next_scale_slice1_runner_extension_gate = READY_FOR_APPROVAL`** |
-| planning gate | **`b_class_erad_next_scale_planning_gate = READY_FOR_APPROVAL`** |
+| sessions | S1 BD2E201–350 **150/150** · S2 BD2E351–500 **150/150** |
+| live execution | [summary](../outputs/validation/cninfo_b_class_erad_next_scale_slice1_live_execution_summary.md) |
+| effective | **300/300 acceptable** · **0 failed** · **0 network_error** |
+| CNINFO | **600**（cap **≤720**） |
+| execution gate | **`b_class_erad_next_scale_slice1_execution_gate = PASS_WITH_CAVEAT`** |
 | scale-200 lineage | **198/200 effective** · **no rerun** · BD2E090/092 side-track only |
 
-**下一步：** live-path mock implementation · or push `e738fa9`（separate phrase）
+**下一步：** offline merge closure / triage package · or push `e738fa9`（separate phrase）
 
 ---
 
 ### 9.6 A 类 Era D — ~200 Metadata Expansion（2026-07-10）
 
-> **commit boundary ready** · effective **192/200** · unresolved **8** · boundary CNINFO **0**
+> **explicit-path commit complete** · **`41dc049`** · effective **192/200** · unresolved **8** · **NOT pushed**
 
 | 项 | 内容 |
 |----|------|
 | plan | [cninfo_a_class_erad_scale_200_plan.md](cninfo_a_class_erad_scale_200_plan.md) |
 | live execution | [execution summary](../outputs/validation/cninfo_a_class_erad_scale_200_execution_summary.md) · **192/200** · CNINFO **423** |
 | execution gate | **`a_class_erad_scale_200_execution_gate = PASS_WITH_CAVEAT`** |
-| isolated retry live | [retry execution summary](../outputs/validation/cninfo_a_class_erad_scale_200_isolated_retry_live_execution_summary.md) · **0/7** · CNINFO **21** |
-| retry execution gate | **`a_class_erad_scale_200_isolated_retry_execution_gate = FAIL_REVIEW_REQUIRED`** |
-| merge closure | [closure summary](../outputs/validation/cninfo_a_class_erad_scale_200_merge_closure_summary.md) · [decision](../outputs/validation/cninfo_a_class_erad_scale_200_merge_closure_decision.md) |
-| effective accepted ledger | [ledger](../outputs/validation/cninfo_a_class_erad_scale_200_effective_accepted_ledger.csv) · **192** rows |
-| unresolved final ledger | [ledger](../outputs/validation/cninfo_a_class_erad_scale_200_unresolved_final_ledger.csv) · **8** rows |
 | merge closure gate | **`a_class_erad_scale_200_merge_closure_gate = PASS_WITH_CAVEAT`** |
-| commit boundary | [boundary review](cninfo_a_class_erad_scale_200_commit_boundary_review.md) · [boundary summary](../outputs/validation/cninfo_a_class_erad_scale_200_commit_boundary_summary.md) · [safe-to-commit](../outputs/validation/cninfo_a_class_erad_scale_200_safe_to_commit_list.md) |
-| commit boundary gate | **`a_class_erad_scale_200_commit_boundary_gate = READY_FOR_COMMIT_REVIEW`** |
-| track status | **CLOSED with caveat** · **NOT committed** · **NOT pushed** |
-| retained cohort | **50/50** acceptable · failures **new_erad only** |
+| explicit-path commit | **`41dc049`** · **47 files** |
+| commit gate | **`a_class_erad_scale_200_commit_gate = PASS_WITH_CAVEAT`** |
+| track status | **CLOSED with caveat** · bulk raw_metadata local-only |
 
-**下一步：** human approve explicit-path commit（`I approve A-class Era D scale-200 explicit-path commit.`）
+**下一步：** see §9.6a next-scale planning
+
+---
+
+### 9.6a A 类 Era D — Next-Scale Planning + Slice1 Runner + Live Path（2026-07-10）
+
+> **runner + dry-run + live-path mock complete** · slice1 **+300** · CNINFO **0** in tests · **NOT APPROVED live**
+
+| 项 | 内容 |
+|----|------|
+| plan | [cninfo_a_class_erad_next_scale_plan.md](cninfo_a_class_erad_next_scale_plan.md) |
+| primary path | **C) staged 200→500→fuller + daily caps** |
+| universe strategy | [strategy](../outputs/validation/cninfo_a_class_erad_next_scale_universe_strategy.md) |
+| candidate universe | [draft](../outputs/validation/cninfo_a_class_erad_next_scale_candidate_universe_draft.csv) · **300** rows · AD2E201–500 |
+| request budget | [budget](../outputs/validation/cninfo_a_class_erad_next_scale_request_budget.md) · est **~630** · cap **≤720** |
+| overlap vs scale-200 | **0** |
+| overlap vs B slice1 | **0** |
+| planning gate | **`a_class_erad_next_scale_planning_gate = READY_FOR_APPROVAL`** |
+| runner | `--erad-a-scale-500-slice1` · [runner extension summary](../outputs/validation/cninfo_a_class_erad_next_scale_slice1_runner_extension_summary.md) |
+| dry-run | **300/300 planned_ok** · **600** planned requests · CNINFO **0** |
+| slice1 runner gate | **`a_class_erad_next_scale_slice1_runner_extension_gate = READY_FOR_APPROVAL`** |
+| live path | [summary](../outputs/validation/cninfo_a_class_erad_next_scale_slice1_live_path_summary.md) · mock **17/17 PASS** · `--case-range` wired |
+| slice1 live-path gate | **`a_class_erad_next_scale_slice1_live_path_gate = READY_FOR_APPROVAL`** |
+| output root | `cninfo_a_class_erad_next_scale_slice1/` |
+| acceptance threshold | **≥270/300** → `PASS_WITH_CAVEAT` |
+
+**下一步：** human approve slice1 live（exact phrase）· or hold until scheduled
 
 ---
 
@@ -599,10 +620,79 @@ planning (offline)
 | universe | **5** rows · DRU001–DRU005 · anchor **`tdate=2026-06-08`** |
 | endpoint | `liftBan/detail` |
 | approval gate | **`d_class_restricted_shares_unlock_first_slice_approval_gate = READY_FOR_APPROVAL`** |
-| live / runner | **NOT APPROVED** |
+| live / runner | dry-run **done** · live **NOT IMPLEMENTED** |
 | CNINFO（本回合） | **0** |
 
-**下一步：** runner extension + dry-run（offline · CNINFO **0**）
+**下一步：** live-path implementation（offline · mock only）
+
+---
+
+### 9.18 D 类 restricted_shares_unlock First-Slice Runner Extension + Dry-run（2026-07-10）
+
+> **runner extension + dry-run only** · CNINFO **0** · **无 live**
+
+| 项 | 内容 |
+|----|------|
+| dry-run | **5/5 planned_ok** · planned **20** |
+| tests | **20/20 PASS** |
+| live path | **not implemented**（stub） |
+| extension gate | **`d_class_restricted_shares_unlock_first_slice_runner_extension_gate = READY_FOR_APPROVAL`** |
+| CNINFO（本回合） | **0** |
+
+**下一步：** live-path implementation（offline · mock only）
+
+---
+
+### 9.19 D 类 restricted_shares_unlock First-Slice Live-Path Implementation（2026-07-10）
+
+> **live-path offline implementation + mock tests only** · CNINFO **0**（本任务）· **无 real live**
+
+| 项 | 内容 |
+|----|------|
+| live function | `execute_restricted_shares_unlock_first_slice_live()` |
+| stub removed | **yes** |
+| tests | **22/22 PASS**（mock CNINFO） |
+| runner tests | **20/20 PASS**（retained） |
+| live-path gate | **`d_class_restricted_shares_unlock_first_slice_live_path_gate = READY_FOR_APPROVAL`** |
+| CNINFO（本回合） | **0** |
+
+**下一步：** human approve phrase → isolated live validation
+
+---
+
+### 9.20 D 类 restricted_shares_unlock First-Slice Isolated Live（2026-07-10）
+
+> **human-approved isolated live** · **NOT verified** · **无 commit** · **无 push**
+
+| 项 | 内容 |
+|----|------|
+| approval | **I approve D-class restricted_shares_unlock first-slice live validation.** |
+| CNINFO | **15** |
+| acceptable | **5/5** |
+| sparse-day empty | **5/5** |
+| execution gate | **`d_class_restricted_shares_unlock_first_slice_execution_gate = PASS_WITH_CAVEAT`** |
+| outcome ledger | [cninfo_d_class_restricted_shares_unlock_first_slice_per_case_outcome_ledger.csv](../outputs/validation/cninfo_d_class_restricted_shares_unlock_first_slice_per_case_outcome_ledger.csv) |
+
+**下一步：** closure / commit-boundary package（offline）— **已完成** §9.21
+
+---
+
+### 9.21 D 类 restricted_shares_unlock First-Slice Closure + Commit Boundary（2026-07-10）
+
+> **offline only** · **CNINFO = 0** · **NOT verified** · **无 commit** · **无 push**
+
+| 项 | 内容 |
+|----|------|
+| closure gate | **`d_class_restricted_shares_unlock_first_slice_closure_gate = PASS_WITH_CAVEAT`** |
+| boundary gate | **`d_class_restricted_shares_unlock_first_slice_commit_boundary_gate = READY_FOR_COMMIT_REVIEW`** |
+| approval_status_for_commit | **NOT_APPROVED** |
+| acceptable | **5/5** · empty_but_valid **×5** · sparse anchor **2026-06-08** |
+| safe-to-commit | **~32** explicit paths |
+| closure review | [cninfo_d_class_restricted_shares_unlock_first_slice_closure_review.md](cninfo_d_class_restricted_shares_unlock_first_slice_closure_review.md) |
+| boundary review | [cninfo_d_class_restricted_shares_unlock_first_slice_commit_boundary_review.md](cninfo_d_class_restricted_shares_unlock_first_slice_commit_boundary_review.md) |
+| post-closure | [cninfo_d_class_restricted_shares_unlock_first_slice_post_closure_next_step_recommendation.md](../outputs/validation/cninfo_d_class_restricted_shares_unlock_first_slice_post_closure_next_step_recommendation.md) |
+
+**下一步：** human-approved explicit-path commit（separate gate）· 或 commit 后 **`equity_pledge`** planning
 
 ---
 
@@ -637,7 +727,12 @@ planning (offline)
 | ED-011f | D-class block_trade first-slice commit boundary review | D | D2 | **完成**（§9.14 · safe **~27** · boundary gate **`READY_FOR_COMMIT_REVIEW`**） |
 | ED-011g | D-class block_trade first-slice explicit-path commit | D | D2 | **完成**（§9.15 · commit **`403472d`** · **28 files** · gate **`PASS_WITH_CAVEAT`** · **无 push** · **NOT verified**） |
 | ED-012 | D-class Era D next-component planning refresh | D | D2 | **完成**（§9.16 · primary **`restricted_shares_unlock`** · refresh gate **`PASS_WITH_CAVEAT`** · CNINFO **0**） |
-| ED-013 | D-class restricted_shares_unlock first-slice approval package | D | D2 | **完成**（§9.17 · universe **5** · approval gate **`READY_FOR_APPROVAL`** · **NOT APPROVED live** · **无 runner**） |
+| ED-013 | D-class restricted_shares_unlock first-slice approval package | D | D2 | **完成**（§9.17 · universe **5** · approval gate **`READY_FOR_APPROVAL`** · **NOT APPROVED live**） |
+| ED-013b | D-class restricted_shares_unlock first-slice runner + dry-run | D | D2 | **完成**（§9.18 · dry-run **5/5** · planned **20** · tests **20/20** · extension gate **`READY_FOR_APPROVAL`** · **无 live**） |
+| ED-013c | D-class restricted_shares_unlock first-slice live path | D | D2 | **完成**（§9.19 · tests **22/22** · mock only · live-path gate **`READY_FOR_APPROVAL`**） |
+| ED-013d | D-class restricted_shares_unlock first-slice isolated live | D | D2 | **完成**（§9.20 · CNINFO **15** · **5/5** · execution gate **`PASS_WITH_CAVEAT`** · **无 commit**） |
+| ED-013e | D-class restricted_shares_unlock first-slice closure review | D | D2 | **完成**（§9.21 · **5/5** · closure gate **`PASS_WITH_CAVEAT`** · CNINFO **0** · **无 commit**） |
+| ED-013f | D-class restricted_shares_unlock first-slice commit boundary review | D | D2 | **完成**（§9.21 · safe **~32** · boundary gate **`READY_FOR_COMMIT_REVIEW`** · **NOT_APPROVED**） |
 | ED-014 | portrait_ontology P0–P3（catalog + coverage + schema + pilot） | 横切 | D0/D2 | **完成**（§9.10 · **715** fields · pilot **000009** · gates **`PASS_OFFLINE`** · **无 live**） |
 | ED-012 | MVP 四线 closure 汇总 | 横切 | D2 | 未开始 |
 | ED-012 | D3 完整规模（分线） | A/B/C/D | D3 | 未开始 |

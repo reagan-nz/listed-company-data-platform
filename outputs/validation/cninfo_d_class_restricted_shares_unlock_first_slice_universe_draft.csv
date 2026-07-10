@@ -1,0 +1,6 @@
+case_id,company_code,company_name,component,market,anchor_tdate,first_slice_include,expected_behavior,exclude_flags,notes,dlc003_reference
+DRU001,300009,安科生物,restricted_shares_unlock,chinext,2026-06-08,yes,empty_but_valid,exclude_688671;exclude_301259,DLC003 Phase1 acceptable empty_but_valid positive control; distinct DRU case_id; sparse unlock-day zero rows legal,yes
+DRU002,000895,双汇发展,restricted_shares_unlock,szse_main,2026-06-08,yes,captured_normal_or_empty_but_valid,exclude_688671;exclude_301259,SZSE主板活跃蓝筹; liftBan/detail company filter; cross-component with prior slices; not sole captured_normal_candidate,no
+DRU003,600000,浦发银行,restricted_shares_unlock,sse_main,2026-06-08,yes,captured_normal_or_empty_but_valid,exclude_688671;exclude_301259,SSE主板金融; same anchor tdate policy; sparse or found both acceptable,no
+DRU004,002415,海康威视,restricted_shares_unlock,szse_main,2026-06-08,yes,captured_normal_or_needs_review,exclude_688671;exclude_301259,SZSE主板龙头制造; field mapping may need review if found; not DLC003R/DLC006R,no
+DRU005,688981,中芯国际,restricted_shares_unlock,star,2026-06-08,yes,captured_normal_or_empty_but_valid,exclude_688671;exclude_301259,科创板大型半导体; star board coverage; sparse-day empty_but_valid allowed,no
