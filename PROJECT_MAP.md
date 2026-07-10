@@ -755,6 +755,7 @@ _最后更新：2026-07-10_
 - `outputs/validation/cninfo_d_class_block_trade_first_slice_safe_to_commit_list.md` — safe-to-commit（**~27** paths）
 - `outputs/validation/cninfo_d_class_block_trade_first_slice_do_not_commit_list.md` — do-not-commit 清单
 - `outputs/validation/cninfo_d_class_block_trade_first_slice_commit_message_draft.md` — commit message 草案
+- `outputs/validation/cninfo_d_class_block_trade_first_slice_commit_status.md` — explicit-path commit 状态（**`a12298b`** · **无 push**）
 - `outputs/validation/cninfo_d_class_block_trade_first_slice/reports/d_class_block_trade_first_slice_live_report.csv` — live 报告
 - `outputs/validation/cninfo_d_class_block_trade_first_slice/reports/d_class_block_trade_first_slice_dryrun_report.csv` — dry-run 报告
 - `outputs/validation/cninfo_d_class_block_trade_first_slice/reports/d_class_block_trade_first_slice_dryrun_summary.md` — dry-run 摘要
@@ -928,16 +929,18 @@ _最后更新：2026-07-10_
 - `outputs/validation/cninfo_b_class_phase3_100_retry_v2_test_cleanup_hardening_summary.md` — test cleanup hardening
 - `outputs/validation/cninfo_b_class_phase3_100_retry_v2_missing_artifact_recovery_summary.md` — recovery live **185/185**
 - `outputs/validation/cninfo_b_class_phase3_100_retry_v2_supplemental_commit_path_list.csv` — supplemental path list
-- **Era D B-class ~200 expansion** — `plans/cninfo_b_class_erad_scale_200_plan.md` · universe [cninfo_b_class_erad_scale_200_universe_draft.csv](outputs/validation/cninfo_b_class_erad_scale_200_universe_draft.csv)（**200** = **100 retained** + **100 new**）· [runner extension summary](outputs/validation/cninfo_b_class_erad_scale_200_runner_extension_summary.md)（gate **READY_FOR_APPROVAL** · **NOT APPROVED live**）
+- **Era D B-class ~200 expansion** — `plans/cninfo_b_class_erad_scale_200_plan.md` · universe [cninfo_b_class_erad_scale_200_universe_draft.csv](outputs/validation/cninfo_b_class_erad_scale_200_universe_draft.csv)（**200** = **100 retained** + **100 new**）· [runner extension summary](outputs/validation/cninfo_b_class_erad_scale_200_runner_extension_summary.md) · live **198/200** · CNINFO **397**
+- **Era D B-class ~200 explicit-path commit** — **`e738fa9`** · **30 files** · [commit status](outputs/validation/cninfo_b_class_erad_scale_200_commit_status.md)（gate **`PASS_WITH_CAVEAT`** · **NOT pushed** · bulk raw_metadata/quality excluded）
 - `lab/test_cninfo_b_class_erad_scale_200_runner.py` — Era D ~200 runner 测试（**15/15 PASS** · CNINFO **0**）
+- `lab/test_cninfo_b_class_erad_scale_200_live_path.py` — Era D ~200 live-path 测试（**17/17 PASS** · mock CNINFO **0**）
 - `plans/cninfo_b_class_erad_scale_200_commit_boundary_review.md` — Era D commit boundary review
-- `outputs/validation/cninfo_b_class_erad_scale_200_commit_boundary_summary.md` — boundary summary（gate **READY_FOR_COMMIT_REVIEW**）
-- `outputs/validation/cninfo_b_class_erad_scale_200_safe_to_commit_list.md` — explicit-path safe list（**~30** paths）
-- `outputs/validation/cninfo_b_class_erad_scale_200_do_not_commit_list.md` — bulk raw_metadata/quality excluded
-- `outputs/validation/cninfo_b_class_erad_scale_200_commit_message_draft.md` — commit message draft（**NOT committed**）
+- `outputs/validation/cninfo_b_class_erad_scale_200_commit_boundary_summary.md` — boundary summary
+- `outputs/validation/cninfo_b_class_erad_scale_200_safe_to_commit_list.md` — explicit-path safe list（**30** paths committed）
+- `outputs/validation/cninfo_b_class_erad_scale_200_do_not_commit_list.md` — bulk raw_metadata/quality excluded（local-only）
+- `outputs/validation/cninfo_b_class_erad_scale_200_unresolved_case_ledger.csv` — unresolved ledger（BD2E090 · BD2E092）
 - `outputs/validation/cninfo_b_class_erad_scale_200/reports/b_class_erad_scale_200_report.csv` — Era D live 报告（**198/200 acceptable** · CNINFO **397**）
-- `plans/cninfo_b_class_erad_scale_200_command_draft.md` — Era D 命令草案（dry-run 已实现 · live **NOT APPROVED**）
-- `outputs/validation/cninfo_b_class_erad_scale_200_approval_checklist.md` — Era D 批准检查清单（**NOT APPROVED**）
+- `plans/cninfo_b_class_erad_scale_200_command_draft.md` — Era D 命令草案
+- `outputs/validation/cninfo_b_class_erad_scale_200_approval_checklist.md` — Era D 批准检查清单（commit complete · **NOT pushed**）
 - `plans/cninfo_b_class_phase3_100_post_commit_inventory_gap_review.md` — Phase 3 post-commit inventory gap review（gate **`READY_FOR_HUMAN_DECISION`** · primary **Option A**）
 - `outputs/validation/cninfo_b_class_phase3_100_post_commit_missing_artifact_ledger.csv` — missing artifact ledger（**185** paths）
 - `outputs/validation/cninfo_b_class_phase3_100_post_commit_gap_metrics.csv` — gap metrics
@@ -1185,4 +1188,6 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 52. **D 类 block_trade first-slice live path 已离线实现**（[live-path summary](outputs/validation/cninfo_d_class_block_trade_first_slice_live_path_summary.md) · tests **18/18** · mock only）。
 53. **D 类 block_trade first-slice isolated live 已执行**（[isolated live summary](outputs/validation/cninfo_d_class_block_trade_first_slice_isolated_live_validation_summary.md) · CNINFO **5** · acceptable **4/5** · execution gate **`PASS_WITH_CAVEAT`** · caveat DBT002 · **无 commit**）。
 54. **D 类 block_trade first-slice closure review 已完成**（[closure summary](outputs/validation/cninfo_d_class_block_trade_first_slice_closure_summary.md) · **4/5** · sparse-day **5/5** · closure gate **`PASS_WITH_CAVEAT`** · CNINFO **0** · **无 commit**）。
+55. **D 类 block_trade first-slice commit boundary review 已完成**（[boundary summary](outputs/validation/cninfo_d_class_block_trade_first_slice_commit_boundary_summary.md) · safe **~27** · boundary gate **`READY_FOR_COMMIT_REVIEW`** · CNINFO **0**）。
+56. **D 类 block_trade first-slice explicit-path commit 已完成**（commit **`a12298b`** · **24 files** · [commit status](outputs/validation/cninfo_d_class_block_trade_first_slice_commit_status.md) · gate **`PASS_WITH_CAVEAT`** · DBT002 caveat retained · **无 push**）。
 12. **每完成一个 Phase**：更新分层表状态 + `outputs/validation/` 留 summary；不做数据库接入。

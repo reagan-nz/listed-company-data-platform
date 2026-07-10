@@ -1,0 +1,6 @@
+case_id,component,anchor_tdate,expected_behavior,retrieval_status,record_count,quality_status,acceptable,failure_type,cninfo_request_count,notes
+DBT001,block_trade,2026-07-03,empty_but_valid,empty_but_valid,0,pass,yes,,1,company-level zero rows; legal empty per quality policy
+DBT002,block_trade,2026-07-03,captured_normal_candidate,empty_but_valid,0,pass,no,expectation_mismatch,1,company-level zero rows; legal empty per quality policy
+DBT003,block_trade,2026-07-03,captured_normal_or_empty_but_valid,empty_but_valid,0,pass,yes,,1,company-level zero rows; legal empty per quality policy
+DBT004,block_trade,2026-07-03,captured_normal_or_empty_but_valid,empty_but_valid,0,pass,yes,,1,company-level zero rows; legal empty per quality policy
+DBT005,block_trade,2026-07-03,captured_normal_or_empty_but_valid,empty_but_valid,0,pass,yes,,1,company-level zero rows; legal empty per quality policy

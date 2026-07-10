@@ -1,0 +1,6 @@
+case_id,company_code,company_name,component,market,anchor_tdate,first_slice_include,expected_behavior,reason,dlc002_reference
+DBT001,601988,中国银行,block_trade,sse_main,2026-07-03,yes,empty_but_valid,DLC002 Phase1 acceptable empty_but_valid positive control; distinct DBT case_id; sparse-day zero rows legal,yes
+DBT002,000895,双汇发展,block_trade,szse_main,2026-07-03,yes,captured_normal_candidate,SZSE主板活跃蓝筹; block_trade ints/statistics company filter; cross-component with margin/disclosure slices; not 688671/301259,no
+DBT003,600000,浦发银行,block_trade,sse_main,2026-07-03,yes,captured_normal_or_empty_but_valid,SSE主板金融; same anchor tdate policy; sparse or found both acceptable,no
+DBT004,002415,海康威视,block_trade,szse_main,2026-07-03,yes,captured_normal_or_empty_but_valid,SZSE主板龙头制造; field mapping may need review if found; not DLC003R/DLC006R,no
+DBT005,688981,中芯国际,block_trade,star,2026-07-03,yes,captured_normal_or_empty_but_valid,科创板大型半导体; star board coverage; sparse-day empty_but_valid allowed,no

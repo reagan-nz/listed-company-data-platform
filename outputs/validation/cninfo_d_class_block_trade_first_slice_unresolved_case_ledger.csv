@@ -1,0 +1,2 @@
+case_id,company_code,company_name,component,anchor_tdate,expected_behavior,retrieval_status,record_count,acceptable,failure_class,recommended_action,blocking_closure,notes
+DBT002,000895,双汇发展,block_trade,2026-07-03,captured_normal_candidate,empty_but_valid,0,no,expectation_mismatch_on_sparse_day,accept_with_caveat|retag_expected_behavior_offline|optional_nonzero_tdate_probe_later,no,sparse-day empty on 2026-07-03; endpoint returned 0 rows consistently for all 5 cases; mismatch is expectation label not transport/filter failure

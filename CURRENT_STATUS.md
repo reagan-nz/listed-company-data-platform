@@ -237,16 +237,16 @@ _最后更新：2026-07-10_
 
 ## B 类 Era D ~200 Metadata Expansion（2026-07-10）
 
-> **commit boundary review complete** · **198/200 caveat retained** · **NOT committed** · **NOT verified**
+> **explicit-path commit complete** · **198/200 caveat retained** · **NOT pushed** · **NOT verified**
 
 | 项 | 状态 |
 |----|------|
 | **Live + closure** | effective **198/200** · CNINFO **397** · closure gate **`PASS_WITH_CAVEAT`** |
-| **Commit boundary** | [summary](outputs/validation/cninfo_b_class_erad_scale_200_commit_boundary_summary.md) · [safe-to-commit](outputs/validation/cninfo_b_class_erad_scale_200_safe_to_commit_list.md)（**~30 paths**） · [do-not-commit](outputs/validation/cninfo_b_class_erad_scale_200_do_not_commit_list.md) · [message draft](outputs/validation/cninfo_b_class_erad_scale_200_commit_message_draft.md) |
-| **Unresolved** | [ledger](outputs/validation/cninfo_b_class_erad_scale_200_unresolved_case_ledger.csv) — BD2E090 · BD2E092 |
-| **Excluded from commit** | `raw_metadata/` **200** · `quality/` **200**（bulk · local-only） |
-| **Gate** | `b_class_erad_scale_200_commit_boundary_gate = READY_FOR_COMMIT_REVIEW` |
-| **下一步** | Human approve explicit-path commit（separate phrase · separate task） |
+| **Explicit-path commit** | **`e738fa9`** · **30 files** · [commit status](outputs/validation/cninfo_b_class_erad_scale_200_commit_status.md) |
+| **Unresolved** | [ledger](outputs/validation/cninfo_b_class_erad_scale_200_unresolved_case_ledger.csv) — BD2E090 · BD2E092（`network_error`） |
+| **Excluded from commit** | `raw_metadata/` **200** · `quality/` **200**（bulk · local-only · confirmed not committed） |
+| **Gate** | `b_class_erad_scale_200_commit_gate = PASS_WITH_CAVEAT` |
+| **下一步** | Human-approved push（separate phrase）· or optional BD2E090/BD2E092 retry（deferred）· or Era D next-scale planning |
 
 ---
 
@@ -343,8 +343,10 @@ _最后更新：2026-07-10_
 | **block_trade closure gate** | `d_class_block_trade_first_slice_closure_gate = PASS_WITH_CAVEAT` |
 | **block_trade commit boundary** | [boundary summary](outputs/validation/cninfo_d_class_block_trade_first_slice_commit_boundary_summary.md) · safe **~27** · CNINFO **0** |
 | **block_trade commit boundary gate** | `d_class_block_trade_first_slice_commit_boundary_gate = READY_FOR_COMMIT_REVIEW` |
+| **block_trade explicit-path commit** | **`a12298b`** · **28 files** · [commit status](outputs/validation/cninfo_d_class_block_trade_first_slice_commit_status.md) |
+| **block_trade commit gate** | `d_class_block_trade_first_slice_commit_gate = PASS_WITH_CAVEAT` · **NOT pushed** |
 | **margin_trading closure gate** | `d_class_margin_trading_first_slice_closure_gate = PASS_WITH_CAVEAT` |
-| **下一步** | Human approve → **explicit-path commit**（separate phrase）· then Era D planning refresh（**restricted_shares_unlock** · planning only）· **无 push** until approved |
+| **下一步** | Era D next-component planning refresh（**`restricted_shares_unlock`** · planning only · **no live**） |
 | 性质 | **规划 only**；7 源市场行为类别；不接 DB/MinIO/RAG；不写 verified；不升级 testing_stable_sample |
 
 ---

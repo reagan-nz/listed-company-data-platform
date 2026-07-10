@@ -289,7 +289,7 @@ planning (offline)
 | Agent | Era | 现行下一步 |
 |-------|-----|------------|
 | **B** | **D** | Human approve **explicit-path commit** · [boundary summary](../outputs/validation/cninfo_b_class_erad_scale_200_commit_boundary_summary.md) |
-| **C** | **D** | C-class Era D **local retention/index doc** 或 **post status-fix harvest audit** · [partial-6 summary](../outputs/validation/cninfo_c_class_erad_partial6_human_review_summary.md) |
+| **C** | **D** | C-class Era D **post status-fix-8 harvest audit**（CNINFO=0）或 **hold** · [retention summary](../outputs/validation/cninfo_c_class_erad_local_retention_summary.md) |
 | **A** | **C** | A3M017 isolated-retry **commit boundary**（offline）→ 再 commit |
 | **D** | **C** | disclosure_schedule closure→boundary→commit **`d37ce0a`** → **Era D next-component planning**（**完成**） |
 
@@ -346,11 +346,8 @@ planning (offline)
 | needs_review triage gate | **`PASS_OFFLINE`** |
 | status-fix-8 gate | **`PASS_OFFLINE`** |
 | status-fix-8 apply gate | **`PASS_WITH_CAVEAT`**（**8/8 appended** · backup on disk） |
-
-**approved_for_snapshot_rebuild = false** · **approved_for_live_resume = false**
-
-| partial-6 human-review gate | **`PASS_OFFLINE`**（**6/6 accept_with_caveat** · needs_live_resume **0/6**） |
-| local retention gate | **`PASS_OFFLINE`**（ED-002 style policy + index） |
+| partial-6 human-review gate | **`PASS_OFFLINE`**（needs_live_resume **0/6**） |
+| local retention gate | **`PASS_OFFLINE`**（ED-002 policy + index） |
 
 **approved_for_snapshot_rebuild = false** · **approved_for_live_resume = false**
 
@@ -360,17 +357,18 @@ planning (offline)
 
 ### 9.5 B 类 Era D — ~200 Metadata Expansion（2026-07-10）
 
-> **commit boundary ready** · **198/200 caveat** · **NOT committed** · **NOT verified**
+> **explicit-path commit complete** · **198/200 caveat** · **NOT pushed** · **NOT verified**
 
 | 项 | 内容 |
 |----|------|
-| effective | **198/200** · unresolved **2**（BD2E090/BD2E092） |
-| commit boundary | [summary](../outputs/validation/cninfo_b_class_erad_scale_200_commit_boundary_summary.md) · [safe-to-commit](../outputs/validation/cninfo_b_class_erad_scale_200_safe_to_commit_list.md) · [do-not-commit](../outputs/validation/cninfo_b_class_erad_scale_200_do_not_commit_list.md) |
-| excluded bulk | raw_metadata **200** · quality **200** |
-| boundary gate | **`b_class_erad_scale_200_commit_boundary_gate = READY_FOR_COMMIT_REVIEW`** |
+| effective | **198/200** · unresolved **2**（BD2E090/BD2E092 · `network_error`） |
+| commit | **`e738fa9`** · **30 files** · [commit status](../outputs/validation/cninfo_b_class_erad_scale_200_commit_status.md) |
+| excluded bulk | raw_metadata **200** · quality **200**（local-only · not committed） |
+| commit gate | **`b_class_erad_scale_200_commit_gate = PASS_WITH_CAVEAT`** |
 | closure gate | **`PASS_WITH_CAVEAT`** |
+| unresolved ledger | [ledger](../outputs/validation/cninfo_b_class_erad_scale_200_unresolved_case_ledger.csv) |
 
-**下一步：** human approve explicit-path commit
+**下一步：** human-approved push（separate phrase）· optional BD2E090/BD2E092 retry（deferred）· Era D next-scale planning
 
 ---
 
@@ -534,6 +532,23 @@ planning (offline)
 
 ---
 
+### 9.15 D 类 block_trade First-Slice Explicit-Path Commit（2026-07-10）
+
+> **human-approved commit** · **24 files** · **NOT pushed** · **NOT verified**
+
+| 项 | 内容 |
+|----|------|
+| commit | **`a12298b`** |
+| files | **24** explicit paths |
+| live_snapshots | **not committed** |
+| DBT002 caveat | **retained** |
+| commit gate | **`d_class_block_trade_first_slice_commit_gate = PASS_WITH_CAVEAT`** |
+| commit status | [cninfo_d_class_block_trade_first_slice_commit_status.md](../outputs/validation/cninfo_d_class_block_trade_first_slice_commit_status.md) |
+
+**下一步：** Era D next-component planning refresh（**`restricted_shares_unlock`** · planning only）
+
+---
+
 ### 9.3 与「先本地、后入库」的对齐
 
 | 现在做 | 以后做（非 Era D） |
@@ -562,6 +577,8 @@ planning (offline)
 | ED-011c | D-class block_trade first-slice live path | D | D2 | **完成**（§9.11 · tests **18/18** · mock only） |
 | ED-011d | D-class block_trade first-slice isolated live | D | D2 | **完成**（§9.12 · CNINFO **5** · **4/5** · execution gate **`PASS_WITH_CAVEAT`** · **无 commit**） |
 | ED-011e | D-class block_trade first-slice closure review | D | D2 | **完成**（§9.13 · **4/5** · closure gate **`PASS_WITH_CAVEAT`** · CNINFO **0** · **无 commit**） |
+| ED-011f | D-class block_trade first-slice commit boundary review | D | D2 | **完成**（§9.14 · safe **~27** · boundary gate **`READY_FOR_COMMIT_REVIEW`**） |
+| ED-011g | D-class block_trade first-slice explicit-path commit | D | D2 | **完成**（§9.15 · commit **`a12298b`** · **24 files** · gate **`PASS_WITH_CAVEAT`** · **无 push**） |
 | ED-014 | portrait_ontology P0–P3（catalog + coverage + schema + pilot） | 横切 | D0/D2 | **完成**（§9.10 · **715** fields · pilot **000009** · gates **`PASS_OFFLINE`** · **无 live**） |
 | ED-012 | MVP 四线 closure 汇总 | 横切 | D2 | 未开始 |
 | ED-012 | D3 完整规模（分线） | A/B/C/D | D3 | 未开始 |
