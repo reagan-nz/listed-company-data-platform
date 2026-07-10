@@ -1,0 +1,23 @@
+design_dimension,rule,value,notes
+sample_size,Phase 3 expansion target,100,在 Phase 2.5 有效 50/50 基础上翻倍至 100 家；metadata only
+case_id_format,case_id 命名规则,B3E001-B3E100,与 Phase 1/2/2.5 命名隔离
+exclude_phase1,排除 B Phase 1 已测公司,5 codes,000550/000895/300009/601988/688981 等 tiny live universe
+exclude_phase2,排除 B Phase 2 已测公司,20 codes,Phase 2 expansion universe 全量排除
+exclude_phase25,排除 B Phase 2.5 已测公司,50 codes,Phase 2.5 expansion universe 全量排除
+exclude_retry_duplicates,排除 failed/retry 重复样本,0 overlap,Phase 2.5 retry universe 为 Phase 2.5 子集；主 universe 已去重
+exclude_problematic_identity,避免已知未解决 identity 问题,yes,若 orgId/代码映射存在未收口问题则不入 universe
+exclude_bse,默认排除北交所 unless explicitly allowed,yes,本包仅 SSE/SZSE 主板 + 创业板 + 科创板
+endpoint_mix_periodic,EP004 periodic-report oriented,50,50% 样本走定期报告 metadata 路径
+endpoint_mix_general,EP005 general-announcement oriented,50,50% 样本走一般公告 metadata 路径
+endpoint_ep001,EP001 announcement query,all 100,全 case 主检索入口
+endpoint_ep002,EP002 orgId resolution,where needed,金融样本含 EP002；非金融 periodic/general 不含
+metadata_only,仅 metadata 检索,yes,不下载 PDF；不解析；不 OCR
+url_lineage_only,仅 URL lineage 登记,yes,pdf_url/adjunct_url 登记；不触碰文件内容
+no_pdf_download,禁止 PDF download,yes,红线
+no_pdf_parse,禁止 PDF parse,yes,红线
+no_ocr_extraction,禁止 OCR / section extraction,yes,红线
+no_db_minio_rag,禁止 DB / MinIO / RAG,yes,红线
+output_root_isolation,独立输出根,outputs/validation/cninfo_b_class_phase3_100_expansion/,与 Phase 1/2/2.5 输出隔离
+approval_flag,未来批准 flag 占位,--approve-b-class-phase3-100-expansion,本回合未实现；仅文档化
+human_approval,显式人工批准后方可 live,required,本回合 NOT APPROVED
+no_live_this_task,本任务不执行 live,yes,offline planning only

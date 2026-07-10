@@ -1,0 +1,100 @@
+case_id,company_code,original_phase3_status,original_failure_type,original_failure_stage,retry_retrieval_status,quality_status,lineage_status,pdf_url_present,pdf_downloaded,pdf_parsed,failure_type,notes
+B3E001,600010,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; network_timeout
+B3E002,600011,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E003,600015,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,found,pass,discovered,1,0,0,,phase3 failed retry live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B3E004,600016,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,found,pass,discovered,1,0,0,,phase3 failed retry live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B3E005,600017,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,found,pass,discovered,1,0,0,,phase3 failed retry live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B3E006,600018,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,found,pass,discovered,1,0,0,,phase3 failed retry live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B3E007,600019,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,found,pass,discovered,1,0,0,,phase3 failed retry live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B3E008,600023,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,found,pass,discovered,1,0,0,,phase3 failed retry live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B3E009,600025,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,found,pass,discovered,1,0,0,,phase3 failed retry live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B3E010,600026,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E011,600027,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,found,pass,discovered,1,0,0,,phase3 failed retry live; live metadata retrieved; PDF not downloaded; quality_checks_pass
+B3E012,600031,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; network_timeout
+B3E013,600033,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E014,600035,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E015,600037,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E016,600038,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E017,600039,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E018,600048,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E019,600054,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E020,600056,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E021,600057,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E022,600058,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E023,600060,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E024,600061,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E025,600062,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E026,600063,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E027,600064,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E028,600066,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E029,600071,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E030,600072,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E031,600073,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E032,600075,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E033,600085,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E034,600088,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E035,600089,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E036,600096,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E037,600098,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E038,600100,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E039,600111,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E040,600115,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E041,600118,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E042,600132,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E043,600141,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E044,600150,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E045,600160,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E046,600176,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E047,600183,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E048,600188,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E049,600196,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E050,600219,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E051,000009,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E052,000012,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E053,000021,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E054,000027,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E055,000039,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E056,000050,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E057,000060,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E058,000069,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E059,000088,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E060,000156,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E061,000157,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E062,000301,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E063,000401,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E064,000408,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E065,000423,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E066,000513,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E067,000519,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E068,000528,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E069,000543,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E070,000547,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E071,000559,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E072,000581,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E073,000596,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E074,000625,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E075,000629,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E076,000630,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E077,000661,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E078,000683,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E079,000703,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E080,000708,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E081,000728,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E082,000733,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E083,000738,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E084,000739,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E085,000768,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E086,000783,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E088,000792,network_error,network_error,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E089,000800,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E090,000807,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E091,300017,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E092,300033,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E093,300122,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E094,300347,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E095,300433,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E096,688001,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E097,688005,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E098,688012,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E099,688019,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed
+B3E100,688029,network_error,ep002_orgid_resolution_failed,EP002_topSearch_orgId,network_error,needs_review,needs_review,0,0,0,network_error,phase3 failed retry live; EP002 orgId resolution failed

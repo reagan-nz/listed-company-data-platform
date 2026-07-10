@@ -1,0 +1,42 @@
+{
+  "case": {
+    "case_id": "B3E086",
+    "company_code": "000783",
+    "company_name": "长江证券",
+    "market": "SZSE主板",
+    "announcement_type": "general_announcement",
+    "target_endpoint": [
+      "EP001",
+      "EP002",
+      "EP005"
+    ],
+    "phase3_include": "yes",
+    "selection_reason": "金融样本；EP002+EP005；financial bucket",
+    "expected_behavior": "validate retrieval_status=found; general_announcement metadata; pdf_url lineage discovered",
+    "prior_phase_overlap": "no",
+    "notes": "metadata only; no PDF download"
+  },
+  "mode": "phase3_live",
+  "cninfo_called": true,
+  "pdf_download_enabled": false,
+  "pdf_parse_enabled": false,
+  "record": {
+    "case_id": "B3E086",
+    "company_code": "000783",
+    "company_name": "长江证券",
+    "endpoint_id": "EP005",
+    "announcement_id": "",
+    "announcement_title": "",
+    "announcement_time": "",
+    "announcement_category": "",
+    "pdf_url": "",
+    "adjunct_url": "",
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_status": "network_error",
+    "quality_status": "needs_review",
+    "lineage_status": "needs_review",
+    "error_type": "network_error",
+    "notes": "phase3 expansion live; EP002 orgId resolution failed"
+  },
+  "raw_announcement": null
+}

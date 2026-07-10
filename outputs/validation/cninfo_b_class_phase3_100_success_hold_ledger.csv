@@ -1,0 +1,2 @@
+case_id,company_code,company_name,retrieval_status,quality_status,lineage_status,hold_reason,rerun_allowed,notes
+B3E087,000786,北新建材,found,pass,discovered,accepted_original_success,no,merge into final effective Phase 3 result; do not rerun in isolated retry batch

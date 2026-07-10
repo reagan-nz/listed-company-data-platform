@@ -1,0 +1,9 @@
+precheck_id,case_id,company_code,market,announcement_type,reachability_status,orgid_resolution_status,resolved_org_id,failure_type,quality_status,cninfo_request_count,notes
+B3EP001,B3E001,600010,SSE主板,periodic_report,reachable,resolved,gssh0600010,,orgid_resolved,1,live precheck; EP002 orgId only; not metadata retry; not retry_v2; err=
+B3EP002,B3E018,600048,SSE主板,periodic_report,reachable,resolved,9900000161,,orgid_resolved,1,live precheck; EP002 orgId only; not metadata retry; not retry_v2; err=
+B3EP003,B3E035,600089,SSE主板,periodic_report,reachable,resolved,gssh0600089,,orgid_resolved,1,live precheck; EP002 orgId only; not metadata retry; not retry_v2; err=
+B3EP004,B3E051,000009,SZSE主板,general_announcement,reachable,resolved,gssz0000009,,orgid_resolved,1,live precheck; EP002 orgId only; not metadata retry; not retry_v2; err=
+B3EP005,B3E074,000625,SZSE主板,general_announcement,reachable,resolved,gssz0000625,,orgid_resolved,1,live precheck; EP002 orgId only; not metadata retry; not retry_v2; err=
+B3EP006,B3E091,300017,创业板,general_announcement,reachable,resolved,9900008387,,orgid_resolved,1,live precheck; EP002 orgId only; not metadata retry; not retry_v2; err=
+B3EP007,B3E096,688001,科创板,general_announcement,reachable,resolved,9900038969,,orgid_resolved,1,live precheck; EP002 orgId only; not metadata retry; not retry_v2; err=
+B3EP008,B3E100,688029,科创板,general_announcement,reachable,resolved,gfbj0834229,,orgid_resolved,1,live precheck; EP002 orgId only; not metadata retry; not retry_v2; err=

@@ -1,0 +1,42 @@
+{
+  "case": {
+    "case_id": "B3E030",
+    "company_code": "600072",
+    "company_name": "中船科技",
+    "market": "SSE主板",
+    "announcement_type": "periodic_report",
+    "target_endpoint": [
+      "EP001",
+      "EP004"
+    ],
+    "original_phase3_status": "network_error",
+    "original_failure_type": "ep002_orgid_resolution_failed",
+    "original_failure_stage": "EP002_topSearch_orgId",
+    "retry_include": "yes",
+    "retry_strategy": "isolated_metadata_retry",
+    "notes": "same endpoints as Phase 3 batch; schema_impact=none; EP002 orgId retry then EP001"
+  },
+  "mode": "phase3_failed_retry_live",
+  "cninfo_called": true,
+  "pdf_download_enabled": false,
+  "pdf_parse_enabled": false,
+  "record": {
+    "case_id": "B3E030",
+    "company_code": "600072",
+    "company_name": "中船科技",
+    "endpoint_id": "EP004",
+    "announcement_id": "",
+    "announcement_title": "",
+    "announcement_time": "",
+    "announcement_category": "",
+    "pdf_url": "",
+    "adjunct_url": "",
+    "source_endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+    "retrieval_status": "network_error",
+    "quality_status": "needs_review",
+    "lineage_status": "needs_review",
+    "error_type": "network_error",
+    "notes": "phase3 failed retry live; EP002 orgId resolution failed"
+  },
+  "raw_announcement": null
+}

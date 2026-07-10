@@ -1,0 +1,19 @@
+metric_group,metric_name,value,gate_impact,notes
+execution,phase3_total_cases,100,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,approved Phase 3 universe
+execution,original_accepted,1,FAIL_REVIEW_REQUIRED,B3E087 hold
+execution,retry_recovered,8,FAIL_REVIEW_REQUIRED,isolated retry recovered
+execution,effective_accepted,9,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,1+8 merged
+execution,persistent_unresolved,91,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,EP002/network
+execution,effective_coverage,9/100,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,not 90 threshold
+gate,retry_execution_gate,FAIL_REVIEW_REQUIRED,FAIL_REVIEW_REQUIRED,8/99 retry acceptable
+gate,closure_status,unresolved_network_caveat,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,offline closure triage
+safety,pdf_downloaded,0,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,
+safety,pdf_parsed,0,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,
+safety,ocr,0,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,
+safety,extraction,0,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,
+safety,db_write,0,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,
+safety,minio_write,0,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,
+safety,rag_run,0,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,
+status,verified,false,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,explicitly not verified
+status,production_ready,false,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,not production_ready
+cninfo,cninfo_requests_closure,0,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,closure round offline only

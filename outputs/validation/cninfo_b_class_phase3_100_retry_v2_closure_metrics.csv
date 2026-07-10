@@ -1,0 +1,26 @@
+metric_group,metric_name,value,gate_impact,notes
+execution,phase3_total_cases,100,PASS_WITH_CAVEAT,approved Phase 3 universe
+execution,accepted_original_hold,1,PASS_WITH_CAVEAT,B3E087
+execution,accepted_failed_retry_recovered,8,PASS_WITH_CAVEAT,8 isolated retry recovered
+execution,accepted_retry_v2_recovered,91,PASS_WITH_CAVEAT,91 retry_v2 recovered
+execution,effective_accepted_final,100,PASS_WITH_CAVEAT,post retry_v2 merge
+execution,effective_unresolved_final,0,PASS_WITH_CAVEAT,post retry_v2 merge
+execution,pre_merge_effective_accepted,9,PASS_WITH_CAVEAT,before retry_v2
+execution,pre_merge_persistent_unresolved,91,PASS_WITH_CAVEAT,before retry_v2
+gate,retry_v2_execution_gate,PASS_WITH_CAVEAT,PASS_WITH_CAVEAT,91/91 acceptable live
+gate,retry_v2_closure_gate,PASS_WITH_CAVEAT,PASS_WITH_CAVEAT,offline merge closure
+gate,phase3_execution_gate_preserved,FAIL_REVIEW_REQUIRED,FAIL_REVIEW_REQUIRED,historical original live
+gate,failed_retry_execution_gate_preserved,FAIL_REVIEW_REQUIRED,FAIL_REVIEW_REQUIRED,historical failed retry live
+gate,failed_retry_closure_gate_preserved,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,pre-retry_v2 closure
+safety,pdf_downloaded,0,PASS_WITH_CAVEAT,
+safety,pdf_parsed,0,PASS_WITH_CAVEAT,
+safety,ocr,0,PASS_WITH_CAVEAT,
+safety,extraction,0,PASS_WITH_CAVEAT,
+safety,db_write,0,PASS_WITH_CAVEAT,
+safety,minio_write,0,PASS_WITH_CAVEAT,
+safety,rag_run,0,PASS_WITH_CAVEAT,
+status,verified,false,PASS_WITH_CAVEAT,
+status,production_ready,false,PASS_WITH_CAVEAT,
+cninfo,cninfo_requests_closure,0,PASS_WITH_CAVEAT,closure round offline only
+cninfo,cninfo_requests_retry_v2_live,182,PASS_WITH_CAVEAT,prior live only; not called in closure
+merge,merge_conflicts,0,PASS_WITH_CAVEAT,none

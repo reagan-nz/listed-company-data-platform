@@ -1,0 +1,21 @@
+metric_group,metric_name,value,interpretation,gate_impact,notes
+original,original_phase3_total,100,Phase 3 expansion universe,FAIL_REVIEW_REQUIRED,B3E001-B3E100
+original,original_phase3_acceptable,1,B3E087 only on original live,FAIL_REVIEW_REQUIRED,found/pass/discovered
+original,original_phase3_failed,99,network_error dominant,FAIL_REVIEW_REQUIRED,EP002 orgId resolution
+retry,retry_total,99,failed cases minus B3E087,FAIL_REVIEW_REQUIRED,isolated retry universe
+retry,retry_acceptable,8,recovered on retry,FAIL_REVIEW_REQUIRED,B3E003-B3E011 subset
+retry,retry_failed,91,persistent network_error,FAIL_REVIEW_REQUIRED,EP002 orgId resolution
+combined,combined_effective_accepted,9,1 hold + 8 retry recovered,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,9/100 effective metadata coverage
+combined,combined_unresolved,91,persistent after merge,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,infrastructure caveat
+cninfo,original_cninfo_requests,3,early EP002 mass failure,FAIL_REVIEW_REQUIRED,original Phase 3 live
+cninfo,retry_cninfo_requests,18,partial EP002 attempts,FAIL_REVIEW_REQUIRED,failed retry live
+failure,dominant_failure_stage,EP002_topSearch_orgId,orgId resolution step,FAIL_REVIEW_REQUIRED,not schema parse failure
+safety,pdf_downloaded,0,metadata only boundary,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,no PDF files
+safety,pdf_parsed,0,no parser invoked,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,
+safety,ocr,0,no OCR,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,
+safety,extraction,0,no section extraction,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,
+safety,db_write,0,no DB,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,
+safety,minio_write,0,no MinIO,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,
+safety,rag_run,0,no RAG,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,
+classification,schema_failure_evidence,none,no field/shape break observed,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,do not change schema
+classification,infrastructure_caveat,yes,EP002/network transient or reachability,PASS_WITH_CAVEAT_NETWORK_UNRESOLVED,precheck before retry_v2

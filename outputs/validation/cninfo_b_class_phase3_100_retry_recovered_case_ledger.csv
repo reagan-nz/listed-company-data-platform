@@ -1,0 +1,9 @@
+case_id,company_code,company_name,market,announcement_type,original_failure_type,retry_retrieval_status,quality_status,lineage_status,announcement_id,announcement_title,pdf_url_present,adjunct_url_present,source_of_recovery,notes
+B3E003,600015,华夏银行,SSE主板,periodic_report,ep002_orgid_resolution_failed,found,pass,discovered,1223129834,华夏银行2024年年度报告,1,1,phase3_failed_retry_live,found/pass/discovered on isolated retry; PDF not downloaded
+B3E004,600016,民生银行,SSE主板,periodic_report,ep002_orgid_resolution_failed,found,pass,discovered,1222951325,中国民生银行2024年年度报告,1,1,phase3_failed_retry_live,found/pass/discovered on isolated retry; PDF not downloaded
+B3E005,600017,日照港,SSE主板,periodic_report,ep002_orgid_resolution_failed,found,pass,discovered,1222922742,日照港2024年年度报告,1,1,phase3_failed_retry_live,found/pass/discovered on isolated retry; PDF not downloaded
+B3E006,600018,上港集团,SSE主板,periodic_report,ep002_orgid_resolution_failed,found,pass,discovered,1222973300,上港集团2024年年度报告,1,1,phase3_failed_retry_live,found/pass/discovered on isolated retry; PDF not downloaded
+B3E007,600019,宝钢股份,SSE主板,periodic_report,ep002_orgid_resolution_failed,found,pass,discovered,1223329102,宝钢股份2024年年度报告,1,1,phase3_failed_retry_live,found/pass/discovered on isolated retry; PDF not downloaded
+B3E008,600023,浙能电力,SSE主板,periodic_report,ep002_orgid_resolution_failed,found,pass,discovered,1223358285,2024年年度报告,1,1,phase3_failed_retry_live,found/pass/discovered on isolated retry; PDF not downloaded
+B3E009,600025,华能水电,SSE主板,periodic_report,ep002_orgid_resolution_failed,found,pass,discovered,1223528765,华能澜沧江水电股份有限公司2024年度向特定对象发行A股股票募集说明书（申报稿）（2024年年报更新版）,1,1,phase3_failed_retry_live,found/pass/discovered on isolated retry; PDF not downloaded
+B3E011,600027,华电国际,SSE主板,periodic_report,ep002_orgid_resolution_failed,found,pass,discovered,1223235106,关于发行股份及支付现金购买资产并募集配套资金暨关联交易报告书（草案）（2024年报更新）修订说明的公告,1,1,phase3_failed_retry_live,found/pass/discovered on isolated retry; PDF not downloaded
