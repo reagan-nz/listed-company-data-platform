@@ -1,0 +1,6 @@
+case_id,company_code,company_name,component,market,anchor_tdate,first_slice_include,expected_behavior,exclude_flags,notes,dlc005_reference
+DEP001,688981,中芯国际,equity_pledge,star,2026-07-03,yes,empty_but_valid,exclude_688671;exclude_301259,DLC005 Phase1 acceptable empty_but_valid positive control; distinct DEP case_id; sparse pledge-day zero rows legal,yes
+DEP002,000895,双汇发展,equity_pledge,szse_main,2026-07-03,yes,captured_normal_or_empty_but_valid,exclude_688671;exclude_301259,SZSE主板活跃蓝筹; equityPledge/list company filter; cross-component with prior slices; not sole captured_normal_candidate,no
+DEP003,600000,浦发银行,equity_pledge,sse_main,2026-07-03,yes,captured_normal_or_empty_but_valid,exclude_688671;exclude_301259,SSE主板金融; same anchor tdate policy; sparse or found both acceptable,no
+DEP004,002415,海康威视,equity_pledge,szse_main,2026-07-03,yes,captured_normal_or_needs_review,exclude_688671;exclude_301259,SZSE主板龙头制造; field mapping may need review if found; not DLC003R/DLC006R,no
+DEP005,601988,中国银行,equity_pledge,sse_main,2026-07-03,yes,captured_normal_or_empty_but_valid,exclude_688671;exclude_301259,SSE主板大型银行; board diversity; sparse-day empty_but_valid allowed per RSU/block_trade lessons,no

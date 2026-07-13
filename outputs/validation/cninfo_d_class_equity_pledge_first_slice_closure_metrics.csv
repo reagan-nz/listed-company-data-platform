@@ -1,0 +1,29 @@
+metric_group,metric_name,value,gate_impact,notes
+first_slice,total_cases,5,closure,DEP001-DEP005 only
+first_slice,acceptable,4,closure,4/5 acceptable; DEP004 expectation_mismatch non-blocking
+first_slice,empty_but_valid,5,closure,sparse-day anchor 2026-07-03; legal empty per quality policy
+first_slice,found,0,closure,no company-level rows on anchor day
+first_slice,failed,0,closure,no transport/http failure
+first_slice,needs_review,0,closure,branch not exercised this slice
+first_slice,unresolved_blocking,0,closure,DEP004 caveat retained; not blocking closure
+cninfo,CNINFO_during_live,5,execution,prior isolated live; cap 20; 1 per case
+cninfo,CNINFO_during_closure,0,closure,this offline review round
+cninfo,request_cap,20,planning,total cap limit
+cninfo,requests_used,5,execution,25% of cap consumed
+caveat,DEP004_expectation_mismatch,yes,closure,captured_normal_or_needs_review vs sparse-day empty_but_valid; DBT002-style
+caveat,sparse_day_all_cases,yes,closure,all 5 cases 0 rows on 2026-07-03
+safety,pdf_download,0,red_line,no PDF
+safety,ocr,0,red_line,no OCR
+safety,extraction,0,red_line,no extraction
+safety,db_write,0,red_line,no DB
+safety,minio_write,0,red_line,no MinIO
+safety,rag_run,0,red_line,no RAG
+exclusion,688671_excluded,yes,universe,DLC003R not in first-slice primary cases
+exclusion,301259_excluded,yes,universe,DLC006R not in first-slice primary cases
+track,known_event_track_closed,yes,closure,d_class_known_event_replacement_final_closure_gate=PASS_WITH_CAVEAT
+track,block_trade_track_closed,yes,closure,d_class_block_trade_first_slice_closure_gate=PASS_WITH_CAVEAT; NOT verified
+track,rsu_track_closed,yes,closure,d_class_restricted_shares_unlock_first_slice_commit_gate=PASS_WITH_CAVEAT; NOT verified
+promotion,disclosure_to_captured_normal,no,red_line,no upgrade from disclosure-only evidence
+promotion,empty_but_valid_to_found,no,red_line,sparse-day empty retained as legal outcome
+gate,execution_gate,PASS_WITH_CAVEAT,preserved,d_class_equity_pledge_first_slice_execution_gate
+gate,closure_gate,PASS_WITH_CAVEAT,closure,4/5 acceptable sparse-day empty; never bare PASS

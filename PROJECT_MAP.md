@@ -813,6 +813,31 @@ _最后更新：2026-07-10_
 - `outputs/validation/cninfo_d_class_equity_pledge_first_slice_universe_draft_sketch.csv` — equity_pledge universe sketch（**5** 行）
 - `outputs/validation/cninfo_d_class_equity_pledge_next_component_planning_summary.md` — equity_pledge 规划摘要
 - `outputs/validation/cninfo_d_class_equity_pledge_next_component_next_step_recommendation.md` — equity_pledge 下一步建议
+- `plans/cninfo_d_class_equity_pledge_first_slice_plan.md` — equity_pledge 第一切片正式规划（gate **READY_FOR_APPROVAL**）
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice_universe_draft.csv` — equity_pledge universe（**5** 行 · DEP001–DEP005）
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice_approval_checklist.md` — equity_pledge 批准清单（**NOT APPROVED for live**）
+- `plans/cninfo_d_class_equity_pledge_first_slice_command_draft.md` — equity_pledge 命令草案（**DO NOT RUN**）
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice_approval_summary.md` — equity_pledge approval 摘要
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice_next_step_recommendation.md` — equity_pledge first-slice 下一步建议
+- `lab/test_cninfo_d_class_equity_pledge_first_slice_runner.py` — equity_pledge runner 测试（**20/20**）
+- `lab/test_cninfo_d_class_equity_pledge_first_slice_live_path.py` — equity_pledge live-path 测试（**22/22** · mock only）
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice_runner_extension_summary.md` — equity_pledge runner 扩展摘要
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice_live_path_summary.md` — live-path 摘要（mock **22/22**）
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice_live_execution_summary.md` — isolated live 摘要（CNINFO **5** · **4/5**）
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice_live_outcome_ledger.csv` — per-case outcome ledger
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice_closure_summary.md` — closure 摘要（gate **`PASS_WITH_CAVEAT`**）
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice_closure_decision.md` — closure 决策
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice_closure_metrics.csv` — closure metrics
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice_effective_result.csv` — effective result
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice_final_caveat_ledger.csv` — caveat ledger
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice_commit_boundary_summary.md` — commit boundary 摘要（gate **`READY_FOR_COMMIT_REVIEW`**）
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice_safe_to_commit_list.md` — safe-to-commit（**~33** paths）
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice_do_not_commit_list.md` — do-not-commit 清单
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice_commit_message_draft.md` — commit message 草案
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice_post_closure_next_step_recommendation.md` — post-closure 建议
+- `plans/cninfo_d_class_equity_pledge_first_slice_closure_review.md` — closure review
+- `plans/cninfo_d_class_equity_pledge_first_slice_commit_boundary_review.md` — commit boundary review
+- `outputs/validation/cninfo_d_class_equity_pledge_first_slice/reports/d_class_equity_pledge_first_slice_live_report.csv` — live 报告
 - `outputs/validation/cninfo_d_class_erad_next_component_candidate_matrix.csv` — Era D 候选矩阵
 - `outputs/validation/cninfo_d_class_erad_next_component_recommendation.md` — Era D 推荐
 - `outputs/validation/cninfo_d_class_erad_next_component_planning_summary.md` — Era D 规划摘要
@@ -1307,4 +1332,11 @@ Era C 已从「所有公告混在一个 success rate 里」调整为 **A–F 分
 61. **D 类 restricted_shares_unlock first-slice isolated live 已执行**（[execution summary](outputs/validation/cninfo_d_class_restricted_shares_unlock_first_slice_live_execution_summary.md) · CNINFO **15** · acceptable **5/5** · sparse-day **5/5** · execution gate **`PASS_WITH_CAVEAT`** · **无 commit**）。
 62. **D 类 restricted_shares_unlock first-slice closure review 已完成**（[closure summary](outputs/validation/cninfo_d_class_restricted_shares_unlock_first_slice_closure_summary.md) · **5/5** · sparse-day empty **5/5** · closure gate **`PASS_WITH_CAVEAT`** · CNINFO **0** · **无 commit**）。
 63. **D 类 restricted_shares_unlock first-slice commit boundary review 已完成**（[boundary summary](outputs/validation/cninfo_d_class_restricted_shares_unlock_first_slice_commit_boundary_summary.md) · safe **~32** · boundary gate **`READY_FOR_COMMIT_REVIEW`** · **NOT_APPROVED** · CNINFO **0**）。
+64. **D 类 restricted_shares_unlock first-slice explicit-path commit 已完成**（commit **`aa087b5`** · **32 files** · gate **`PASS_WITH_CAVEAT`** · **无 push** · **NOT verified**）。
+65. **D 类 equity_pledge next-component planning 已完成**（[planning summary](outputs/validation/cninfo_d_class_equity_pledge_next_component_planning_summary.md) · primary **`equity_pledge`** · planning gate **`PASS_WITH_CAVEAT`** · CNINFO **0**）。
+66. **D 类 equity_pledge first-slice approval package 已准备**（[approval summary](outputs/validation/cninfo_d_class_equity_pledge_first_slice_approval_summary.md) · universe **5** · DEP001–DEP005 · approval gate **`READY_FOR_APPROVAL`** · **NOT APPROVED for live** · CNINFO **0**）。
+67. **D 类 equity_pledge first-slice runner 扩展与 dry-run 已准备**（[extension summary](outputs/validation/cninfo_d_class_equity_pledge_first_slice_runner_extension_summary.md) · dry-run **5/5** · planned **5** · tests **20/20** · extension gate **`READY_FOR_APPROVAL`** · CNINFO **0**）。
+68. **D 类 equity_pledge first-slice live path 已离线实现**（[live-path summary](outputs/validation/cninfo_d_class_equity_pledge_first_slice_live_path_summary.md) · tests **22/22** · live-path gate **`READY_FOR_APPROVAL`** · mock only · CNINFO **0**）。
+69. **D 类 equity_pledge first-slice isolated live 已执行**（[execution summary](outputs/validation/cninfo_d_class_equity_pledge_first_slice_live_execution_summary.md) · CNINFO **5** · acceptable **4/5** · sparse-day empty **5/5** · execution gate **`PASS_WITH_CAVEAT`** · **无 commit**）。
+70. **D 类 equity_pledge first-slice closure + commit boundary 已完成**（[closure summary](outputs/validation/cninfo_d_class_equity_pledge_first_slice_closure_summary.md) · closure gate **`PASS_WITH_CAVEAT`** · boundary gate **`READY_FOR_COMMIT_REVIEW`** · safe **~33** · CNINFO **0** · **无 commit**）。
 12. **每完成一个 Phase**：更新分层表状态 + `outputs/validation/` 留 summary；不做数据库接入。

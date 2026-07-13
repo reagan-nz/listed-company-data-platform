@@ -1,0 +1,6 @@
+case_id,company_code,company_name,anchor_tdate,expected_behavior,retrieval_status,quality_status,record_count,outcome,acceptable,failure_type,cninfo_request_count,notes
+DEP001,688981,中芯国际,2026-07-03,empty_but_valid,empty_but_valid,pass,0,empty_but_valid,yes,,1,DLC005-style control; sparse-day zero rows legal
+DEP002,000895,双汇发展,2026-07-03,captured_normal_or_empty_but_valid,empty_but_valid,pass,0,empty_but_valid,yes,,1,sparse-day empty acceptable per expectation mix
+DEP003,600000,浦发银行,2026-07-03,captured_normal_or_empty_but_valid,empty_but_valid,pass,0,empty_but_valid,yes,,1,sparse-day empty acceptable per expectation mix
+DEP004,002415,海康威视,2026-07-03,captured_normal_or_needs_review,empty_but_valid,pass,0,empty_but_valid,no,expectation_mismatch,1,sparse-day empty; needs found or needs_review with rows for this expectation
+DEP005,601988,中国银行,2026-07-03,captured_normal_or_empty_but_valid,empty_but_valid,pass,0,empty_but_valid,yes,,1,sparse-day empty acceptable per expectation mix

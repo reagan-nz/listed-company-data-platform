@@ -390,9 +390,21 @@ _最后更新：2026-07-10_
 | **restricted_shares_unlock explicit-path commit** | **`aa087b5`** · **32 files** · sparse-day caveat retained |
 | **restricted_shares_unlock commit gate** | `d_class_restricted_shares_unlock_first_slice_commit_gate = PASS_WITH_CAVEAT` · **NOT pushed** · **NOT verified** |
 | **equity_pledge next-component planning** | [plan](plans/cninfo_d_class_equity_pledge_next_component_planning.md) · [matrix](outputs/validation/cninfo_d_class_equity_pledge_next_component_candidate_matrix.csv) · [recommendation](outputs/validation/cninfo_d_class_equity_pledge_next_component_recommendation.md) · [summary](outputs/validation/cninfo_d_class_equity_pledge_next_component_planning_summary.md) · CNINFO **0** |
-| **equity_pledge planning gate** | `d_class_equity_pledge_next_component_planning_gate = READY_FOR_APPROVAL` |
-| **equity_pledge primary recommendation** | **`equity_pledge`** · runner-up **`shareholder_change`** · first-slice sketch **DEP001–DEP005** |
-| **equity_pledge first-slice sketch** | [plan draft](plans/cninfo_d_class_equity_pledge_first_slice_plan_draft.md) · [universe sketch](outputs/validation/cninfo_d_class_equity_pledge_first_slice_universe_draft_sketch.csv) · **NOT APPROVED** |
+| **equity_pledge planning gate** | `d_class_equity_pledge_next_component_planning_gate = PASS_WITH_CAVEAT`（human chose **`equity_pledge`**） |
+| **equity_pledge primary recommendation** | **`equity_pledge`** · runner-up **`shareholder_change`** · first-slice **DEP001–DEP005** |
+| **equity_pledge first-slice approval package** | [plan](plans/cninfo_d_class_equity_pledge_first_slice_plan.md) · [universe](outputs/validation/cninfo_d_class_equity_pledge_first_slice_universe_draft.csv) · [checklist](outputs/validation/cninfo_d_class_equity_pledge_first_slice_approval_checklist.md) · [summary](outputs/validation/cninfo_d_class_equity_pledge_first_slice_approval_summary.md) · CNINFO **0** |
+| **equity_pledge approval gate** | `d_class_equity_pledge_first_slice_approval_gate = READY_FOR_APPROVAL` · **APPROVED_FOR_THIS_LIVE_ONLY** |
+| **equity_pledge runner extension** | [extension summary](outputs/validation/cninfo_d_class_equity_pledge_first_slice_runner_extension_summary.md) · dry-run **5/5** · planned **5** · tests **20/20 PASS** |
+| **equity_pledge runner extension gate** | `d_class_equity_pledge_first_slice_runner_extension_gate = READY_FOR_APPROVAL` |
+| **equity_pledge live path** | [live-path summary](outputs/validation/cninfo_d_class_equity_pledge_first_slice_live_path_summary.md) · tests **22/22 PASS**（mock only） |
+| **equity_pledge live-path gate** | `d_class_equity_pledge_first_slice_live_path_gate = READY_FOR_APPROVAL` |
+| **equity_pledge isolated live** | [live execution summary](outputs/validation/cninfo_d_class_equity_pledge_first_slice_live_execution_summary.md) · CNINFO **5** · acceptable **4/5** · execution gate **`PASS_WITH_CAVEAT`** |
+| **equity_pledge execution gate** | `d_class_equity_pledge_first_slice_execution_gate = PASS_WITH_CAVEAT` |
+| **equity_pledge closure** | [closure summary](outputs/validation/cninfo_d_class_equity_pledge_first_slice_closure_summary.md) · **4/5** · sparse-day empty **5/5** · CNINFO **0** |
+| **equity_pledge closure gate** | `d_class_equity_pledge_first_slice_closure_gate = PASS_WITH_CAVEAT` |
+| **equity_pledge commit boundary** | [boundary summary](outputs/validation/cninfo_d_class_equity_pledge_first_slice_commit_boundary_summary.md) · safe **~33** · CNINFO **0** |
+| **equity_pledge commit boundary gate** | `d_class_equity_pledge_first_slice_commit_boundary_gate = READY_FOR_COMMIT_REVIEW` |
+| **equity_pledge first-slice sketch** | [plan draft](plans/cninfo_d_class_equity_pledge_first_slice_plan_draft.md) · superseded by formal plan |
 | **block_trade first-slice approval package** | [plan](plans/cninfo_d_class_block_trade_first_slice_plan.md) · [universe](outputs/validation/cninfo_d_class_block_trade_first_slice_universe_draft.csv) · [checklist](outputs/validation/cninfo_d_class_block_trade_first_slice_approval_checklist.md) · [summary](outputs/validation/cninfo_d_class_block_trade_first_slice_approval_summary.md) · CNINFO **0** |
 | **block_trade approval gate** | `d_class_block_trade_first_slice_approval_gate = READY_FOR_APPROVAL` · **APPROVED_FOR_THIS_LIVE_ONLY** |
 | **block_trade runner extension** | [extension summary](outputs/validation/cninfo_d_class_block_trade_first_slice_runner_extension_summary.md) · dry-run **5/5** · tests **19/19 PASS** · CNINFO **0** |
@@ -407,7 +419,7 @@ _最后更新：2026-07-10_
 | **block_trade explicit-path commit** | **`403472d`** · **28 files** · [commit status](outputs/validation/cninfo_d_class_block_trade_first_slice_commit_status.md) |
 | **block_trade commit gate** | `d_class_block_trade_first_slice_commit_gate = PASS_WITH_CAVEAT` · **NOT pushed** · **NOT verified** |
 | **margin_trading closure gate** | `d_class_margin_trading_first_slice_closure_gate = PASS_WITH_CAVEAT` |
-| **下一步** | **Human approve equity_pledge as next Era D component**（phrase in [next-step recommendation](outputs/validation/cninfo_d_class_equity_pledge_next_component_next_step_recommendation.md)）→ first-slice approval package（offline · **无 CNINFO**） |
+| **下一步** | **shareholder_change next-component planning package**（offline · **无 live**） |
 | 性质 | **规划 only**；7 源市场行为类别；不接 DB/MinIO/RAG；不写 verified；不升级 testing_stable_sample |
 
 ---

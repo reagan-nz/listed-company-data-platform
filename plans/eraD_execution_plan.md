@@ -720,7 +720,7 @@ planning (offline)
 
 | 项 | 内容 |
 |----|------|
-| planning gate | **`d_class_equity_pledge_next_component_planning_gate = READY_FOR_APPROVAL`** |
+| planning gate | **`d_class_equity_pledge_next_component_planning_gate = PASS_WITH_CAVEAT`** |
 | primary | **`equity_pledge`** |
 | runner-up | **`shareholder_change`** |
 | first-slice sketch | **5** · DEP001–DEP005 · anchor **`tdate=2026-07-03`**（offline only） |
@@ -729,7 +729,95 @@ planning (offline)
 | first-slice draft | [cninfo_d_class_equity_pledge_first_slice_plan_draft.md](cninfo_d_class_equity_pledge_first_slice_plan_draft.md) |
 | next step | [cninfo_d_class_equity_pledge_next_component_next_step_recommendation.md](../outputs/validation/cninfo_d_class_equity_pledge_next_component_next_step_recommendation.md) |
 
-**下一步：** human approve component → equity_pledge first-slice approval package（offline）
+**下一步：** human approve component → equity_pledge first-slice approval package — **已完成** §9.24
+
+---
+
+### 9.24 D 类 equity_pledge First-Slice Approval Package（2026-07-10）
+
+> **offline only** · **CNINFO = 0** · **NOT APPROVED for live** · **无 runner** · **无 commit**
+
+| 项 | 内容 |
+|----|------|
+| component approval | **I approve D-class equity_pledge as the next Era D component.** |
+| planning gate | **`d_class_equity_pledge_next_component_planning_gate = PASS_WITH_CAVEAT`** |
+| approval gate | **`d_class_equity_pledge_first_slice_approval_gate = READY_FOR_APPROVAL`** |
+| universe | **5** · DEP001–DEP005 · anchor **`tdate=2026-07-03`** |
+| expectation mix | 1 `empty_but_valid` · 3 `captured_normal_or_empty_but_valid` · 1 `captured_normal_or_needs_review` |
+| formal plan | [cninfo_d_class_equity_pledge_first_slice_plan.md](cninfo_d_class_equity_pledge_first_slice_plan.md) |
+| next step | [cninfo_d_class_equity_pledge_first_slice_next_step_recommendation.md](../outputs/validation/cninfo_d_class_equity_pledge_first_slice_next_step_recommendation.md) |
+
+**下一步：** equity_pledge first-slice runner extension + dry-run — **已完成** §9.25
+
+---
+
+### 9.25 D 类 equity_pledge First-Slice Runner Extension + Dry-run（2026-07-10）
+
+> **offline only** · **CNINFO = 0** · **NOT APPROVED for live** · live path **stub**
+
+| 项 | 内容 |
+|----|------|
+| runner extension gate | **`d_class_equity_pledge_first_slice_runner_extension_gate = READY_FOR_APPROVAL`** |
+| dry-run | **5/5 planned_ok** · planned **5** · CNINFO **0** |
+| tests | **20/20 PASS** |
+| live stub | `equity_pledge_first_slice_live_not_implemented` |
+| extension summary | [cninfo_d_class_equity_pledge_first_slice_runner_extension_summary.md](../outputs/validation/cninfo_d_class_equity_pledge_first_slice_runner_extension_summary.md) |
+
+**下一步：** equity_pledge first-slice live-path implementation — **已完成** §9.26
+
+---
+
+### 9.26 D 类 equity_pledge First-Slice Live-Path Implementation（2026-07-10）
+
+> **offline only** · **CNINFO = 0** · **NOT APPROVED for live** · mock tests only
+
+| 项 | 内容 |
+|----|------|
+| live-path gate | **`d_class_equity_pledge_first_slice_live_path_gate = READY_FOR_APPROVAL`** |
+| live entry | `execute_equity_pledge_first_slice_live()` |
+| tests | live-path **22/22** · runner **20/20** |
+| dry-run reconfirm | **5/5 planned_ok** · planned **5** · CNINFO **0** |
+| stub removed | `equity_pledge_first_slice_live_not_implemented` |
+| live-path summary | [cninfo_d_class_equity_pledge_first_slice_live_path_summary.md](../outputs/validation/cninfo_d_class_equity_pledge_first_slice_live_path_summary.md) |
+
+**下一步：** human approve isolated live — **已完成** §9.27
+
+---
+
+### 9.27 D 类 equity_pledge First-Slice Isolated Live Validation（2026-07-10）
+
+> **human-approved** · **NOT verified** · **NOT production_ready** · **无 commit**
+
+| 项 | 内容 |
+|----|------|
+| approval | **I approve D-class equity_pledge first-slice live validation.** |
+| CNINFO requests | **5** |
+| acceptable | **4/5** |
+| executed | **5/5** |
+| sparse-day empty | **5/5** |
+| execution gate | **`PASS_WITH_CAVEAT`** |
+| caveat | DEP004 `captured_normal_or_needs_review` + sparse-day `empty_but_valid` → expectation_mismatch |
+| execution summary | [cninfo_d_class_equity_pledge_first_slice_live_execution_summary.md](../outputs/validation/cninfo_d_class_equity_pledge_first_slice_live_execution_summary.md) |
+
+**下一步：** equity_pledge first-slice closure / commit-boundary package — **已完成** §9.28
+
+---
+
+### 9.28 D 类 equity_pledge First-Slice Closure + Commit Boundary（2026-07-10）
+
+> **offline only** · **CNINFO = 0** · **NOT verified** · **无 commit**
+
+| 项 | 内容 |
+|----|------|
+| closure gate | **`d_class_equity_pledge_first_slice_closure_gate = PASS_WITH_CAVEAT`** |
+| boundary gate | **`d_class_equity_pledge_first_slice_commit_boundary_gate = READY_FOR_COMMIT_REVIEW`** |
+| acceptable | **4/5** · sparse-day empty **5/5** |
+| caveat | DEP004 `expectation_mismatch_on_sparse_day` · non-blocking |
+| safe-to-commit | **~33** explicit paths |
+| closure summary | [cninfo_d_class_equity_pledge_first_slice_closure_summary.md](../outputs/validation/cninfo_d_class_equity_pledge_first_slice_closure_summary.md) |
+| boundary summary | [cninfo_d_class_equity_pledge_first_slice_commit_boundary_summary.md](../outputs/validation/cninfo_d_class_equity_pledge_first_slice_commit_boundary_summary.md) |
+
+**下一步：** human approve explicit-path commit with phrase **I approve D-class equity_pledge first-slice explicit-path commit.**
 
 ---
 
@@ -771,7 +859,12 @@ planning (offline)
 | ED-013e | D-class restricted_shares_unlock first-slice closure review | D | D2 | **完成**（§9.21 · **5/5** · closure gate **`PASS_WITH_CAVEAT`** · CNINFO **0** · **无 commit**） |
 | ED-013f | D-class restricted_shares_unlock first-slice commit boundary review | D | D2 | **完成**（§9.21 · safe **~32** · boundary gate **`READY_FOR_COMMIT_REVIEW`** · **NOT_APPROVED**） |
 | ED-013g | D-class restricted_shares_unlock first-slice explicit-path commit | D | D2 | **完成**（§9.22 · commit **`aa087b5`** · **32 files** · gate **`PASS_WITH_CAVEAT`** · **无 push** · **NOT verified**） |
-| ED-015 | D-class equity_pledge next-component planning | D | D2 | **完成**（§9.23 · primary **`equity_pledge`** · planning gate **`READY_FOR_APPROVAL`** · CNINFO **0**） |
+| ED-015 | D-class equity_pledge next-component planning | D | D2 | **完成**（§9.23 · primary **`equity_pledge`** · planning gate **`PASS_WITH_CAVEAT`** · CNINFO **0**） |
+| ED-016 | D-class equity_pledge first-slice approval package | D | D2 | **完成**（§9.24 · universe **5** · approval gate **`READY_FOR_APPROVAL`** · **NOT APPROVED live**） |
+| ED-016b | D-class equity_pledge first-slice runner + dry-run | D | D2 | **完成**（§9.25 · dry-run **5/5** · planned **5** · tests **20/20** · extension gate **`READY_FOR_APPROVAL`** · **无 live**） |
+| ED-016c | D-class equity_pledge first-slice live-path | D | D2 | **完成**（§9.26 · live-path **22/22** · runner **20/20** · live-path gate **`READY_FOR_APPROVAL`** · mock only · CNINFO **0**） |
+| ED-016d | D-class equity_pledge first-slice isolated live | D | D2 | **完成**（§9.27 · CNINFO **5** · acceptable **4/5** · execution gate **`PASS_WITH_CAVEAT`** · **无 commit**） |
+| ED-016e | D-class equity_pledge first-slice closure + commit boundary | D | D2 | **完成**（§9.28 · closure **`PASS_WITH_CAVEAT`** · boundary **`READY_FOR_COMMIT_REVIEW`** · safe **~33** · CNINFO **0** · **无 commit**） |
 | ED-014 | portrait_ontology P0–P3（catalog + coverage + schema + pilot） | 横切 | D0/D2 | **完成**（§9.10 · **715** fields · pilot **000009** · gates **`PASS_OFFLINE`** · **无 live**） |
 | ED-012 | MVP 四线 closure 汇总 | 横切 | D2 | 未开始 |
 | ED-012 | D3 完整规模（分线） | A/B/C/D | D3 | 未开始 |
