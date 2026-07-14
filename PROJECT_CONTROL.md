@@ -107,7 +107,7 @@ Local commit/merge may be autonomous under policy · **push remains human-gated*
 
 | Field | Value |
 |-------|-------|
-| current_stage | fuller-market slice1 **status-ledger rebuilt + QA closure recorded** · snapshot **blocked** |
+| current_stage | fuller-market slice1 **status-ledger rebuilt + QA closure recorded** · snapshot prep **on** · prod snapshot execute **blocked** |
 | current_gate | execution `PASS_WITH_CAVEAT` · status_ledger_rebuild `PASS_WITH_CAVEAT` · qa_closure `PASS_WITH_CAVEAT` · progression `PACKAGE_COMPLETE` · `approved_for_snapshot_rebuild = true`（**preparation path only** · AQ-C-SNAP C-GEN-20260714-06）· `execute_production_snapshot_rebuild = false` |
 | executor_used | `c-class-executor` (orchestration pilot · offline ledger+QA) |
 | reviewer_used | `evidence-auditor` |
