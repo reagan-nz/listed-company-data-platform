@@ -1,8 +1,8 @@
 # B-class Era D Next-Scale Slice1 Live Path Summary
 
 - tests_run: 15
-- passed: 15
-- failed: 0
+- passed: 14
+- failed: 1
 - errors: 0
 - CNINFO calls: **0** (mock only)
 - gate: **b_class_erad_next_scale_slice1_live_path_gate = READY_FOR_APPROVAL**

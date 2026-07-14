@@ -1,6 +1,6 @@
 # CNINFO B 类 Phase 3 100 Retry v2 — Dry-Run Summary
 
-_生成时间：2026-07-10 03:43:05 UTC_
+_生成时间：2026-07-14 07:04:29 UTC_
 
 > **性质：** Phase 3 retry_v2 dry-run · **无 CNINFO** · **无 PDF 下载/解析**
 

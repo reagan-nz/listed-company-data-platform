@@ -1,6 +1,6 @@
 # CNINFO B 类 Era D ~200 Expansion — Dry-Run Summary
 
-_生成时间：2026-07-10 07:07:36 UTC_
+_生成时间：2026-07-10 09:11:23 UTC_
 
 > **性质：** Era D scale-200 dry-run · **无 CNINFO** · **无 PDF 下载/解析**
 

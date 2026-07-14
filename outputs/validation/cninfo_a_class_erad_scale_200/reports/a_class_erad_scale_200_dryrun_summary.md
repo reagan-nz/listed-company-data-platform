@@ -1,6 +1,6 @@
 # CNINFO A 类 Era D ~200 Metadata Expansion — Dry-run 摘要
 
-_生成时间：2026-07-10 07:07:34 UTC_
+_生成时间：2026-07-13 10:17:49 UTC_
 
 > **性质：** Era D runner dry-run · **无 CNINFO** · **无 live** · **无 PDF**
 

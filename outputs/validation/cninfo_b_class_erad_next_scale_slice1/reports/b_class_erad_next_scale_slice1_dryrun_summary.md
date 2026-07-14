@@ -1,6 +1,6 @@
 # CNINFO B 类 Era D Next-Scale Slice1 — Dry-Run Summary
 
-_生成时间：2026-07-10 09:11:35 UTC_
+_生成时间：2026-07-10 10:06:17 UTC_
 
 > **性质：** Era D next-scale slice1 dry-run · **无 CNINFO** · **无 PDF 下载/解析**
 
