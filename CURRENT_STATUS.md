@@ -17,7 +17,7 @@ _最后更新：2026-07-14_
 | Runtime ignore boundary | `d385bb6` |
 | Controller policy foundation | `0f63a90` |
 | A next-scale slice1 | local commit `4118974` · merge `71a83c1` · **post-integration HOLD** · unresolved **6** · gate **`PASS_WITH_CAVEAT`** · **NOT verified** · **NOT production_ready** · **无 push** |
-| B fuller slice2 | local commit `f0bff3a` · **post-integration HOLD** · BD2E624 deferred · gate **`PASS_WITH_CAVEAT`** · **NOT verified** · **NOT production_ready** · **无 push** |
+| B fuller slice2 | local commit `f0bff3a` · **post-integration HOLD** · BD2E624 isolated retry **found** · cumulative **~798** proposed · slice2 主 row 历史 `network_error` 保留 · gate **`PASS_WITH_CAVEAT`** · **NOT verified** · **NOT production_ready** · **无 push** |
 | Option C recovery | `3b0c7ce`（remote unique sidecars） |
 | C fuller slice1 | ledger+QA **`PASS_WITH_CAVEAT`** · `approved_for_snapshot_rebuild = false` · **HOLD** |
 | D shareholder_change | planning gate **`READY_FOR_APPROVAL`** · **≠ approved** · 等待 human component 批准 |
@@ -300,17 +300,20 @@ _最后更新：2026-07-14_
 
 ## B 类 Era D Fuller Next-Slice（2026-07-13）
 
-> **merge closure complete** · **299/300 acceptable** · **CNINFO 0**（closure）· **local integration completed** `f0bff3a` · **NOT verified** · **NOT production_ready** · **无 push**
+> **slice2 主 merge closure complete** · **299/300 acceptable**（Session 1）· **BD2E624 post-retry effective 300/300** · cumulative **~798** proposed · **CNINFO 0**（B-09 closure）· **local integration completed** `f0bff3a` · **NOT verified** · **NOT production_ready** · **无 push**
 
 | 项 | 状态 |
 |----|------|
-| **Primary path** | **C) staged fuller slice2 +300**（BD2E501–800）→ cumulative **~797** |
-| **Live** | [execution summary](outputs/validation/cninfo_b_class_erad_fuller_next_slice2_live_execution_summary.md) · **598 CNINFO** |
-| **Merge closure** | [summary](outputs/validation/cninfo_b_class_erad_fuller_next_slice2_merge_closure_summary.md) · acceptable **299/300** |
-| **Unresolved** | **1**（BD2E624 EP002 network_error）· **8** empty_response edges |
+| **Primary path** | **C) staged fuller slice2 +300**（BD2E501–800）→ cumulative **~798**（post-retry effective） |
+| **Live** | [execution summary](outputs/validation/cninfo_b_class_erad_fuller_next_slice2_live_execution_summary.md) · **598 CNINFO**（slice2 Session 1） |
+| **Merge closure（主）** | [summary](outputs/validation/cninfo_b_class_erad_fuller_next_slice2_merge_closure_summary.md) · acceptable **299/300**（historical · **不 mutate**） |
+| **BD2E624 isolated retry** | [wave3 report](outputs/validation/cninfo_b_class_bd2e624_isolated_retry_execution_report_wave3_20260714.md) · retry **`found`** · CNINFO **2** · gate **`PASS_WITH_CAVEAT`** |
+| **BD2E624 merge closure** | [merge closure](outputs/validation/cninfo_b_class_bd2e624_merge_closure_20260714.md) · post-retry acceptable **300/300** · cumulative **797→798** |
+| **Unresolved** | 主 closure 历史 **1**（BD2E624 EP002 `network_error`）· post-retry effective **0** · **8** empty_response edges |
+| **Failure evidence** | slice2 主 live report row BD2E624 **只读保留** · `network_error` |
 | **Explicit-path commit** | **`f0bff3a`** · **local integration completed** · **post-integration HOLD** |
-| **Gate** | `b_class_erad_fuller_next_slice_merge_closure_gate = PASS_WITH_CAVEAT` |
-| **下一步** | **post-integration HOLD** · BD2E624 deferred · no live rerun · push 另需 human |
+| **Gate** | `b_class_erad_fuller_next_slice_merge_closure_gate = PASS_WITH_CAVEAT`（post-retry effective） |
+| **下一步** | **post-integration HOLD** · BD2E624 merge track **closed**（`PASS_WITH_CAVEAT`）· no further BD2E624 live · push 另需 human |
 
 ---
 

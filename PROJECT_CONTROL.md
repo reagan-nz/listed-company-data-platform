@@ -94,9 +94,9 @@ Local commit/merge may be autonomous under policy · **push remains human-gated*
 | reviewer_used | `evidence-auditor` · `git-boundary-reviewer` |
 | reviewer_result | Evidence Auditor `VERIFIED_ENOUGH_TO_CONTINUE` HIGH 92% · Git Boundary `READY_FOR_HUMAN_COMMIT_APPROVAL` HIGH 90% (pre-commit; now spent) |
 | reviewer_confidence | Evidence 92% · Git Boundary 90% |
-| evidence_paths | slice2 report CSV · merge closure · boundary package (**36** whole-file) · commit `f0bff3a` · unresolved ledger **1** (BD2E624) |
-| known_caveats | BD2E624 network_error · deferred · 8 empty_response acceptable_edge · mixed shared files **excluded** from commit (OPTION 1) · bulk sidecars excluded · retry_v2 sidecars recovered via Option C where applicable |
-| next_allowed_task | **post-integration HOLD** · no live rerun · BD2E624 remains deferred · no gate upgrade |
+| evidence_paths | slice2 report CSV · merge closure · boundary package (**36** whole-file) · commit `f0bff3a` · unresolved ledger **1** (BD2E624 historical) · post-retry unresolved ledger **0** · [wave3 report](outputs/validation/cninfo_b_class_bd2e624_isolated_retry_execution_report_wave3_20260714.md) · [bd2e624 merge closure](outputs/validation/cninfo_b_class_bd2e624_merge_closure_20260714.md) · [lineage refresh](outputs/validation/cninfo_b_class_bd2e624_lineage_refresh_20260714.md) |
+| known_caveats | BD2E624 **recovered** via isolated retry side-track · slice2 主 row historical `network_error` preserved · 8 empty_response acceptable_edge · mixed shared files **excluded** from commit (OPTION 1) · bulk sidecars excluded · retry_v2 sidecars recovered via Option C where applicable · cumulative **798** proposed · **NOT verified** |
+| next_allowed_task | **post-integration HOLD** · BD2E624 merge closure **closed**（`PASS_WITH_CAVEAT`）· cumulative lineage refresh applied · **no further BD2E624 live** · no gate upgrade to bare PASS |
 | blocked_actions | push · rerun · live · gate upgrade · `git add .` · `git add -A` · PDF/DB/RAG · verified · production_ready · mutate scale-200/slice1 roots |
 | last_verified_at | 2026-07-14 (state reconciliation · Git history) |
 | prior commits | scale-200 `e738fa9` · slice1 `350cdda` · fuller slice2 `f0bff3a` — **NOT pushed** |
@@ -108,7 +108,7 @@ Local commit/merge may be autonomous under policy · **push remains human-gated*
 | Field | Value |
 |-------|-------|
 | current_stage | fuller-market slice1 **status-ledger rebuilt + QA closure recorded** · snapshot **blocked** |
-| current_gate | execution `PASS_WITH_CAVEAT` · status_ledger_rebuild `PASS_WITH_CAVEAT` · qa_closure `PASS_WITH_CAVEAT` · `approved_for_snapshot_rebuild = false` |
+| current_gate | execution `PASS_WITH_CAVEAT` · status_ledger_rebuild `PASS_WITH_CAVEAT` · qa_closure `PASS_WITH_CAVEAT` · progression `PACKAGE_COMPLETE` · `approved_for_snapshot_rebuild = true`（**preparation path only** · AQ-C-SNAP C-GEN-20260714-06）· `execute_production_snapshot_rebuild = false` |
 | executor_used | `c-class-executor` (orchestration pilot · offline ledger+QA) |
 | reviewer_used | `evidence-auditor` |
 | reviewer_result | `VERIFIED_ENOUGH_TO_CONTINUE` |
@@ -379,7 +379,7 @@ Track · Stage · Executor · Reviewer · Executor/Controller/Reviewer gates · 
 | Item | Route | Note |
 |------|-------|------|
 | A next-scale slice1 | **INFO** | committed `4118974` · merged `71a83c1` · **post-integration HOLD** · unresolved **6** retained · **NOT verified** |
-| B fuller slice2 | **INFO** | committed `f0bff3a` · **post-integration HOLD** · BD2E624 deferred · **NOT verified** |
+| B fuller slice2 | **INFO** | committed `f0bff3a` · **post-integration HOLD** · BD2E624 retry **found** · cumulative **798** proposed · **NOT verified** |
 | C slice1 ledger+QA | **HOLD** | pilot closed `PASS_WITH_CAVEAT` · snapshot still **blocked** (`approved_for_snapshot_rebuild = false`) |
 | D shareholder_change | **Human Level-2** | component approval pending · `READY_FOR_APPROVAL` ≠ approved |
 | remote publication | **Human** | `main` ahead **42** / behind **4** · push **NOT authorized** |
@@ -394,7 +394,7 @@ Track · Stage · Executor · Reviewer · Executor/Controller/Reviewer gates · 
 2. **D** — human component approval for shareholder_change (Level 2) · `READY_FOR_APPROVAL` ≠ approved
 3. **Remote publication checkpoint** — human push / recovery strategy for `main` (ahead 42 · behind 4) · **pending**
 4. **A** — **post-integration HOLD** (`4118974` / `71a83c1`) · unresolved caveats retained · no live retry
-5. **B** — **post-integration HOLD** (`f0bff3a`) · BD2E624 deferred · no live rerun
+5. **B** — **post-integration HOLD** (`f0bff3a`) · BD2E624 merge **closed** · cumulative **798** proposed · no further BD2E624 live
 
 A/B Level-2 commit waits are **closed** (spent). Push remains human-controlled.  
 Daily Loop v2 Operational Mode active：例行成功静默；仅审批/冲突/破坏性/push/安全边界打断。
