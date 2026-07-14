@@ -95,8 +95,8 @@ outputs/harvest/**/raw/
 outputs/harvest/**/normalized/
 outputs/harvest/**/quality/**
 outputs/harvest/**/live_snapshots/
-# 保留 C fuller QA rebuild backup（evidence；不整目录忽略后无法反选）
-!outputs/harvest/**/quality/*.bak_pre_offline_rebuild_*
+# harvest status rebuild backup：默认忽略，避免 dirty；需保留时复制到 outputs/validation evidence package
+outputs/harvest/**/company_harvest_status.csv.bak_pre_offline_rebuild_*
 # Validation runtime bulk（不忽略 reports/ 与顶层 evidence MD/CSV）
 outputs/validation/**/raw_metadata/
 outputs/validation/**/live_snapshots/
