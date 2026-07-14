@@ -101,6 +101,10 @@ outputs/harvest/**/live_snapshots/
 outputs/validation/**/raw_metadata/
 outputs/validation/**/live_snapshots/
 outputs/validation/**/quality/*.json
+# Validation runtime noise（run meta / test guards）
+outputs/validation/**/run_meta.json
+outputs/validation/**/_production_guard/
+outputs/validation/**/_erad_test_guard.txt
 # Local-only portrait generated outputs
 outputs/portrait/
 
