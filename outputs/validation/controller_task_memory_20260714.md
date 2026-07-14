@@ -13,6 +13,10 @@ _Autonomous memory layer · Daily Loop v2_
 | B-D1-run2 | B | BD2E624 offline triage + event prep gap | `cninfo_b_class_bd2e624_offline_triage_20260714.md` · `cninfo_b_class_mission_event_prep_gap_20260714.md` | 2026-07-14 |
 | C-D1-run2 | C | partial-7 evidence completeness | `cninfo_c_class_partial7_evidence_completeness_20260714.md` · `cninfo_c_class_partial7_offline_qa_matrix_20260714.csv` | 2026-07-14 |
 | D-D1-run2 | D | shareholder_change offline prep refresh | `cninfo_d_class_shareholder_change_offline_prep_refresh_20260714.md` · checklist CSV | 2026-07-14 |
+| A-GEN-20260714-03 | A | attribute-gap ledger + slice2 offline prep | attribute_gap_* · next_scale_slice2_offline_prep | 2026-07-14 |
+| B-GEN-20260714-03 | B | empty_response edge taxonomy | empty_response_edge_* | 2026-07-14 |
+| C-GEN-20260714-03 | C | empty-dividend CE1E176/188/193 package | empty_dividend_* | 2026-07-14 |
+| D-GEN-20260714-03 | D | shareholder_change schema + event model | schema_prep · event_model CSV | 2026-07-14 |
 
 
 ## Deferred tasks
