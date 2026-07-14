@@ -1,0 +1,17 @@
+case_id,company_code,slice,taxonomy_tag,disposition,live_required
+BD2E203,000562,next_scale_slice1,ER-VAL-EP004-PERIODIC,accept_with_caveat,no
+BD2E204,000569,next_scale_slice1,ER-VAL-EP005-GENERAL,accept_with_caveat,no
+BD2E245,001233,next_scale_slice1,ER-VAL-EP004-PERIODIC,accept_with_caveat,no
+BD2E249,001285,next_scale_slice1,ER-VAL-EP004-PERIODIC,accept_with_caveat,no
+BD2E377,600253,next_scale_slice1,ER-VAL-EP004-PERIODIC,accept_with_caveat,no
+BD2E388,600357,next_scale_slice1,ER-VAL-EP005-GENERAL,accept_with_caveat,no
+BD2E445,600842,next_scale_slice1,ER-VAL-EP004-PERIODIC,accept_with_caveat,no
+BD2E463,601026,next_scale_slice1,ER-VAL-EP004-PERIODIC,accept_with_caveat,no
+BD2E537,002710,fuller_next_slice2,ER-VAL-EP004-PERIODIC,accept_with_caveat,no
+BD2E725,301449,fuller_next_slice2,ER-VAL-EP004-PERIODIC,accept_with_caveat,no
+BD2E738,301583,fuller_next_slice2,ER-VAL-EP005-GENERAL,accept_with_caveat,no
+BD2E739,301584,fuller_next_slice2,ER-VAL-EP004-PERIODIC,accept_with_caveat,no
+BD2E743,301638,fuller_next_slice2,ER-VAL-EP004-PERIODIC,accept_with_caveat,no
+BD2E745,301669,fuller_next_slice2,ER-VAL-EP004-PERIODIC,accept_with_caveat,no
+BD2E746,301687,fuller_next_slice2,ER-VAL-EP005-GENERAL,accept_with_caveat,no
+BD2E751,601206,fuller_next_slice2,ER-VAL-EP004-PERIODIC,accept_with_caveat,no
