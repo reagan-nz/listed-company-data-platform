@@ -1,67 +1,41 @@
 # Controller Approval Queue 2026-07-14
 
 
-_Daily Autonomous Loop v2 · offline packaging only_  
-_规则：已知 HOLD / WAITING_APPROVAL **不重复打断**；本文件维护审批队列，供 human 在解锁有意义下一步时使用_
+_Daily Autonomous Loop v2_  
+_Updated: run6 human 4-gate approval_
 
 
-## 1. Queue（open）
+## 1. Queue
 
 
-| ID | Track | Decision needed | Unlocks if approved | Status |
-|----|-------|-----------------|---------------------|--------|
-| AQ-D-SC | D | shareholder_change **component** Level-2 approval phrase | D first-slice planning→runner/dry-run/live package chain（仍分步审批） | **WAITING_APPROVAL** · READY_FOR_APPROVAL ≠ approved |
-| AQ-C-SNAP | C | flip `approved_for_snapshot_rebuild`（explicit） | C snapshot rebuild candidate path | **blocked** · do not rebuild |
-| AQ-PUSH | repo | remote publication / push phrase | publish diverged `main`（ahead/behind） | **NOT authorized** |
-| AQ-WT-SYNC | worktrees | human clean unknown dirty in A/B/C/D worktrees | Option A sync to main tip · track execute from worktrees | **SKIP sync** while dirty+stale |
+| ID | Track | Decision | Status |
+|----|-------|----------|--------|
+| AQ-D-SC | D | shareholder_change component Level-2 | **APPROVED** 2026-07-14 — phrase granted |
+| AQ-C-SNAP | C | snapshot rebuild / progression | **APPROVED** 2026-07-14 — preparation path; prod execute still HOLD（rebuild_candidate=no） |
+| AQ-B-BD2E624 | B | BD2E624 next-step validation/retry | **APPROVED** 2026-07-14 — unlocks prep + bounded isolated retry（≤2 CNINFO · isolated root · keep FAIL evidence） |
+| AQ-A-NEXT | A | next-scale progression | **APPROVED** 2026-07-14 — Controller adopted S1/+100/O3 cohort freeze |
+| AQ-PUSH | repo | push / remote publish | **NOT authorized** |
+| AQ-WT-SYNC | worktrees | clean dirty WT + sync | **SKIP sync** |
 
 
-## 2. Do not re-interrupt for（known）
+## 2. Scoped live notes（B）
 
 
-- A post-integration HOLD（unresolved 6 retained）  
-- B post-integration HOLD（BD2E624 deferred）  
-- C snapshot blocked（already listed）  
-- D shareholder_change waiting（already listed）  
-- historical spent live/commit approvals  
+Human approval of BD2E624 retry work + “bounded execution within existing safety rules” is recorded as authorizing **isolated 1/1 BD2E624 retry** after dry-run, with:
+
+- universe 1/1 · case-range BD2E624:BD2E624  
+- output root isolated under `..._bd2e624_retry/`  
+- CNINFO cap ≤2  
+- write-block on slice2 main root  
+- preserve baseline failure evidence · PASS_WITH_CAVEAT if unresolved  
+
+Does **not** authorize: push · wipe unresolved · bare PASS · scale live beyond 1 case.
 
 
-## 3. Evidence pointers（D shareholder_change）
+## 3. Still separately gated
 
 
-Already on main（planning · not approved）:
-
-
-- `plans/cninfo_d_class_shareholder_change_next_component_planning.md`  
-- `plans/cninfo_d_class_shareholder_change_first_slice_plan_draft.md`  
-- `outputs/validation/cninfo_d_class_shareholder_change_next_component_*.md`  
-- `outputs/validation/cninfo_d_class_autonomous_batch_v1_shareholder_change_gate.md`  
-
-
-Exact approval phrase remains a **human** Level-2 decision. Controller must not invent approval text as granted.
-
-
-
----
-
-## 4. Autonomous progress while queue open
-
-
-Per mission / interrupt / cycle policies:
-
-
-- Continue other safe READY work（docs/evidence/offline packaging）  
-- Do **not** stop entire daily run solely because this queue is non-empty  
-- Do **not** execute D shareholder_change live/runner without component approval  
-
-
-
----
-
-## 5. Safety
-
-
-- CNINFO: 0  
-- Live: 0  
-- Push: 0  
-- Approval bypass: no  
+- D first-slice **live**（S5）· runner extension（S4）  
+- A slice2 **live harvest**（cohort frozen offline only）  
+- C **production** snapshot rebuild execute  
+- AQ-PUSH · AQ-WT-SYNC  

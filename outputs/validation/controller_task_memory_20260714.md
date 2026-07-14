@@ -46,11 +46,13 @@ _Autonomous memory layer · Daily Loop v2_
 
 | blocker | notes |
 |---------|-------|
-| AQ-D-SC | Level-2 shareholder_change phrase |
-| AQ-C-SNAP | snapshot flip |
+| AQ-D-SC | **CLEARED run6** — phrase granted 2026-07-14 |
+| AQ-C-SNAP | **CLEARED run6** — snapshot progression approved（prod execute still matrix-gated） |
+| B-BD2E624-retry | **CLEARED run6** — retry path approved（live still after prep/precheck） |
+| A-next-scale | **CLEARED run6** — progression approved（Controller adopts S1/+100/O3 for A-09） |
 | AQ-PUSH | diverged main |
 | AQ-WT-SYNC | dirty stale worktrees |
-| A/B post-integration HOLD | no live retry/scale without new scope |
+| A/B post-integration HOLD | live harvest still needs task-level scope; offline unlocked |
 
 
 ## Human rejected
