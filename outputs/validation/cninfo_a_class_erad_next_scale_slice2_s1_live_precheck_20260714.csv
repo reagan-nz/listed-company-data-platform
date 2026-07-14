@@ -1,0 +1,21 @@
+check_id,check_name,offline_or_live,required_before_live,status,notes
+PC-S2S1-001,cohort freeze note 已落档且 S1/+100/O3 冻结,offline,yes,ready,证据: cninfo_a_class_erad_next_scale_slice2_s1_cohort_freeze_note_20260714.md; A-GEN-20260714-09
+PC-S2S1-002,S1 +100 candidate universe 100 行 AD2E501-600,offline,yes,ready,证据: cninfo_a_class_erad_next_scale_slice2_s1_plus100_candidate_universe_20260714.csv
+PC-S2S1-003,lint 综合 PASS 含 L-D4 ST=0,offline,yes,ready,证据: cninfo_a_class_erad_next_scale_slice2_s1_plus100_lint_check_20260714.md; ST 0/100
+PC-S2S1-004,overlap lint L-A1..L-B4 及 AB_182 disjoint PASS,offline,yes,ready,证据: lint check §3; 交集全 0
+PC-S2S1-005,post-integration HOLD 状态已确认,offline,yes,blocked,证据: PROJECT_CONTROL.md; next_allowed_task=HOLD; 解除前禁止 live
+PC-S2S1-006,human slice2 S1 +100 live 显式批准短语,offline,yes,blocked,AQ-A-NEXT 仅 cohort freeze; 须 separate live phrase
+PC-S2S1-007,controller approval queue 含 slice2 live 条目,offline,yes,blocked,证据: controller_approval_queue_20260714.md §3; slice2 live harvest separately gated
+PC-S2S1-008,slice2 runner extension 已实现且 tests PASS,offline,yes,blocked,--erad-a-scale-500-slice2 未实现; 须 separate runner extension task
+PC-S2S1-009,dry-run 100/100 planned_ok CNINFO=0,offline,yes,blocked,依赖 PC-S2S1-008; 命令见 command draft §5
+PC-S2S1-010,隔离 output root 已指定且 write-block 清单已核对,offline,yes,ready,证据: live prep package §6; outputs/validation/cninfo_a_class_erad_next_scale_slice2_s1/
+PC-S2S1-011,182 台账 remainder 旧 draft 写保护,offline,yes,ready,freeze note §6; 禁止 mutate ab_overlap_182_ledger remainder superseded drafts
+PC-S2S1-012,live prep package 已撰写,offline,yes,ready,本包 A-GEN-20260714-10; cninfo_a_class_erad_next_scale_slice2_s1_live_prep_package_20260714.md
+PC-S2S1-013,command draft 已撰写,offline,yes,ready,本包; cninfo_a_class_erad_next_scale_slice2_s1_command_draft_20260714.md
+PC-S2S1-014,request cap 已估算且 human 批准未来 live,offline,yes,blocked,点估计 ~210 cap <=240; live prep §5; 须 live approval
+PC-S2S1-015,case-range AD2E501-600 且不重跑 AD2E001-500,offline,yes,ready,lineage-reference only; scale-200 8 unresolved side-track
+PC-S2S1-016,PDF/OCR/extraction/DB/MinIO/RAG 禁用确认,offline,yes,ready,fresh_metadata only; phase3_production_root_write=no
+PC-S2S1-017,success criteria >=90/100 PASS_WITH_CAVEAT 已登记,offline,yes,ready,live prep §7; 不是 bare PASS
+PC-S2S1-018,O3 182 治理 Controller 终裁若 live 前要求,offline,no,blocked,PENDING_CONTROLLER; O3 记账 only 本 cohort 不引入新交叉
+PC-S2S1-019,slice1 主根 report/quality/merge closure 写保护,offline,yes,ready,不得写 cninfo_a_class_erad_next_scale_slice1/
+PC-S2S1-020,跨轨 B/C/D live 并行 cap 已文档化,offline,no,ready,live prep §10; 日合计 CNINFO cap 若并行
