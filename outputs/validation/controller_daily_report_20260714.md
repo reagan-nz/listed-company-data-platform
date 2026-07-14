@@ -68,7 +68,7 @@ No worktree delete/recreate. No force-clean.
 
 - CNINFO count: 0
 - Live execution count: 0
-- Commit count: 2（enablement + this report）
+- Commit count: 3（enablement + report + tip finalize）
 - Push count: 0
 - git add .: no
 - Files deleted: no
