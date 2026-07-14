@@ -1,0 +1,37 @@
+check_id,check_name,offline_or_live,required_before_dryrun,required_before_live,status,notes
+RE-S2S1-001,cohort freeze note 已落档 S1/+100/O3 冻结,offline,yes,yes,ready,证据: cninfo_a_class_erad_next_scale_slice2_s1_cohort_freeze_note_20260714.md; A-GEN-20260714-09
+RE-S2S1-002,S1 +100 lint 综合 PASS 含 L-D4 ST=0,offline,yes,yes,ready,证据: cninfo_a_class_erad_next_scale_slice2_s1_plus100_lint_check_20260714.md; ST 0/100
+RE-S2S1-003,live prep package 已交付 CNINFO cap 已登记,offline,yes,yes,ready,证据: cninfo_a_class_erad_next_scale_slice2_s1_live_prep_package_20260714.md; cap <=240 点估计 ~210
+RE-S2S1-004,runner extension design 已撰写,offline,yes,yes,ready,本包 A-GEN-20260714-11; cninfo_a_class_erad_next_scale_slice2_s1_runner_design_20260714.md
+RE-S2S1-005,flag --erad-a-scale-500-slice2 已注册,offline,yes,yes,blocked,参照 slice1 --erad-a-scale-500-slice1; 未实现
+RE-S2S1-006,flag --approve-a-class-erad-scale-500-slice2 已注册,offline,no,yes,blocked,live only; dry-run 不需要
+RE-S2S1-007,mode 互斥 scale-200/failed-retry/slice1 已 enforce,offline,yes,yes,blocked,错误码 erad_a_scale_500_slice2_incompatible_with_other_modes
+RE-S2S1-008,canonical universe CSV path 校验已实现,offline,yes,yes,blocked,须指向 cninfo_a_class_erad_next_scale_slice2_s1_plus100_candidate_universe_20260714.csv
+RE-S2S1-009,universe size 必须等于 100 AD2E501-600,offline,yes,yes,blocked,REQUIRED_ERAD_NEXT_SCALE_SLICE2_UNIVERSE_SIZE=100
+RE-S2S1-010,load 派生 report_type/market/erad_include 同 slice1 形状,offline,yes,yes,blocked,4 列 freeze CSV 不 mutate; _derive_a_slice2_report_fields case_num 501-600
+RE-S2S1-011,canonical output root 校验已实现,offline,yes,yes,blocked,outputs/validation/cninfo_a_class_erad_next_scale_slice2_s1/
+RE-S2S1-012,write-block scale-200 根已 enforce,offline,yes,yes,blocked,继承 slice1 ERAD_SLICE1_SCALE_200_ROOT_WRITE_FORBIDDEN 同型
+RE-S2S1-013,write-block failed_retry 根已 enforce,offline,yes,yes,blocked,继承 slice1 failed_retry root block
+RE-S2S1-014,write-block slice1 主根已 enforce,offline,yes,yes,blocked,slice2 新增 ERAD_SLICE2_SLICE1_ROOT_WRITE_FORBIDDEN; 294/300 effective 保护
+RE-S2S1-015,write-block phase3/A3M017 根已 enforce,offline,yes,yes,blocked,继承 slice1 PHASE3_OUTPUT_ROOT_VIOLATION
+RE-S2S1-016,overlap lint L-A1..L-A4 运行时 re-assert,offline,yes,yes,blocked,对照 A_ALL_U A_CUM_EFF A_S200_U A_S1_U; 离线 lint 已 PASS
+RE-S2S1-017,overlap lint L-B1..L-B4 运行时 re-assert,offline,yes,yes,blocked,对照 B_CUM B_S200 B_S1 B fuller slice2; 离线 lint 已 PASS
+RE-S2S1-018,AB_182 disjoint 运行时 re-assert,offline,yes,yes,blocked,对照 ab_overlap_182_ledger; O3 记账 only
+RE-S2S1-019,L-D4 ST 名称命中运行时校验,offline,yes,yes,blocked,/(?:\*?ST|S\*ST)/; freeze lint 0/100
+RE-S2S1-020,request cap <=240 enforce,offline,yes,yes,blocked,ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP=240; 100x2=200 planned
+RE-S2S1-021,dry-run 100/100 planned_ok CNINFO=0,offline,yes,yes,blocked,依赖 RE-S2S1-005..020; 命令见 design §8
+RE-S2S1-022,dryrun report/summary 命名 a_class_erad_next_scale_slice2_s1_*,offline,yes,yes,blocked,mode=erad_a_scale_500_slice2_dry_run
+RE-S2S1-023,case-range AD2E501:AD2E550 与 AD2E551:AD2E600 支持,offline,yes,yes,blocked,2x50 session split; 复用 slice1 parse_erad_a_slice1_case_range 同型
+RE-S2S1-024,_mock_test/_mock_live_test 子目录允许,offline,yes,yes,blocked,同 slice1 mock parent 模式
+RE-S2S1-025,test_cninfo_a_class_erad_next_scale_slice2_runner.py PASS,offline,yes,yes,blocked,参照 slice1 17/17 tests; CNINFO=0
+RE-S2S1-026,test_cninfo_a_class_erad_next_scale_slice2_live_path.py PASS,offline,no,yes,blocked,mock live CNINFO=0; approval gate 测试
+RE-S2S1-027,slice1 regression tests 17/17 仍 PASS,offline,yes,yes,blocked,不得破坏 --erad-a-scale-500-slice1
+RE-S2S1-028,182 台账 remainder 旧 draft 写保护未触碰,offline,yes,yes,ready,freeze note §6; runner 不得 mutate 受保护 CSV
+RE-S2S1-029,runner_extension_gate 可升至 READY_FOR_APPROVAL,offline,yes,yes,blocked,须 RE-S2S1-021+025+027 全绿
+RE-S2S1-030,post-integration HOLD 状态确认,offline,no,yes,blocked,PROJECT_CONTROL; PC-S2S1-005; 解除前禁止 live
+RE-S2S1-031,human slice2 live 显式批准短语,offline,no,yes,blocked,AQ-A-NEXT 仅 cohort freeze; separate live phrase
+RE-S2S1-032,precheck PC-S2S1-001..020 全 ready,offline,no,yes,blocked,证据: cninfo_a_class_erad_next_scale_slice2_s1_live_precheck_20260714.csv
+RE-S2S1-033,live 命令 shape 与 command draft 一致,offline,no,yes,blocked,须 --approve-a-class-erad-scale-500-slice2 + --live
+RE-S2S1-034,success criteria >=90/100 PASS_WITH_CAVEAT,offline,no,yes,ready,live prep §7; 不是 bare PASS
+RE-S2S1-035,O3 182 治理 Controller 终裁若 live 前要求,offline,no,no,blocked,PENDING_CONTROLLER; 非 dry-run 阻塞项
+RE-S2S1-036,跨轨 B/C/D 并行 CNINFO cap 已文档化,offline,no,yes,ready,live prep §10; 日合计 cap 若并行 live
