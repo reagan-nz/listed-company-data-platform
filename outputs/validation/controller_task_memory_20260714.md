@@ -27,6 +27,15 @@ _Autonomous memory layer · Daily Loop v2_
 | B-GEN-20260714-05 | B | BD2E624 offline validation rules + precheck | bd2e624_offline_validation_rules · precheck_checklist | 2026-07-14 |
 | C-GEN-20260714-05 | C | dual-layer semantic validation rules + matrix | dual_layer_validation_rules · rule_matrix | 2026-07-14 |
 | A-GEN-20260714-08 | A | slice2 ST selection strategy（S1 recommend） | slice2_st_selection_strategy · checklist | 2026-07-14 |
+| D-GEN-20260714-06 | D | first-slice approval package + Tier-1 fixtures | first_slice_approval_package · universe_lock · fixtures | 2026-07-14 |
+| B-GEN-20260714-06 | B | BD2E624 isolated retry offline prep | isolated_retry_plan · universe · command_draft | 2026-07-14 |
+| A-GEN-20260714-09 | A | S1 +100 non-ST cohort freeze + lint PASS | s1_plus100_candidate · lint_check · freeze_note | 2026-07-14 |
+| C-GEN-20260714-06 | C | snapshot progression package（prod HOLD） | snapshot_progression_* · mock_rebuild_plan | 2026-07-14 |
+| B-GEN-20260714-07 | B | dry-run blocker / extension note | isolated_retry_execution_report · runner_extension_note | 2026-07-14 |
+| D-GEN-20260714-07 | D | Tier-1 fixture VR PASS_OFFLINE | fixture_vr_validation · matrix | 2026-07-14 |
+| A-GEN-20260714-10 | A | slice2 S1 live-prep package | s1_live_prep · command_draft · precheck | 2026-07-14 |
+| B-GEN-20260714-08 | B | isolated-retry runner + live found（CNINFO=2） | wave3 execution report · bd2e624_retry root | 2026-07-14 |
+| B-GEN-20260714-09 | B | post-retry merge closure（797→798 proposed） | merge_closure · recovered/post ledgers | 2026-07-14 |
 
 
 ## Deferred tasks
@@ -34,11 +43,12 @@ _Autonomous memory layer · Daily Loop v2_
 
 | id | track | reason |
 |----|-------|--------|
-| BD2E624-retry | B | post-integration HOLD · needs separate approval · offline rules ready |
+| BD2E624-merge-lineage | B | optional CURRENT_STATUS / mission gap refresh for 798 |
+| A-slice2-live | A | needs runner `--erad-a-scale-500-slice2` + live phrase |
 | A-unresolved6-live | A | live_needed=no · HOLD |
-| A-ST-S1-regen | A | waits human sign-off of S1 + cap before new CSV |
-| C-snapshot-rebuild | C | approved_for_snapshot_rebuild=false |
-| D-SC-live/runner | D | WAITING_APPROVAL component · sample/rules/evidence prep done |
+| C-prod-snapshot-rebuild | C | rebuild_candidate=no · HOLD correct |
+| D-SC-runner-S4 | D | needs runner extension approval |
+| D-SC-live-S5 | D | needs explicit live phrase |
 
 
 ## Known blockers
@@ -48,11 +58,10 @@ _Autonomous memory layer · Daily Loop v2_
 |---------|-------|
 | AQ-D-SC | **CLEARED run6** — phrase granted 2026-07-14 |
 | AQ-C-SNAP | **CLEARED run6** — snapshot progression approved（prod execute still matrix-gated） |
-| B-BD2E624-retry | **CLEARED run6** — retry path approved（live still after prep/precheck） |
-| A-next-scale | **CLEARED run6** — progression approved（Controller adopts S1/+100/O3 for A-09） |
+| B-BD2E624-retry | B | **CLEARED run6** — isolated retry live found · merge closure packaged |
+| A-next-scale | A | **CLEARED run6** — S1/+100 frozen · live still separately gated |
 | AQ-PUSH | diverged main |
 | AQ-WT-SYNC | dirty stale worktrees |
-| A/B post-integration HOLD | live harvest still needs task-level scope; offline unlocked |
 
 
 ## Human rejected
