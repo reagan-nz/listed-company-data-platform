@@ -3,10 +3,12 @@
 _Last verified by Controller: 2026-07-14_  
 _Workflow upgrade: project subagent team enabled for routine orchestration (2026-07-13)_  
 _Workflow: `regression-reviewer` promoted to ROUTINE_READ_ONLY (2026-07-14)_  
-_State reconciliation: Git / A-B / queue / autonomy synced to HEAD `4a62f78` (2026-07-14)_
+_State reconciliation: Git / A-B / queue / autonomy synced to HEAD `4a62f78` (2026-07-14)_  
+_Operating mode: **Daily Autonomous Loop v2 Operational Mode**（默认运行；非 Pilot）· policies `c1662f4` · bak ignore `a32d338` · acceptance 2026-07-14_
 
 > This file is the **workflow state register**. Update only after executor completion (when applicable) · Controller verification · required independent review · gate reconciliation · artifact checks.  
-> Executor claims alone are insufficient. **Actual files / reports / Git history outrank this file** when they conflict.
+> Executor claims alone are insufficient. **Actual files / reports / Git history outrank this file** when they conflict.  
+> **Daily execution churn** goes to Daily Autonomous Operation Report；本文件仅记录慢变控制/架构/策略状态。
 
 ---
 
@@ -26,7 +28,8 @@ Agent definitions: `.cursor/agents/*.md`
 **Do not create another subagent** until the human explicitly asks.
 
 **Operating principle:** Executors perform bounded track work · Regression Reviewer checks behavioral impact and test-evidence sufficiency · Evidence Auditor checks factual support of metrics/gates · Git Boundary Reviewer checks commit/push scope safety · Controller coordinates and chooses next valid state.  
-**Autonomy split:** local **commit / merge** may proceed under controller autonomy policy when boundary evidence is complete · **push / force-push / remote publication** remain **human-controlled**.  
+**Daily Autonomous Loop v2 Operational Mode:** Controller may daily read state · classify queue · execute allowed offline tasks · bounded local commits · emit daily report · **silent success**.  
+**Autonomy split:** local **commit / merge** may proceed under controller autonomy / commit-autonomy v2 when boundary evidence is complete · **push / force-push / remote publication** remain **human-controlled**.  
 **Human** still grants live · architecture · policy · and any action outside autonomy scope.  
 No agent may propose, execute, review, and approve the same high-risk action alone.  
 Reviewers do **not** replace each other.
@@ -37,14 +40,14 @@ Reviewers do **not** replace each other.
 
 | Item | Verified value |
 |------|----------------|
-| current branch | `main` @ `4a62f78` |
-| origin relationship | **ahead 25 · behind 4** (do not push/rebase without human approval) |
+| current branch | `main` @ `a32d338`（operational enablement tip; git outranks if moved） |
+| origin relationship | **ahead 42 · behind 4** (do not push/rebase without human approval) |
 | integrated commits | B fuller slice2 `f0bff3a` · A next-scale slice1 `4118974` · merge `71a83c1` |
 | recovery | Option C unique-path recovery `3b0c7ce` |
-| controller foundation | policy `0f63a90` · runtime ignore boundary `d385bb6` · agents `4a62f78` |
+| controller foundation | policy `0f63a90` · runtime ignore `d385bb6`/`a32d338` · agents `4a62f78` · Daily Loop v2 `c1662f4` |
 | prior local commits of note | `85abad0` equity_pledge · `350cdda` B slice1 · `aa087b5` RSU · `41dc049` A scale-200 · `403472d` block_trade · `e738fa9` B scale-200 |
 | push | **NOT authorized** · remote publication checkpoint **pending** |
-| working tree | dirty (~evidence / source / status docs; runtime bulk ignored) |
+| working tree | main clean at enablement · worktrees may be stale/dirty（preflight Option A） |
 
 ---
 
@@ -379,8 +382,9 @@ Track · Stage · Executor · Reviewer · Executor/Controller/Reviewer gates · 
 | B fuller slice2 | **INFO** | committed `f0bff3a` · **post-integration HOLD** · BD2E624 deferred · **NOT verified** |
 | C slice1 ledger+QA | **HOLD** | pilot closed `PASS_WITH_CAVEAT` · snapshot still **blocked** (`approved_for_snapshot_rebuild = false`) |
 | D shareholder_change | **Human Level-2** | component approval pending · `READY_FOR_APPROVAL` ≠ approved |
-| remote publication | **Human** | `main` ahead **25** / behind **4** · push **NOT authorized** |
+| remote publication | **Human** | `main` ahead **42** / behind **4** · push **NOT authorized** |
 | D commits unpushed · disclosure `d37ce0a` not on main | **INFO / Controller** | no self-approve push |
+| Daily Autonomous Loop v2 | **OPERATIONAL** | default mode · policies `c1662f4` · first run 2026-07-14 |
 
 ---
 
@@ -388,8 +392,9 @@ Track · Stage · Executor · Reviewer · Executor/Controller/Reviewer gates · 
 
 1. **C** — slice1 ledger+QA **done** (`PASS_WITH_CAVEAT`) · **HOLD** · optional later slice2 planning · **no snapshot**
 2. **D** — human component approval for shareholder_change (Level 2) · `READY_FOR_APPROVAL` ≠ approved
-3. **Remote publication checkpoint** — human push / recovery strategy for `main` (ahead 25 · behind 4) · **pending**
+3. **Remote publication checkpoint** — human push / recovery strategy for `main` (ahead 42 · behind 4) · **pending**
 4. **A** — **post-integration HOLD** (`4118974` / `71a83c1`) · unresolved caveats retained · no live retry
 5. **B** — **post-integration HOLD** (`f0bff3a`) · BD2E624 deferred · no live rerun
 
-A/B Level-2 commit waits are **closed** (spent). Push remains human-controlled.
+A/B Level-2 commit waits are **closed** (spent). Push remains human-controlled.  
+Daily Loop v2 Operational Mode active：例行成功静默；仅审批/冲突/破坏性/push/安全边界打断。
