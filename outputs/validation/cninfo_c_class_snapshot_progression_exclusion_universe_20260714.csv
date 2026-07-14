@@ -1,0 +1,20 @@
+exclusion_id,cohort_family,company_code,company_name,case_id,ledger_status,audit_status,dual_layer_rule_id,exclusion_reason,promotion_allowed_now,source_package_ref
+EXC-P01,partial7,600001,邯郸钢铁,CE1E002,partial,partial,DLVR-P01;DLVR-P04,normalized 4/10; raw 6x http_error/500; security_observe delisted=true; excluded from snapshot complete pool,no,cninfo_c_class_partial7_evidence_completeness_20260714.md
+EXC-P02,partial7,600005,武钢股份,CE1E003,partial,partial,DLVR-P01;DLVR-P04,normalized 4/10; delisted/merged SSE; accept_with_caveat,no,cninfo_c_class_partial7_evidence_completeness_20260714.md
+EXC-P03,partial7,600068,葛洲坝,CE1E034,partial,partial,DLVR-P01;DLVR-P04,normalized 4/10; delisted infrastructure SOE; accept_with_caveat,no,cninfo_c_class_partial7_evidence_completeness_20260714.md
+EXC-P04,partial7,000003,PT金田A,CE1E061,partial,partial,DLVR-P01;DLVR-P04,normalized 4/10; PT tradingStatus=0; delisted=true; accept_with_caveat,no,cninfo_c_class_partial7_evidence_completeness_20260714.md
+EXC-P05,partial7,000015,PT中浩A,CE1E067,partial,partial,DLVR-P01;DLVR-P04,normalized 4/10; PT tradingStatus=0; accept_with_caveat,no,cninfo_c_class_partial7_evidence_completeness_20260714.md
+EXC-P06,partial7,000022,深赤湾A,CE1E070,partial,partial,DLVR-P01;DLVR-P04,normalized 4/10; merger/delisting SZSE; accept_with_caveat,no,cninfo_c_class_partial7_evidence_completeness_20260714.md
+EXC-P07,partial7,000024,招商地产,CE1E071,partial,partial,DLVR-P01;DLVR-P04,normalized 4/10; merger/delisting SZSE; accept_with_caveat,no,cninfo_c_class_partial7_evidence_completeness_20260714.md
+EXC-E01,empty_dividend3,688031,星环科技,CE1E176,complete,needs_review,DLVR-E01;DLVR-E02;DLVR-E03,valid_empty dividend raw 200; zero-byte normalized; legal dual-layer divergence; accept_with_caveat,no,cninfo_c_class_empty_dividend_evidence_20260714.md
+EXC-E02,empty_dividend3,688062,迈威生物,CE1E188,complete,needs_review,DLVR-E01;DLVR-E02;DLVR-E03,valid_empty dividend; audit source_ledger dividend_history=no vs zero-byte present,no,cninfo_c_class_empty_dividend_evidence_20260714.md
+EXC-E03,empty_dividend3,688071,华依科技,CE1E193,complete,needs_review,DLVR-E01;DLVR-E02;DLVR-E03,valid_empty dividend; STAR active delisted=false; offline_review_first,no,cninfo_c_class_empty_dividend_evidence_20260714.md
+EXC-H01,holdout9,000003,PT金田A,,closed_with_caveat,hold_for_review,SR-03;holdout_ledger,not in 491 success subset; identity_review only if separately requested,no,cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv
+EXC-H02,holdout9,000578,盐湖集团,,closed_with_caveat,hold_for_review,SR-03;holdout_ledger,delisted/legacy name signal; not in 491,no,cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv
+EXC-H03,holdout9,000666,经纬纺机,,closed_with_caveat,hold_for_review,SR-03;holdout_ledger,delist/reorg signal; not in 491,no,cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv
+EXC-H04,holdout9,000689,ST宏业,,closed_with_caveat,hold_for_review,SR-03;holdout_ledger,ST identity signal; not in 491,no,cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv
+EXC-H05,holdout9,000861,海印股份,,closed_with_caveat,hold_for_review,SR-03;holdout_ledger,distressed/ST signal; not in 491,no,cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv
+EXC-H06,holdout9,000961,ST中南,,closed_with_caveat,hold_for_review,SR-03;holdout_ledger,ST identity signal; not in 491,no,cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv
+EXC-H07,holdout9,002280,ST联络,,closed_with_caveat,hold_for_review,SR-03;holdout_ledger,ST identity signal; not in 491,no,cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv
+EXC-H08,holdout9,301212,联盛化学,,closed_with_caveat_still_partial,C35R016,SR-03;holdout_ledger,C35R016 still_partial executive http_error; isolated retry deferred,no,cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv
+EXC-H09,holdout9,600220,ST阳光,,closed_with_caveat,hold_for_review,SR-03;holdout_ledger,ST identity signal; not in 491,no,cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv
