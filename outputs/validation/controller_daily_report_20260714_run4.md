@@ -3,7 +3,7 @@
 Date: 2026-07-14  
 Run: **ops run4**  
 state_refresh_timestamp（stop）: `2026-07-14T17:24:29+0800`  
-HEAD: `c36086d`（report commit may advance）  
+HEAD: `abd3051`  
 Budget: 10 iter · 120 min · 12 commits  
 
 ## Iterations
