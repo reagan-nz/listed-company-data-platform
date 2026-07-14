@@ -1,0 +1,64 @@
+event_or_field,category,required_for_first_slice,status,notes
+shareholder_change,event_type,yes,draft,Parent ownership-event type; source_category=shareholder_change; target d_company_event
+shareholder_change.increase,event_subtype,yes,draft,Derived from query type=inc; query_mode=type_inc; UI label 增持明细
+shareholder_change.decrease,event_subtype,no,blocked,Derived from query type=desc NOT dec; query_mode=type_desc; deferred beyond first-slice single-mode inc policy
+d_company_event,logical_table,yes,draft,record_kind=event; schema ref schemas/d_class/d_company_event.schema.json; not a DB migration
+market_event,envelope,yes,draft,Phase1 unified envelope per cninfo_d_class_event_object_schema.md
+shareholder_change_payload,component_payload,yes,draft,Sibling key under event_type; DC005 fixture pattern
+event_id,envelope_field,yes,draft,Logical PK hash(source_id query_mode company_code event_date actor_name)
+company_code,envelope_field,yes,draft,Maps SECCODE; universe filter key DSC001-DSC005
+company_name,envelope_field,recommended,draft,Maps SECNAME; nullable_if_missing per freeze v1
+event_time,envelope_field,yes,draft,Primary timeline key; must equal change_date / VARYDATE
+event_type,envelope_field,yes,draft,Fixed value shareholder_change
+event_status,envelope_field,yes,draft,captured | empty_but_valid | failed | pending per quality policy
+quality_status,envelope_field,yes,draft,pass | caveat | needs_review | blocked; must match payload when present
+source_endpoint,envelope_field,recommended,draft,https://www.cninfo.com.cn/data20/shareholeder/detail spelling shareholeder preserved
+source_record_id,envelope_field,yes,draft,Stable hash of raw row when no official id
+lineage.registry_source_id,lineage_field,yes,draft,Fixed shareholder_change
+lineage.query_mode,lineage_field,yes,draft,First-slice fixed type_inc
+lineage.query_params,lineage_field,yes,draft,Must include type and tdate for first-slice
+lineage.fetch_time,lineage_field,yes,draft,Retrieval timestamp ISO8601
+lineage.raw_record_hash,lineage_field,yes,draft,Mandatory for captured rows
+lineage.raw_record_json,lineage_field,yes,draft,Full CNINFO record object mandatory per registry raw_record_required
+lineage.lineage_status,lineage_field,yes,draft,Phase1 default discovered; linked blocked
+shareholder_name,component_field,yes,draft,Maps F002V; actor in d_company_event
+change_type,component_field,yes,draft,Query param type value inc for first-slice; maps to event_subtype
+change_amount,component_field,yes,draft,Maps F004N primary_amount shares; required when found not on empty_but_valid
+change_ratio,component_field,recommended,draft,Maps F005N primary_ratio percent; nullable_if_missing
+change_date,component_field,yes,draft,Maps VARYDATE; must equal event_time
+quality_status_payload,component_field,yes,draft,Mirror of envelope quality_status when payload exists
+SECCODE,raw_cninfo_field,yes,draft,Registry confirmed company_code
+SECNAME,raw_cninfo_field,recommended,draft,Registry confirmed company_name
+DECLAREDATE,raw_cninfo_field,recommended,draft,Registry confirmed announcement_date
+VARYDATE,raw_cninfo_field,yes,draft,Registry confirmed share_change_date primary event date
+F002V,raw_cninfo_field,yes,draft,Registry confirmed shareholder_name
+F004N,raw_cninfo_field,yes,draft,Registry confirmed share_change_amount shares
+F005N,raw_cninfo_field,recommended,draft,Registry confirmed share_change_ratio_percent
+F007V,raw_cninfo_field,no,draft,Registry confirmed share_change_price optional; desc mode may be empty or range
+type,query_param,yes,draft,First-slice fixed inc; drives event_subtype increase
+tdate,query_param,yes,draft,Shared anchor 2026-07-03 offline documented not CNINFO probed
+query_mode_type_inc,query_mode,yes,draft,Supported mode type=inc plus optional tdate
+query_mode_type_desc,query_mode,no,blocked,Supported in registry but excluded from first-slice
+endpoint_shareholeder_detail,api,yes,draft,POST params_location=query records_path=data.records
+event_subtype_increase,mapping_rule,yes,draft,query_params.type=inc maps to event_subtype increase
+event_subtype_decrease,mapping_rule,no,blocked,query_params.type=desc maps to event_subtype decrease
+primary_amount_unit_shares,mapping_rule,yes,draft,d_company_event primary_amount_unit=shares for F004N
+primary_ratio_unit_percent,mapping_rule,recommended,draft,d_company_event primary_ratio_unit=percent for F005N
+primary_price_unit_yuan_per_share,mapping_rule,no,draft,Set only when F007V present per mapper
+actor_name_mapping,mapping_rule,yes,draft,d_company_event actor_name from F002V shareholder_name
+announcement_date_mapping,mapping_rule,recommended,draft,d_company_event announcement_date from DECLAREDATE
+empty_but_valid_semantic,retrieval_semantic,yes,draft,Zero rows on sparse tdate legitimate; DSC005 control; not failure
+captured_normal_or_empty_but_valid,expectation_mix,yes,draft,Default for DSC001-DSC003; DBT002 lesson no sole captured_normal_candidate
+captured_normal_or_needs_review,expectation_mix,yes,draft,DSC004 field mapping review if found; DEP004 mix required
+empty_but_valid_control,expectation_mix,yes,draft,DSC005 sparse-day control case
+disclosure_evidence_boundary,governance,yes,blocked,Disclosure PDF or manual review must not populate structured fields
+DLC006R_301259_exclusion,governance,yes,blocked,Permanent exclude from primary universe; known-event closed no reopen
+DLC006_000550_precedent,governance,yes,draft,DSC001 distinct case_id; not DLC006R proxy; planning precedent only
+separate_disclosure_lineage_only,governance,yes,blocked,Must not promote to captured_normal without project decision
+raw_record_required_policy,governance,yes,draft,registry mapping raw_record_required=true; no structured row without raw lineage
+schema_json_amendment,implementation,no,blocked,No d_company_event.schema.json change until Level-2 plus later commit approval
+mapper_live_validation,implementation,no,blocked,lab/cninfo_d_class_mappers.py exists offline; no live CNINFO validation
+runner_first_slice_flag,implementation,no,blocked,--shareholder-change-first-slice not implemented
+formal_universe_lock,implementation,no,blocked,Requires human component phrase before first-slice approval package
+B_class_event_document_link,integration,no,blocked,Phase1 lineage_status linked not implemented
+type_dec_invalid,validation_rule,yes,draft,Registry R012 type=dec forbidden; must use desc for decrease mode
