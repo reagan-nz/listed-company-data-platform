@@ -1,0 +1,25 @@
+check_id,check_name,offline_or_live,required_before_retry,status,notes
+PC-BD2E-001,BD2E624 offline triage 已完成且 disposition=deferred_unresolved_failed,offline,yes,ready,证据: cninfo_b_class_bd2e624_offline_triage_20260714.md; 不重做 triage
+PC-BD2E-002,baseline retrieval_status=network_error 与 EP002 orgId failed 一致,offline,yes,ready,证据: unresolved ledger + live report row 125 + edge-case classification row 10
+PC-BD2E-003,network_error 与 empty_response 对比规则已登记（VR-MIS-01..05）,offline,yes,ready,证据: validation rules §2; 参照 ER-VAL 八例 BD2E537 与 cross-slice index
+PC-BD2E-004,slice2 主 merge closure gate=PASS_WITH_CAVEAT 且 299/300 acceptable 未变,offline,yes,ready,证据: merge closure summary; BD2E624 不计入 acceptable
+PC-BD2E-005,post-integration HOLD 状态已确认,offline,yes,blocked,证据: PROJECT_CONTROL.md + CURRENT_STATUS.md; next_allowed_task=HOLD; 解除前禁止 live
+PC-BD2E-006,human Level-2 isolated retry 显式批准短语,offline,yes,blocked,slice2 live 批准不含 BD2E624 单 case retry; 须 separate approval phrase
+PC-BD2E-007,controller approval queue 含 BD2E624 retry 条目,live,yes,blocked,当前: controller_approval_queue_20260714.md 无 retry 条目
+PC-BD2E-008,1-case isolated retry universe CSV 已导出,offline,yes,blocked,参照 TLC002/A3M017 单 case universe 格式; 仅 BD2E624/300778
+PC-BD2E-009,isolated retry plan + approval checklist + command draft 已撰写,offline,yes,blocked,参照 plans/cninfo_b_class_tlc002_isolated_retry_plan.md 模式
+PC-BD2E-010,隔离 output root 已指定且 write-block 清单已核对,offline,yes,blocked,建议: outputs/validation/cninfo_b_class_erad_fuller_next_slice2_bd2e624_retry/; 不得写 slice2 主根
+PC-BD2E-011,slice2 主 report/quality/merge closure 写保护,offline,yes,ready,规则 VR-MRG-04; phase3/scale-200/slice1 根 untouched
+PC-BD2E-012,不得与 16 例 ER-VAL empty_response requery 混批,offline,yes,ready,证据: cross-slice ER-VAL index; VR-MIS-05
+PC-BD2E-013,runner dry-run 1/1 planned_ok（mock only）,offline,yes,blocked,须 CNINFO=0; 参照 triage §4.1 step 4
+PC-BD2E-014,runner tests PASS（若 runner 扩展）,offline,no,blocked,仅当 isolated retry runner 扩展任务完成时 required
+PC-BD2E-015,request cap 已估算且 human 批准（建议≤2 CNINFO）,offline,yes,blocked,单 case EP002→EP001 链; 不得 burst
+PC-BD2E-016,case-range BD2E624:BD2E624 且不重跑 BD2E001-800 其他 case,live,yes,ready,规则 VR §3.2 F4; bd2e001_500/scale_200/slice1 lineage-reference only
+PC-BD2E-017,PDF/OCR/extraction/DB/MinIO/RAG 禁用确认,offline,yes,ready,fresh_metadata only; phase3_production_root_write=no
+PC-BD2E-018,acceptance rules 包已就绪（本 validation rules）,offline,yes,ready,本包 B-GEN-20260714-05; gate PASS_OFFLINE
+PC-BD2E-019,retry 后 misclassification guard 可执行（EP002 fail≠empty_response）,live,yes,ready,验收时核对 VR-MIS-01..04; 参照 BD2E537 empty_response 对照
+PC-BD2E-020,retry 失败保留 deferred 路径已定义,live,yes,ready,VR §3.2 F1-F3; slice2 主 gate 保持 PASS_WITH_CAVEAT
+PC-BD2E-021,retry 成功 separate merge closure 路径已定义,live,no,ready,VR-MRG-01..06; cumulative 797→798; 非本 precheck 阻塞项
+PC-BD2E-022,不得 offline 改写 BD2E624 为 acceptable,offline,yes,ready,triage §4.1 step 5; 仅 live 完成后可更新 ledger
+PC-BD2E-023,Session 1 邻接成功对照 BD2E625=found 可引用,offline,yes,ready,证据: session1 live log; 非 EP002 结构性缺陷信号
+PC-BD2E-024,integration commit f0bff3a 后 HOLD 未解除确认,offline,yes,blocked,证据: autonomous_batch_v1_post_integration_next_step.md; no BD2E624 live retry
