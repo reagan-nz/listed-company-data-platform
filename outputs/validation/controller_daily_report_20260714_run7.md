@@ -5,7 +5,7 @@ Run: **ops run7**
 Execution time: ~2026-07-14T18:20 → 18:25 +0800（~5 min）  
 state_refresh_timestamp（start）: `2026-07-14T18:20:03+0800`  
 state_refresh_timestamp（stop）: `2026-07-14T18:24:30+0800`  
-HEAD: （closeout tip）  
+HEAD: `94b4205`
 Budget: 10 iter · 120 min · 12 commits  
 
 ## Iterations
@@ -75,7 +75,7 @@ CNINFO: **0** · Live: **0** · Push: **0** · Approval bypass: **no**
 |-----|------|
 | iterations | 3 / 10 |
 | runtime | ~5 min / 120 |
-| autonomous commits | ~10 mission + closeout / 12 |
+| autonomous commits | 10 / 12 |
 
 ## Final verdict
 
