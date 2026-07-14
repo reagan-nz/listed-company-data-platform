@@ -58,8 +58,8 @@ _Autonomous memory layer · Daily Loop v2_
 |---------|-------|
 | AQ-D-SC | **CLEARED run6** — phrase granted 2026-07-14 |
 | AQ-C-SNAP | **CLEARED run6** — snapshot progression approved（prod execute still matrix-gated） |
-| B-BD2E624-retry | B | **CLEARED run6** — isolated retry live found · merge closure packaged |
-| A-next-scale | A | **CLEARED run6** — S1/+100 frozen · live still separately gated |
+| B-BD2E624-retry | **CLEARED run6** — isolated retry live found · merge closure packaged |
+| A-next-scale | **CLEARED run6** — S1/+100 frozen · live still separately gated |
 | AQ-PUSH | diverged main |
 | AQ-WT-SYNC | dirty stale worktrees |
 

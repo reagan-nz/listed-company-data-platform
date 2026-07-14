@@ -4,7 +4,7 @@ Date: 2026-07-14
 Run: **ops run6**  
 state_refresh_timestamp（start）: `2026-07-14T17:47:55+0800`  
 state_refresh_timestamp（stop）: `2026-07-14T18:03:23+0800`  
-HEAD: `81391cf`  
+HEAD: `7b065dc`
 Budget: 10 iter · 120 min · 12 commits  
 
 ## Newly unlocked tasks（from human approvals）
@@ -65,7 +65,7 @@ All four granted gates **consumed** for offline/bounded paths. AQ-PUSH / AQ-WT-S
 |-----|------|
 | iterations | 4 / 10 |
 | runtime | ~15 min / 120 |
-| autonomous commits | 11 / 12（mission packages + closeout pending） |
+| autonomous commits | 12 / 12 |
 
 ## Remaining bottlenecks
 
