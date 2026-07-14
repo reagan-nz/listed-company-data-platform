@@ -22,6 +22,11 @@ if _LAB_DIR not in sys.path:
 
 import build_cninfo_c_class_company_snapshot as company_snapshot  # noqa: E402
 import build_cninfo_c_class_snapshot_batch as batch_runner  # noqa: E402
+from cninfo_c_class_erad_cleanup_guard import (  # noqa: E402
+    CLEANUP_REFUSED_MSG,
+    assert_safe_test_cleanup_path,
+    is_protected_c_class_production_root,
+)
 from build_cninfo_c_class_company_snapshot import (  # noqa: E402
     DEFAULT_HARVEST_ROOT,
     NORM_ROOT,
@@ -76,7 +81,17 @@ class TestPhase3SuccessSnapshotApproval(unittest.TestCase):
     def tearDown(self) -> None:
         reset_snapshot_batch_paths()
 
-    def test_case1_yaml_has_491_rows(self) -> None:
+    def test_cleanup_refuses_production_phase3_snapshot_root(self) -> None:
+        prod = os.path.join(BASE_DIR, PHASE3_SNAPSHOT_ROOT)
+        self.assertTrue(is_protected_c_class_production_root(prod))
+        with self.assertRaises(RuntimeError) as ctx:
+            assert_safe_test_cleanup_path(prod)
+        self.assertIn(CLEANUP_REFUSED_MSG, str(ctx.exception))
+
+    def test_cleanup_refuses_production_full_snapshot_root(self) -> None:
+        prod = os.path.join(BASE_DIR, FULL_SNAPSHOT_OUT_DIR_REL)
+        with self.assertRaises(RuntimeError):
+            assert_safe_test_cleanup_path(prod)
         with open(PHASE3_SAMPLE, encoding="utf-8") as fh:
             data = yaml.safe_load(fh)
         self.assertEqual(data.get("company_count"), PHASE3_SUCCESS_SNAPSHOT_EXPECTED_COUNT)

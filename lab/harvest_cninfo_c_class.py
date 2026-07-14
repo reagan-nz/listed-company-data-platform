@@ -130,6 +130,14 @@ PHASE3_BATCH_SAMPLE_BASENAME = "eval_companies_c_class_phase3_batch_500_001.yaml
 PHASE3_BATCH_EXPECTED_COUNT = 500
 PHASE3_BATCH_OUTPUT_ROOT = "outputs/harvest/cninfo_c_class/phase3_batch_500_001"
 PHASE2_BATCH_OUTPUT_ROOT = "outputs/harvest/cninfo_c_class/phase2_smoke_200"
+FULLER_MARKET_SLICE1_SAMPLE_BASENAME = "eval_companies_c_class_fuller_market_slice1_200.yaml"
+FULLER_MARKET_SLICE1_EXPECTED_COUNT = 200
+FULLER_MARKET_SLICE1_OUTPUT_ROOT = "outputs/harvest/cninfo_c_class/fuller_market_slice1_200"
+FULLER_MARKET_SLICE1_MOCK_ROOT_PREFIX = "outputs/harvest/cninfo_c_class/_mock_fuller_market_slice1"
+FULLER_MARKET_SLICE1_APPROVAL_REQUIRED = "FULLER_MARKET_SLICE1_HARVEST_APPROVAL_REQUIRED"
+FULLER_MARKET_SLICE1_OUTPUT_ROOT_REQUIRED = "FULLER_MARKET_SLICE1_OUTPUT_ROOT_REQUIRED"
+FULLER_MARKET_SLICE1_OUTPUT_ROOT_FORBIDDEN = "FULLER_MARKET_SLICE1_OUTPUT_ROOT_FORBIDDEN"
+PHASE35_BATCH_OUTPUT_ROOT = "outputs/harvest/cninfo_c_class/phase35_batch_500_001_resume"
 PHASE3_BATCH_APPROVAL_REQUIRED = "PHASE3_BATCH_500_HARVEST_APPROVAL_REQUIRED"
 PHASE3_OUTPUT_ROOT_REQUIRED = "PHASE3_BATCH_OUTPUT_ROOT_REQUIRED"
 PHASE3_OUTPUT_ROOT_FORBIDDEN = "PHASE3_BATCH_OUTPUT_ROOT_FORBIDDEN"
@@ -163,6 +171,11 @@ def is_phase3_batch_sample(sample_path: str) -> bool:
     return norm.endswith(PHASE3_BATCH_SAMPLE_BASENAME)
 
 
+def is_fuller_market_slice1_sample(sample_path: str) -> bool:
+    norm = sample_path.replace("\\", "/")
+    return norm.endswith(FULLER_MARKET_SLICE1_SAMPLE_BASENAME)
+
+
 def _normalize_output_root_path(path: str) -> str:
     return path.replace("\\", "/").rstrip("/")
 
@@ -183,6 +196,39 @@ def validate_phase3_output_root(output_root: Optional[str] = None) -> Tuple[bool
         return False, f"{PHASE3_OUTPUT_ROOT_FORBIDDEN}:default_863_root"
     if effective == phase2_root:
         return False, f"{PHASE3_OUTPUT_ROOT_FORBIDDEN}:phase2_smoke_200"
+    if effective != expected:
+        return False, f"output_root_must_be={expected} actual={effective}"
+    return True, expected
+
+
+def validate_fuller_market_slice1_output_root(
+    output_root: Optional[str] = None,
+) -> Tuple[bool, str]:
+    """
+    Era D fuller-market slice1 live harvest 输出根目录安全检查。
+    须使用隔离的 fuller_market_slice1_200 根目录（或 _mock_fuller_market_slice1* 测试根）。
+    禁止写入 863 / phase2 / phase3 / phase35 生产根。
+    """
+    effective = _normalize_output_root_path(output_root or HARVEST_OUTPUT_ROOT)
+    expected = _normalize_output_root_path(FULLER_MARKET_SLICE1_OUTPUT_ROOT)
+    default_root = _normalize_output_root_path(DEFAULT_HARVEST_OUTPUT_ROOT)
+    phase2_root = _normalize_output_root_path(PHASE2_BATCH_OUTPUT_ROOT)
+    phase3_root = _normalize_output_root_path(PHASE3_BATCH_OUTPUT_ROOT)
+    phase35_root = _normalize_output_root_path(PHASE35_BATCH_OUTPUT_ROOT)
+    mock_prefix = _normalize_output_root_path(FULLER_MARKET_SLICE1_MOCK_ROOT_PREFIX)
+
+    if not output_root:
+        return False, FULLER_MARKET_SLICE1_OUTPUT_ROOT_REQUIRED
+    if effective == default_root:
+        return False, f"{FULLER_MARKET_SLICE1_OUTPUT_ROOT_FORBIDDEN}:default_863_root"
+    if effective == phase2_root:
+        return False, f"{FULLER_MARKET_SLICE1_OUTPUT_ROOT_FORBIDDEN}:phase2_smoke_200"
+    if effective == phase3_root:
+        return False, f"{FULLER_MARKET_SLICE1_OUTPUT_ROOT_FORBIDDEN}:phase3_batch_500_001"
+    if effective == phase35_root:
+        return False, f"{FULLER_MARKET_SLICE1_OUTPUT_ROOT_FORBIDDEN}:phase35_batch_500_001_resume"
+    if "_mock_fuller_market_slice1" in effective:
+        return True, effective
     if effective != expected:
         return False, f"output_root_must_be={expected} actual={effective}"
     return True, expected
@@ -895,6 +941,10 @@ def resolve_live_execution_mode(
         if getattr(args, "approve_phase3_batch_500_harvest", False):
             return "phase3_batch"
         return ""
+    if sample_path and is_fuller_market_slice1_sample(sample_path):
+        if getattr(args, "approve_fuller_market_slice1_harvest", False):
+            return "fuller_market_slice1"
+        return ""
     if args.limit is not None:
         return "smoke"
     if args.approve_full_harvest:
@@ -913,6 +963,8 @@ def enforce_live_approval_gate(
             print(PHASE2_SMOKE_APPROVAL_REQUIRED, file=sys.stderr)
         elif sample_path and is_phase3_batch_sample(sample_path):
             print(PHASE3_BATCH_APPROVAL_REQUIRED, file=sys.stderr)
+        elif sample_path and is_fuller_market_slice1_sample(sample_path):
+            print(FULLER_MARKET_SLICE1_APPROVAL_REQUIRED, file=sys.stderr)
         else:
             print(FULL_HARVEST_APPROVAL_REQUIRED, file=sys.stderr)
         sys.exit(2)
@@ -1008,6 +1060,7 @@ def validate_pre_live_harvest(
     approve_full_harvest: bool,
     approve_phase2_smoke_harvest: bool = False,
     approve_phase3_batch_500_harvest: bool = False,
+    approve_fuller_market_slice1_harvest: bool = False,
     limit: Optional[int],
     resume: bool,
     run_status_path: Optional[str] = None,
@@ -1071,11 +1124,40 @@ def validate_pre_live_harvest(
             issues.append(root_detail)
         if limit is not None and len(companies) > limit:
             issues.append(f"companies={len(companies)} limit={limit}")
+    elif execution_mode == "fuller_market_slice1":
+        data = load_sample_yaml(sample_path)
+        declared = data.get("company_count")
+        actual = len(companies)
+        if limit is not None:
+            if actual != limit:
+                issues.append(f"expected_limit={limit} actual={actual}")
+            if limit > FULLER_MARKET_SLICE1_EXPECTED_COUNT:
+                issues.append(f"limit_exceeds_universe={limit}")
+        else:
+            if declared is not None and int(declared) != actual:
+                issues.append(f"company_count_declared={declared!r} actual={actual}")
+            if actual != FULLER_MARKET_SLICE1_EXPECTED_COUNT:
+                issues.append(
+                    f"expected={FULLER_MARKET_SLICE1_EXPECTED_COUNT} actual={actual}"
+                )
+        if not approve_fuller_market_slice1_harvest:
+            issues.append("approve_fuller_market_slice1_harvest_required")
+        if approve_full_harvest:
+            issues.append("approve_full_harvest_not_valid_for_fuller_market_slice1")
+        if approve_phase2_smoke_harvest:
+            issues.append("approve_phase2_smoke_not_valid_for_fuller_market_slice1")
+        if approve_phase3_batch_500_harvest:
+            issues.append("approve_phase3_batch_not_valid_for_fuller_market_slice1")
+        root_ok, root_detail = validate_fuller_market_slice1_output_root(output_root)
+        if not root_ok:
+            issues.append(root_detail)
     elif execution_mode == "smoke":
         if is_phase2_smoke_sample(sample_path):
             issues.append("phase2_smoke_requires_approve_phase2_smoke_harvest")
         if is_phase3_batch_sample(sample_path):
             issues.append("phase3_batch_requires_approve_phase3_batch_500_harvest")
+        if is_fuller_market_slice1_sample(sample_path):
+            issues.append("fuller_market_slice1_requires_approve_fuller_market_slice1_harvest")
         if limit is None or limit < 1:
             issues.append(f"smoke_limit_invalid={limit!r}")
         if len(companies) > (limit or 0):
@@ -1116,6 +1198,14 @@ def validate_pre_live_harvest(
             f"mode=phase3_batch company_count={len(companies)} hold_overlap=0 "
             f"approve_phase3_batch_500_harvest=true "
             f"output_root={HARVEST_OUTPUT_ROOT} "
+            f"planned_http_cases={len(companies) * HTTP_SOURCES_PER_COMPANY}"
+        )
+    elif execution_mode == "fuller_market_slice1":
+        detail = (
+            f"mode=fuller_market_slice1 company_count={len(companies)} hold_overlap=0 "
+            f"approve_fuller_market_slice1_harvest=true "
+            f"output_root={HARVEST_OUTPUT_ROOT} "
+            f"limit={limit} resume={resume} "
             f"planned_http_cases={len(companies) * HTTP_SOURCES_PER_COMPANY}"
         )
     else:
@@ -2352,6 +2442,11 @@ def parse_args() -> argparse.Namespace:
         help="显式批准 Phase 3 batch 500 live harvest（与 full/phase2 批准独立）",
     )
     parser.add_argument(
+        "--approve-fuller-market-slice1-harvest",
+        action="store_true",
+        help="显式批准 Era D fuller-market slice1 live harvest（须隔离 output-root）",
+    )
+    parser.add_argument(
         "--output-root",
         default=None,
         help="harvest 产物根目录（phase2 须隔离；默认 outputs/harvest/cninfo_c_class）",
@@ -2669,6 +2764,93 @@ def _run_live_phase3_batch(args: argparse.Namespace, sample_path: str, hold_path
     print(f"MD    {args.smoke_md}")
 
 
+def _run_live_fuller_market_slice1(
+    args: argparse.Namespace, sample_path: str, hold_path: str,
+) -> None:
+    """Era D fuller-market slice1 live harvest（须隔离根 + 显式 approval）。"""
+    all_companies = load_sample_companies(sample_path)
+    companies = all_companies[: args.limit] if args.limit is not None else all_companies
+
+    ok, detail = validate_pre_live_harvest(
+        sample_path,
+        companies,
+        hold_path,
+        execution_mode="fuller_market_slice1",
+        approve_full_harvest=args.approve_full_harvest,
+        approve_phase2_smoke_harvest=args.approve_phase2_smoke_harvest,
+        approve_phase3_batch_500_harvest=args.approve_phase3_batch_500_harvest,
+        approve_fuller_market_slice1_harvest=args.approve_fuller_market_slice1_harvest,
+        limit=args.limit,
+        resume=args.resume,
+        output_root=args.output_root,
+    )
+    label = "pre_live_harvest_validation"
+    if ok:
+        print(f"{label}: PASS  ({detail})")
+    else:
+        print(f"{label}: FAIL  ({detail})", file=sys.stderr)
+        sys.exit(2)
+
+    pending, skip_count, pending_count = apply_resume_filter(companies, args.resume)
+    print(f"resume_skip_count={skip_count}")
+    print(f"resume_pending_count={pending_count}")
+
+    run_status = make_run_status(
+        mode="live",
+        company_count=len(companies),
+        completed_company_count=skip_count,
+        status="running",
+        resume_enabled=args.resume,
+    )
+    write_run_status(run_status)
+
+    mapper_ok, _mapper_rows = validate_mapper_wiring()
+    if not mapper_ok:
+        print("mapper_wiring: FAIL", file=sys.stderr)
+        sys.exit(2)
+    print("mapper_wiring: PASS")
+
+    report_rows, stats = run_live_harvest(pending)
+
+    run_status["status"] = "completed"
+    run_status["finished_at"] = _utc_now_iso()
+    run_status["completed_company_count"] = skip_count + len(pending)
+    write_run_status(run_status)
+
+    metrics = compute_harvest_gate_metrics(
+        report_rows,
+        total_universe=len(companies),
+        resume_enabled=args.resume,
+        resume_skip_count=skip_count if args.resume else 0,
+    )
+    write_quality_harvest_summary(
+        metrics, stats, run_mode_label="live fuller-market slice1",
+    )
+    write_smoke_csv(args.smoke_csv, report_rows)
+    write_smoke_summary(
+        args.smoke_md, companies, report_rows, stats, sample_path, args.limit,
+    )
+
+    harvest_pass = (
+        "PASS" if stats.get("http_requests", 0) > 0 and stats.get("raw_files", 0) > 0 else "FAIL"
+    )
+    print(
+        f"SUMMARY  mode=live-fuller-market-slice1  companies={len(companies)}  "
+        f"output_root={HARVEST_OUTPUT_ROOT}  limit={args.limit}  resume={args.resume}  "
+        f"http_requests={stats.get('http_requests', 0)}  "
+        f"success={stats.get('success_count', 0)}  "
+        f"raw_files={stats.get('raw_files', 0)}  "
+        f"normalized_files={stats.get('normalized_files', 0)}  "
+        f"harvest={harvest_pass}"
+    )
+    print(f"RAW   {_harvest_abs_path(HARVEST_OUTPUT_ROOT + '/raw/')}")
+    print(f"NORM  {_harvest_abs_path(HARVEST_OUTPUT_ROOT + '/normalized/')}")
+    print(f"QUAL  {_harvest_abs_path(HARVEST_OUTPUT_ROOT + '/quality/')}")
+    print(f"STATUS  {_quality_abs_path(RUN_STATUS_REL)}")
+    print(f"CSV   {args.smoke_csv}")
+    print(f"MD    {args.smoke_md}")
+
+
 def _run_live_full(args: argparse.Namespace, sample_path: str, hold_path: str) -> None:
     all_companies = load_sample_companies(sample_path)
 
@@ -2798,6 +2980,8 @@ def main() -> None:
             _run_live_phase2_smoke(args, sample_path, hold_path)
         elif execution_mode == "phase3_batch":
             _run_live_phase3_batch(args, sample_path, hold_path)
+        elif execution_mode == "fuller_market_slice1":
+            _run_live_fuller_market_slice1(args, sample_path, hold_path)
         else:
             _run_live_full(args, sample_path, hold_path)
         return

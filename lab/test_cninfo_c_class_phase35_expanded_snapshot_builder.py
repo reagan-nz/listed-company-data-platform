@@ -22,6 +22,11 @@ if _LAB_DIR not in sys.path:
     sys.path.insert(0, _LAB_DIR)
 
 import build_cninfo_c_class_snapshot_batch as batch_runner  # noqa: E402
+from cninfo_c_class_erad_cleanup_guard import (  # noqa: E402
+    CLEANUP_REFUSED_MSG,
+    assert_safe_test_cleanup_path,
+    is_protected_c_class_production_root,
+)
 from build_cninfo_c_class_snapshot_batch import (  # noqa: E402
     BASE_DIR,
     FULL_SNAPSHOT_OUT_DIR_REL,
@@ -112,10 +117,17 @@ class TestPhase35ExpandedSnapshotBuilder(unittest.TestCase):
         )
 
     def tearDown(self) -> None:
+        # 生产 snapshot 根：仅断言 JSON 集合未变，不执行删除（Era D cleanup 硬化）
         snapshot_json_after = set(
             glob.glob(os.path.join(SNAPSHOT_ROOT, "**", "*.json"), recursive=True)
         )
         self.assertEqual(snapshot_json_after, self._snapshot_json_before)
+
+    def test_cleanup_refuses_production_phase35_snapshot_root(self) -> None:
+        self.assertTrue(is_protected_c_class_production_root(SNAPSHOT_ROOT))
+        with self.assertRaises(RuntimeError) as ctx:
+            assert_safe_test_cleanup_path(SNAPSHOT_ROOT)
+        self.assertIn(CLEANUP_REFUSED_MSG, str(ctx.exception))
 
     def test_case1_dry_run_calls_cninfo_zero_times(self) -> None:
         result = _run_runner(DRYRUN_ARGS)
