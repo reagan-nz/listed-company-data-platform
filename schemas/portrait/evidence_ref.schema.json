@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-d.local/schemas/portrait/evidence_ref.schema.json",
+  "title": "evidence_ref",
+  "description": "公司画像证据指针：指向既有 outputs/harvest|validation|snapshot 路径（只读引用，不搬库）。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "evidence_ref_id",
+    "source_path",
+    "fetched_at"
+  ],
+  "properties": {
+    "evidence_ref_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "证据指针唯一 ID，供 fact_record.evidence_ref_id 引用。"
+    },
+    "source_path": {
+      "type": "string",
+      "minLength": 1,
+      "description": "相对项目根的产物路径，如 outputs/harvest/cninfo_c_class/normalized/executive_profile/000009.jsonl"
+    },
+    "source_url": {
+      "type": ["string", "null"],
+      "description": "原始来源 URL（若有）。"
+    },
+    "sha256": {
+      "type": ["string", "null"],
+      "description": "原始记录或文件哈希（可空）。"
+    },
+    "fetched_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "证据抓取或回填时间 ISO8601。"
+    },
+    "note": {
+      "type": ["string", "null"],
+      "description": "补充说明，如行号、source_id、mapper 备注。"
+    }
+  }
+}

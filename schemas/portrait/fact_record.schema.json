@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cninfo-era-d.local/schemas/portrait/fact_record.schema.json",
+  "title": "fact_record",
+  "description": "公司画像事实层单条记录：company_id + field_id + value + as_of/period + evidence_ref。",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "value_shape": {
+      "type": "string",
+      "enum": ["scalar", "timeseries", "event", "document"]
+    },
+    "source_track": {
+      "type": "string",
+      "enum": ["A", "B", "C", "D", "multi", "none"]
+    },
+    "fact_status": {
+      "type": "string",
+      "enum": ["testing", "partial", "candidate", "not_modeled", "blocked", "empty_ok"]
+    }
+  },
+  "required": [
+    "company_id",
+    "field_id",
+    "module_id",
+    "value",
+    "value_shape",
+    "source_track",
+    "source_rank",
+    "evidence_ref_id",
+    "conflict_flag",
+    "status",
+    "collected_at"
+  ],
+  "properties": {
+    "company_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "公司主键，优先 company_code。"
+    },
+    "field_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "画像字段 ID，格式 module.subgroup.field_slug。"
+    },
+    "module_id": {
+      "type": "string",
+      "pattern": "^M(0[1-9]|1[0-8])$",
+      "description": "模块 M01-M18。"
+    },
+    "value": {
+      "description": "字段值，类型随 value_shape 变化。"
+    },
+    "value_shape": {
+      "$ref": "#/definitions/value_shape"
+    },
+    "as_of": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "快照类字段的有效日期。"
+    },
+    "period": {
+      "type": ["string", "null"],
+      "description": "时序/事件类字段的报告期，如 2024 或 2024Q3。"
+    },
+    "source_track": {
+      "$ref": "#/definitions/source_track"
+    },
+    "source_rank": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "同 field_id 多源时排序，1 为优先。"
+    },
+    "evidence_ref_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "必须指向 evidence_index.jsonl 中的 evidence_ref_id。"
+    },
+    "conflict_flag": {
+      "type": "string",
+      "enum": ["yes", "no"],
+      "description": "多源冲突标记，不静默合并。"
+    },
+    "status": {
+      "$ref": "#/definitions/fact_status"
+    },
+    "collected_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "事实写入时间 ISO8601。"
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "as_of": { "type": "string" }
+      },
+      "required": ["as_of"]
+    },
+    {
+      "properties": {
+        "period": { "type": "string" }
+      },
+      "required": ["period"]
+    },
+    {
+      "properties": {
+        "as_of": { "type": "null" },
+        "period": { "type": "null" }
+      }
+    }
+  ]
+}
