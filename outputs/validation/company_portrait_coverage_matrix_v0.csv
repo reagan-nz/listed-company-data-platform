@@ -1,0 +1,716 @@
+field_id,module_id,primary_track,existing_catalog_ref,existing_schema_ref,coverage_status,evidence_root_hint,gap_reason
+M01.primary_identity.company_code,M01,C,cninfo_company_basic_profile:ASECCODE,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,
+M01.primary_identity.stock_short_name,M01,C,cninfo_company_basic_profile:ASECNAME,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,
+M01.primary_identity.legal_name,M01,C,cninfo_company_basic_profile:ORGNAME,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,
+M01.primary_identity.english_name,M01,C,cninfo_company_basic_profile:F001V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,
+M01.primary_identity.former_name,M01,C,,,not_modeled,,尚无采集映射
+M01.primary_identity.unified_social_credit_code,M01,C,,,not_modeled,,尚无采集映射
+M01.primary_identity.organization_code,M01,C,,,not_modeled,,尚无采集映射
+M01.primary_identity.internal_company_id,M01,C,,,partial,,尚无采集映射
+M01.primary_identity.exchange_internal_id,M01,C,,,not_modeled,,尚无采集映射
+M01.primary_identity.disclosure_id,M01,C,,,not_modeled,,尚无采集映射
+M01.primary_identity.short_name_change_history,M01,C,,,not_modeled,,尚无采集映射
+M01.primary_identity.code_change_history,M01,C,,,not_modeled,,尚无采集映射
+M01.legal_registry.legal_representative,M01,C,cninfo_company_basic_profile:F003V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,
+M01.legal_registry.registered_capital,M01,C,cninfo_company_basic_profile:F007N,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,
+M01.legal_registry.paid_in_capital,M01,C,,,not_modeled,,尚无采集映射
+M01.legal_registry.establishment_date,M01,C,cninfo_company_basic_profile:F010D,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,
+M01.legal_registry.business_term,M01,C,,,not_modeled,,尚无采集映射
+M01.legal_registry.registered_address,M01,C,cninfo_company_basic_profile:F004V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,
+M01.legal_registry.office_address,M01,C,cninfo_company_basic_profile:F005V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,
+M01.legal_registry.registration_authority,M01,C,,,not_modeled,,尚无采集映射
+M01.legal_registry.enterprise_nature,M01,C,,,not_modeled,,尚无采集映射
+M01.legal_registry.operating_status,M01,C,,,not_modeled,,尚无采集映射
+M01.legal_registry.company_type,M01,C,,,not_modeled,,尚无采集映射
+M01.legal_registry.incorporation_method,M01,C,,,not_modeled,,尚无采集映射
+M01.legal_registry.predecessor,M01,C,,,not_modeled,,尚无采集映射
+M01.legal_registry.shareholding_reform_history,M01,C,,,not_modeled,,尚无采集映射
+M01.legal_registry.business_registration_change_history,M01,C,,,not_modeled,,尚无采集映射
+M01.listing_identity.listing_date,M01,C,cninfo_company_basic_profile:F006D,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,
+M01.listing_identity.exchange,M01,C,cninfo_company_basic_profile:(derived)exchange,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,
+M01.listing_identity.listed_board,M01,C,cninfo_company_basic_profile:MARKET,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,
+M01.listing_identity.security_category,M01,C,,,not_modeled,,尚无采集映射
+M01.listing_identity.stock_category,M01,C,,,not_modeled,,尚无采集映射
+M01.listing_identity.ipo_price,M01,C,,,not_modeled,,尚无采集映射
+M01.listing_identity.ipo_shares,M01,C,,,not_modeled,,尚无采集映射
+M01.listing_identity.ipo_proceeds,M01,C,,,not_modeled,,尚无采集映射
+M01.listing_identity.listing_status,M01,C,cninfo_company_security_profile:(n/a),schemas/c_class/c_company_security_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/,
+M01.listing_identity.trading_status,M01,C,cninfo_company_security_profile:tradingStatus,schemas/c_class/c_company_security_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/,
+M01.listing_identity.suspension_resumption,M01,C,,,not_modeled,,尚无采集映射
+M01.listing_identity.special_treatment,M01,C,,,not_modeled,,尚无采集映射
+M01.listing_identity.delisting_risk_warning,M01,C,,,not_modeled,,尚无采集映射
+M01.listing_identity.delisting,M01,C,cninfo_company_security_profile:delisted,schemas/c_class/c_company_security_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/,
+M01.listing_identity.board_transfer,M01,C,,,not_modeled,,尚无采集映射
+M01.listing_identity.index_constituent,M01,C,,,not_modeled,,尚无采集映射
+M01.listing_identity.margin_trading_target,M01,C,,,not_modeled,,尚无采集映射
+M01.listing_identity.stock_connect_target,M01,C,cninfo_company_security_profile:sshk|cninfo_company_security_profile:szhk,schemas/c_class/c_company_security_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/,
+M01.contact_disclosure.company_website,M01,C,cninfo_company_contact_profile:F011V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,
+M01.contact_disclosure.contact_phone,M01,C,cninfo_company_contact_profile:F013V,schemas/c_class/c_company_basic_profile.schema.json,candidate,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,
+M01.contact_disclosure.contact_fax,M01,C,cninfo_company_contact_profile:F014V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/,
+M01.contact_disclosure.contact_email,M01,C,cninfo_company_contact_profile:F012V,schemas/c_class/c_company_basic_profile.schema.json,candidate,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,
+M01.contact_disclosure.ir_phone,M01,C,,,not_modeled,,尚无采集映射
+M01.contact_disclosure.ir_email,M01,C,,,not_modeled,,尚无采集映射
+M01.contact_disclosure.board_secretary_contact,M01,C,cninfo_company_contact_profile:F018V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/,
+M01.contact_disclosure.securities_affairs_representative,M01,C,cninfo_company_contact_profile:F018V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/,
+M01.contact_disclosure.office_address,M01,C,cninfo_company_basic_profile:F005V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/,
+M01.contact_disclosure.postal_code,M01,C,cninfo_company_contact_profile:F006V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/,
+M01.contact_disclosure.designated_disclosure_media,M01,C,,,not_modeled,,尚无采集映射
+M01.contact_disclosure.announcement_website,M01,C,,,not_modeled,,尚无采集映射
+M01.contact_disclosure.interactive_platform_url,M01,C,,,not_modeled,,尚无采集映射
+M01.contact_disclosure.official_wechat_account,M01,C,,,not_modeled,,尚无采集映射
+M02.main_business.main_business_summary,M02,none,cninfo_company_business_scope:F015V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,
+M02.main_business.business_scope,M02,none,cninfo_company_business_scope:F016V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,
+M02.main_business.zh_53f7c400d0,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.main_business.zh_56d1607262,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.main_business.zh_cd805284df,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.main_business.zh_581778ce60,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.main_business.zh_80352f1eab,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.main_business.zh_7253246b0d,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.main_business.zh_b7dcb4ac97,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.main_business.zh_93e5ac5de2,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.main_business.zh_c4ca2d1372,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.products_services.zh_abc0ac7995,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.products_services.zh_f169e62c64,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.products_services.zh_540778c99a,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.products_services.zh_0ef0d64de9,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.products_services.zh_5e22c44d04,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.products_services.zh_036694368c,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.products_services.zh_4d1b674327,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.products_services.zh_cd805284df,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.products_services.zh_73c4ffe554,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.products_services.zh_61af25d349,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.products_services.zh_31ce1fba38,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.products_services.zh_1dff047020,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.products_services.zh_009200773b,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.products_services.zh_32c808cbe5,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.products_services.zh_ffd36194f6,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.business_model.zh_0fbf81fe9c,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.business_model.zh_656d37e66d,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.business_model.zh_7477c06aa2,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.business_model.zh_47bd108ed0,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.business_model.zh_f58eb48d46,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.business_model.zh_1015352380,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.business_model.zh_56769e03db,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.business_model.zh_95c39407c4,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.business_model.zh_a30467b6f2,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.business_model.zh_073b73c937,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.business_model.zh_bffe9e031d,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.business_model.zh_6f61fe239d,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.business_model.zh_6dc9b21730,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.business_model.zh_52230be1b6,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.regional_market.zh_fa1ecc2d8c,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.regional_market.zh_6cfc1d2ade,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.regional_market.zh_e3b56a8b93,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.regional_market.zh_e13278ecbd,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.regional_market.zh_27ba3a583d,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.regional_market.zh_5ca8dcb5a1,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.regional_market.zh_faa2d9999d,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.regional_market.zh_0696f122b8,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.regional_market.zh_28b0f963ae,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.regional_market.zh_7a6cddf8e9,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.regional_market.zh_9f62c85405,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.supply_chain_position.zh_77ca98f0d0,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.supply_chain_position.zh_cf63fb1902,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.supply_chain_position.zh_6b9e6e8c4b,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.supply_chain_position.zh_6bb35782b0,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.supply_chain_position.zh_db26d3e718,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.supply_chain_position.zh_fbc0728d13,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.supply_chain_position.zh_612a969098,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.supply_chain_position.zh_3127655a2b,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.supply_chain_position.zh_af85e6d2a9,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.supply_chain_position.zh_c6c0bc81e0,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M02.supply_chain_position.zh_e1db162d9f,M02,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M03.industry_classification.zh_39332a9d47,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_classification.zh_19afa16b79,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_classification.zh_ba97ae23d1,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_classification.zh_e5b24447ee,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_classification.zh_a50be53f56,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_classification.zh_4b8727d54f,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_classification.zh_ac68e03b37,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_classification.zh_e0ab63c5c6,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_classification.zh_65d6ad92fa,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_environment.zh_a29651ed71,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_environment.zh_9f451d1407,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_environment.zh_b3f3a20a69,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_environment.zh_104e7c5f2b,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_environment.zh_70459b825d,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_environment.zh_967ecf2233,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_environment.zh_513bac1951,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_environment.zh_7cfc209838,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_environment.zh_9034238d17,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_environment.zh_e03510316a,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_environment.zh_2e07638dac,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.industry_environment.zh_87256dc179,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.competitive_position.zh_b0aa167a4f,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.competitive_position.zh_59911ca51f,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.competitive_position.zh_072577ec90,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.competitive_position.zh_79685c5844,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.competitive_position.zh_2b5a35cb58,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.competitive_position.zh_2e5b4058e4,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.competitive_position.zh_fc79220180,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.competitive_position.zh_292d5c3dc1,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.competitive_position.zh_e612352048,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.competitive_position.zh_ae5ea5a597,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.competitive_position.zh_e7114757da,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M03.competitive_position.zh_ee351eb179,M03,C,cninfo_company_industry_profile:F032V,schemas/c_class/c_company_basic_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/company_basic_profile/,仅单一行业字段，非完整分类体系
+M04.finance_summary.revenue,M04,A,cninfo_a_class:report_document,schemas/a_class/ (lineage only),partial,outputs/validation/cninfo_a_class_*/raw_metadata/,
+M04.finance_summary.zh_33316830d3,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.finance_summary.zh_4ce4a94e1f,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.finance_summary.zh_1dff047020,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.finance_summary.net_profit,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.finance_summary.net_profit_attributable,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.finance_summary.net_profit_ex_nonrecurring,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.finance_summary.total_assets,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.finance_summary.total_liabilities,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.finance_summary.net_assets,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.finance_summary.debt_to_asset_ratio,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.finance_summary.zh_72c9ff6ba5,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.finance_summary.zh_d6285926fe,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.finance_summary.zh_afe67c90c8,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.finance_summary.zh_655f38c3a0,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.finance_summary.eps,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.finance_summary.bps,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.finance_summary.roe,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.growth_capability.zh_9a1c6570a7,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.growth_capability.zh_0bb7125b62,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.growth_capability.zh_18c4df6a37,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.growth_capability.zh_ef81c09d41,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.growth_capability.zh_9c4e2cced9,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.growth_capability.zh_c2f72feafa,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.growth_capability.zh_fc93ccfda7,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.growth_capability.zh_639f1ed179,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.growth_capability.zh_560ddea4f1,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.growth_capability.zh_66cc838f19,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.profitability.zh_1dff047020,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.profitability.zh_8d2106dd4f,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.profitability.zh_8719cf7f19,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.profitability.zh_eedb4dcba6,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.profitability.zh_55961bec38,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.profitability.zh_3c16b004c8,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.profitability.zh_9e9959b32a,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.profitability.roe,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.profitability.zh_b33e7feefc,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.profitability.zh_2e6adee4d4,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.cashflow_quality.zh_d6285926fe,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.cashflow_quality.zh_6bf1f9ecb6,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.cashflow_quality.zh_cab3be6f4f,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.cashflow_quality.zh_fe94f93a50,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.cashflow_quality.zh_b2968e9475,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.cashflow_quality.zh_2fbb1856d2,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.cashflow_quality.zh_5b05bd84e2,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.cashflow_quality.zh_342bf6afe7,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.asset_quality.zh_1c879e2227,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.asset_quality.zh_99336c8b03,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.asset_quality.zh_bd0354c61b,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.asset_quality.zh_c234fddd90,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.asset_quality.zh_f89604eb4b,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.asset_quality.zh_0408711501,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.asset_quality.zh_d5ed188a83,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.asset_quality.zh_1702cfb24d,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.asset_quality.zh_ddf85006f6,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.asset_quality.zh_929f3d459c,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.asset_quality.zh_badd05a5fa,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.asset_quality.zh_a9ca0e5015,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.asset_quality.zh_635f9277fd,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.solvency_liquidity.zh_f3810d1b96,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.solvency_liquidity.zh_18c0a63161,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.solvency_liquidity.zh_03f8697086,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.solvency_liquidity.zh_0882451f03,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.solvency_liquidity.zh_77cd7c725b,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.solvency_liquidity.zh_70c68686ca,M04,A,,,not_modeled,,财报数值需 PDF 解析闸门，A 类仅 metadata lineage
+M04.solvency_liquidity.zh_0ae2aa81a6,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.solvency_liquidity.zh_a4b64c9c27,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.solvency_liquidity.zh_35e927f98d,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.solvency_liquidity.zh_3d9c8f2613,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.solvency_liquidity.zh_8e65d02696,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M04.solvency_liquidity.zh_fc17d92eec,M04,A,cninfo_a_class:report_document,schemas/a_class/ (metadata only),partial,,A 类仅 URL/metadata lineage，无数值抽取
+M05.rd_investment.zh_9d362d0f21,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.rd_investment.zh_3c16b004c8,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.rd_investment.zh_de0af4a92c,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.rd_investment.zh_a5529e54be,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.rd_investment.zh_46cb6134cd,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.rd_investment.zh_ed0c0af65e,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.rd_investment.zh_00b6321003,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.rd_investment.zh_9778040a82,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.rd_investment.zh_4ae2c4c7e7,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.rd_investment.zh_2ce3b2dd14,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.core_technology.zh_5643b55b10,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.core_technology.zh_0ef0d64de9,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.core_technology.zh_dc35472d67,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.core_technology.zh_16c649451c,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.core_technology.zh_7b70ffe0b5,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.core_technology.zh_393a5c2ef9,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.core_technology.zh_a44af5772e,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.core_technology.zh_0e8271447e,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.core_technology.zh_e106e7a0f4,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.core_technology.zh_737e6ee3a6,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.intellectual_property.zh_5306c1ae93,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.intellectual_property.zh_e7fa0e8235,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.intellectual_property.zh_c7a576391a,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.intellectual_property.zh_2ab73b795e,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.intellectual_property.zh_e5e587d3fd,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.intellectual_property.zh_a80fe49d30,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.intellectual_property.zh_1cd6600efb,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.intellectual_property.zh_d0b0e12580,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.intellectual_property.zh_7d9307834f,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M05.intellectual_property.zh_1c2c57b721,M05,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.workforce_structure.zh_d2f3c8fed1,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.workforce_structure.zh_7df533aaa4,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.workforce_structure.zh_9033a08bfb,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.workforce_structure.zh_21018a2a37,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.workforce_structure.zh_37bb287dd2,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.workforce_structure.zh_45f54e1543,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.workforce_structure.zh_b385b17a0d,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.workforce_structure.zh_004b896526,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.workforce_structure.zh_dbf8f95a83,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.workforce_structure.zh_92f600287c,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.workforce_structure.zh_2fe78666ce,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.workforce_structure.zh_25969a9a00,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.workforce_structure.zh_bd3a5cf468,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.workforce_structure.zh_e3c2cd5fe0,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.org_structure.zh_ec98fa163c,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.org_structure.zh_cdcfaf3de6,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.org_structure.zh_15cad6f4d3,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.org_structure.zh_6f1d6c3e35,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.org_structure.zh_4f58a7c59d,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.org_structure.zh_66a4db636e,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.org_structure.zh_0872f8cd70,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.org_structure.zh_b48f2b7d82,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.subsidiaries_investments.zh_2545a54228,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.subsidiaries_investments.zh_3c5475ce9a,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.subsidiaries_investments.zh_3cccfde0cf,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.subsidiaries_investments.zh_1fff63ff01,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.subsidiaries_investments.zh_08eb5d7ffa,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.subsidiaries_investments.zh_8e9864160f,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.subsidiaries_investments.zh_1f7e5dd69b,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.subsidiaries_investments.holding_ratio,M06,none,cninfo_top_shareholders_profile:F004N,schemas/c_class/c_shareholder_profile.schema.json,candidate,outputs/harvest/cninfo_c_class/normalized/top_shareholders_profile/,
+M06.subsidiaries_investments.main_business_summary,M06,none,cninfo_company_basic_profile:F015V,schemas/c_class/c_company_basic_profile.schema.json,candidate,outputs/harvest/cninfo_c_class/normalized/,
+M06.subsidiaries_investments.zh_aaaf7ca11e,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.subsidiaries_investments.zh_27c77a7e74,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.subsidiaries_investments.zh_713fd96fb2,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M06.subsidiaries_investments.zh_e6d66e9af5,M06,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M07.share_capital_structure.total_share_capital,M07,C,cninfo_share_capital_profile:F021N,schemas/c_class/c_share_capital_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/share_capital_profile/,
+M07.share_capital_structure.float_share_capital,M07,C,cninfo_share_capital_profile:F022N,schemas/c_class/c_share_capital_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/share_capital_profile/,
+M07.share_capital_structure.restricted_share_capital,M07,C,cninfo_share_capital_profile:F023N,schemas/c_class/c_share_capital_profile.schema.json,testing,outputs/harvest/cninfo_c_class/normalized/share_capital_profile/,
+M07.share_capital_structure.unrestricted_float_shares,M07,C,cninfo_share_capital_profile:F024N,schemas/c_class/c_share_capital_profile.schema.json,testing,outputs/harvest/cninfo_c_class/normalized/share_capital_profile/,
+M07.share_capital_structure.a_shares,M07,C,,,not_modeled,,尚无采集映射
+M07.share_capital_structure.b_shares,M07,C,,,not_modeled,,尚无采集映射
+M07.share_capital_structure.h_shares,M07,C,,,not_modeled,,尚无采集映射
+M07.share_capital_structure.preferred_shares,M07,C,,,not_modeled,,尚无采集映射
+M07.share_capital_structure.share_capital_change,M07,C,cninfo_share_capital_profile:F002V,schemas/c_class/c_share_capital_profile.schema.json,testing,outputs/harvest/cninfo_c_class/normalized/share_capital_profile/,
+M07.share_capital_structure.stock_dividend,M07,C,,,not_modeled,,尚无采集映射
+M07.share_capital_structure.capitalization_issue,M07,C,,,not_modeled,,尚无采集映射
+M07.share_capital_structure.rights_issue,M07,C,,,not_modeled,,尚无采集映射
+M07.share_capital_structure.seasoned_equity_offering,M07,C,,,not_modeled,,尚无采集映射
+M07.share_capital_structure.buyback_cancellation,M07,C,,,not_modeled,,尚无采集映射
+M07.share_capital_structure.convertible_bond_conversion,M07,C,,,not_modeled,,尚无采集映射
+M07.shareholder_structure.top_ten_shareholders,M07,C,cninfo_top_shareholders_profile:F002V,schemas/c_class/c_shareholder_profile.schema.json,testing,outputs/harvest/cninfo_c_class/normalized/top_shareholders_profile/,
+M07.shareholder_structure.top_ten_float_shareholders,M07,C,cninfo_top_float_shareholders_profile:F002V,schemas/c_class/c_shareholder_profile.schema.json,testing,outputs/harvest/cninfo_c_class/normalized/top_shareholders_profile/,
+M07.shareholder_structure.institutional_shareholders,M07,C,,,not_modeled,,尚无采集映射
+M07.shareholder_structure.individual_shareholders,M07,C,,,not_modeled,,尚无采集映射
+M07.shareholder_structure.state_owned_shareholders,M07,C,,,not_modeled,,尚无采集映射
+M07.shareholder_structure.foreign_shareholders,M07,C,,,not_modeled,,尚无采集映射
+M07.shareholder_structure.fund_holdings,M07,C,,,not_modeled,,尚无采集映射
+M07.shareholder_structure.social_security_holdings,M07,C,,,not_modeled,,尚无采集映射
+M07.shareholder_structure.pension_fund_holdings,M07,C,,,not_modeled,,尚无采集映射
+M07.shareholder_structure.hk_clearing_holdings,M07,C,,,not_modeled,,尚无采集映射
+M07.shareholder_structure.holding_shares,M07,C,cninfo_top_shareholders_profile:F003N,schemas/c_class/c_shareholder_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/top_shareholders_profile/,
+M07.shareholder_structure.holding_ratio,M07,C,cninfo_top_shareholders_profile:F004N,schemas/c_class/c_shareholder_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/top_shareholders_profile/,
+M07.shareholder_structure.share_nature,M07,C,,,not_modeled,,尚无采集映射
+M07.control_chain.controlling_shareholder,M07,C,,,not_modeled,,尚无采集映射
+M07.control_chain.actual_controller,M07,C,,,not_modeled,,尚无采集映射
+M07.control_chain.ultimate_beneficiary,M07,C,,,not_modeled,,尚无采集映射
+M07.control_chain.control_chain,M07,C,,,not_modeled,,尚无采集映射
+M07.control_chain.indirect_holding,M07,C,,,not_modeled,,尚无采集映射
+M07.control_chain.concert_party,M07,C,,,not_modeled,,尚无采集映射
+M07.control_chain.voting_rights_entrustment,M07,C,,,not_modeled,,尚无采集映射
+M07.control_chain.control_change,M07,C,,,not_modeled,,尚无采集映射
+M07.control_chain.no_actual_controller,M07,C,,,not_modeled,,尚无采集映射
+M07.control_chain.state_owned_background,M07,C,,,not_modeled,,尚无采集映射
+M07.control_chain.private_background,M07,C,,,not_modeled,,尚无采集映射
+M07.equity_stability.shareholder_increase,M07,C,,,not_modeled,,尚无采集映射
+M07.equity_stability.shareholder_decrease,M07,C,,,not_modeled,,尚无采集映射
+M07.equity_stability.share_pledge,M07,C,,,not_modeled,,尚无采集映射
+M07.equity_stability.share_freeze,M07,C,,,not_modeled,,尚无采集映射
+M07.equity_stability.restricted_shares_unlock,M07,C,,,not_modeled,,尚无采集映射
+M07.equity_stability.share_buyback,M07,C,,,not_modeled,,尚无采集映射
+M07.equity_stability.employee_stock_ownership_plan,M07,C,,,not_modeled,,尚无采集映射
+M07.equity_stability.equity_incentive,M07,C,,,not_modeled,,尚无采集映射
+M07.equity_stability.control_contest,M07,C,,,not_modeled,,尚无采集映射
+M08.executive_board.chairman,M08,C,,,not_modeled,,尚无采集映射
+M08.executive_board.general_manager,M08,C,,,not_modeled,,尚无采集映射
+M08.executive_board.director,M08,C,,,not_modeled,,尚无采集映射
+M08.executive_board.independent_director,M08,C,,,not_modeled,,尚无采集映射
+M08.executive_board.supervisor,M08,C,,,not_modeled,,尚无采集映射
+M08.executive_board.senior_management,M08,C,,,not_modeled,,尚无采集映射
+M08.executive_board.board_secretary,M08,C,cninfo_executive_profile:F009V,schemas/c_class/c_executive_profile.schema.json,testing,outputs/harvest/cninfo_c_class/normalized/executive_profile/,
+M08.executive_board.securities_affairs_representative,M08,C,cninfo_company_contact_profile:F018V,schemas/c_class/c_company_basic_profile.schema.json,testing,outputs/harvest/cninfo_c_class/normalized/,
+M08.executive_board.person_name,M08,C,cninfo_executive_profile:F002V,schemas/c_class/c_executive_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/executive_profile/,
+M08.executive_board.gender,M08,C,cninfo_executive_profile:F010V,schemas/c_class/c_executive_profile.schema.json,testing,outputs/harvest/cninfo_c_class/normalized/executive_profile/,
+M08.executive_board.age,M08,C,,,not_modeled,,尚无采集映射
+M08.executive_board.education,M08,C,cninfo_executive_profile:F017V,schemas/c_class/c_executive_profile.schema.json,testing,outputs/harvest/cninfo_c_class/normalized/executive_profile/,
+M08.executive_board.appointment_date,M08,C,,,not_modeled,,尚无采集映射
+M08.executive_board.term_of_office,M08,C,,,not_modeled,,尚无采集映射
+M08.executive_board.position,M08,C,cninfo_executive_profile:F009V,schemas/c_class/c_executive_profile.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/executive_profile/,
+M08.executive_board.biography,M08,C,,,not_modeled,,尚无采集映射
+M08.executive_board.compensation,M08,C,cninfo_executive_profile:F012N,schemas/c_class/c_executive_profile.schema.json,testing,outputs/harvest/cninfo_c_class/normalized/executive_profile/,
+M08.executive_board.holding_shares,M08,C,cninfo_top_shareholders_profile:F003N|cninfo_executive_profile:F005N,schemas/c_class/c_shareholder_profile.schema.json,testing,outputs/harvest/cninfo_c_class/normalized/top_shareholders_profile/,
+M08.executive_board.concurrent_positions,M08,C,,,not_modeled,,尚无采集映射
+M08.executive_board.resignation,M08,C,,,not_modeled,,尚无采集映射
+M08.executive_board.change_reason,M08,C,cninfo_share_capital_profile:F002V,schemas/c_class/c_share_capital_profile.schema.json,testing,outputs/harvest/cninfo_c_class/normalized/share_capital_profile/,
+M08.board_committees.board_members,M08,C,,,not_modeled,,尚无采集映射
+M08.board_committees.independent_director_ratio,M08,C,,,not_modeled,,尚无采集映射
+M08.board_committees.audit_committee,M08,C,,,not_modeled,,尚无采集映射
+M08.board_committees.compensation_committee,M08,C,,,not_modeled,,尚无采集映射
+M08.board_committees.nomination_committee,M08,C,,,not_modeled,,尚无采集映射
+M08.board_committees.strategy_committee,M08,C,,,not_modeled,,尚无采集映射
+M08.board_committees.committee_members,M08,C,,,not_modeled,,尚无采集映射
+M08.board_committees.meeting_count,M08,C,,,not_modeled,,尚无采集映射
+M08.board_committees.voting_outcome,M08,C,,,not_modeled,,尚无采集映射
+M08.governance_internal_control.governance_system,M08,C,,,not_modeled,,尚无采集映射
+M08.governance_internal_control.internal_control_evaluation,M08,C,,,not_modeled,,尚无采集映射
+M08.governance_internal_control.internal_control_audit,M08,C,,,not_modeled,,尚无采集映射
+M08.governance_internal_control.governance_defects,M08,C,,,not_modeled,,尚无采集映射
+M08.governance_internal_control.related_party_transaction_policy,M08,C,,,not_modeled,,尚无采集映射
+M08.governance_internal_control.disclosure_policy,M08,C,,,not_modeled,,尚无采集映射
+M08.governance_internal_control.investor_protection,M08,C,,,not_modeled,,尚无采集映射
+M08.governance_internal_control.independence,M08,C,,,not_modeled,,尚无采集映射
+M08.governance_internal_control.horizontal_competition,M08,C,,,not_modeled,,尚无采集映射
+M08.governance_internal_control.fund_occupation,M08,C,,,not_modeled,,尚无采集映射
+M08.governance_internal_control.illegal_guarantee,M08,C,,,not_modeled,,尚无采集映射
+M09.dividend_distribution.dividend_year,M09,C,cninfo_dividend_financing_profile:F001V,schemas/c_class/c_company_profile_snapshot.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/dividend_history/,
+M09.dividend_distribution.dividend_plan_text,M09,C,cninfo_dividend_financing_profile:F007V,schemas/c_class/c_company_profile_snapshot.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/dividend_history/,
+M09.dividend_distribution.cash_dividend_per_share,M09,C,cninfo_dividend_financing_profile:derived_cash_dividend_per_share,schemas/c_class/c_company_profile_snapshot.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/dividend_history/,
+M09.dividend_distribution.stock_dividend_per_share,M09,C,,,not_modeled,,尚无采集映射
+M09.dividend_distribution.transfer_per_share,M09,C,,,not_modeled,,尚无采集映射
+M09.dividend_distribution.cash_dividend_amount,M09,C,,,not_modeled,,尚无采集映射
+M09.dividend_distribution.record_date,M09,C,,,not_modeled,,尚无采集映射
+M09.dividend_distribution.ex_dividend_date,M09,C,cninfo_dividend_financing_profile:F020D,schemas/c_class/c_company_profile_snapshot.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/dividend_history/,
+M09.dividend_distribution.payment_date,M09,C,cninfo_dividend_financing_profile:F023D,schemas/c_class/c_company_profile_snapshot.schema.json,partial,outputs/harvest/cninfo_c_class/normalized/dividend_history/,
+M09.dividend_distribution.no_dividend_reason,M09,C,,,not_modeled,,尚无采集映射
+M09.dividend_distribution.profit_distribution_policy,M09,C,,,not_modeled,,尚无采集映射
+M09.dividend_distribution.cumulative_dividends,M09,C,,,not_modeled,,尚无采集映射
+M09.dividend_distribution.dividend_yield,M09,C,,,not_modeled,,尚无采集映射
+M09.dividend_distribution.dividend_stability,M09,C,,,not_modeled,,尚无采集映射
+M09.financing_actions.ipo,M09,C,,,not_modeled,,尚无采集映射
+M09.financing_actions.private_placement,M09,C,,,not_modeled,,尚无采集映射
+M09.financing_actions.public_offering,M09,C,,,not_modeled,,尚无采集映射
+M09.financing_actions.rights_issue,M09,C,,,not_modeled,,尚无采集映射
+M09.financing_actions.convertible_bond,M09,C,,,not_modeled,,尚无采集映射
+M09.financing_actions.corporate_bond,M09,C,,,not_modeled,,尚无采集映射
+M09.financing_actions.short_term_financing_bond,M09,C,,,not_modeled,,尚无采集映射
+M09.financing_actions.medium_term_note,M09,C,,,not_modeled,,尚无采集映射
+M09.financing_actions.bank_credit_line,M09,C,,,not_modeled,,尚无采集映射
+M09.financing_actions.asset_securitization,M09,C,,,not_modeled,,尚无采集映射
+M09.financing_actions.preferred_shares,M09,C,,,not_modeled,,尚无采集映射
+M09.financing_actions.proceeds_usage,M09,C,,,not_modeled,,尚无采集映射
+M09.financing_actions.fundraising_project,M09,C,,,not_modeled,,尚无采集映射
+M09.financing_actions.proceeds_usage_progress,M09,C,,,not_modeled,,尚无采集映射
+M09.financing_actions.proceeds_usage_change,M09,C,,,not_modeled,,尚无采集映射
+M09.ma_major_investment.major_asset_restructuring,M09,C,,,not_modeled,,尚无采集映射
+M09.ma_major_investment.asset_acquisition,M09,C,,,not_modeled,,尚无采集映射
+M09.ma_major_investment.asset_disposal,M09,C,,,not_modeled,,尚无采集映射
+M09.ma_major_investment.external_investment,M09,C,,,not_modeled,,尚无采集映射
+M09.ma_major_investment.subsidiary_establishment,M09,C,,,not_modeled,,尚无采集映射
+M09.ma_major_investment.equity_transfer,M09,C,,,not_modeled,,尚无采集映射
+M09.ma_major_investment.major_project_investment,M09,C,,,not_modeled,,尚无采集映射
+M09.ma_major_investment.investment_amount,M09,C,,,not_modeled,,尚无采集映射
+M09.ma_major_investment.counterparty,M09,C,,,not_modeled,,尚无采集映射
+M09.ma_major_investment.transaction_progress,M09,C,,,not_modeled,,尚无采集映射
+M09.ma_major_investment.performance_commitment,M09,C,,,not_modeled,,尚无采集映射
+M09.ma_major_investment.goodwill_formation,M09,C,,,not_modeled,,尚无采集映射
+M10.customer_structure.zh_088590c331,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.customer_structure.zh_a4ad1d4d98,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.customer_structure.zh_f43306b6c1,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.customer_structure.zh_c3785b2f81,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.customer_structure.zh_1d6d9858c0,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.customer_structure.zh_8cecd72d58,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.customer_structure.zh_ab720428fb,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.customer_structure.zh_26e9901381,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.customer_structure.zh_28b0f963ae,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.customer_structure.zh_ee26f117b7,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.supplier_structure.zh_8afa75c329,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.supplier_structure.zh_806d26d83e,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.supplier_structure.zh_b0e8c3aa39,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.supplier_structure.zh_7549a477b7,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.supplier_structure.zh_f9c14d3a75,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.supplier_structure.zh_ec57784576,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.supplier_structure.zh_e45a90d2e6,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.supplier_structure.zh_3abc7535f1,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.supplier_structure.zh_f06bfd1c20,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.major_contracts_orders.zh_cfddcfd729,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.major_contracts_orders.zh_2959d032c4,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.major_contracts_orders.zh_d3e5cc779d,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.major_contracts_orders.zh_9b23dd5776,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.major_contracts_orders.zh_d837797b6b,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.major_contracts_orders.zh_d98167d36d,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.major_contracts_orders.zh_75c434f9ca,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.major_contracts_orders.zh_5906201df0,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.major_contracts_orders.zh_78f6a01a01,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.major_contracts_orders.zh_a7d1e67d39,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M10.major_contracts_orders.zh_5ff177f393,M10,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.production_capacity.zh_2bdadf66d0,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.production_capacity.zh_3c123277cd,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.production_capacity.zh_347e2280a9,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.production_capacity.zh_66abe88716,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.production_capacity.zh_c74e26d3d5,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.production_capacity.zh_ca92efd74d,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.production_capacity.zh_ae63694e9a,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.production_capacity.zh_546a81fda6,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.production_capacity.zh_6411a56f7c,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.production_capacity.zh_3d842b01f1,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_assets.zh_010108fbb9,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_assets.zh_69406b4341,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_assets.zh_01f2c16cda,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_assets.zh_af8aef1bf9,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_assets.zh_2df430cf64,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_assets.zh_bd0354c61b,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_assets.zh_c234fddd90,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_assets.zh_f89604eb4b,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_assets.zh_0408711501,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_assets.zh_a9ca0e5015,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_assets.zh_635f9277fd,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_assets.zh_09e2f38f11,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_assets.zh_1702cfb24d,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_projects.fundraising_project,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_projects.zh_2ed07efc16,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_projects.zh_4c36c3d84c,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_projects.zh_46cb6134cd,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_projects.zh_99fd20f16b,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_projects.zh_0ea517d87a,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_projects.zh_a21fcc4c87,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_projects.zh_6fd4cb81a8,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_projects.zh_5ecc7d12d7,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_projects.zh_cd9df47dd6,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M11.major_projects.zh_51e2bbe0a9,M11,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.operational_risk.zh_727f191f14,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.operational_risk.zh_91cdfed7b7,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.operational_risk.zh_d5cda1f6a5,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.operational_risk.zh_c2cb5d09fe,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.operational_risk.zh_c7ca14ab10,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.operational_risk.zh_57592924b3,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.operational_risk.zh_34e6a35d9e,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.operational_risk.zh_a5d12ef22c,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.financial_risk.zh_778272e5e9,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.financial_risk.zh_df016bab0f,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.financial_risk.zh_8854faeeaa,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.financial_risk.zh_fcd3e0057f,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.financial_risk.zh_badd05a5fa,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.financial_risk.zh_74944d9a53,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.financial_risk.zh_cbc7b93310,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.financial_risk.zh_d5ea940481,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.financial_risk.zh_e0a48df141,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.technology_product_risk.zh_a44af5772e,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.technology_product_risk.zh_127f384973,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.technology_product_risk.zh_405d805a8f,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.technology_product_risk.zh_d5e16fb53c,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.technology_product_risk.zh_ce5d518064,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.technology_product_risk.zh_2de5456506,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.technology_product_risk.zh_9fd3831600,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.compliance_regulatory_risk.zh_69a5f3e525,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.compliance_regulatory_risk.zh_d21851a7e9,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.compliance_regulatory_risk.zh_c6ea935bcd,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.compliance_regulatory_risk.zh_e41a224e01,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.compliance_regulatory_risk.zh_e54d603e1c,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.compliance_regulatory_risk.zh_b8a1186f66,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.compliance_regulatory_risk.zh_958e13c910,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.compliance_regulatory_risk.zh_9b8cdd9828,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.compliance_regulatory_risk.zh_23809bb9e3,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.compliance_regulatory_risk.zh_cdfe9fd9f7,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.compliance_regulatory_risk.zh_97d0fe8c68,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.litigation_arbitration.zh_5cd8769138,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.litigation_arbitration.zh_7f76ebf3fe,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.litigation_arbitration.zh_5ff177f393,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.litigation_arbitration.zh_d3260d4c68,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.litigation_arbitration.zh_9175733edb,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.litigation_arbitration.zh_8dde133227,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.litigation_arbitration.zh_62c5fa715a,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.litigation_arbitration.zh_04ba2721b3,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.litigation_arbitration.zh_bb742c788a,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M12.litigation_arbitration.zh_445736f58e,M12,B,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M13.periodic_report_events.annual_report_disclosure,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,partial,outputs/validation/cninfo_b_class_*/raw_metadata/,
+M13.periodic_report_events.semi_annual_report_disclosure,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.periodic_report_events.q1_report_disclosure,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.periodic_report_events.q3_report_disclosure,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.periodic_report_events.earnings_forecast,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.periodic_report_events.earnings_flash,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.periodic_report_events.earnings_briefing,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.governance_events.zh_f7bf801dda,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.governance_events.zh_ad7d12f2d8,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.governance_events.zh_131b6f46dd,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.governance_events.zh_7e2b0805f2,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.governance_events.zh_9a76c94a9e,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.governance_events.zh_dfc9b59784,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.governance_events.zh_d4a68aee9e,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.governance_events.zh_b8382a80ea,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.capital_market_events.zh_068506d2ab,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.capital_market_events.seasoned_equity_offering,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.capital_market_events.rights_issue,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.capital_market_events.convertible_bond,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.capital_market_events.zh_687b07af3b,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.capital_market_events.equity_incentive,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.capital_market_events.zh_b6e3f0da75,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.capital_market_events.restricted_shares_unlock,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.capital_market_events.zh_a9e410c900,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.capital_market_events.share_pledge,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.capital_market_events.share_freeze,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.operating_events.zh_c3b00912ef,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.operating_events.zh_b5f45a879a,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.operating_events.zh_045e034a42,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.operating_events.zh_5ecc7d12d7,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.operating_events.zh_9b733588cf,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.operating_events.zh_7e9e525b1c,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.operating_events.zh_06c46c2561,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.operating_events.zh_8cecd72d58,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.operating_events.zh_ec57784576,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.risk_events.zh_31585c53f5,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.risk_events.zh_5e93dd357a,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.risk_events.zh_bb3976ed2d,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.risk_events.zh_d21851a7e9,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.risk_events.zh_7742229b35,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.risk_events.st,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.risk_events.zh_7837d427a5,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.risk_events.zh_b8a0bdf2c4,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.risk_events.zh_ac8ebc2faf,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.risk_events.zh_3368c6f4dc,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M13.risk_events.zh_03d2dad051,M13,B,cninfo_b_class:announcement_record,schemas/b_class/b_document.schema.json,candidate,outputs/validation/cninfo_b_class_*/raw_metadata/,事件壳可建，结构化类型待补
+M14.market_performance.zh_2c88927f9c,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.market_performance.zh_a034bb5318,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.market_performance.zh_bb8dc3655a,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.market_performance.zh_5602d1261f,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.market_performance.zh_3499cdb792,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.market_performance.zh_574bb4e3ff,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.market_performance.zh_95544aca76,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.market_performance.zh_a72f568f99,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.market_performance.zh_d90ab80efd,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.market_performance.zh_9473c796f0,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.market_performance.zh_e6c91d0a40,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.market_performance.zh_38d2074280,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.market_performance.zh_2fd456b746,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.market_performance.zh_d9debb028d,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.market_trading_events.zh_264935c326,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.market_trading_events.block_trade,M14,D,cninfo_d_class:block_trade,schemas/d_class/d_company_event.schema.json,candidate,outputs/validation/cninfo_d_class_block_trade_first_slice/,
+M14.market_trading_events.zh_16ed8928d0,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.market_trading_events.margin_trading,M14,D,cninfo_d_class:margin_trading,schemas/d_class/d_company_metric_daily.schema.json,testing,outputs/validation/cninfo_d_class_margin_trading_first_slice/,
+M14.market_trading_events.restricted_shares_unlock,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.market_trading_events.suspension_resumption,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.market_trading_events.zh_18cf919a0f,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.market_trading_events.zh_d39cc956da,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.institutional_attention.fund_holdings,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.institutional_attention.zh_67a93ca444,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.institutional_attention.zh_6be20f2c6f,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.institutional_attention.zh_7d3d68678e,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.institutional_attention.zh_4dc4051576,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.institutional_attention.zh_013c4e3fc2,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.institutional_attention.zh_d30ed3a229,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M14.institutional_attention.zh_6dd09a0014,M14,D,cninfo_d_class:market_event,schemas/d_class/d_company_event.schema.json,not_modeled,outputs/validation/cninfo_d_class_*/,D 类组件待扩样
+M15.investor_qa.zh_ba733b090b,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M15.investor_qa.zh_524653c2ab,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M15.investor_qa.zh_9a8c11a9af,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M15.investor_qa.zh_14a693e84a,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M15.investor_qa.zh_0870f653d0,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M15.investor_qa.zh_d1d4812187,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M15.institutional_research.zh_1597fd733e,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M15.institutional_research.zh_7df53c1ed9,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M15.institutional_research.zh_79256d84a6,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M15.institutional_research.zh_18e85d15f1,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M15.institutional_research.zh_6c7dc9e67a,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M15.institutional_research.zh_eb47367114,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M15.institutional_research.zh_016468621a,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M15.institutional_research.zh_163552eb59,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M15.earnings_roadshow.earnings_briefing,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M15.earnings_roadshow.zh_27712bd94d,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M15.earnings_roadshow.zh_4b5c89d6ba,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M15.earnings_roadshow.zh_b5349decd4,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M15.earnings_roadshow.zh_8c8d1a09b5,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M15.earnings_roadshow.zh_20200d0318,M15,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M16.source_documents.zh_015749df82,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.source_documents.zh_e58237f94f,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.source_documents.zh_1a993f313b,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.source_documents.pdf,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.source_documents.zh_c6ea935bcd,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.source_documents.zh_2f2b936550,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.source_documents.zh_9db52f4252,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.source_documents.zh_301856341c,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.source_documents.zh_b1147b2c69,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.source_documents.zh_aca97b1810,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.evidence_chain.source_name,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.evidence_chain.source_url,M16,multi,cninfo_b_class:pdf_url,schemas/b_class/b_document.schema.json,partial,outputs/validation/cninfo_b_class_*/raw_metadata/,
+M16.evidence_chain.disclosure_date,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.evidence_chain.fetched_at,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.evidence_chain.file_hash,M16,multi,cninfo_a_class:raw_hash,schemas/a_class/ (lineage),partial,outputs/validation/cninfo_a_class_*/raw_metadata/,
+M16.evidence_chain.zh_7b0930e205,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.evidence_chain.zh_918a0c837b,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.evidence_chain.zh_150074c2e8,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.evidence_chain.zh_cbd3d723b4,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.evidence_chain.zh_8b75edab69,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.evidence_chain.zh_590645a6dd,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.evidence_chain.zh_f2e3aea180,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.text_knowledge_base.zh_7348c86b69,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.text_knowledge_base.zh_968faa24eb,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.text_knowledge_base.zh_301856341c,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.text_knowledge_base.zh_789a9efb19,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.text_knowledge_base.zh_57004356be,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.text_knowledge_base.zh_6283b107bf,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.text_knowledge_base.zh_4572316dab,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M16.text_knowledge_base.zh_ecc787f4a9,M16,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.field_quality.field_exists,M17,multi,portrait_meta:field_quality,schemas/portrait/fact_record.schema.json,candidate,outputs/portrait/companies/,
+M17.field_quality.zh_5b574dbdc5,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.field_quality.zh_4e983cb523,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.field_quality.zh_ce40d12d57,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.field_quality.zh_a7f486fc6d,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.field_quality.zh_2ca1706f96,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.field_quality.zh_46ad37dfe7,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.field_quality.zh_32faea6c04,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.field_quality.zh_9afd2de51a,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.field_quality.zh_86897f7b33,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.module_status.zh_bd02fe7570,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.module_status.zh_c0509a1c82,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.module_status.zh_2c44c1dc38,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.module_status.zh_b147b5c5ba,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.module_status.zh_3fe170dadc,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.module_status.zh_acfcd0b7ec,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.module_status.zh_51b238f850,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.module_status.zh_72db24bc1f,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.module_status.zh_3b94984a8a,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.module_status.zh_1e73641485,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.update_status.last_updated_at,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.update_status.zh_364ca66bbc,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.update_status.zh_b0ca0ecb0a,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.update_status.zh_45eee632b5,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.update_status.zh_41bc350377,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.update_status.zh_d8ae010108,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.update_status.zh_8866dfaa0a,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.update_status.zh_117787955f,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.conflict_versioning.zh_ea2779fa44,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.conflict_versioning.zh_45cff348af,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.conflict_versioning.zh_6147c93e30,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.conflict_versioning.zh_43d7a03f6d,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.conflict_versioning.zh_26ee4d2ea5,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.conflict_versioning.zh_5d55e288de,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M17.conflict_versioning.zh_53aecfaa20,M17,multi,portrait_meta:cross_cutting,schemas/portrait/,candidate,outputs/portrait/companies/,横切规范，随试点落地
+M18.company_summary.zh_c964bd2acf,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.company_summary.zh_3075452507,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.company_summary.zh_1451957412,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.company_summary.zh_a3eff9bae7,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.company_summary.zh_04ffa7368d,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.company_summary.zh_a69d964d6d,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.company_summary.zh_607976f011,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.company_summary.zh_8496b09c3b,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.tag_system.zh_13e308043f,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.tag_system.zh_2215e85066,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.tag_system.zh_ac06ceeda0,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.tag_system.zh_ea277bcf21,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.tag_system.zh_b1d63cf6d9,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.tag_system.zh_24d50f6d53,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.tag_system.zh_671aa2b2f3,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.tag_system.zh_8012bcc61d,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.tag_system.zh_69ae76919b,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.tag_system.zh_763c379ec5,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.qa_assist.zh_0adb1147b3,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.qa_assist.zh_64f717b2b6,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.qa_assist.zh_9837742421,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.qa_assist.zh_f7f9ea4a9a,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.qa_assist.zh_f7eb570b6d,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.qa_assist.zh_2b60b4c4a4,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
+M18.qa_assist.zh_41fc198887,M18,none,,,defer,,依赖年报正文/IR/外部源，本阶段不建模
