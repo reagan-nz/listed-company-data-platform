@@ -9,7 +9,8 @@ CNINFO B-class Phase 2.5 / Phase 3 expansion metadata validation runner.
 --phase3-100-retry-v2 模式：91-case isolated retry v2；dry-run 默认；live 须 --approve-b-class-phase3-100-retry-v2。
 --erad-b-scale-200 模式：200-case Era D expansion；dry-run 默认；live 须 --approve-b-class-erad-scale-200。
 --erad-b-scale-500-slice1 模式：300-case Era D next-scale slice1（BD2E201–500）；dry-run 默认；live 须 --approve-b-class-erad-scale-500-slice1。
---erad-b-fuller-slice2 模式：300-case Era D fuller next-slice2（BD2E501–800）；dry-run 默认；live 须 --approve-b-class-erad-fuller-slice2（live 未实现 · stub only）。
+--erad-b-fuller-slice2 模式：300-case Era D fuller next-slice2（BD2E501–800）；dry-run 默认；live 须 --approve-b-class-erad-fuller-slice2。
+--erad-b-bd2e624-isolated-retry 模式：BD2E624 isolated retry（1/1）；dry-run 默认；live 须 --approve-b-class-bd2e624-isolated-retry 或 --approve-b-class-erad-fuller-slice2。
 
 Usage:
     python lab/run_cninfo_b_class_phase25_expansion_validation.py
@@ -573,6 +574,69 @@ ERAD_FULLER_SLICE2_QUALITY_REPORT_CSV = os.path.join(
     DEFAULT_ERAD_FULLER_SLICE2_OUTPUT_ROOT,
     "reports",
     "b_class_erad_fuller_next_slice2_quality_report.csv",
+)
+# BD2E624 isolated retry（1/1 · EP002→EP001 · CNINFO cap ≤2）
+DEFAULT_BD2E624_ISOLATED_RETRY_UNIVERSE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_b_class_bd2e624_isolated_retry_universe_20260714.csv",
+)
+DEFAULT_BD2E624_ISOLATED_RETRY_OUTPUT_ROOT = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_b_class_erad_fuller_next_slice2_bd2e624_retry",
+)
+BD2E624_ISOLATED_RETRY_CASE_ID = "BD2E624"
+BD2E624_ISOLATED_RETRY_COMPANY_CODE = "300778"
+BD2E624_ISOLATED_RETRY_CASE_RANGE = "BD2E624:BD2E624"
+REQUIRED_BD2E624_ISOLATED_RETRY_UNIVERSE_SIZE = 1
+MAX_BD2E624_ISOLATED_RETRY_PLANNED_REQUESTS = 2
+MAX_BD2E624_ISOLATED_RETRY_CNINFO_REQUESTS = 2
+BD2E624_ISOLATED_RETRY_UNIVERSE_CSV_REQUIRED = "bd2e624_isolated_retry_universe_csv_required"
+BD2E624_ISOLATED_RETRY_OUTPUT_ROOT_VIOLATION = (
+    "output_root_must_be_cninfo_b_class_erad_fuller_next_slice2_bd2e624_retry"
+)
+BD2E624_ISOLATED_RETRY_APPROVAL_REQUIRED = "approve_b_class_bd2e624_isolated_retry_required"
+BD2E624_ISOLATED_RETRY_UNIVERSE_SIZE_VIOLATION = (
+    "bd2e624_isolated_retry_universe_size_must_equal_1"
+)
+BD2E624_ISOLATED_RETRY_CASE_ID_VIOLATION = "bd2e624_isolated_retry_only_bd2e624_allowed"
+BD2E624_ISOLATED_RETRY_CASE_RANGE_REQUIRED = "bd2e624_isolated_retry_case_range_must_be_bd2e624_only"
+BD2E624_ISOLATED_RETRY_REQUEST_CAP_EXCEEDED = "bd2e624_isolated_retry_planned_request_cap_exceeded"
+BD2E624_SLICE2_MAIN_ROOT_WRITE_FORBIDDEN = (
+    "erad_fuller_slice2_main_root_write_forbidden_for_bd2e624_retry"
+)
+BD2E624_ISOLATED_RETRY_MOCK_TEST_PARENT = os.path.join(
+    DEFAULT_BD2E624_ISOLATED_RETRY_OUTPUT_ROOT, "_mock_test"
+)
+BD2E624_ISOLATED_RETRY_MOCK_LIVE_TEST_PARENT = os.path.join(
+    DEFAULT_BD2E624_ISOLATED_RETRY_OUTPUT_ROOT, "_mock_live_test"
+)
+PHASE25_EXPANSION_APPROVAL_WRONG_FOR_BD2E624_ISOLATED_RETRY = (
+    "approve_b_class_phase25_expansion_not_valid_for_bd2e624_isolated_retry"
+)
+PHASE25_RETRY_APPROVAL_WRONG_FOR_BD2E624_ISOLATED_RETRY = (
+    "approve_b_class_phase25_failed_retry_not_valid_for_bd2e624_isolated_retry"
+)
+PHASE3_EXPANSION_APPROVAL_WRONG_FOR_BD2E624_ISOLATED_RETRY = (
+    "approve_b_class_phase3_100_expansion_not_valid_for_bd2e624_isolated_retry"
+)
+PHASE3_RETRY_V1_APPROVAL_WRONG_FOR_BD2E624_ISOLATED_RETRY = (
+    "approve_b_class_phase3_100_failed_retry_not_valid_for_bd2e624_isolated_retry"
+)
+PHASE3_RETRY_V2_APPROVAL_WRONG_FOR_BD2E624_ISOLATED_RETRY = (
+    "approve_b_class_phase3_100_retry_v2_not_valid_for_bd2e624_isolated_retry"
+)
+ERAD_SCALE_200_APPROVAL_WRONG_FOR_BD2E624_ISOLATED_RETRY = (
+    "approve_b_class_erad_scale_200_not_valid_for_bd2e624_isolated_retry"
+)
+ERAD_SLICE1_APPROVAL_WRONG_FOR_BD2E624_ISOLATED_RETRY = (
+    "approve_b_class_erad_scale_500_slice1_not_valid_for_bd2e624_isolated_retry"
+)
+ERAD_FULLER_SLICE2_APPROVAL_WRONG_FOR_BD2E624_ISOLATED_RETRY = (
+    "approve_b_class_erad_fuller_slice2_batch_not_valid_for_bd2e624_isolated_retry"
 )
 
 PHASE3_REPORT_COLUMNS = [
@@ -2856,6 +2920,8 @@ def is_allowed_erad_mock_test_output_root(output_root: str) -> bool:
         ERAD_NEXT_SCALE_SLICE1_MOCK_LIVE_TEST_PARENT,
         ERAD_FULLER_SLICE2_MOCK_TEST_PARENT,
         ERAD_FULLER_SLICE2_MOCK_LIVE_TEST_PARENT,
+        BD2E624_ISOLATED_RETRY_MOCK_TEST_PARENT,
+        BD2E624_ISOLATED_RETRY_MOCK_LIVE_TEST_PARENT,
     ):
         parent = _normalize_output_root(parent_path)
         if root.startswith(parent + os.sep):
@@ -2883,6 +2949,8 @@ def safe_cleanup_erad_test_output_root(temp_root: str) -> None:
         raise RuntimeError("拒绝清理 Era D next-scale slice1 生产 output root")
     if is_production_erad_fuller_slice2_output_root(temp_root):
         raise RuntimeError("拒绝清理 Era D fuller slice2 生产 output root")
+    if is_production_bd2e624_isolated_retry_output_root(temp_root):
+        raise RuntimeError("拒绝清理 BD2E624 isolated retry 生产 output root")
     if not is_allowed_erad_mock_test_output_root(temp_root):
         raise RuntimeError("拒绝清理非 mock 测试目录")
     shutil.rmtree(temp_root, ignore_errors=True)
@@ -3579,6 +3647,514 @@ def is_production_erad_fuller_slice2_output_root(output_root: str) -> bool:
         return False
     allowed = _normalize_output_root(DEFAULT_ERAD_FULLER_SLICE2_OUTPUT_ROOT)
     return root == allowed or root.startswith(allowed + os.sep)
+
+
+def is_production_bd2e624_isolated_retry_output_root(output_root: str) -> bool:
+    root = _normalize_output_root(output_root)
+    if is_allowed_erad_mock_test_output_root(root):
+        return False
+    allowed = _normalize_output_root(DEFAULT_BD2E624_ISOLATED_RETRY_OUTPUT_ROOT)
+    return root == allowed or root.startswith(allowed + os.sep)
+
+
+def is_erad_bd2e624_isolated_retry_context(args: argparse.Namespace) -> bool:
+    """检测 BD2E624 isolated retry 模式（显式 flag 或 isolated universe + output root）。"""
+    if getattr(args, "erad_b_bd2e624_isolated_retry", False):
+        return True
+    csv_ok, _ = validate_bd2e624_isolated_retry_universe_csv_path(args.universe_csv)
+    root_ok, _ = validate_bd2e624_isolated_retry_output_root(args.output_root)
+    return csv_ok and root_ok
+
+
+def validate_bd2e624_isolated_retry_universe_csv_path(universe_csv: str) -> Tuple[bool, str]:
+    expected = os.path.normpath(os.path.abspath(DEFAULT_BD2E624_ISOLATED_RETRY_UNIVERSE_CSV))
+    actual = os.path.normpath(os.path.abspath(universe_csv))
+    if actual != expected:
+        return False, BD2E624_ISOLATED_RETRY_UNIVERSE_CSV_REQUIRED
+    return True, ""
+
+
+def validate_bd2e624_isolated_retry_output_root(output_root: str) -> Tuple[bool, str]:
+    """BD2E624 retry 仅允许隔离根；禁止 slice2 主根及其他生产根。"""
+    root = _normalize_output_root(output_root)
+    allowed = _normalize_output_root(DEFAULT_BD2E624_ISOLATED_RETRY_OUTPUT_ROOT)
+    for forbidden_root, err in (
+        (DEFAULT_ERAD_FULLER_SLICE2_OUTPUT_ROOT, BD2E624_SLICE2_MAIN_ROOT_WRITE_FORBIDDEN),
+        (DEFAULT_ERAD_SCALE_200_OUTPUT_ROOT, ERAD_FULLER_SLICE2_SCALE_200_ROOT_WRITE_FORBIDDEN),
+        (DEFAULT_ERAD_NEXT_SCALE_SLICE1_OUTPUT_ROOT, ERAD_FULLER_SLICE2_SLICE1_ROOT_WRITE_FORBIDDEN),
+        (DEFAULT_PHASE3_OUTPUT_ROOT, PHASE3_EXPANSION_BASELINE_WRITE_FORBIDDEN),
+        (DEFAULT_PHASE3_RETRY_OUTPUT_ROOT, PHASE3_FAILED_RETRY_BASELINE_WRITE_FORBIDDEN),
+        (DEFAULT_PHASE3_RETRY_V2_OUTPUT_ROOT, PHASE3_RETRY_V2_OUTPUT_ROOT_VIOLATION),
+        (DEFAULT_EP002_PRECHECK_ROOT, EP002_PRECHECK_BASELINE_WRITE_FORBIDDEN),
+        (DEFAULT_OUTPUT_ROOT, PHASE25_BASELINE_WRITE_FORBIDDEN),
+        (DEFAULT_RETRY_OUTPUT_ROOT, RETRY_BASELINE_WRITE_FORBIDDEN),
+        (PHASE1_TINY_LIVE_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
+        (TLC002_RETRY_ROOT, TLC002_BASELINE_WRITE_FORBIDDEN),
+        (PHASE2_EXPANSION_ROOT, PHASE2_BASELINE_WRITE_FORBIDDEN),
+        (PHASE3_FORBIDDEN_ROOT, "phase3_batch_500_output_root_forbidden"),
+        (A_CLASS_VALIDATION_ROOT, ERAD_A_CLASS_ROOT_WRITE_FORBIDDEN),
+        (C_CLASS_HARVEST_ROOT, ERAD_C_CLASS_HARVEST_ROOT_WRITE_FORBIDDEN),
+        (C_CLASS_SNAPSHOT_ROOT, ERAD_C_CLASS_SNAPSHOT_ROOT_WRITE_FORBIDDEN),
+        (D_CLASS_VALIDATION_ROOT, ERAD_D_CLASS_ROOT_WRITE_FORBIDDEN),
+    ):
+        norm = _normalize_output_root(forbidden_root)
+        if root == norm or root.startswith(norm + os.sep):
+            return False, err
+    if root == allowed or root.startswith(allowed + os.sep):
+        return True, ""
+    return False, BD2E624_ISOLATED_RETRY_OUTPUT_ROOT_VIOLATION
+
+
+def validate_bd2e624_isolated_retry_universe_size(
+    cases: List[EraDFullerSlice2UniverseCase],
+) -> Tuple[bool, str]:
+    included = [c for c in cases if c.erad_include == "yes"]
+    if len(included) != REQUIRED_BD2E624_ISOLATED_RETRY_UNIVERSE_SIZE:
+        return (
+            False,
+            f"{BD2E624_ISOLATED_RETRY_UNIVERSE_SIZE_VIOLATION}: got {len(included)} "
+            f"expected {REQUIRED_BD2E624_ISOLATED_RETRY_UNIVERSE_SIZE}",
+        )
+    if len(included) == 1:
+        case = included[0]
+        if case.case_id != BD2E624_ISOLATED_RETRY_CASE_ID:
+            return False, f"{BD2E624_ISOLATED_RETRY_CASE_ID_VIOLATION}:got={case.case_id}"
+        if case.company_code != BD2E624_ISOLATED_RETRY_COMPANY_CODE:
+            return (
+                False,
+                f"{BD2E624_ISOLATED_RETRY_CASE_ID_VIOLATION}:company={case.company_code}",
+            )
+    return True, ""
+
+
+def validate_bd2e624_isolated_retry_case_range(case_range: Optional[str]) -> Tuple[bool, str]:
+    if not case_range:
+        return False, BD2E624_ISOLATED_RETRY_CASE_RANGE_REQUIRED
+    normalized = case_range.strip()
+    if normalized != BD2E624_ISOLATED_RETRY_CASE_RANGE:
+        return False, BD2E624_ISOLATED_RETRY_CASE_RANGE_REQUIRED
+    return True, ""
+
+
+def enforce_bd2e624_isolated_retry_approval_gate(args: argparse.Namespace) -> None:
+    wrong_flags = (
+        (args.approve_b_class_phase25_expansion, PHASE25_EXPANSION_APPROVAL_WRONG_FOR_BD2E624_ISOLATED_RETRY),
+        (args.approve_b_class_phase25_failed_retry, PHASE25_RETRY_APPROVAL_WRONG_FOR_BD2E624_ISOLATED_RETRY),
+        (args.approve_b_class_phase3_100_expansion, PHASE3_EXPANSION_APPROVAL_WRONG_FOR_BD2E624_ISOLATED_RETRY),
+        (args.approve_b_class_phase3_100_failed_retry, PHASE3_RETRY_V1_APPROVAL_WRONG_FOR_BD2E624_ISOLATED_RETRY),
+        (args.approve_b_class_phase3_100_retry_v2, PHASE3_RETRY_V2_APPROVAL_WRONG_FOR_BD2E624_ISOLATED_RETRY),
+        (
+            getattr(args, "approve_b_class_phase3_100_ep002_reachability_precheck", False),
+            EP002_PRECHECK_APPROVAL_WRONG_FOR_ERAD_FULLER_SLICE2,
+        ),
+        (getattr(args, "approve_b_class_erad_scale_200", False), ERAD_SCALE_200_APPROVAL_WRONG_FOR_BD2E624_ISOLATED_RETRY),
+        (
+            getattr(args, "approve_b_class_erad_scale_500_slice1", False),
+            ERAD_SLICE1_APPROVAL_WRONG_FOR_BD2E624_ISOLATED_RETRY,
+        ),
+        (args.approve_b_class_phase2_expansion, PHASE2_APPROVAL_WRONG_FOR_PHASE3),
+        (args.approve_b_class_tiny_live_validation, TINY_LIVE_APPROVAL_WRONG),
+        (args.approve_b_class_tlc002_retry, TLC002_RETRY_APPROVAL_WRONG),
+    )
+    for enabled, error_code in wrong_flags:
+        if enabled:
+            print(f"ERROR: {error_code}", file=sys.stderr)
+            sys.exit(2)
+    for flag, err in (
+        (args.approve_full_harvest, tiny_live.FORBIDDEN_APPROVE_FULL_HARVEST),
+        (args.approve_phase2_smoke_harvest, tiny_live.FORBIDDEN_APPROVE_PHASE2),
+        (args.approve_phase3_batch_500_harvest, tiny_live.FORBIDDEN_APPROVE_PHASE3),
+    ):
+        if flag:
+            print(f"ERROR: {err}", file=sys.stderr)
+            sys.exit(2)
+    if args.mode != "live":
+        return
+    approved = (
+        getattr(args, "approve_b_class_bd2e624_isolated_retry", False)
+        or getattr(args, "approve_b_class_erad_fuller_slice2", False)
+    )
+    if not approved:
+        print(f"ERROR: {BD2E624_ISOLATED_RETRY_APPROVAL_REQUIRED}", file=sys.stderr)
+        sys.exit(2)
+
+
+def enforce_bd2e624_isolated_retry_request_cap(total_planned: int) -> Tuple[bool, str]:
+    if total_planned > MAX_BD2E624_ISOLATED_RETRY_PLANNED_REQUESTS:
+        return (
+            False,
+            f"{BD2E624_ISOLATED_RETRY_REQUEST_CAP_EXCEEDED}:{total_planned}>{MAX_BD2E624_ISOLATED_RETRY_PLANNED_REQUESTS}",
+        )
+    return True, ""
+
+
+def compute_bd2e624_isolated_retry_runner_gate(
+    universe_issues: List[str],
+    case_count: int,
+    total_planned: int,
+) -> str:
+    if universe_issues or case_count != REQUIRED_BD2E624_ISOLATED_RETRY_UNIVERSE_SIZE:
+        return "FAIL"
+    ok_cap, _ = enforce_bd2e624_isolated_retry_request_cap(total_planned)
+    if not ok_cap:
+        return "FAIL"
+    return "READY_FOR_APPROVAL"
+
+
+def compute_bd2e624_isolated_retry_execution_gate(
+    erad_rows: List[Dict[str, str]],
+    expected_case_count: int,
+) -> str:
+    if any(classify_case_acceptability(r) == "red_line_violation" for r in erad_rows):
+        return "FAIL_REVIEW_REQUIRED"
+    if len(erad_rows) != expected_case_count:
+        return "FAIL_REVIEW_REQUIRED"
+    if expected_case_count != 1:
+        return "FAIL_REVIEW_REQUIRED"
+    row = erad_rows[0]
+    status = str(row.get("retrieval_status") or "")
+    if status == "network_error":
+        return "FAIL_REVIEW_REQUIRED"
+    if status in ("found", "empty_response"):
+        return "PASS_WITH_CAVEAT"
+    acceptable = classify_case_acceptability(row)
+    if acceptable in ("acceptable", "needs_review_acceptable", "empty_but_valid"):
+        return "PASS_WITH_CAVEAT"
+    return "FAIL_REVIEW_REQUIRED"
+
+
+def write_bd2e624_isolated_retry_dryrun_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    path = os.path.join(
+        output_paths["reports"],
+        "b_class_erad_fuller_next_slice2_bd2e624_retry_dryrun_report.csv",
+    )
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=ERAD_SCALE_200_DRYRUN_REPORT_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return path
+
+
+def write_bd2e624_isolated_retry_dryrun_summary(
+    output_paths: Dict[str, str],
+    rows: List[Dict[str, str]],
+    universe_issues: List[str],
+    gate: str,
+    total_planned: int,
+) -> str:
+    planned_ok = sum(1 for r in rows if r.get("dryrun_status") == "planned_ok")
+    lines = [
+        "# CNINFO B 类 BD2E624 Isolated Retry — Dry-Run Summary",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** BD2E624 isolated retry dry-run · **无 CNINFO** · **无 PDF 下载/解析**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        "| mode | bd2e624_isolated_retry_dry_run |",
+        f"| case_id | {BD2E624_ISOLATED_RETRY_CASE_ID} |",
+        f"| company_code | {BD2E624_ISOLATED_RETRY_COMPANY_CODE} |",
+        f"| planned_ok | {planned_ok}/{REQUIRED_BD2E624_ISOLATED_RETRY_UNIVERSE_SIZE} |",
+        f"| total planned_request_count | {total_planned} |",
+        "| CNINFO calls (dry-run) | **0** |",
+        "| endpoint chain | EP002 → EP001 |",
+        "",
+        "## Write-block",
+        "",
+        "- slice2 主根 reports/quality/merge closure：**未写入**",
+        "",
+        "## Gate",
+        "",
+        "```text",
+        f"b_class_bd2e624_isolated_retry_runner_extension_gate = READY_FOR_APPROVAL",
+        f"bd2e624_isolated_retry_dryrun_gate = {gate}",
+        "```",
+        "",
+        "**NOT verified** · **NOT production_ready** · **NOT bare PASS**",
+        "",
+    ]
+    if universe_issues:
+        lines.extend(["## Universe issues", ""] + [f"- {x}" for x in universe_issues])
+    path = os.path.join(
+        output_paths["reports"],
+        "b_class_erad_fuller_next_slice2_bd2e624_retry_dryrun_summary.md",
+    )
+    with open(path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    return path
+
+
+def write_live_bd2e624_isolated_retry_reports(
+    report_records: List[Dict[str, Any]],
+    output_paths: Dict[str, str],
+    stats: tiny_live.LiveStats,
+    universe_issues: List[str],
+    expected_case_count: int,
+) -> Tuple[str, str, str, str]:
+    erad_rows = [build_erad_fuller_slice2_report_row(r) for r in report_records]
+    gate = compute_bd2e624_isolated_retry_execution_gate(erad_rows, expected_case_count)
+
+    report_path = os.path.join(
+        output_paths["reports"],
+        "b_class_erad_fuller_next_slice2_bd2e624_retry_report.csv",
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=ERAD_SCALE_200_REPORT_COLUMNS)
+        writer.writeheader()
+        writer.writerows(erad_rows)
+
+    quality_path = os.path.join(
+        output_paths["reports"],
+        "b_class_erad_fuller_next_slice2_bd2e624_retry_quality_report.csv",
+    )
+    with open(quality_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=ERAD_SCALE_200_QUALITY_REPORT_COLUMNS)
+        writer.writeheader()
+        for row in erad_rows:
+            writer.writerow({k: row.get(k, "") for k in ERAD_SCALE_200_QUALITY_REPORT_COLUMNS})
+
+    retrieval_status = erad_rows[0].get("retrieval_status", "") if erad_rows else ""
+    summary_path = os.path.join(
+        output_paths["reports"],
+        "b_class_erad_fuller_next_slice2_bd2e624_retry_summary.md",
+    )
+    lines = [
+        "# CNINFO B 类 BD2E624 Isolated Retry — Live Execution Summary",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** BD2E624 isolated retry live · **无 PDF 下载/解析** · **不是 verified**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        f"| case_id | {BD2E624_ISOLATED_RETRY_CASE_ID} |",
+        f"| company_code | {BD2E624_ISOLATED_RETRY_COMPANY_CODE} |",
+        f"| retrieval_status | {retrieval_status} |",
+        f"| CNINFO requests | {stats.cninfo_requests} |",
+        f"| CNINFO cap | ≤ {MAX_BD2E624_ISOLATED_RETRY_CNINFO_REQUESTS} |",
+        "",
+        "## Write-block",
+        "",
+        "- slice2 主根 failure evidence：**只读保留**",
+        "",
+        "## Gate",
+        "",
+        "```text",
+        f"bd2e624_isolated_retry_execution_gate = {gate}",
+        "```",
+        "",
+        "**不是 bare PASS** · **不是 verified** · **不是 production_ready**",
+        "",
+    ]
+    if universe_issues:
+        lines.extend(["## Universe issues", ""] + [f"- {x}" for x in universe_issues])
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+
+    return report_path, summary_path, quality_path, gate
+
+
+def process_bd2e624_isolated_retry_live(
+    cases: List[EraDFullerSlice2UniverseCase],
+    output_paths: Dict[str, str],
+    categories_config: Dict[str, Any],
+) -> Tuple[List[Dict[str, Any]], tiny_live.LiveStats, List[str]]:
+    """BD2E624 isolated retry live：单 case · CNINFO cap ≤2。"""
+    report_records: List[Dict[str, Any]] = []
+    universe_issues: List[str] = []
+    stats = tiny_live.LiveStats()
+
+    for case in cases:
+        if case.erad_include != "yes":
+            continue
+        issues = validate_erad_fuller_slice2_case(case)
+        if case.case_id != BD2E624_ISOLATED_RETRY_CASE_ID:
+            issues.append(BD2E624_ISOLATED_RETRY_CASE_ID_VIOLATION)
+        if case.company_code != BD2E624_ISOLATED_RETRY_COMPANY_CODE:
+            issues.append(BD2E624_ISOLATED_RETRY_CASE_ID_VIOLATION)
+        if issues:
+            universe_issues.append(f"{case.case_id}:{';'.join(issues)}")
+            continue
+        p25 = erad_fuller_slice2_to_phase25_case(case)
+        tl_case = to_tiny_live_case(p25)
+        stats.companies_executed += 1
+        record = tiny_live.execute_live_case(tl_case, categories_config, stats)
+        if stats.cninfo_requests > MAX_BD2E624_ISOLATED_RETRY_CNINFO_REQUESTS:
+            universe_issues.append(
+                f"cninfo_request_cap_exceeded:{stats.cninfo_requests}>{MAX_BD2E624_ISOLATED_RETRY_CNINFO_REQUESTS}"
+            )
+            break
+        record["notes"] = (
+            f"bd2e624 isolated retry live; cohort={case.cohort}; "
+            f"baseline_network_error_ep002_deferred; "
+            f"retained_evidence_mode=fresh_metadata; "
+            f"bd2e001_500_lineage_reference_only=yes; "
+            f"scale_200_lineage_reference_only=yes; "
+            f"slice1_lineage_reference_only=yes; "
+            f"phase3_production_root_write=no; {record.get('notes', '')}"
+        )
+        record["_erad_fuller_slice2_case"] = case
+        record["_phase25_case"] = p25
+        primary = record.get("endpoint_id") or SOURCE_TYPE_PRIMARY_ENDPOINT[tl_case.source_type]
+        snap_path = os.path.join(
+            output_paths["raw_metadata"], f"{case.case_id}_{primary}.json"
+        )
+        with open(snap_path, "w", encoding="utf-8") as f:
+            json.dump(
+                {
+                    "case_id": case.case_id,
+                    "case": {
+                        "case_id": case.case_id,
+                        "company_code": case.company_code,
+                        "company_name": case.company_name,
+                        "market": case.market,
+                        "announcement_type": case.announcement_type,
+                        "target_endpoint": case.target_endpoint,
+                        "cohort": case.cohort,
+                        "prior_in_scale_200_or_slice1": case.prior_in_scale_200_or_slice1,
+                        "include_reason": case.include_reason,
+                        "erad_include": case.erad_include,
+                    },
+                    "mode": "bd2e624_isolated_retry_live",
+                    "retry": "bd2e624_isolated",
+                    "retained_evidence_mode": "fresh_metadata",
+                    "bd2e001_500_lineage_reference_only": True,
+                    "scale_200_lineage_reference_only": True,
+                    "slice1_lineage_reference_only": True,
+                    "phase3_production_root_write": False,
+                    "cninfo_called": True,
+                    "pdf_download_enabled": PDF_DOWNLOAD_ENABLED,
+                    "pdf_parse_enabled": PDF_PARSE_ENABLED,
+                    "record": {k: record.get(k) for k in tiny_live.REPORT_COLUMNS},
+                    "raw_announcement": record.get("raw_announcement"),
+                },
+                f,
+                ensure_ascii=False,
+                indent=2,
+            )
+        qpath = os.path.join(output_paths["quality"], f"{case.case_id}.json")
+        with open(qpath, "w", encoding="utf-8") as f:
+            json.dump(
+                {
+                    "case_id": case.case_id,
+                    "cohort": case.cohort,
+                    "retained_evidence_mode": "fresh_metadata",
+                    "quality_status": record.get("quality_status"),
+                    "lineage_status": record.get("lineage_status"),
+                    "error_type": record.get("error_type", ""),
+                    "pdf_download_enabled": PDF_DOWNLOAD_ENABLED,
+                    "pdf_parse_enabled": PDF_PARSE_ENABLED,
+                },
+                f,
+                ensure_ascii=False,
+                indent=2,
+            )
+        report_records.append(record)
+        print(
+            f"case_id={case.case_id} company_code={case.company_code} "
+            f"retrieval_status={record.get('retrieval_status')}",
+            flush=True,
+        )
+    return report_records, stats, universe_issues
+
+
+def _run_erad_bd2e624_isolated_retry_mode(args: argparse.Namespace) -> int:
+    if args.mode == "live":
+        enforce_bd2e624_isolated_retry_approval_gate(args)
+
+    ok_csv, csv_err = validate_bd2e624_isolated_retry_universe_csv_path(args.universe_csv)
+    if not ok_csv:
+        print(f"ERROR: {csv_err}", file=sys.stderr)
+        return 2
+
+    ok_root, root_err = validate_bd2e624_isolated_retry_output_root(args.output_root)
+    if not ok_root:
+        print(f"ERROR: {root_err}", file=sys.stderr)
+        return 2
+
+    if not os.path.isfile(args.universe_csv):
+        print(f"ERROR: universe not found: {args.universe_csv}", file=sys.stderr)
+        return 2
+
+    case_range = getattr(args, "case_range", None)
+    ok_range, range_err = validate_bd2e624_isolated_retry_case_range(case_range)
+    if not ok_range:
+        print(f"ERROR: {range_err}", file=sys.stderr)
+        return 2
+
+    output_paths = ensure_output_layout(_normalize_output_root(args.output_root))
+    cases = load_erad_fuller_slice2_universe(args.universe_csv)
+    included = [c for c in cases if c.erad_include == "yes"]
+    included = filter_erad_fuller_slice2_cases_by_range(included, case_range)
+
+    ok_size, size_err = validate_bd2e624_isolated_retry_universe_size(included)
+    if not ok_size:
+        print(f"ERROR: {size_err}", file=sys.stderr)
+        return 2
+
+    expected_case_count = len(included)
+
+    if args.mode == "dry_run":
+        dryrun_rows, universe_issues = process_erad_fuller_slice2_dry_run(included, output_paths)
+        total_planned = sum(int(r.get("planned_request_count", "0")) for r in dryrun_rows)
+        ok_cap, cap_err = enforce_bd2e624_isolated_retry_request_cap(total_planned)
+        if not ok_cap:
+            universe_issues.append(cap_err)
+
+        report_path = write_bd2e624_isolated_retry_dryrun_report(dryrun_rows, output_paths)
+        gate = compute_bd2e624_isolated_retry_runner_gate(
+            universe_issues, len(included), total_planned
+        )
+        summary_path = write_bd2e624_isolated_retry_dryrun_summary(
+            output_paths, dryrun_rows, universe_issues, gate, total_planned
+        )
+        planned_ok = sum(1 for r in dryrun_rows if r["dryrun_status"] == "planned_ok")
+        print(
+            f"mode=bd2e624_isolated_retry_dry_run cases={len(included)} "
+            f"planned_ok={planned_ok} cninfo_calls=0"
+        )
+        print(f"planned_request_count_total={total_planned}")
+        print(f"gate=b_class_bd2e624_isolated_retry_runner_extension_gate=READY_FOR_APPROVAL")
+        print(f"gate=bd2e624_isolated_retry_dryrun_gate={gate}")
+        print(f"dryrun_report={report_path}")
+        print(f"dryrun_summary={summary_path}")
+        if universe_issues:
+            print(f"universe_issues={len(universe_issues)}", file=sys.stderr)
+            return 1
+        return 0
+
+    with open(CATEGORIES_YAML, encoding="utf-8") as f:
+        categories_config = yaml.safe_load(f) or {}
+    report_records, stats, universe_issues = process_bd2e624_isolated_retry_live(
+        included, output_paths, categories_config
+    )
+    if stats.cninfo_requests > MAX_BD2E624_ISOLATED_RETRY_CNINFO_REQUESTS:
+        universe_issues.append(
+            f"cninfo_request_cap_exceeded:{stats.cninfo_requests}>{MAX_BD2E624_ISOLATED_RETRY_CNINFO_REQUESTS}"
+        )
+    report_path, summary_path, quality_path, gate = write_live_bd2e624_isolated_retry_reports(
+        report_records, output_paths, stats, universe_issues, expected_case_count
+    )
+    print(
+        f"mode=bd2e624_isolated_retry_live cases={len(included)} "
+        f"executed={len(report_records)} cninfo_calls={stats.cninfo_requests}"
+    )
+    print(f"gate=bd2e624_isolated_retry_execution_gate={gate}")
+    print(f"report={report_path}")
+    print(f"summary={summary_path}")
+    print(f"quality={quality_path}")
+    if universe_issues:
+        return 1
+    if gate == "FAIL_REVIEW_REQUIRED":
+        return 1
+    return 0
 
 
 def enforce_erad_next_scale_slice1_request_cap(total_planned: int) -> Tuple[bool, str]:
@@ -6225,9 +6801,19 @@ def build_parser() -> argparse.ArgumentParser:
         help="300-case Era D fuller next-slice2 模式（BD2E501–800 · dry-run 默认）",
     )
     parser.add_argument(
+        "--erad-b-bd2e624-isolated-retry",
+        action="store_true",
+        help="BD2E624 isolated retry 模式（1/1 · CNINFO cap ≤2 · dry-run 默认）",
+    )
+    parser.add_argument(
         "--approve-b-class-erad-fuller-slice2",
         action="store_true",
         help="显式批准 B-class Era D fuller next-slice2 live",
+    )
+    parser.add_argument(
+        "--approve-b-class-bd2e624-isolated-retry",
+        action="store_true",
+        help="显式批准 B-class BD2E624 isolated retry live",
     )
     parser.add_argument(
         "--case-range",
@@ -6238,6 +6824,9 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def _run_erad_fuller_slice2_mode(args: argparse.Namespace) -> int:
+    if is_erad_bd2e624_isolated_retry_context(args):
+        return _run_erad_bd2e624_isolated_retry_mode(args)
+
     if args.mode == "live":
         enforce_erad_fuller_slice2_approval_gate(args)
 
@@ -6872,11 +7461,17 @@ def _run_retry_mode(args: argparse.Namespace) -> int:
 def main(argv: Optional[List[str]] = None) -> int:
     args = build_parser().parse_args(argv)
 
-    if args.erad_b_fuller_slice2:
-        if args.universe_csv == DEFAULT_UNIVERSE_CSV:
-            args.universe_csv = DEFAULT_ERAD_FULLER_SLICE2_UNIVERSE_CSV
-        if args.output_root == DEFAULT_OUTPUT_ROOT:
-            args.output_root = DEFAULT_ERAD_FULLER_SLICE2_OUTPUT_ROOT
+    if args.erad_b_fuller_slice2 or args.erad_b_bd2e624_isolated_retry:
+        if args.erad_b_bd2e624_isolated_retry:
+            if args.universe_csv == DEFAULT_UNIVERSE_CSV:
+                args.universe_csv = DEFAULT_BD2E624_ISOLATED_RETRY_UNIVERSE_CSV
+            if args.output_root == DEFAULT_OUTPUT_ROOT:
+                args.output_root = DEFAULT_BD2E624_ISOLATED_RETRY_OUTPUT_ROOT
+        else:
+            if args.universe_csv == DEFAULT_UNIVERSE_CSV:
+                args.universe_csv = DEFAULT_ERAD_FULLER_SLICE2_UNIVERSE_CSV
+            if args.output_root == DEFAULT_OUTPUT_ROOT:
+                args.output_root = DEFAULT_ERAD_FULLER_SLICE2_OUTPUT_ROOT
         enforce_forbidden_options(args)
         return _run_erad_fuller_slice2_mode(args)
 
