@@ -88,6 +88,22 @@ outputs/harvest/cninfo_c_class/phase*/
 outputs/harvest/**/run_status.json
 outputs/harvest/**/company_harvest_status.csv
 
+# ── Runtime Artifact Ignore Boundary（autonomous live / harvest bulk）──
+# 保留：outputs/validation/**/reports/ · summary MD · evidence ledgers · QA closure
+# Harvest runtime（含 fuller_market 等嵌套批次目录）
+outputs/harvest/**/raw/
+outputs/harvest/**/normalized/
+outputs/harvest/**/quality/**
+outputs/harvest/**/live_snapshots/
+# 保留 C fuller QA rebuild backup（evidence；不整目录忽略后无法反选）
+!outputs/harvest/**/quality/*.bak_pre_offline_rebuild_*
+# Validation runtime bulk（不忽略 reports/ 与顶层 evidence MD/CSV）
+outputs/validation/**/raw_metadata/
+outputs/validation/**/live_snapshots/
+outputs/validation/**/quality/*.json
+# Local-only portrait generated outputs
+outputs/portrait/
+
 # C-class 逐行 validation 大表（脚本可重跑；保留 *_summary.md 与小表）
 outputs/validation/cninfo_c_class_phase*_harvest_dryrun_report.csv
 outputs/validation/cninfo_c_class_phase*_harvest_output_root_dryrun_report.csv
