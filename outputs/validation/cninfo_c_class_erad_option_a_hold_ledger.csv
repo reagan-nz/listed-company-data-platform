@@ -1,0 +1,5 @@
+cohort,decision,rebuild_candidate,live_resume,notes
+phase35_491,HOLD,no,no,491_local_json_sufficient;QA_PASS_WITH_CAVEAT;human_accepted_Option_A
+863_primary,HOLD,no,no,863_full_snapshot_exists;805_complete_58_needs_review_ledger_only;human_accepted_Option_A
+needs_review_58,DEFER_LIVE_TRIAGE_OFFLINE,no,no,58_rows_triage_ledger;live_needed_all_no;no_harvest_gap_proven
+holdout_9,REMAIN_NON_PROMOTED,no,no,closed_with_caveat;promotion_forbidden;explicit_exclusion

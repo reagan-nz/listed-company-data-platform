@@ -1,0 +1,3 @@
+backup_path=/Users/zhao/Desktop/97/实操/数据收集测试/listed_company_data_collector/outputs/harvest/cninfo_c_class/quality/company_harvest_status.csv.bak_erad_status_fix_8_20260710T080910Z
+production_csv=/Users/zhao/Desktop/97/实操/数据收集测试/listed_company_data_collector/outputs/harvest/cninfo_c_class/quality/company_harvest_status.csv
+timestamp=20260710T080910Z

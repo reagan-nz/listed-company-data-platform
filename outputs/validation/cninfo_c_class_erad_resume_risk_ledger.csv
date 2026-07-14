@@ -1,0 +1,9 @@
+risk_id,category,description,severity,likelihood,mitigation,owner_track,status
+R-C-01,test_cleanup,pytest/live-path tearDown deletes production harvest or snapshot JSON,high,medium,Harden cleanup to refuse production roots; add regression tests,C,open
+R-C-02,mixed_working_tree,Parallel Era D agents on shared branch overwrite C status or runner files,high,medium,Use c-class-erad-resume branch; Prompt Manager merges status docs,C,open
+R-C-03,disk_pressure,863 harvest + 491/863 snapshots exceed local disk during full re-run,medium,medium,Disk audit before live; budget caps; staged batches not full rebuild in planning,C,open
+R-C-04,dry_run_write,dry-run or mock test writes into production harvest/snapshot root,medium,medium,Force isolated _mock_* output roots in tests; runner dry-run flags,C,open
+R-C-05,holdout_promotion,Era D expansion accidentally includes 9 holdout or promotes C35R016,high,low,Holdout ledger locked; QA exclude rules unchanged; no promotion_allowed_now=yes,C,monitoring
+R-C-06,cross_track_mutation,A/B/D Era D work mutates cninfo_c_class harvest or snapshot paths,high,low,Protected roots CSV; agent-C only touches C roots; red line in eraD parallel agreement,C,open
+R-C-07,snapshot_rebuild_premature,491/863 snapshot rebuild before cleanup hardening completes,medium,medium,Slice-C-EraD-01 first; rebuild only after hardening gate approval,C,mitigated_by_plan
+R-C-08,gitignore_assumption,Operators assume snapshot in git and delete local copies,low,medium,Document local-only retention; eraD retention policy when written,C,open
