@@ -1,0 +1,2 @@
+case_id,company_code,company_name,market,announcement_type,original_failure_type,retry_retrieval_status,quality_status,lineage_status,announcement_id,announcement_title,pdf_url_present,adjunct_url_present,source_of_recovery,notes
+BD2E624,300778,新城市,创业板,general_announcement,ep002_orgid_resolution_failed,found,pass,discovered,1223749848,国泰海通证券股份有限公司关于公司使用自有资金支付募投项目部分款项并以募集资金等额置换的核查意见,1,1,bd2e624_isolated_retry_live,found/pass/discovered on isolated retry; baseline network_error preserved in slice2 main report; PDF not downloaded

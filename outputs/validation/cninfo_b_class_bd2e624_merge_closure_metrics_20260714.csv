@@ -1,0 +1,7 @@
+metric_layer,metric_name,pre_merge_value,post_merge_value,gate,notes
+slice2,acceptable_count,299,300,PASS_WITH_CAVEAT,found+empty_response; BD2E624 recovered via isolated retry
+slice2,unresolved_failed_count,1,0,PASS_WITH_CAVEAT,historical unresolved ledger preserved; post-retry ledger 0 rows
+slice2,empty_response_caveat_count,8,8,PASS_WITH_CAVEAT,unchanged acceptable_edge
+cumulative,staged_fuller_effective,797,798,PASS_WITH_CAVEAT,198 scale-200 + 300 slice1 + 300 slice2 acceptable
+retry,cninfo_calls_isolated,0,2,PASS_WITH_CAVEAT,B-08 live already executed
+closure,cninfo_calls_this_package,0,0,PASS_WITH_CAVEAT,offline only
