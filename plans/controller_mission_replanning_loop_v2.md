@@ -2,7 +2,7 @@
 
 
 _最后更新：2026-07-14_  
-_配套：[controller_daily_autonomous_loop_v2.md](controller_daily_autonomous_loop_v2.md) · [controller_execution_cycle_policy_v2.md](controller_execution_cycle_policy_v2.md) · [controller_task_generator_policy_v2.md](controller_task_generator_policy_v2.md) · [controller_task_continuation_policy_v2.md](controller_task_continuation_policy_v2.md) · [controller_capability_gap_analysis_v2.md](controller_capability_gap_analysis_v2.md) · [controller_stuck_detection_policy_v2.md](controller_stuck_detection_policy_v2.md)_
+_配套：[controller_daily_autonomous_loop_v2.md](controller_daily_autonomous_loop_v2.md) · [controller_execution_cycle_policy_v2.md](controller_execution_cycle_policy_v2.md) · [controller_task_generator_policy_v2.md](controller_task_generator_policy_v2.md) · [controller_task_continuation_policy_v2.md](controller_task_continuation_policy_v2.md) · [controller_capability_gap_analysis_v2.md](controller_capability_gap_analysis_v2.md) · [controller_stuck_detection_policy_v2.md](controller_stuck_detection_policy_v2.md) · [controller_track_execution_queue_policy_v2.md](controller_track_execution_queue_policy_v2.md) · [controller_track_stop_reason_policy_v2.md](controller_track_stop_reason_policy_v2.md)_
 
 
 ## 1. Purpose
@@ -141,6 +141,14 @@ Candidate search summary:
   considered_count:
   rejected_count:
   rejection_breakdown: { requires_approval, unsafe, duplicate, already_completed, low_mission_value, other }
+Track queue status:
+  A: active_task / queued_tasks / stop_reason
+  B: active_task / queued_tasks / stop_reason
+  C: active_task / queued_tasks / stop_reason
+  D: active_task / queued_tasks / stop_reason
+Human blocked:     # tracks with HUMAN_GATE_BLOCKED
+Priority deferred: # LOW_PRIORITY_DEFERRED
+No safe task:      # NO_SAFE_AUTONOMOUS_TASK
 Why no higher-value task exists:
 Track execution balance:
   A iterations:
@@ -148,6 +156,7 @@ Track execution balance:
   C iterations:
   D iterations:
   Last executed iteration per track:
+Next recommended action:
 ```
 
 
@@ -160,6 +169,9 @@ Rules:
 4. Skipping candidate audit before `NO_VALUABLE_SAFE_TASK` is a policy violation.  
 5. Skipping any of A/B/C/D in the audit is a policy violation.  
 6. If a track shows non-empty **autonomous candidates** that were never dispatched while another track dominated iterations → stop reason must explain fairness failure or execute that track before stopping.  
+7. Per-track `stop_reason` from [stop-reason policy](controller_track_stop_reason_policy_v2.md) is **required** in the audit packet.  
+8. Global `NO_VALUABLE_SAFE_TASK` is **invalid** if any track is `LOW_PRIORITY_DEFERRED` or `RESOURCE_ALLOCATED_ELSEWHERE` with a non-empty Autonomous Queue, or if any track still has dispatchable autonomous READY work.  
+9. Tracks that are only `HUMAN_GATE_BLOCKED` do **not** by themselves authorize global stop.  
 
 
 
@@ -202,6 +214,36 @@ Controller **must not** replace track agents for A/B/C/D capability work.
 4. Do not “drain one easy track” while other tracks’ Autonomous Queues are non-empty.  
 5. Continuation + generator + gap analysis + **approval split** are invoked **every** post-task replan.  
 6. WAITING_APPROVAL on live work does **not** remove the track from autonomous replan.  
+7. Maintain **per-track Autonomous Queues** per [track execution queue v2](controller_track_execution_queue_policy_v2.md)：after validate/evidence/memory, a track may request its **next queued** Controller-approved autonomous task — Controller still re-scores before dispatch.  
+8. Every idle track must carry a primary [stop reason](controller_track_stop_reason_policy_v2.md)；`HUMAN_GATE_BLOCKED` ≠ global `NO_VALUABLE_SAFE_TASK`.  
+
+
+---
+
+# 4.1 Post-task per-track continuation（normative）
+
+
+```text
+Task complete on track T
+    ↓
+Validate · evidence · memory · bounded commit
+    ↓
+Controller state refresh + re-score T’s Autonomous Queue
+    ↓
+If T queue head still READY and selected under allocation:
+      dispatch next T task（same-track continuation）
+Else if other tracks have higher-value READY:
+      set T stop_reason = RESOURCE_ALLOCATED_ELSEWHERE or LOW_PRIORITY_DEFERRED
+      dispatch other track
+Else if T only has approval-gated next valuable work:
+      set T stop_reason = HUMAN_GATE_BLOCKED
+      continue other tracks’ Autonomous Queues
+Else:
+      set T stop_reason = CURRENT_TASK_COMPLETED or NO_SAFE_AUTONOMOUS_TASK
+```
+
+
+Do **not** idle the whole day when only one track is `HUMAN_GATE_BLOCKED`.  
 
 
 

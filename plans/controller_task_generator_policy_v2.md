@@ -2,7 +2,7 @@
 
 
 _最后更新：2026-07-14_  
-_配套：[controller_execution_cycle_policy_v2.md](controller_execution_cycle_policy_v2.md) · [controller_mission_replanning_loop_v2.md](controller_mission_replanning_loop_v2.md) · [controller_capability_gap_analysis_v2.md](controller_capability_gap_analysis_v2.md) · [controller_task_memory_policy_v2.md](controller_task_memory_policy_v2.md) · [controller_task_priority_policy_v2.md](controller_task_priority_policy_v2.md) · [controller_mission_objective_v2.md](controller_mission_objective_v2.md)_
+_配套：[controller_execution_cycle_policy_v2.md](controller_execution_cycle_policy_v2.md) · [controller_mission_replanning_loop_v2.md](controller_mission_replanning_loop_v2.md) · [controller_capability_gap_analysis_v2.md](controller_capability_gap_analysis_v2.md) · [controller_task_memory_policy_v2.md](controller_task_memory_policy_v2.md) · [controller_task_priority_policy_v2.md](controller_task_priority_policy_v2.md) · [controller_mission_objective_v2.md](controller_mission_objective_v2.md) · [controller_track_execution_queue_policy_v2.md](controller_track_execution_queue_policy_v2.md) · [controller_track_stop_reason_policy_v2.md](controller_track_stop_reason_policy_v2.md)_
 
 
 ## 1. Purpose
@@ -98,8 +98,45 @@ Every track **MUST** maintain two queues:
 Skipping D-class-executor for an entire daily run solely because AQ-D-SC is open is a **policy failure** when Autonomous Queue items existed.
 
 
+### Assignment into track execution queues
+
+
+After generation + safety filter, Controller **assigns** surviving autonomous candidates into per-track [execution queues](controller_track_execution_queue_policy_v2.md):
+
+
+```text
+global candidates
+    ↓
+split autonomous | approval
+    ↓
+A Autonomous Queue ← ordered by priority
+B Autonomous Queue ← …
+C Autonomous Queue ← …
+D Autonomous Queue ← …
+```
+
+
+Ordering within a track queue uses mission impact · bottleneck reduction · explicit dependencies — not FIFO alone.  
+Agents pull **only** Controller-assigned queue heads after re-score（no invent）.
+
+
 
 ---
+
+# 3.2 Stop reason when generation yields empty autonomous set
+
+
+If a track’s Autonomous Queue is empty after generation:
+
+
+| Condition | Track `stop_reason` |
+|-----------|---------------------|
+| Approval Queue has the next valuable step | `HUMAN_GATE_BLOCKED` |
+| No approval next step · no autonomous survivors | `NO_SAFE_AUTONOMOUS_TASK` or `CURRENT_TASK_COMPLETED` |
+| Autonomous items exist but not selected | do not mark empty — use `LOW_PRIORITY_DEFERRED` / `RESOURCE_ALLOCATED_ELSEWHERE` |
+
+
+Never collapse the above into global `NO_VALUABLE_SAFE_TASK` until **all** tracks are audited.  
 
 # 4. Candidate schema（required）
 
@@ -178,18 +215,21 @@ generate candidates（from fresh gaps + memory）
     ↓
 filter by safety + memory
     ↓
-gap-align + priority rank
+assign into per-track Autonomous Queues（+ Approval Queues）
     ↓
-select highest-value target（promote offline_safe → READY）
+gap-align + priority rank（global + within-track）
+    ↓
+select highest-value target under fairness / queue availability
     ↓
 dispatch required_agent
     ↓
-after completion → replan（do not blindly execute leftover list）
+after completion → validate/evidence/memory → request next from track queue → Controller re-score → continue or replan
 ```
 
 
 Stale candidates from a prior wave that no longer match gaps may be dropped or deferred.  
-If zero candidates survive filters after reassessment → run **candidate audit**（per track: considered / rejected / reason）→ only then may cycle use `NO_VALUABLE_SAFE_TASK` / `NO_SAFE_READY`（after stuck analysis if repeats）.
+If zero candidates survive filters after reassessment → run **candidate audit**（per track: considered / rejected / reason / **stop_reason**）→ only then may cycle use `NO_VALUABLE_SAFE_TASK` / `NO_SAFE_READY`（after stuck analysis if repeats）.  
+A single track `HUMAN_GATE_BLOCKED` is **not** sufficient for global stop.  
 
 
 

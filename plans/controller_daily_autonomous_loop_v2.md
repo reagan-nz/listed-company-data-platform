@@ -47,6 +47,8 @@ _优先级层：[controller_task_priority_policy_v2.md](controller_task_priority
 | [controller_task_continuation_policy_v2.md](controller_task_continuation_policy_v2.md) | 完成后评估缺口 · 生成 successor |
 | [controller_task_memory_policy_v2.md](controller_task_memory_policy_v2.md) | 完成/失败/延期/拒绝/阻塞记忆 |
 | [controller_resource_allocation_policy_v2.md](controller_resource_allocation_policy_v2.md) | 按使命收益分配迭代/预算（非均分） |
+| [controller_track_execution_queue_policy_v2.md](controller_track_execution_queue_policy_v2.md) | 每轨动态 Autonomous Queue · 完成后可续拉下一任务 |
+| [controller_track_stop_reason_policy_v2.md](controller_track_stop_reason_policy_v2.md) | 轨道停机原因分类 · HUMAN_GATE ≠ 全局无任务 |
 | [controller_stuck_detection_policy_v2.md](controller_stuck_detection_policy_v2.md) | 无进展循环检测 · 停无尽重复 |
 | [controller_milestone_management_v2.md](controller_milestone_management_v2.md) | 全市场使命里程碑拆解 |
 | [controller_execution_cycle_policy_v2.md](controller_execution_cycle_policy_v2.md) | 同日多轮执行 · 再排队 · 停机条件 · 日预算 |

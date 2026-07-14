@@ -2,7 +2,7 @@
 
 
 _最后更新：2026-07-14_  
-_配套：[controller_task_priority_policy_v2.md](controller_task_priority_policy_v2.md) · [controller_mission_objective_v2.md](controller_mission_objective_v2.md) · [controller_progress_tracking_v2.md](controller_progress_tracking_v2.md) · [controller_execution_cycle_policy_v2.md](controller_execution_cycle_policy_v2.md) · [controller_task_generator_policy_v2.md](controller_task_generator_policy_v2.md) · [controller_mission_replanning_loop_v2.md](controller_mission_replanning_loop_v2.md)_
+_配套：[controller_task_priority_policy_v2.md](controller_task_priority_policy_v2.md) · [controller_mission_objective_v2.md](controller_mission_objective_v2.md) · [controller_progress_tracking_v2.md](controller_progress_tracking_v2.md) · [controller_execution_cycle_policy_v2.md](controller_execution_cycle_policy_v2.md) · [controller_task_generator_policy_v2.md](controller_task_generator_policy_v2.md) · [controller_mission_replanning_loop_v2.md](controller_mission_replanning_loop_v2.md) · [controller_track_execution_queue_policy_v2.md](controller_track_execution_queue_policy_v2.md) · [controller_track_stop_reason_policy_v2.md](controller_track_stop_reason_policy_v2.md)_
 
 
 ## 1. Purpose
@@ -20,23 +20,33 @@ A-class ran many successor iterations while D-class was never invoked solely bec
 
 ---
 
-# 2. Allocation factors
+# 2. Allocation factors / priority calculation
 
 
-Prioritize tracks using:
+Prioritize tracks and candidates using:
+
+
+```text
+Priority ≈
+  mission impact
++ bottleneck reduction
++ track staleness
++ queue availability
+```
 
 
 | Factor | Prefer |
 |--------|--------|
-| **mission importance** | capability closest to ultimate full-market mission / current milestone |
-| **bottleneck status** | work that clears binding constraints for multiple future tasks |
-| **expected progress gain** | larger honest capability improvement per effort |
-| **track inactivity / staleness** | tracks with Autonomous Queue work that have not executed recently |
+| **mission impact** | capability closest to ultimate full-market mission / current milestone |
+| **bottleneck reduction** | work that clears binding constraints for multiple future tasks |
+| **track staleness** | tracks with Autonomous Queue work that have not executed recently |
+| **queue availability** | tracks with non-empty Controller-approved Autonomous Queues ready to continue |
 
 
 Do **not** allocate 25% each by default.  
-Do **not** allocate 100% to the easiest track when other tracks have autonomous candidates.
-
+Do **not** allocate 100% to the easiest track when other tracks have autonomous candidates.  
+Do **not** force equal execution counts — critical progress still wins.  
+**Queue availability** raises a track’s score when successors are already validated and queued（reduces idle gaps after completion）.  
 
 
 ---
@@ -68,11 +78,14 @@ Within one daily run, if iterations ≥4 and one track already has **>50%** of t
 
 ```text
 1. Split each track into Autonomous Queue vs Approval Queue（generator §3.1）
-2. List offline_safe READY candidates from Autonomous Queues only for dispatch
-3. Score: mission importance · bottleneck · expected gain · safety · staleness
-4. Select highest-value target under fairness constraints（§3）
-5. Parallelize only when isolation allows and fairness is not violated
-6. Keep Approval Queue visible · never confuse it with “no work”
+2. Assign surviving autonomous candidates into per-track execution queues
+3. List offline_safe READY candidates from Autonomous Queues only for dispatch
+4. Score: mission impact · bottleneck reduction · staleness · queue availability · safety
+5. Select highest-value target under fairness constraints（§3）
+6. On task complete: allow same-track queue pull only after Controller re-score（execution queue v2）
+7. If another track wins the slot: set idle track stop_reason = RESOURCE_ALLOCATED_ELSEWHERE or LOW_PRIORITY_DEFERRED
+8. Parallelize only when isolation allows and fairness is not violated
+9. Keep Approval Queue visible · never confuse it with “no work”
 ```
 
 
@@ -118,3 +131,6 @@ Forbidden:
 - **skipping D/B/C entirely because approval-gated live work is pending**  
 - chaining A successors until budget ends while other Autonomous Queues are non-empty  
 - treating Approval Queue as the only queue for a track  
+- forcing equal drain of all track queues  
+- idling a track with non-empty Autonomous Queue without recording `RESOURCE_ALLOCATED_ELSEWHERE` or `LOW_PRIORITY_DEFERRED`  
+- treating `HUMAN_GATE_BLOCKED` as global `NO_VALUABLE_SAFE_TASK`  

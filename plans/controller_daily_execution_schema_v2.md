@@ -2,7 +2,7 @@
 
 
 _最后更新：2026-07-14_  
-_配套：[controller_daily_autonomous_loop_v2.md](controller_daily_autonomous_loop_v2.md) · [controller_progress_tracking_v2.md](controller_progress_tracking_v2.md)_
+_配套：[controller_daily_autonomous_loop_v2.md](controller_daily_autonomous_loop_v2.md) · [controller_progress_tracking_v2.md](controller_progress_tracking_v2.md) · [controller_track_execution_queue_policy_v2.md](controller_track_execution_queue_policy_v2.md) · [controller_track_stop_reason_policy_v2.md](controller_track_stop_reason_policy_v2.md) · [controller_mission_replanning_loop_v2.md](controller_mission_replanning_loop_v2.md)_
 
 
 ## 1. Purpose
@@ -35,6 +35,9 @@ COMPLETED
 
 
 Definitions: see Daily Autonomous Loop v2 §4.1.
+
+
+Per-track idle classification uses [stop-reason policy](controller_track_stop_reason_policy_v2.md) enums（`HUMAN_GATE_BLOCKED` · `CURRENT_TASK_COMPLETED` · `LOW_PRIORITY_DEFERRED` · `NO_SAFE_AUTONOMOUS_TASK` · `RESOURCE_ALLOCATED_ELSEWHERE` · `RUNNING` · `BUDGET_HOLD`）— these are **orthogonal** to the status enum above（e.g. status=`WAITING_APPROVAL` + stop_reason=`HUMAN_GATE_BLOCKED` while Autonomous Queue may still be `READY` for offline work）.
 
 
 
@@ -108,6 +111,12 @@ TrackPlan:
   human_interrupt:
     required: true|false
     reasons: []
+  autonomous_queue:           # Controller-approved offline_safe task_ids（ordered）
+    - "<task_id>"
+  approval_queue:             # human-gated items（not dispatchable）
+    - "<task_id or gate id>"
+  active_task: "<task_id|none>"
+  stop_reason: "RUNNING" | "HUMAN_GATE_BLOCKED" | "CURRENT_TASK_COMPLETED" | "LOW_PRIORITY_DEFERRED" | "NO_SAFE_AUTONOMOUS_TASK" | "RESOURCE_ALLOCATED_ELSEWHERE" | "BUDGET_HOLD"
   notes: "<caveats / unresolved counts / HOLD rationale>"
 ```
 
@@ -278,6 +287,27 @@ Branch: main (ahead X / behind Y)
 - Why no higher-value task exists:
 - Why stopped:
 - Next recommended autonomous target:
+- Track Queue Status（required）:
+  - A:
+    - active task:
+    - queued tasks:
+    - stop reason:
+  - B:
+    - active task:
+    - queued tasks:
+    - stop reason:
+  - C:
+    - active task:
+    - queued tasks:
+    - stop reason:
+  - D:
+    - active task:
+    - queued tasks:
+    - stop reason:
+- Human blocked:
+- Priority deferred:
+- No safe task:
+- Next recommended action:
 - Track execution balance:
   - A iterations:
   - B iterations:
@@ -339,10 +369,12 @@ Branch: main (ahead X / behind Y)
 | overall_completion_pct | capability-based estimate or `unknown` · never from commit/file counts |
 | estimated_remaining_effort | velocity-based or `unknown` · never fabricate calendar ETAs |
 | Current bottleneck | binding constraint on mission progress · required |
-| stop_reason | `NO_VALUABLE_SAFE_TASK`（alias `NO_SAFE_READY`）· `HUMAN_INTERRUPT` · `BUDGET_REACHED` · `SAFETY_VIOLATION` |
+| stop_reason | Global: `NO_VALUABLE_SAFE_TASK`（alias `NO_SAFE_READY`）· `HUMAN_INTERRUPT` · `BUDGET_REACHED` · `SAFETY_VIOLATION` |
+| Track Queue Status | Per-track `active task` · `queued tasks` · `stop reason` · required on stop · [execution queue](controller_track_execution_queue_policy_v2.md) · [stop reason](controller_track_stop_reason_policy_v2.md) |
+| Human blocked / Priority deferred / No safe task | Rollups of track stop reasons · required on stop |
 | State refresh timestamp | required before each replan and on stop · [mission replanning §2.1](controller_mission_replanning_loop_v2.md) |
 | Candidate search summary | per-track **autonomous candidates** + **approval blockers** + rejected/reasons · all of A/B/C/D required |
-| Why no higher-value task exists | required on stop · not “HOLD/WAITING_APPROVAL exists” alone |
+| Why no higher-value task exists | required on stop · not “HOLD/WAITING_APPROVAL exists” alone · not conflate `HUMAN_GATE_BLOCKED` with global no-work |
 | Track execution balance | A/B/C/D iteration counts + last executed iteration per track · required on stop |
 | budget used | iterations / runtime / autonomous commits vs daily caps · defaults **10 / 120m / 12** · batching required |
 | Generated / Executed / Successor / Blocked tasks | planning intelligence · required each report |
