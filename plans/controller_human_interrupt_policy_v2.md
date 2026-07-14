@@ -2,7 +2,7 @@
 
 
 _最后更新：2026-07-14_  
-_配套：[controller_daily_autonomous_loop_v2.md](controller_daily_autonomous_loop_v2.md)_
+_配套：[controller_daily_autonomous_loop_v2.md](controller_daily_autonomous_loop_v2.md) · [controller_mission_objective_v2.md](controller_mission_objective_v2.md)_
 
 
 ## 1. Purpose
@@ -17,6 +17,7 @@ _配套：[controller_daily_autonomous_loop_v2.md](controller_daily_autonomous_l
 - 减少对例行工作的打扰  
 - 保留高风险决策的人控  
 - 与 push / autonomy / orchestration v1 一致  
+- 与 [mission objective v2](controller_mission_objective_v2.md) 审批哲学一致：**approval 是同步点，不是全局停机**  
 
 
 
@@ -29,7 +30,16 @@ Human interrupt = **决策边界**，不是进度汇报。
 
 
 Routine progress → continue  
-Irreversible / ambiguous / publication / approval-gated → stop
+Irreversible / ambiguous / publication / newly actionable approval → stop  
+
+
+From [mission objective v2](controller_mission_objective_v2.md):
+
+
+- Approval is a **synchronization point**, not a global workflow stop.  
+- A blocked track must not idle the whole system.  
+- Do not re-interrupt for **known** HOLD / WAITING_APPROVAL already on the approval queue.  
+- Interrupt for approval when it unlocks meaningful next execution, safety requires it, or **no autonomous progress remains**.
 
 
 
@@ -102,6 +112,10 @@ Controller **must not** stop solely for:
 - regenerating ledgers / summaries that do not change gates  
 - marking a track HOLD when PROJECT_CONTROL already says HOLD  
 - daily report generation  
+- **known HOLD** already recorded  
+- **known WAITING_APPROVAL** already on the approval queue（do not re-page）  
+- existing blockers already listed in PROJECT_CONTROL / prior daily report  
+- continuing independent tracks while another track waits approval  
 
 
 If these items fail technically, record PARTIAL/FAILED in the daily report — that is **not** automatically a human interrupt unless §3 also triggers.

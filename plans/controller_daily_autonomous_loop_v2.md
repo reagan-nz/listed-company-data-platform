@@ -2,8 +2,9 @@
 
 
 _最后更新：2026-07-14_  
-_状态：设计稿 · 未启用为强制运行时_  
-_依赖：controller_*_policy_v1 · PROJECT_CONTROL · worktree policies · push policy_
+_状态：Operational Mode 默认运行策略_  
+_依赖：controller_*_policy_v1 · PROJECT_CONTROL · worktree policies · push policy_  
+_目标层：[controller_mission_objective_v2.md](controller_mission_objective_v2.md)_
 
 
 ## 1. Purpose
@@ -22,11 +23,15 @@ _依赖：controller_*_policy_v1 · PROJECT_CONTROL · worktree policies · push
 8. 仅在规定打断点请求 human  
 
 
+**Mission（最高目标）：** 在安全边界内，推动 A/B/C/D 朝全市场数据采集能力前进，并最大化独立 track 的自主进度。详见 [controller_mission_objective_v2.md](controller_mission_objective_v2.md)。
+
+
 本文件是 **主运行策略**。配套：
 
 
 | 文件 | 职责 |
 |------|------|
+| [controller_mission_objective_v2.md](controller_mission_objective_v2.md) | 最高目标 · track 目标 · 审批哲学 · 优化优先级 |
 | [controller_daily_execution_schema_v2.md](controller_daily_execution_schema_v2.md) | 日计划 / 日报 schema |
 | [controller_human_interrupt_policy_v2.md](controller_human_interrupt_policy_v2.md) | human 打断规则 |
 | [controller_commit_autonomy_policy_v2.md](controller_commit_autonomy_policy_v2.md) | 自动 commit 权限 |
@@ -141,6 +146,9 @@ Cross-track work → `CROSS_TRACK_REVIEW_REQUIRED` · do not silent-split.
 ---
 
 # 4. Phase 2 — Daily Execution Plan
+
+
+计划生成必须以 [mission objective v2](controller_mission_objective_v2.md) 为优化方向：优先推进独立 track 的全市场能力相关自主工作；被阻塞 track 不拖停其他 track。
 
 
 ## 4.1 Track status vocabulary
