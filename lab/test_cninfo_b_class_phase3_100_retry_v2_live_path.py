@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import csv
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -26,6 +27,7 @@ BASE_DIR = runner.BASE_DIR
 RUNNER = os.path.join(_LAB_DIR, "run_cninfo_b_class_phase25_expansion_validation.py")
 UNIVERSE = runner.DEFAULT_PHASE3_RETRY_V2_UNIVERSE_CSV
 OUTPUT_ROOT = runner.DEFAULT_PHASE3_RETRY_V2_OUTPUT_ROOT
+MOCK_TEST_PARENT = os.path.join(OUTPUT_ROOT, "_mock_live_test")
 PHASE3_OUTPUT_ROOT = runner.DEFAULT_PHASE3_OUTPUT_ROOT
 PHASE3_RETRY_OUTPUT_ROOT = runner.DEFAULT_PHASE3_RETRY_OUTPUT_ROOT
 EP002_PRECHECK_ROOT = runner.DEFAULT_EP002_PRECHECK_ROOT
@@ -140,22 +142,38 @@ def _gate_row(
     }
 
 
-def _cleanup_mock_live_artifacts() -> None:
-    """删除 mock live 测试写入的 live 报告与快照，保留 dry-run 产物。"""
-    for name in (
-        "b_class_phase3_100_retry_v2_report.csv",
-        "b_class_phase3_100_retry_v2_summary.md",
-        "b_class_phase3_100_retry_v2_quality_report.csv",
-    ):
-        path = os.path.join(OUTPUT_ROOT, "reports", name)
-        if os.path.isfile(path):
-            os.unlink(path)
-    for sub in ("raw_metadata", "quality"):
-        subdir = os.path.join(OUTPUT_ROOT, sub)
-        if os.path.isdir(subdir):
-            for fn in os.listdir(subdir):
-                os.unlink(os.path.join(subdir, fn))
-            os.rmdir(subdir)
+def _normalize_root(path: str) -> str:
+    return os.path.normpath(os.path.abspath(path))
+
+
+def _is_production_retry_v2_output_root(output_root: str) -> bool:
+    return _normalize_root(output_root) == _normalize_root(OUTPUT_ROOT)
+
+
+def _live_args_for_output_root(output_root: str) -> List[str]:
+    return [
+        "--phase3-100-retry-v2", "--live", "--universe-csv", UNIVERSE,
+        "--output-root", output_root, "--approve-b-class-phase3-100-retry-v2",
+    ]
+
+
+def _is_allowed_mock_test_output_root(output_root: str) -> bool:
+    root = _normalize_root(output_root)
+    parent = _normalize_root(MOCK_TEST_PARENT)
+    return root.startswith(parent + os.sep)
+
+
+def _create_mock_test_output_root() -> str:
+    os.makedirs(MOCK_TEST_PARENT, exist_ok=True)
+    return tempfile.mkdtemp(prefix="run_", dir=MOCK_TEST_PARENT)
+
+
+def _cleanup_temp_output_root(temp_root: str) -> None:
+    if _is_production_retry_v2_output_root(temp_root):
+        raise RuntimeError("拒绝清理生产 retry_v2 output root")
+    if not _is_allowed_mock_test_output_root(temp_root):
+        raise RuntimeError("拒绝清理非 mock 测试目录")
+    shutil.rmtree(temp_root, ignore_errors=True)
 
 
 class TestPhase3RetryV2LivePath(unittest.TestCase):
@@ -203,10 +221,11 @@ class TestPhase3RetryV2LivePath(unittest.TestCase):
             "run_cninfo_b_class_tiny_live_validation.execute_live_case",
             side_effect=_mock_execute_live_case,
         ):
+            tmp_root = _create_mock_test_output_root()
             try:
-                rc = runner.main(LIVE_ARGS)
+                rc = runner.main(_live_args_for_output_root(tmp_root))
             finally:
-                _cleanup_mock_live_artifacts()
+                _cleanup_temp_output_root(tmp_root)
         self.assertEqual(rc, 0)
 
     def test_universe_must_equal_91(self) -> None:
@@ -409,19 +428,24 @@ class TestPhase3RetryV2LivePath(unittest.TestCase):
             self.assertIn(err, result.stderr)
 
     def test_live_path_does_not_call_real_cninfo(self) -> None:
-        with mock.patch("requests.get") as get_mock, mock.patch("requests.post") as post_mock:
-            with mock.patch(
-                "run_cninfo_b_class_tiny_live_validation.execute_live_case",
-                side_effect=_mock_execute_live_case,
-            ) as mock_exec:
-                try:
-                    rc = runner.main(LIVE_ARGS)
-                finally:
-                    _cleanup_mock_live_artifacts()
-        self.assertEqual(rc, 0)
-        self.assertEqual(mock_exec.call_count, runner.REQUIRED_PHASE3_RETRY_V2_UNIVERSE_SIZE)
-        get_mock.assert_not_called()
-        post_mock.assert_not_called()
+        tmp_root = _create_mock_test_output_root()
+        try:
+            with mock.patch("requests.get") as get_mock, mock.patch("requests.post") as post_mock:
+                with mock.patch(
+                    "run_cninfo_b_class_tiny_live_validation.execute_live_case",
+                    side_effect=_mock_execute_live_case,
+                ) as mock_exec:
+                    rc = runner.main(_live_args_for_output_root(tmp_root))
+            self.assertEqual(rc, 0)
+            self.assertEqual(mock_exec.call_count, runner.REQUIRED_PHASE3_RETRY_V2_UNIVERSE_SIZE)
+            get_mock.assert_not_called()
+            post_mock.assert_not_called()
+        finally:
+            _cleanup_temp_output_root(tmp_root)
+
+    def test_cleanup_refuses_production_output_root(self) -> None:
+        with self.assertRaises(RuntimeError):
+            _cleanup_temp_output_root(OUTPUT_ROOT)
 
     def test_dry_run_still_91_of_91_and_cninfo_zero(self) -> None:
         with mock.patch("requests.get") as get_mock, mock.patch("requests.post") as post_mock:
