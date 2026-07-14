@@ -1,0 +1,28 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class shareholder_change first-slice offline synthetic",
+    "case_id": "DSC003",
+    "component": "shareholder_change",
+    "scenario": "empty_but_valid",
+    "cninfo_called": false,
+    "synthetic": true,
+    "query_params": { "type": "inc", "tdate": "2026-07-03" }
+  },
+  "market_event": {
+    "event_id": "fixture_dsc003_sh_600000_empty",
+    "company_code": "600000",
+    "event_type": "shareholder_change",
+    "event_time": "2026-07-03",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/shareholeder/detail",
+    "source_record_id": "fixture_raw_sh_inc_dsc003_empty",
+    "event_status": "empty_but_valid",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "shareholder_change",
+      "query_mode": "type_inc",
+      "query_params": { "type": "inc", "tdate": "2026-07-03" },
+      "fetch_time": "2026-07-14T10:00:00+08:00",
+      "lineage_status": "discovered"
+    }
+  }
+}

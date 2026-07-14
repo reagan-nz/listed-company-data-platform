@@ -1,0 +1,47 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class shareholder_change first-slice offline synthetic",
+    "case_id": "DSC004",
+    "component": "shareholder_change",
+    "scenario": "needs_review",
+    "cninfo_called": false,
+    "synthetic": true,
+    "query_params": { "type": "inc", "tdate": "2026-07-03" }
+  },
+  "market_event": {
+    "event_id": "fixture_dsc004_sh_002415_20260710",
+    "company_code": "002415",
+    "event_type": "shareholder_change",
+    "event_time": "2026-07-10",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/shareholeder/detail",
+    "source_record_id": "fixture_raw_sh_inc_dsc004",
+    "event_status": "captured",
+    "quality_status": "needs_review",
+    "lineage": {
+      "registry_source_id": "shareholder_change",
+      "query_mode": "type_inc",
+      "query_params": { "type": "inc", "tdate": "2026-07-03" },
+      "fetch_time": "2026-07-14T10:00:00+08:00",
+      "raw_record_hash": "sha256:synthetic_sh_inc_dsc004_needs_review",
+      "raw_record_json": {
+        "SECCODE": "002415",
+        "SECNAME": "海康威视",
+        "DECLAREDATE": "2026-07-03",
+        "VARYDATE": "2026-07-10",
+        "F002V": "合成股东名称DSC004",
+        "F004N": 200000.0,
+        "F007V": "32.10"
+      },
+      "lineage_status": "discovered"
+    }
+  },
+  "shareholder_change": {
+    "company_code": "002415",
+    "company_name": "海康威视",
+    "shareholder_name": "合成股东名称DSC004",
+    "change_type": "inc",
+    "change_amount": 200000.0,
+    "change_date": "2026-07-10",
+    "quality_status": "needs_review"
+  }
+}
