@@ -1,0 +1,25 @@
+check_id,check_name,offline_or_live,required_before_draft_regen,status,notes
+ST-CHK-001,Controller 已择 ST 策略档位（S1/S2/S3/S4）,offline,yes,blocked,推荐 S1 ST-EXCLUDE; 未择一前不得冻结 cohort
+ST-CHK-002,remainder ST 基线已复核（156 中 ST=48 非 ST=108）,offline,yes,ready,证据: st_selection_strategy §2.1; CNINFO=0
+ST-CHK-003,O3 治理假设已确认（182 记账 PENDING_CONTROLLER）,offline,yes,ready,证据: overlap_lint_spec §4.3; 与 ST 策略正交
+ST-CHK-004,AB_182 ∩ REMAINDER = ∅ 已确认,offline,yes,ready,证据: ab_overlap_182_ledger; ST 不引入新 A∩B 交叉
+ST-CHK-005,S1 路径: ST 名称命中目标 = 0,offline,yes,ready,S1/S3 primary 选取前 FILTER_ST; 正则 (?:\*?ST|S\*ST)
+ST-CHK-006,S4 路径: L-D4 CAVEAT 已显式签收,offline,yes,blocked,现状 +100 含 48 ST; 仅当冻结 S4 时 required
+ST-CHK-007,S2 路径: CAP_ST 与 ST 例外表已冻结,offline,yes,blocked,须 CSV 列明 cap 与例外 company_code
+ST-CHK-008,冻结 cohort 规模与 ST 策略一致,offline,yes,blocked,S1: N≤108; S4 +150: 48 ST; +100 S1: 100 非 ST
+ST-CHK-009,反对 +6 buffer-only 增批（无 ST 策略变更）,offline,yes,ready,6 码 688785-688818 全非 ST; 单独 churn 无 mission 价值
+ST-CHK-010,slice1 同型对齐（300 码 ST=0）已评估,offline,yes,ready,S1 对齐; S4 偏离须 Controller 记录
+ST-CHK-011,既有 +100 draft（48 ST）重选需求已判定,offline,yes,blocked,S1 冻结则须新 CSV 任务; 本包不 mutate 原文件
+ST-CHK-012,既有 +50 draft（0 ST）S1 下可保留性已评估,offline,yes,ready,+50 全非 ST; S1 可与新 +100 拼接前 50 非 ST 需重算 case_id
+ST-CHK-013,overlap L-A1..L-B4 重选后须全 PASS,offline,yes,ready,ST 滤除不改变 overlap 源; 重选仍须 lint
+ST-CHK-014,L-P2 S2_DRAFT ⊆ REMAINDER（不扩池）,offline,yes,ready,O4 未批准前硬约束
+ST-CHK-015,case_id AD2E501+ 连续无冲突,offline,yes,blocked,重生成 draft 时验收; 当前 +100/+50 已占 AD2E501-650
+ST-CHK-016,post-integration HOLD 未解除,offline,yes,blocked,PROJECT_CONTROL; 解除前禁止 live
+ST-CHK-017,human slice2 approval phrase 未消费,offline,yes,blocked,slice1 phrase spent; ST 策略不替代 live 批准
+ST-CHK-018,cohort freeze 不作为本包 gate flip,offline,yes,ready,planning only; 不宣称 production_ready
+ST-CHK-019,ST side-track ledger（S3）路径若选则独立 cohort 标签,offline,no,blocked,仅 S3 时 required; primary 仍 ST=0
+ST-CHK-020,扩池 O4 触发时须重跑 ST 基线扫描,offline,no,blocked,O4 未启动; 新 POOL 版本后 required
+ST-CHK-021,O2 翻转时 remainder 与 ST 计数须重算,offline,no,blocked,O2 未选; 若 B 释放码则 blocked→required
+ST-CHK-022,写保护: 不 mutate 182 台账/remainder/既有 report,offline,yes,ready,本任务 CNINFO=0 仅新增策略与 checklist
+ST-CHK-023,推荐 cap 签收: +100 S1 或 +108 S1,offline,yes,blocked,Controller 择一; 优于 S4 +150 CAVEAT
+ST-CHK-024,attribute gap 联动: ST 富集批须 offline caveat,offline,yes,ready,S4 下 48 ST 可能影响 gap 可比性; S1 规避
