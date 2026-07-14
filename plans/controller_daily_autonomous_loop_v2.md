@@ -4,7 +4,10 @@
 _最后更新：2026-07-14_  
 _状态：Operational Mode 默认运行策略_  
 _依赖：controller_*_policy_v1 · PROJECT_CONTROL · worktree policies · push policy_  
-_目标层：[controller_mission_objective_v2.md](controller_mission_objective_v2.md)_
+_目标层：[controller_mission_objective_v2.md](controller_mission_objective_v2.md)_  
+_进度层：[controller_progress_tracking_v2.md](controller_progress_tracking_v2.md)_  
+_周期层：[controller_execution_cycle_policy_v2.md](controller_execution_cycle_policy_v2.md)_  
+_优先级层：[controller_task_priority_policy_v2.md](controller_task_priority_policy_v2.md)_
 
 
 ## 1. Purpose
@@ -14,13 +17,14 @@ _目标层：[controller_mission_objective_v2.md](controller_mission_objective_v
 
 
 1. 读取当前状态  
-2. 生成当日执行计划  
+2. 生成当日执行计划 / 队列  
 3. 编排 A/B/C/D worktree  
 4. 调度 specialized agents  
 5. 产出 evidence package  
 6. 在允许范围内做 bounded local commit  
-7. 生成日报  
-8. 仅在规定打断点请求 human  
+7. **在同一次日运行内重新评估队列并继续**（直到无 READY / interrupt / budget / safety）  
+8. 生成日报（含 Progress intelligence）  
+9. 仅在规定打断点请求 human  
 
 
 **Mission（最高目标）：** 在安全边界内，推动 A/B/C/D 朝全市场数据采集能力前进，并最大化独立 track 的自主进度。详见 [controller_mission_objective_v2.md](controller_mission_objective_v2.md)。
@@ -32,6 +36,9 @@ _目标层：[controller_mission_objective_v2.md](controller_mission_objective_v
 | 文件 | 职责 |
 |------|------|
 | [controller_mission_objective_v2.md](controller_mission_objective_v2.md) | 最高目标 · track 目标 · 审批哲学 · 优化优先级 |
+| [controller_progress_tracking_v2.md](controller_progress_tracking_v2.md) | 能力覆盖进度 · bottleneck · effort 估计 · 停机进度块 |
+| [controller_execution_cycle_policy_v2.md](controller_execution_cycle_policy_v2.md) | 同日多轮执行 · 再排队 · 停机条件 · 日预算 |
+| [controller_task_priority_policy_v2.md](controller_task_priority_policy_v2.md) | 安全 READY 任务优先级 P1–P5 · 同级排序因子 |
 | [controller_daily_execution_schema_v2.md](controller_daily_execution_schema_v2.md) | 日计划 / 日报 schema |
 | [controller_human_interrupt_policy_v2.md](controller_human_interrupt_policy_v2.md) | human 打断规则 |
 | [controller_commit_autonomy_policy_v2.md](controller_commit_autonomy_policy_v2.md) | 自动 commit 权限 |
@@ -55,26 +62,34 @@ Read state
   PROJECT_MAP.md
   git reality (HEAD / dirty / ahead-behind / worktrees)
     ↓
-Classify tracks A/B/C/D
-  READY | RUNNING | HOLD | WAITING_APPROVAL | BLOCKED | COMPLETED
+┌── Execution cycle (same daily run) ─────────────────────┐
+│  Classify / refresh queue A/B/C/D                       │
+│    READY | RUNNING | HOLD | WAITING_APPROVAL | …        │
+│       ↓                                                 │
+│  Select highest-value safe READY task(s)                │
+│       ↓                                                 │
+│  Worktree orchestration + bounded agent execution       │
+│       ↓                                                 │
+│  Evidence packaging + validate                          │
+│       ↓                                                 │
+│  Autonomous commit (if policy allows)                   │
+│       ↓                                                 │
+│  Update state → re-read queue                           │
+│       ↓                                                 │
+│  Continue while safe READY remain                       │
+│    AND budget not exhausted                             │
+│    AND no global safety / required global interrupt     │
+└─────────────────────────────────────────────────────────┘
     ↓
-Generate daily execution plan
-    ↓
-Worktree orchestration
-  agent/a-class · agent/b-class · agent/c-class · agent/d-class
-    ↓
-Agent execution (bounded)
-    ↓
-Evidence packaging
-    ↓
-Autonomous commit (if policy allows)
-    ↓
-Daily report
+Daily report + Progress intelligence
     ↓
 Human interrupt only at defined gates
     ↓
 (no auto push)
 ```
+
+
+HOLD / WAITING_APPROVAL on one track does **not** end the cycle for other READY tracks. Cycle / budget authority: [execution cycle policy v2](controller_execution_cycle_policy_v2.md).
 
 
 当前已落地基础（设计假设）：
@@ -188,7 +203,9 @@ For each of A/B/C/D, plan must state:
 3. `READY_FOR_APPROVAL` ≠ approved.  
 4. post-integration HOLD tracks: no live retry unless new human scope.  
 5. One track failure must not cancel other READY tracks.  
-6. Do not schedule push in daily auto plan.
+6. Do not schedule push in daily auto plan.  
+7. After a task completes, **re-evaluate the queue** in the same daily run（execution cycle policy v2）— do not stop solely because one iteration finished.  
+8. HOLD / WAITING_APPROVAL on one track must not stop other READY tracks.
 
 
 
@@ -325,7 +342,10 @@ Hard rule for Daily Loop v2:
 Schema: see [controller_daily_execution_schema_v2.md](controller_daily_execution_schema_v2.md).
 
 
-Minimum sections: Date · HEAD · Tracks A–D · Human attention · Safety counters.
+Minimum sections: Date · HEAD · Tracks A–D · **Progress intelligence**（[progress tracking v2](controller_progress_tracking_v2.md)）· Human attention · Safety counters.
+
+
+Progress block is mandatory on every stop / end-of-day report. Prefer capability coverage over commit/file counts. Use `unknown` when denominators or velocity are missing.
 
 
 
@@ -346,27 +366,72 @@ Daily Loop must not interrupt for normal docs/evidence/tests/bounded commits.
 # 11. Daily Loop Algorithm (normative)
 
 
+Multi-iteration authority: [controller_execution_cycle_policy_v2.md](controller_execution_cycle_policy_v2.md).
+
+
 ```text
 LOOP_START(date):
+  budget = load_daily_budget()   # max_iterations / max_runtime / max_autonomous_commits
   S = read_state()
-  P = build_daily_plan(S)          # schema v2
-  for track in {A,B,C,D} parallel-safe:
-    if P[track].status not in {READY}:
-      record_and_continue
-    if not preflight_worktree(track):
-      P[track].status = BLOCKED
-      continue
-    R = dispatch_agent(track, P[track])
-    if R.needs_human:
-      escalate(R.reasons)          # interrupt policy
-      continue
-    if R.commit_eligible and commit_autonomy_allows(R):
-      explicit_path_commit(R)
-    package_evidence(R)
-  write_daily_report(P, results)
+  P = build_daily_plan(S)        # schema v2
+  iterations = 0
+
+  while true:
+    if budget_exhausted(budget):
+      stop_reason = BUDGET_REACHED
+      break
+    if safety_violation_detected():
+      stop_reason = SAFETY_VIOLATION
+      break
+
+    S = read_state()             # re-read each cycle
+    P = refresh_queue(S, P)
+
+    ready = tracks_with_safe_READY(P)
+    if ready is empty:
+      stop_reason = NO_SAFE_READY
+      break
+
+    # Track-scoped WAITING_APPROVAL / HOLD: escalate those tracks, do not break loop
+    for track in tracks_needing_interrupt(P):
+      escalate(track)            # interrupt policy · continue others
+
+    wave = select_highest_value_safe_tasks(ready, task_priority_v2)
+    iterations += 1
+
+    for track in wave parallel-safe:
+      if not preflight_worktree(track):
+        P[track].status = BLOCKED
+        continue
+      R = dispatch_agent(track, P[track])
+      package_evidence(R)
+      if R.needs_human and interrupt_is_global(R):
+        stop_reason = HUMAN_INTERRUPT
+        break outer
+      if R.needs_human:
+        escalate(R.reasons)      # track-scoped · continue
+        continue
+      if R.commit_eligible and commit_autonomy_allows(R):
+        if commit_budget_remaining(budget):
+          explicit_path_commit(R)
+          budget.commits_used += 1
+        else:
+          stop_reason = BUDGET_REACHED
+          break outer
+      update_track_state(P, R)
+
+    if stop_reason set:
+      break
+    # else: loop → re-read queue
+
+  write_daily_report(P, results, stop_reason, budget, iterations)
+  # include Progress intelligence + execution_cycle fields
   NEVER push
 LOOP_END
 ```
+
+
+Stop only for: `NO_SAFE_READY` · `HUMAN_INTERRUPT`（global）· `BUDGET_REACHED` · `SAFETY_VIOLATION`.
 
 
 
@@ -411,4 +476,5 @@ Enabling Daily Loop v2 as default runtime requires human acceptance of these fou
 - Not a CI system replacement  
 - Not auto remote publication  
 - Not automatic gate promotion  
-- Not silent PROJECT_CONTROL rewrite every loop（control updates remain explicit packages）
+- Not silent PROJECT_CONTROL rewrite every loop（control updates remain explicit packages）  
+- Not a single-iteration day（one queue pass then stop while safe READY + budget remain）

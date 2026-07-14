@@ -2,7 +2,7 @@
 
 
 _最后更新：2026-07-14_  
-_配套：[controller_daily_autonomous_loop_v2.md](controller_daily_autonomous_loop_v2.md)_
+_配套：[controller_daily_autonomous_loop_v2.md](controller_daily_autonomous_loop_v2.md) · [controller_progress_tracking_v2.md](controller_progress_tracking_v2.md)_
 
 
 ## 1. Purpose
@@ -200,6 +200,61 @@ Branch: main (ahead X / behind Y)
 - evidence:
 - notes:
 
+## Progress intelligence
+
+### Global
+- overall_completion_pct:
+- completed_capability_units:
+- remaining_capability_units:
+- estimated_remaining_effort:
+
+### Tracks
+#### A
+- goal: Full-market company information coverage
+- company_coverage:
+- attribute_coverage:
+- missing_scope:
+- progress_note:
+
+#### B
+- goal: Full-market disclosure/event coverage
+- source_coverage:
+- extraction_coverage:
+- event_completeness:
+- progress_note:
+
+#### C
+- goal: Full-market evidence and quality coverage
+- validation_coverage:
+- evidence_completeness:
+- qa_status:
+- progress_note:
+
+#### D
+- goal: Full-market shareholder/capital structure coverage
+- shareholder_coverage:
+- ownership_events:
+- capital_structure_completeness:
+- progress_note:
+
+### Remaining work
+- ...
+
+### Bottleneck
+- Current bottleneck:
+- Reason:
+- Recommended next focus:
+
+### Stop context
+- Reason for stopping:
+- Human decisions required:
+- execution_cycle:
+  - iterations_completed:
+  - stop_reason: NO_SAFE_READY | HUMAN_INTERRUPT | BUDGET_REACHED | SAFETY_VIOLATION
+  - budget: max_iterations/used · max_runtime/used · max_autonomous_commits/used
+  - continued_despite_hold_or_waiting:
+  - tracks_still_ready_at_stop:
+
 ## Human attention required
 - Push:
 - Approval:
@@ -233,6 +288,15 @@ Branch: main (ahead X / behind Y)
 | Push count | must be `0` unless human-approved push executed outside auto loop |
 | CNINFO count | sum of real network CNINFO calls across tracks |
 | Live execution count | number of live scopes executed (0 if offline-only day) |
+| overall_completion_pct | capability-based estimate or `unknown` · never from commit/file counts |
+| estimated_remaining_effort | velocity-based or `unknown` · never fabricate calendar ETAs |
+| Current bottleneck | binding constraint on mission progress · required |
+| stop_reason | `NO_SAFE_READY` · `HUMAN_INTERRUPT` · `BUDGET_REACHED` · `SAFETY_VIOLATION` · from [execution cycle policy v2](controller_execution_cycle_policy_v2.md) |
+| budget used | iterations / runtime / autonomous commits vs daily caps · required on stop |
+
+
+Progress field definitions: [controller_progress_tracking_v2.md](controller_progress_tracking_v2.md).  
+Cycle / budget definitions: [controller_execution_cycle_policy_v2.md](controller_execution_cycle_policy_v2.md).
 
 
 ## 5.3 Machine-readable companion (optional)
@@ -245,6 +309,9 @@ Same content may also be emitted as:
 
 
 Must not contain secrets. Prefer summaries over bulk runtime dumps.
+
+
+When present, YAML should include a `progress_intelligence` object mirroring §5.1（global · tracks A–D · remaining_work · bottleneck · stop_context）. Use `unknown` for missing denominators/velocity — never invent exact timelines.
 
 
 
