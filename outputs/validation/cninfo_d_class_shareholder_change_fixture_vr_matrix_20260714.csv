@@ -1,0 +1,64 @@
+fixture_file,case_id,rule_group,rule_group_name,rule_ids,result,fail_rules,notes
+DSC001_empty.json,DSC001,A,Universe & Query,VR-001–VR-008,pass,,blocked; universe_lock
+DSC001_empty.json,DSC001,B,Raw Retrieval,VR-009–VR-014,pass,,Tier-1 synthetic; no HTTP wrapper; portfolio dual-variant mix
+DSC001_empty.json,DSC001,C,Field Mapping,VR-015–VR-024,na,,
+DSC001_empty.json,DSC001,D,Envelope & Quality,VR-025–VR-032,pass,,5/5 primary variants; no gate overclaim in fixture text
+DSC001_empty.json,DSC001,E,Lineage,VR-033–VR-037,na,,
+DSC001_empty.json,DSC001,F,Evidence Boundary,VR-038–VR-040,pass,,blocked policy
+DSC001_empty.json,DSC001,G,Governance,VR-041–VR-042,pass,,blocked policy
+DSC001_found.json,DSC001,A,Universe & Query,VR-001–VR-008,pass,,blocked; universe_lock
+DSC001_found.json,DSC001,B,Raw Retrieval,VR-009–VR-014,pass,,Tier-1 synthetic; no HTTP wrapper; portfolio dual-variant mix
+DSC001_found.json,DSC001,C,Field Mapping,VR-015–VR-024,pass,,optional F007V; no forced primary_price in payload; synthetic fixture_id per DC005 convention
+DSC001_found.json,DSC001,D,Envelope & Quality,VR-025–VR-032,pass,,5/5 primary variants; no gate overclaim in fixture text
+DSC001_found.json,DSC001,E,Lineage,VR-033–VR-037,pass,,synthetic placeholder hash per Phase1 convention
+DSC001_found.json,DSC001,F,Evidence Boundary,VR-038–VR-040,pass,,blocked policy
+DSC001_found.json,DSC001,G,Governance,VR-041–VR-042,pass,,blocked policy
+DSC002_empty.json,DSC002,A,Universe & Query,VR-001–VR-008,pass,,blocked; universe_lock
+DSC002_empty.json,DSC002,B,Raw Retrieval,VR-009–VR-014,pass,,Tier-1 synthetic; no HTTP wrapper; portfolio dual-variant mix
+DSC002_empty.json,DSC002,C,Field Mapping,VR-015–VR-024,na,,
+DSC002_empty.json,DSC002,D,Envelope & Quality,VR-025–VR-032,pass,,5/5 primary variants; no gate overclaim in fixture text
+DSC002_empty.json,DSC002,E,Lineage,VR-033–VR-037,na,,
+DSC002_empty.json,DSC002,F,Evidence Boundary,VR-038–VR-040,pass,,blocked policy
+DSC002_empty.json,DSC002,G,Governance,VR-041–VR-042,pass,,blocked policy
+DSC002_found.json,DSC002,A,Universe & Query,VR-001–VR-008,pass,,blocked; universe_lock
+DSC002_found.json,DSC002,B,Raw Retrieval,VR-009–VR-014,pass,,Tier-1 synthetic; no HTTP wrapper; portfolio dual-variant mix
+DSC002_found.json,DSC002,C,Field Mapping,VR-015–VR-024,pass,,optional F007V; no forced primary_price in payload; synthetic fixture_id per DC005 convention
+DSC002_found.json,DSC002,D,Envelope & Quality,VR-025–VR-032,pass,,5/5 primary variants; no gate overclaim in fixture text
+DSC002_found.json,DSC002,E,Lineage,VR-033–VR-037,pass,,synthetic placeholder hash per Phase1 convention
+DSC002_found.json,DSC002,F,Evidence Boundary,VR-038–VR-040,pass,,blocked policy
+DSC002_found.json,DSC002,G,Governance,VR-041–VR-042,pass,,blocked policy
+DSC003_empty.json,DSC003,A,Universe & Query,VR-001–VR-008,pass,,blocked; universe_lock
+DSC003_empty.json,DSC003,B,Raw Retrieval,VR-009–VR-014,pass,,Tier-1 synthetic; no HTTP wrapper; portfolio dual-variant mix
+DSC003_empty.json,DSC003,C,Field Mapping,VR-015–VR-024,na,,
+DSC003_empty.json,DSC003,D,Envelope & Quality,VR-025–VR-032,pass,,5/5 primary variants; no gate overclaim in fixture text
+DSC003_empty.json,DSC003,E,Lineage,VR-033–VR-037,na,,
+DSC003_empty.json,DSC003,F,Evidence Boundary,VR-038–VR-040,pass,,blocked policy
+DSC003_empty.json,DSC003,G,Governance,VR-041–VR-042,pass,,blocked policy
+DSC003_found.json,DSC003,A,Universe & Query,VR-001–VR-008,pass,,blocked; universe_lock
+DSC003_found.json,DSC003,B,Raw Retrieval,VR-009–VR-014,pass,,Tier-1 synthetic; no HTTP wrapper; portfolio dual-variant mix
+DSC003_found.json,DSC003,C,Field Mapping,VR-015–VR-024,pass,,optional F007V; no forced primary_price in payload; synthetic fixture_id per DC005 convention
+DSC003_found.json,DSC003,D,Envelope & Quality,VR-025–VR-032,pass,,5/5 primary variants; no gate overclaim in fixture text
+DSC003_found.json,DSC003,E,Lineage,VR-033–VR-037,pass,,synthetic placeholder hash per Phase1 convention
+DSC003_found.json,DSC003,F,Evidence Boundary,VR-038–VR-040,pass,,blocked policy
+DSC003_found.json,DSC003,G,Governance,VR-041–VR-042,pass,,blocked policy
+DSC004_needs_review_synthetic.json,DSC004,A,Universe & Query,VR-001–VR-008,pass,,blocked; universe_lock
+DSC004_needs_review_synthetic.json,DSC004,B,Raw Retrieval,VR-009–VR-014,pass,,Tier-1 synthetic; no HTTP wrapper; needs_review + mix; portfolio dual-variant mix
+DSC004_needs_review_synthetic.json,DSC004,C,Field Mapping,VR-015–VR-024,pass,,optional F007V; no forced primary_price in payload; synthetic fixture_id per DC005 convention
+DSC004_needs_review_synthetic.json,DSC004,D,Envelope & Quality,VR-025–VR-032,pass,,5/5 primary variants; no gate overclaim in fixture text
+DSC004_needs_review_synthetic.json,DSC004,E,Lineage,VR-033–VR-037,pass,,synthetic placeholder hash per Phase1 convention
+DSC004_needs_review_synthetic.json,DSC004,F,Evidence Boundary,VR-038–VR-040,pass,,blocked policy
+DSC004_needs_review_synthetic.json,DSC004,G,Governance,VR-041–VR-042,pass,,blocked policy
+DSC005_empty_but_valid_synthetic.json,DSC005,A,Universe & Query,VR-001–VR-008,pass,,blocked; universe_lock
+DSC005_empty_but_valid_synthetic.json,DSC005,B,Raw Retrieval,VR-009–VR-014,pass,,Tier-1 synthetic; no HTTP wrapper; portfolio dual-variant mix
+DSC005_empty_but_valid_synthetic.json,DSC005,C,Field Mapping,VR-015–VR-024,na,,
+DSC005_empty_but_valid_synthetic.json,DSC005,D,Envelope & Quality,VR-025–VR-032,pass,,5/5 primary variants; no gate overclaim in fixture text
+DSC005_empty_but_valid_synthetic.json,DSC005,E,Lineage,VR-033–VR-037,na,,
+DSC005_empty_but_valid_synthetic.json,DSC005,F,Evidence Boundary,VR-038–VR-040,pass,,blocked policy
+DSC005_empty_but_valid_synthetic.json,DSC005,G,Governance,VR-041–VR-042,pass,,blocked policy
+__universe_lock__,DSC001-DSC005,A,Universe & Query,VR-001–VR-008,pass,,cninfo_d_class_shareholder_change_first_slice_universe_lock_20260714.csv
+__universe_lock__,DSC001-DSC005,B,Raw Retrieval,VR-009–VR-014,na,,cninfo_d_class_shareholder_change_first_slice_universe_lock_20260714.csv
+__universe_lock__,DSC001-DSC005,C,Field Mapping,VR-015–VR-024,na,,cninfo_d_class_shareholder_change_first_slice_universe_lock_20260714.csv
+__universe_lock__,DSC001-DSC005,D,Envelope & Quality,VR-025–VR-032,na,,cninfo_d_class_shareholder_change_first_slice_universe_lock_20260714.csv
+__universe_lock__,DSC001-DSC005,E,Lineage,VR-033–VR-037,na,,cninfo_d_class_shareholder_change_first_slice_universe_lock_20260714.csv
+__universe_lock__,DSC001-DSC005,F,Evidence Boundary,VR-038–VR-040,pass,,cninfo_d_class_shareholder_change_first_slice_universe_lock_20260714.csv
+__universe_lock__,DSC001-DSC005,G,Governance,VR-041–VR-042,pass,,cninfo_d_class_shareholder_change_first_slice_universe_lock_20260714.csv
