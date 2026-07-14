@@ -1,0 +1,25 @@
+check_id,check_name,status_before_execution,status_after_execution_20260714,unlock_or_still_blocked,notes
+PC-BD2E-001,BD2E624 offline triage 已完成且 disposition=deferred_unresolved_failed,ready,ready,unlocked_prior,baseline 保留; live 未执行
+PC-BD2E-002,baseline retrieval_status=network_error 与 EP002 orgId failed 一致,ready,ready,unlocked_prior,本包未变更 retrieval_status
+PC-BD2E-003,network_error 与 empty_response 对比规则已登记（VR-MIS-01..05）,ready,ready,unlocked_prior,validation rules 仍适用
+PC-BD2E-004,slice2 主 merge closure gate=PASS_WITH_CAVEAT 且 299/300 acceptable 未变,ready,ready,unlocked_prior,slice2 主根 reports 未 mutate
+PC-BD2E-005,post-integration HOLD 状态已确认,blocked,blocked,still_blocked,PROJECT_CONTROL HOLD 未解除; 非本包 blocker 主因
+PC-BD2E-006,human Level-2 isolated retry 显式批准短语,partial_unlock,partial_unlock,unlocked_prep_only,AQ-B-BD2E624 已登记; live 因 dry-run blocker 未执行
+PC-BD2E-007,controller approval queue 含 BD2E624 retry 条目,blocked,blocked,still_blocked,controller queue 仍无 retry 条目
+PC-BD2E-008,1-case isolated retry universe CSV 已导出,ready,ready,unlocked_prior,runner 当前拒绝 isolated universe 路径
+PC-BD2E-009,isolated retry plan + approval checklist + command draft 已撰写,ready,ready,unlocked_prior,command draft 已执行验证
+PC-BD2E-010,隔离 output root 已指定且 write-block 清单已核对,ready,blocked,still_blocked,runner 拒绝 isolated output root; 官方根未创建
+PC-BD2E-011,slice2 主 report/quality/merge closure 写保护,ready,ready,unlocked_prior,git diff slice2/reports 为空; 仅 _mock_test 诊断写入
+PC-BD2E-012,不得与 16 例 ER-VAL empty_response requery 混批,ready,ready,unlocked_prior,未执行 live
+PC-BD2E-013,runner dry-run 1/1 planned_ok（mock only）,blocked,blocked,still_blocked,draft 命令 exit 2; erad_b_fuller_slice2_universe_csv_required
+PC-BD2E-014,runner tests PASS（若 runner 扩展）,blocked,blocked,still_blocked,runner extension 未实现; required_before_retry=no
+PC-BD2E-015,request cap 已估算且 human 批准（建议≤2 CNINFO）,ready,ready,unlocked_prior,诊断探测 planned_request_count_total=2; live 未执行 CNINFO=0
+PC-BD2E-016,case-range BD2E624:BD2E624 且不重跑 BD2E001-800 其他 case,ready,ready,unlocked_prior,诊断 case-range 仅 1 case
+PC-BD2E-017,PDF/OCR/extraction/DB/MinIO/RAG 禁用确认,ready,ready,unlocked_prior,本包 CNINFO=0
+PC-BD2E-018,acceptance rules 包已就绪（validation rules）,ready,ready,unlocked_prior,未触发 live 验收
+PC-BD2E-019,retry 后 misclassification guard 可执行（EP002 fail≠empty_response）,ready,ready,unlocked_prior,live 未执行; baseline network_error 保留
+PC-BD2E-020,retry 失败保留 deferred 路径已定义,ready,ready,unlocked_prior,当前状态=deferred（runner blocker）
+PC-BD2E-021,retry 成功 separate merge closure 路径已定义,ready,ready,unlocked_prior,merge closure 未变更
+PC-BD2E-022,不得 offline 改写 BD2E624 为 acceptable,ready,ready,unlocked_prior,未 offline force-resolve
+PC-BD2E-023,Session 1 邻接成功对照 BD2E625=found 可引用,ready,ready,unlocked_prior,未变更
+PC-BD2E-024,integration commit f0bff3a 后 HOLD 未解除确认,blocked,blocked,still_blocked,HOLD 仍有效
