@@ -1,0 +1,69 @@
+# CNINFO A 类 Era D Next-Scale Slice1 — Commit Boundary File List
+# 生成时间：2026-07-13
+# 性质：explicit-path WHOLE-FILE SAFE only · mixed shared status/plan EXCLUDED（OPTION 1）
+# Exact whole-file safe path count: 39
+# 本任务不 stage / 不 commit / 不 push · CNINFO = 0
+
+# --- Source / Runner（A-class runner；document inclusion） ---
+lab/run_cninfo_a_class_phase2_metadata_expansion.py
+
+# --- Tests ---
+lab/test_cninfo_a_class_erad_next_scale_slice1_runner.py
+lab/test_cninfo_a_class_erad_next_scale_slice1_live_path.py
+
+# --- Plans（A next-scale only；eraD_execution_plan.md EXCLUDED — mixed hunks） ---
+plans/cninfo_a_class_erad_next_scale_plan.md
+plans/cninfo_a_class_erad_next_scale_command_draft.md
+
+# --- Validation — Next-Scale Planning ---
+outputs/validation/cninfo_a_class_erad_next_scale_approval_checklist.md
+outputs/validation/cninfo_a_class_erad_next_scale_candidate_universe_draft.csv
+outputs/validation/cninfo_a_class_erad_next_scale_next_step_recommendation.md
+outputs/validation/cninfo_a_class_erad_next_scale_planning_summary.md
+outputs/validation/cninfo_a_class_erad_next_scale_request_budget.md
+outputs/validation/cninfo_a_class_erad_next_scale_universe_strategy.md
+
+# --- Validation — Slice1 Runner / Live / Closure ---
+outputs/validation/cninfo_a_class_erad_next_scale_slice1_runner_extension_summary.md
+outputs/validation/cninfo_a_class_erad_next_scale_slice1_live_path_summary.md
+outputs/validation/cninfo_a_class_erad_next_scale_slice1_live_execution_summary.md
+outputs/validation/cninfo_a_class_erad_next_scale_slice1_merge_closure_summary.md
+outputs/validation/cninfo_a_class_erad_next_scale_slice1_merge_closure_decision.md
+outputs/validation/cninfo_a_class_erad_next_scale_slice1_effective_accepted_ledger.csv
+outputs/validation/cninfo_a_class_erad_next_scale_slice1_unresolved_final_ledger.csv
+outputs/validation/cninfo_a_class_erad_next_scale_slice1_unresolved_triage_summary.md
+outputs/validation/cninfo_a_class_erad_next_scale_slice1_cumulative_lineage_summary.md
+outputs/validation/cninfo_a_class_erad_next_scale_slice1_next_step_recommendation.md
+
+# --- Validation — Slice1 Boundary Package ---
+outputs/validation/cninfo_a_class_erad_next_scale_slice1_shared_file_reconciliation.md
+outputs/validation/cninfo_a_class_erad_next_scale_slice1_commit_boundary_summary.md
+outputs/validation/cninfo_a_class_erad_next_scale_slice1_commit_boundary_file_list.txt
+outputs/validation/cninfo_a_class_erad_next_scale_slice1_safe_to_commit_list.md
+outputs/validation/cninfo_a_class_erad_next_scale_slice1_do_not_commit_list.md
+outputs/validation/cninfo_a_class_erad_next_scale_slice1_commit_message_draft.md
+
+# --- Validation — Reports（compact · metadata summaries only） ---
+outputs/validation/cninfo_a_class_erad_next_scale_slice1/reports/a_class_erad_next_scale_slice1_dryrun_report.csv
+outputs/validation/cninfo_a_class_erad_next_scale_slice1/reports/a_class_erad_next_scale_slice1_dryrun_summary.md
+outputs/validation/cninfo_a_class_erad_next_scale_slice1/reports/a_class_erad_next_scale_slice1_live_report.csv
+outputs/validation/cninfo_a_class_erad_next_scale_slice1/reports/a_class_erad_next_scale_slice1_live_summary.md
+outputs/validation/cninfo_a_class_erad_next_scale_slice1/reports/a_class_erad_next_scale_slice1_live_quality_report.csv
+outputs/validation/cninfo_a_class_erad_next_scale_slice1/reports/a_class_erad_next_scale_slice1_unresolved_ledger.csv
+outputs/validation/cninfo_a_class_erad_next_scale_slice1/reports/session1/a_class_erad_next_scale_slice1_live_report.csv
+outputs/validation/cninfo_a_class_erad_next_scale_slice1/reports/session1/a_class_erad_next_scale_slice1_live_summary.md
+outputs/validation/cninfo_a_class_erad_next_scale_slice1/reports/session1/a_class_erad_next_scale_slice1_live_quality_report.csv
+outputs/validation/cninfo_a_class_erad_next_scale_slice1/reports/session2/a_class_erad_next_scale_slice1_live_report.csv
+outputs/validation/cninfo_a_class_erad_next_scale_slice1/reports/session2/a_class_erad_next_scale_slice1_live_summary.md
+outputs/validation/cninfo_a_class_erad_next_scale_slice1/reports/session2/a_class_erad_next_scale_slice1_live_quality_report.csv
+
+# --- EXCLUDED FROM THIS A COMMIT（mixed shared / workflow / bulk） ---
+# CURRENT_STATUS.md
+# PROJECT_MAP.md
+# plans/eraD_execution_plan.md
+# PROJECT_CONTROL.md
+# outputs/validation/cninfo_a_class_erad_next_scale_slice1/raw_metadata/  (300)
+# outputs/validation/cninfo_a_class_erad_next_scale_slice1/_mock_live_test/
+# outputs/validation/cninfo_a_class_erad_scale_200/          (historical production root · do not rewrite)
+# Phase 3 / A3M017 production roots
+# B/C/D tracks
