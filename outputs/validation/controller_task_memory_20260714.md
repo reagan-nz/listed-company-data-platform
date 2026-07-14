@@ -17,6 +17,12 @@ _Autonomous memory layer · Daily Loop v2_
 | B-GEN-20260714-03 | B | empty_response edge taxonomy | empty_response_edge_* | 2026-07-14 |
 | C-GEN-20260714-03 | C | empty-dividend CE1E176/188/193 package | empty_dividend_* | 2026-07-14 |
 | D-GEN-20260714-03 | D | shareholder_change schema + event model | schema_prep · event_model CSV | 2026-07-14 |
+| A-GEN-20260714-04 | A | slice2 pool remainder 156 | slice2_pool_remainder_* | 2026-07-14 |
+| B-GEN-20260714-04 | B | cross-slice ER-VAL 16 | cross_slice_erval_* | 2026-07-14 |
+| C-GEN-20260714-04 | C | caveat10 registry | caveat10_registry_* | 2026-07-14 |
+| A-GEN-20260714-05 | A | overlap lint + 182 ledger | slice2_overlap_lint_* · ab_overlap_182_* | 2026-07-14 |
+| A-GEN-20260714-06 | A | slice2 +100 draft | slice2_candidate_universe_draft_* | 2026-07-14 |
+| A-GEN-20260714-07 | A | slice2 +50 complement | slice2_plus50_* | 2026-07-14 |
 
 
 ## Deferred tasks
