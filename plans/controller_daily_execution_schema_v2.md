@@ -208,6 +208,12 @@ Branch: main (ahead X / behind Y)
 - remaining_capability_units:
 - estimated_remaining_effort:
 
+### Mission progress
+- active_milestones:
+- milestones_advanced:
+- completed_capabilities:
+- capability_gaps:          # from gap analysis · not % only
+
 ### Tracks
 #### A
 - goal: Full-market company information coverage
@@ -236,6 +242,28 @@ Branch: main (ahead X / behind Y)
 - ownership_events:
 - capital_structure_completeness:
 - progress_note:
+
+## Planning intelligence
+
+### Generated tasks
+- ...
+
+### Executed tasks
+- task_id / track / agent / commit / gap_impact:
+
+### Successor tasks
+- ...
+
+### Blocked tasks
+- ...
+
+### Stuck analysis
+- Cause:
+- Possible autonomous actions:
+- Human dependency:
+
+### Next recommended actions
+- ...
 
 ### Remaining work
 - ...
@@ -292,11 +320,15 @@ Branch: main (ahead X / behind Y)
 | estimated_remaining_effort | velocity-based or `unknown` · never fabricate calendar ETAs |
 | Current bottleneck | binding constraint on mission progress · required |
 | stop_reason | `NO_SAFE_READY` · `HUMAN_INTERRUPT` · `BUDGET_REACHED` · `SAFETY_VIOLATION` · from [execution cycle policy v2](controller_execution_cycle_policy_v2.md) |
-| budget used | iterations / runtime / autonomous commits vs daily caps · required on stop |
+| budget used | iterations / runtime / autonomous commits vs daily caps · defaults **10 / 120m / 12** · batching required |
+| Generated / Executed / Successor / Blocked tasks | planning intelligence · required each report |
+| Stuck analysis | Cause · Possible autonomous actions · Human dependency · required when stuck or at NO_SAFE_READY |
+| capability_gaps | actionable gaps from [capability gap analysis v2](controller_capability_gap_analysis_v2.md) · not percentage-only |
 
 
 Progress field definitions: [controller_progress_tracking_v2.md](controller_progress_tracking_v2.md).  
-Cycle / budget definitions: [controller_execution_cycle_policy_v2.md](controller_execution_cycle_policy_v2.md).
+Cycle / budget definitions: [controller_execution_cycle_policy_v2.md](controller_execution_cycle_policy_v2.md).  
+Planning authorities: generator · continuation · memory · allocation · stuck · milestone policies.
 
 
 ## 5.3 Machine-readable companion (optional)

@@ -30,7 +30,7 @@ _优先级层：[controller_task_priority_policy_v2.md](controller_task_priority
 **Mission（最高目标）：** 在安全边界内，推动 A/B/C/D 朝全市场数据采集能力前进，并最大化独立 track 的自主进度。详见 [controller_mission_objective_v2.md](controller_mission_objective_v2.md)。
 
 
-**System intent：** Daily Loop v2 是 **mission-progress execution system**（经 track agents 推进 A/B/C/D），**不是** controller 自我维护循环。Controller 维护不得在仍有可发现的安全 mission/evidence 工作时装满预算。
+**System intent：** Daily Loop v2 是 **mission-progress autonomous planning + execution system**（缺口分析 · 任务生成 · 延续规划 · 记忆 · 资源分配 · 卡住检测 · 里程碑 · 经 track agents 执行），**不是** controller 自我维护循环。
 
 
 本文件是 **主运行策略**。配套：
@@ -40,6 +40,13 @@ _优先级层：[controller_task_priority_policy_v2.md](controller_task_priority
 |------|------|
 | [controller_mission_objective_v2.md](controller_mission_objective_v2.md) | 最高目标 · track 目标 · 审批哲学 · 优化优先级 |
 | [controller_progress_tracking_v2.md](controller_progress_tracking_v2.md) | 能力覆盖进度 · bottleneck · effort 估计 · 停机进度块 |
+| [controller_capability_gap_analysis_v2.md](controller_capability_gap_analysis_v2.md) | 进度→可行动缺口 · root cause · next tasks |
+| [controller_task_generator_policy_v2.md](controller_task_generator_policy_v2.md) | 空队列时生成安全候选任务 |
+| [controller_task_continuation_policy_v2.md](controller_task_continuation_policy_v2.md) | 完成后评估缺口 · 生成 successor |
+| [controller_task_memory_policy_v2.md](controller_task_memory_policy_v2.md) | 完成/失败/延期/拒绝/阻塞记忆 |
+| [controller_resource_allocation_policy_v2.md](controller_resource_allocation_policy_v2.md) | 按使命收益分配迭代/预算（非均分） |
+| [controller_stuck_detection_policy_v2.md](controller_stuck_detection_policy_v2.md) | 无进展循环检测 · 停无尽重复 |
+| [controller_milestone_management_v2.md](controller_milestone_management_v2.md) | 全市场使命里程碑拆解 |
 | [controller_execution_cycle_policy_v2.md](controller_execution_cycle_policy_v2.md) | 同日多轮执行 · 再排队 · 停机条件 · 日预算 |
 | [controller_task_priority_policy_v2.md](controller_task_priority_policy_v2.md) | 安全 READY 任务优先级 P1–P5 · 同级排序因子 |
 | [controller_daily_execution_schema_v2.md](controller_daily_execution_schema_v2.md) | 日计划 / 日报 schema |
@@ -214,20 +221,24 @@ For each of A/B/C/D, plan must state:
 11. Do not spend budget on controller self-updates when mission work exists or is discoverable.  
 
 
-## 4.4 Task Discovery
+## 4.4 Task Discovery / Generation
 
 
 When refresh yields no safe READY:
 
 
-1. Inspect A/B/C/D mission objectives（mission objective v2）.  
-2. Generate safe autonomous candidates（examples: A coverage expansion analysis · B disclosure/event preparation · C QA/evidence improvement · D offline component preparation）.  
-3. Promote only candidates that pass safety / approval / red lines.  
-4. Re-rank with task priority v2（mission-first）.  
-5. Only then may Controller set `NO_SAFE_READY`.  
+1. Inspect A/B/C/D mission objectives + milestones.  
+2. Run capability gap analysis → actionable gaps（not % only）.  
+3. Read task memory · skip completed/rejected/blocked equivalents.  
+4. Generate candidates（task generator v2）with required schema fields.  
+5. Allocate resources by expected mission gain（not equal share）.  
+6. Promote offline_safe → READY · rank · dispatch track agents.  
+7. After each completion → continuation policy（successor or next bottleneck）.  
+8. If spinning with no capability progress → stuck detection · stop endless repeat.  
+9. Only then may Controller set `NO_SAFE_READY`.  
 
 
-Authority detail: [execution cycle policy v2 §3.1](controller_execution_cycle_policy_v2.md).
+Authorities: generator · continuation · gap · memory · allocation · stuck · milestone · execution cycle §3.1.
 
 
 
@@ -404,7 +415,7 @@ Avoid burning `max_autonomous_commits` on tiny controller commits（tip-align ch
 Schema: see [controller_daily_execution_schema_v2.md](controller_daily_execution_schema_v2.md).
 
 
-Minimum sections: Date · HEAD · Tracks A–D · **Progress intelligence**（[progress tracking v2](controller_progress_tracking_v2.md)）· Human attention · Safety counters.
+Minimum sections: Date · HEAD · Tracks A–D · **Progress intelligence** · **Planning intelligence**（generated/executed/successor/blocked/stuck/next actions）· Human attention · Safety counters.
 
 
 Progress block is mandatory on every stop / end-of-day report. Prefer capability coverage over commit/file counts. Use `unknown` when denominators or velocity are missing.
@@ -451,12 +462,17 @@ LOOP_START(date):
 
     ready = tracks_with_safe_READY(P)
     if ready is empty:
-      candidates = discover_safe_mission_candidates(A,B,C,D)  # mandatory
-      P = promote_safe_candidates(P, candidates)
+      gaps = analyze_capability_gaps(S)                 # gap analysis v2
+      mem = read_task_memory()
+      candidates = generate_tasks(gaps, mem, mission)   # generator v2
+      candidates = filter_memory_and_safety(candidates)
+      P = promote_offline_safe(P, allocate(candidates)) # resource allocation v2
       ready = tracks_with_safe_READY(P)
       if ready is empty:
-        stop_reason = NO_SAFE_READY
-        break
+        stuck = stuck_detect(mem, gaps)                 # stuck detection v2
+        if stuck.only_human_dependency or no_new_actions:
+          stop_reason = NO_SAFE_READY
+          break
 
     # Defer controller-band tasks if any capability/evidence-band ready exists
     ready = apply_mission_progress_priority(ready, task_priority_v2)
@@ -492,19 +508,25 @@ LOOP_START(date):
           stop_reason = BUDGET_REACHED
           break outer
       update_track_state(P, R)
+      write_task_memory(R)
+      successors = continue_after_task(R, gaps)   # continuation v2
+      P = promote_offline_safe(P, successors)
 
     if stop_reason set:
       break
     # else: loop → re-read queue
 
   write_daily_report_once(P, results, stop_reason, budget, iterations)
-  # include Progress intelligence + execution_cycle + agent dispatch counts
+  # include planning fields: generated/executed/successor/blocked/stuck/milestones
   NEVER push
 LOOP_END
 ```
 
 
-Stop only for: `NO_SAFE_READY`（**after discovery**）· `HUMAN_INTERRUPT`（global）· `BUDGET_REACHED` · `SAFETY_VIOLATION`.
+Stop only for: `NO_SAFE_READY`（**after generation + stuck check**）· `HUMAN_INTERRUPT`（global）· `BUDGET_REACHED` · `SAFETY_VIOLATION`.
+
+
+Default budget: max_iterations **10** · max_runtime **120m** · max_autonomous_commits **12**（batching required）.
 
 
 

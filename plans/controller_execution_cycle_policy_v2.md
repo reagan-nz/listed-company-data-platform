@@ -2,7 +2,7 @@
 
 
 _最后更新：2026-07-14_  
-_配套：[controller_daily_autonomous_loop_v2.md](controller_daily_autonomous_loop_v2.md) · [controller_mission_objective_v2.md](controller_mission_objective_v2.md) · [controller_progress_tracking_v2.md](controller_progress_tracking_v2.md) · [controller_task_priority_policy_v2.md](controller_task_priority_policy_v2.md) · [controller_human_interrupt_policy_v2.md](controller_human_interrupt_policy_v2.md) · [controller_commit_autonomy_policy_v2.md](controller_commit_autonomy_policy_v2.md)_
+_配套：[controller_daily_autonomous_loop_v2.md](controller_daily_autonomous_loop_v2.md) · [controller_mission_objective_v2.md](controller_mission_objective_v2.md) · [controller_progress_tracking_v2.md](controller_progress_tracking_v2.md) · [controller_task_priority_policy_v2.md](controller_task_priority_policy_v2.md) · [controller_task_generator_policy_v2.md](controller_task_generator_policy_v2.md) · [controller_task_continuation_policy_v2.md](controller_task_continuation_policy_v2.md) · [controller_capability_gap_analysis_v2.md](controller_capability_gap_analysis_v2.md) · [controller_task_memory_policy_v2.md](controller_task_memory_policy_v2.md) · [controller_resource_allocation_policy_v2.md](controller_resource_allocation_policy_v2.md) · [controller_stuck_detection_policy_v2.md](controller_stuck_detection_policy_v2.md) · [controller_milestone_management_v2.md](controller_milestone_management_v2.md) · [controller_human_interrupt_policy_v2.md](controller_human_interrupt_policy_v2.md) · [controller_commit_autonomy_policy_v2.md](controller_commit_autonomy_policy_v2.md)_
 
 
 ## 1. Purpose
@@ -98,7 +98,7 @@ If multiple READY tracks exist: may run in parallel when worktree isolation allo
 Selection authority: **task priority policy v2**. Mission objective v2 defines what mission progress means; progress tracking v2 supplies bottleneck / coverage inputs.
 
 
-## 3.1 Task Discovery Requirement
+## 3.1 Task Discovery / Task Generation Requirement
 
 
 If no READY task exists after refresh:
@@ -107,25 +107,34 @@ If no READY task exists after refresh:
 **Do NOT** conclude `NO_SAFE_READY` immediately.
 
 
-Controller **must** inspect each track mission objective and attempt to generate **safe autonomous candidate tasks**:
+Controller **must**:
+
+
+1. Run capability gap analysis（[capability gap analysis v2](controller_capability_gap_analysis_v2.md)）.  
+2. Read task memory（[task memory policy v2](controller_task_memory_policy_v2.md)）.  
+3. Generate candidates via [task generator policy v2](controller_task_generator_policy_v2.md) against A/B/C/D mission objectives.  
+4. Apply resource allocation（[resource allocation v2](controller_resource_allocation_policy_v2.md)）and priority.  
+5. Promote `offline_safe` survivors to READY.  
 
 
 | Track | Mission lens | Example safe candidates（non-exhaustive） |
 |-------|--------------|------------------------------------------|
-| A | full-market company information coverage | coverage expansion analysis · missing-scope / unresolved offline packaging · attribute-gap ledger |
-| B | full-market disclosure/event coverage | new disclosure/event preparation · deferred-case offline triage · extraction-gap matrix |
-| C | full-market evidence and quality | QA/evidence improvement · caveat ledger hardening · validation completeness offline |
-| D | full-market shareholder/capital | offline component preparation · planning refresh · universe sketch（not unapproved live） |
+| A | full-market company information coverage | coverage gap analysis · missing field investigation · next slice preparation |
+| B | full-market disclosure/event coverage | event/source coverage expansion prep · taxonomy improvement · parser preparation |
+| C | full-market evidence and quality | QA gap resolution · evidence completeness improvement |
+| D | full-market shareholder/capital | offline schema preparation · event modeling · approval package preparation |
 
 
-Discovery rules:
+Discovery/generation rules:
 
 
 1. Candidates must be **offline-safe** unless an exact live approval is already spent for that scope.  
 2. Candidates must **not** bypass HOLD live bans · snapshot block · WAITING_APPROVAL component gates.  
 3. Candidates that pass safety are promoted to READY for this cycle’s ranking.  
-4. Only if discovery yields **zero** safe candidates → `NO_SAFE_READY` is allowed.  
-5. “Tracks show HOLD in PROJECT_CONTROL” is **not** sufficient discovery.  
+4. After a completed task, run [continuation policy v2](controller_task_continuation_policy_v2.md) before declaring the track idle.  
+5. If generation yields nothing new, run [stuck detection v2](controller_stuck_detection_policy_v2.md) — do not endlessly repeat.  
+6. Only if generation + stuck analysis leave **zero** safe candidates → `NO_SAFE_READY` is allowed.  
+7. “Tracks show HOLD in PROJECT_CONTROL” is **not** sufficient discovery.  
 
 
 ## 3.2 Agent Routing Requirement
@@ -186,7 +195,7 @@ Stop **execution cycling** and proceed to Daily Report when **any** of:
 
 | Stop reason | Meaning |
 |-------------|---------|
-| `NO_SAFE_READY` | after refresh **and Task Discovery（§3.1）**, still no safe READY `allowed_action` |
+| `NO_SAFE_READY` | after refresh **and** task generation/discovery **and** stuck analysis（when applicable）, still no safe READY `allowed_action` |
 | `HUMAN_INTERRUPT` | interrupt policy requires human before further autonomous work（may be track-scoped; see §5） |
 | `BUDGET_REACHED` | any daily execution budget limit hit（§6） |
 | `SAFETY_VIOLATION` | red-line / ownership / evidence honesty breach — halt further autonomous actions |
@@ -239,9 +248,9 @@ Purpose: prevent infinite autonomous execution inside one daily run.
 
 | Budget | Default | Notes |
 |--------|---------|-------|
-| `max_iterations` | 8 | select→execute→validate→update cycles per daily run |
-| `max_runtime` | 120 minutes | wall-clock from LOOP_START；soft stop at limit |
-| `max_autonomous_commits` | 6 | local commits created by this daily run |
+| `max_iterations` | **10** | select→discover/generate→execute→validate→continue cycles per daily run |
+| `max_runtime` | **120 minutes** | wall-clock from LOOP_START；soft stop at limit |
+| `max_autonomous_commits` | **12** | local commits created by this daily run · **batching still required** |
 
 
 Defaults may be tightened by human in PROJECT_CONTROL / daily plan header. Raising budgets above defaults requires human acceptance（not silent expansion mid-run）.
