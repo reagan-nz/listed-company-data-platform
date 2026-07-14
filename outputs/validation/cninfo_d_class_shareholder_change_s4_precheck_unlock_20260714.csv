@@ -1,0 +1,44 @@
+check_id,check_name,offline_or_live,status_at_d08_interface,status_after_d09_precheck,unlock_or_still_blocked,unlock_trigger,notes
+SC-S4-001,AQ-D-SC 组件批准已落档（D-06 approval package）,offline,ready,ready,unlocked_prior,prior_ready,证据: cninfo_d_class_shareholder_change_first_slice_approval_package_20260714.md; COMPONENT_APPROVED; 不随 D-08/D-09 变更
+SC-S4-002,universe lock DSC001-DSC005 已冻结,offline,ready,ready,unlocked_prior,prior_ready,证据: cninfo_d_class_shareholder_change_first_slice_universe_lock_20260714.csv; 5 rows locked; impl 只读加载
+SC-S4-003,Tier-1 fixtures 8/8 VR PASS_OFFLINE（D-07）,offline,ready,ready,unlocked_prior,prior_ready,证据: cninfo_d_class_shareholder_change_fixture_vr_validation_20260714.md; gate=PASS_OFFLINE
+SC-S4-004,validation rules VR-001-VR-042 已就绪,offline,ready,ready,unlocked_prior,prior_ready,证据: cninfo_d_class_shareholder_change_validation_rules_20260714.md
+SC-S4-005,command draft 已撰写（dry-run/live 形状）,offline,ready,ready,unlocked_prior,prior_ready,证据: cninfo_d_class_shareholder_change_first_slice_command_draft_20260714.md; NOT_APPROVED_DO_NOT_RUN
+SC-S4-006,S4 runner design 包已撰写（D-08）,offline,ready,ready,unlocked_by_D08,D08_design_complete,证据: cninfo_d_class_shareholder_change_s4_runner_design_20260714.md; runner_design_gate=READY_FOR_IMPLEMENTATION_APPROVAL
+SC-S4-007,registry source_id=shareholder_change endpoint 已登记,offline,ready,ready,unlocked_prior,prior_ready,证据: config/cninfo_d_class_source_registry_draft.yaml; shareholeder/detail 拼写保留
+SC-S4-008,query_mode type_inc+tdate=2026-07-03 已在 lock 与 fixtures 对齐,offline,ready,ready,unlocked_prior,prior_ready,证据: universe_lock + fixtures query_params; VR-003/007 pass
+SC-S4-009,688671/301259 永久排除已登记,offline,ready,ready,unlocked_prior,prior_ready,证据: universe_lock exclude_flags; VR-004/040
+SC-S4-010,expected_behavior mix 已在 lock 定义,offline,ready,ready,unlocked_prior,prior_ready,1 empty_but_valid + 3 captured_normal_or_empty_but_valid + 1 captured_normal_or_needs_review
+SC-S4-011,CNINFO cap per-case<=4 total<=20 已在设计定义,offline,ready,ready,unlocked_by_D08,D08_design_complete,设计 §6; planned~5; dry-run CNINFO=0; live cap 待 S5
+SC-S4-012,隔离 output root 路径已在设计定义,offline,ready,ready,unlocked_by_D08,D08_design_complete,cninfo_d_class_shareholder_change_first_slice/; Tier-2 planned layout
+SC-S4-013,write-block 清单已在设计定义,offline,ready,ready,unlocked_by_D08,D08_design_complete,设计 §8; v1/v2/replacement/targeted_probe/其他 first-slice 根
+SC-S4-014,generic multi-probe 隔离要求已设计,offline,ready,ready,unlocked_by_D08,D08_design_complete,设计 §2/§5; 不得复用 _build_live_params desc 路径; VR-008
+SC-S4-015,equity_pledge first-slice 参照实现可复用模式,offline,ready,ready,unlocked_prior,prior_ready,lab/run_cninfo_d_class_tiny_live_validation.py equity_pledge_first_slice 函数族
+SC-S4-016,--shareholder-change-first-slice flag 已实现,offline,blocked,blocked,unlocks_on_impl_approval,human_impl_approval,当前 runner 无此 flag; human S4-impl approval 后允许编码; 编码完成前仍 blocked
+SC-S4-017,--approve-d-class-shareholder-change-first-slice approval guard 已实现,offline,blocked,blocked,unlocks_on_impl_complete,runner_impl_complete,live guard 未编码; dry-run 不需 approval; live guard 与 impl 同批交付
+SC-S4-018,load/validate universe lock loader 已实现,offline,blocked,blocked,unlocks_on_impl_approval,human_impl_approval,ShareholderChangeFirstSliceRow + validate 函数待编码
+SC-S4-019,build_shareholder_change_first_slice_plan 已实现,offline,blocked,blocked,unlocks_on_impl_approval,human_impl_approval,单请求 type=inc+tdate; 非 multi-probe
+SC-S4-020,output root 校验与 write-block enforce 已实现,offline,blocked,blocked,unlocks_on_impl_approval,human_impl_approval,validate + enforce 函数待编码
+SC-S4-021,mixed mode 互斥 guard 已实现,offline,blocked,blocked,unlocks_on_impl_approval,human_impl_approval,与 replacement/v2/其他 first-slice 互斥待编码
+SC-S4-022,dry-run report/summary/planned_snapshots 已实现,offline,blocked,blocked,unlocks_on_impl_approval,human_impl_approval,d_class_shareholder_change_first_slice_dryrun_* 待编码
+SC-S4-023,runner unit tests 已编写并通过,offline,blocked,blocked,unlocks_on_impl_complete,runner_impl_complete,参照 test_cninfo_d_class_equity_pledge_first_slice_runner.py 模式; impl 后 required
+SC-S4-024,dry-run 执行 5/5 planned_ok（CNINFO=0）,offline,blocked,blocked,blocked_until_dryrun_pass,dryrun_pass,须 runner impl 完成 + dry-run approval; 预期 planned_total=5; CNINFO=0
+SC-S4-025,human runner implementation approval 短语,offline,blocked,partial_unlock,unlocks_on_impl_approval,human_impl_approval,COMPONENT_APPROVED 不自动授权 runner; 本 precheck 将 S4-impl 路径标为 partial_unlock; 短语落档后 SC-S4-016..022 可开工
+SC-S4-026,human first-slice live approval 短语（S5）,live,blocked,blocked,blocked_until_live_approval,live_approval,证据: D-06 §13; live_gate=NOT_APPROVED; impl/dry-run approval 均不自动授权 live
+SC-S4-027,live path execute_shareholder_change_first_slice_live 已实现,live,blocked,blocked,unlocks_on_impl_complete,runner_impl_complete,参照 equity_pledge live 路径; S5 gated; 可与 dry-run 同批 impl 但 live 仍 blocked
+SC-S4-028,live request cap enforce<=20 已实现,live,blocked,blocked,unlocks_on_impl_complete,runner_impl_complete,validate_shareholder_change_first_slice_request_caps 待编码
+SC-S4-029,is_shareholder_change_first_slice_acceptable 已实现,live,blocked,blocked,unlocks_on_impl_complete,runner_impl_complete,>=3/5 threshold logic 待编码
+SC-S4-030,live_snapshots + outcome ledger 输出已实现,live,blocked,blocked,unlocks_on_impl_complete,runner_impl_complete,{case_id}_shareholder_change.json + live_outcome_ledger.csv
+SC-S4-031,live CNINFO 执行（<=20）,live,blocked,blocked,blocked_until_live_execution,live_execution,本任务 CNINFO=0; S5 explicit approval + dry-run PASS 后方可执行
+SC-S4-032,execution gate PASS_WITH_CAVEAT 评估,live,blocked,blocked,blocked_until_live_execution,live_execution,>=3/5 acceptable; 永不 bare PASS; 仅 live 完成后评估
+SC-S4-033,closed tracks 不重开确认,offline,ready,ready,unlocked_prior,prior_ready,equity_pledge/RSU/block_trade/margin/disclosure/known-event frozen
+SC-S4-034,PDF/OCR/DB/MinIO/RAG 禁用确认,offline,ready,ready,unlocked_prior,prior_ready,D-class metadata only; dryrun/live report columns pdf_download=no 等
+SC-S4-035,universe lock/fixtures 写保护,offline,ready,ready,unlocked_prior,prior_ready,本任务不 mutate; impl 须 enforce read-only load
+SC-S4-036,verified/production_ready claim 禁止,offline,ready,ready,unlocked_prior,prior_ready,VR-042; design gate 不升级 verified
+SC-S4-037,commit/push 本任务禁止,offline,ready,ready,unlocked_prior,prior_ready,design/precheck only; CNINFO=0
+SC-S4-038,PROJECT_CONTROL gate flip 禁止,offline,ready,ready,unlocked_prior,prior_ready,不修改 PROJECT_CONTROL/CURRENT_STATUS/PROJECT_MAP
+GATE-001,runner_design_gate,offline,READY_FOR_IMPLEMENTATION_APPROVAL,READY_FOR_IMPLEMENTATION_APPROVAL,unlocked_by_D08,D08_design_complete,D-08 落档; 等待 human impl approval 方可进入 S4-impl
+GATE-002,runner_gate,offline,NOT_APPROVED,NOT_APPROVED,unlocks_on_impl_approval,human_impl_approval,impl approval + 编码 + tests 后提议 runner_gate 变更; 本 precheck 不 flip
+GATE-003,runner_dryrun_gate,offline,NOT_APPLICABLE,NOT_APPLICABLE,blocked_until_dryrun_pass,dryrun_pass,impl 完成后 dry-run 5/5 planned_ok; CNINFO=0
+GATE-004,live_gate,live,NOT_APPROVED,NOT_APPROVED,blocked_until_live_approval,live_approval,S5 独立短语; dry-run PASS 为前置建议非自动授权
+GATE-005,execution_gate,live,NOT_APPLICABLE,NOT_APPLICABLE,blocked_until_live_execution,live_execution,live 完成后评估 PASS_WITH_CAVEAT 或 FAIL_REVIEW_REQUIRED
