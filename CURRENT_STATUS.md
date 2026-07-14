@@ -1,8 +1,28 @@
 # 当前进展：CNINFO 数据源 A–F 分层验证（Phase 1 已收口 · Phase 2 已收口）
 
-_最后更新：2026-07-10_
+_最后更新：2026-07-14_
 
-> **本文件说明「现在具体在做什么」。** 仓库整体导航见 [PROJECT_MAP.md](PROJECT_MAP.md)；**A–F 分层与验证口径权威文档**见 [plans/cninfo_data_source_layered_inventory.md](plans/cninfo_data_source_layered_inventory.md)；产品大方向见 [ROADMAP.md](ROADMAP.md)。
+> **本文件说明「现在具体在做什么」。** 仓库整体导航见 [PROJECT_MAP.md](PROJECT_MAP.md)；**工作流控制面**见 [PROJECT_CONTROL.md](PROJECT_CONTROL.md)；**A–F 分层与验证口径权威文档**见 [plans/cninfo_data_source_layered_inventory.md](plans/cninfo_data_source_layered_inventory.md)；产品大方向见 [ROADMAP.md](ROADMAP.md)。
+>
+> **文档层级：** `PROJECT_CONTROL.md` = 控制面寄存器（已单独同步）；本文件 = 状态展示层（历史 milestones 保留，仅校正当前 tip）。
+
+---
+
+## 当前仓库现实（2026-07-14 状态同步）
+
+| 项 | 值 |
+|----|------|
+| HEAD（含控制面同步） | `710b3c3`（`PROJECT_CONTROL` reconciliation） |
+| Agent infrastructure | `4a62f78` |
+| Runtime ignore boundary | `d385bb6` |
+| Controller policy foundation | `0f63a90` |
+| A next-scale slice1 | local commit `4118974` · merge `71a83c1` · **post-integration HOLD** · unresolved **6** · gate **`PASS_WITH_CAVEAT`** · **NOT verified** · **NOT production_ready** · **无 push** |
+| B fuller slice2 | local commit `f0bff3a` · **post-integration HOLD** · BD2E624 deferred · gate **`PASS_WITH_CAVEAT`** · **NOT verified** · **NOT production_ready** · **无 push** |
+| Option C recovery | `3b0c7ce`（remote unique sidecars） |
+| C fuller slice1 | ledger+QA **`PASS_WITH_CAVEAT`** · `approved_for_snapshot_rebuild = false` · **HOLD** |
+| D shareholder_change | planning gate **`READY_FOR_APPROVAL`** · **≠ approved** · 等待 human component 批准 |
+| Autonomy | 本地文档/bounded commit/worktree/merge 可按策略自治 · **push / 不可逆发布** 需 human |
+| Remote | `main` ahead / behind 相对 `origin/main` · **push NOT authorized** |
 
 ---
 
@@ -162,8 +182,11 @@ _最后更新：2026-07-10_
 | **Era D next-scale planning** | [plan](plans/cninfo_a_class_erad_next_scale_plan.md) · [universe strategy](outputs/validation/cninfo_a_class_erad_next_scale_universe_strategy.md) · [request budget](outputs/validation/cninfo_a_class_erad_next_scale_request_budget.md) · [candidate universe](outputs/validation/cninfo_a_class_erad_next_scale_candidate_universe_draft.csv) · slice1 **+300** · overlap **0** · CNINFO **0** · gate **`READY_FOR_APPROVAL`** · **NOT APPROVED live/runner** · **不是 verified**） |
 | **Era D next-scale slice1 runner + dry-run** | [runner extension summary](outputs/validation/cninfo_a_class_erad_next_scale_slice1_runner_extension_summary.md) · [dry-run report](outputs/validation/cninfo_a_class_erad_next_scale_slice1/reports/a_class_erad_next_scale_slice1_dryrun_report.csv) · [dry-run summary](outputs/validation/cninfo_a_class_erad_next_scale_slice1/reports/a_class_erad_next_scale_slice1_dryrun_summary.md) · tests **17/17 PASS**（**300/300 planned_ok** · **600** planned requests · CNINFO **0** · live **NOT APPROVED** · **不是 verified**） |
 | **Era D next-scale slice1 live path** | [live path summary](outputs/validation/cninfo_a_class_erad_next_scale_slice1_live_path_summary.md) · [live-path tests](lab/test_cninfo_a_class_erad_next_scale_slice1_live_path.py)（**17/17 PASS** · mock CNINFO **0** · live path wired） |
-| **Gate** | `a_class_phase1_boundary_gate = PASS_WITH_CAVEAT` · `a_class_phase2_metadata_execution_gate = FAIL_REVIEW_REQUIRED` · `a_class_phase2_failed_retry_execution_gate = FAIL_REVIEW_REQUIRED` · `a_class_phase2_metadata_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED` · `a_class_phase2_network_recovery_retry_v2_execution_gate = FAIL_REVIEW_REQUIRED` · `a_class_phase2_retry_v2_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED` · `a_class_phase2_cninfo_reachability_precheck_execution_gate = PASS_WITH_CAVEAT` · `a_class_phase2_retry_v3_planning_gate = READY_FOR_APPROVAL` · `a_class_phase2_retry_v3_runner_extension_gate = READY_FOR_APPROVAL` · `a_class_phase2_retry_v3_live_implementation_gate = READY_FOR_APPROVAL` · `a_class_phase2_retry_v3_execution_gate = PASS_WITH_CAVEAT` · `a_class_phase2_metadata_final_closure_gate = PASS_WITH_CAVEAT` · `a_class_phase2_commit_boundary_review_gate = READY_FOR_COMMIT_REVIEW` · `a_class_phase2_commit_review_gate = READY_FOR_HUMAN_DECISION` · `a_class_phase3_50_company_planning_gate = READY_FOR_APPROVAL` · `a_class_phase3_50_company_runner_extension_gate = READY_FOR_APPROVAL` · `a_class_phase3_50_company_live_path_gate = READY_FOR_APPROVAL` · `a_class_phase3_50_company_execution_gate = PASS_WITH_CAVEAT` · `a_class_phase3_50_company_closure_gate = PASS_WITH_CAVEAT` · `a_class_phase3_50_company_commit_boundary_review_gate = READY_FOR_COMMIT_REVIEW` · `a_class_phase3_50_company_commit_review_gate = READY_FOR_HUMAN_DECISION` · `a_class_phase3_a3m017_isolated_retry_planning_gate = READY_FOR_APPROVAL` · `a_class_erad_scale_200_planning_gate = READY_FOR_APPROVAL` · `a_class_erad_scale_200_runner_extension_gate = READY_FOR_APPROVAL` · `a_class_erad_scale_200_live_path_gate = READY_FOR_APPROVAL` · `a_class_erad_scale_200_execution_gate = PASS_WITH_CAVEAT` · `a_class_erad_scale_200_failed_case_triage_gate = PASS_OFFLINE` · `a_class_erad_scale_200_isolated_retry_planning_gate = READY_FOR_APPROVAL` · `a_class_erad_scale_200_isolated_retry_runner_extension_gate = READY_FOR_APPROVAL` · `a_class_erad_scale_200_isolated_retry_live_path_gate = READY_FOR_APPROVAL` · `a_class_erad_scale_200_isolated_retry_execution_gate = FAIL_REVIEW_REQUIRED` · `a_class_erad_scale_200_merge_closure_gate = PASS_WITH_CAVEAT` · `a_class_erad_scale_200_commit_boundary_gate = READY_FOR_COMMIT_REVIEW` · `a_class_erad_scale_200_commit_gate = PASS_WITH_CAVEAT` · `a_class_erad_next_scale_planning_gate = READY_FOR_APPROVAL` · `a_class_erad_next_scale_slice1_runner_extension_gate = READY_FOR_APPROVAL` · `a_class_erad_next_scale_slice1_live_path_gate = READY_FOR_APPROVAL` |
-| **下一步** | **Human approve slice1 live**（exact phrase）**OR** hold until human schedules |
+| **Era D next-scale slice1 live execution** | [execution summary](outputs/validation/cninfo_a_class_erad_next_scale_slice1_live_execution_summary.md) · [live report](outputs/validation/cninfo_a_class_erad_next_scale_slice1/reports/a_class_erad_next_scale_slice1_live_report.csv) · **294/300 acceptable** · CNINFO **637** · gate **`PASS_WITH_CAVEAT`** · **不是 verified** · **无 commit** · **无 push**） |
+| **Era D next-scale slice1 merge closure** | [merge closure summary](outputs/validation/cninfo_a_class_erad_next_scale_slice1_merge_closure_summary.md) · [effective ledger](outputs/validation/cninfo_a_class_erad_next_scale_slice1_effective_accepted_ledger.csv)（**294** rows） · [unresolved final](outputs/validation/cninfo_a_class_erad_next_scale_slice1_unresolved_final_ledger.csv)（**6** rows） · [cumulative lineage](outputs/validation/cninfo_a_class_erad_next_scale_slice1_cumulative_lineage_summary.md) · cumulative **486** effective codes · CNINFO **0** · gate **`PASS_WITH_CAVEAT`** · **不是 verified**） |
+| **Era D next-scale slice1 explicit-path commit + merge** | commit **`4118974`** · merge **`71a83c1`** · **local integration completed** · unresolved **6** retained · **无 push** · **不是 verified** · **不是 production_ready** |
+| **Gate** | `a_class_phase1_boundary_gate = PASS_WITH_CAVEAT` · `a_class_phase2_metadata_execution_gate = FAIL_REVIEW_REQUIRED` · `a_class_phase2_failed_retry_execution_gate = FAIL_REVIEW_REQUIRED` · `a_class_phase2_metadata_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED` · `a_class_phase2_network_recovery_retry_v2_execution_gate = FAIL_REVIEW_REQUIRED` · `a_class_phase2_retry_v2_closure_gate = PASS_WITH_CAVEAT_NETWORK_UNRESOLVED` · `a_class_phase2_cninfo_reachability_precheck_execution_gate = PASS_WITH_CAVEAT` · `a_class_phase2_retry_v3_planning_gate = READY_FOR_APPROVAL` · `a_class_phase2_retry_v3_runner_extension_gate = READY_FOR_APPROVAL` · `a_class_phase2_retry_v3_live_implementation_gate = READY_FOR_APPROVAL` · `a_class_phase2_retry_v3_execution_gate = PASS_WITH_CAVEAT` · `a_class_phase2_metadata_final_closure_gate = PASS_WITH_CAVEAT` · `a_class_phase2_commit_boundary_review_gate = READY_FOR_COMMIT_REVIEW` · `a_class_phase2_commit_review_gate = READY_FOR_HUMAN_DECISION` · `a_class_phase3_50_company_planning_gate = READY_FOR_APPROVAL` · `a_class_phase3_50_company_runner_extension_gate = READY_FOR_APPROVAL` · `a_class_phase3_50_company_live_path_gate = READY_FOR_APPROVAL` · `a_class_phase3_50_company_execution_gate = PASS_WITH_CAVEAT` · `a_class_phase3_50_company_closure_gate = PASS_WITH_CAVEAT` · `a_class_phase3_50_company_commit_boundary_review_gate = READY_FOR_COMMIT_REVIEW` · `a_class_phase3_50_company_commit_review_gate = READY_FOR_HUMAN_DECISION` · `a_class_phase3_a3m017_isolated_retry_planning_gate = READY_FOR_APPROVAL` · `a_class_erad_scale_200_planning_gate = READY_FOR_APPROVAL` · `a_class_erad_scale_200_runner_extension_gate = READY_FOR_APPROVAL` · `a_class_erad_scale_200_live_path_gate = READY_FOR_APPROVAL` · `a_class_erad_scale_200_execution_gate = PASS_WITH_CAVEAT` · `a_class_erad_scale_200_failed_case_triage_gate = PASS_OFFLINE` · `a_class_erad_scale_200_isolated_retry_planning_gate = READY_FOR_APPROVAL` · `a_class_erad_scale_200_isolated_retry_runner_extension_gate = READY_FOR_APPROVAL` · `a_class_erad_scale_200_isolated_retry_live_path_gate = READY_FOR_APPROVAL` · `a_class_erad_scale_200_isolated_retry_execution_gate = FAIL_REVIEW_REQUIRED` · `a_class_erad_scale_200_merge_closure_gate = PASS_WITH_CAVEAT` · `a_class_erad_scale_200_commit_boundary_gate = READY_FOR_COMMIT_REVIEW` · `a_class_erad_scale_200_commit_gate = PASS_WITH_CAVEAT` · `a_class_erad_next_scale_planning_gate = READY_FOR_APPROVAL` · `a_class_erad_next_scale_slice1_runner_extension_gate = READY_FOR_APPROVAL` · `a_class_erad_next_scale_slice1_live_path_gate = READY_FOR_APPROVAL` · `a_class_erad_next_scale_slice1_execution_gate = PASS_WITH_CAVEAT` · `a_class_erad_next_scale_slice1_merge_closure_gate = PASS_WITH_CAVEAT` |
+| **下一步** | **post-integration HOLD** · unresolved **6** retained · no live retry · remote publication / push 另需 human |
 | 性质 | metadata + URL lineage only；不接 DB/MinIO/RAG；不写 verified；不升级 testing_stable_sample |
 
 ---
@@ -260,18 +283,34 @@ _最后更新：2026-07-10_
 
 ## B 类 Era D Next-Scale Slice1（2026-07-10）
 
-> **merge closure complete** · **300/300 effective** · **CNINFO 0（closure）** · **NOT verified** · **NOT pushed**
+> **explicit-path commit complete** · **`350cdda`** · **39 files** · **NOT pushed** · **NOT verified**
 
 | 项 | 状态 |
 |----|------|
 | **Mode** | `--erad-b-scale-500-slice1` · BD2E201–500 · **fresh_metadata only** |
-| **Live execution** | [summary](outputs/validation/cninfo_b_class_erad_next_scale_slice1_live_execution_summary.md) · Session1 **150/150** + Session2 **150/150** · CNINFO **600** |
-| **Merge closure** | [summary](outputs/validation/cninfo_b_class_erad_next_scale_slice1_merge_closure_summary.md) · [decision](outputs/validation/cninfo_b_class_erad_next_scale_slice1_merge_closure_decision.md) · effective **300/300** · edge **9** |
-| **Ledgers** | [effective](outputs/validation/cninfo_b_class_erad_next_scale_slice1_effective_accepted_ledger.csv) · [edge triage](outputs/validation/cninfo_b_class_erad_next_scale_slice1_edge_case_triage_ledger.csv) · [cumulative lineage](outputs/validation/cninfo_b_class_erad_next_scale_slice1_cumulative_lineage_summary.md) |
-| **Commit boundary** | [review](plans/cninfo_b_class_erad_next_scale_slice1_commit_boundary_review.md) · [summary](outputs/validation/cninfo_b_class_erad_next_scale_slice1_commit_boundary_summary.md) · safe **~48** paths · **NOT_APPROVED** |
+| **Live execution** | [summary](outputs/validation/cninfo_b_class_erad_next_scale_slice1_live_execution_summary.md) · **300/300** · CNINFO **600** |
+| **Merge closure** | effective **300/300** · edge **9** · gate **`PASS_WITH_CAVEAT`** |
+| **Explicit-path commit** | **`350cdda`** · **39 files** · [commit status](outputs/validation/cninfo_b_class_erad_next_scale_slice1_commit_status.md) |
+| **Excluded from commit** | `raw_metadata/` **~300** · `quality/` **~300**（bulk · local-only） |
 | **Cumulative** | scale-200 **198** + slice1 **300** → **498** toward ~500 |
-| **Gate** | `b_class_erad_next_scale_slice1_merge_closure_gate = PASS_WITH_CAVEAT` · `b_class_erad_next_scale_slice1_commit_boundary_gate = READY_FOR_COMMIT_REVIEW` |
-| **下一步** | Human approve slice1 explicit-path commit（exact phrase）· or hold closed-with-caveat |
+| **Gate** | `b_class_erad_next_scale_slice1_commit_gate = PASS_WITH_CAVEAT` |
+| **下一步** | Fuller next-slice planning（offline）· or hold at **498** · or push（separate phrase） |
+
+---
+
+## B 类 Era D Fuller Next-Slice（2026-07-13）
+
+> **merge closure complete** · **299/300 acceptable** · **CNINFO 0**（closure）· **local integration completed** `f0bff3a` · **NOT verified** · **NOT production_ready** · **无 push**
+
+| 项 | 状态 |
+|----|------|
+| **Primary path** | **C) staged fuller slice2 +300**（BD2E501–800）→ cumulative **~797** |
+| **Live** | [execution summary](outputs/validation/cninfo_b_class_erad_fuller_next_slice2_live_execution_summary.md) · **598 CNINFO** |
+| **Merge closure** | [summary](outputs/validation/cninfo_b_class_erad_fuller_next_slice2_merge_closure_summary.md) · acceptable **299/300** |
+| **Unresolved** | **1**（BD2E624 EP002 network_error）· **8** empty_response edges |
+| **Explicit-path commit** | **`f0bff3a`** · **local integration completed** · **post-integration HOLD** |
+| **Gate** | `b_class_erad_fuller_next_slice_merge_closure_gate = PASS_WITH_CAVEAT` |
+| **下一步** | **post-integration HOLD** · BD2E624 deferred · no live rerun · push 另需 human |
 
 ---
 
@@ -403,7 +442,13 @@ _最后更新：2026-07-10_
 | **equity_pledge closure** | [closure summary](outputs/validation/cninfo_d_class_equity_pledge_first_slice_closure_summary.md) · **4/5** · sparse-day empty **5/5** · CNINFO **0** |
 | **equity_pledge closure gate** | `d_class_equity_pledge_first_slice_closure_gate = PASS_WITH_CAVEAT` |
 | **equity_pledge commit boundary** | [boundary summary](outputs/validation/cninfo_d_class_equity_pledge_first_slice_commit_boundary_summary.md) · safe **~33** · CNINFO **0** |
-| **equity_pledge commit boundary gate** | `d_class_equity_pledge_first_slice_commit_boundary_gate = READY_FOR_COMMIT_REVIEW` |
+| **equity_pledge commit boundary gate** | `d_class_equity_pledge_first_slice_commit_boundary_gate = READY_FOR_COMMIT_REVIEW` · **APPROVED_FOR_EXPLICIT_PATH_COMMIT** |
+| **equity_pledge explicit-path commit** | **`85abad0`** · **33 files** · [commit status](outputs/validation/cninfo_d_class_equity_pledge_first_slice_commit_status.md) |
+| **equity_pledge commit gate** | `d_class_equity_pledge_first_slice_commit_gate = PASS_WITH_CAVEAT` · **NOT pushed** · **NOT verified** |
+| **shareholder_change next-component planning** | [plan](plans/cninfo_d_class_shareholder_change_next_component_planning.md) · [matrix](outputs/validation/cninfo_d_class_shareholder_change_next_component_candidate_matrix.csv) · [recommendation](outputs/validation/cninfo_d_class_shareholder_change_next_component_recommendation.md) · [summary](outputs/validation/cninfo_d_class_shareholder_change_next_component_planning_summary.md) · CNINFO **0** |
+| **shareholder_change planning gate** | `d_class_shareholder_change_next_component_planning_gate = READY_FOR_APPROVAL` |
+| **shareholder_change primary recommendation** | **`shareholder_change`** · runner-up **`executive_shareholding`** · first-slice sketch **DSC001–DSC005** |
+| **shareholder_change first-slice sketch** | [plan draft](plans/cninfo_d_class_shareholder_change_first_slice_plan_draft.md) · [universe sketch](outputs/validation/cninfo_d_class_shareholder_change_first_slice_universe_draft_sketch.csv) · **NOT APPROVED** |
 | **equity_pledge first-slice sketch** | [plan draft](plans/cninfo_d_class_equity_pledge_first_slice_plan_draft.md) · superseded by formal plan |
 | **block_trade first-slice approval package** | [plan](plans/cninfo_d_class_block_trade_first_slice_plan.md) · [universe](outputs/validation/cninfo_d_class_block_trade_first_slice_universe_draft.csv) · [checklist](outputs/validation/cninfo_d_class_block_trade_first_slice_approval_checklist.md) · [summary](outputs/validation/cninfo_d_class_block_trade_first_slice_approval_summary.md) · CNINFO **0** |
 | **block_trade approval gate** | `d_class_block_trade_first_slice_approval_gate = READY_FOR_APPROVAL` · **APPROVED_FOR_THIS_LIVE_ONLY** |
@@ -419,7 +464,7 @@ _最后更新：2026-07-10_
 | **block_trade explicit-path commit** | **`403472d`** · **28 files** · [commit status](outputs/validation/cninfo_d_class_block_trade_first_slice_commit_status.md) |
 | **block_trade commit gate** | `d_class_block_trade_first_slice_commit_gate = PASS_WITH_CAVEAT` · **NOT pushed** · **NOT verified** |
 | **margin_trading closure gate** | `d_class_margin_trading_first_slice_closure_gate = PASS_WITH_CAVEAT` |
-| **下一步** | **shareholder_change next-component planning package**（offline · **无 live**） |
+| **下一步** | **Human approve shareholder_change as next Era D component**（exact phrase · **NOT APPROVED**） |
 | 性质 | **规划 only**；7 源市场行为类别；不接 DB/MinIO/RAG；不写 verified；不升级 testing_stable_sample |
 
 ---
@@ -717,6 +762,7 @@ flowchart TD
 | 194 | ~~C-class Era D remaining-50 closure + fuller-market scale planning~~ → **完成**（[50 closure](outputs/validation/cninfo_c_class_erad_needs_review_50_closure_summary.md) · live_needed **0/50** · [fuller-market plan](plans/cninfo_c_class_erad_fuller_market_scale_plan.md) · slice1 **+200** · gate **`PASS_OFFLINE`** + **`READY_FOR_APPROVAL`** · CNINFO **0**） |
 | 195 | ~~C-class Era D fuller-market slice1 harvest dry-run prep~~ → **完成**（[prep summary](outputs/validation/cninfo_c_class_erad_fuller_market_slice1_dryrun_prep_summary.md) · YAML **200** · dry-run **1400** HTTP cases · gate **`PASS_OFFLINE`** · CNINFO **0**） |
 | 196 | ~~C-class Era D fuller-market slice1 live path wiring~~ → **完成**（[live path summary](outputs/validation/cninfo_c_class_erad_fuller_market_slice1_live_path_summary.md) · tests **12/12** · gate **`READY_FOR_APPROVAL`** · **NOT executed live** · CNINFO **0**） |
+| 197 | ~~C-class Era D fuller-market slice1 isolated live harvest~~ → **完成**（[execution summary](outputs/validation/cninfo_c_class_erad_fuller_market_slice1_live_execution_summary.md) · **2 sessions** · CNINFO **~1400** · **193+7** · gate **`PASS_WITH_CAVEAT`** · 863 **untouched**） |
 | 187 | ~~portrait_ontology P0–P3~~ → **完成**（[ontology plan](plans/company_portrait_ontology_plan.md) · **715** fields · pilot **000009** · gates **`PASS_OFFLINE`** · CNINFO **0** · **无 live** · **无 DB**） |
 | 100 | dividend_history YAML backfill → **GO（决策 only）** · **不执行** |
 | 101 | BSE legacy / hold / abnormal side-track → **待文档化** |

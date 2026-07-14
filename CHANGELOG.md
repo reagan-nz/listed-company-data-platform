@@ -1,8 +1,18 @@
 # 阶段成果记录：每个阶段完成了什么
 
-_本文件只记录**已完成**的工作。未来规划见 [ROADMAP.md](ROADMAP.md)，当前进展见 [CURRENT_STATUS.md](CURRENT_STATUS.md)。_
+_本文件只记录**已完成**的工作。未来规划见 [ROADMAP.md](ROADMAP.md)，当前进展见 [CURRENT_STATUS.md](CURRENT_STATUS.md)，控制面见 [PROJECT_CONTROL.md](PROJECT_CONTROL.md)。_
 
 格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)。所有指标保持不变。
+
+---
+
+## 最新：Controller 工作流与文档控制面（2026-07-14）
+
+- **Controller policy foundation**（`0f63a90`）：落地 orchestration / autonomy / worktree / integration / push / recovery 等策略文档（`plans/controller_*.md`）。
+- **Runtime artifact isolation**（`d385bb6`）：扩展 ignore 边界，将 harvest bulk / validation noise / run_meta / guards 等 runtime 产物与仓库历史分离。
+- **Agent infrastructure**（`4a62f78`）：新增 `.cursor/agents/*`（A/B/C/D executors + evidence / git-boundary / regression reviewers）。
+- **PROJECT_CONTROL reconciliation**（`710b3c3`）：控制面寄存器与 post-integration Git 现实同步（A/B HOLD · queue · autonomy split）。
+- **A/B local integration（先前已完成，本条仅登记）**：B fuller slice2 `f0bff3a` · A next-scale slice1 `4118974` · merge `71a83c1` · **无 push** · **无 verified** · **无 production_ready**。
 
 ---
 

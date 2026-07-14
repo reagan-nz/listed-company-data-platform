@@ -1,8 +1,15 @@
 # 动态数据平台存储结构设计：MinIO + MongoDB + PostgreSQL
 
-_最后更新：2026-06-30_
+_最后更新：2026-07-14（仅补充 runtime / 证据生命周期说明；schema 设计正文保留）_
 
 > 本文件是**当前阶段的存储结构设计方案**，属于架构规划，不是已经做出来的系统。当前阶段**只做需求梳理、schema/collection 设计与小样本试点准备，不做全量迁移、不部署生产数据库、不改现有代码与数据**。
+
+### 与当前仓库现实的关系（2026-07-14）
+
+- **证据生命周期：** CNINFO A–D 验证产物优先落在 `outputs/validation/` / `outputs/harvest/`；gate 以 `PASS_WITH_CAVEAT` 等为准，**不自动晋升**为 PostgreSQL 正式库记录，也**不写 verified**。
+- **Runtime 产物与仓库历史分离：** harvest bulk、raw_metadata、live_snapshots、run_meta、guards 等由 ignore 边界隔离（`d385bb6`）；本地文件缓存仍可存在，但不等于 MinIO/生产对象存储已部署。
+- **Controller 架构：** 多 agent 工作流管理采集与边界审查；**不改变**本文件三层存储目标 schema，也不等于存储层已上线。
+- 以下正文中的 MinIO / MongoDB / PostgreSQL 设计**仍然有效作为目标架构**；部署与迁移节奏仍暂缓。
 
 ---
 

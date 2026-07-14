@@ -1,11 +1,13 @@
 # Era C 执行计划（A–F 分层验证 · Composer 可执行）
 
-_最后更新：2026-07-09_
+_最后更新：2026-07-14（历史叙事保留；当前 tip 见下方同步注）_
 
 > **权威分类与验证口径：** [cninfo_data_source_layered_inventory.md](cninfo_data_source_layered_inventory.md)  
-> **仓库导航：** [PROJECT_MAP.md](../PROJECT_MAP.md) · **当前进展：** [CURRENT_STATUS.md](../CURRENT_STATUS.md)
+> **仓库导航：** [PROJECT_MAP.md](../PROJECT_MAP.md) · **当前进展：** [CURRENT_STATUS.md](../CURRENT_STATUS.md) · **控制面：** [PROJECT_CONTROL.md](../PROJECT_CONTROL.md)
 >
 > **只在 Era C 范围内改动**；**不要同时展开所有 Phase**；红线见第 1 节。
+>
+> **2026-07-14 tip 同步（不改写下方历史章节）：** A/B Era D 扩展包已 **local integration completed**（见 eraD / CURRENT_STATUS）；本文件主体仍是 Era C 历史执行记录。C fuller-market / snapshot 相关结论以 CURRENT_STATUS 与 `approved_for_snapshot_rebuild = false` 为准。**无 verified** · **无 production_ready**。
 
 ---
 
@@ -3751,7 +3753,13 @@ Human decision on holdout signoff commit review gate · optional push for `8662e
 
 ~~B 类 Phase 3 post-commit inventory gap review~~ → **完成**（§7dxgm · **185 missing** · gap gate **`READY_FOR_HUMAN_DECISION`** · CNINFO **0**）
 
-**B-class Phase 3 human decision**（Option A artifact recovery live + supplemental commit **vs** Option B hold closed-with-caveat）
+~~B 类 Phase 3 retry_v2 test cleanup hardening~~ → **完成**（test cleanup hardening gate **`PASS_OFFLINE`**）
+
+~~B 类 Phase 3 retry_v2 missing-artifact recovery~~ → **完成**（**185/185 restored** · recovery gate **`PASS_WITH_CAVEAT`**）
+
+~~B 类 Phase 3 retry_v2 supplemental explicit-path commit~~ → **完成**（**185** recovered live sidecars · **无 amend f3f6077** · supplemental review gate **`READY_FOR_HUMAN_DECISION`** · **无 push**）
+
+**B-class Phase 3 supplemental commit review human decision**（push if desired · **无 verified**）
 
 ---
 
