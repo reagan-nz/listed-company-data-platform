@@ -1,0 +1,10 @@
+case_id,company_code,retrieval_status,classification,notes
+BD2E537,002710,empty_response,acceptable_edge,empty_response at EP001/EP005; valid empty corpus signal; accept_with_caveat; live_needed=no; retry_again=no
+BD2E725,301449,empty_response,acceptable_edge,empty_response at EP001/EP005; valid empty corpus signal; accept_with_caveat; live_needed=no; retry_again=no
+BD2E738,301583,empty_response,acceptable_edge,empty_response at EP001/EP005; valid empty corpus signal; accept_with_caveat; live_needed=no; retry_again=no
+BD2E739,301584,empty_response,acceptable_edge,empty_response at EP001/EP005; valid empty corpus signal; accept_with_caveat; live_needed=no; retry_again=no
+BD2E743,301638,empty_response,acceptable_edge,empty_response at EP001/EP005; valid empty corpus signal; accept_with_caveat; live_needed=no; retry_again=no
+BD2E745,301669,empty_response,acceptable_edge,empty_response at EP001/EP005; valid empty corpus signal; accept_with_caveat; live_needed=no; retry_again=no
+BD2E746,301687,empty_response,acceptable_edge,empty_response at EP001/EP005; valid empty corpus signal; accept_with_caveat; live_needed=no; retry_again=no
+BD2E751,601206,empty_response,acceptable_edge,empty_response at EP001/EP005; valid empty corpus signal; accept_with_caveat; live_needed=no; retry_again=no
+BD2E624,300778,network_error,unresolved_failed,EP002 orgId resolution failed during live; root_cause_family=ep002_orgid_network_error; defer retry; not counted in acceptable
