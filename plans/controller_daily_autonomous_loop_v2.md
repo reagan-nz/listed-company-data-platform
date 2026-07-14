@@ -30,6 +30,9 @@ _优先级层：[controller_task_priority_policy_v2.md](controller_task_priority
 **Mission（最高目标）：** 在安全边界内，推动 A/B/C/D 朝全市场数据采集能力前进，并最大化独立 track 的自主进度。详见 [controller_mission_objective_v2.md](controller_mission_objective_v2.md)。
 
 
+**System intent：** Daily Loop v2 是 **mission-progress execution system**（经 track agents 推进 A/B/C/D），**不是** controller 自我维护循环。Controller 维护不得在仍有可发现的安全 mission/evidence 工作时装满预算。
+
+
 本文件是 **主运行策略**。配套：
 
 
@@ -199,13 +202,32 @@ For each of A/B/C/D, plan must state:
 
 
 1. Prefer **offline** continuation over live.  
-2. Prefer **HOLD** over inventing next scale.  
+2. Prefer **HOLD** over inventing **live / next-scale** without scope — HOLD does **not** mean “no offline mission work”.  
 3. `READY_FOR_APPROVAL` ≠ approved.  
-4. post-integration HOLD tracks: no live retry unless new human scope.  
+4. post-integration HOLD tracks: no live retry unless new human scope；**still require Task Discovery** for safe offline candidates.  
 5. One track failure must not cancel other READY tracks.  
 6. Do not schedule push in daily auto plan.  
 7. After a task completes, **re-evaluate the queue** in the same daily run（execution cycle policy v2）— do not stop solely because one iteration finished.  
-8. HOLD / WAITING_APPROVAL on one track must not stop other READY tracks.
+8. HOLD / WAITING_APPROVAL on one track must not stop other READY tracks.  
+9. **Mission Progress Priority：** A/B/C/D capability > track evidence/QA > controller maintenance（task priority v2）.  
+10. If queue has no READY → **Task Discovery** over A/B/C/D mission objectives before `NO_SAFE_READY`.  
+11. Do not spend budget on controller self-updates when mission work exists or is discoverable.  
+
+
+## 4.4 Task Discovery
+
+
+When refresh yields no safe READY:
+
+
+1. Inspect A/B/C/D mission objectives（mission objective v2）.  
+2. Generate safe autonomous candidates（examples: A coverage expansion analysis · B disclosure/event preparation · C QA/evidence improvement · D offline component preparation）.  
+3. Promote only candidates that pass safety / approval / red lines.  
+4. Re-rank with task priority v2（mission-first）.  
+5. Only then may Controller set `NO_SAFE_READY`.  
+
+
+Authority detail: [execution cycle policy v2 §3.1](controller_execution_cycle_policy_v2.md).
 
 
 
@@ -255,6 +277,26 @@ Follow `controller_worktree_synchronization_policy_v1.md`:
 # 6. Phase 4 — Agent Execution Model
 
 
+## 6.0 Agent routing（normative）
+
+
+Track progress and track-evidence tasks **MUST** use:
+
+
+| Track | Agent |
+|-------|-------|
+| A | `a-class-executor` |
+| B | `b-class-executor` |
+| C | `c-class-executor` |
+| D | `d-class-executor` |
+
+
+Controller **coordinates**（plan · discover · budget · commit gate · daily report）but **must not replace** these agents for A/B/C/D work.
+
+
+A run with 0 track-agent dispatches while discovery could have produced safe track candidates is a **failed mission-progress run**.
+
+
 ## 6.1 Agent must
 
 
@@ -262,7 +304,7 @@ Follow `controller_worktree_synchronization_policy_v1.md`:
 2. Execute **only** `allowed_action`  
 3. Write evidence under agreed validation roots  
 4. Validate red lines / output-root guards  
-5. Prepare explicit-path commit inventory when commit_eligible  
+5. Prepare explicit-path commit inventory when commit_eligible（prefer **batched** package）  
 6. Return structured completion report to Controller  
 
 
@@ -333,6 +375,26 @@ Hard rule for Daily Loop v2:
 **local commit/merge may be autonomous when policy satisfied · push always human-controlled.**
 
 
+### Commit batching（required）
+
+
+Prefer:
+
+
+```text
+task batch → validation → bounded explicit-path commit
+```
+
+
+Avoid burning `max_autonomous_commits` on tiny controller commits（tip-align chains · one-line HEAD rewrites · dripped policy files）.
+
+
+- One completed agent task package → prefer **one** domain commit  
+- Related controller docs shipping together → **one** commit  
+- Daily report → prefer **one** end-of-cycle commit  
+- Detail: [execution cycle policy v2 §3.3](controller_execution_cycle_policy_v2.md)
+
+
 
 ---
 
@@ -389,8 +451,15 @@ LOOP_START(date):
 
     ready = tracks_with_safe_READY(P)
     if ready is empty:
-      stop_reason = NO_SAFE_READY
-      break
+      candidates = discover_safe_mission_candidates(A,B,C,D)  # mandatory
+      P = promote_safe_candidates(P, candidates)
+      ready = tracks_with_safe_READY(P)
+      if ready is empty:
+        stop_reason = NO_SAFE_READY
+        break
+
+    # Defer controller-band tasks if any capability/evidence-band ready exists
+    ready = apply_mission_progress_priority(ready, task_priority_v2)
 
     # Track-scoped WAITING_APPROVAL / HOLD: escalate those tracks, do not break loop
     for track in tracks_needing_interrupt(P):
@@ -400,10 +469,14 @@ LOOP_START(date):
     iterations += 1
 
     for track in wave parallel-safe:
+      if track in {A,B,C,D}:
+        agent = required_track_agent(track)   # a/b/c/d-class-executor
+      else:
+        agent = controller_only_if_maintenance_band()
       if not preflight_worktree(track):
         P[track].status = BLOCKED
         continue
-      R = dispatch_agent(track, P[track])
+      R = dispatch_agent(agent, track, P[track])  # Controller must not substitute
       package_evidence(R)
       if R.needs_human and interrupt_is_global(R):
         stop_reason = HUMAN_INTERRUPT
@@ -413,7 +486,7 @@ LOOP_START(date):
         continue
       if R.commit_eligible and commit_autonomy_allows(R):
         if commit_budget_remaining(budget):
-          explicit_path_commit(R)
+          explicit_path_commit_batched(R)   # prefer one package commit
           budget.commits_used += 1
         else:
           stop_reason = BUDGET_REACHED
@@ -424,14 +497,14 @@ LOOP_START(date):
       break
     # else: loop → re-read queue
 
-  write_daily_report(P, results, stop_reason, budget, iterations)
-  # include Progress intelligence + execution_cycle fields
+  write_daily_report_once(P, results, stop_reason, budget, iterations)
+  # include Progress intelligence + execution_cycle + agent dispatch counts
   NEVER push
 LOOP_END
 ```
 
 
-Stop only for: `NO_SAFE_READY` · `HUMAN_INTERRUPT`（global）· `BUDGET_REACHED` · `SAFETY_VIOLATION`.
+Stop only for: `NO_SAFE_READY`（**after discovery**）· `HUMAN_INTERRUPT`（global）· `BUDGET_REACHED` · `SAFETY_VIOLATION`.
 
 
 
@@ -477,4 +550,5 @@ Enabling Daily Loop v2 as default runtime requires human acceptance of these fou
 - Not auto remote publication  
 - Not automatic gate promotion  
 - Not silent PROJECT_CONTROL rewrite every loop（control updates remain explicit packages）  
-- Not a single-iteration day（one queue pass then stop while safe READY + budget remain）
+- Not a single-iteration day（one queue pass then stop while safe READY + budget remain）  
+- Not a **controller maintenance loop**（policy/report commits with 0 track-agent mission work while discoverable safe A/B/C/D candidates exist）
