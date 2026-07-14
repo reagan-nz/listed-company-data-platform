@@ -1,0 +1,20 @@
+exclusion_id,cohort_family,company_code,company_name,case_id,exclusion_ledger_status,exclusion_audit_status,exclusion_promotion_allowed,source_ledger_status,source_audit_or_category,source_promotion_allowed,source_package_ref,consistency_result,mismatch_fields,notes
+EXC-P01,partial7,600001,邯郸钢铁,CE1E002,partial,partial,no,partial,partial,no,cninfo_c_class_partial7_evidence_completeness_20260714.md,MATCH,,
+EXC-P02,partial7,600005,武钢股份,CE1E003,partial,partial,no,partial,partial,no,cninfo_c_class_partial7_evidence_completeness_20260714.md,MATCH,,
+EXC-P03,partial7,600068,葛洲坝,CE1E034,partial,partial,no,partial,partial,no,cninfo_c_class_partial7_evidence_completeness_20260714.md,MATCH,,
+EXC-P04,partial7,000003,PT金田A,CE1E061,partial,partial,no,partial,partial,no,cninfo_c_class_partial7_evidence_completeness_20260714.md,MATCH,,dual-track: partial7 CE1E061 + holdout9 by design
+EXC-P05,partial7,000015,PT中浩A,CE1E067,partial,partial,no,partial,partial,no,cninfo_c_class_partial7_evidence_completeness_20260714.md,MATCH,,
+EXC-P06,partial7,000022,深赤湾A,CE1E070,partial,partial,no,partial,partial,no,cninfo_c_class_partial7_evidence_completeness_20260714.md,MATCH,,
+EXC-P07,partial7,000024,招商地产,CE1E071,partial,partial,no,partial,partial,no,cninfo_c_class_partial7_evidence_completeness_20260714.md,MATCH,,
+EXC-E01,empty_dividend3,688031,星环科技,CE1E176,complete,needs_review,no,complete,needs_review,no,cninfo_c_class_empty_dividend_evidence_20260714.md,MATCH,,
+EXC-E02,empty_dividend3,688062,迈威生物,CE1E188,complete,needs_review,no,complete,needs_review,no,cninfo_c_class_empty_dividend_evidence_20260714.md,MATCH,,
+EXC-E03,empty_dividend3,688071,华依科技,CE1E193,complete,needs_review,no,complete,needs_review,no,cninfo_c_class_empty_dividend_evidence_20260714.md,MATCH,,
+EXC-H01,holdout9,000003,PT金田A,,closed_with_caveat,hold_for_review,no,closed_with_caveat,hold_for_review,no,cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv,MATCH,,dual-track: partial7 CE1E061 + holdout9 by design
+EXC-H02,holdout9,000578,盐湖集团,,closed_with_caveat,hold_for_review,no,closed_with_caveat,hold_for_review,no,cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv,MATCH,,
+EXC-H03,holdout9,000666,经纬纺机,,closed_with_caveat,hold_for_review,no,closed_with_caveat,hold_for_review,no,cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv,MATCH,,
+EXC-H04,holdout9,000689,ST宏业,,closed_with_caveat,hold_for_review,no,closed_with_caveat,hold_for_review,no,cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv,MATCH,,
+EXC-H05,holdout9,000861,海印股份,,closed_with_caveat,hold_for_review,no,closed_with_caveat,hold_for_review,no,cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv,MATCH,,
+EXC-H06,holdout9,000961,ST中南,,closed_with_caveat,hold_for_review,no,closed_with_caveat,hold_for_review,no,cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv,MATCH,,
+EXC-H07,holdout9,002280,ST联络,,closed_with_caveat,hold_for_review,no,closed_with_caveat,hold_for_review,no,cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv,MATCH,,
+EXC-H08,holdout9,301212,联盛化学,,closed_with_caveat_still_partial,C35R016,no,closed_with_caveat_still_partial,C35R016,no,cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv,MATCH,,
+EXC-H09,holdout9,600220,ST阳光,,closed_with_caveat,hold_for_review,no,closed_with_caveat,hold_for_review,no,cninfo_c_class_phase35_holdout_closed_with_caveat_ledger.csv,MATCH,,
