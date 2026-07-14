@@ -1,0 +1,20 @@
+rule_id,applies_to,ledger_expectation,audit_expectation,offline_action,requires_snapshot,requires_live
+DLVR-001,both,harvest_status=complete when normalized source files >=10 (existence; zero-byte counts),N/A alone; cross-check with DLVR-004/005,count normalized/<source_type>/ per company; reconcile with company_harvest_status.csv,false,false
+DLVR-002,both,harvest_status=partial when 1<=normalized sources<=9,resume_state=partial (status_csv_partial),list missing normalized sources; match raw retrieval_status to gaps,false,false
+DLVR-003,both,harvest_status=missing when normalized sources=0,resume_state=missing (no_status_row_no_normalized_files),confirm no status row and no disk artifacts; flag universe gap,false,false
+DLVR-004,both,N/A (ledger ignores content),source present only if jsonl has >=1 non-empty line or json size>2,recompute per-source present offline; write source_ledger rows,false,false
+DLVR-005,both,complete (10/10 file existence),complete (status_csv_complete_sources_ok),no caveat; counts toward audit complete 190,false,false
+DLVR-P01,partial,partial (4/10 normalized),partial (status_csv_partial),package raw 6x http_error/500 + security_observe delisted=true; cite partial7 offline matrix,false,false
+DLVR-P02,partial,partial retained despite raw HTTP 500; not upgraded to missing,partial; live recommendation deferred_targeted_live_after_approval,record business_code=9240002; disposition=accept_with_caveat; not re-live recommended,false,false
+DLVR-P03,partial,must not label 4/10 as complete,must not label partial as complete,verify ledger audit reconcile agree; violation => FAIL_REVIEW_REQUIRED,false,false
+DLVR-P04,partial,partial excluded from snapshot complete pool,partial holds deferred_targeted_live_after_approval or hold,exclude 7 partial cases from snapshot planning; approved_for_snapshot_rebuild=false,false,false
+DLVR-E01,empty_dividend,complete (10/10 files exist incl zero-byte dividend),needs_review (status_csv_complete_but_source_gap; audit 9/10 present),document legal dual-layer divergence; forbid flipping ledger due to audit needs_review,false,false
+DLVR-E02,empty_dividend,complete; raw dividend valid_empty http 200 raw_records=[],needs_review; source_ledger dividend_history=no/missing by content rule,package raw valid_empty envelope + zero-byte normalized path + audit/ledger cross-ref,false,false
+DLVR-E03,empty_dividend,complete; security_observe delisted=false,needs_review (distinct from delisted partial pattern),distinguish from partial7 delisted=true; disposition=accept_with_caveat,false,false
+DLVR-E04,empty_dividend,complete must not downgrade to partial due to audit,needs_review; live recommendation offline_review_first,cite caveat_ledger no re-live; no CNINFO without Controller approval,false,false
+DLVR-E05,empty_dividend,dividend file exists zero-byte => sources_present,dividend no valid lines => missing,register audit-vs-ledger semantic mismatch as known caveat not data defect,false,false
+DLVR-G01,both,maintain closure rebuild 193 complete / 7 partial / 0 missing,maintain closure audit 190 complete / 7 partial / 3 needs_review,all 10 caveat cases disposition=accept_with_caveat; gate=PASS_WITH_CAVEAT,false,false
+DLVR-G02,both,do not erase caveat due to high complete count,do not silently ignore needs_review/partial,forbid verified / production_ready / bare PASS upgrade,false,false
+DLVR-G03,both,N/A,N/A,approved_for_snapshot_rebuild=false unchanged; rules do not trigger snapshot rebuild,false,false
+DLVR-G04,both,complete/partial = retrieval outcome only,resume_state = quality/eligibility layer,downstream must read both layers; single-layer complete insufficient for production bundle,false,false
+DLVR-G05,both,unknown harvest_status value,needs_review (unmapped_status_csv),manual review; no automatic live,false,false
