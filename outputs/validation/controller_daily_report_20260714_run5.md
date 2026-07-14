@@ -4,7 +4,7 @@ Date: 2026-07-14
 Run: **ops run5**  
 state_refresh_timestamp（start）: `2026-07-14T17:32:45+0800`  
 state_refresh_timestamp（stop）: `2026-07-14T17:38:55+0800`  
-HEAD: `aa85ae8`（mission packages）· closeout commit follows  
+HEAD: `8e74edd`
 Budget: 10 iter · 120 min · 12 commits  
 
 ## Iterations
@@ -81,7 +81,7 @@ Iterations completed: **4**
 |-----|------|
 | iterations | 4 / 10 |
 | runtime | ~6 min / 120 |
-| autonomous commits | 4 mission + 1 closeout pending / 12 |
+| autonomous commits | 6 / 12 |
 
 ## Final verdict
 
