@@ -1,0 +1,7 @@
+case_id,company_code,failure_class,disposition,live_needed,offline_next_action,notes
+AD2E216,601206,not_found_or_matching_miss,accept_unresolved_with_caveat,no,offline_raw_metadata_orgid_matching_review,Slice1 live not_found; records=0 or orgId network_error; retain caveat; no live retry in this package
+AD2E270,603262,not_found_or_matching_miss,accept_unresolved_with_caveat,no,offline_raw_metadata_orgid_matching_review,Slice1 live not_found; records=0 or orgId network_error; retain caveat; no live retry in this package
+AD2E284,603400,not_found_or_matching_miss,accept_unresolved_with_caveat,no,offline_raw_metadata_orgid_matching_review,Slice1 live not_found; records=0 or orgId network_error; retain caveat; no live retry in this package
+AD2E308,603698,not_found_or_matching_miss,accept_unresolved_with_caveat,no,offline_raw_metadata_orgid_matching_review,Slice1 live not_found; records=0 or orgId network_error; retain caveat; no live retry in this package
+AD2E323,000559,network_or_empty_response,accept_unresolved_with_caveat,no,offline_request_trace_and_orgid_review,Slice1 live network_error; records=0 or orgId network_error; retain caveat; no live retry in this package
+AD2E373,002710,not_found_or_matching_miss,accept_unresolved_with_caveat,no,offline_raw_metadata_orgid_matching_review,Slice1 live not_found; records=0 or orgId network_error; retain caveat; no live retry in this package
