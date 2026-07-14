@@ -1,6 +1,6 @@
 # CNINFO C-Class Harvest Dry-Run Validation Summary
 
-_生成时间：2026-07-09_
+_生成时间：2026-07-10_
 
 ## Run mode
 
@@ -12,16 +12,16 @@ _生成时间：2026-07-09_
 
 | check | result |
 |-------|--------|
-| company_count | **500** (expected 863) |
+| company_count | **200** (expected 863) |
 | hold_overlap | **0** |
-| planned_http_cases | **3500** (expected 6041) |
+| planned_http_cases | **1400** (expected 6041) |
 | preflight_gate | **PASS** |
 
 ## Planned cases
 
-- **companies:** 500
-- **matrix_rows:** 5000 (500 × 10)
-- **planned_http_cases:** **3500**
+- **companies:** 200
+- **matrix_rows:** 2000 (200 × 10)
+- **planned_http_cases:** **1400**
 - **source_count:** **10**
 
 ## Source matrix
@@ -64,21 +64,21 @@ _生成时间：2026-07-09_
 
 ### raw destination（示例）
 
-- `outputs/harvest/cninfo_c_class/phase3_batch_500_001/raw/basic_profile/{company_code}.json`
-- `outputs/harvest/cninfo_c_class/phase3_batch_500_001/raw/dividend_history/{company_code}.jsonl`
+- `outputs/harvest/cninfo_c_class/_mock_fuller_market_slice1_dryrun/raw/basic_profile/{company_code}.json`
+- `outputs/harvest/cninfo_c_class/_mock_fuller_market_slice1_dryrun/raw/dividend_history/{company_code}.jsonl`
 
 ### normalized destination（示例）
 
-- `outputs/harvest/cninfo_c_class/phase3_batch_500_001/normalized/company_basic_profile/{company_code}.json`
-- `outputs/harvest/cninfo_c_class/phase3_batch_500_001/normalized/dividend_history/{company_code}.jsonl`
+- `outputs/harvest/cninfo_c_class/_mock_fuller_market_slice1_dryrun/normalized/company_basic_profile/{company_code}.json`
+- `outputs/harvest/cninfo_c_class/_mock_fuller_market_slice1_dryrun/normalized/dividend_history/{company_code}.jsonl`
 
 ### quality record（planned）
 
-- `outputs/harvest/cninfo_c_class/phase3_batch_500_001/quality/harvest_summary.md`
-- `outputs/harvest/cninfo_c_class/phase3_batch_500_001/quality/field_fill_rate.csv`
-- `outputs/harvest/cninfo_c_class/phase3_batch_500_001/quality/source_quality.csv`
-- `outputs/harvest/cninfo_c_class/phase3_batch_500_001/quality/hold_company_list.csv`
-- `outputs/harvest/cninfo_c_class/phase3_batch_500_001/quality/company_harvest_status.csv`
+- `outputs/harvest/cninfo_c_class/_mock_fuller_market_slice1_dryrun/quality/harvest_summary.md`
+- `outputs/harvest/cninfo_c_class/_mock_fuller_market_slice1_dryrun/quality/field_fill_rate.csv`
+- `outputs/harvest/cninfo_c_class/_mock_fuller_market_slice1_dryrun/quality/source_quality.csv`
+- `outputs/harvest/cninfo_c_class/_mock_fuller_market_slice1_dryrun/quality/hold_company_list.csv`
+- `outputs/harvest/cninfo_c_class/_mock_fuller_market_slice1_dryrun/quality/company_harvest_status.csv`
 
 **output_paths_gate:** **PASS**
 
@@ -105,6 +105,6 @@ Live harvest **pending human approval**（需人工批准后 `--live`）。
 
 ## Appendix
 
-- Sample: `lab/eval_companies_c_class_phase3_batch_500_001.yaml`
+- Sample: `lab/eval_companies_c_class_fuller_market_slice1_200.yaml`
 - Matrix CSV: [cninfo_c_class_harvest_dryrun_report.csv](cninfo_c_class_harvest_dryrun_report.csv)
 - Dry-run summary: [cninfo_c_class_harvest_dryrun_summary.md](cninfo_c_class_harvest_dryrun_summary.md)

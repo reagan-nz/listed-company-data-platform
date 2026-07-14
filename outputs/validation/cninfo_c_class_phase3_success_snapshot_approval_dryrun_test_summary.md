@@ -1,6 +1,6 @@
 # CNINFO C-Class Snapshot Batch Dry-Run Summary
 
-_生成时间：2026-07-09_
+_生成时间：2026-07-10_
 
 > 离线 batch runner dry-run。**无 CNINFO** · **未调用 build_snapshot** · **未生成 snapshot JSON**
 
