@@ -380,7 +380,7 @@ Track · Stage · Executor · Reviewer · Executor/Controller/Reviewer gates · 
 |------|-------|------|
 | A next-scale slice1 | **INFO** | committed `4118974` · merged `71a83c1` · **post-integration HOLD** · unresolved **6** retained · **NOT verified** |
 | B fuller slice2 | **INFO** | committed `f0bff3a` · **post-integration HOLD** · BD2E624 retry **found** · cumulative **798** proposed · **NOT verified** |
-| C slice1 ledger+QA | **HOLD** | pilot closed `PASS_WITH_CAVEAT` · snapshot still **blocked** (`approved_for_snapshot_rebuild = false`) |
+| C slice1 ledger+QA + snapshot prep | **HOLD** | progression `PACKAGE_COMPLETE` · prep `approved_for_snapshot_rebuild = true`（**preparation path only** · C-06）· C-07 exclusion audit `PASS_OFFLINE` · prod execute **blocked**（`execute_production_snapshot_rebuild = false` · `rebuild_candidate=all no` · Option A HOLD） |
 | D shareholder_change | **Human Level-2** | component approval pending · `READY_FOR_APPROVAL` ≠ approved |
 | remote publication | **Human** | `main` ahead **42** / behind **4** · push **NOT authorized** |
 | D commits unpushed · disclosure `d37ce0a` not on main | **INFO / Controller** | no self-approve push |
@@ -390,7 +390,7 @@ Track · Stage · Executor · Reviewer · Executor/Controller/Reviewer gates · 
 
 ## Controller Queue (priority)
 
-1. **C** — slice1 ledger+QA **done** (`PASS_WITH_CAVEAT`) · **HOLD** · optional later slice2 planning · **no snapshot**
+1. **C** — slice1 ledger+QA **done** · progression prep **on**（C-06/C-07）· **HOLD** prod snapshot execute（`rebuild_candidate=all no` · Option A）· optional later slice2 planning
 2. **D** — human component approval for shareholder_change (Level 2) · `READY_FOR_APPROVAL` ≠ approved
 3. **Remote publication checkpoint** — human push / recovery strategy for `main` (ahead 42 · behind 4) · **pending**
 4. **A** — **post-integration HOLD** (`4118974` / `71a83c1`) · unresolved caveats retained · no live retry
