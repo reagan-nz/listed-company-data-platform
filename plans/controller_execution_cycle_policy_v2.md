@@ -2,7 +2,7 @@
 
 
 _最后更新：2026-07-14_  
-_配套：[controller_daily_autonomous_loop_v2.md](controller_daily_autonomous_loop_v2.md) · [controller_mission_objective_v2.md](controller_mission_objective_v2.md) · [controller_progress_tracking_v2.md](controller_progress_tracking_v2.md) · [controller_task_priority_policy_v2.md](controller_task_priority_policy_v2.md) · [controller_task_generator_policy_v2.md](controller_task_generator_policy_v2.md) · [controller_task_continuation_policy_v2.md](controller_task_continuation_policy_v2.md) · [controller_capability_gap_analysis_v2.md](controller_capability_gap_analysis_v2.md) · [controller_task_memory_policy_v2.md](controller_task_memory_policy_v2.md) · [controller_resource_allocation_policy_v2.md](controller_resource_allocation_policy_v2.md) · [controller_stuck_detection_policy_v2.md](controller_stuck_detection_policy_v2.md) · [controller_milestone_management_v2.md](controller_milestone_management_v2.md) · [controller_human_interrupt_policy_v2.md](controller_human_interrupt_policy_v2.md) · [controller_commit_autonomy_policy_v2.md](controller_commit_autonomy_policy_v2.md)_
+_配套：[controller_daily_autonomous_loop_v2.md](controller_daily_autonomous_loop_v2.md) · [controller_mission_objective_v2.md](controller_mission_objective_v2.md) · [controller_progress_tracking_v2.md](controller_progress_tracking_v2.md) · [controller_mission_replanning_loop_v2.md](controller_mission_replanning_loop_v2.md) · [controller_task_priority_policy_v2.md](controller_task_priority_policy_v2.md) · [controller_task_generator_policy_v2.md](controller_task_generator_policy_v2.md) · [controller_task_continuation_policy_v2.md](controller_task_continuation_policy_v2.md) · [controller_capability_gap_analysis_v2.md](controller_capability_gap_analysis_v2.md) · [controller_task_memory_policy_v2.md](controller_task_memory_policy_v2.md) · [controller_resource_allocation_policy_v2.md](controller_resource_allocation_policy_v2.md) · [controller_stuck_detection_policy_v2.md](controller_stuck_detection_policy_v2.md) · [controller_milestone_management_v2.md](controller_milestone_management_v2.md) · [controller_human_interrupt_policy_v2.md](controller_human_interrupt_policy_v2.md) · [controller_commit_autonomy_policy_v2.md](controller_commit_autonomy_policy_v2.md)_
 
 
 ## 1. Purpose
@@ -37,35 +37,34 @@ Daily Autonomous Loop v2 在**同一次日运行（one daily run）**内，不�
 ```text
 CYCLE_START (within one Daily Loop run)
     ↓
-Read state
+Mission state assessment
     ↓
-Generate / refresh queue
+┌── Mission replanning loop（dynamic queue）──────────────┐
+│  Recalculate A/B/C/D capability gaps                   │
+│       ↓                                                │
+│  Generate / select highest-value safe target           │
+│    （NOT a fixed todo list · generator + priority）    │
+│       ↓                                                │
+│  Assign track agent → execute → evidence → validate    │
+│       ↓                                                │
+│  Bounded commit if commit budget remains               │
+│       ↓                                                │
+│  Update memory + state                                 │
+│       ↓                                                │
+│  Replan（mandatory）→ next target                      │
+│       ↓                                                │
+│  Continue until reassessment finds no valuable safe    │
+│    work / interrupt / iteration-runtime budget / safety│
+└────────────────────────────────────────────────────────┘
     ↓
-If no safe READY → Task Discovery（inspect A/B/C/D mission objectives）
-    ↓
-Select highest-value safe task
-  （mission progress > evidence > controller maintenance）
-  （task priority policy v2）
-    ↓
-Dispatch owning track agent（not Controller substitute）
-    ↓
-Execute (bounded allowed_action)
-    ↓
-Validate (evidence + red lines)
-    ↓
-Bounded commit if allowed（prefer batched package · not microcommits）
-    ↓
-Update state (plan + track status + evidence pointers)
-    ↓
-Re-read queue
-    ↓
-Continue if safe READY / discoverable mission tasks exist
-    ↓
-else → STOP_CYCLE → Daily Report + Progress intelligence
+STOP → Daily Report（incl. Completed / Next targets / Gaps / Why stopped）
 ```
 
 
-One **iteration** = one pass through select →（discover if needed）→ agent execute → validate → optional **batched** commit → update → re-read.
+One **iteration** = assess/replan → select **one**（or parallel-safe）highest-value target → agent execute → validate → optional commit → memory → **mandatory gap recalculation** before next select.
+
+
+Authority: [controller_mission_replanning_loop_v2.md](controller_mission_replanning_loop_v2.md).
 
 
 
@@ -74,25 +73,23 @@ One **iteration** = one pass through select →（discover if needed）→ agent
 # 3. Selection rules
 
 
-When refreshing the queue, Controller must:
+When refreshing **or after every completed task**, Controller must:
 
 
-1. Re-classify A/B/C/D using current git + evidence + PROJECT_CONTROL.  
-2. Filter to **safe READY** only（no missing approval · no red-line action）.  
-3. If the safe READY set is empty → run **Task Discovery**（§3.1）before considering stop.  
-4. Rank remaining candidates with [controller_task_priority_policy_v2.md](controller_task_priority_policy_v2.md):  
-   **Mission Progress Priority:** A/B/C/D capability > track evidence/QA > controller maintenance；  
-   then P1→P5 within that hard order.  
-5. Select the **highest-value safe** task（or parallel-safe wave）.  
-6. **Route** track progress tasks to the owning agent（§3.2）— Controller coordinates only.  
-7. Prefer offline / capability-advancing work over speculative live.  
-8. Never select an action that requires missing Level-2 approval.  
-9. Never invent **live / approval-bypass** READY to fill idle budget.  
-10. Do not prefer controller P4/P5 while safe mission/evidence candidates exist or were just discovered.  
-11. Do not consume execution budget on controller self-updates when mission work exists.  
+1. **Recalculate** A/B/C/D capability gaps（gap analysis v2）— mandatory before next select.  
+2. Re-classify tracks using current git + evidence + PROJECT_CONTROL + **fresh gaps**.  
+3. Filter to **safe READY** only（no missing approval · no red-line action）.  
+4. If the safe READY set is empty **or** prior generated list is stale → run **Task Discovery / Generation**（§3.1）.  
+5. Rank with [task priority policy v2](controller_task_priority_policy_v2.md) under Mission Progress Priority.  
+6. Select the **highest-value safe** next target（dynamic queue — do **not** drain a fixed todo list）.  
+7. **Route** track work to owning agent（§3.2）.  
+8. Prefer offline / capability-advancing work over speculative live.  
+9. Never select missing Level-2 approval actions · never invent live READY to fill budget.  
+10. Do not prefer controller maintenance while mission/evidence targets exist after replan.  
+11. After execute/validate/commit/memory → return to step 1（[mission replanning loop v2](controller_mission_replanning_loop_v2.md)）.  
 
 
-If multiple READY tracks exist: may run in parallel when worktree isolation allows（Daily Loop Phase 3）；each parallel unit still counts toward iteration / commit / runtime budgets as defined in §6. Parallel waves must still respect mission-first priority（no controller filler beside an available track P1）.
+Parallel waves only when isolation + expected mission gain justify — still replan after the wave.
 
 
 Selection authority: **task priority policy v2**. Mission objective v2 defines what mission progress means; progress tracking v2 supplies bottleneck / coverage inputs.
@@ -195,17 +192,25 @@ Stop **execution cycling** and proceed to Daily Report when **any** of:
 
 | Stop reason | Meaning |
 |-------------|---------|
-| `NO_SAFE_READY` | after refresh **and** task generation/discovery **and** stuck analysis（when applicable）, still no safe READY `allowed_action` |
+| `NO_SAFE_READY` | after **mission reassessment**（recalculate A/B/C/D gaps + generation + stuck）, still no valuable safe READY target |
 | `HUMAN_INTERRUPT` | interrupt policy requires human before further autonomous work（may be track-scoped; see §5） |
-| `BUDGET_REACHED` | any daily execution budget limit hit（§6） |
+| `BUDGET_REACHED` | iteration/runtime budget exhausted for further execute cycles（commit budget: see §6.3） |
 | `SAFETY_VIOLATION` | red-line / ownership / evidence honesty breach — halt further autonomous actions |
+
+
+### Do NOT stop because
+
+
+- a previously generated todo list finished  
+- one agent or one track package finished  
+- HOLD / WAITING_APPROVAL exists  
 
 
 After stop:
 
 
-1. Emit Daily Report + Progress intelligence（progress tracking v2）.  
-2. Record stop reason and remaining HOLD / WAITING_APPROVAL.  
+1. Emit Daily Report + Progress + Planning + **replanning fields**（Completed this cycle · Generated next targets · Current mission gaps · Why stopped · Next recommended autonomous target）.  
+2. Record remaining HOLD / WAITING_APPROVAL.  
 3. **Never** auto-push.  
 
 
@@ -268,10 +273,24 @@ Defaults may be tightened by human in PROJECT_CONTROL / daily plan header. Raisi
 ## 6.3 On budget reached
 
 
+Budget is a **safety boundary**, not mission completion.
+
+
 ```text
-status: BUDGET_REACHED
-action: stop cycling · write daily report · list unfinished READY (if any) as remaining work
-forbidden: extending budget silently · starting live to “finish faster”
+max_iterations / max_runtime exhausted:
+  stop further agent execute cycles · write daily report
+
+max_autonomous_commits exhausted:
+  stop additional commits
+  MAY continue reasoning / gap recalculation / reporting without new commits
+  MUST NOT invent live work to “use” remaining iteration budget
+```
+
+
+```text
+status: BUDGET_REACHED（scoped）
+forbidden: treating commit-budget hit as full-market mission complete
+           extending budget silently
 ```
 
 

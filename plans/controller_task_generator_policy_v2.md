@@ -2,17 +2,17 @@
 
 
 _最后更新：2026-07-14_  
-_配套：[controller_execution_cycle_policy_v2.md](controller_execution_cycle_policy_v2.md) · [controller_capability_gap_analysis_v2.md](controller_capability_gap_analysis_v2.md) · [controller_task_memory_policy_v2.md](controller_task_memory_policy_v2.md) · [controller_task_priority_policy_v2.md](controller_task_priority_policy_v2.md) · [controller_mission_objective_v2.md](controller_mission_objective_v2.md)_
+_配套：[controller_execution_cycle_policy_v2.md](controller_execution_cycle_policy_v2.md) · [controller_mission_replanning_loop_v2.md](controller_mission_replanning_loop_v2.md) · [controller_capability_gap_analysis_v2.md](controller_capability_gap_analysis_v2.md) · [controller_task_memory_policy_v2.md](controller_task_memory_policy_v2.md) · [controller_task_priority_policy_v2.md](controller_task_priority_policy_v2.md) · [controller_mission_objective_v2.md](controller_mission_objective_v2.md)_
 
 
 ## 1. Purpose
 
 
-When the Daily Autonomous Loop queue has **no READY task**, Controller must **generate** safe autonomous candidate tasks — not stop immediately.
+When the Daily Autonomous Loop needs a **next target**, Controller must **generate** safe autonomous candidate tasks from **current** mission gaps — not only when the queue is empty, and not as a once-per-day fixed todo list.
 
 
-This policy is the **task generation** authority behind Task Discovery.  
-It turns mission + progress + gaps + memory into structured candidates for ranking and agent routing.
+This policy is the **task generation** authority behind Task Discovery **and** continuous [mission replanning](controller_mission_replanning_loop_v2.md).  
+It turns mission + progress + **fresh** gaps + memory into structured candidates for ranking and agent routing.
 
 
 
@@ -25,12 +25,14 @@ Run the generator when **any** of:
 
 
 1. Refresh yields empty safe READY set.  
-2. Continuation policy requests a successor after a completed task.  
-3. Stuck detection asks for alternative autonomous actions.  
-4. Gap analyzer emits actionable gaps without an existing READY task.  
+2. **After every completed task** — as part of mandatory replan（even if prior candidates remain）.  
+3. Continuation policy requests a successor after a completed task.  
+4. Stuck detection asks for alternative autonomous actions.  
+5. Gap analyzer emits actionable gaps without an existing READY task that still matches.  
 
 
-Do **not** skip generation solely because PROJECT_CONTROL shows HOLD / WAITING_APPROVAL.
+Do **not** skip generation solely because PROJECT_CONTROL shows HOLD / WAITING_APPROVAL.  
+Do **not** treat an earlier generated batch as the remaining schedule without re-scoring against recalculated A/B/C/D gaps.
 
 
 
@@ -39,18 +41,25 @@ Do **not** skip generation solely because PROJECT_CONTROL shows HOLD / WAITING_A
 # 3. Analysis inputs
 
 
+**Prerequisite：** complete [state refresh](controller_mission_replanning_loop_v2.md)（git · evidence · memory · progress · track status）before reading inputs below. Do not generate from stale snapshots.
+
+
 Before emitting candidates, analyze:
 
 
 | Input | Source |
 |-------|--------|
 | Mission objective | mission objective v2 · A/B/C/D goals |
-| Progress intelligence | progress tracking v2 · latest baseline/report |
-| Track gaps | capability gap analysis v2 |
-| Historical tasks | task memory v2（completed / failed / deferred / rejected / blockers） |
+| Progress intelligence | progress tracking v2 · latest baseline/report（refreshed） |
+| Track gaps | capability gap analysis v2（after refresh） |
+| Historical tasks | task memory v2（refreshed） |
+| Track status | PROJECT_CONTROL + git reality（refreshed） |
 
 
 Reject candidates that memory marks as completed-equivalent, human-rejected, or known-blocked approaches.
+
+
+When no candidate is promoted, emit a **candidate audit**（mission replanning §2.2）before `NO_VALUABLE_SAFE_TASK`.
 
 
 
@@ -119,23 +128,28 @@ These are templates — concrete candidates must cite evidence paths and gap ids
 
 ---
 
-# 7. Promotion
+# 7. Promotion / dynamic queue
 
 
 ```text
-generate candidates
+recalculate A/B/C/D gaps
+    ↓
+generate candidates（from fresh gaps + memory）
     ↓
 filter by safety + memory
     ↓
 gap-align + priority rank
     ↓
-promote offline_safe → READY
+select highest-value target（promote offline_safe → READY）
     ↓
 dispatch required_agent
+    ↓
+after completion → replan（do not blindly execute leftover list）
 ```
 
 
-If zero candidates survive filters → only then may cycle use `NO_SAFE_READY`（after stuck analysis if repeats）.
+Stale candidates from a prior wave that no longer match gaps may be dropped or deferred.  
+If zero candidates survive filters after reassessment → run **candidate audit**（per track: considered / rejected / reason）→ only then may cycle use `NO_VALUABLE_SAFE_TASK` / `NO_SAFE_READY`（after stuck analysis if repeats）.
 
 
 
@@ -152,3 +166,7 @@ Forbidden:
 - duplicate completed memory entries  
 - Controller-only busywork labeled as A/B/C/D mission progress  
 - candidates without `expected_capability_improvement`  
+- treating a generated batch as a fixed todo list that must be fully drained before replan  
+- skipping A/B/C/D gap recalculation because leftover candidates exist  
+- generating candidates without state refresh  
+- stopping with NO_VALUABLE_SAFE_TASK without recording rejected candidates and reasons  

@@ -265,6 +265,20 @@ Branch: main (ahead X / behind Y)
 ### Next recommended actions
 - ...
 
+### Replanning summary（required）
+- State refresh timestamp:
+- Completed this cycle:
+- Generated next targets:
+- Current mission gaps:
+- Candidate search summary:
+  - Track A — considered / rejected / reasons:
+  - Track B — considered / rejected / reasons:
+  - Track C — considered / rejected / reasons:
+  - Track D — considered / rejected / reasons:
+- Why no higher-value task exists:
+- Why stopped:
+- Next recommended autonomous target:
+
 ### Remaining work
 - ...
 
@@ -278,7 +292,7 @@ Branch: main (ahead X / behind Y)
 - Human decisions required:
 - execution_cycle:
   - iterations_completed:
-  - stop_reason: NO_SAFE_READY | HUMAN_INTERRUPT | BUDGET_REACHED | SAFETY_VIOLATION
+  - stop_reason: NO_VALUABLE_SAFE_TASK | NO_SAFE_READY | HUMAN_INTERRUPT | BUDGET_REACHED | SAFETY_VIOLATION
   - budget: max_iterations/used · max_runtime/used · max_autonomous_commits/used
   - continued_despite_hold_or_waiting:
   - tracks_still_ready_at_stop:
@@ -319,7 +333,10 @@ Branch: main (ahead X / behind Y)
 | overall_completion_pct | capability-based estimate or `unknown` · never from commit/file counts |
 | estimated_remaining_effort | velocity-based or `unknown` · never fabricate calendar ETAs |
 | Current bottleneck | binding constraint on mission progress · required |
-| stop_reason | `NO_SAFE_READY` · `HUMAN_INTERRUPT` · `BUDGET_REACHED` · `SAFETY_VIOLATION` · from [execution cycle policy v2](controller_execution_cycle_policy_v2.md) |
+| stop_reason | `NO_VALUABLE_SAFE_TASK`（alias `NO_SAFE_READY`）· `HUMAN_INTERRUPT` · `BUDGET_REACHED` · `SAFETY_VIOLATION` |
+| State refresh timestamp | required before each replan and on stop · [mission replanning §2.1](controller_mission_replanning_loop_v2.md) |
+| Candidate search summary | per-track considered / rejected / reasons · required before `NO_VALUABLE_SAFE_TASK` |
+| Why no higher-value task exists | required on stop when no target selected · not “HOLD exists” alone |
 | budget used | iterations / runtime / autonomous commits vs daily caps · defaults **10 / 120m / 12** · batching required |
 | Generated / Executed / Successor / Blocked tasks | planning intelligence · required each report |
 | Stuck analysis | Cause · Possible autonomous actions · Human dependency · required when stuck or at NO_SAFE_READY |

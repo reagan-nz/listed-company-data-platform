@@ -7,6 +7,7 @@ _依赖：controller_*_policy_v1 · PROJECT_CONTROL · worktree policies · push
 _目标层：[controller_mission_objective_v2.md](controller_mission_objective_v2.md)_  
 _进度层：[controller_progress_tracking_v2.md](controller_progress_tracking_v2.md)_  
 _周期层：[controller_execution_cycle_policy_v2.md](controller_execution_cycle_policy_v2.md)_  
+_重规划层：[controller_mission_replanning_loop_v2.md](controller_mission_replanning_loop_v2.md)_  
 _优先级层：[controller_task_priority_policy_v2.md](controller_task_priority_policy_v2.md)_
 
 
@@ -30,7 +31,7 @@ _优先级层：[controller_task_priority_policy_v2.md](controller_task_priority
 **Mission（最高目标）：** 在安全边界内，推动 A/B/C/D 朝全市场数据采集能力前进，并最大化独立 track 的自主进度。详见 [controller_mission_objective_v2.md](controller_mission_objective_v2.md)。
 
 
-**System intent：** Daily Loop v2 是 **mission-progress autonomous planning + execution system**（缺口分析 · 任务生成 · 延续规划 · 记忆 · 资源分配 · 卡住检测 · 里程碑 · 经 track agents 执行），**不是** controller 自我维护循环。
+**System intent：** Daily Loop v2 是 **continuously replanning mission system**（每完成一任务即重算 A/B/C/D 缺口并选下一最高价值目标 · 动态队列 · 非固定 todo 批处理），经 track agents 执行；**不是** controller 自我维护循环，也不是“生成四条任务做完即停”。
 
 
 本文件是 **主运行策略**。配套：
@@ -39,6 +40,7 @@ _优先级层：[controller_task_priority_policy_v2.md](controller_task_priority
 | 文件 | 职责 |
 |------|------|
 | [controller_mission_objective_v2.md](controller_mission_objective_v2.md) | 最高目标 · track 目标 · 审批哲学 · 优化优先级 |
+| [controller_mission_replanning_loop_v2.md](controller_mission_replanning_loop_v2.md) | 连续重规划 · 动态队列 · 每任务后重算缺口 |
 | [controller_progress_tracking_v2.md](controller_progress_tracking_v2.md) | 能力覆盖进度 · bottleneck · effort 估计 · 停机进度块 |
 | [controller_capability_gap_analysis_v2.md](controller_capability_gap_analysis_v2.md) | 进度→可行动缺口 · root cause · next tasks |
 | [controller_task_generator_policy_v2.md](controller_task_generator_policy_v2.md) | 空队列时生成安全候选任务 |
@@ -221,24 +223,27 @@ For each of A/B/C/D, plan must state:
 11. Do not spend budget on controller self-updates when mission work exists or is discoverable.  
 
 
-## 4.4 Task Discovery / Generation
+## 4.4 Task Discovery / Generation / Replanning
 
 
-When refresh yields no safe READY:
+The queue is **dynamic**（[mission replanning loop v2](controller_mission_replanning_loop_v2.md)）.
 
 
-1. Inspect A/B/C/D mission objectives + milestones.  
-2. Run capability gap analysis → actionable gaps（not % only）.  
-3. Read task memory · skip completed/rejected/blocked equivalents.  
-4. Generate candidates（task generator v2）with required schema fields.  
-5. Allocate resources by expected mission gain（not equal share）.  
-6. Promote offline_safe → READY · rank · dispatch track agents.  
-7. After each completion → continuation policy（successor or next bottleneck）.  
-8. If spinning with no capability progress → stuck detection · stop endless repeat.  
-9. Only then may Controller set `NO_SAFE_READY`.  
+When refresh yields no safe READY **or after every completed task**:
 
 
-Authorities: generator · continuation · gap · memory · allocation · stuck · milestone · execution cycle §3.1.
+1. Recalculate A/B/C/D capability gaps（not % only）.  
+2. Read task memory · skip completed/rejected/blocked equivalents.  
+3. Generate candidates from **fresh** gaps（task generator v2）— do not drain a fixed prior list.  
+4. Allocate by expected mission gain · select **highest-value** next target.  
+5. Promote offline_safe → READY · dispatch track agent.  
+6. Evidence validate · bounded commit if commit budget remains.  
+7. Update memory → **mandatory replan** → next target.  
+8. If spinning with no capability progress → stuck detection.  
+9. Stop only after reassessment finds no valuable safe work / interrupt / iteration-runtime budget / safety.  
+
+
+Do **not** stop because a generated batch finished · one agent finished · one track package finished · HOLD exists.
 
 
 
@@ -446,84 +451,71 @@ Multi-iteration authority: [controller_execution_cycle_policy_v2.md](controller_
 LOOP_START(date):
   budget = load_daily_budget()   # max_iterations / max_runtime / max_autonomous_commits
   S = read_state()
-  P = build_daily_plan(S)        # schema v2
+  P = build_daily_plan(S)
   iterations = 0
 
   while true:
-    if budget_exhausted(budget):
+    if iteration_or_runtime_exhausted(budget):
       stop_reason = BUDGET_REACHED
       break
     if safety_violation_detected():
       stop_reason = SAFETY_VIOLATION
       break
 
-    S = read_state()             # re-read each cycle
-    P = refresh_queue(S, P)
+    S = read_state()
+    # --- Mission replan（mandatory each iteration）---
+    gaps = analyze_capability_gaps(S)              # A/B/C/D fresh
+    mem = read_task_memory()
+    candidates = generate_tasks(gaps, mem, mission)
+    candidates = filter_memory_and_safety(candidates)
+    ready = promote_and_rank(allocate(candidates), task_priority_v2)
 
-    ready = tracks_with_safe_READY(P)
     if ready is empty:
-      gaps = analyze_capability_gaps(S)                 # gap analysis v2
-      mem = read_task_memory()
-      candidates = generate_tasks(gaps, mem, mission)   # generator v2
-      candidates = filter_memory_and_safety(candidates)
-      P = promote_offline_safe(P, allocate(candidates)) # resource allocation v2
-      ready = tracks_with_safe_READY(P)
-      if ready is empty:
-        stuck = stuck_detect(mem, gaps)                 # stuck detection v2
-        if stuck.only_human_dependency or no_new_actions:
-          stop_reason = NO_SAFE_READY
-          break
+      stuck = stuck_detect(mem, gaps)
+      if stuck.only_human_dependency or no_new_actions:
+        stop_reason = NO_SAFE_READY
+        break
 
-    # Defer controller-band tasks if any capability/evidence-band ready exists
-    ready = apply_mission_progress_priority(ready, task_priority_v2)
-
-    # Track-scoped WAITING_APPROVAL / HOLD: escalate those tracks, do not break loop
     for track in tracks_needing_interrupt(P):
-      escalate(track)            # interrupt policy · continue others
+      escalate(track)
 
-    wave = select_highest_value_safe_tasks(ready, task_priority_v2)
+    target = select_highest_value_safe_target(ready)   # dynamic · not fixed todo drain
     iterations += 1
 
-    for track in wave parallel-safe:
-      if track in {A,B,C,D}:
-        agent = required_track_agent(track)   # a/b/c/d-class-executor
-      else:
-        agent = controller_only_if_maintenance_band()
-      if not preflight_worktree(track):
-        P[track].status = BLOCKED
-        continue
-      R = dispatch_agent(agent, track, P[track])  # Controller must not substitute
-      package_evidence(R)
-      if R.needs_human and interrupt_is_global(R):
-        stop_reason = HUMAN_INTERRUPT
-        break outer
-      if R.needs_human:
-        escalate(R.reasons)      # track-scoped · continue
-        continue
-      if R.commit_eligible and commit_autonomy_allows(R):
-        if commit_budget_remaining(budget):
-          explicit_path_commit_batched(R)   # prefer one package commit
-          budget.commits_used += 1
-        else:
-          stop_reason = BUDGET_REACHED
-          break outer
-      update_track_state(P, R)
-      write_task_memory(R)
-      successors = continue_after_task(R, gaps)   # continuation v2
-      P = promote_offline_safe(P, successors)
-
-    if stop_reason set:
+    agent = required_track_agent(target.track)
+    if not preflight_worktree(target.track):
+      P[target.track].status = BLOCKED
+      continue
+    R = dispatch_agent(agent, target)
+    package_evidence(R)
+    maybe_evidence_review(R)
+    if R.needs_human and interrupt_is_global(R):
+      stop_reason = HUMAN_INTERRUPT
       break
-    # else: loop → re-read queue
+    if R.needs_human:
+      escalate(R.reasons)
+      continue
+    if R.commit_eligible and commit_autonomy_allows(R):
+      if commit_budget_remaining(budget):
+        explicit_path_commit_batched(R)
+        budget.commits_used += 1
+      # else: skip commit · may continue reasoning/reporting later
+    write_task_memory(R)
+    update_track_state(P, R)
+    # loop → mandatory replan（do not execute leftover batch blindly）
 
-  write_daily_report_once(P, results, stop_reason, budget, iterations)
-  # include planning fields: generated/executed/successor/blocked/stuck/milestones
+  write_daily_report_once(...)
+  # must include: Completed this cycle · Generated next targets ·
+  # Current mission gaps · Why stopped · Next recommended autonomous target
   NEVER push
 LOOP_END
 ```
 
 
-Stop only for: `NO_SAFE_READY`（**after generation + stuck check**）· `HUMAN_INTERRUPT`（global）· `BUDGET_REACHED` · `SAFETY_VIOLATION`.
+Stop only for: `NO_SAFE_READY`（**after mission reassessment**）· `HUMAN_INTERRUPT` · `BUDGET_REACHED`（iteration/runtime；commit budget stops commits only）· `SAFETY_VIOLATION`.
+
+
+Do **not** stop because: generated list finished · one agent finished · one track package finished · HOLD exists.
 
 
 Default budget: max_iterations **10** · max_runtime **120m** · max_autonomous_commits **12**（batching required）.
@@ -573,4 +565,5 @@ Enabling Daily Loop v2 as default runtime requires human acceptance of these fou
 - Not automatic gate promotion  
 - Not silent PROJECT_CONTROL rewrite every loop（control updates remain explicit packages）  
 - Not a single-iteration day（one queue pass then stop while safe READY + budget remain）  
-- Not a **controller maintenance loop**（policy/report commits with 0 track-agent mission work while discoverable safe A/B/C/D candidates exist）
+- Not a **controller maintenance loop**（policy/report commits with 0 track-agent mission work while discoverable safe A/B/C/D candidates exist）  
+- Not a **fixed todo batch**（generate A/B/C/D once · execute · stop without mission reassessment）
