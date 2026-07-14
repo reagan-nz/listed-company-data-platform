@@ -23,6 +23,10 @@ _Autonomous memory layer · Daily Loop v2_
 | A-GEN-20260714-05 | A | overlap lint + 182 ledger | slice2_overlap_lint_* · ab_overlap_182_* | 2026-07-14 |
 | A-GEN-20260714-06 | A | slice2 +100 draft | slice2_candidate_universe_draft_* | 2026-07-14 |
 | A-GEN-20260714-07 | A | slice2 +50 complement | slice2_plus50_* | 2026-07-14 |
+| D-GEN-20260714-05 | D | sample prep + validation rules + evidence map | shareholder_change_sample_prep · validation_rules · offline_evidence_map | 2026-07-14 |
+| B-GEN-20260714-05 | B | BD2E624 offline validation rules + precheck | bd2e624_offline_validation_rules · precheck_checklist | 2026-07-14 |
+| C-GEN-20260714-05 | C | dual-layer semantic validation rules + matrix | dual_layer_validation_rules · rule_matrix | 2026-07-14 |
+| A-GEN-20260714-08 | A | slice2 ST selection strategy（S1 recommend） | slice2_st_selection_strategy · checklist | 2026-07-14 |
 
 
 ## Deferred tasks
@@ -30,10 +34,11 @@ _Autonomous memory layer · Daily Loop v2_
 
 | id | track | reason |
 |----|-------|--------|
-| BD2E624-retry | B | post-integration HOLD · needs separate approval |
+| BD2E624-retry | B | post-integration HOLD · needs separate approval · offline rules ready |
 | A-unresolved6-live | A | live_needed=no · HOLD |
+| A-ST-S1-regen | A | waits human sign-off of S1 + cap before new CSV |
 | C-snapshot-rebuild | C | approved_for_snapshot_rebuild=false |
-| D-SC-live/runner | D | WAITING_APPROVAL component |
+| D-SC-live/runner | D | WAITING_APPROVAL component · sample/rules/evidence prep done |
 
 
 ## Known blockers
@@ -61,3 +66,7 @@ _Autonomous memory layer · Daily Loop v2_
 - Re-triaging BD2E624 with same disposition only  
 - Re-documenting partial-7 without new evidence dimension  
 - Re-refreshing D approval checklist without schema/event-model delta  
+- +6 buffer clear without ST strategy / cohort decision  
+- Inventing AQ-D-SC approval phrase  
+- Regenerating slice2 CSV before human S1/cap sign-off  
+

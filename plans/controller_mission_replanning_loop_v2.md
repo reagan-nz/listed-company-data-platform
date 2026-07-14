@@ -116,14 +116,19 @@ Forbidden:
 Before stopping with **`NO_VALUABLE_SAFE_TASK`**（alias of execution-cycle `NO_SAFE_READY` after full reassessment）, Controller **MUST** record a candidate audit.
 
 
-Per track **A / B / C / D**:
+**`NO_VALUABLE_SAFE_TASK` is valid only after all tracks A/B/C/D are checked.**
+
+
+Per track **A / B / C / D**（required shape）:
 
 
 ```text
 Track: A|B|C|D
-Candidates considered:
-Rejected candidates:
-Reason rejected:   # one of: requires approval | unsafe | duplicate | already completed | low mission value | other（cite）
+  autonomous candidates:
+  approval blockers:
+  Candidates considered:
+  Rejected candidates:
+  Reason rejected:   # requires approval | unsafe | duplicate | already completed | low mission value | other
 ```
 
 
@@ -137,6 +142,12 @@ Candidate search summary:
   rejected_count:
   rejection_breakdown: { requires_approval, unsafe, duplicate, already_completed, low_mission_value, other }
 Why no higher-value task exists:
+Track execution balance:
+  A iterations:
+  B iterations:
+  C iterations:
+  D iterations:
+  Last executed iteration per track:
 ```
 
 
@@ -144,9 +155,11 @@ Rules:
 
 
 1. Audit is required even when the answer is “only human-gated work remains.”  
-2. “HOLD exists” is **not** a sufficient Why — list considered offline_safe ideas and why rejected.  
+2. “HOLD exists” / “WAITING_APPROVAL” is **not** a sufficient Why — list **autonomous candidates** considered and why rejected.  
 3. Duplicate / already completed reasons must cite task memory ids when available.  
 4. Skipping candidate audit before `NO_VALUABLE_SAFE_TASK` is a policy violation.  
+5. Skipping any of A/B/C/D in the audit is a policy violation.  
+6. If a track shows non-empty **autonomous candidates** that were never dispatched while another track dominated iterations → stop reason must explain fairness failure or execute that track before stopping.  
 
 
 
@@ -185,9 +198,10 @@ Controller **must not** replace track agents for A/B/C/D capability work.
 
 1. A prior generated list is a **hint**, not a binding schedule.  
 2. After each completion: discard stale READY items that no longer match recalculated gaps（or re-rank them against fresh gaps）.  
-3. Prefer the **single highest-value** next target（or parallel-safe wave only when isolation + gain justify）.  
-4. Do not “drain the original four” out of habit if replanning shows a different bottleneck.  
-5. Continuation policy + task generator + gap analysis are invoked **every** post-task replan.  
+3. Prefer the **single highest-value** next target under **track fairness**（resource allocation v2）— not endless same-track successors.  
+4. Do not “drain one easy track” while other tracks’ Autonomous Queues are non-empty.  
+5. Continuation + generator + gap analysis + **approval split** are invoked **every** post-task replan.  
+6. WAITING_APPROVAL on live work does **not** remove the track from autonomous replan.  
 
 
 
@@ -249,9 +263,19 @@ Completed this cycle:
 Generated next targets:
 Current mission gaps:
 Candidate search summary:
+  Track A — autonomous candidates / approval blockers / rejected / reasons:
+  Track B — autonomous candidates / approval blockers / rejected / reasons:
+  Track C — autonomous candidates / approval blockers / rejected / reasons:
+  Track D — autonomous candidates / approval blockers / rejected / reasons:
 Why no higher-value task exists:
 Why stopped:
 Next recommended autonomous target:
+Track execution balance:
+  A iterations:
+  B iterations:
+  C iterations:
+  D iterations:
+  Last executed iteration per track:
 ```
 
 
@@ -291,3 +315,5 @@ Forbidden:
 - claim mission progress from controller maintenance while skipping replan  
 - replan from stale state without §2.1 refresh  
 - declare `NO_VALUABLE_SAFE_TASK` without §2.2 candidate audit  
+- skip D/B/C autonomous planning because live approval is pending  
+- allow one track to consume all iterations while other Autonomous Queues are non-empty  

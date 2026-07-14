@@ -59,7 +59,43 @@ Before emitting candidates, analyze:
 Reject candidates that memory marks as completed-equivalent, human-rejected, or known-blocked approaches.
 
 
-When no candidate is promoted, emit a **candidate audit**（mission replanning §2.2）before `NO_VALUABLE_SAFE_TASK`.
+When no candidate is promoted, emit a **candidate audit**（mission replanning §2.2）before `NO_VALUABLE_SAFE_TASK` — including **Autonomous Queue vs Approval Queue** per track.
+
+
+
+---
+
+# 3.1 Approval Split（normative）
+
+
+Every track **MUST** maintain two queues:
+
+
+| Queue | Contents |
+|-------|----------|
+| **Autonomous Queue** | Tasks executable **without** new human approval（offline_safe · spent-scope only） |
+| **Approval Queue** | Tasks blocked by missing Level-2 / live / snapshot / push approval |
+
+
+### Hard rules
+
+
+1. Approval-gated **live** work must **not** block autonomous offline work on the same track.  
+2. A track in `WAITING_APPROVAL` / HOLD-for-live **MUST NOT** be removed from autonomous planning.  
+3. Generator **must** still emit Autonomous Queue candidates for that track when gaps allow.  
+4. Approval Queue items are recorded for human attention — they are **not** READY for dispatch.  
+
+
+### Example — D shareholder_change
+
+
+| Queue | Examples |
+|-------|----------|
+| Approval | live shareholder_change execution · runner with CNINFO · unapproved component go-live |
+| Autonomous | event taxonomy · schema refinement · sample preparation · validation rules · offline evidence mapping |
+
+
+Skipping D-class-executor for an entire daily run solely because AQ-D-SC is open is a **policy failure** when Autonomous Queue items existed.
 
 
 
@@ -74,6 +110,7 @@ Each candidate **must** contain:
 ```text
 task_id:              # stable id e.g. A-GEN-20260714-01
 track:                # A | B | C | D
+queue:                # autonomous | approval
 objective:            # one sentence capability intent
 expected_capability_improvement:
 risk_level:           # low | medium | high
@@ -119,7 +156,10 @@ Candidates must:
 | A | coverage gap analysis · missing field investigation · next slice **preparation**（offline） |
 | B | event/source coverage expansion **prep** · taxonomy improvement · parser preparation |
 | C | QA gap resolution · evidence completeness improvement |
-| D | offline schema preparation · event modeling · approval package preparation |
+| D | offline schema preparation · event modeling · approval package preparation · sample prep · validation rules · offline evidence mapping |
+
+
+`approval_gated` / `live_gated` go to **Approval Queue** only. Autonomous examples above stay generatable while WAITING_APPROVAL.
 
 
 These are templates — concrete candidates must cite evidence paths and gap ids.
@@ -170,3 +210,6 @@ Forbidden:
 - skipping A/B/C/D gap recalculation because leftover candidates exist  
 - generating candidates without state refresh  
 - stopping with NO_VALUABLE_SAFE_TASK without recording rejected candidates and reasons  
+- removing a WAITING_APPROVAL track from autonomous generation  
+- treating “D needs approval” as “D has no autonomous candidates” without checking schema/taxonomy/sample/validation offline work  
+- letting one track’s easy successors monopolize generation while other tracks’ Autonomous Queues are non-empty  

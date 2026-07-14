@@ -271,13 +271,19 @@ Branch: main (ahead X / behind Y)
 - Generated next targets:
 - Current mission gaps:
 - Candidate search summary:
-  - Track A — considered / rejected / reasons:
-  - Track B — considered / rejected / reasons:
-  - Track C — considered / rejected / reasons:
-  - Track D — considered / rejected / reasons:
+  - Track A — autonomous candidates: / approval blockers: / considered / rejected / reasons:
+  - Track B — autonomous candidates: / approval blockers: / considered / rejected / reasons:
+  - Track C — autonomous candidates: / approval blockers: / considered / rejected / reasons:
+  - Track D — autonomous candidates: / approval blockers: / considered / rejected / reasons:
 - Why no higher-value task exists:
 - Why stopped:
 - Next recommended autonomous target:
+- Track execution balance:
+  - A iterations:
+  - B iterations:
+  - C iterations:
+  - D iterations:
+  - Last executed iteration per track:
 
 ### Remaining work
 - ...
@@ -335,8 +341,9 @@ Branch: main (ahead X / behind Y)
 | Current bottleneck | binding constraint on mission progress · required |
 | stop_reason | `NO_VALUABLE_SAFE_TASK`（alias `NO_SAFE_READY`）· `HUMAN_INTERRUPT` · `BUDGET_REACHED` · `SAFETY_VIOLATION` |
 | State refresh timestamp | required before each replan and on stop · [mission replanning §2.1](controller_mission_replanning_loop_v2.md) |
-| Candidate search summary | per-track considered / rejected / reasons · required before `NO_VALUABLE_SAFE_TASK` |
-| Why no higher-value task exists | required on stop when no target selected · not “HOLD exists” alone |
+| Candidate search summary | per-track **autonomous candidates** + **approval blockers** + rejected/reasons · all of A/B/C/D required |
+| Why no higher-value task exists | required on stop · not “HOLD/WAITING_APPROVAL exists” alone |
+| Track execution balance | A/B/C/D iteration counts + last executed iteration per track · required on stop |
 | budget used | iterations / runtime / autonomous commits vs daily caps · defaults **10 / 120m / 12** · batching required |
 | Generated / Executed / Successor / Blocked tasks | planning intelligence · required each report |
 | Stuck analysis | Cause · Possible autonomous actions · Human dependency · required when stuck or at NO_SAFE_READY |
