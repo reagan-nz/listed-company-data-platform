@@ -1,6 +1,6 @@
 # CNINFO D 类 Known Event Targeted Probe Dry-run Summary
 
-_生成时间：2026-07-09 12:13:09 UTC_
+_生成时间：2026-07-10 06:47:59 UTC_
 
 > **性质：** known-event targeted probe dry-run only · **CNINFO calls = 0** · **NOT APPROVED**
 

@@ -1,0 +1,11 @@
+component,prior_evidence,era_c_status,orthogonality_score,risk_notes,recommend_rank,include_in_erad_mvp
+margin_trading,DLC001 tiny-live found 1 row; DMT first-slice 5/5 acceptable,closed_first_slice_commit_116f875,low,closed; do not expand in Era D planning task,excluded,no
+disclosure_schedule,DLC004 tiny-live found 1 row; DDS first-slice 5/5 acceptable; DDS004 needs_review caveat,closed_first_slice_commit_d37ce0a,low,closed; DDS004 CAV-DDS-004 retained,excluded,no
+restricted_shares_unlock,DLC003 tiny-live empty_but_valid; DLC003R caveated structured evidence at 688671,known_event_caveated_only_not_reopened,medium,must exclude 688671; anchor/probe complexity higher than block_trade,2,yes
+block_trade,DLC002 tiny-live empty_but_valid acceptable; DC002 ready-case captured_pass,not_yet_first_sliced,high,clean orthogonality; sparse-day empty_but_valid expected; 1 req/case,1,yes
+equity_pledge,DLC005 tiny-live empty_but_valid acceptable,not_yet_first_sliced,high,only empty_but_valid tiny-live evidence; viable third component,3,yes
+shareholder_change,DLC006 tiny-live empty_but_valid; DLC006R component gap accepted at 301259,known_event_gap_accepted_not_reopened,medium,must exclude 301259; component gap documentation burden,4,yes
+executive_shareholding,DLC007 tiny-live found 2 rows needs_review,not_yet_first_sliced,medium,field mapping ambiguity; overlaps 002415 DDS004 needs_review pattern,5,yes
+abnormal_trading,registry only; no Phase1 tiny-live case,not_yet_first_sliced,low,market-level endpoint getMarketStatisticsData; weak company-level first-slice fit,6,no
+shareholder_data,registry P2; no tiny-live case,not_yet_first_sliced,medium,person-stock tables; later breadth,7,no
+fund_industry_allocation,registry P2; no tiny-live case,not_yet_first_sliced,low,fund industry not company-event orthogonality,8,no

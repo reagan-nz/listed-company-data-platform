@@ -1,0 +1,12 @@
+component,endpoint_readiness,schema_readiness,prior_slice_status,expected_first_slice_size,risk,recommendation_rank,notes
+margin_trading,ready,ready,closed_committed_116f875,5,low,excluded,do not expand; Era D slice closed
+disclosure_schedule,ready,ready,closed_committed_d37ce0a,5,low,excluded,DDS004 CAV-DDS-004 retained; do not expand
+block_trade,ready,ready,closed_committed_403472d,5,low,excluded,sparse-day 5/5 empty; DBT002 caveat; NOT verified; NOT pushed
+known_event_replacement,ready,ready,closed_committed_389cd9c,2,low,excluded,DLC003R/DLC006R caveated; do not rerun
+restricted_shares_unlock,ready,ready,closed_committed_aa087b5,5,medium,excluded,5/5 sparse-day empty_but_valid; NOT verified; NOT pushed
+equity_pledge,ready,ready,closed_committed_85abad0,5,low,excluded,4/5 sparse-day empty; DEP004 caveat; NOT verified; NOT pushed
+shareholder_change,ready,ready,not_yet_first_sliced,5,medium,1,P0; shareholeder/detail; DLC006 000550 precedent; exclude 301259; primary next component
+executive_shareholding,ready,partial_needs_review,not_yet_first_sliced,5,medium,2,DLC007 needs_review; overlaps DDS004 pattern; runner-up
+abnormal_trading,registry_only,no_tiny_live,not_yet_first_sliced,5,high,3,market-level endpoint; weak company first-slice fit; deprioritize
+shareholder_data,registry_only,no_tiny_live,not_yet_first_sliced,5,medium,4,P2 periodic structure; deprioritize
+fund_industry_allocation,registry_only,no_tiny_live,not_yet_first_sliced,5,low,5,P2 fund industry; deprioritize

@@ -1,6 +1,6 @@
 # CNINFO D 类 margin_trading First-Slice Dry-run Summary
 
-_生成时间：2026-07-10 03:54:22 UTC_
+_生成时间：2026-07-10 09:16:45 UTC_
 
 > **性质：** margin_trading first-slice dry-run only · **CNINFO calls = 0** · **NOT APPROVED**
 
