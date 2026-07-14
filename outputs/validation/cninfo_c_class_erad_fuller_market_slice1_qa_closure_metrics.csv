@@ -1,0 +1,20 @@
+metric_key,metric_value,notes
+source_output_root,outputs/harvest/cninfo_c_class/fuller_market_slice1_200,slice1 isolated root
+expected_universe_count,200,universe draft CE1E001-CE1E200
+disk_unique_company_count,200,union of normalized source filenames
+previous_status_ledger_row_count,100,stale Session2 overwrite
+rebuilt_status_ledger_row_count,200,offline rebuild from disk+universe
+complete_count,193,normalized sources >= 10
+partial_count,7,1-9 normalized sources
+missing_count,0,0 normalized sources
+duplicate_count,0,ledger+universe
+unmatched_count,0,disk codes not in universe
+classification_rule,normalized_sources>=10 => complete; 1-9 => partial; 0 => missing,
+approved_for_snapshot_rebuild,false,unchanged
+cninfo_calls,0,offline only
+claimed_qa_gate,PASS_WITH_CAVEAT,7 partial delisted/merged + 3 empty_but_valid dividend needs_review
+status_ledger_backup,outputs/harvest/cninfo_c_class/fuller_market_slice1_200/quality/company_harvest_status.csv.bak_pre_offline_rebuild_20260713T100619Z,
+offline_resume_audit_complete,190,resume audit after ledger rebuild
+offline_resume_audit_partial,7,
+offline_resume_audit_needs_review,3,"CE1E176,CE1E188,CE1E193 empty dividend jsonl"
+exact_caveat_case_ids,"CE1E002,CE1E003,CE1E034,CE1E061,CE1E067,CE1E070,CE1E071,CE1E176,CE1E188,CE1E193",7 partial + 3 empty dividend
