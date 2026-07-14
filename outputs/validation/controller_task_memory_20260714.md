@@ -36,6 +36,14 @@ _Autonomous memory layer · Daily Loop v2_
 | A-GEN-20260714-10 | A | slice2 S1 live-prep package | s1_live_prep · command_draft · precheck | 2026-07-14 |
 | B-GEN-20260714-08 | B | isolated-retry runner + live found（CNINFO=2） | wave3 execution report · bd2e624_retry root | 2026-07-14 |
 | B-GEN-20260714-09 | B | post-retry merge closure（797→798 proposed） | merge_closure · recovered/post ledgers | 2026-07-14 |
+| A-GEN-20260714-11 | A | slice2 S1 runner extension design | s1_runner_design · checklist | 2026-07-14 |
+| A-GEN-20260714-12 | A | slice2 S1 runner stub tests（24 OK） | runner_stub test · stub_note | 2026-07-14 |
+| B-GEN-20260714-10 | B | BD2E624 lineage refresh to 798 | lineage_refresh · CURRENT_STATUS/PC | 2026-07-14 |
+| B-GEN-20260714-11 | B | post-retry evidence index | post_retry_evidence_index | 2026-07-14 |
+| C-GEN-20260714-07 | C | snapshot exclusion consistency PASS_OFFLINE | exclusion_consistency_* | 2026-07-14 |
+| C-GEN-20260714-08 | C | snapshot prep vs execute control-plane sync | control_plane_sync_note | 2026-07-14 |
+| D-GEN-20260714-08 | D | S4 runner design package | s4_runner_design · interface_checklist | 2026-07-14 |
+| D-GEN-20260714-09 | D | S4 precheck unlock map | s4_precheck_unlock · note | 2026-07-14 |
 
 
 ## Deferred tasks
@@ -43,11 +51,11 @@ _Autonomous memory layer · Daily Loop v2_
 
 | id | track | reason |
 |----|-------|--------|
-| BD2E624-merge-lineage | B | optional CURRENT_STATUS / mission gap refresh for 798 |
-| A-slice2-live | A | needs runner `--erad-a-scale-500-slice2` + live phrase |
+| A-slice2-runner-impl | A | HUMAN_GATE — implement `--erad-a-scale-500-slice2` |
+| A-slice2-live | A | needs live phrase after dry-run |
 | A-unresolved6-live | A | live_needed=no · HOLD |
-| C-prod-snapshot-rebuild | C | rebuild_candidate=no · HOLD correct |
-| D-SC-runner-S4 | D | needs runner extension approval |
+| C-prod-snapshot-rebuild | C | HUMAN_GATE · rebuild_candidate=no · HOLD correct |
+| D-SC-runner-S4-impl | D | HUMAN_GATE — implementation approval |
 | D-SC-live-S5 | D | needs explicit live phrase |
 
 
