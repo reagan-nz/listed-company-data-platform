@@ -135,6 +135,35 @@ DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_UNIVERSE_CSV = os.path.join(
 DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_OUTPUT_ROOT = os.path.join(
     BASE_DIR, "outputs", "validation", "cninfo_a_class_erad_next_scale_slice2_s1"
 )
+# A-R16-01：AD2E578/590/598 orgId 离线回退孤立重试（独立根 · 不得写入封闭 S1 live 根）
+DEFAULT_ERAD_SLICE2_ORGID_FALLBACK_RETRY_UNIVERSE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_erad_next_scale_slice2_s1_orgid_fallback_retry_universe.csv",
+)
+DEFAULT_ERAD_SLICE2_ORGID_FALLBACK_RETRY_OUTPUT_ROOT = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_erad_next_scale_slice2_s1_orgid_fallback_retry",
+)
+ERAD_SLICE2_ORGID_FALLBACK_RETRY_CASE_IDS: Set[str] = {
+    "AD2E578",
+    "AD2E590",
+    "AD2E598",
+}
+REQUIRED_ERAD_SLICE2_ORGID_FALLBACK_RETRY_SIZE = 3
+ERAD_SLICE2_ORGID_FALLBACK_RETRY_REQUEST_CAP = 12
+ERAD_SLICE2_ORGID_FALLBACK_RETRY_CLOSED_ROOT_WRITE_FORBIDDEN = (
+    "orgid_fallback_retry_must_not_write_closed_slice2_s1_live_root"
+)
+ERAD_SLICE2_ORGID_FALLBACK_RETRY_UNIVERSE_SIZE_VIOLATION = (
+    "erad_a_slice2_orgid_fallback_retry_universe_size_must_equal_3"
+)
+ERAD_SLICE2_ORGID_FALLBACK_RETRY_CASE_SET_VIOLATION = (
+    "erad_a_slice2_orgid_fallback_retry_case_ids_must_be_AD2E578_590_598"
+)
 ERAD_NEXT_SCALE_SLICE2_SCALE200_EFFECTIVE_LEDGER = os.path.join(
     BASE_DIR,
     "outputs",
@@ -5546,6 +5575,102 @@ def validate_erad_next_scale_slice2_universe_csv_path(universe_csv: str) -> Tupl
     return True, ""
 
 
+def is_erad_slice2_orgid_fallback_retry_mode(
+    universe_csv: Optional[str] = None,
+    output_root: Optional[str] = None,
+) -> bool:
+    """判定是否为 AD2E578/590/598 orgId 离线回退孤立重试模式。"""
+    retry_universe = os.path.normpath(
+        os.path.abspath(DEFAULT_ERAD_SLICE2_ORGID_FALLBACK_RETRY_UNIVERSE_CSV)
+    )
+    retry_root = _normalize_output_root(DEFAULT_ERAD_SLICE2_ORGID_FALLBACK_RETRY_OUTPUT_ROOT)
+    if universe_csv:
+        actual_u = os.path.normpath(os.path.abspath(universe_csv))
+        if actual_u == retry_universe:
+            return True
+    if output_root:
+        root = _normalize_output_root(output_root)
+        if root == retry_root or root.startswith(retry_root + os.sep):
+            return True
+    return False
+
+
+def validate_erad_slice2_orgid_fallback_retry_universe_csv_path(
+    universe_csv: str,
+) -> Tuple[bool, str]:
+    expected = os.path.normpath(
+        os.path.abspath(DEFAULT_ERAD_SLICE2_ORGID_FALLBACK_RETRY_UNIVERSE_CSV)
+    )
+    actual = os.path.normpath(os.path.abspath(universe_csv))
+    if actual != expected:
+        return False, "erad_a_slice2_orgid_fallback_retry_universe_csv_required"
+    return True, ""
+
+
+def validate_erad_slice2_orgid_fallback_retry_output_root(
+    output_root: str,
+) -> Tuple[bool, str]:
+    """孤立重试输出仅允许独立 retry 根；禁止写入封闭 slice2 S1 live 根。"""
+    root = _normalize_output_root(output_root)
+    allowed = _normalize_output_root(DEFAULT_ERAD_SLICE2_ORGID_FALLBACK_RETRY_OUTPUT_ROOT)
+    closed_s1 = _normalize_output_root(DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_OUTPUT_ROOT)
+    if root == closed_s1 or root.startswith(closed_s1 + os.sep):
+        return False, ERAD_SLICE2_ORGID_FALLBACK_RETRY_CLOSED_ROOT_WRITE_FORBIDDEN
+    blocked = (
+        (PHASE1_OUTPUT_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
+        (DEFAULT_OUTPUT_ROOT, PHASE2_EXPANSION_WRITE_FORBIDDEN),
+        (DEFAULT_RETRY_OUTPUT_ROOT, RETRY_V1_WRITE_FORBIDDEN),
+        (DEFAULT_RETRY_V2_OUTPUT_ROOT, RETRY_V2_WRITE_FORBIDDEN),
+        (DEFAULT_RETRY_V3_OUTPUT_ROOT, RETRY_V3_OUTPUT_ROOT_VIOLATION),
+        (PRECHECK_OUTPUT_ROOT, PRECHECK_WRITE_FORBIDDEN),
+        (DEFAULT_PHASE3_OUTPUT_ROOT, PHASE3_OUTPUT_ROOT_VIOLATION),
+        (DEFAULT_A3M017_RETRY_OUTPUT_ROOT, "a3m017_isolated_retry_output_root_forbidden"),
+        (DEFAULT_ERAD_SCALE_200_OUTPUT_ROOT, ERAD_SLICE2_SCALE_200_ROOT_WRITE_FORBIDDEN),
+        (
+            DEFAULT_ERAD_FAILED_RETRY_OUTPUT_ROOT,
+            ERAD_SLICE2_FAILED_RETRY_ROOT_WRITE_FORBIDDEN,
+        ),
+        (DEFAULT_ERAD_NEXT_SCALE_SLICE1_OUTPUT_ROOT, ERAD_SLICE2_SLICE1_ROOT_WRITE_FORBIDDEN),
+        (C_CLASS_HARVEST_ROOT, "c_class_harvest_output_root_forbidden"),
+        (B_CLASS_VALIDATION_PREFIX, "b_class_validation_output_root_forbidden"),
+        (C_CLASS_VALIDATION_PREFIX, "c_class_validation_output_root_forbidden"),
+        (D_CLASS_VALIDATION_PREFIX, "d_class_validation_output_root_forbidden"),
+    )
+    for path, err in blocked:
+        p = _normalize_output_root(path)
+        if root == p or root.startswith(p + os.sep):
+            return False, err
+    if root == allowed or root.startswith(allowed + os.sep):
+        return True, ""
+    return False, "output_root_must_be_under_cninfo_a_class_erad_next_scale_slice2_s1_orgid_fallback_retry"
+
+
+def validate_erad_slice2_orgid_fallback_retry_universe_size(
+    cases: List[EraDNextScaleSlice2UniverseCase],
+) -> Tuple[bool, str]:
+    included = [c for c in cases if c.erad_include == "yes"]
+    if len(included) != REQUIRED_ERAD_SLICE2_ORGID_FALLBACK_RETRY_SIZE:
+        return (
+            False,
+            f"{ERAD_SLICE2_ORGID_FALLBACK_RETRY_UNIVERSE_SIZE_VIOLATION}: "
+            f"got {len(included)} expected {REQUIRED_ERAD_SLICE2_ORGID_FALLBACK_RETRY_SIZE}",
+        )
+    case_ids = {c.case_id for c in included}
+    if case_ids != ERAD_SLICE2_ORGID_FALLBACK_RETRY_CASE_IDS:
+        return (
+            False,
+            f"{ERAD_SLICE2_ORGID_FALLBACK_RETRY_CASE_SET_VIOLATION}: got={sorted(case_ids)}",
+        )
+    return True, ""
+
+
+def erad_slice2_request_cap_for_mode(*, orgid_fallback_retry: bool) -> int:
+    """按模式返回 CNINFO 请求上限。"""
+    if orgid_fallback_retry:
+        return ERAD_SLICE2_ORGID_FALLBACK_RETRY_REQUEST_CAP
+    return ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP
+
+
 def validate_erad_next_scale_slice2_output_root(output_root: str) -> Tuple[bool, str]:
     """Era D A-class next-scale slice2 输出仅允许 slice2 S1 隔离根。"""
     root = _normalize_output_root(output_root)
@@ -5565,6 +5690,10 @@ def validate_erad_next_scale_slice2_output_root(output_root: str) -> Tuple[bool,
             ERAD_SLICE2_FAILED_RETRY_ROOT_WRITE_FORBIDDEN,
         ),
         (DEFAULT_ERAD_NEXT_SCALE_SLICE1_OUTPUT_ROOT, ERAD_SLICE2_SLICE1_ROOT_WRITE_FORBIDDEN),
+        (
+            DEFAULT_ERAD_SLICE2_ORGID_FALLBACK_RETRY_OUTPUT_ROOT,
+            "orgid_fallback_retry_root_forbidden_for_full_slice2",
+        ),
         (C_CLASS_HARVEST_ROOT, "c_class_harvest_output_root_forbidden"),
         (B_CLASS_VALIDATION_PREFIX, "b_class_validation_output_root_forbidden"),
         (C_CLASS_VALIDATION_PREFIX, "c_class_validation_output_root_forbidden"),
@@ -5869,8 +5998,16 @@ def process_erad_a_next_scale_slice2_live(
     cases: List[EraDNextScaleSlice2UniverseCase],
     output_paths: Dict[str, str],
     stats: tiny_live.LiveStats,
+    *,
+    request_cap: Optional[int] = None,
+    mode_label: str = "erad_a_scale_500_slice2_live",
 ) -> Tuple[List[Dict[str, str]], List[str]]:
-    """Era D A-class next-scale slice2 live：100 新码 fresh_metadata only；须 approval gate。"""
+    """Era D A-class next-scale slice2 live：fresh_metadata only；须 approval gate。"""
+    cap = (
+        ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP
+        if request_cap is None
+        else int(request_cap)
+    )
     rows: List[Dict[str, str]] = []
     universe_issues: List[str] = []
     for case in cases:
@@ -5904,9 +6041,9 @@ def process_erad_a_next_scale_slice2_live(
         before_requests = stats.cninfo_requests
         record = tiny_live.execute_live_case(tl_case, stats)
         case_cninfo_requests = stats.cninfo_requests - before_requests
-        if stats.cninfo_requests > ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP:
+        if stats.cninfo_requests > cap:
             universe_issues.append(
-                f"cninfo_request_cap_exceeded:{stats.cninfo_requests}>{ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP}"
+                f"cninfo_request_cap_exceeded:{stats.cninfo_requests}>{cap}"
             )
             break
         live_row = build_erad_next_scale_slice2_live_report_row(
@@ -5929,10 +6066,12 @@ def process_erad_a_next_scale_slice2_live(
                         "include_reason": case.include_reason,
                         "erad_include": case.erad_include,
                     },
-                    "mode": "erad_a_scale_500_slice2_live",
+                    "mode": mode_label,
                     "lineage_evidence_mode": "fresh_metadata",
                     "ad2e001_500_lineage_reference_only": True,
                     "slice1_production_root_write": False,
+                    "closed_slice2_s1_live_root_write": False,
+                    "orgid_offline_fallback": record.get("_orgid_offline_fallback", "n/a"),
                     "cninfo_called": True,
                     "cninfo_request_count": case_cninfo_requests,
                     "pdf_download_enabled": False,
@@ -5961,12 +6100,19 @@ def compute_erad_next_scale_slice2_execution_gate(
     universe_issues: List[str],
     stats: tiny_live.LiveStats,
     expected_case_count: int,
+    *,
+    request_cap: Optional[int] = None,
 ) -> str:
+    cap = (
+        ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP
+        if request_cap is None
+        else int(request_cap)
+    )
     if has_red_line_violation(stats, rows):
         return "FAIL_REVIEW_REQUIRED"
     if universe_issues:
         return "FAIL_REVIEW_REQUIRED"
-    if stats.cninfo_requests > ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP:
+    if stats.cninfo_requests > cap:
         return "FAIL_REVIEW_REQUIRED"
     if len(rows) != expected_case_count:
         return "FAIL_REVIEW_REQUIRED"
@@ -6244,31 +6390,70 @@ def main(argv: Optional[List[str]] = None) -> int:
         if args.universe_csv is None:
             print(f"ERROR: {ERAD_NEXT_SCALE_SLICE2_UNIVERSE_CSV_REQUIRED}", file=sys.stderr)
             return 2
+        orgid_fb_retry = is_erad_slice2_orgid_fallback_retry_mode(
+            args.universe_csv, args.output_root
+        )
         if args.output_root is None:
-            args.output_root = DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_OUTPUT_ROOT
+            args.output_root = (
+                DEFAULT_ERAD_SLICE2_ORGID_FALLBACK_RETRY_OUTPUT_ROOT
+                if orgid_fb_retry
+                else DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_OUTPUT_ROOT
+            )
+            # 若仅给了 retry universe，需再判定一次
+            orgid_fb_retry = is_erad_slice2_orgid_fallback_retry_mode(
+                args.universe_csv, args.output_root
+            )
         enforce_forbidden_options(args)
         if args.mode == "live":
             enforce_erad_next_scale_slice2_approval_gate(args)
-        ok_csv, csv_err = validate_erad_next_scale_slice2_universe_csv_path(args.universe_csv)
-        if not ok_csv:
-            print(f"ERROR: {csv_err}", file=sys.stderr)
-            return 2
-        ok_root, root_err = validate_erad_next_scale_slice2_output_root(args.output_root)
-        if not ok_root:
-            print(f"ERROR: {root_err}", file=sys.stderr)
-            return 2
+        if orgid_fb_retry:
+            ok_csv, csv_err = validate_erad_slice2_orgid_fallback_retry_universe_csv_path(
+                args.universe_csv
+            )
+            if not ok_csv:
+                print(f"ERROR: {csv_err}", file=sys.stderr)
+                return 2
+            ok_root, root_err = validate_erad_slice2_orgid_fallback_retry_output_root(
+                args.output_root
+            )
+            if not ok_root:
+                print(f"ERROR: {root_err}", file=sys.stderr)
+                return 2
+        else:
+            ok_csv, csv_err = validate_erad_next_scale_slice2_universe_csv_path(
+                args.universe_csv
+            )
+            if not ok_csv:
+                print(f"ERROR: {csv_err}", file=sys.stderr)
+                return 2
+            ok_root, root_err = validate_erad_next_scale_slice2_output_root(args.output_root)
+            if not ok_root:
+                print(f"ERROR: {root_err}", file=sys.stderr)
+                return 2
         if not os.path.isfile(args.universe_csv):
             print(f"ERROR: universe not found: {args.universe_csv}", file=sys.stderr)
             return 2
         case_range = getattr(args, "case_range", None)
+        if case_range and orgid_fb_retry:
+            print(
+                "ERROR: case_range_not_allowed_for_orgid_fallback_retry",
+                file=sys.stderr,
+            )
+            return 2
         if case_range:
             try:
                 parse_erad_a_slice2_case_range(case_range)
             except ValueError as exc:
                 print(f"ERROR: {exc}", file=sys.stderr)
                 return 2
+        request_cap = erad_slice2_request_cap_for_mode(orgid_fallback_retry=orgid_fb_retry)
         if args.limit is not None and not case_range:
-            if args.limit != REQUIRED_ERAD_NEXT_SCALE_SLICE2_UNIVERSE_SIZE:
+            expected_limit = (
+                REQUIRED_ERAD_SLICE2_ORGID_FALLBACK_RETRY_SIZE
+                if orgid_fb_retry
+                else REQUIRED_ERAD_NEXT_SCALE_SLICE2_UNIVERSE_SIZE
+            )
+            if args.limit != expected_limit:
                 print(
                     f"ERROR: {ERAD_NEXT_SCALE_SLICE2_UNIVERSE_SIZE_VIOLATION}: limit={args.limit}",
                     file=sys.stderr,
@@ -6281,7 +6466,14 @@ def main(argv: Optional[List[str]] = None) -> int:
         included = filter_erad_a_next_scale_slice2_cases_by_range(included, case_range)
         if args.limit is not None:
             included = included[: args.limit]
-        if not case_range:
+        if orgid_fb_retry:
+            ok_size, size_err = validate_erad_slice2_orgid_fallback_retry_universe_size(
+                included
+            )
+            if not ok_size:
+                print(f"ERROR: {size_err}", file=sys.stderr)
+                return 2
+        elif not case_range:
             ok_size, size_err = validate_erad_next_scale_slice2_universe_size(included)
             if not ok_size:
                 print(f"ERROR: {size_err}", file=sys.stderr)
@@ -6290,16 +6482,26 @@ def main(argv: Optional[List[str]] = None) -> int:
             print(f"ERROR: {ERAD_SLICE2_CASE_RANGE_INVALID}:empty_subset", file=sys.stderr)
             return 2
         expected_case_count = len(included)
+        mode_label = (
+            "erad_a_scale_500_slice2_orgid_fallback_retry_live"
+            if orgid_fb_retry
+            else "erad_a_scale_500_slice2_live"
+        )
         if args.mode == "dry_run":
             rows, universe_issues = process_erad_next_scale_slice2_dry_run(included, normalized_root)
             total_planned = sum(
                 int(r.get("planned_request_count_case", "0")) for r in rows
             )
             ok_cap, cap_err = enforce_erad_next_scale_slice2_request_cap(total_planned)
+            if orgid_fb_retry and total_planned > request_cap:
+                ok_cap, cap_err = (
+                    False,
+                    f"{ERAD_SLICE2_REQUEST_CAP_EXCEEDED}:{total_planned}>{request_cap}",
+                )
             if not ok_cap:
                 universe_issues.append(cap_err)
             report_path = write_erad_next_scale_slice2_dryrun_report(rows, output_paths)
-            if case_range:
+            if case_range or orgid_fb_retry:
                 gate = ERAD_NEXT_SCALE_SLICE2_RUNNER_GATE if not universe_issues else "FAIL"
             else:
                 gate = compute_erad_next_scale_slice2_runner_gate(
@@ -6312,6 +6514,7 @@ def main(argv: Optional[List[str]] = None) -> int:
             print(
                 f"mode=erad_a_scale_500_slice2_dry_run cases={len(included)} "
                 f"planned_ok={planned_ok} cninfo_calls=0"
+                f"{' orgid_fallback_retry=yes' if orgid_fb_retry else ''}"
             )
             print(f"planned_request_count_total={total_planned}")
             print(
@@ -6324,15 +6527,23 @@ def main(argv: Optional[List[str]] = None) -> int:
             return 0
         stats = tiny_live.LiveStats()
         rows, universe_issues = process_erad_a_next_scale_slice2_live(
-            included, output_paths, stats
+            included,
+            output_paths,
+            stats,
+            request_cap=request_cap,
+            mode_label=mode_label,
         )
-        if stats.cninfo_requests > ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP:
+        if stats.cninfo_requests > request_cap:
             universe_issues.append(
                 f"{ERAD_SLICE2_REQUEST_CAP_EXCEEDED}: actual={stats.cninfo_requests} "
-                f"cap={ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP}"
+                f"cap={request_cap}"
             )
         gate = compute_erad_next_scale_slice2_execution_gate(
-            rows, universe_issues, stats, expected_case_count
+            rows,
+            universe_issues,
+            stats,
+            expected_case_count,
+            request_cap=request_cap,
         )
         report_path = write_erad_next_scale_slice2_live_report(rows, output_paths)
         quality_path = write_erad_next_scale_slice2_live_quality_report(rows, output_paths)
@@ -6343,9 +6554,11 @@ def main(argv: Optional[List[str]] = None) -> int:
             1 for row in rows if is_erad_next_scale_slice2_case_acceptable(row)
         )
         print(
-            f"mode=erad_a_scale_500_slice2_live cases={len(included)} "
+            f"mode={mode_label} cases={len(included)} "
             f"executed={len(rows)} acceptable={acceptable_count} "
-            f"cninfo_calls={stats.cninfo_requests}"
+            f"cninfo_calls={stats.cninfo_requests} "
+            f"orgid_fallback_hits={stats.orgid_offline_fallback_hits} "
+            f"orgid_fallback_misses={stats.orgid_offline_fallback_misses}"
         )
         print(f"gate=a_class_erad_next_scale_slice2_s1_execution_gate={gate}")
         print(

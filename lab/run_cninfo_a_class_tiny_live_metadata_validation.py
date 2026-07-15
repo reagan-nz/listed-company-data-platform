@@ -321,6 +321,10 @@ class LiveStats:
     endpoint_hits: Dict[str, int] = field(
         default_factory=lambda: {"topSearch": 0, "hisAnnouncement": 0}
     )
+    # 离线 orgId 映射回退计数（不计入 cninfo_requests）
+    orgid_offline_fallback_hits: int = 0
+    orgid_offline_fallback_misses: int = 0
+    orgid_offline_fallback_sources: Dict[str, str] = field(default_factory=dict)
 
 
 def _normalize_output_root(path: str) -> str:
@@ -804,9 +808,40 @@ def _count_english_rejected(records: List[Dict[str, Any]], company_code: str) ->
     return count
 
 
+def _try_offline_orgid_fallback(
+    company_code: str, stats: LiveStats
+) -> Tuple[str, str]:
+    """
+    topSearch 未解析到 orgId 时的离线映射回退。
+
+    命中：返回 (org_id, "")，并记录 fallback 源。
+    未命中：返回 ("", 原错误保留由调用方处理)；显式计 miss，禁止静默成功。
+    """
+    import cninfo_a_class_orgid_mapping_fallback as offline_fb  # 局部导入，避免循环依赖
+
+    hit = offline_fb.lookup_orgid(company_code)
+    if hit.found and (hit.org_id or "").strip():
+        org = hit.org_id.strip()
+        _ORGID_CACHE[company_code] = org
+        stats.orgid_offline_fallback_hits += 1
+        stats.orgid_offline_fallback_sources[company_code] = hit.source or "offline_mapping"
+        return org, ""
+    # 映射未命中：显式登记，不得伪造 orgId
+    stats.orgid_offline_fallback_misses += 1
+    miss_err = hit.error or f"offline_orgid_not_found:{company_code}"
+    stats.orgid_offline_fallback_sources[company_code] = f"miss:{miss_err}"
+    return "", miss_err
+
+
 def resolve_orgid(company_code: str, stats: LiveStats) -> Tuple[str, str]:
+    """
+    解析 orgId：优先 topSearch；失败后再尝试离线映射回退。
+
+    映射未命中时保留 topSearch 失败语义（调用方仍得空 orgId + 原错误）。
+    """
     if company_code in _ORGID_CACHE:
         return _ORGID_CACHE[company_code], ""
+    topsearch_err = "empty_response"
     try:
         resp = requests.post(
             TOPSEARCH_ENDPOINT,
@@ -818,28 +853,38 @@ def resolve_orgid(company_code: str, stats: LiveStats) -> Tuple[str, str]:
         stats.endpoint_hits["topSearch"] = stats.endpoint_hits.get("topSearch", 0) + 1
         time.sleep(SLEEP_SECONDS)
         if resp.status_code == 429:
-            return "", "rate_limited"
-        if not resp.ok:
-            return "", "network_error"
-        items = resp.json()
-        if not isinstance(items, list):
-            return "", "empty_response"
-        for item in items:
-            if str(item.get("code")) == str(company_code):
-                org = (item.get("orgId") or "").strip()
-                if org:
-                    _ORGID_CACHE[company_code] = org
-                    return org, ""
-        if items:
-            org = (items[0].get("orgId") or "").strip()
-            if org:
-                _ORGID_CACHE[company_code] = org
-                return org, ""
+            topsearch_err = "rate_limited"
+        elif not resp.ok:
+            topsearch_err = "network_error"
+        else:
+            items = resp.json()
+            if not isinstance(items, list):
+                topsearch_err = "empty_response"
+            else:
+                for item in items:
+                    if str(item.get("code")) == str(company_code):
+                        org = (item.get("orgId") or "").strip()
+                        if org:
+                            _ORGID_CACHE[company_code] = org
+                            return org, ""
+                if items:
+                    org = (items[0].get("orgId") or "").strip()
+                    if org:
+                        _ORGID_CACHE[company_code] = org
+                        return org, ""
+                topsearch_err = "empty_response"
     except requests.exceptions.Timeout:
-        return "", "network_error"
+        topsearch_err = "network_error"
     except Exception:
-        return "", "network_error"
-    return "", "empty_response"
+        topsearch_err = "network_error"
+
+    # topSearch 未得 orgId：尝试离线回退（不增加 CNINFO 计数）
+    fb_org, fb_err = _try_offline_orgid_fallback(company_code, stats)
+    if fb_org:
+        return fb_org, ""
+    # 回退未命中：保留 topSearch 错误；miss 已记入 stats，不吞掉
+    _ = fb_err
+    return "", topsearch_err
 
 
 def fetch_announcements(
@@ -902,8 +947,20 @@ def execute_live_case(case: UniverseCase, stats: LiveStats) -> Dict[str, str]:
     stats.companies_executed += 1
     base = _live_row_base(case)
     org_id, org_err = resolve_orgid(case.company_code, stats)
+    fallback_source = stats.orgid_offline_fallback_sources.get(case.company_code, "")
+    used_offline_fallback = bool(
+        org_id and fallback_source and not str(fallback_source).startswith("miss:")
+    )
+    fallback_note = (
+        f"orgid_offline_fallback=yes; source={fallback_source}"
+        if used_offline_fallback
+        else ""
+    )
     if not org_id:
         stats.failure_count += 1
+        miss_note = ""
+        if str(fallback_source).startswith("miss:"):
+            miss_note = f"; orgid_offline_fallback=miss; {fallback_source}"
         return {
             **base,
             "retrieval_status": org_err or "network_error",
@@ -916,7 +973,9 @@ def execute_live_case(case: UniverseCase, stats: LiveStats) -> Dict[str, str]:
             "period_match_status": "n/a",
             "pdf_url_present": "no",
             "adjunct_url_present": "no",
-            "notes": f"orgId resolution failed: {org_err}",
+            "notes": f"orgId resolution failed: {org_err}{miss_note}",
+            "_org_id": "",
+            "_orgid_offline_fallback": "miss" if miss_note else "n/a",
         }
 
     column = infer_column(case.company_code)
@@ -944,7 +1003,13 @@ def execute_live_case(case: UniverseCase, stats: LiveStats) -> Dict[str, str]:
                 "period_match_status": "n/a",
                 "pdf_url_present": "no",
                 "adjunct_url_present": "no",
-                "notes": "rate_limited; stopped",
+                "notes": (
+                    f"rate_limited; stopped; {fallback_note}".strip("; ")
+                    if fallback_note
+                    else "rate_limited; stopped"
+                ),
+                "_org_id": org_id,
+                "_orgid_offline_fallback": "yes" if used_offline_fallback else "no",
             }
         if batch:
             records.extend(batch)
@@ -958,6 +1023,12 @@ def execute_live_case(case: UniverseCase, stats: LiveStats) -> Dict[str, str]:
 
     if not picked:
         stats.failure_count += 1
+        notes = (
+            f"no v2 matching periodic report; records={len(records)}; "
+            f"last_err={last_err}; matching_logic={MATCHING_LOGIC_VERSION}"
+        )
+        if fallback_note:
+            notes = f"{notes}; {fallback_note}"
         return {
             **base,
             "retrieval_status": "not_found",
@@ -970,10 +1041,9 @@ def execute_live_case(case: UniverseCase, stats: LiveStats) -> Dict[str, str]:
             "period_match_status": "n/a",
             "pdf_url_present": "no",
             "adjunct_url_present": "no",
-            "notes": (
-                f"no v2 matching periodic report; records={len(records)}; "
-                f"last_err={last_err}; matching_logic={MATCHING_LOGIC_VERSION}"
-            ),
+            "notes": notes,
+            "_org_id": org_id,
+            "_orgid_offline_fallback": "yes" if used_offline_fallback else "no",
         }
 
     title = _strip_html(str(picked.get("announcementTitle") or ""))
@@ -991,6 +1061,11 @@ def execute_live_case(case: UniverseCase, stats: LiveStats) -> Dict[str, str]:
     if retrieval_status == "title_mismatch":
         stats.failure_count += 1
         stats.wrong_report_type_count += 1
+        notes = (
+            f"title mismatch: {mismatch_reason}; matching_logic={MATCHING_LOGIC_VERSION}"
+        )
+        if fallback_note:
+            notes = f"{notes}; {fallback_note}"
         return {
             **base,
             "retrieval_status": "title_mismatch",
@@ -1003,13 +1078,19 @@ def execute_live_case(case: UniverseCase, stats: LiveStats) -> Dict[str, str]:
             "period_match_status": period_match_status,
             "pdf_url_present": "yes" if pdf_url else "no",
             "adjunct_url_present": "yes" if adjunct else "no",
-            "notes": (
-                f"title mismatch: {mismatch_reason}; matching_logic={MATCHING_LOGIC_VERSION}"
-            ),
+            "notes": notes,
+            "_org_id": org_id,
+            "_orgid_offline_fallback": "yes" if used_offline_fallback else "no",
         }
 
     quality_status, lineage_status = assess_live_quality(adjunct, pdf_url, "found")
     stats.success_count += 1
+    notes = (
+        f"v2 live metadata; storage_status={STORAGE_STATUS_PHASE1}; "
+        f"matching_logic={MATCHING_LOGIC_VERSION}; PDF not downloaded"
+    )
+    if fallback_note:
+        notes = f"{notes}; {fallback_note}"
     return {
         **base,
         "retrieval_status": "found",
@@ -1022,12 +1103,10 @@ def execute_live_case(case: UniverseCase, stats: LiveStats) -> Dict[str, str]:
         "period_match_status": period_match_status,
         "pdf_url_present": "yes" if pdf_url else "no",
         "adjunct_url_present": "yes" if adjunct else "no",
-        "notes": (
-            f"v2 live metadata; storage_status={STORAGE_STATUS_PHASE1}; "
-            f"matching_logic={MATCHING_LOGIC_VERSION}; PDF not downloaded"
-        ),
+        "notes": notes,
         "_raw_announcement": picked,
         "_org_id": org_id,
+        "_orgid_offline_fallback": "yes" if used_offline_fallback else "no",
     }
 
 
