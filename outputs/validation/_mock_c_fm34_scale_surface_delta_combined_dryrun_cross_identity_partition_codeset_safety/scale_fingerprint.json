@@ -1,0 +1,76 @@
+{
+  "generated_at": "2026-07-15T15:01:10Z",
+  "task_id": "C-FM-34",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "seal_chain_extended": false,
+  "scale_tier_count": 7,
+  "company_coverage_sum": 3314,
+  "harvest_unique_union": 2249,
+  "harvest_additive": 2261,
+  "overlap_delta": 12,
+  "surface_unique": 2251,
+  "combined_dryrun_coverage": 1053,
+  "union_complete": 2134,
+  "union_partial": 106,
+  "union_failed": 9,
+  "resume_improved": 28,
+  "resume_same": 1,
+  "resume_worse": 0,
+  "surface_harvest_delta_n": 2,
+  "partial_risk_bands": {
+    "p35_heavy": 75,
+    "p3_mid": 14,
+    "p2_mid": 12,
+    "fu_light": 5
+  },
+  "residual_safety_coverage": 117,
+  "complete_codes_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431",
+  "partial_codes_sha256": "5d5da7030f91e60893627d7fcf208b79f4f09e3edc5c4255fb797c1706672d73",
+  "failed_codes_sha256": "fb74a9df6bbecf75a7c2b354491a80c4b294c3c1cd392ec429bd8d16b74a14f6",
+  "winner_map_sha256": "ff2c6a28b361498b0dbf163ad1d1779041e1dd4e772b652e6382e1d4051fbb07",
+  "improved_codes_sha256": "8be1b0a704f205387c024d05b3d592d4cc64c6b3b9556546f6e65614001d54e8",
+  "same_codes_sha256": "2896da9453ebb1a999cf3074dc4753d776587b6a385ab9d5a5ed0fe9942bf5d6",
+  "batch_priority": [
+    "h863",
+    "p35",
+    "p3",
+    "p2",
+    "fu"
+  ],
+  "frozen_fps": {
+    "dry863_surface_delta_codeset_freeze": "2c74735022d758c306c53c1510152fde20f99301abb338329b0cb43874858e64",
+    "combined_dryrun_coverage_cardinality_freeze": "354363f4f2c0809cdb0720ac5a366746ef8fa326fa6102cd0f451e2142b07f39",
+    "cross_metric_identity_lock": "7e2d3d3a517e09e8eac77204c1b0832e87d001f8a3d2cdbd8bbee51d95109842",
+    "partition_codeset_sha256_lock": "44c1f92225b49df762e458cd5b1617888aa873b3e5723191bab4dd1927e47ade",
+    "fm33_union_status_partition_cardinality_freeze": "2c0bbb7b1704dd8246eb37db6f617458e7de71d6ca89592e0c21aa4cff56cf34",
+    "fm33_overlap_delta_cardinality_freeze": "bb2fec2da48551d74b22c3a68a971793331bb88cff5937e8d1c4dbe0f9af30c7",
+    "fm33_residual_safety_coverage_lock": "56a5b3978d7cd9e96710b012af416125c14cf301aa3b9ed81d4e52ce0c46ecf9",
+    "fm33_resume_same_worse_write_boundary": "c2623992e1e63b1b8789a43c47aaf6bcabae5de6ecd1662a09e588e5b40c9908"
+  },
+  "observed_fps": {
+    "dry863_surface_delta_codeset_freeze": "2c74735022d758c306c53c1510152fde20f99301abb338329b0cb43874858e64",
+    "combined_dryrun_coverage_cardinality_freeze": "354363f4f2c0809cdb0720ac5a366746ef8fa326fa6102cd0f451e2142b07f39",
+    "cross_metric_identity_lock": "7e2d3d3a517e09e8eac77204c1b0832e87d001f8a3d2cdbd8bbee51d95109842",
+    "partition_codeset_sha256_lock": "44c1f92225b49df762e458cd5b1617888aa873b3e5723191bab4dd1927e47ade"
+  },
+  "fingerprint": {
+    "row_count": 150,
+    "ok_count": 150,
+    "fail_count": 0,
+    "layers": {
+      "fm33_continuity": 8,
+      "dry863_surface_delta_codeset_freeze": 5,
+      "combined_dryrun_coverage_cardinality_freeze": 5,
+      "cross_metric_identity_lock": 5,
+      "partition_codeset_sha256_lock": 5,
+      "protected_write_guard": 5,
+      "output_root_protection": 7,
+      "frozen_mock_isolation": 36,
+      "protected_csv_registry": 39,
+      "fm_gate_battery": 28,
+      "execute_hold_seal": 7
+    },
+    "fingerprint_sha256": "558c4451f36f84449368763b5139cb574bf62b8ca1caec332874ba6c1f9f1771"
+  }
+}

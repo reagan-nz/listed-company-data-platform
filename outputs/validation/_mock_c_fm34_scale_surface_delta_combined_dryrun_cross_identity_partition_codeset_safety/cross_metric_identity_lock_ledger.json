@@ -1,0 +1,49 @@
+{
+  "generated_at": "2026-07-15T15:01:10Z",
+  "task_id": "C-FM-34",
+  "fingerprint_sha256": "7e2d3d3a517e09e8eac77204c1b0832e87d001f8a3d2cdbd8bbee51d95109842",
+  "sample_denials": [
+    {
+      "broken_identity": "partition_sum_ne_unique",
+      "mutation_allowed": false,
+      "reason": "cross_metric_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "broken_identity": "surface_ne_unique_plus_delta",
+      "mutation_allowed": false,
+      "reason": "cross_metric_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "broken_identity": "additive_ne_unique_plus_overlap",
+      "mutation_allowed": false,
+      "reason": "cross_metric_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "broken_identity": "residual_ne_failed_plus_partial_plus_delta",
+      "mutation_allowed": false,
+      "reason": "cross_metric_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "cross_metric_identity_lock",
+    "partition_sum_eq_unique": true,
+    "surface_eq_unique_plus_delta": true,
+    "additive_eq_unique_plus_overlap": true,
+    "residual_eq_failed_plus_partial_plus_delta": true,
+    "unique": 2249,
+    "surface": 2251,
+    "additive": 2261,
+    "overlap_delta": 12,
+    "surface_harvest_delta_n": 2,
+    "residual_safety_coverage": 117,
+    "union_complete": 2134,
+    "union_partial": 106,
+    "union_failed": 9,
+    "mutation_allowed": false,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

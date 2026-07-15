@@ -1,0 +1,32 @@
+{
+  "generated_at": "2026-07-15T15:01:10Z",
+  "task_id": "C-FM-34",
+  "fingerprint_sha256": "354363f4f2c0809cdb0720ac5a366746ef8fa326fa6102cd0f451e2142b07f39",
+  "combined_dryrun_coverage": 1053,
+  "sample_denials": [
+    {
+      "proposed_combined_dryrun_coverage": 1054,
+      "frozen_combined_dryrun_coverage": 1053,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "combined_dryrun_coverage_cardinality_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_combined_dryrun_coverage": 1053,
+      "frozen_combined_dryrun_coverage": 1053,
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "combined_dryrun_coverage_cardinality_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "combined_dryrun_coverage_cardinality_freeze",
+    "combined_dryrun_coverage": 1053,
+    "deny_coverage_inflate": true,
+    "deny_coverage_deflate": true,
+    "deny_cardinality_mutation": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
