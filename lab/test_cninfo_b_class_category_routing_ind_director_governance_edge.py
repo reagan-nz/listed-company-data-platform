@@ -44,7 +44,7 @@ NONSTANDARD = (
 )
 SM_RES = "2025年第二次临时股东大会决议公告"
 BOARD = "第七届董事会第十一次会议决议公告"
-ZHANGCHENG = "公司章程（2025年6月修订）"
+ZHIDU = "货币资金管理制度"
 
 
 class TestIndDirectorGovernanceRoutingEdge(unittest.TestCase):
@@ -89,9 +89,9 @@ class TestIndDirectorGovernanceRoutingEdge(unittest.TestCase):
         self.assertEqual(r.predicted_document_type, "annual_report")
         self.assertEqual(r.predicted_route_to, "cninfo_periodic_report_pdf")
 
-    def test_zhangcheng_still_other(self) -> None:
-        """章程类低价值边角仍落 other（本包不硬推）。"""
-        r = routing.route_title(ZHANGCHENG, self.config)
+    def test_general_system_still_other(self) -> None:
+        """一般管理制度低价值边角仍落 other（本包不硬推）。"""
+        r = routing.route_title(ZHIDU, self.config)
         self.assertEqual(r.predicted_document_type, "other")
 
     def test_prior_paths_not_regressed(self) -> None:

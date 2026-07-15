@@ -1,0 +1,5 @@
+# B-FM-36 live allow-list — category 空（仅 known-document）
+status: live_sample_scoped_B-FM-36
+verified: false
+notes: empty category sample for B-FM-36 known-document-only live
+cases: []
