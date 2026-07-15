@@ -27,6 +27,7 @@ LAB_DIR = os.path.join(BASE_DIR, "lab")
 if LAB_DIR not in sys.path:
     sys.path.insert(0, LAB_DIR)
 
+import cninfo_a_class_listing_period_gate as listing_period_gate  # noqa: E402
 import run_cninfo_a_class_tiny_live_metadata_validation as tiny_live  # noqa: E402
 
 DEFAULT_UNIVERSE_CSV = os.path.join(
@@ -757,6 +758,15 @@ ERAD_SLICE2_OVERLAP_B_S1 = "erad_a_slice2_overlap_l_b3_b_s1_u"
 ERAD_SLICE2_OVERLAP_B_S2 = "erad_a_slice2_overlap_l_b4_b_s2_u"
 ERAD_SLICE2_OVERLAP_AB_182 = "erad_a_slice2_overlap_ab_182"
 ERAD_SLICE2_ST_NAME_HIT = "erad_a_slice2_ld4_st_name_hit"
+# L-D6：expected_period 相对 listing_date 门禁（A-R16-03）
+ERAD_SLICE2_LISTING_PERIOD_BLOCK = "erad_a_slice2_ld6_listing_period_block"
+ERAD_SLICE2_LISTING_PROFILE_MISSING = "erad_a_slice2_ld6_listing_profile_missing"
+# 封闭 S1 已知 listing_gap/unlisted 三案（A-R16-02）；dry-run 仅 flag，不阻断冻结 cohort 闸
+ERAD_SLICE2_FROZEN_LISTING_CAVEAT_CASE_IDS: Set[str] = {
+    "AD2E578",
+    "AD2E590",
+    "AD2E598",
+}
 ERAD_SLICE2_REQUEST_CAP_EXCEEDED = "erad_a_next_scale_slice2_request_cap_exceeded"
 ERAD_SLICE2_CASE_RANGE_INVALID = "erad_a_slice2_case_range_invalid"
 ERAD_SLICE2_SCALE_200_ROOT_WRITE_FORBIDDEN = "erad_a_slice2_scale_200_root_write_forbidden"
@@ -5518,7 +5528,7 @@ def validate_erad_next_scale_slice2_duplicate_codes(
 def lint_erad_next_scale_slice2_overlap(
     cases: List[EraDNextScaleSlice2UniverseCase],
 ) -> List[str]:
-    """离线 overlap lint：A/B cumulative · AB_182 · L-D4 ST。"""
+    """离线 overlap lint：A/B cumulative · AB_182 · L-D4 ST · L-D6 listing_period。"""
     issues: List[str] = []
     slice2_codes = {c.company_code for c in cases if c.erad_include == "yes"}
     a_s200 = _load_company_codes_from_csv(DEFAULT_ERAD_SCALE_200_UNIVERSE_CSV, "company_code")
@@ -5564,7 +5574,83 @@ def lint_erad_next_scale_slice2_overlap(
     ]
     if st_hits:
         issues.append(f"{ERAD_SLICE2_ST_NAME_HIT}:count={len(st_hits)}")
+    # L-D6：未来 cohort 硬拒 listing_gap / unlisted；冻结 S1 三案仅 flag
+    listing_blocking, _listing_flags = lint_erad_next_scale_slice2_listing_period(
+        cases,
+        grandfather_case_ids=ERAD_SLICE2_FROZEN_LISTING_CAVEAT_CASE_IDS,
+    )
+    issues.extend(listing_blocking)
     return issues
+
+
+def lint_erad_next_scale_slice2_listing_period(
+    cases: List[EraDNextScaleSlice2UniverseCase],
+    *,
+    profile_dir: str = listing_period_gate.DEFAULT_PROFILE_DIR,
+    grandfather_case_ids: Optional[Set[str]] = None,
+) -> Tuple[List[str], List[str]]:
+    """
+    L-D6 上市日 vs expected_period 离线 lint（CNINFO = 0）。
+
+    返回 (blocking_issues, flag_notes)。
+    - listing_gap / unlisted / profile_missing → 默认 blocking
+    - grandfather_case_ids 内仅写入 flag_notes（封闭 S1 已知 caveat）
+    """
+    grandfather = grandfather_case_ids or set()
+    blocking: List[str] = []
+    flags: List[str] = []
+    for case in cases:
+        if case.erad_include != "yes":
+            continue
+        result = listing_period_gate.assess_listing_vs_expected_period(
+            case.company_code,
+            case.expected_period,
+            profile_dir=profile_dir,
+        )
+        if not listing_period_gate.is_listing_period_reject(result):
+            continue
+        detail = (
+            f"{case.case_id}:{case.company_code}:{result.failure_class}:"
+            f"listing_date={result.listing_date or 'null'}:"
+            f"expected_period={result.expected_period}"
+        )
+        if case.case_id in grandfather:
+            flags.append(f"{ERAD_SLICE2_LISTING_PERIOD_BLOCK}:grandfather:{detail}")
+            continue
+        err_code = (
+            ERAD_SLICE2_LISTING_PROFILE_MISSING
+            if result.failure_class == listing_period_gate.FAILURE_PROFILE_MISSING
+            else ERAD_SLICE2_LISTING_PERIOD_BLOCK
+        )
+        blocking.append(f"{err_code}:{detail}")
+    return blocking, flags
+
+
+def filter_erad_next_scale_slice2_cases_by_listing_period(
+    cases: List[EraDNextScaleSlice2UniverseCase],
+    *,
+    profile_dir: str = listing_period_gate.DEFAULT_PROFILE_DIR,
+) -> Tuple[List[EraDNextScaleSlice2UniverseCase], List[listing_period_gate.ListingPeriodGateResult]]:
+    """
+    未来 next-scale / slice universe 构建入口：硬拒 listing_gap / unlisted / profile_missing。
+
+    无 grandfather；不 mutate 输入列表。
+    """
+    kept: List[EraDNextScaleSlice2UniverseCase] = []
+    rejected: List[listing_period_gate.ListingPeriodGateResult] = []
+    for case in cases:
+        if case.erad_include != "yes":
+            continue
+        result = listing_period_gate.assess_listing_vs_expected_period(
+            case.company_code,
+            case.expected_period,
+            profile_dir=profile_dir,
+        )
+        if listing_period_gate.is_listing_period_reject(result):
+            rejected.append(result)
+        else:
+            kept.append(case)
+    return kept, rejected
 
 
 def validate_erad_next_scale_slice2_universe_csv_path(universe_csv: str) -> Tuple[bool, str]:
@@ -5820,13 +5906,28 @@ def process_erad_next_scale_slice2_dry_run(
     rows: List[Dict[str, str]] = []
     universe_issues: List[str] = list(validate_erad_next_scale_slice2_duplicate_codes(cases))
     universe_issues.extend(lint_erad_next_scale_slice2_overlap(cases))
+    _listing_blocking, listing_flags = lint_erad_next_scale_slice2_listing_period(
+        cases,
+        grandfather_case_ids=ERAD_SLICE2_FROZEN_LISTING_CAVEAT_CASE_IDS,
+    )
+    # listing_blocking 已由 lint_erad_next_scale_slice2_overlap 并入；此处仅保留 flag 供行级标注
+    listing_flag_by_case: Dict[str, str] = {}
+    for note in listing_flags:
+        # 格式：err:grandfather:CASE_ID:CODE:failure_class:...
+        parts = note.split(":")
+        if len(parts) >= 3 and parts[1] == "grandfather":
+            listing_flag_by_case[parts[2]] = note
     for case in cases:
         if case.erad_include != "yes":
             continue
         issues = validate_erad_next_scale_slice2_case(case)
         if issues:
             universe_issues.append(f"{case.case_id}:{';'.join(issues)}")
-        rows.append(build_erad_next_scale_slice2_dryrun_row(case, issues, output_root))
+        row = build_erad_next_scale_slice2_dryrun_row(case, issues, output_root)
+        flag = listing_flag_by_case.get(case.case_id)
+        if flag:
+            row["notes"] = f"{row['notes']}; listing_period_flag={flag}"
+        rows.append(row)
     return rows, universe_issues
 
 
@@ -5864,6 +5965,7 @@ def write_erad_next_scale_slice2_dryrun_summary(
     total_planned: int,
 ) -> str:
     planned_ok = sum(1 for row in rows if row["dryrun_status"] == "planned_ok")
+    listing_flagged = sum(1 for row in rows if "listing_period_flag=" in (row.get("notes") or ""))
     total = len(rows)
     lines = [
         "# CNINFO A 类 Era D Next-Scale Slice2 S1 — Dry-run 摘要",
@@ -5883,11 +5985,13 @@ def write_erad_next_scale_slice2_dryrun_summary(
         f"| planned_requests_total | {total_planned} (cap ≤ {ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP}) |",
         f"| matching_logic | **{MATCHING_LOGIC_VERSION}** |",
         "| CNINFO calls | **0** |",
+        f"| L-D6 listing_period grandfather flags | {listing_flagged} |",
         "",
         "## Overlap lint",
         "",
         "- L-A1..L-A4 / L-B1..L-B4 / AB_182: **0 overlap**（若无 universe issues）",
         "- L-D4 ST 名称命中: **0**",
+        "- L-D6 listing_period: 未来 cohort **硬拒**；冻结 S1 三案 **flag only**",
         "",
         "## Safety",
         "",

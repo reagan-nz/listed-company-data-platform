@@ -18,7 +18,7 @@ import json
 import os
 from dataclasses import dataclass
 from datetime import date, datetime
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
 _LAB_DIR = os.path.dirname(os.path.abspath(__file__))
 _BASE_DIR = os.path.dirname(_LAB_DIR)
@@ -212,3 +212,62 @@ def assess_listing_vs_expected_period(
         source=src,
         notes="上市日不晚于报告期；空公告需另查 query/keyword/matching",
     )
+
+
+def is_listing_period_reject(result: ListingPeriodGateResult) -> bool:
+    """
+    未来 cohort 构建是否应剔除该案。
+
+    剔除：listing_gap · unlisted（blocks_periodic_retrieval）。
+    profile_missing / period 不可解析：亦剔除（不得假装可达）。
+    """
+    if result.blocks_periodic_retrieval:
+        return True
+    return result.failure_class == FAILURE_PROFILE_MISSING
+
+
+def partition_by_listing_period(
+    items: Iterable[Tuple[str, str]],
+    *,
+    profile_dir: str = DEFAULT_PROFILE_DIR,
+) -> Tuple[List[ListingPeriodGateResult], List[ListingPeriodGateResult]]:
+    """
+    按上市日门禁拆分候选。
+
+    items: (company_code, expected_period) 序列。
+    返回 (accepted, rejected)；CNINFO 恒为 0。
+    """
+    accepted: List[ListingPeriodGateResult] = []
+    rejected: List[ListingPeriodGateResult] = []
+    for company_code, expected_period in items:
+        result = assess_listing_vs_expected_period(
+            company_code, expected_period, profile_dir=profile_dir
+        )
+        if is_listing_period_reject(result):
+            rejected.append(result)
+        else:
+            accepted.append(result)
+    return accepted, rejected
+
+
+def filter_codes_passing_listing_period(
+    items: Sequence[Tuple[str, str]],
+    *,
+    profile_dir: str = DEFAULT_PROFILE_DIR,
+) -> Tuple[List[Tuple[str, str]], List[ListingPeriodGateResult]]:
+    """
+    未来 next-scale / slice universe 构建入口：仅保留门禁通过项。
+
+    返回 (kept_items, rejected_results)。
+    """
+    kept: List[Tuple[str, str]] = []
+    rejected: List[ListingPeriodGateResult] = []
+    for company_code, expected_period in items:
+        result = assess_listing_vs_expected_period(
+            company_code, expected_period, profile_dir=profile_dir
+        )
+        if is_listing_period_reject(result):
+            rejected.append(result)
+        else:
+            kept.append((normalize_code(company_code), (expected_period or "").strip()))
+    return kept, rejected

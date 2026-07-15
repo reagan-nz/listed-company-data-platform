@@ -99,6 +99,51 @@ class ListingPeriodGateTests(unittest.TestCase):
             self.assertEqual(result.cninfo_calls, 0)
             self.assertTrue(result.blocks_periodic_retrieval)
 
+    def test_partition_and_filter_reject_listing_gap(self) -> None:
+        """未来 cohort 构建入口：listing_gap / unlisted 进入 rejected。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            (Path(tmp) / "688605.json").write_text(
+                json.dumps(
+                    {"company_code": "688605", "listing_date": "2024-12-12"},
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+            (Path(tmp) / "600000.json").write_text(
+                json.dumps(
+                    {"company_code": "600000", "listing_date": "1999-11-10"},
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+            (Path(tmp) / "688688.json").write_text(
+                json.dumps(
+                    {
+                        "company_code": "688688",
+                        "listing_date": None,
+                        "raw_record_json": {"basicInformation": [{"F006D": None}]},
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+            items = [
+                ("688605", "2024-06-30"),
+                ("600000", "2024-06-30"),
+                ("688688", "2024-09-30"),
+            ]
+            accepted, rejected = gate.partition_by_listing_period(
+                items, profile_dir=tmp
+            )
+            self.assertEqual(len(accepted), 1)
+            self.assertEqual(accepted[0].company_code, "600000")
+            self.assertEqual(len(rejected), 2)
+            kept, rejected2 = gate.filter_codes_passing_listing_period(
+                items, profile_dir=tmp
+            )
+            self.assertEqual(kept, [("600000", "2024-06-30")])
+            self.assertEqual(len(rejected2), 2)
+
 
 if __name__ == "__main__":
     unittest.main()

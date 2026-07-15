@@ -200,6 +200,46 @@ class TestEradNextScaleSlice2Runner(unittest.TestCase):
         overlap_issues = runner.lint_erad_next_scale_slice2_overlap(cases)
         self.assertEqual(overlap_issues, [])
 
+    def test_listing_period_lint_flags_frozen_triad_without_blocking(self) -> None:
+        """A-R16-03：冻结 S1 三案 L-D6 flag only；不阻断 overlap/dry-run 闸。"""
+        cases = runner.load_erad_next_scale_slice2_universe(UNIVERSE)
+        blocking, flags = runner.lint_erad_next_scale_slice2_listing_period(
+            cases,
+            grandfather_case_ids=runner.ERAD_SLICE2_FROZEN_LISTING_CAVEAT_CASE_IDS,
+        )
+        self.assertEqual(blocking, [])
+        self.assertEqual(len(flags), 3)
+        flagged_ids = {note.split(":")[2] for note in flags}
+        self.assertEqual(flagged_ids, runner.ERAD_SLICE2_FROZEN_LISTING_CAVEAT_CASE_IDS)
+
+    def test_listing_period_lint_blocks_ungrandfathered_gap(self) -> None:
+        """未来 cohort：无 grandfather 时 listing_gap 必须 blocking。"""
+        cases = runner.load_erad_next_scale_slice2_universe(UNIVERSE)
+        triad = [
+            c
+            for c in cases
+            if c.case_id in runner.ERAD_SLICE2_FROZEN_LISTING_CAVEAT_CASE_IDS
+        ]
+        blocking, flags = runner.lint_erad_next_scale_slice2_listing_period(
+            triad, grandfather_case_ids=set()
+        )
+        self.assertEqual(flags, [])
+        self.assertEqual(len(blocking), 3)
+        self.assertTrue(
+            all(runner.ERAD_SLICE2_LISTING_PERIOD_BLOCK in b for b in blocking)
+        )
+
+    def test_filter_builder_rejects_listing_gap_cases(self) -> None:
+        """未来 universe builder：硬拒 listing_gap/unlisted 三案。"""
+        cases = runner.load_erad_next_scale_slice2_universe(UNIVERSE)
+        kept, rejected = runner.filter_erad_next_scale_slice2_cases_by_listing_period(
+            cases
+        )
+        self.assertEqual(len(rejected), 3)
+        self.assertEqual(len(kept), 97)
+        rejected_codes = {r.company_code for r in rejected}
+        self.assertEqual(rejected_codes, {"688605", "688688", "688758"})
+
     def test_pdf_and_verified_blocked(self) -> None:
         for extra, err in (
             (["--download-pdf"], runner.PDF_DOWNLOAD_REQUESTED_NOT_ALLOWED),

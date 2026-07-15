@@ -157,6 +157,8 @@ PLANNED_RUNNER_SYMBOLS = [
     "load_erad_next_scale_slice2_universe",
     "validate_erad_next_scale_slice2_output_root",
     "lint_erad_next_scale_slice2_overlap",
+    "lint_erad_next_scale_slice2_listing_period",
+    "filter_erad_next_scale_slice2_cases_by_listing_period",
     "process_erad_next_scale_slice2_dry_run",
     "enforce_erad_next_scale_slice2_request_cap",
 ]
