@@ -1,0 +1,59 @@
+case_id=AD2E751 cohort=next_scale_listing_aware company_code=300836 retrieval_status=found quality=pass
+case_id=AD2E752 cohort=next_scale_listing_aware company_code=300840 retrieval_status=found quality=pass
+case_id=AD2E753 cohort=next_scale_listing_aware company_code=300853 retrieval_status=found quality=pass
+case_id=AD2E754 cohort=next_scale_listing_aware company_code=300856 retrieval_status=found quality=pass
+case_id=AD2E755 cohort=next_scale_listing_aware company_code=300858 retrieval_status=found quality=pass
+case_id=AD2E756 cohort=next_scale_listing_aware company_code=300864 retrieval_status=found quality=pass
+case_id=AD2E757 cohort=next_scale_listing_aware company_code=300867 retrieval_status=found quality=pass
+case_id=AD2E758 cohort=next_scale_listing_aware company_code=300870 retrieval_status=found quality=pass
+case_id=AD2E759 cohort=next_scale_listing_aware company_code=300884 retrieval_status=found quality=pass
+case_id=AD2E760 cohort=next_scale_listing_aware company_code=300891 retrieval_status=found quality=pass
+case_id=AD2E761 cohort=next_scale_listing_aware company_code=300900 retrieval_status=found quality=pass
+case_id=AD2E762 cohort=next_scale_listing_aware company_code=300905 retrieval_status=found quality=pass
+case_id=AD2E763 cohort=next_scale_listing_aware company_code=300907 retrieval_status=found quality=pass
+case_id=AD2E764 cohort=next_scale_listing_aware company_code=300921 retrieval_status=found quality=pass
+case_id=AD2E765 cohort=next_scale_listing_aware company_code=300939 retrieval_status=found quality=pass
+case_id=AD2E766 cohort=next_scale_listing_aware company_code=300959 retrieval_status=found quality=pass
+case_id=AD2E767 cohort=next_scale_listing_aware company_code=300962 retrieval_status=found quality=pass
+case_id=AD2E768 cohort=next_scale_listing_aware company_code=300976 retrieval_status=found quality=pass
+case_id=AD2E769 cohort=next_scale_listing_aware company_code=300987 retrieval_status=found quality=pass
+case_id=AD2E770 cohort=next_scale_listing_aware company_code=300989 retrieval_status=found quality=pass
+case_id=AD2E771 cohort=next_scale_listing_aware company_code=300993 retrieval_status=found quality=pass
+case_id=AD2E772 cohort=next_scale_listing_aware company_code=300996 retrieval_status=found quality=pass
+case_id=AD2E773 cohort=next_scale_listing_aware company_code=300997 retrieval_status=found quality=pass
+case_id=AD2E774 cohort=next_scale_listing_aware company_code=300998 retrieval_status=found quality=pass
+case_id=AD2E775 cohort=next_scale_listing_aware company_code=301001 retrieval_status=found quality=pass
+case_id=AD2E776 cohort=next_scale_listing_aware company_code=301002 retrieval_status=found quality=pass
+case_id=AD2E777 cohort=next_scale_listing_aware company_code=301009 retrieval_status=found quality=pass
+case_id=AD2E778 cohort=next_scale_listing_aware company_code=301011 retrieval_status=found quality=pass
+case_id=AD2E779 cohort=next_scale_listing_aware company_code=301017 retrieval_status=found quality=pass
+case_id=AD2E780 cohort=next_scale_listing_aware company_code=301018 retrieval_status=found quality=pass
+case_id=AD2E781 cohort=next_scale_listing_aware company_code=301021 retrieval_status=found quality=pass
+case_id=AD2E782 cohort=next_scale_listing_aware company_code=301022 retrieval_status=found quality=pass
+case_id=AD2E783 cohort=next_scale_listing_aware company_code=301025 retrieval_status=found quality=pass
+case_id=AD2E784 cohort=next_scale_listing_aware company_code=301027 retrieval_status=found quality=pass
+case_id=AD2E785 cohort=next_scale_listing_aware company_code=301033 retrieval_status=found quality=pass
+case_id=AD2E786 cohort=next_scale_listing_aware company_code=301052 retrieval_status=found quality=pass
+case_id=AD2E787 cohort=next_scale_listing_aware company_code=301055 retrieval_status=found quality=pass
+case_id=AD2E788 cohort=next_scale_listing_aware company_code=301063 retrieval_status=found quality=pass
+case_id=AD2E789 cohort=next_scale_listing_aware company_code=301066 retrieval_status=found quality=pass
+case_id=AD2E790 cohort=next_scale_listing_aware company_code=301068 retrieval_status=found quality=pass
+case_id=AD2E791 cohort=next_scale_listing_aware company_code=301077 retrieval_status=found quality=pass
+case_id=AD2E792 cohort=next_scale_listing_aware company_code=301107 retrieval_status=found quality=pass
+case_id=AD2E793 cohort=next_scale_listing_aware company_code=301108 retrieval_status=found quality=pass
+case_id=AD2E794 cohort=next_scale_listing_aware company_code=301111 retrieval_status=found quality=pass
+case_id=AD2E795 cohort=next_scale_listing_aware company_code=301112 retrieval_status=found quality=pass
+case_id=AD2E796 cohort=next_scale_listing_aware company_code=301113 retrieval_status=found quality=pass
+case_id=AD2E797 cohort=next_scale_listing_aware company_code=301123 retrieval_status=found quality=pass
+case_id=AD2E798 cohort=next_scale_listing_aware company_code=301126 retrieval_status=found quality=pass
+case_id=AD2E799 cohort=next_scale_listing_aware company_code=301128 retrieval_status=found quality=pass
+case_id=AD2E800 cohort=next_scale_listing_aware company_code=301130 retrieval_status=found quality=pass
+mode=erad_a_listing_aware_s5_live cases=50 executed=50 acceptable=50 cninfo_calls=110 orgid_fallback_hits=0 orgid_fallback_misses=0
+gate=a_class_erad_next_scale_slice2_s1_execution_gate=PASS_WITH_CAVEAT
+gate=a_class_erad_next_scale_slice2_s1_live_path_gate=READY_FOR_APPROVAL
+erad_slice2_live_report=/Users/zhao/Desktop/97/实操/数据收集测试/listed_company_data_collector/outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s5/reports/a_class_erad_next_scale_slice2_s1_live_report.csv
+erad_slice2_live_quality=/Users/zhao/Desktop/97/实操/数据收集测试/listed_company_data_collector/outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s5/reports/a_class_erad_next_scale_slice2_s1_live_quality_report.csv
+erad_slice2_live_summary=/Users/zhao/Desktop/97/实操/数据收集测试/listed_company_data_collector/outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s5/reports/a_class_erad_next_scale_slice2_s1_live_summary.md
+real 342.77
+user 4.78
+sys 0.28
