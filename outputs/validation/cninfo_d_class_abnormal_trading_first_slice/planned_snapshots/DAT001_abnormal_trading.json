@@ -1,0 +1,29 @@
+{
+  "case_id": "DAT001",
+  "company_code": "000004",
+  "company_name": "国华退",
+  "component": "abnormal_trading",
+  "anchor_tdate": "2026-07-03",
+  "query_mode": "single_day_paged",
+  "planned_requests": [
+    "single_day_paged_2026-07-03"
+  ],
+  "query_params": [
+    {
+      "sdate": "2026-07-03",
+      "edate": "2026-07-03",
+      "platecode": "",
+      "orderby": "",
+      "page": 1,
+      "rows": 30
+    }
+  ],
+  "endpoint": "https://www.cninfo.com.cn/data/statis/getMarketStatisticsData",
+  "records_path": "marketList",
+  "expected_behavior": "captured_normal_or_needs_review",
+  "fixture_refs": [
+    "fixtures/d_class/abnormal_trading_first_slice/DAT001_needs_review_synthetic.json"
+  ],
+  "cninfo_called": false,
+  "detail_nested_deferred": true
+}

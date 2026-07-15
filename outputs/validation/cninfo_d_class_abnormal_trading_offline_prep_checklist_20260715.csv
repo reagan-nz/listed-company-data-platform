@@ -1,0 +1,11 @@
+item_id,category,status,notes
+CHK-001,universe_lock,done,DAT001-DAT005 locked
+CHK-002,validation_rules,done,VR-001–VR-042 draft
+CHK-003,sample_prep,done,Tier0 sample_raw + Tier1 fixtures
+CHK-004,tier1_fixtures,done,8 synthetic files
+CHK-005,command_draft,done,dry-run + live blocked
+CHK-006,runner_dryrun,done,S4 planned_ok 5/5 CNINFO=0
+CHK-007,live_path,blocked,live_not_implemented + no approve
+CHK-008,cninfo,blocked,calls=0
+CHK-009,dlc006r,excluded,no reopen
+CHK-010,commit_push,blocked,executor no commit/push

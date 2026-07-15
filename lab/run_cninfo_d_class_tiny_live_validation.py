@@ -1437,6 +1437,179 @@ EXECUTIVE_SHAREHOLDING_FIRST_SLICE_QUALITY_REPORT_COLUMNS = [
 ]
 
 
+DEFAULT_ABNORMAL_TRADING_FIRST_SLICE_OUTPUT_ROOT = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_d_class_abnormal_trading_first_slice",
+)
+DEFAULT_ABNORMAL_TRADING_FIRST_SLICE_UNIVERSE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_d_class_abnormal_trading_first_slice_universe_lock_20260715.csv",
+)
+ABNORMAL_TRADING_FIRST_SLICE_FIXTURE_DIR = os.path.join(
+    BASE_DIR,
+    "fixtures",
+    "d_class",
+    "abnormal_trading_first_slice",
+)
+ABNORMAL_TRADING_FIRST_SLICE_DRYRUN_REPORT_CSV = os.path.join(
+    DEFAULT_ABNORMAL_TRADING_FIRST_SLICE_OUTPUT_ROOT,
+    "reports",
+    "d_class_abnormal_trading_first_slice_dryrun_report.csv",
+)
+ABNORMAL_TRADING_FIRST_SLICE_DRYRUN_SUMMARY_MD = os.path.join(
+    DEFAULT_ABNORMAL_TRADING_FIRST_SLICE_OUTPUT_ROOT,
+    "reports",
+    "d_class_abnormal_trading_first_slice_dryrun_summary.md",
+)
+
+ABNORMAL_TRADING_FIRST_SLICE_RUNNER_GATE = "READY_FOR_APPROVAL"
+ABNORMAL_TRADING_FIRST_SLICE_LIVE_PATH_GATE = "READY_FOR_APPROVAL"
+ABNORMAL_TRADING_FIRST_SLICE_EXECUTION_GATE_PASS = "PASS_WITH_CAVEAT"
+ABNORMAL_TRADING_FIRST_SLICE_EXECUTION_GATE_FAIL = "FAIL_REVIEW_REQUIRED"
+ABNORMAL_TRADING_FIRST_SLICE_EXPECTED_UNIVERSE_SIZE = 5
+ABNORMAL_TRADING_FIRST_SLICE_ALLOWED_CASE_IDS: Set[str] = {
+    "DAT001",
+    "DAT002",
+    "DAT003",
+    "DAT004",
+    "DAT005",
+}
+ABNORMAL_TRADING_FIRST_SLICE_EXPECTED_COMPANY_CODES: Dict[str, str] = {
+    "DAT001": "000004",
+    "DAT002": "000895",
+    "DAT003": "600000",
+    "DAT004": "002415",
+    "DAT005": "601988",
+}
+ABNORMAL_TRADING_FIRST_SLICE_FORBIDDEN_COMPANY_CODES: Set[str] = {
+    "688671",
+    "301259",
+}
+ABNORMAL_TRADING_FIRST_SLICE_COMPONENT = "abnormal_trading"
+ABNORMAL_TRADING_FIRST_SLICE_ANCHOR_TDATE = "2026-07-03"
+ABNORMAL_TRADING_FIRST_SLICE_ENDPOINT = (
+    "https://www.cninfo.com.cn/data/statis/getMarketStatisticsData"
+)
+ABNORMAL_TRADING_FIRST_SLICE_PER_CASE_MAX_REQUESTS = 1
+ABNORMAL_TRADING_FIRST_SLICE_TOTAL_MAX_REQUESTS = 20
+ABNORMAL_TRADING_FIRST_SLICE_CASE_FIXTURES: Dict[str, Tuple[str, ...]] = {
+    "DAT001": ("DAT001_needs_review_synthetic.json",),
+    "DAT002": ("DAT002_found.json", "DAT002_empty.json"),
+    "DAT003": ("DAT003_found.json", "DAT003_empty.json"),
+    "DAT004": ("DAT004_found.json", "DAT004_empty.json"),
+    "DAT005": ("DAT005_empty_but_valid_synthetic.json",),
+}
+
+ABNORMAL_TRADING_FIRST_SLICE_APPROVAL_REQUIRED = (
+    "approve_d_class_abnormal_trading_first_slice_required"
+)
+ABNORMAL_TRADING_FIRST_SLICE_WRONG_APPROVAL_FLAG = (
+    "wrong_approval_flag_for_abnormal_trading_first_slice"
+)
+ABNORMAL_TRADING_FIRST_SLICE_MIXED_MODE_BLOCKED = (
+    "abnormal_trading_first_slice_incompatible_with_other_modes"
+)
+ABNORMAL_TRADING_FIRST_SLICE_UNIVERSE_CSV_REQUIRED = (
+    "abnormal_trading_first_slice_requires_explicit_universe_csv"
+)
+ABNORMAL_TRADING_FIRST_SLICE_OUTPUT_ROOT_REQUIRED = (
+    "abnormal_trading_first_slice_output_root_must_be_cninfo_d_class_abnormal_trading_first_slice"
+)
+ABNORMAL_TRADING_FIRST_SLICE_V1_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "v1_output_root_write_blocked_for_abnormal_trading_first_slice"
+)
+ABNORMAL_TRADING_FIRST_SLICE_V2_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "v2_output_root_write_blocked_for_abnormal_trading_first_slice"
+)
+ABNORMAL_TRADING_FIRST_SLICE_REPLACEMENT_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "replacement_output_root_write_blocked_for_abnormal_trading_first_slice"
+)
+ABNORMAL_TRADING_FIRST_SLICE_TARGETED_PROBE_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "targeted_probe_output_root_write_blocked_for_abnormal_trading_first_slice"
+)
+ABNORMAL_TRADING_FIRST_SLICE_EXECUTIVE_SHAREHOLDING_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "executive_shareholding_first_slice_output_root_write_blocked"
+)
+ABNORMAL_TRADING_FIRST_SLICE_SHAREHOLDER_CHANGE_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "shareholder_change_first_slice_output_root_write_blocked"
+)
+ABNORMAL_TRADING_FIRST_SLICE_EQUITY_PLEDGE_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "equity_pledge_first_slice_output_root_write_blocked"
+)
+ABNORMAL_TRADING_FIRST_SLICE_MARGIN_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "margin_trading_first_slice_output_root_write_blocked"
+)
+ABNORMAL_TRADING_FIRST_SLICE_DISCLOSURE_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "disclosure_schedule_first_slice_output_root_write_blocked"
+)
+ABNORMAL_TRADING_FIRST_SLICE_BLOCK_TRADE_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "block_trade_first_slice_output_root_write_blocked"
+)
+ABNORMAL_TRADING_FIRST_SLICE_RSU_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "restricted_shares_unlock_first_slice_output_root_write_blocked"
+)
+ABNORMAL_TRADING_FIRST_SLICE_UNIVERSE_SIZE_MISMATCH = (
+    "abnormal_trading_first_slice_universe_size_must_equal_5"
+)
+ABNORMAL_TRADING_FIRST_SLICE_FORBIDDEN_CASE_ID = (
+    "forbidden_case_id_in_abnormal_trading_first_slice_universe"
+)
+ABNORMAL_TRADING_FIRST_SLICE_WRONG_COMPONENT = (
+    "abnormal_trading_first_slice_component_must_be_abnormal_trading"
+)
+ABNORMAL_TRADING_FIRST_SLICE_INCLUDE_REQUIRED = "first_slice_include_must_be_yes"
+ABNORMAL_TRADING_FIRST_SLICE_FORBIDDEN_COMPANY_CODE = (
+    "forbidden_company_code_in_abnormal_trading_first_slice_universe"
+)
+ABNORMAL_TRADING_FIRST_SLICE_WRONG_COMPANY_CODE = (
+    "abnormal_trading_first_slice_company_code_mismatch"
+)
+ABNORMAL_TRADING_FIRST_SLICE_WRONG_ANCHOR_TDATE = (
+    "abnormal_trading_first_slice_anchor_tdate_mismatch"
+)
+ABNORMAL_TRADING_FIRST_SLICE_PER_CASE_CAP_EXCEEDED = (
+    "abnormal_trading_first_slice_per_case_request_cap_exceeded"
+)
+ABNORMAL_TRADING_FIRST_SLICE_TOTAL_CAP_EXCEEDED = (
+    "abnormal_trading_first_slice_total_request_cap_exceeded"
+)
+ABNORMAL_TRADING_FIRST_SLICE_FIXTURE_MISSING = (
+    "abnormal_trading_first_slice_tier1_fixture_missing"
+)
+ABNORMAL_TRADING_FIRST_SLICE_LIVE_NOT_IMPLEMENTED = (
+    "abnormal_trading_first_slice_live_not_implemented"
+)
+
+ABNORMAL_TRADING_FIRST_SLICE_DRYRUN_REPORT_COLUMNS = [
+    "case_id",
+    "company_code",
+    "company_name",
+    "component",
+    "market",
+    "anchor_tdate",
+    "first_slice_include",
+    "expected_behavior",
+    "planned_request_count",
+    "planned_output_root",
+    "planned_endpoint",
+    "fixture_refs",
+    "cninfo_call_planned",
+    "pdf_download",
+    "ocr",
+    "extraction",
+    "db_write",
+    "minio_write",
+    "rag_run",
+    "dryrun_status",
+    "notes",
+]
+
+
+
 BLOCK_TRADE_FIRST_SLICE_DRYRUN_REPORT_COLUMNS = [
     "case_id",
     "company_code",
@@ -1838,6 +2011,22 @@ class ExecutiveShareholdingFirstSliceRow:
     exclude_flags: str
     notes: str
     dlc007_reference: str
+
+
+
+@dataclass
+class AbnormalTradingFirstSliceRow:
+    case_id: str
+    company_code: str
+    company_name: str
+    component: str
+    market: str
+    anchor_tdate: str
+    first_slice_include: str
+    expected_behavior: str
+    exclude_flags: str
+    notes: str
+    sample_raw_reference: str
 
 
 @dataclass
@@ -7086,6 +7275,7 @@ def enforce_executive_shareholding_first_slice_forbidden_options(
         ("restricted_shares_unlock_first_slice", args.restricted_shares_unlock_first_slice),
         ("equity_pledge_first_slice", args.equity_pledge_first_slice),
         ("shareholder_change_first_slice", args.shareholder_change_first_slice),
+        ("abnormal_trading_first_slice", args.abnormal_trading_first_slice),
     ]
     for name, enabled in mixed_modes:
         if args.executive_shareholding_first_slice and enabled:
@@ -7732,6 +7922,559 @@ def run_executive_shareholding_first_slice(args: argparse.Namespace) -> int:
     print(f"dryrun_report={report_path}")
     print(f"dryrun_summary={summary_path}")
     return 0
+
+
+
+def load_abnormal_trading_first_slice_universe(
+    path: str,
+) -> List[AbnormalTradingFirstSliceRow]:
+    rows: List[AbnormalTradingFirstSliceRow] = []
+    with open(path, newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            rows.append(
+                AbnormalTradingFirstSliceRow(
+                    case_id=str(row.get("case_id", "")).strip(),
+                    company_code=str(row.get("company_code", "")).strip(),
+                    company_name=str(row.get("company_name", "")).strip(),
+                    component=str(row.get("component", "")).strip(),
+                    market=str(row.get("market", "")).strip(),
+                    anchor_tdate=str(row.get("anchor_tdate", "")).strip(),
+                    first_slice_include=str(
+                        row.get("first_slice_include", "")
+                    ).strip(),
+                    expected_behavior=str(
+                        row.get("expected_behavior", "")
+                    ).strip(),
+                    exclude_flags=str(row.get("exclude_flags", "")).strip(),
+                    notes=str(row.get("notes", "")).strip(),
+                    sample_raw_reference=str(
+                        row.get("sample_raw_reference", "")
+                    ).strip(),
+                )
+            )
+    return rows
+
+
+def build_abnormal_trading_first_slice_plan(
+    anchor_tdate: str = ABNORMAL_TRADING_FIRST_SLICE_ANCHOR_TDATE,
+) -> List[str]:
+    """abnormal_trading 第一切片计划：单日 marketList · single_day_paged。"""
+    return [f"single_day_paged_{anchor_tdate}"]
+
+
+def _build_abnormal_trading_first_slice_params(
+    row: AbnormalTradingFirstSliceRow,
+) -> List[Dict[str, Any]]:
+    return [
+        {
+            "sdate": row.anchor_tdate,
+            "edate": row.anchor_tdate,
+            "platecode": "",
+            "orderby": "",
+            "page": 1,
+            "rows": 30,
+        }
+    ]
+
+
+def compute_abnormal_trading_first_slice_planned_requests(
+    row: AbnormalTradingFirstSliceRow,
+) -> int:
+    return len(build_abnormal_trading_first_slice_plan(row.anchor_tdate))
+
+
+def resolve_abnormal_trading_first_slice_fixture_refs(case_id: str) -> List[str]:
+    names = ABNORMAL_TRADING_FIRST_SLICE_CASE_FIXTURES.get(case_id, ())
+    return [
+        os.path.join(ABNORMAL_TRADING_FIRST_SLICE_FIXTURE_DIR, name) for name in names
+    ]
+
+
+def validate_abnormal_trading_first_slice_fixtures(
+    rows: List[AbnormalTradingFirstSliceRow],
+) -> List[str]:
+    issues: List[str] = []
+    for row in rows:
+        refs = resolve_abnormal_trading_first_slice_fixture_refs(row.case_id)
+        if not refs:
+            issues.append(
+                f"{ABNORMAL_TRADING_FIRST_SLICE_FIXTURE_MISSING}:{row.case_id}"
+            )
+            continue
+        for ref in refs:
+            if not os.path.isfile(ref):
+                issues.append(
+                    f"{ABNORMAL_TRADING_FIRST_SLICE_FIXTURE_MISSING}:"
+                    f"{row.case_id}:{os.path.basename(ref)}"
+                )
+    return issues
+
+
+def validate_abnormal_trading_first_slice_universe(
+    rows: List[AbnormalTradingFirstSliceRow],
+) -> List[str]:
+    issues: List[str] = []
+    if len(rows) != ABNORMAL_TRADING_FIRST_SLICE_EXPECTED_UNIVERSE_SIZE:
+        issues.append(
+            f"{ABNORMAL_TRADING_FIRST_SLICE_UNIVERSE_SIZE_MISMATCH}:got={len(rows)}"
+        )
+    seen_ids: Set[str] = set()
+    total_planned = 0
+    for row in rows:
+        case_id = row.case_id
+        if case_id in seen_ids:
+            issues.append(f"duplicate_case_id:{case_id}")
+        seen_ids.add(case_id)
+        if case_id not in ABNORMAL_TRADING_FIRST_SLICE_ALLOWED_CASE_IDS:
+            issues.append(
+                f"{ABNORMAL_TRADING_FIRST_SLICE_FORBIDDEN_CASE_ID}:{case_id}"
+            )
+        if row.company_code in ABNORMAL_TRADING_FIRST_SLICE_FORBIDDEN_COMPANY_CODES:
+            issues.append(
+                f"{ABNORMAL_TRADING_FIRST_SLICE_FORBIDDEN_COMPANY_CODE}:"
+                f"{row.company_code}"
+            )
+        expected_code = ABNORMAL_TRADING_FIRST_SLICE_EXPECTED_COMPANY_CODES.get(case_id)
+        if expected_code and row.company_code != expected_code:
+            issues.append(
+                f"{ABNORMAL_TRADING_FIRST_SLICE_WRONG_COMPANY_CODE}:"
+                f"{case_id}={row.company_code}"
+            )
+        if row.component != ABNORMAL_TRADING_FIRST_SLICE_COMPONENT:
+            issues.append(f"{ABNORMAL_TRADING_FIRST_SLICE_WRONG_COMPONENT}:{case_id}")
+        if row.first_slice_include.lower() != "yes":
+            issues.append(f"{ABNORMAL_TRADING_FIRST_SLICE_INCLUDE_REQUIRED}:{case_id}")
+        if row.anchor_tdate != ABNORMAL_TRADING_FIRST_SLICE_ANCHOR_TDATE:
+            issues.append(
+                f"{ABNORMAL_TRADING_FIRST_SLICE_WRONG_ANCHOR_TDATE}:"
+                f"{case_id}={row.anchor_tdate}"
+            )
+        planned = compute_abnormal_trading_first_slice_planned_requests(row)
+        if planned > ABNORMAL_TRADING_FIRST_SLICE_PER_CASE_MAX_REQUESTS:
+            issues.append(
+                f"{ABNORMAL_TRADING_FIRST_SLICE_PER_CASE_CAP_EXCEEDED}:"
+                f"{case_id}={planned}"
+            )
+        total_planned += planned
+    for required_id in sorted(ABNORMAL_TRADING_FIRST_SLICE_ALLOWED_CASE_IDS):
+        if required_id not in seen_ids:
+            issues.append(f"missing_case_id:{required_id}")
+    if total_planned > ABNORMAL_TRADING_FIRST_SLICE_TOTAL_MAX_REQUESTS:
+        issues.append(
+            f"{ABNORMAL_TRADING_FIRST_SLICE_TOTAL_CAP_EXCEEDED}:{total_planned}"
+        )
+    issues.extend(validate_abnormal_trading_first_slice_fixtures(rows))
+    return issues
+
+
+def validate_abnormal_trading_first_slice_output_root(
+    output_root: str,
+) -> Tuple[bool, str]:
+    root = _normalize_output_root(output_root)
+    allowed = _normalize_output_root(DEFAULT_ABNORMAL_TRADING_FIRST_SLICE_OUTPUT_ROOT)
+    blocked_pairs = [
+        (
+            _normalize_output_root(DEFAULT_OUTPUT_ROOT),
+            ABNORMAL_TRADING_FIRST_SLICE_V1_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(DEFAULT_V2_OUTPUT_ROOT),
+            ABNORMAL_TRADING_FIRST_SLICE_V2_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(DEFAULT_REPLACEMENT_OUTPUT_ROOT),
+            ABNORMAL_TRADING_FIRST_SLICE_REPLACEMENT_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(DEFAULT_TARGETED_PROBE_OUTPUT_ROOT),
+            ABNORMAL_TRADING_FIRST_SLICE_TARGETED_PROBE_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(DEFAULT_EXECUTIVE_SHAREHOLDING_FIRST_SLICE_OUTPUT_ROOT),
+            ABNORMAL_TRADING_FIRST_SLICE_EXECUTIVE_SHAREHOLDING_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(DEFAULT_SHAREHOLDER_CHANGE_FIRST_SLICE_OUTPUT_ROOT),
+            ABNORMAL_TRADING_FIRST_SLICE_SHAREHOLDER_CHANGE_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(DEFAULT_EQUITY_PLEDGE_FIRST_SLICE_OUTPUT_ROOT),
+            ABNORMAL_TRADING_FIRST_SLICE_EQUITY_PLEDGE_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(DEFAULT_MARGIN_TRADING_FIRST_SLICE_OUTPUT_ROOT),
+            ABNORMAL_TRADING_FIRST_SLICE_MARGIN_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(DEFAULT_DISCLOSURE_SCHEDULE_FIRST_SLICE_OUTPUT_ROOT),
+            ABNORMAL_TRADING_FIRST_SLICE_DISCLOSURE_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(DEFAULT_BLOCK_TRADE_FIRST_SLICE_OUTPUT_ROOT),
+            ABNORMAL_TRADING_FIRST_SLICE_BLOCK_TRADE_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(
+                DEFAULT_RESTRICTED_SHARES_UNLOCK_FIRST_SLICE_OUTPUT_ROOT
+            ),
+            ABNORMAL_TRADING_FIRST_SLICE_RSU_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+    ]
+    for blocked_root, token in blocked_pairs:
+        if root == blocked_root or root.startswith(blocked_root + os.sep):
+            return False, token
+    if root == allowed or root.startswith(allowed + os.sep):
+        return True, ""
+    return False, ABNORMAL_TRADING_FIRST_SLICE_OUTPUT_ROOT_REQUIRED
+
+
+def enforce_abnormal_trading_first_slice_write_block_targets(
+    output_paths: Dict[str, str],
+) -> None:
+    protected = [
+        _normalize_output_root(DEFAULT_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_V2_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_REPLACEMENT_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_TARGETED_PROBE_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_EXECUTIVE_SHAREHOLDING_FIRST_SLICE_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_SHAREHOLDER_CHANGE_FIRST_SLICE_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_EQUITY_PLEDGE_FIRST_SLICE_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_MARGIN_TRADING_FIRST_SLICE_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_DISCLOSURE_SCHEDULE_FIRST_SLICE_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_BLOCK_TRADE_FIRST_SLICE_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_RESTRICTED_SHARES_UNLOCK_FIRST_SLICE_OUTPUT_ROOT),
+        _normalize_output_root(CALIBRATED_UNIVERSE_CSV),
+        _normalize_output_root(DEFAULT_UNIVERSE_CSV),
+    ]
+    for key in ("root", "reports"):
+        target = _normalize_output_root(output_paths[key])
+        for blocked in protected:
+            if target == blocked or target.startswith(blocked + os.sep):
+                print(
+                    f"ERROR: {ABNORMAL_TRADING_FIRST_SLICE_V1_OUTPUT_ROOT_WRITE_BLOCKED}:{key}",
+                    file=sys.stderr,
+                )
+                sys.exit(2)
+
+
+def enforce_abnormal_trading_first_slice_forbidden_options(
+    args: argparse.Namespace,
+) -> None:
+    enforce_forbidden_options(args)
+    mixed_modes = [
+        ("known_event_replacement", args.known_event_replacement),
+        ("known_event_targeted_probe", args.known_event_targeted_probe),
+        ("bounded_probe_v2", args.bounded_probe_v2),
+        ("margin_trading_first_slice", args.margin_trading_first_slice),
+        ("block_trade_first_slice", args.block_trade_first_slice),
+        ("restricted_shares_unlock_first_slice", args.restricted_shares_unlock_first_slice),
+        ("equity_pledge_first_slice", args.equity_pledge_first_slice),
+        ("shareholder_change_first_slice", args.shareholder_change_first_slice),
+        ("executive_shareholding_first_slice", args.executive_shareholding_first_slice),
+    ]
+    for name, enabled in mixed_modes:
+        if args.abnormal_trading_first_slice and enabled:
+            print(
+                f"ERROR: {ABNORMAL_TRADING_FIRST_SLICE_MIXED_MODE_BLOCKED}:{name}",
+                file=sys.stderr,
+            )
+            sys.exit(2)
+    wrong_flags = [
+        ("approve_d_class_tiny_live_validation", args.approve_d_class_tiny_live_validation),
+        (
+            "approve_d_class_tiny_live_v2_bounded_probe",
+            args.approve_d_class_tiny_live_v2_bounded_probe,
+        ),
+        (
+            "approve_d_class_known_event_replacement_validation",
+            args.approve_d_class_known_event_replacement_validation,
+        ),
+        (
+            "approve_d_class_known_event_targeted_probe",
+            args.approve_d_class_known_event_targeted_probe,
+        ),
+        (
+            "approve_d_class_margin_trading_first_slice",
+            args.approve_d_class_margin_trading_first_slice,
+        ),
+        (
+            "approve_d_class_block_trade_first_slice",
+            args.approve_d_class_block_trade_first_slice,
+        ),
+        (
+            "approve_d_class_restricted_shares_unlock_first_slice",
+            args.approve_d_class_restricted_shares_unlock_first_slice,
+        ),
+        (
+            "approve_d_class_equity_pledge_first_slice",
+            args.approve_d_class_equity_pledge_first_slice,
+        ),
+        (
+            "approve_d_class_shareholder_change_first_slice",
+            args.approve_d_class_shareholder_change_first_slice,
+        ),
+        (
+            "approve_d_class_executive_shareholding_first_slice",
+            args.approve_d_class_executive_shareholding_first_slice,
+        ),
+    ]
+    for name, enabled in wrong_flags:
+        if args.abnormal_trading_first_slice and enabled:
+            print(
+                f"ERROR: {ABNORMAL_TRADING_FIRST_SLICE_WRONG_APPROVAL_FLAG}:{name}",
+                file=sys.stderr,
+            )
+            sys.exit(2)
+    if (
+        not args.abnormal_trading_first_slice
+        and args.approve_d_class_abnormal_trading_first_slice
+    ):
+        print(
+            f"ERROR: {ABNORMAL_TRADING_FIRST_SLICE_WRONG_APPROVAL_FLAG}:"
+            "abnormal_trading_first_slice_flag_without_mode",
+            file=sys.stderr,
+        )
+        sys.exit(2)
+    for flag_name in ("pdf_download", "ocr", "extraction"):
+        if getattr(args, flag_name, False):
+            token = {
+                "pdf_download": PDF_DOWNLOAD_BLOCKED,
+                "ocr": OCR_BLOCKED,
+                "extraction": EXTRACTION_BLOCKED,
+            }[flag_name]
+            print(f"ERROR: {token}", file=sys.stderr)
+            sys.exit(2)
+
+
+def enforce_abnormal_trading_first_slice_live_approval_gate(
+    args: argparse.Namespace,
+) -> None:
+    if args.mode == "live" and args.abnormal_trading_first_slice:
+        if not args.approve_d_class_abnormal_trading_first_slice:
+            print(
+                f"ERROR: {ABNORMAL_TRADING_FIRST_SLICE_APPROVAL_REQUIRED}",
+                file=sys.stderr,
+            )
+            sys.exit(2)
+
+
+def build_abnormal_trading_first_slice_dryrun_rows(
+    rows: List[AbnormalTradingFirstSliceRow],
+    output_root: str,
+) -> List[Dict[str, str]]:
+    dry_rows: List[Dict[str, str]] = []
+    for row in rows:
+        planned_requests = compute_abnormal_trading_first_slice_planned_requests(row)
+        plan = build_abnormal_trading_first_slice_plan(row.anchor_tdate)
+        fixture_refs = resolve_abnormal_trading_first_slice_fixture_refs(row.case_id)
+        dry_rows.append(
+            {
+                "case_id": row.case_id,
+                "company_code": row.company_code,
+                "company_name": row.company_name,
+                "component": row.component,
+                "market": row.market,
+                "anchor_tdate": row.anchor_tdate,
+                "first_slice_include": row.first_slice_include,
+                "expected_behavior": row.expected_behavior,
+                "planned_request_count": str(planned_requests),
+                "planned_output_root": output_root,
+                "planned_endpoint": ABNORMAL_TRADING_FIRST_SLICE_ENDPOINT,
+                "fixture_refs": ";".join(os.path.basename(r) for r in fixture_refs),
+                "cninfo_call_planned": (
+                    "yes" if row.first_slice_include.lower() == "yes" else "no"
+                ),
+                "pdf_download": "no",
+                "ocr": "no",
+                "extraction": "no",
+                "db_write": "no",
+                "minio_write": "no",
+                "rag_run": "no",
+                "dryrun_status": "planned_ok",
+                "notes": (
+                    f"anchor={row.anchor_tdate}; plan={','.join(plan)}; "
+                    f"query_mode=single_day_paged; empty_but_valid_allowed=yes; "
+                    f"not_generic_multi_probe=yes; detail_nested_deferred=yes; "
+                    f"tier1_fixtures={len(fixture_refs)}"
+                ),
+            }
+        )
+    return dry_rows
+
+
+def write_abnormal_trading_first_slice_planned_snapshots(
+    rows: List[AbnormalTradingFirstSliceRow],
+    output_paths: Dict[str, str],
+) -> None:
+    snap_dir = os.path.join(output_paths["root"], "planned_snapshots")
+    os.makedirs(snap_dir, exist_ok=True)
+    for row in rows:
+        plan = build_abnormal_trading_first_slice_plan(row.anchor_tdate)
+        params = _build_abnormal_trading_first_slice_params(row)
+        fixture_refs = resolve_abnormal_trading_first_slice_fixture_refs(row.case_id)
+        payload = {
+            "case_id": row.case_id,
+            "company_code": row.company_code,
+            "company_name": row.company_name,
+            "component": row.component,
+            "anchor_tdate": row.anchor_tdate,
+            "query_mode": "single_day_paged",
+            "planned_requests": plan,
+            "query_params": params,
+            "endpoint": ABNORMAL_TRADING_FIRST_SLICE_ENDPOINT,
+            "records_path": "marketList",
+            "expected_behavior": row.expected_behavior,
+            "fixture_refs": [
+                os.path.relpath(r, BASE_DIR).replace("\\", "/") for r in fixture_refs
+            ],
+            "cninfo_called": False,
+            "detail_nested_deferred": True,
+        }
+        out = os.path.join(snap_dir, f"{row.case_id}_abnormal_trading.json")
+        with open(out, "w", encoding="utf-8") as f:
+            json.dump(payload, f, ensure_ascii=False, indent=2)
+            f.write("\n")
+
+
+def write_abnormal_trading_first_slice_dryrun_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"],
+        "d_class_abnormal_trading_first_slice_dryrun_report.csv",
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(
+            f, fieldnames=ABNORMAL_TRADING_FIRST_SLICE_DRYRUN_REPORT_COLUMNS
+        )
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_abnormal_trading_first_slice_dryrun_summary(
+    dry_rows: List[Dict[str, str]],
+    output_paths: Dict[str, str],
+    universe_csv: str,
+) -> str:
+    planned_total = sum(int(r["planned_request_count"]) for r in dry_rows)
+    lines = [
+        "# CNINFO D 类 abnormal_trading First-Slice Dry-run Summary",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** abnormal_trading first-slice dry-run only · **CNINFO calls = 0** · **NOT APPROVED for production**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        f"| cases | **{len(dry_rows)}** |",
+        f"| planned_ok | **{len(dry_rows)}/{len(dry_rows)}** |",
+        f"| planned_request_count_total | **{planned_total}** |",
+        f"| CNINFO calls | **0** |",
+        f"| universe | `{universe_csv}` |",
+        "",
+        "## Endpoint",
+        "",
+        "- component: **abnormal_trading**",
+        f"- endpoint: `{ABNORMAL_TRADING_FIRST_SLICE_ENDPOINT}`",
+        "- query mode: **single_day_paged**",
+        f"- anchor_tdate: **{ABNORMAL_TRADING_FIRST_SLICE_ANCHOR_TDATE}**",
+        "- records_path: **marketList**",
+        "- fixture root: `fixtures/d_class/abnormal_trading_first_slice/`",
+        "- detail[]: **deferred** (d_event_party_detail)",
+        "",
+        "## Gates",
+        "",
+        "```text",
+        f"d_class_abnormal_trading_first_slice_runner_extension_gate = {ABNORMAL_TRADING_FIRST_SLICE_RUNNER_GATE}",
+        "approval_status = STANDING_SCOPE_AUTHORIZED_OFFLINE",
+        "approved_for_live = false",
+        "```",
+        "",
+        "**NOT PASS** · **NOT live_ready** · **NOT verified** · **NOT production_ready**",
+        "",
+        "Future acceptance threshold: **≥3/5 acceptable → PASS_WITH_CAVEAT**",
+        "",
+    ]
+    summary_path = os.path.join(
+        output_paths["reports"],
+        "d_class_abnormal_trading_first_slice_dryrun_summary.md",
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    return summary_path
+
+
+def execute_abnormal_trading_first_slice_live(
+    universe_rows: List[AbnormalTradingFirstSliceRow],
+    output_paths: Dict[str, str],
+) -> int:
+    """live 路径尚未实现；批准后仍拒绝，保证 CNINFO=0。"""
+    print(
+        f"ERROR: {ABNORMAL_TRADING_FIRST_SLICE_LIVE_NOT_IMPLEMENTED}",
+        file=sys.stderr,
+    )
+    return 2
+
+
+def run_abnormal_trading_first_slice(args: argparse.Namespace) -> int:
+    enforce_abnormal_trading_first_slice_forbidden_options(args)
+    enforce_abnormal_trading_first_slice_live_approval_gate(args)
+
+    if args.universe_csv == DEFAULT_UNIVERSE_CSV:
+        print(
+            f"ERROR: {ABNORMAL_TRADING_FIRST_SLICE_UNIVERSE_CSV_REQUIRED}",
+            file=sys.stderr,
+        )
+        return 2
+
+    if not os.path.isfile(args.universe_csv):
+        print(f"ERROR: universe not found: {args.universe_csv}", file=sys.stderr)
+        return 2
+
+    ok_root, root_err = validate_abnormal_trading_first_slice_output_root(args.output_root)
+    if not ok_root:
+        print(f"ERROR: {root_err}", file=sys.stderr)
+        return 2
+
+    universe_rows = load_abnormal_trading_first_slice_universe(args.universe_csv)
+    universe_issues = validate_abnormal_trading_first_slice_universe(universe_rows)
+    if universe_issues:
+        print(
+            "ERROR: abnormal_trading first-slice universe validation failed: "
+            f"{universe_issues}",
+            file=sys.stderr,
+        )
+        return 2
+
+    output_root = _normalize_output_root(args.output_root)
+    output_paths = ensure_output_layout(output_root, args.mode)
+    enforce_abnormal_trading_first_slice_write_block_targets(output_paths)
+
+    if args.mode == "live":
+        return execute_abnormal_trading_first_slice_live(universe_rows, output_paths)
+
+    dry_rows = build_abnormal_trading_first_slice_dryrun_rows(universe_rows, output_root)
+    write_abnormal_trading_first_slice_planned_snapshots(universe_rows, output_paths)
+    report_path = write_abnormal_trading_first_slice_dryrun_report(dry_rows, output_paths)
+    summary_path = write_abnormal_trading_first_slice_dryrun_summary(
+        dry_rows, output_paths, args.universe_csv
+    )
+    planned_total = sum(int(r["planned_request_count"]) for r in dry_rows)
+    print(
+        f"mode=abnormal_trading_first_slice_dry_run cases={len(dry_rows)} "
+        f"planned_request_count_total={planned_total} cninfo_calls=0"
+    )
+    print(
+        "gate=d_class_abnormal_trading_first_slice_runner_extension_gate="
+        f"{ABNORMAL_TRADING_FIRST_SLICE_RUNNER_GATE}"
+    )
+    print(f"dryrun_report={report_path}")
+    print(f"dryrun_summary={summary_path}")
+    return 0
+
 
 
 def targeted_probe_row_to_universe_case(row: TargetedProbeUniverseRow) -> UniverseCase:
@@ -9685,11 +10428,26 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="显式批准 executive_shareholding first-slice live（须人工批准）",
     )
+    parser.add_argument(
+        "--abnormal-trading-first-slice",
+        action="store_true",
+        help="启用 abnormal_trading 第一切片模式（仅 DAT001–DAT005）",
+    )
+    parser.add_argument(
+        "--approve-d-class-abnormal-trading-first-slice",
+        action="store_true",
+        help="显式批准 abnormal_trading first-slice live（须人工批准 · live 尚未实现）",
+    )
     return parser
 
 
 def main(argv: Optional[List[str]] = None) -> int:
     args = build_parser().parse_args(argv)
+
+    if args.abnormal_trading_first_slice:
+        if args.output_root is None:
+            args.output_root = DEFAULT_ABNORMAL_TRADING_FIRST_SLICE_OUTPUT_ROOT
+        return run_abnormal_trading_first_slice(args)
 
     if args.executive_shareholding_first_slice:
         if args.output_root is None:

@@ -1,0 +1,12 @@
+component,endpoint_readiness,schema_readiness,prior_slice_status,expected_first_slice_size,risk,recommendation_rank,notes
+executive_shareholding,ready,ready,s5_pass_with_caveat_d_fm02,5,medium,excluded,S5 closure PASS_WITH_CAVEAT; Controller committing; do not reopen
+shareholder_change,ready,ready,committed_complete,5,low,excluded,do not reopen
+equity_pledge,ready,ready,closed,5,low,excluded,do not reopen
+restricted_shares_unlock,ready,ready,closed,5,medium,excluded,do not reopen
+block_trade,ready,ready,closed,5,low,excluded,do not reopen
+margin_trading,ready,ready,closed,5,low,excluded,do not reopen
+disclosure_schedule,ready,ready,closed,5,low,excluded,do not reopen
+known_event_replacement,ready,ready,closed,2,low,excluded,no DLC006R reopen
+abnormal_trading,ready,ready_main_event_detail_deferred,not_yet_first_sliced,5,high,1,P1 primary; marketList single_day_paged; detail[] deferred; standing D
+shareholder_data,registry_only,periodic_metric,not_yet_first_sliced,5,medium,2,P2 deprioritize
+fund_industry_allocation,registry_only,industry_aggregate,not_yet_first_sliced,5,low,3,P2 deprioritize

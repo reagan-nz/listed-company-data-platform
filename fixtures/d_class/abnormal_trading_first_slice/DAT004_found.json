@@ -1,0 +1,74 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class abnormal_trading first-slice offline synthetic",
+    "case_id": "DAT004",
+    "component": "abnormal_trading",
+    "scenario": "captured",
+    "cninfo_called": false,
+    "synthetic": true,
+    "tier0_cite": [
+      "fixtures/d_class/abnormal_trading/sample_raw.json"
+    ],
+    "query_params": {
+      "sdate": "2026-07-03",
+      "edate": "2026-07-03",
+      "platecode": "",
+      "orderby": "",
+      "page": 1,
+      "rows": 30
+    }
+  },
+  "market_event": {
+    "event_id": "fixture_dat004_abn_002415_20260703",
+    "company_code": "002415",
+    "event_type": "abnormal_trading",
+    "event_time": "2026-07-03",
+    "source_endpoint": "https://www.cninfo.com.cn/data/statis/getMarketStatisticsData",
+    "source_record_id": "fixture_raw_abn_dat004",
+    "event_status": "captured",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "abnormal_trading",
+      "query_mode": "single_day_paged",
+      "query_params": {
+        "sdate": "2026-07-03",
+        "edate": "2026-07-03",
+        "platecode": "",
+        "orderby": "",
+        "page": 1,
+        "rows": 30
+      },
+      "fetch_time": "2026-07-15T17:00:00+08:00",
+      "raw_record_hash": "sha256:synthetic_abn_dat004_captured",
+      "raw_record_json": {
+        "secCode": "002415",
+        "secName": "海康威视",
+        "tradeTime": "2026-07-03",
+        "type": "涨幅偏离值达7%",
+        "buyTotal": null,
+        "sellTotal": null,
+        "buyPercent": null,
+        "sellPercent": null,
+        "detail": [
+          {
+            "buyOrgName": "合成买入营业部DAT004",
+            "buyOrgBuyTotal": "100,000.00",
+            "buyOrgSellTotal": "0.00",
+            "sellOrgName": "合成卖出营业部DAT004",
+            "sellOrgBuyTotal": "0.00",
+            "sellOrgSellTotal": "100,000.00"
+          }
+        ]
+      },
+      "lineage_status": "discovered"
+    }
+  },
+  "abnormal_trading": {
+    "company_code": "002415",
+    "company_name": "海康威视",
+    "trade_date": "2026-07-03",
+    "public_information_reason": "涨幅偏离值达7%",
+    "quality_status": "pass",
+    "detail_nested_deferred": true
+  }
+}

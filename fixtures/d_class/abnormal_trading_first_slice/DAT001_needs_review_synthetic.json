@@ -1,0 +1,74 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class abnormal_trading first-slice offline synthetic",
+    "case_id": "DAT001",
+    "component": "abnormal_trading",
+    "scenario": "needs_review",
+    "cninfo_called": false,
+    "synthetic": true,
+    "tier0_cite": [
+      "fixtures/d_class/abnormal_trading/sample_raw.json"
+    ],
+    "query_params": {
+      "sdate": "2026-07-03",
+      "edate": "2026-07-03",
+      "platecode": "",
+      "orderby": "",
+      "page": 1,
+      "rows": 30
+    }
+  },
+  "market_event": {
+    "event_id": "fixture_dat001_abn_000004_20260703",
+    "company_code": "000004",
+    "event_type": "abnormal_trading",
+    "event_time": "2026-07-03",
+    "source_endpoint": "https://www.cninfo.com.cn/data/statis/getMarketStatisticsData",
+    "source_record_id": "fixture_raw_abn_dat001",
+    "event_status": "captured",
+    "quality_status": "needs_review",
+    "lineage": {
+      "registry_source_id": "abnormal_trading",
+      "query_mode": "single_day_paged",
+      "query_params": {
+        "sdate": "2026-07-03",
+        "edate": "2026-07-03",
+        "platecode": "",
+        "orderby": "",
+        "page": 1,
+        "rows": 30
+      },
+      "fetch_time": "2026-07-15T17:00:00+08:00",
+      "raw_record_hash": "sha256:synthetic_abn_dat001_needs_review",
+      "raw_record_json": {
+        "secCode": "000004",
+        "secName": "国华退",
+        "tradeTime": "2026-07-03",
+        "type": "退市整理期",
+        "buyTotal": null,
+        "sellTotal": null,
+        "buyPercent": null,
+        "sellPercent": null,
+        "detail": [
+          {
+            "buyOrgName": "合成买入营业部DAT001",
+            "buyOrgBuyTotal": "100,000.00",
+            "buyOrgSellTotal": "0.00",
+            "sellOrgName": "合成卖出营业部DAT001",
+            "sellOrgBuyTotal": "0.00",
+            "sellOrgSellTotal": "100,000.00"
+          }
+        ]
+      },
+      "lineage_status": "needs_review"
+    }
+  },
+  "abnormal_trading": {
+    "company_code": "000004",
+    "company_name": "国华退",
+    "trade_date": "2026-07-03",
+    "public_information_reason": "退市整理期",
+    "quality_status": "needs_review",
+    "detail_nested_deferred": true
+  }
+}
