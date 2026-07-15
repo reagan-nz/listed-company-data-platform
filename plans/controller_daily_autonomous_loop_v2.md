@@ -585,3 +585,19 @@ Enabling Daily Loop v2 as default runtime requires human acceptance of these fou
 
 
 是否将 v3 设为默认运行引擎，需要单独的人类确认（与本文件启用 Daily Loop v2 时的要求一致）。
+
+
+
+---
+
+
+# 16. Relationship to Mission Execution Engine v4（异步轨内循环）
+
+
+[controller_mission_execution_engine_v4.md](controller_mission_execution_engine_v4.md) 在 v3 之上将调度从 **Global Wave 同步屏障** 改为 **track-local 异步循环**：任一轨完成 → evidence/regression/boundary → commit → 仅刷新该轨 gap → 立刻派发 successor，**不等**其他轨结束。
+
+
+本文件 §11 多轮算法在启用 v4 时解释为：**可对多轨并发实例化**；禁止把"等待 A/B/C/D 齐步"写成隐式 barrier。长任务（如 CNINFO live）仅将该轨标为 EXECUTING/RUNNING，其他轨继续。
+
+
+预算默认扩展见 v4 §5（runtime 240min · commits ≤30 · 废除固定小 global-wave 上限）。Push 仍人控。

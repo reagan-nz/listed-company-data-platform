@@ -133,4 +133,22 @@ Forbidden:
 - treating Approval Queue as the only queue for a track  
 - forcing equal drain of all track queues  
 - idling a track with non-empty Autonomous Queue without recording `RESOURCE_ALLOCATED_ELSEWHERE` or `LOW_PRIORITY_DEFERRED`  
-- treating `HUMAN_GATE_BLOCKED` as global `NO_VALUABLE_SAFE_TASK`  
+- treating `HUMAN_GATE_BLOCKED` as global `NO_VALUABLE_SAFE_TASK`
+
+
+
+---
+
+
+# 8. Relationship to Mission Execution Engine v4
+
+
+[controller_mission_execution_engine_v4.md](controller_mission_execution_engine_v4.md) 要求 fairness **不得**解释成"等四轨齐步"。正确行为：
+
+
+- 一轨长任务 EXECUTING 时，其他轨若有更高/同等价值 READY → **立即**分配 agent  
+- 禁止：因 A 正在 CNINFO live 而让 B/C/D 空闲等待下一 Global Wave  
+- 仍禁止：为"让空闲轨看起来忙碌"而发明低价值任务（§7 anti-patterns 不变）
+
+
+Fairness 继续防止单轨垄断预算；v4 只禁止把 fairness 误做成同步屏障。  

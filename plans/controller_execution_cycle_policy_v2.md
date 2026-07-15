@@ -388,3 +388,16 @@ execution_cycle:
 [controller_mission_execution_engine_v3.md](controller_mission_execution_engine_v3.md)（architecture design only · 未启用）引用本文件 §2/§3/§4 作为迭代机制、任务发现和停机条件的权威，不改变其中任何规则。v3 唯一的整合动作：在本文件 §3 步骤 11（"execute/validate/commit/memory → return to step 1"）与下一轮 replan 之间，插入一次 **Capability Gain Check**（v3 §6），其结果反馈进 stuck detection v2 与 task priority v2 的降级判断，但不新增停机条件、不改变 §4 的四个 stop reason 枚举。
 
 本文件的 stop-reason 语义（`NO_SAFE_READY` / `HUMAN_INTERRUPT` / `BUDGET_REACHED` / `SAFETY_VIOLATION`）保持权威不变；v3 §3.2/§12 只是把它们与 track 级 stop-reason（stop reason policy v2）并列展示，供整体理解。
+
+
+
+---
+
+
+# 12. Relationship to Mission Execution Engine v4
+
+
+[controller_mission_execution_engine_v4.md](controller_mission_execution_engine_v4.md) 要求本文件的迭代循环按轨异步推进：完成一轨任务后立即进入该轨的 validate/commit/memory/replan，**不得**等待其他轨形成 Global Wave。
+
+
+§4 停机条件仍权威；v4 明确：**一轨 RUNNING 或一轨暂时无任务 ≠ 全局停机**。仅当四轨 candidate audit 后均无有价值安全任务，或 runtime/commit 预算耗尽，或安全/人决边界触发时才停。
