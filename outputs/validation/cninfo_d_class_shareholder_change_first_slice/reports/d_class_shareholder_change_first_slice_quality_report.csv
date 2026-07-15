@@ -1,0 +1,6 @@
+case_id,component,anchor_tdate,query_type,expected_behavior,retrieval_status,record_count,quality_status,acceptable,failure_type,cninfo_request_count,notes
+DSC001,shareholder_change,2026-07-03,inc,captured_normal_or_empty_but_valid,empty_but_valid,0,pass,yes,,1,company-level zero rows; legal empty per quality policy
+DSC002,shareholder_change,2026-07-03,inc,captured_normal_or_empty_but_valid,empty_but_valid,0,pass,yes,,1,company-level zero rows; legal empty per quality policy
+DSC003,shareholder_change,2026-07-03,inc,captured_normal_or_empty_but_valid,empty_but_valid,0,pass,yes,,1,company-level zero rows; legal empty per quality policy
+DSC004,shareholder_change,2026-07-03,inc,captured_normal_or_needs_review,empty_but_valid,0,pass,no,expectation_mismatch,1,company-level zero rows; legal empty per quality policy
+DSC005,shareholder_change,2026-07-03,inc,empty_but_valid,empty_but_valid,0,pass,yes,,1,company-level zero rows; legal empty per quality policy

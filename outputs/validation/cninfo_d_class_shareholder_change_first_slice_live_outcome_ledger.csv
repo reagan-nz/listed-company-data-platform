@@ -1,0 +1,6 @@
+case_id,company_code,company_name,anchor_tdate,query_type,expected_behavior,retrieval_status,quality_status,record_count,outcome,acceptable,failure_type,cninfo_request_count,notes
+DSC001,000550,江铃汽车,2026-07-03,inc,captured_normal_or_empty_but_valid,empty_but_valid,pass,0,empty_but_valid,yes,,1,sparse-day company-level zero rows; empty acceptable per expectation mix
+DSC002,000895,双汇发展,2026-07-03,inc,captured_normal_or_empty_but_valid,empty_but_valid,pass,0,empty_but_valid,yes,,1,sparse-day company-level zero rows; empty acceptable per expectation mix
+DSC003,600000,浦发银行,2026-07-03,inc,captured_normal_or_empty_but_valid,empty_but_valid,pass,0,empty_but_valid,yes,,1,sparse-day company-level zero rows; empty acceptable per expectation mix
+DSC004,002415,海康威视,2026-07-03,inc,captured_normal_or_needs_review,empty_but_valid,pass,0,empty_but_valid,no,expectation_mismatch,1,sparse-day empty; needs found or needs_review with rows for this expectation
+DSC005,601988,中国银行,2026-07-03,inc,empty_but_valid,empty_but_valid,pass,0,empty_but_valid,yes,,1,sparse-day empty_but_valid control; zero rows legal
