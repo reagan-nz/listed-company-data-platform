@@ -1,0 +1,16 @@
+option_id,option,status,cninfo_budget,risk,recommendation_rank,notes
+EXECUTIVE_SHAREHOLDING_NEXT_SLICE_OFFLINE,executive_shareholding DES101-105 threeMonth+b denser-window next-slice offline planning,primary_executed,0,medium,1,D-FM-53; first-slice closed 4/5 PASS_WITH_CAVEAT; DES001 lesson; priority2 threeMonth+b rows=1862 vs oneMonth+b rows=842; structure cite DC006+fixtures; no DLC006R reopen; no runner/live; NOT summary H4 reopen
+SC_NEXT_SLICE_BOUNDED_LIVE,shareholder_change next-slice bounded live,forbidden_this_round,>=1,high,excluded,live_gate=NOT_APPROVED; dry-run root frozen D-FM-52; controller_execution_allowed=false
+RSU_NEXT_SLICE_BOUNDED_LIVE,restricted_shares_unlock next-slice bounded live,forbidden_this_round,>=1,high,excluded,live_gate=NOT_APPROVED; dry-run root frozen D-FM-48; controller_execution_allowed=false
+EP_NEXT_SLICE_BOUNDED_LIVE,equity_pledge next-slice bounded live,forbidden_this_round,>=1,high,excluded,live_gate=NOT_APPROVED; dry-run root frozen D-FM-44; controller_execution_allowed=false
+FIA_FURTHER_SCALE_BOUNDED_LIVE,fund_industry_allocation further-scale bounded live,forbidden_this_round,>=1,high,excluded,live_gate=NOT_APPROVED; controller_execution_allowed=false
+AT_NEXT_SLICE_BOUNDED_LIVE,abnormal_trading next-slice bounded live,forbidden_this_round,>=1,high,excluded,live_gate=NOT_APPROVED; dry-run root frozen
+SD_NEXT_SLICE_BOUNDED_LIVE,shareholder_data next-slice bounded live,forbidden_this_round,>=1,high,excluded,live_gate=NOT_APPROVED; dry-run root frozen
+ESS_DEVTOOLS_PAUSE_HOLD,executive_shareholding_summary pause pending DevTools Network capture,hold_documented,0,medium,2,no H3/H4 blind retry; summary track separate from ESH detail next-slice
+ESS_H3_H4_BLIND_PROBE,leader/total or leader/detail-as-summary guess probe,forbidden,>=1,high,excluded,explicit non-recommendation; paused_pending_devtools
+EXECUTIVE_SHAREHOLDING_FIRST_SLICE_RELIVE,re-live DES001-005 or overwrite ESH live_report,forbidden,>=1,high,excluded,closed first-slice; not this track
+SC_FIRST_OR_NEXT_MUTATE,mutate SC first-slice or SC next-slice dry-run/lock roots,forbidden,>=1,high,excluded,D-FM-49/50/51/52 freeze; red line
+RSU_FIRST_OR_NEXT_MUTATE,mutate RSU first-slice or RSU next-slice dry-run/lock roots,forbidden,>=1,high,excluded,D-FM-45/46/48 freeze; red line
+EP_FIA_AT_SD_FROZEN_ROOT_MUTATE,mutate EP first/next dry-run or FIA first/next/further or AT/SD first/next dry-run roots/locks,forbidden,>=1,high,excluded,D-FM-40/44 freeze; red line
+LEVEL2_IDLE,wait for Level-2 phrase,forbidden,0,n/a,excluded,standing_scope auth; Level-2 NOT required
+DLC006R_REOPEN,known-event DLC006R,forbidden,>=1,high,excluded,permanent non-reopen
