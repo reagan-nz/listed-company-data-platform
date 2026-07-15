@@ -3,7 +3,8 @@
 """
 CNINFO D 类 abnormal_trading — Tier-1 offline fixture schema 校验。
 
-对照 VR checklist 加载 fixtures/d_class/abnormal_trading_first_slice/DAT001–DAT005。
+对照 VR checklist 加载 fixtures/d_class/abnormal_trading_first_slice/DAT001–DAT005
+（含 D-FM-04 增补：marketList filter / 同日多 type）。
 
 离线 only · 无 CNINFO · 无 live · 不升级 gate · 不 claim verified。
 
@@ -54,12 +55,28 @@ FREEZE_REQUIRED = (
     "quality_status",
 )
 RAW_CORE = ("secCode", "secName", "tradeTime", "type")
+RAW_ONLY_TOTALS = ("buyTotal", "sellTotal", "buyPercent", "sellPercent")
+DETAIL_FLAT_FORBIDDEN = (
+    "buyOrgName",
+    "sellOrgName",
+    "buyOrgBuyTotal",
+    "sellOrgSellTotal",
+    "detail",
+)
 
 EXPECTED_FILES = {
     "DAT001": ("DAT001_needs_review_synthetic.json",),
     "DAT002": ("DAT002_found.json", "DAT002_empty.json"),
-    "DAT003": ("DAT003_found.json", "DAT003_empty.json"),
-    "DAT004": ("DAT004_found.json", "DAT004_empty.json"),
+    "DAT003": (
+        "DAT003_found.json",
+        "DAT003_empty.json",
+        "DAT003_market_list_filtered_empty.json",
+    ),
+    "DAT004": (
+        "DAT004_found.json",
+        "DAT004_empty.json",
+        "DAT004_multi_type_found.json",
+    ),
     "DAT005": ("DAT005_empty_but_valid_synthetic.json",),
 }
 
@@ -242,6 +259,87 @@ class TestAbnormalTradingFixtures(unittest.TestCase):
             self.universe_by_id["DAT005"]["expected_behavior"], "empty_but_valid"
         )
 
+    def test_vr009_market_list_filtered_empty(self) -> None:
+        """VR-009/010：市场截面有记录但无目标 secCode → empty_but_valid。"""
+        path = FIXTURE_DIR / "DAT003_market_list_filtered_empty.json"
+        data = _load_json(path)
+        meta = data["_fixture_meta"]
+        filt = meta["market_list_filter"]
+        self.assertEqual(meta["scenario"], "empty_but_valid_after_secCode_filter")
+        self.assertGreater(int(filt["raw_market_list_count"]), 0)
+        self.assertEqual(int(filt["matched_secCode_count"]), 0)
+        self.assertEqual(filt["target_secCode"], "600000")
+        self.assertNotIn("600000", filt["other_secCodes"])
+        me = data["market_event"]
+        self.assertEqual(me["event_status"], "empty_but_valid")
+        self.assertEqual(me["quality_status"], "pass")
+        self.assertNotIn("abnormal_trading", data)
+        self._note(
+            path.name,
+            "DAT003",
+            "B",
+            "Raw Retrieval",
+            "VR-009/010",
+            "pass",
+            "secCode filter → empty_but_valid",
+        )
+
+    def test_vr011_multi_type_sibling_skeleton(self) -> None:
+        """同日多 type：sibling 与 primary 均含 VR-011 骨架。"""
+        path = FIXTURE_DIR / "DAT004_multi_type_found.json"
+        data = _load_json(path)
+        siblings = data["_fixture_meta"]["sibling_raw_records"]
+        self.assertEqual(len(siblings), 2)
+        types = {r["type"] for r in siblings}
+        self.assertEqual(len(types), 2)
+        for raw in siblings:
+            for k in RAW_CORE:
+                self.assertIn(k, raw)
+            self.assertEqual(raw["secCode"], "002415")
+            self.assertEqual(raw["tradeTime"], ANCHOR)
+            self.assertIsInstance(raw.get("detail"), list)
+        primary = data["market_event"]["lineage"]["raw_record_json"]
+        self.assertEqual(
+            primary["type"], data["abnormal_trading"]["public_information_reason"]
+        )
+        self.assertIn(primary["type"], types)
+        self._note(
+            path.name,
+            "DAT004",
+            "B",
+            "Raw Retrieval",
+            "VR-011",
+            "pass",
+            "multi_type sibling skeleton",
+        )
+
+    def test_vr021_totals_raw_only_and_vr024_detail_not_flat(self) -> None:
+        """VR-021/024：汇总字段与 detail[] 不得扁平进主 payload。"""
+        for case_id, path, data in self.fixtures:
+            me = data["market_event"]
+            if me["event_status"] != "captured":
+                continue
+            payload = data["abnormal_trading"]
+            for k in RAW_ONLY_TOTALS:
+                self.assertNotIn(k, payload, f"{path.name}:{k}")
+            for k in DETAIL_FLAT_FORBIDDEN:
+                self.assertNotIn(k, payload, f"{path.name}:{k}")
+            raw = me["lineage"]["raw_record_json"]
+            for k in RAW_ONLY_TOTALS:
+                self.assertIn(k, raw, f"{path.name}:raw.{k}")
+            self.assertTrue(payload.get("detail_nested_deferred") is True, path.name)
+            if case_id == "DAT004" and path.name == "DAT004_multi_type_found.json":
+                self.assertEqual(payload.get("mapping_confidence"), "medium")
+        self._note(
+            "-",
+            "-",
+            "C",
+            "Field Mapping",
+            "VR-021/024",
+            "pass",
+            "totals raw_only; detail not flat",
+        )
+
     @classmethod
     def tearDownClass(cls) -> None:
         # 汇总 matrix（由实例方法累积到共享 list）
@@ -297,7 +395,7 @@ class TestAbnormalTradingFixtures(unittest.TestCase):
             [
                 "# CNINFO D 类 abnormal_trading — Tier-1 Fixture VR Validation（Offline）",
                 "",
-                f"_生成时间：D-FM-03 · wall≈{wall:.2f}s_",
+                f"_生成时间：D-FM-04 · wall≈{wall:.2f}s_",
                 "",
                 "> **性质：** Tier-1 fixture offline VR · **CNINFO = 0** · **不是 verified**",
                 "",
@@ -315,6 +413,11 @@ class TestAbnormalTradingFixtures(unittest.TestCase):
                 "abnormal_trading_component_approved = standing_scope",
                 "```",
                 "",
+                "## D-FM-04 增补",
+                "",
+                "- `DAT003_market_list_filtered_empty.json` · VR-009/010",
+                "- `DAT004_multi_type_found.json` · VR-011 + VR-021/024",
+                "",
                 "## Artifacts",
                 "",
                 f"- matrix: `outputs/validation/{VALIDATION_OUT.name}`",
@@ -322,8 +425,8 @@ class TestAbnormalTradingFixtures(unittest.TestCase):
                 "- test: `lab/test_cninfo_d_class_abnormal_trading_fixtures.py`",
                 "",
                 "```text",
-                "task_id = D-FM-03",
-                "phase = abnormal_trading_tier1_fixture_stubs",
+                "task_id = D-FM-04",
+                "phase = abnormal_trading_tier1_fixture_edge_extension",
                 "```",
                 "",
             ]

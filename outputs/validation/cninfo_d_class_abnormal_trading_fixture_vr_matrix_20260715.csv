@@ -7,7 +7,10 @@ DAT002_empty.json,DAT002,D,Envelope,VR-025–VR-030,pass,empty_but_valid
 DAT003_found.json,DAT003,D,Envelope,VR-025–VR-030,pass,captured
 DAT003_found.json,DAT003,C,Field Mapping,VR-015–VR-024,pass,secCode/tradeTime/type mapped; detail deferred
 DAT003_empty.json,DAT003,D,Envelope,VR-025–VR-030,pass,empty_but_valid
+DAT003_market_list_filtered_empty.json,DAT003,D,Envelope,VR-025–VR-030,pass,empty_but_valid
 DAT004_found.json,DAT004,D,Envelope,VR-025–VR-030,pass,captured
 DAT004_found.json,DAT004,C,Field Mapping,VR-015–VR-024,pass,secCode/tradeTime/type mapped; detail deferred
 DAT004_empty.json,DAT004,D,Envelope,VR-025–VR-030,pass,empty_but_valid
+DAT004_multi_type_found.json,DAT004,D,Envelope,VR-025–VR-030,pass,captured
+DAT004_multi_type_found.json,DAT004,C,Field Mapping,VR-015–VR-024,pass,secCode/tradeTime/type mapped; detail deferred
 DAT005_empty_but_valid_synthetic.json,DAT005,D,Envelope,VR-025–VR-030,pass,empty_but_valid

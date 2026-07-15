@@ -1,0 +1,52 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class abnormal_trading first-slice offline synthetic · VR-009/010 marketList secCode filter",
+    "case_id": "DAT003",
+    "component": "abnormal_trading",
+    "scenario": "empty_but_valid_after_secCode_filter",
+    "cninfo_called": false,
+    "synthetic": true,
+    "tier0_cite": [
+      "fixtures/d_class/abnormal_trading/sample_raw.json"
+    ],
+    "query_params": {
+      "sdate": "2026-07-03",
+      "edate": "2026-07-03",
+      "platecode": "",
+      "orderby": "",
+      "page": 1,
+      "rows": 30
+    },
+    "market_list_filter": {
+      "raw_market_list_count": 2,
+      "matched_secCode_count": 0,
+      "target_secCode": "600000",
+      "other_secCodes": ["000001", "600519"],
+      "note": "市场截面有记录但无目标公司 → empty_but_valid（非空 marketList）"
+    }
+  },
+  "market_event": {
+    "event_id": "fixture_dat003_abn_600000_filtered_empty",
+    "company_code": "600000",
+    "event_type": "abnormal_trading",
+    "event_time": "2026-07-03",
+    "source_endpoint": "https://www.cninfo.com.cn/data/statis/getMarketStatisticsData",
+    "source_record_id": "fixture_raw_abn_dat003_filtered_empty",
+    "event_status": "empty_but_valid",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "abnormal_trading",
+      "query_mode": "single_day_paged",
+      "query_params": {
+        "sdate": "2026-07-03",
+        "edate": "2026-07-03",
+        "platecode": "",
+        "orderby": "",
+        "page": 1,
+        "rows": 30
+      },
+      "fetch_time": "2026-07-15T17:20:00+08:00",
+      "lineage_status": "discovered"
+    }
+  }
+}
