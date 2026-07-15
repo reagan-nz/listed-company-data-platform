@@ -1,0 +1,2 @@
+case_id,probe_key,expected_behavior,retrieval_status,record_count,acceptable,failure_type,caveat,http_status,last_error,cninfo_requests,endpoint,task_id,probe_gate
+DFIA005,rdate_20251231,empty_but_valid,found,19,yes,empty_control_anchor_stale,empty_control_anchor_stale,200,,1,https://www.cninfo.com.cn/data20/fund/industry,D-FM-18,PASS_WITH_CAVEAT

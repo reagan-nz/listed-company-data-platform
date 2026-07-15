@@ -1,0 +1,13 @@
+{
+  "task_id": "D-FM-18",
+  "case_id": "DFIA005",
+  "shared_probe_key": "rdate_20251231",
+  "query_params": {
+    "rdate": "20251231"
+  },
+  "expected_behavior": "empty_but_valid",
+  "industry_code": "*",
+  "cninfo_budget": 1,
+  "universe_lock_mutated": false,
+  "mode": "dry_run"
+}

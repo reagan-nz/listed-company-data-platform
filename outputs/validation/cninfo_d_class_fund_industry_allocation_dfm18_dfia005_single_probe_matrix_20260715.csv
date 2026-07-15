@@ -1,0 +1,2 @@
+case_id,prior_dfm13_retrieval,prior_dfm13_failure,dfm18_retrieval,dfm18_records,dfm18_http,dfm18_acceptable,dfm18_caveat,transport_cleared,universe_lock_mutated,cninfo_calls,notes
+DFIA005,http_error,transport_or_http_error,found,19,200,yes,empty_control_anchor_stale,yes,no,1,Phase2 empty control stale; ENDDATE=2025-12-31 now returns 19 rows; runner broad found path acceptable=yes; lock expected empty_but_valid unchanged
