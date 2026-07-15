@@ -1,0 +1,44 @@
+# B-FM-10 live allow-list — 仅 B-FM-05/06 新晋 IR category-sample
+version: "draft-0.1"
+status: live_sample_scoped_B-FM-10
+verified: false
+notes: B-FM-10 live allow-list only; not a new fixture lineage
+
+cases:
+  - case_id: ir_activity_sample_001
+    case_status: ready
+    source_id: cninfo_meeting_notice_pdf
+    source_category: meeting_notice_pdf
+    title_pattern: "投资者网上集体接待日"
+    date_start: "2025-05-08"
+    date_end: "2025-05-22"
+    expected_min_results: 1
+    expected_document_types:
+      - investor_relations_activity
+      - meeting_notice
+    false_positive_guard_patterns:
+      - 年度报告
+      - 第一季度报告
+    notes: >-
+      B-FM-10 live allow-list（依赖 B-FM-05 晋升 / B-FM-04 routing edge）：
+      集体接待日全市场窗；锚点 BD2E202 / 吉林化纤 000420。
+      不写 verified；不下载 PDF。
+
+  - case_id: ir_activity_sample_002
+    case_status: ready
+    source_id: cninfo_meeting_notice_pdf
+    source_category: meeting_notice_pdf
+    title_pattern: "投资者开放日"
+    date_start: "2025-06-01"
+    date_end: "2025-06-05"
+    expected_min_results: 1
+    expected_document_types:
+      - investor_relations_activity
+      - meeting_notice
+    false_positive_guard_patterns:
+      - 年度报告
+      - 第一季度报告
+    notes: >-
+      B-FM-10 live allow-list（依赖 B-FM-06 晋升 / B-FM-04 routing edge）：
+      投资者开放日全市场窗；锚点 BD2E232 / 新乡化纤 000949。
+      不写 verified；不下载 PDF。

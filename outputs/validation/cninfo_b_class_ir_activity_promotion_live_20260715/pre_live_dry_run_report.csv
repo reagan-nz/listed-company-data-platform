@@ -1,0 +1,5 @@
+case_id,case_type,case_status,source_id,title_pattern,date_start,date_end,expected_document_type,expected_route_to,dry_run_status,would_query,query_status,notes
+ir_activity_known_002,known_document,ready,cninfo_meeting_notice_pdf,投资者网上集体接待日,2025-05-19,2025-05-22,investor_relations_activity,cninfo_meeting_notice_pdf,ready_for_future_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called
+ir_activity_known_003,known_document,ready,cninfo_meeting_notice_pdf,投资者开放日,2025-06-02,2025-06-05,investor_relations_activity,cninfo_meeting_notice_pdf,ready_for_future_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called
+ir_activity_sample_001,category_sample,ready,cninfo_meeting_notice_pdf,投资者网上集体接待日,2025-05-08,2025-05-22,"investor_relations_activity,meeting_notice",,ready_for_category_sample_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called
+ir_activity_sample_002,category_sample,ready,cninfo_meeting_notice_pdf,投资者开放日,2025-06-01,2025-06-05,"investor_relations_activity,meeting_notice",,ready_for_category_sample_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called

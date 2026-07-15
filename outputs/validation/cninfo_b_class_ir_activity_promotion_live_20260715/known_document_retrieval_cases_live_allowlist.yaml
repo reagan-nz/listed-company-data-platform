@@ -1,0 +1,38 @@
+# B-FM-10 live allow-list — 仅 B-FM-05/06 新晋 IR known-document
+version: "draft-0.1"
+status: live_sample_scoped_B-FM-10
+verified: false
+notes: B-FM-10 live allow-list only; not a new fixture lineage
+
+cases:
+  - case_id: ir_activity_known_002
+    case_status: ready
+    source_id: cninfo_meeting_notice_pdf
+    company_code: "000420"
+    company_name: "吉林化纤"
+    title_pattern: "投资者网上集体接待日"
+    expected_document_type: investor_relations_activity
+    date_start: "2025-05-19"
+    date_end: "2025-05-22"
+    expected_route_to: cninfo_meeting_notice_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-10 live allow-list（依赖 B-FM-05 晋升 / B-FM-04 routing edge）：
+      吉林化纤 000420，BD2E202 / announcement_id=1223605360。
+      不写 verified；不下载 PDF。
+
+  - case_id: ir_activity_known_003
+    case_status: ready
+    source_id: cninfo_meeting_notice_pdf
+    company_code: "000949"
+    company_name: "新乡化纤"
+    title_pattern: "投资者开放日"
+    expected_document_type: investor_relations_activity
+    date_start: "2025-06-02"
+    date_end: "2025-06-05"
+    expected_route_to: cninfo_meeting_notice_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-10 live allow-list（依赖 B-FM-06 晋升 / B-FM-04 routing edge）：
+      新乡化纤 000949，BD2E232 / announcement_id=1223746795。
+      不写 verified；不下载 PDF。
