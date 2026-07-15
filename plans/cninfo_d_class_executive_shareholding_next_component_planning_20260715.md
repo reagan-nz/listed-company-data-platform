@@ -166,8 +166,14 @@ Era D D-line 已完成 **7** 个 first-slice 轨道（含 shareholder_change）�
 | recommendation | [cninfo_d_class_executive_shareholding_next_component_recommendation_20260715.md](../outputs/validation/cninfo_d_class_executive_shareholding_next_component_recommendation_20260715.md) |
 | planning summary | [cninfo_d_class_executive_shareholding_next_component_planning_summary_20260715.md](../outputs/validation/cninfo_d_class_executive_shareholding_next_component_planning_summary_20260715.md) |
 | universe sketch | [cninfo_d_class_executive_shareholding_first_slice_universe_draft_sketch_20260715.csv](../outputs/validation/cninfo_d_class_executive_shareholding_first_slice_universe_draft_sketch_20260715.csv) |
-| VR checklist stub | [cninfo_d_class_executive_shareholding_offline_prep_checklist_stub_20260715.csv](../outputs/validation/cninfo_d_class_executive_shareholding_offline_prep_checklist_stub_20260715.csv) |
+| VR checklist stub（Run 15） | [cninfo_d_class_executive_shareholding_offline_prep_checklist_stub_20260715.csv](../outputs/validation/cninfo_d_class_executive_shareholding_offline_prep_checklist_stub_20260715.csv) |
 | next step | [cninfo_d_class_executive_shareholding_next_component_next_step_recommendation_20260715.md](../outputs/validation/cninfo_d_class_executive_shareholding_next_component_next_step_recommendation_20260715.md) |
+| **first-slice approval package（D-R16-01）** | [cninfo_d_class_executive_shareholding_first_slice_approval_package_20260715.md](../outputs/validation/cninfo_d_class_executive_shareholding_first_slice_approval_package_20260715.md) |
+| universe lock | [cninfo_d_class_executive_shareholding_first_slice_universe_lock_20260715.csv](../outputs/validation/cninfo_d_class_executive_shareholding_first_slice_universe_lock_20260715.csv) |
+| validation rules（full VR） | [cninfo_d_class_executive_shareholding_validation_rules_20260715.md](../outputs/validation/cninfo_d_class_executive_shareholding_validation_rules_20260715.md) |
+| sample prep（DC006/DLC007 only） | [cninfo_d_class_executive_shareholding_sample_prep_20260715.md](../outputs/validation/cninfo_d_class_executive_shareholding_sample_prep_20260715.md) |
+| command draft | [cninfo_d_class_executive_shareholding_first_slice_command_draft_20260715.md](../outputs/validation/cninfo_d_class_executive_shareholding_first_slice_command_draft_20260715.md) |
+| offline checklist（promoted） | [cninfo_d_class_executive_shareholding_offline_prep_checklist_20260715.csv](../outputs/validation/cninfo_d_class_executive_shareholding_offline_prep_checklist_20260715.csv) |
 
 ---
 

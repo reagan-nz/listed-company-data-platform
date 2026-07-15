@@ -1,0 +1,29 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class executive_shareholding first-slice offline synthetic",
+    "case_id": "DES003",
+    "component": "executive_shareholding",
+    "scenario": "empty_but_valid",
+    "cninfo_called": false,
+    "synthetic": true,
+    "tier0_cite": ["DC006"],
+    "query_params": { "timeMark": "oneMonth", "varyType": "b" }
+  },
+  "market_event": {
+    "event_id": "fixture_des003_exec_600000_empty",
+    "company_code": "600000",
+    "event_type": "executive_shareholding",
+    "event_time": "2026-06-15",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/leader/detail",
+    "source_record_id": "fixture_raw_exec_des003_empty",
+    "event_status": "empty_but_valid",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "executive_shareholding",
+      "query_mode": "oneMonth_varyType_b",
+      "query_params": { "timeMark": "oneMonth", "varyType": "b" },
+      "fetch_time": "2026-07-15T12:00:00+08:00",
+      "lineage_status": "discovered"
+    }
+  }
+}

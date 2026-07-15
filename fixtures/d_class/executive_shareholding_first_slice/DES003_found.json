@@ -1,0 +1,52 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class executive_shareholding first-slice offline synthetic",
+    "case_id": "DES003",
+    "component": "executive_shareholding",
+    "scenario": "captured",
+    "cninfo_called": false,
+    "synthetic": true,
+    "tier0_cite": ["DC006"],
+    "query_params": { "timeMark": "oneMonth", "varyType": "b" }
+  },
+  "market_event": {
+    "event_id": "fixture_des003_exec_600000_20260615",
+    "company_code": "600000",
+    "event_type": "executive_shareholding",
+    "event_time": "2026-06-15",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/leader/detail",
+    "source_record_id": "fixture_raw_exec_des003",
+    "event_status": "captured",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "executive_shareholding",
+      "query_mode": "oneMonth_varyType_b",
+      "query_params": { "timeMark": "oneMonth", "varyType": "b" },
+      "fetch_time": "2026-07-15T12:00:00+08:00",
+      "raw_record_hash": "sha256:synthetic_exec_des003_found",
+      "raw_record_json": {
+        "SECCODE": "600000",
+        "SECNAME": "浦发银行",
+        "ENDDATE": "2026-06-15",
+        "HUMANNAME": "合成高管姓名DES003",
+        "F001V": "合成变动人DES003",
+        "F002V": "副行长",
+        "F003V": "本人",
+        "F006N": 15000.0,
+        "F008N": 8.50,
+        "F010V": "二级市场买卖"
+      },
+      "lineage_status": "discovered"
+    }
+  },
+  "executive_shareholding": {
+    "company_code": "600000",
+    "company_name": "浦发银行",
+    "executive_name": "合成高管姓名DES003",
+    "position": "副行长",
+    "change_type": "增持",
+    "change_amount": 15000.0,
+    "change_date": "2026-06-15",
+    "quality_status": "pass"
+  }
+}

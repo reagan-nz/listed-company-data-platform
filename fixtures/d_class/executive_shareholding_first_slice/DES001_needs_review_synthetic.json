@@ -1,0 +1,51 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class executive_shareholding first-slice offline synthetic",
+    "case_id": "DES001",
+    "component": "executive_shareholding",
+    "scenario": "needs_review",
+    "cninfo_called": false,
+    "synthetic": true,
+    "tier0_cite": ["DC006", "DLC007"],
+    "query_params": { "timeMark": "oneMonth", "varyType": "b" }
+  },
+  "market_event": {
+    "event_id": "fixture_des001_exec_002415_20260615",
+    "company_code": "002415",
+    "event_type": "executive_shareholding",
+    "event_time": "2026-06-15",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/leader/detail",
+    "source_record_id": "fixture_raw_exec_des001",
+    "event_status": "captured",
+    "quality_status": "needs_review",
+    "lineage": {
+      "registry_source_id": "executive_shareholding",
+      "query_mode": "oneMonth_varyType_b",
+      "query_params": { "timeMark": "oneMonth", "varyType": "b" },
+      "fetch_time": "2026-07-15T12:00:00+08:00",
+      "raw_record_hash": "sha256:synthetic_exec_des001_needs_review",
+      "raw_record_json": {
+        "SECCODE": "002415",
+        "SECNAME": "海康威视",
+        "ENDDATE": "2026-06-15",
+        "HUMANNAME": "合成高管姓名DES001",
+        "F001V": "合成变动人DES001",
+        "F002V": "其他",
+        "F003V": "本人",
+        "F006N": 10000.0,
+        "F010V": "二级市场买卖"
+      },
+      "lineage_status": "discovered"
+    }
+  },
+  "executive_shareholding": {
+    "company_code": "002415",
+    "company_name": "海康威视",
+    "executive_name": "合成高管姓名DES001",
+    "position": "其他",
+    "change_type": "增持",
+    "change_amount": 10000.0,
+    "change_date": "2026-06-15",
+    "quality_status": "needs_review"
+  }
+}

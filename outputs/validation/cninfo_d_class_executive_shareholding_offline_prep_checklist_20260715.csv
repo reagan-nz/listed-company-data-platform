@@ -4,17 +4,21 @@ ESH-PLAN-02,candidate_matrix_csv,ready,outputs/validation/cninfo_d_class_executi
 ESH-PLAN-03,recommendation_md,ready,outputs/validation/cninfo_d_class_executive_shareholding_next_component_recommendation_20260715.md,human approval phrase documented; NOT claimed approved
 ESH-PLAN-04,planning_summary_md,ready,outputs/validation/cninfo_d_class_executive_shareholding_next_component_planning_summary_20260715.md,CNINFO=0; NOT verified
 ESH-PLAN-05,universe_draft_sketch_csv,ready,outputs/validation/cninfo_d_class_executive_shareholding_first_slice_universe_draft_sketch_20260715.csv,DES001-DES005; sketch source for lock; not mutated
-ESH-PLAN-06,next_step_recommendation_md,ready,outputs/validation/cninfo_d_class_executive_shareholding_next_component_next_step_recommendation_20260715.md,updated for D-R16-01 package complete; await human approve component
+ESH-PLAN-06,next_step_recommendation_md,ready,outputs/validation/cninfo_d_class_executive_shareholding_next_component_next_step_recommendation_20260715.md,updated D-R16-02 S3 fixtures DONE; await human approve component; S4/S5 blocked
 ESH-PKG-01,universe_lock_csv,ready,outputs/validation/cninfo_d_class_executive_shareholding_first_slice_universe_lock_20260715.csv,DES001-DES005 locked; timeMark=oneMonth; varyType=b; task=D-R16-01
 ESH-PKG-02,validation_rules_md,ready,outputs/validation/cninfo_d_class_executive_shareholding_validation_rules_20260715.md,VR-001 to VR-042 full checklist; promoted from ESH-STUB-01; offline draft
-ESH-PKG-03,sample_prep_md,ready,outputs/validation/cninfo_d_class_executive_shareholding_sample_prep_20260715.md,Tier-0 cite DC006/DLC007 only; Tier-1 plan only; no fixture files created
+ESH-PKG-03,sample_prep_md,ready,outputs/validation/cninfo_d_class_executive_shareholding_sample_prep_20260715.md,Tier-0 cite DC006/DLC007; Tier-1 stubs created D-R16-02
 ESH-PKG-04,command_draft_md,ready,outputs/validation/cninfo_d_class_executive_shareholding_first_slice_command_draft_20260715.md,NOT_APPROVED_DO_NOT_RUN; flags not implemented
 ESH-PKG-05,approval_package_md,ready,outputs/validation/cninfo_d_class_executive_shareholding_first_slice_approval_package_20260715.md,offline package; component_approved=false; CNINFO=0
 ESH-PKG-06,package_index_md,ready,outputs/validation/cninfo_d_class_executive_shareholding_first_slice/PACKAGE_INDEX_20260715.md,first_slice dir index; no live/reports yet
 ESH-PKG-07,offline_prep_checklist_csv,ready,outputs/validation/cninfo_d_class_executive_shareholding_offline_prep_checklist_20260715.csv,this file; stub promoted to full checklist
 ESH-STUB-01,vr_checklist_stub,superseded,outputs/validation/cninfo_d_class_executive_shareholding_offline_prep_checklist_stub_20260715.csv,D-R15-02 stub retained read-only; full VR = ESH-PKG-02
 ESH-STUB-02,schema_prep,blocked_until_approval,n/a,do not start Level-2 schema_prep until component approved
-ESH-STUB-03,sample_fixture_plan,ready_as_plan,outputs/validation/cninfo_d_class_executive_shareholding_sample_prep_20260715.md,promoted from stub; still no new fixture JSON files
+ESH-STUB-03,sample_fixture_plan,ready,fixtures/d_class/executive_shareholding_first_slice/,D-R16-02 Tier-1 stubs DES001-005; 8 JSON; offline only
+ESH-FIX-01,tier1_fixture_json,ready,fixtures/d_class/executive_shareholding_first_slice/,DES001 needs_review; DES002-004 dual; DES005 empty; cninfo_called=false
+ESH-FIX-02,fixture_vr_test,ready,lab/test_cninfo_d_class_executive_shareholding_fixtures.py,14 tests offline schema vs VR checklist
+ESH-FIX-03,fixture_vr_matrix,ready,outputs/validation/cninfo_d_class_executive_shareholding_fixture_vr_matrix_20260715.csv,VR group matrix per fixture
+ESH-FIX-04,fixture_vr_summary,ready,outputs/validation/cninfo_d_class_executive_shareholding_fixture_vr_validation_20260715.md,offline validation summary; gate unchanged
 ESH-STUB-04,runner_extension,forbidden_this_round,n/a,no --executive-shareholding-first-slice implement
 ESH-STUB-05,cninfo_live,forbidden_this_round,n/a,CNINFO=0
 ESH-SAFE-01,exclude_301259_688671,locked_policy,universe lock + VR-004/VR-040,permanent first-slice exclude

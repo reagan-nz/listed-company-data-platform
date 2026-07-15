@@ -1,0 +1,57 @@
+fixture_file,case_id,rule_group,rule_group_name,rule_ids,result,fail_rules,notes
+DES001_needs_review_synthetic.json,DES001,A,Universe & Query,VR-001–VR-008,pass,,universe_lock + fixture query_params
+DES001_needs_review_synthetic.json,DES001,B,Raw Retrieval,VR-009–VR-014,pass,,Tier-1 synthetic; no HTTP; portfolio mix
+DES001_needs_review_synthetic.json,DES001,C,Field Mapping,VR-015–VR-024,pass,,SECCODE/ENDDATE/HUMANNAME/F006N mapped; F005N omitted
+DES001_needs_review_synthetic.json,DES001,D,Envelope & Quality,VR-025–VR-032,pass,,scenario=needs_review; status=captured
+DES001_needs_review_synthetic.json,DES001,E,Lineage,VR-033–VR-037,pass,,raw_record_json + synthetic hash; lineage_status!=linked
+DES001_needs_review_synthetic.json,DES001,F,Evidence Boundary,VR-038–VR-040,pass,,no 301259/688671/DLC006R; blocked policy
+DES001_needs_review_synthetic.json,DES001,G,Governance,VR-041–VR-042,pass,,component_approved=false; NOT verified; no gate overclaim
+DES002_found.json,DES002,A,Universe & Query,VR-001–VR-008,pass,,universe_lock + fixture query_params
+DES002_found.json,DES002,B,Raw Retrieval,VR-009–VR-014,pass,,Tier-1 synthetic; no HTTP; portfolio mix
+DES002_found.json,DES002,C,Field Mapping,VR-015–VR-024,pass,,SECCODE/ENDDATE/HUMANNAME/F006N mapped; F005N omitted
+DES002_found.json,DES002,D,Envelope & Quality,VR-025–VR-032,pass,,scenario=captured; status=captured
+DES002_found.json,DES002,E,Lineage,VR-033–VR-037,pass,,raw_record_json + synthetic hash; lineage_status!=linked
+DES002_found.json,DES002,F,Evidence Boundary,VR-038–VR-040,pass,,no 301259/688671/DLC006R; blocked policy
+DES002_found.json,DES002,G,Governance,VR-041–VR-042,pass,,component_approved=false; NOT verified; no gate overclaim
+DES002_empty.json,DES002,A,Universe & Query,VR-001–VR-008,pass,,universe_lock + fixture query_params
+DES002_empty.json,DES002,B,Raw Retrieval,VR-009–VR-014,pass,,Tier-1 synthetic; no HTTP; portfolio mix
+DES002_empty.json,DES002,C,Field Mapping,VR-015–VR-024,na,,empty_but_valid 无 payload
+DES002_empty.json,DES002,D,Envelope & Quality,VR-025–VR-032,pass,,scenario=empty_but_valid; status=empty_but_valid
+DES002_empty.json,DES002,E,Lineage,VR-033–VR-037,na,,empty 无 raw_record_json
+DES002_empty.json,DES002,F,Evidence Boundary,VR-038–VR-040,pass,,no 301259/688671/DLC006R; blocked policy
+DES002_empty.json,DES002,G,Governance,VR-041–VR-042,pass,,component_approved=false; NOT verified; no gate overclaim
+DES003_found.json,DES003,A,Universe & Query,VR-001–VR-008,pass,,universe_lock + fixture query_params
+DES003_found.json,DES003,B,Raw Retrieval,VR-009–VR-014,pass,,Tier-1 synthetic; no HTTP; portfolio mix
+DES003_found.json,DES003,C,Field Mapping,VR-015–VR-024,pass,,SECCODE/ENDDATE/HUMANNAME/F006N mapped; F005N omitted
+DES003_found.json,DES003,D,Envelope & Quality,VR-025–VR-032,pass,,scenario=captured; status=captured
+DES003_found.json,DES003,E,Lineage,VR-033–VR-037,pass,,raw_record_json + synthetic hash; lineage_status!=linked
+DES003_found.json,DES003,F,Evidence Boundary,VR-038–VR-040,pass,,no 301259/688671/DLC006R; blocked policy
+DES003_found.json,DES003,G,Governance,VR-041–VR-042,pass,,component_approved=false; NOT verified; no gate overclaim
+DES003_empty.json,DES003,A,Universe & Query,VR-001–VR-008,pass,,universe_lock + fixture query_params
+DES003_empty.json,DES003,B,Raw Retrieval,VR-009–VR-014,pass,,Tier-1 synthetic; no HTTP; portfolio mix
+DES003_empty.json,DES003,C,Field Mapping,VR-015–VR-024,na,,empty_but_valid 无 payload
+DES003_empty.json,DES003,D,Envelope & Quality,VR-025–VR-032,pass,,scenario=empty_but_valid; status=empty_but_valid
+DES003_empty.json,DES003,E,Lineage,VR-033–VR-037,na,,empty 无 raw_record_json
+DES003_empty.json,DES003,F,Evidence Boundary,VR-038–VR-040,pass,,no 301259/688671/DLC006R; blocked policy
+DES003_empty.json,DES003,G,Governance,VR-041–VR-042,pass,,component_approved=false; NOT verified; no gate overclaim
+DES004_found.json,DES004,A,Universe & Query,VR-001–VR-008,pass,,universe_lock + fixture query_params
+DES004_found.json,DES004,B,Raw Retrieval,VR-009–VR-014,pass,,Tier-1 synthetic; no HTTP; portfolio mix
+DES004_found.json,DES004,C,Field Mapping,VR-015–VR-024,pass,,SECCODE/ENDDATE/HUMANNAME/F006N mapped; F005N omitted
+DES004_found.json,DES004,D,Envelope & Quality,VR-025–VR-032,pass,,scenario=captured; status=captured
+DES004_found.json,DES004,E,Lineage,VR-033–VR-037,pass,,raw_record_json + synthetic hash; lineage_status!=linked
+DES004_found.json,DES004,F,Evidence Boundary,VR-038–VR-040,pass,,no 301259/688671/DLC006R; blocked policy
+DES004_found.json,DES004,G,Governance,VR-041–VR-042,pass,,component_approved=false; NOT verified; no gate overclaim
+DES004_empty.json,DES004,A,Universe & Query,VR-001–VR-008,pass,,universe_lock + fixture query_params
+DES004_empty.json,DES004,B,Raw Retrieval,VR-009–VR-014,pass,,Tier-1 synthetic; no HTTP; portfolio mix
+DES004_empty.json,DES004,C,Field Mapping,VR-015–VR-024,na,,empty_but_valid 无 payload
+DES004_empty.json,DES004,D,Envelope & Quality,VR-025–VR-032,pass,,scenario=empty_but_valid; status=empty_but_valid
+DES004_empty.json,DES004,E,Lineage,VR-033–VR-037,na,,empty 无 raw_record_json
+DES004_empty.json,DES004,F,Evidence Boundary,VR-038–VR-040,pass,,no 301259/688671/DLC006R; blocked policy
+DES004_empty.json,DES004,G,Governance,VR-041–VR-042,pass,,component_approved=false; NOT verified; no gate overclaim
+DES005_empty_but_valid_synthetic.json,DES005,A,Universe & Query,VR-001–VR-008,pass,,universe_lock + fixture query_params
+DES005_empty_but_valid_synthetic.json,DES005,B,Raw Retrieval,VR-009–VR-014,pass,,Tier-1 synthetic; no HTTP; portfolio mix
+DES005_empty_but_valid_synthetic.json,DES005,C,Field Mapping,VR-015–VR-024,na,,empty_but_valid 无 payload
+DES005_empty_but_valid_synthetic.json,DES005,D,Envelope & Quality,VR-025–VR-032,pass,,scenario=empty_but_valid; status=empty_but_valid
+DES005_empty_but_valid_synthetic.json,DES005,E,Lineage,VR-033–VR-037,na,,empty 无 raw_record_json
+DES005_empty_but_valid_synthetic.json,DES005,F,Evidence Boundary,VR-038–VR-040,pass,,no 301259/688671/DLC006R; blocked policy
+DES005_empty_but_valid_synthetic.json,DES005,G,Governance,VR-041–VR-042,pass,,component_approved=false; NOT verified; no gate overclaim
