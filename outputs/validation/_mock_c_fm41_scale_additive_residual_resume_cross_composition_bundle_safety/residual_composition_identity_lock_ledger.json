@@ -1,0 +1,98 @@
+{
+  "generated_at": "2026-07-15T16:13:19Z",
+  "task_id": "C-FM-41",
+  "fingerprint_sha256": "f4c58d6fd6e29b813fc4e3d10582070049ffbff2da366994547ed8488f45af7b",
+  "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44",
+  "residual_formula": "106+9+2=117",
+  "sample_denials": [
+    {
+      "proposed": {
+        "residual": 118,
+        "partial": 106,
+        "failed": 9,
+        "delta_n": 2
+      },
+      "frozen": {
+        "residual": 117,
+        "partial": 106,
+        "failed": 9,
+        "delta_n": 2
+      },
+      "residual_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "residual_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "residual": 116,
+        "partial": 106,
+        "failed": 9,
+        "delta_n": 2
+      },
+      "frozen": {
+        "residual": 117,
+        "partial": 106,
+        "failed": 9,
+        "delta_n": 2
+      },
+      "residual_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "residual_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "residual": 117,
+        "partial": 107,
+        "failed": 9,
+        "delta_n": 2
+      },
+      "frozen": {
+        "residual": 117,
+        "partial": 106,
+        "failed": 9,
+        "delta_n": 2
+      },
+      "residual_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "residual_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "residual": 117,
+        "partial": 106,
+        "failed": 9,
+        "delta_n": 2
+      },
+      "frozen": {
+        "residual": 117,
+        "partial": 106,
+        "failed": 9,
+        "delta_n": 2
+      },
+      "residual_formula_holds": true,
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "residual_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "residual_composition_identity_lock",
+    "union_partial": 106,
+    "union_failed": 9,
+    "surface_harvest_delta_n": 2,
+    "residual_safety_coverage": 117,
+    "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44",
+    "residual_formula": "106+9+2=117",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

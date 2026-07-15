@@ -1,0 +1,260 @@
+{
+  "generated_at": "2026-07-15T16:13:19Z",
+  "task_id": "C-FM-41",
+  "fingerprint_sha256": "51c814c755b5886c5b7cb218072b31dfb1075688ce0bca36db28b569da7df63f",
+  "bundle_sha256": "bfcd48460cdb75a1de83c5783ab42566ec48e03a882e2c95a905f59d985e0f44",
+  "compositions": {
+    "unique_union_composition": {
+      "formula": "2134+106+9=2249",
+      "composition_sha256": "7725392d7fe52f14bd6868b89a4e0feb04e72108e472c5bd86d0261985b60d53"
+    },
+    "surface_unique_composition": {
+      "formula": "2249+2=2251",
+      "composition_sha256": "5d152925d160cf5ada761bb18d1191ec38ed134bb66e723e7fa6d4e526c98738"
+    },
+    "additive_composition": {
+      "formula": "2249+12=2261",
+      "composition_sha256": "944d3ff7ce3e9bd87e56d5eaf14fe7a9b565f98dd8ed7d3df825d4a0de43e4f8"
+    },
+    "residual_composition": {
+      "formula": "106+9+2=117",
+      "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+    },
+    "resume_composition": {
+      "formula": "28+1+0=29",
+      "composition_sha256": "a3bbfb72bc07137260c36ca2a6668b51e80085719c9f3554d655406c764f9266"
+    }
+  },
+  "sample_denials": [
+    {
+      "proposed_compositions": {
+        "unique_union_composition": {
+          "formula": "2134+106+9=2249",
+          "composition_sha256": "7725392d7fe52f14bd6868b89a4e0feb04e72108e472c5bd86d0261985b60d53"
+        },
+        "surface_unique_composition": {
+          "formula": "2249+2=2251",
+          "composition_sha256": "5d152925d160cf5ada761bb18d1191ec38ed134bb66e723e7fa6d4e526c98738"
+        },
+        "additive_composition": {
+          "formula": "2249+12=2261",
+          "composition_sha256": "944d3ff7ce3e9bd87e56d5eaf14fe7a9b565f98dd8ed7d3df825d4a0de43e4f8"
+        },
+        "residual_composition": {
+          "formula": "106+9+2=117",
+          "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+        },
+        "resume_composition": {
+          "formula": "28+1+0=29",
+          "composition_sha256": "a3bbfb72bc07137260c36ca2a6668b51e80085719c9f3554d655406c764f9266"
+        },
+        "tier_coverage_composition": {
+          "formula": "tiers=7;coverage_sum=3314",
+          "composition_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      },
+      "frozen_compositions": {
+        "unique_union_composition": {
+          "formula": "2134+106+9=2249",
+          "composition_sha256": "7725392d7fe52f14bd6868b89a4e0feb04e72108e472c5bd86d0261985b60d53"
+        },
+        "surface_unique_composition": {
+          "formula": "2249+2=2251",
+          "composition_sha256": "5d152925d160cf5ada761bb18d1191ec38ed134bb66e723e7fa6d4e526c98738"
+        },
+        "additive_composition": {
+          "formula": "2249+12=2261",
+          "composition_sha256": "944d3ff7ce3e9bd87e56d5eaf14fe7a9b565f98dd8ed7d3df825d4a0de43e4f8"
+        },
+        "residual_composition": {
+          "formula": "106+9+2=117",
+          "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+        },
+        "resume_composition": {
+          "formula": "28+1+0=29",
+          "composition_sha256": "a3bbfb72bc07137260c36ca2a6668b51e80085719c9f3554d655406c764f9266"
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_composition_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "unique_union_composition": {
+          "formula": "2134+106+9=2249",
+          "composition_sha256": "7725392d7fe52f14bd6868b89a4e0feb04e72108e472c5bd86d0261985b60d53"
+        },
+        "surface_unique_composition": {
+          "formula": "2249+2=2251",
+          "composition_sha256": "5d152925d160cf5ada761bb18d1191ec38ed134bb66e723e7fa6d4e526c98738"
+        },
+        "additive_composition": {
+          "formula": "2249+12=2261",
+          "composition_sha256": "944d3ff7ce3e9bd87e56d5eaf14fe7a9b565f98dd8ed7d3df825d4a0de43e4f8"
+        },
+        "residual_composition": {
+          "formula": "106+9+2=117",
+          "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+        }
+      },
+      "frozen_compositions": {
+        "unique_union_composition": {
+          "formula": "2134+106+9=2249",
+          "composition_sha256": "7725392d7fe52f14bd6868b89a4e0feb04e72108e472c5bd86d0261985b60d53"
+        },
+        "surface_unique_composition": {
+          "formula": "2249+2=2251",
+          "composition_sha256": "5d152925d160cf5ada761bb18d1191ec38ed134bb66e723e7fa6d4e526c98738"
+        },
+        "additive_composition": {
+          "formula": "2249+12=2261",
+          "composition_sha256": "944d3ff7ce3e9bd87e56d5eaf14fe7a9b565f98dd8ed7d3df825d4a0de43e4f8"
+        },
+        "residual_composition": {
+          "formula": "106+9+2=117",
+          "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+        },
+        "resume_composition": {
+          "formula": "28+1+0=29",
+          "composition_sha256": "a3bbfb72bc07137260c36ca2a6668b51e80085719c9f3554d655406c764f9266"
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_composition_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "unique_union_composition": {
+          "formula": "2134+106+9=2249",
+          "composition_sha256": "7725392d7fe52f14bd6868b89a4e0feb04e72108e472c5bd86d0261985b60d53"
+        },
+        "surface_unique_composition": {
+          "formula": "2249+2=2251",
+          "composition_sha256": "5d152925d160cf5ada761bb18d1191ec38ed134bb66e723e7fa6d4e526c98738"
+        },
+        "additive_composition": {
+          "formula": "2249+11=2260",
+          "composition_sha256": "944d3ff7ce3e9bd87e56d5eaf14fe7a9b565f98dd8ed7d3df825d4a0de43e4f8"
+        },
+        "residual_composition": {
+          "formula": "106+9+2=117",
+          "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+        },
+        "resume_composition": {
+          "formula": "28+1+0=29",
+          "composition_sha256": "a3bbfb72bc07137260c36ca2a6668b51e80085719c9f3554d655406c764f9266"
+        }
+      },
+      "frozen_compositions": {
+        "unique_union_composition": {
+          "formula": "2134+106+9=2249",
+          "composition_sha256": "7725392d7fe52f14bd6868b89a4e0feb04e72108e472c5bd86d0261985b60d53"
+        },
+        "surface_unique_composition": {
+          "formula": "2249+2=2251",
+          "composition_sha256": "5d152925d160cf5ada761bb18d1191ec38ed134bb66e723e7fa6d4e526c98738"
+        },
+        "additive_composition": {
+          "formula": "2249+12=2261",
+          "composition_sha256": "944d3ff7ce3e9bd87e56d5eaf14fe7a9b565f98dd8ed7d3df825d4a0de43e4f8"
+        },
+        "residual_composition": {
+          "formula": "106+9+2=117",
+          "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+        },
+        "resume_composition": {
+          "formula": "28+1+0=29",
+          "composition_sha256": "a3bbfb72bc07137260c36ca2a6668b51e80085719c9f3554d655406c764f9266"
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_composition_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "unique_union_composition": {
+          "formula": "2134+106+9=2249",
+          "composition_sha256": "7725392d7fe52f14bd6868b89a4e0feb04e72108e472c5bd86d0261985b60d53"
+        },
+        "surface_unique_composition": {
+          "formula": "2249+2=2251",
+          "composition_sha256": "5d152925d160cf5ada761bb18d1191ec38ed134bb66e723e7fa6d4e526c98738"
+        },
+        "additive_composition": {
+          "formula": "2249+12=2261",
+          "composition_sha256": "944d3ff7ce3e9bd87e56d5eaf14fe7a9b565f98dd8ed7d3df825d4a0de43e4f8"
+        },
+        "residual_composition": {
+          "formula": "106+9+2=117",
+          "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+        },
+        "resume_composition": {
+          "formula": "28+1+0=29",
+          "composition_sha256": "a3bbfb72bc07137260c36ca2a6668b51e80085719c9f3554d655406c764f9266"
+        }
+      },
+      "frozen_compositions": {
+        "unique_union_composition": {
+          "formula": "2134+106+9=2249",
+          "composition_sha256": "7725392d7fe52f14bd6868b89a4e0feb04e72108e472c5bd86d0261985b60d53"
+        },
+        "surface_unique_composition": {
+          "formula": "2249+2=2251",
+          "composition_sha256": "5d152925d160cf5ada761bb18d1191ec38ed134bb66e723e7fa6d4e526c98738"
+        },
+        "additive_composition": {
+          "formula": "2249+12=2261",
+          "composition_sha256": "944d3ff7ce3e9bd87e56d5eaf14fe7a9b565f98dd8ed7d3df825d4a0de43e4f8"
+        },
+        "residual_composition": {
+          "formula": "106+9+2=117",
+          "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+        },
+        "resume_composition": {
+          "formula": "28+1+0=29",
+          "composition_sha256": "a3bbfb72bc07137260c36ca2a6668b51e80085719c9f3554d655406c764f9266"
+        }
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "cross_composition_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "cross_composition_bundle_identity_lock",
+    "compositions": {
+      "unique_union_composition": {
+        "formula": "2134+106+9=2249",
+        "composition_sha256": "7725392d7fe52f14bd6868b89a4e0feb04e72108e472c5bd86d0261985b60d53"
+      },
+      "surface_unique_composition": {
+        "formula": "2249+2=2251",
+        "composition_sha256": "5d152925d160cf5ada761bb18d1191ec38ed134bb66e723e7fa6d4e526c98738"
+      },
+      "additive_composition": {
+        "formula": "2249+12=2261",
+        "composition_sha256": "944d3ff7ce3e9bd87e56d5eaf14fe7a9b565f98dd8ed7d3df825d4a0de43e4f8"
+      },
+      "residual_composition": {
+        "formula": "106+9+2=117",
+        "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+      },
+      "resume_composition": {
+        "formula": "28+1+0=29",
+        "composition_sha256": "a3bbfb72bc07137260c36ca2a6668b51e80085719c9f3554d655406c764f9266"
+      }
+    },
+    "bundle_sha256": "bfcd48460cdb75a1de83c5783ab42566ec48e03a882e2c95a905f59d985e0f44",
+    "deny_composition_mutate": true,
+    "deny_bundle_inflate": true,
+    "deny_bundle_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

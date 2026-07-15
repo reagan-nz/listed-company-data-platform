@@ -1,0 +1,89 @@
+{
+  "generated_at": "2026-07-15T16:13:19Z",
+  "task_id": "C-FM-41",
+  "fingerprint_sha256": "257203467a88d91a327451fe5e565a719d4648da27a7a160fd196b8d6c7710f5",
+  "composition_sha256": "944d3ff7ce3e9bd87e56d5eaf14fe7a9b565f98dd8ed7d3df825d4a0de43e4f8",
+  "additive_formula": "2249+12=2261",
+  "sample_denials": [
+    {
+      "proposed": {
+        "additive": 2262,
+        "unique": 2249,
+        "overlap": 12
+      },
+      "frozen": {
+        "additive": 2261,
+        "unique": 2249,
+        "overlap": 12
+      },
+      "additive_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "additive_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "additive": 2260,
+        "unique": 2249,
+        "overlap": 12
+      },
+      "frozen": {
+        "additive": 2261,
+        "unique": 2249,
+        "overlap": 12
+      },
+      "additive_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "additive_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "additive": 2261,
+        "unique": 2249,
+        "overlap": 13
+      },
+      "frozen": {
+        "additive": 2261,
+        "unique": 2249,
+        "overlap": 12
+      },
+      "additive_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "additive_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "additive": 2261,
+        "unique": 2249,
+        "overlap": 12
+      },
+      "frozen": {
+        "additive": 2261,
+        "unique": 2249,
+        "overlap": 12
+      },
+      "additive_formula_holds": true,
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "additive_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "additive_composition_identity_lock",
+    "harvest_unique_union": 2249,
+    "overlap_delta": 12,
+    "harvest_additive": 2261,
+    "composition_sha256": "944d3ff7ce3e9bd87e56d5eaf14fe7a9b565f98dd8ed7d3df825d4a0de43e4f8",
+    "additive_formula": "2249+12=2261",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

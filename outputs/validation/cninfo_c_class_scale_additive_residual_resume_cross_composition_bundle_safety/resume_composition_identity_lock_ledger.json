@@ -1,0 +1,98 @@
+{
+  "generated_at": "2026-07-15T16:13:19Z",
+  "task_id": "C-FM-41",
+  "fingerprint_sha256": "c1aab78ee87424f3119650d02f7c423e67571820688b6505ecc8eef1df4aca2d",
+  "composition_sha256": "a3bbfb72bc07137260c36ca2a6668b51e80085719c9f3554d655406c764f9266",
+  "resume_formula": "28+1+0=29",
+  "sample_denials": [
+    {
+      "proposed": {
+        "total": 30,
+        "improved": 28,
+        "same": 1,
+        "worse": 0
+      },
+      "frozen": {
+        "total": 29,
+        "improved": 28,
+        "same": 1,
+        "worse": 0
+      },
+      "resume_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "total": 28,
+        "improved": 28,
+        "same": 1,
+        "worse": 0
+      },
+      "frozen": {
+        "total": 29,
+        "improved": 28,
+        "same": 1,
+        "worse": 0
+      },
+      "resume_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "total": 29,
+        "improved": 29,
+        "same": 1,
+        "worse": 0
+      },
+      "frozen": {
+        "total": 29,
+        "improved": 28,
+        "same": 1,
+        "worse": 0
+      },
+      "resume_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "total": 29,
+        "improved": 28,
+        "same": 1,
+        "worse": 0
+      },
+      "frozen": {
+        "total": 29,
+        "improved": 28,
+        "same": 1,
+        "worse": 0
+      },
+      "resume_formula_holds": true,
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "resume_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "resume_composition_identity_lock",
+    "resume_improved": 28,
+    "resume_same": 1,
+    "resume_worse": 0,
+    "resume_total": 29,
+    "composition_sha256": "a3bbfb72bc07137260c36ca2a6668b51e80085719c9f3554d655406c764f9266",
+    "resume_formula": "28+1+0=29",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
