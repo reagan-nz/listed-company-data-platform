@@ -1,0 +1,66 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class equity_pledge next-slice offline synthetic · denser-day cite 2026-07-02",
+    "case_id": "DEP101",
+    "component": "equity_pledge",
+    "scenario": "captured",
+    "cninfo_called": false,
+    "synthetic": true,
+    "dense_day_cite": "2026-07-02",
+    "dense_day_cite_task": "D-FM-41",
+    "approval_task_id": "D-FM-42",
+    "tier0_cite": [
+      "fixtures/d_class/equity_pledge/sample_raw.json"
+    ],
+    "query_params": {
+      "tdate": "2026-07-02"
+    },
+    "structure_cite": "fixtures/d_class/equity_pledge/sample_raw.json"
+  },
+  "market_event": {
+    "event_id": "fixture_dep101_ep_000001_20260702",
+    "company_code": "000001",
+    "event_type": "equity_pledge",
+    "event_time": "2026-07-02",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/equityPledge/list",
+    "source_record_id": "fixture_raw_ep_dep101",
+    "event_status": "captured",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "equity_pledge",
+      "query_mode": "tdate_daily",
+      "query_params": {
+        "tdate": "2026-07-02"
+      },
+      "fetch_time": "2026-07-15T23:00:00+08:00",
+      "raw_record_hash": "sha256:synthetic_ep_dep101_captured_20260702",
+      "raw_record_json": {
+        "SECCODE": "000001",
+        "SECNAME": "平安银行",
+        "DECLAREDATE": "2026-07-02",
+        "F001V": "合成出质人DEP101",
+        "F003V": "合成质权人DEP101银行",
+        "F006N": 1101.0,
+        "F007N": 0.6,
+        "F012N": 0,
+        "F018N": 11.0,
+        "F008V": "质押用于融资（合成·raw_only）"
+      },
+      "lineage_status": "discovered"
+    }
+  },
+  "equity_pledge": {
+    "company_code": "000001",
+    "company_name": "平安银行",
+    "announcement_date": "2026-07-02",
+    "event_date": "2026-07-02",
+    "pledgor": "合成出质人DEP101",
+    "pledgee": "合成质权人DEP101银行",
+    "pledged_shares": 1101.0,
+    "pledged_shares_10k_shares": 1101.0,
+    "pledge_ratio_to_total_share_capital_percent": 0.6,
+    "cumulative_pledge_ratio_percent": 11.0,
+    "released_pledge_shares_10k_shares": 0,
+    "quality_status": "pass"
+  }
+}

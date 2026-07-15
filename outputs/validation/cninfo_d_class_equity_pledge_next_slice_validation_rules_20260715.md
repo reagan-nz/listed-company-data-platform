@@ -1,17 +1,19 @@
 # CNINFO D 类 equity_pledge — Next-Slice Validation Rules（VR-EP-NS-001–VR-EP-NS-042）
 
-_生成时间：2026-07-15 · D-FM-41 · offline draft_
+_生成时间：2026-07-15 · D-FM-41 draft · D-FM-42 lock 晋升_
 
 > **性质：** next-slice VR checklist · **CNINFO = 0** · **不是 verified** · **不覆盖** first-slice VR / DEP001–005 证据
 >
 > **范围：** DEP101–DEP105 · shared denser-day cite `anchor_tdate=2026-07-02` · **禁** `2026-07-03` 作 found 唯一锚
+>
+> **D-FM-42：** universe_lock_status=`locked` · approval_task_id=`D-FM-42` · sketch 仍 `draft_not_locked` 作历史
 
 ## A — Universe & Query（VR-EP-NS-001–VR-EP-NS-008）
 
 | ID | 规则 |
 |----|------|
 | VR-EP-NS-001 | universe 恰好 **5** 行 · case_id **DEP101–DEP105**（与 DEP001–005 隔离） |
-| VR-EP-NS-002 | component=`equity_pledge` · next_slice_include=`yes` · universe_lock_status 未来=`locked`（本包 sketch=`draft_not_locked`） |
+| VR-EP-NS-002 | component=`equity_pledge` · next_slice_include=`yes` · universe_lock_status=`locked` · approval_task_id=`D-FM-42` |
 | VR-EP-NS-003 | 全案共享 `anchor_tdate=2026-07-02` · query `tdate_daily` · **禁止** `2026-07-03` 作 sole found 锚 |
 | VR-EP-NS-004 | 永久排除 **688671** · **301259** · exclude_flags 含 `exclude_sparse_day_20260703_sole_found_anchor` · `exclude_sole_needs_review` · `exclude_first_slice_DEP001_005_mutate` |
 | VR-EP-NS-005 | endpoint=`https://www.cninfo.com.cn/data20/equityPledge/list` · records_path=`data.records` |

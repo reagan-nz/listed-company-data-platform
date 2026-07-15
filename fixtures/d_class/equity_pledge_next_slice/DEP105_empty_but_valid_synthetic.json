@@ -1,0 +1,38 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class equity_pledge next-slice offline synthetic · denser-day cite 2026-07-02",
+    "case_id": "DEP105",
+    "component": "equity_pledge",
+    "scenario": "empty_but_valid",
+    "cninfo_called": false,
+    "synthetic": true,
+    "dense_day_cite": "2026-07-02",
+    "dense_day_cite_task": "D-FM-41",
+    "approval_task_id": "D-FM-42",
+    "tier0_cite": [
+      "fixtures/d_class/equity_pledge/sample_raw.json"
+    ],
+    "query_params": {
+      "tdate": "2026-07-02"
+    }
+  },
+  "market_event": {
+    "event_id": "fixture_dep105_ep_601988_empty",
+    "company_code": "601988",
+    "event_type": "equity_pledge",
+    "event_time": "2026-07-02",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/equityPledge/list",
+    "source_record_id": "fixture_raw_ep_dep105_empty",
+    "event_status": "empty_but_valid",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "equity_pledge",
+      "query_mode": "tdate_daily",
+      "query_params": {
+        "tdate": "2026-07-02"
+      },
+      "fetch_time": "2026-07-15T23:00:00+08:00",
+      "lineage_status": "discovered"
+    }
+  }
+}

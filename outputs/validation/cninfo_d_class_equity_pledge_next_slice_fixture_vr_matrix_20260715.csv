@@ -1,0 +1,14 @@
+fixture,case_id,group,topic,vr,status,note
+DEP101_found.json,DEP101,D,Envelope,VR-EP-NS-025–VR-EP-NS-030,pass,captured
+DEP101_found.json,DEP101,C,Field Mapping,VR-EP-NS-015–VR-EP-NS-024,pass,SECCODE/DECLAREDATE/F001V/F006N freeze; F008V raw_only
+DEP101_empty.json,DEP101,D,Envelope,VR-EP-NS-025–VR-EP-NS-030,pass,empty_but_valid
+DEP102_found.json,DEP102,D,Envelope,VR-EP-NS-025–VR-EP-NS-030,pass,captured
+DEP102_found.json,DEP102,C,Field Mapping,VR-EP-NS-015–VR-EP-NS-024,pass,SECCODE/DECLAREDATE/F001V/F006N freeze; F008V raw_only
+DEP102_empty.json,DEP102,D,Envelope,VR-EP-NS-025–VR-EP-NS-030,pass,empty_but_valid
+DEP103_found.json,DEP103,D,Envelope,VR-EP-NS-025–VR-EP-NS-030,pass,captured
+DEP103_found.json,DEP103,C,Field Mapping,VR-EP-NS-015–VR-EP-NS-024,pass,SECCODE/DECLAREDATE/F001V/F006N freeze; F008V raw_only
+DEP103_empty.json,DEP103,D,Envelope,VR-EP-NS-025–VR-EP-NS-030,pass,empty_but_valid
+DEP104_found.json,DEP104,D,Envelope,VR-EP-NS-025–VR-EP-NS-030,pass,captured
+DEP104_found.json,DEP104,C,Field Mapping,VR-EP-NS-015–VR-EP-NS-024,pass,SECCODE/DECLAREDATE/F001V/F006N freeze; F008V raw_only
+DEP104_empty.json,DEP104,D,Envelope,VR-EP-NS-025–VR-EP-NS-030,pass,empty_but_valid
+DEP105_empty_but_valid_synthetic.json,DEP105,D,Envelope,VR-EP-NS-025–VR-EP-NS-030,pass,empty_but_valid

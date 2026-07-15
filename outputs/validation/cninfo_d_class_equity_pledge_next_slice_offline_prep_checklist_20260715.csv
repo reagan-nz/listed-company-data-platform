@@ -1,20 +1,20 @@
 item_id,category,status,path_or_ref,notes
-EP-NS-PL-01,planning_md,ready,plans/cninfo_d_class_equity_pledge_next_slice_planning_20260715.md,D-FM-41 next-slice offline planning; READY_FOR_APPROVAL
-EP-NS-PL-02,candidate_matrix_csv,ready,outputs/validation/cninfo_d_class_equity_pledge_es_shareholder_change_next_slice_candidate_matrix_20260715.csv,EP primary; ES/SC deferred; live/H3/H4/DLC006R forbidden
-EP-NS-PL-03,universe_sketch_csv,ready,outputs/validation/cninfo_d_class_equity_pledge_next_slice_universe_draft_sketch_20260715.csv,DEP101-105; anchor=2026-07-02; draft_not_locked
-EP-NS-PL-04,validation_rules_md,ready,outputs/validation/cninfo_d_class_equity_pledge_next_slice_validation_rules_20260715.md,VR-EP-NS-001–042; does not overwrite first-slice
-EP-NS-PL-05,recommendation_md,ready,outputs/validation/cninfo_d_class_equity_pledge_next_slice_recommendation_20260715.md,primary=equity_pledge next-slice offline
-EP-NS-PL-06,planning_summary_md,ready,outputs/validation/cninfo_d_class_equity_pledge_next_slice_planning_summary_20260715.md,readiness rank + gate wall
-EP-NS-PL-07,next_step_recommendation_md,ready,outputs/validation/cninfo_d_class_equity_pledge_next_slice_next_step_recommendation_20260715.md,approval package next; live blocked
-EP-NS-PL-08,caveat_ledger_csv,ready,outputs/validation/cninfo_d_class_equity_pledge_next_slice_final_caveat_ledger.csv,CAV-EP-NS-* entries
-EP-NS-PL-09,task_wall_md,ready,outputs/validation/cninfo_d_class_equity_pledge_dfm41_next_slice_planning_20260715.md,task/files/tests/CNINFO/allow-list/wall
-EP-NS-PL-10,offline_test,ready,lab/test_cninfo_d_class_equity_pledge_next_slice_planning_offline.py,CNINFO=0; freeze sha256 checks
-EP-NS-PL-11,tier0_sample_raw,ready_readonly,fixtures/d_class/equity_pledge/sample_raw.json,tdate=2026-07-02; SECCODE=000001; not mutated
-EP-NS-STUB-01,universe_lock_csv,blocked_until_approval_package,n/a,sketch only this round; lock in later approval package
-EP-NS-STUB-02,tier1_fixtures_dir,blocked_until_approval_package,n/a,fixtures/d_class/equity_pledge_next_slice/ not created this round
-EP-NS-STUB-03,next_slice_runner_extension,blocked_until_next_task,n/a,--equity-pledge-next-slice not implemented this round
-EP-NS-STUB-04,next_slice_s4_dryrun,blocked_until_runner,n/a,CNINFO=0 when implemented
-EP-NS-STUB-05,next_slice_bounded_live,forbidden_this_round,n/a,needs lock+runner+explicit approve; prefer shared probe=1
+EP-NS-AP-01,universe_lock_csv,ready,outputs/validation/cninfo_d_class_equity_pledge_next_slice_universe_lock_20260715.csv,DEP101-105 locked; anchor=2026-07-02; approval_task_id=D-FM-42; sketch remains draft history
+EP-NS-AP-02,validation_rules_md,ready,outputs/validation/cninfo_d_class_equity_pledge_next_slice_validation_rules_20260715.md,VR-EP-NS-001–042; does not overwrite first-slice VR; lock status updated D-FM-42
+EP-NS-AP-03,approval_package_md,ready,outputs/validation/cninfo_d_class_equity_pledge_next_slice_approval_package_20260715.md,STANDING_SCOPE_AUTHORIZED; live/runner NOT_APPROVED
+EP-NS-AP-04,command_draft_md,ready,outputs/validation/cninfo_d_class_equity_pledge_next_slice_command_draft_20260715.md,draft only; flags not implemented; do not execute
+EP-NS-AP-05,tier1_fixtures_dir,ready,fixtures/d_class/equity_pledge_next_slice/,9 files; synthetic; cninfo_called=false; denser-day cite 2026-07-02
+EP-NS-AP-06,fixture_vr_test,ready,lab/test_cninfo_d_class_equity_pledge_next_slice_fixtures.py,offline VR; EP first + FIA/AT/SD freeze attestation
+EP-NS-AP-07,dfm42_evidence_md,ready,outputs/validation/cninfo_d_class_equity_pledge_dfm42_next_slice_approval_package_20260715.md,task wall + gates + allow-list notes
+EP-NS-AP-08,next_step_recommendation_md,ready,outputs/validation/cninfo_d_class_equity_pledge_next_slice_approval_next_step_recommendation_20260715.md,runner extension next; ESS pause hold; live blocked
+EP-NS-AP-09,fixture_vr_matrix_csv,ready,outputs/validation/cninfo_d_class_equity_pledge_next_slice_fixture_vr_matrix_20260715.csv,written by fixture test tearDown
+EP-NS-PL-01,planning_md,ready_readonly,plans/cninfo_d_class_equity_pledge_next_slice_planning_20260715.md,D-FM-41 planning retained; READY_FOR_APPROVAL history
+EP-NS-PL-03,universe_sketch_csv,ready_readonly,outputs/validation/cninfo_d_class_equity_pledge_next_slice_universe_draft_sketch_20260715.csv,DEP101-105; draft_not_locked history; do not mutate
+EP-NS-STUB-01,next_slice_runner_extension,blocked_until_next_task,n/a,--equity-pledge-next-slice not implemented this round
+EP-NS-STUB-02,next_slice_s4_dryrun,blocked_until_runner,n/a,CNINFO=0 when implemented
+EP-NS-STUB-03,next_slice_bounded_live,forbidden_this_round,n/a,needs lock+runner+explicit approve; prefer shared probe=1
+EP-NS-STUB-04,fia_further_scale_bounded_live,forbidden_this_round,n/a,controller_execution_allowed=false; live_gate=NOT_APPROVED
+EP-NS-STUB-05,at_sd_bounded_live,forbidden_this_round,n/a,controller_execution_allowed=false; live_gate=NOT_APPROVED
 EP-NS-SAFE-01,ep_first_slice_universe_draft_frozen,locked_policy,outputs/validation/cninfo_d_class_equity_pledge_first_slice_universe_draft.csv,sha256 must remain 5fb4fa00...; no mutate
 EP-NS-SAFE-02,ep_first_slice_live_report_frozen,locked_policy,outputs/validation/cninfo_d_class_equity_pledge_first_slice/reports/d_class_equity_pledge_first_slice_live_report.csv,sha256 must remain 435b53bc...; no overwrite
 EP-NS-SAFE-03,ep_first_slice_dryrun_report_frozen,locked_policy,outputs/validation/cninfo_d_class_equity_pledge_first_slice/reports/d_class_equity_pledge_first_slice_dryrun_report.csv,sha256 must remain a035f8ef...; no overwrite
@@ -30,7 +30,9 @@ EP-NS-SAFE-12,at_next_dryrun_root_frozen,locked_policy,outputs/validation/cninfo
 EP-NS-SAFE-13,sd_next_dryrun_root_frozen,locked_policy,outputs/validation/cninfo_d_class_shareholder_data_next_slice/,no overwrite dryrun report/summary
 EP-NS-SAFE-14,ess_h3_h4_forbidden,policy,n/a,paused_pending_devtools; no blind probe
 EP-NS-SAFE-15,no_dlc006r_reopen,policy,n/a,exclude 688671/301259; no DLC006R
-EP-NS-GATE-01,planning_gate,READY_FOR_APPROVAL,d_class_equity_pledge_next_slice_planning_gate,NOT verified; NOT production_ready
+EP-NS-SAFE-16,exclude_console_logs_from_allow_list,policy,n/a,allow-list notes must not include console logs as commit artifacts
+EP-NS-GATE-01,planning_gate,READY_FOR_APPROVAL,d_class_equity_pledge_next_slice_planning_gate,D-FM-41 history; NOT verified
 EP-NS-GATE-02,live_gate,NOT_APPROVED,d_class_equity_pledge_next_slice_live_gate,explicit
 EP-NS-GATE-03,runner_gate,NOT_APPROVED,d_class_equity_pledge_next_slice_runner_gate,explicit
-EP-NS-GATE-04,fia_further_scale_live_gate,NOT_APPROVED,d_class_fund_industry_allocation_further_scale_live_gate,preserved from D-FM-40
+EP-NS-GATE-04,approval_gate,STANDING_SCOPE_AUTHORIZED,d_class_equity_pledge_next_slice_approval_gate,NOT verified; NOT production_ready
+EP-NS-GATE-05,fixture_vr_gate,PASS_OFFLINE,d_class_equity_pledge_next_slice_fixture_vr_gate,offline only
