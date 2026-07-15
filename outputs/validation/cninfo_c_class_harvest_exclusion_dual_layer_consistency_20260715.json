@@ -1,0 +1,38 @@
+{
+  "generated_at": "2026-07-15T09:08:10Z",
+  "task_id": "C-FM-03",
+  "gate": "PASS_OFFLINE",
+  "layer_gates": {
+    "harvest_exclusion_family": "PASS_OFFLINE",
+    "dual_layer_cohort": "PASS_OFFLINE",
+    "manifest_reconcile": "PASS_OFFLINE",
+    "harvest_863_structural": "PASS_OFFLINE"
+  },
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "fail_count": 0,
+  "matrix_rows": 39,
+  "output_root": "outputs/validation/_mock_c_fm03_cli_test_tmp",
+  "matrix_path": "outputs/validation/_mock_c_fm03_cli_test_tmp/consistency_matrix.csv",
+  "fingerprint_863_path": "outputs/validation/_mock_c_fm03_cli_test_tmp/harvest_863_structural_fingerprint.json",
+  "fingerprint_863": {
+    "row_count": 861,
+    "unique_codes": 861,
+    "empty_code_rows": 0,
+    "status_counts": {
+      "complete": 861
+    },
+    "content_sha256": "26492958c008adfa04f620508a6d80af4430ef366788db6bb798ce73fb4a6ca4",
+    "fingerprint_sha256": "b25006b906a7ad14a96c703a896dd7fc18741d2c3e03886e87c01b898ba76278"
+  },
+  "inputs": {
+    "slice1_harvest_status": "outputs/harvest/cninfo_c_class/fuller_market_slice1_200/quality/company_harvest_status.csv",
+    "harvest_863_status": "outputs/harvest/cninfo_c_class/quality/company_harvest_status.csv",
+    "exclusion_manifest": "outputs/validation/cninfo_c_class_snapshot_progression_exclusion_universe_20260714.csv",
+    "exclusion_reconcile": "outputs/validation/cninfo_c_class_erad_snapshot_rebuild_dryrun/exclusion_reconcile.csv",
+    "empty3_index": "outputs/validation/cninfo_c_class_erad_fuller_market_slice1_qa_closure_dual_layer_index/qa_closure_dual_layer_evidence_index.csv",
+    "partial7_index": "outputs/validation/cninfo_c_class_erad_fuller_market_slice1_qa_closure_dual_layer_index/qa_closure_dual_layer_evidence_index_partial7.csv",
+    "cohort_coverage": "outputs/validation/cninfo_c_class_erad_fuller_market_slice1_qa_closure_dual_layer_index/qa_closure_dual_layer_cohort_coverage.csv"
+  },
+  "mock_root_is_isolated": true
+}

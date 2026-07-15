@@ -14,3 +14,4 @@ C-ROOT-MOCK,**/_mock_*/**,ephemeral,era_d_test,mock,delete_ok_tests_only,Test-on
 C-ROOT-MOCK2,**/_mock_live_test/**,ephemeral,era_d_test,mock,delete_ok_tests_only,B-class precedent pattern; adopt for C live-path tests
 C-ROOT-MOCK3,outputs/validation/_mock_snapshot_batch_standard_dryrun_isolated/,ephemeral,era_d_test,mock,delete_ok_tests_only,Standard snapshot batch dry-run isolated scaffold root; never production EXECUTE
 C-ROOT-MOCK4,outputs/validation/_mock_c_fm02_slice1_190_validation_cohort/,ephemeral,era_d_test,mock,delete_ok_tests_only,C-FM-02 isolated snapshot validation cohort dry-run + lineage; never production EXECUTE
+C-ROOT-MOCK5,outputs/validation/_mock_c_fm03_harvest_exclusion_dual_layer_consistency/,ephemeral,era_d_test,mock,delete_ok_tests_only,C-FM-03 harvest/exclusion/dual-layer consistency matrix + 863 structural fingerprint; never production EXECUTE
