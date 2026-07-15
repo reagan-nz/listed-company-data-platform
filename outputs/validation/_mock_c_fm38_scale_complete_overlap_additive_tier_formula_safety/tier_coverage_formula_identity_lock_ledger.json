@@ -1,0 +1,74 @@
+{
+  "generated_at": "2026-07-15T15:36:10Z",
+  "task_id": "C-FM-38",
+  "fingerprint_sha256": "ad67c48705737a81b79833f2daccf1ff0da4c23c363ad4d95b718b833b4ae35b",
+  "tier_coverage_formula": "tiers=7;coverage_sum=3314",
+  "sample_denials": [
+    {
+      "proposed": {
+        "scale_tier_count": 8,
+        "company_coverage_sum": 3314
+      },
+      "frozen": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3314
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "tier_coverage_formula_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3315
+      },
+      "frozen": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3314
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "tier_coverage_formula_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "scale_tier_count": 6,
+        "company_coverage_sum": 3313
+      },
+      "frozen": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3314
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "tier_coverage_formula_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3314
+      },
+      "frozen": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3314
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "tier_coverage_formula_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "tier_coverage_formula_identity_lock",
+    "scale_tier_count": 7,
+    "company_coverage_sum": 3314,
+    "tier_coverage_formula": "tiers=7;coverage_sum=3314",
+    "deny_formula_mutate": true,
+    "deny_coverage_inflate": true,
+    "deny_coverage_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

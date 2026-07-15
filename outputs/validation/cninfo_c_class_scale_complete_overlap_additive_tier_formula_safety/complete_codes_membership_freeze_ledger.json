@@ -1,0 +1,62 @@
+{
+  "generated_at": "2026-07-15T15:36:10Z",
+  "task_id": "C-FM-38",
+  "fingerprint_sha256": "9df9d9f6a264dde6be15eeea5578720440aed88ff118f82034f643f42e14996f",
+  "union_complete": 2134,
+  "complete_codes_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431",
+  "sample_denials": [
+    {
+      "action": "inject",
+      "proposed_n": 2135,
+      "proposed_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431",
+      "frozen_n": 2134,
+      "frozen_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431",
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "complete_codes_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "drop",
+      "proposed_n": 2133,
+      "proposed_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431",
+      "frozen_n": 2134,
+      "frozen_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431",
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "complete_codes_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "sha_mutate",
+      "proposed_n": 2134,
+      "proposed_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "frozen_n": 2134,
+      "frozen_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431",
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "complete_codes_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "inject",
+      "proposed_n": 2134,
+      "proposed_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431",
+      "frozen_n": 2134,
+      "frozen_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431",
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "complete_codes_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "complete_codes_membership_freeze",
+    "union_complete": 2134,
+    "complete_codes_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431",
+    "deny_inject": true,
+    "deny_drop": true,
+    "deny_sha_mutate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

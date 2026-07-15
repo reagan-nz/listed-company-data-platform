@@ -1,0 +1,178 @@
+{
+  "generated_at": "2026-07-15T15:36:10Z",
+  "task_id": "C-FM-38",
+  "fingerprint_sha256": "7b605b477053dbb121c4000fc435ef80a9e1eec2be53a920e3d28a846b315fc8",
+  "overlap_delta": 12,
+  "overlap_codes": [
+    "000003",
+    "000019",
+    "000026",
+    "000035",
+    "300013",
+    "300083",
+    "600005",
+    "600037",
+    "600095",
+    "600098",
+    "688061",
+    "688079"
+  ],
+  "overlap_codes_sha256": "39ab9b76382938c4919b3c0b6bbde612fd21a4acfbeee279ea7a0fc8e9847cea",
+  "sample_denials": [
+    {
+      "action": "inject",
+      "proposed_codes": [
+        "000003",
+        "000019",
+        "000026",
+        "000035",
+        "300013",
+        "300083",
+        "600005",
+        "600037",
+        "600095",
+        "600098",
+        "688061",
+        "688079",
+        "999999"
+      ],
+      "frozen_codes": [
+        "000003",
+        "000019",
+        "000026",
+        "000035",
+        "300013",
+        "300083",
+        "600005",
+        "600037",
+        "600095",
+        "600098",
+        "688061",
+        "688079"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "overlap_delta_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "drop",
+      "proposed_codes": [
+        "000003",
+        "000019",
+        "000026",
+        "000035",
+        "300013",
+        "300083",
+        "600005",
+        "600037",
+        "600095",
+        "600098",
+        "688061"
+      ],
+      "frozen_codes": [
+        "000003",
+        "000019",
+        "000026",
+        "000035",
+        "300013",
+        "300083",
+        "600005",
+        "600037",
+        "600095",
+        "600098",
+        "688061",
+        "688079"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "overlap_delta_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "replace",
+      "proposed_codes": [
+        "000001",
+        "000002"
+      ],
+      "frozen_codes": [
+        "000003",
+        "000019",
+        "000026",
+        "000035",
+        "300013",
+        "300083",
+        "600005",
+        "600037",
+        "600095",
+        "600098",
+        "688061",
+        "688079"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "overlap_delta_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "replace",
+      "proposed_codes": [
+        "000003",
+        "000019",
+        "000026",
+        "000035",
+        "300013",
+        "300083",
+        "600005",
+        "600037",
+        "600095",
+        "600098",
+        "688061",
+        "688079"
+      ],
+      "frozen_codes": [
+        "000003",
+        "000019",
+        "000026",
+        "000035",
+        "300013",
+        "300083",
+        "600005",
+        "600037",
+        "600095",
+        "600098",
+        "688061",
+        "688079"
+      ],
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "overlap_delta_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "overlap_delta_membership_freeze",
+    "overlap_delta": 12,
+    "p35_fu": [
+      "000003"
+    ],
+    "p2_fu": [
+      "000019",
+      "000026",
+      "000035",
+      "300013",
+      "300083",
+      "600005",
+      "600037",
+      "600095",
+      "600098",
+      "688061",
+      "688079"
+    ],
+    "overlap_codes_sha256": "39ab9b76382938c4919b3c0b6bbde612fd21a4acfbeee279ea7a0fc8e9847cea",
+    "deny_inject": true,
+    "deny_drop": true,
+    "deny_replace": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

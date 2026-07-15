@@ -1,0 +1,87 @@
+{
+  "generated_at": "2026-07-15T15:36:10Z",
+  "task_id": "C-FM-38",
+  "fingerprint_sha256": "843397f9858f3e82f7a8dd6da28ff4e04911b6c94c6c57c26029317b87952c79",
+  "additive_formula": "2249+12=2261",
+  "sample_denials": [
+    {
+      "proposed": {
+        "unique": 2250,
+        "additive": 2261,
+        "overlap": 12
+      },
+      "frozen": {
+        "unique": 2249,
+        "additive": 2261,
+        "overlap": 12
+      },
+      "additive_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "additive_formula_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "unique": 2249,
+        "additive": 2262,
+        "overlap": 12
+      },
+      "frozen": {
+        "unique": 2249,
+        "additive": 2261,
+        "overlap": 12
+      },
+      "additive_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "additive_formula_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "unique": 2249,
+        "additive": 2261,
+        "overlap": 13
+      },
+      "frozen": {
+        "unique": 2249,
+        "additive": 2261,
+        "overlap": 12
+      },
+      "additive_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "additive_formula_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "unique": 2249,
+        "additive": 2261,
+        "overlap": 12
+      },
+      "frozen": {
+        "unique": 2249,
+        "additive": 2261,
+        "overlap": 12
+      },
+      "additive_formula_holds": true,
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "additive_formula_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "additive_formula_identity_lock",
+    "harvest_unique_union": 2249,
+    "harvest_additive": 2261,
+    "overlap_delta": 12,
+    "additive_formula": "2249+12=2261",
+    "deny_formula_mutate": true,
+    "deny_coverage_inflate": true,
+    "deny_coverage_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
