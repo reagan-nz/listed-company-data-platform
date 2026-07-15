@@ -1,0 +1,5 @@
+hyp_id,url,http_status,classification,cninfo_calls,body_code,body_msg,decision
+H1,https://www.cninfo.com.cn/data20/leader/summary,404,rejected,1,404,页面不存在,falsified_stop_or_continue_H2
+H2,https://www.cninfo.com.cn/data20/leader/statistics,404,rejected,1,404,页面不存在,falsified_budget_exhausted
+H3,https://www.cninfo.com.cn/data20/leader/total,,unprobed,0,,,deferred_no_blind_retry
+H4,https://www.cninfo.com.cn/data20/leader/detail,,forbidden_reopen,0,,,es_detail_closed

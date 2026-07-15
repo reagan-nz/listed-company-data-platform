@@ -186,12 +186,14 @@ class ExecutiveShareholdingSummaryOfflineDiscoveryTests(unittest.TestCase):
             self.assertTrue(row["standard_candidate"])
 
     def test_endpoint_hypothesis_lists_h1_and_sibling(self) -> None:
+        # D-FM-22：H1/H2 已有界探针证伪（404）；台账保留 sibling + H1 URL
         text = ENDPOINT_MD.read_text(encoding="utf-8")
         self.assertIn(SIBLING_DETAIL_URL, text)
         self.assertIn(H1_SUMMARY_URL, text)
-        self.assertIn("probe_executed = false", text)
-        self.assertIn("cninfo_calls = 0", text)
-        self.assertIn("unprobed", text)
+        self.assertIn("probe_executed = true", text)
+        self.assertIn("cninfo_calls = 2", text)
+        self.assertIn("rejected_404", text)
+        self.assertIn("FAIL_REVIEW_REQUIRED", text)
 
     def test_universe_sketch_five_cases_and_excludes(self) -> None:
         rows = _read_csv(UNIVERSE_SKETCH)
@@ -221,10 +223,14 @@ class ExecutiveShareholdingSummaryOfflineDiscoveryTests(unittest.TestCase):
         rows = _read_csv(CHECKLIST_CSV)
         by_id = {r["item_id"]: r for r in rows}
         self.assertEqual(by_id["ESS-GATE-01"]["status"], "READY_FOR_APPROVAL")
+        self.assertEqual(by_id["ESS-GATE-02"]["status"], "FAIL_REVIEW_REQUIRED")
         self.assertEqual(by_id["ESS-STUB-06"]["status"], "forbidden_this_round")
         self.assertEqual(by_id["ESS-STUB-05"]["status"], "forbidden_this_round")
-        self.assertEqual(by_id["ESS-STUB-04"]["status"], "blocked_until_endpoint_probe")
+        self.assertEqual(
+            by_id["ESS-STUB-04"]["status"], "blocked_until_endpoint_confirmed"
+        )
         self.assertEqual(by_id["ESS-SAFE-04"]["status"], "locked_policy")
+        self.assertEqual(by_id["ESS-PROBE-03"]["status"], "executed_dfm22")
 
     def test_no_network_imports_for_cninfo(self) -> None:
         import lab.test_cninfo_d_class_executive_shareholding_summary_offline_discovery as self_mod

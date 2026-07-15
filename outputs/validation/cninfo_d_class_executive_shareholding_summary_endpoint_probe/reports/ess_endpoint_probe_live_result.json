@@ -1,0 +1,53 @@
+{
+  "task_id": "D-FM-22",
+  "component": "executive_shareholding_summary",
+  "mode": "live",
+  "cninfo_calls": 2,
+  "hard_cap": 2,
+  "final_hyp": "H2",
+  "final_url": "https://www.cninfo.com.cn/data20/leader/statistics",
+  "final_classification": "rejected",
+  "endpoint_status": "unconfirmed_probe_failed",
+  "record_count": 0,
+  "records_path": "",
+  "sample_keys": [],
+  "probe_gate": "FAIL_REVIEW_REQUIRED",
+  "live_gate": "NOT_APPROVED",
+  "caveat": "H1_and_or_H2_rejected_or_invalid; optional_DevTools",
+  "stop_reason": "stop_after_H2_rejected",
+  "attempts": [
+    {
+      "hyp_id": "H1",
+      "url": "https://www.cninfo.com.cn/data20/leader/summary",
+      "params": {
+        "timeMark": "oneMonth",
+        "varyType": "b"
+      },
+      "http_status": 404,
+      "classification": "rejected",
+      "record_count": 0,
+      "records_path": "",
+      "sample_keys": [],
+      "parse_error": "http_404",
+      "cninfo_call_index": 1
+    },
+    {
+      "hyp_id": "H2",
+      "url": "https://www.cninfo.com.cn/data20/leader/statistics",
+      "params": {
+        "timeMark": "oneMonth",
+        "varyType": "b"
+      },
+      "http_status": 404,
+      "classification": "rejected",
+      "record_count": 0,
+      "records_path": "",
+      "sample_keys": [],
+      "parse_error": "http_404",
+      "cninfo_call_index": 2
+    }
+  ],
+  "protected_live_roots_mutated": false,
+  "registry_write": false,
+  "verified_claim": false
+}

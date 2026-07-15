@@ -1,0 +1,41 @@
+{
+  "task_id": "D-FM-22",
+  "component": "executive_shareholding_summary",
+  "mode": "dry_run",
+  "cninfo_budget": 2,
+  "hard_cap": 2,
+  "probe_sequence": [
+    {
+      "order": 1,
+      "hyp_id": "H1",
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/data20/leader/summary",
+      "params": {
+        "timeMark": "oneMonth",
+        "varyType": "b"
+      },
+      "params_location": "query"
+    },
+    {
+      "order": 2,
+      "hyp_id": "H2",
+      "method": "POST",
+      "url": "https://www.cninfo.com.cn/data20/leader/statistics",
+      "params": {
+        "timeMark": "oneMonth",
+        "varyType": "b"
+      },
+      "params_location": "query",
+      "condition": "only_if_H1_rejected_or_invalid"
+    }
+  ],
+  "protected_live_roots_not_mutated": [
+    "outputs/validation/cninfo_d_class_executive_shareholding_first_slice",
+    "outputs/validation/cninfo_d_class_fund_industry_allocation_first_slice",
+    "outputs/validation/cninfo_d_class_fund_industry_allocation_dfia005_single_probe",
+    "outputs/validation/cninfo_d_class_abnormal_trading_first_slice",
+    "outputs/validation/cninfo_d_class_shareholder_data_first_slice"
+  ],
+  "registry_write": false,
+  "verified_claim": false
+}

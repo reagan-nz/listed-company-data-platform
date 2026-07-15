@@ -1,26 +1,39 @@
-# CNINFO D 类 executive_shareholding_summary — Discovery Next Step Recommendation
+# CNINFO D 类 executive_shareholding_summary — Endpoint Probe Next Step
 
-_生成时间：2026-07-15 · D-FM-21_
+_生成时间：2026-07-15 · D-FM-22_
 
-> **planning gate：** `d_class_executive_shareholding_summary_discovery_planning_gate = READY_FOR_APPROVAL`
+> **probe gate：** `d_class_executive_shareholding_summary_endpoint_probe_gate = FAIL_REVIEW_REQUIRED`
+>
+> **endpoint_status：** `unconfirmed_probe_failed`（H1/H2 = 404）
 >
 > **standing_scope：** full-market shareholder / capital · Level-2 phrase **NOT** required
->
-> **Explicit：** READY_FOR_APPROVAL ≠ live-approved · NOT verified · NOT production_ready · endpoint **unconfirmed**
 
 ---
 
-## Primary
+## What D-FM-22 proved
 
-**Bounded endpoint probe（standing-scope）** · H1 `leader/summary` 优先 · 失败再 H2 · **CNINFO ≤ 2** · hard **≤ 3** · **无** runner · **不** mutate FIA/ES/AT/SD live 根
+| hyp | URL | HTTP | result |
+|-----|-----|------|--------|
+| H1 | `data20/leader/summary` | **404** | falsified（页面不存在） |
+| H2 | `data20/leader/statistics` | **404** | falsified（页面不存在） |
+| H3 | `data20/leader/total` | — | **未探**（预算用尽） |
+| H4 | `data20/leader/detail` | — | **禁止 reopen** |
+
+CNINFO calls = **2** · 无伪成功 · 无 registry 写入 · 无 FIA/ES/AT/SD live 根 mutate。
+
+---
+
+## Primary（下一任务）
+
+**DevTools-assisted path discovery（prefer offline-first）**
 
 | 项 | 内容 |
 |----|------|
-| prerequisite | D-FM-21 discovery package committed / reviewed |
-| CNINFO | **1–2** |
-| success | HTTP 200 + records 可解析 + UI 字段可对照 |
-| after pass | registry draft candidate + sample_raw · 另批 offline |
-| after fail | 记录证伪 · 可选 DevTools 人工确认 · **不**伪成功 |
+| action | 人工打开「高管持股变动汇总」tab · 捕获真实 Network XHR |
+| CNINFO | **0**（人工浏览器）或另批 **≤1** 仅对捕获 URL 做确认探针 |
+| success | 真实 path + method + params + sample JSON |
+| after | registry draft candidate + sample_raw · 仍 **NOT** verified |
+| forbid | 猜测性再探 H3/H4 · 不 reopen ES detail live |
 
 ---
 
@@ -28,32 +41,32 @@ _生成时间：2026-07-15 · D-FM-21_
 
 | 选项 | 条件 |
 |------|------|
-| FIA scale / next-slice offline planning | 独立任务 · CNINFO=0 · **不** reopen first-slice live roots |
-| Controller commit-boundary for D-FM-21 | offline · 无 CNINFO · human/controller |
+| FIA scale / next-slice offline planning | CNINFO=0 · **不** reopen first-slice live roots |
+| ESS discovery gate hold | planning 仍 `READY_FOR_APPROVAL`；endpoint 仍 unconfirmed |
 
 ---
 
 ## Explicit Non-Recommendations
 
 - **不** Level-2 IDLE
-- **不** reopen DLC006R / 301259 / ES detail / closed event tracks
-- **不** AT / SD scale hardening live
-- **不** unified FIA 5-case re-live 刷指标
+- **不** 再烧 CNINFO 盲猜 H3/H4
+- **不** reopen DLC006R / ES detail / AT / SD / FIA live
 - **不** verified / production_ready / bare PASS
 - **不** commit / push（executor）
-- **不** 在 endpoint 未确认时写入 registry `testing_stable_sample`
+- **不** 把 404 写成 endpoint confirmed
 
 ---
 
 ## Recommendation Summary
 
 ```text
-primary_recommendation = executive_shareholding_summary_bounded_endpoint_probe
+primary_recommendation = ess_devtools_network_capture_then_bounded_confirm
 secondary_recommendation = fia_scale_or_next_slice_offline
-discovery_planning_gate = READY_FOR_APPROVAL
+endpoint_probe_gate = FAIL_REVIEW_REQUIRED
+endpoint_status = unconfirmed_probe_failed
+h1_h2_status = rejected_404
 standing_scope_auth = full_market_shareholder_capital
 level2_phrase_required = false
-endpoint_status = unconfirmed
-cninfo_calls = 0
+cninfo_calls = 2
 ready_for_commit = true
 ```

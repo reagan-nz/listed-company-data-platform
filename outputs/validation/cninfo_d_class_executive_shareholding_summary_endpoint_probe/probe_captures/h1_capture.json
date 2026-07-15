@@ -1,0 +1,17 @@
+{
+  "task_id": "D-FM-22",
+  "hyp_id": "H1",
+  "url": "https://www.cninfo.com.cn/data20/leader/summary",
+  "params": {
+    "timeMark": "oneMonth",
+    "varyType": "b"
+  },
+  "http_status": 404,
+  "classification": "rejected",
+  "record_count": 0,
+  "records_path": "",
+  "sample_keys": [],
+  "parse_error": "http_404",
+  "payload_truncated": null,
+  "body_snippet": "{\"msg\":\"页面不存在\",\"path\":\"/leader/summary\",\"code\":\"404\",\"params\":{\"timeMark\":\"oneMonth\",\"varyType\":\"b\"}}"
+}
