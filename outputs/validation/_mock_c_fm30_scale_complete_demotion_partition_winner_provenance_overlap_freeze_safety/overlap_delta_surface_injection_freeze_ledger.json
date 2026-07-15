@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-07-15T14:24:49Z",
+  "task_id": "C-FM-30",
+  "fingerprint_sha256": "7a019fc8114586086db6ae6e7319ff2cd6e6769e77eabf46f43516398ddb4fb2",
+  "overlap_delta": 12,
+  "harvest_additive": 2261,
+  "surface_extras": [
+    "000037",
+    "000055"
+  ],
+  "inject_denial_count": 2,
+  "doc": {
+    "kind": "overlap_delta_surface_injection_freeze",
+    "overlap_delta": 12,
+    "harvest_additive": 2261,
+    "harvest_unique_union": 2249,
+    "surface_extras": [
+      "000037",
+      "000055"
+    ],
+    "deny_surface_inject_into_harvest": true,
+    "deny_overlap_delta_mutation": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

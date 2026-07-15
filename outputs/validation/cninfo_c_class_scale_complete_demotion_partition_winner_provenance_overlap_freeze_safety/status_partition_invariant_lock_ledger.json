@@ -1,0 +1,19 @@
+{
+  "generated_at": "2026-07-15T14:24:49Z",
+  "task_id": "C-FM-30",
+  "fingerprint_sha256": "cf92235295178cf93c83db4a1c2469f8f9662439fcae888c666878a1877cbe07",
+  "complete_n": 2134,
+  "partial_n": 106,
+  "failed_n": 9,
+  "unique_union": 2249,
+  "doc": {
+    "kind": "status_partition_invariant_lock",
+    "complete_n": 2134,
+    "partial_n": 106,
+    "failed_n": 9,
+    "unique_union": 2249,
+    "equation": "2134+106+9=2249",
+    "mutation_allowed": false,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

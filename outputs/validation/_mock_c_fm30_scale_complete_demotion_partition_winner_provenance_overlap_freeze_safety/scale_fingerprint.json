@@ -1,0 +1,62 @@
+{
+  "generated_at": "2026-07-15T14:24:49Z",
+  "task_id": "C-FM-30",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "seal_chain_extended": false,
+  "scale_tier_count": 7,
+  "company_coverage_sum": 3314,
+  "harvest_unique_union": 2249,
+  "overlap_delta": 12,
+  "surface_unique": 2251,
+  "union_complete": 2134,
+  "union_partial": 106,
+  "union_failed": 9,
+  "resume_improved": 28,
+  "resume_same": 1,
+  "surface_harvest_delta_n": 2,
+  "partial_risk_bands": {
+    "p35_heavy": 75,
+    "p3_mid": 14,
+    "p2_mid": 12,
+    "fu_light": 5
+  },
+  "residual_safety_coverage": 117,
+  "complete_codes_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431",
+  "winner_map_sha256": "ff2c6a28b361498b0dbf163ad1d1779041e1dd4e772b652e6382e1d4051fbb07",
+  "frozen_fps": {
+    "complete_demotion_denial": "2123af3b0358b4c89d4dc4be244036f89f5bb746a88669f3fcebc6057a592616",
+    "status_partition_invariant_lock": "cf92235295178cf93c83db4a1c2469f8f9662439fcae888c666878a1877cbe07",
+    "winner_provenance_lock": "900d342a10ec22811eff54a38bb1e81eb4b0cc3a261b85d7958d40182b7591a4",
+    "overlap_delta_surface_injection_freeze": "7a019fc8114586086db6ae6e7319ff2cd6e6769e77eabf46f43516398ddb4fb2",
+    "fm29_partial_promote_reclass_denial": "8c6ddf947d2660666ab139b6fb399fdbefb4ae369f0adcb3e4803cb5920af651",
+    "fm29_resume_same_hold_write_boundary": "fae9752ee9cb88168a5805db623a51a50546f39606ac97a2032d51c3bc3e6abf",
+    "fm29_residual_lift_denial": "70217be897007208e64049d2da24bd95f5092bc9087d66d9d1361d6097f8302f",
+    "fm29_coverage_invariant_lock": "b6681b0accae1477a347b600a78b08cd349943e6944393e11c8262230afda189"
+  },
+  "observed_fps": {
+    "complete_demotion_denial": "2123af3b0358b4c89d4dc4be244036f89f5bb746a88669f3fcebc6057a592616",
+    "status_partition_invariant_lock": "cf92235295178cf93c83db4a1c2469f8f9662439fcae888c666878a1877cbe07",
+    "winner_provenance_lock": "900d342a10ec22811eff54a38bb1e81eb4b0cc3a261b85d7958d40182b7591a4",
+    "overlap_delta_surface_injection_freeze": "7a019fc8114586086db6ae6e7319ff2cd6e6769e77eabf46f43516398ddb4fb2"
+  },
+  "fingerprint": {
+    "row_count": 144,
+    "ok_count": 144,
+    "fail_count": 0,
+    "layers": {
+      "fm29_continuity": 6,
+      "complete_demotion_denial": 7,
+      "status_partition_invariant_lock": 6,
+      "winner_provenance_lock": 6,
+      "overlap_delta_surface_injection_freeze": 8,
+      "protected_write_guard": 5,
+      "output_root_protection": 7,
+      "frozen_mock_isolation": 33,
+      "protected_csv_registry": 35,
+      "fm_gate_battery": 24,
+      "execute_hold_seal": 7
+    },
+    "fingerprint_sha256": "ca4a48dc15a3b635449f98151e47ef21db7f40b14d74202e72f2054a78553262"
+  }
+}
