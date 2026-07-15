@@ -1,0 +1,6 @@
+case_id,company_code,company_name,component,market,anchor_rdate,first_slice_include,expected_behavior,exclude_flags,notes,sample_raw_reference
+DSD001,000001,平安银行,shareholder_data,szse_main,20260331,yes,captured_normal,exclude_688671;exclude_301259,Tier0 sample_raw cite (shareholeder/data rdate); distinct DSD; 1 raw→6 metrics; not sole fragile needs_review,yes
+DSD002,000895,双汇发展,shareholder_data,szse_main,20260331,yes,captured_normal_or_empty_but_valid,exclude_688671;exclude_301259,SZSE主板活跃蓝筹; shared rdate filter; cross-component with prior slices; found or absent both acceptable,no
+DSD003,600000,浦发银行,shareholder_data,sse_main,20260331,yes,captured_normal_or_empty_but_valid,exclude_688671;exclude_301259,SSE主板金融; same shared rdate; board diversity,no
+DSD004,002415,海康威视,shareholder_data,szse_main,20260331,yes,captured_normal_or_empty_but_valid,exclude_688671;exclude_301259,SZSE主板制造; independent DSD; not DDS004/DES proxy; not forced pass,no
+DSD005,000004,国华退,shareholder_data,szse_main,20260331,yes,empty_but_valid,exclude_688671;exclude_301259,退市/整理期 empty_but_valid control; may be absent from rdate cross-section; mix policy,no
