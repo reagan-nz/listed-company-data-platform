@@ -64,11 +64,13 @@ fund_industry_allocation_component_approved = standing_scope
 
 | case_id | industry_code | query_mode | anchor_rdate | expected_behavior |
 |---------|---------------|------------|--------------|-------------------|
-| DFIA001 | C26 | default | （空） | captured_normal |
+| DFIA001 | C26 | default | （空） | captured_normal_or_empty_but_valid |
 | DFIA002 | * | default | （空） | captured_normal |
 | DFIA003 | * | rdate | 20260331 | captured_normal |
 | DFIA004 | C26 | rdate | 20260331 | captured_normal_or_empty_but_valid |
 | DFIA005 | * | rdate | 20251231 | empty_but_valid |
+
+> **D-FM-17 lock amend：** 仅 DFIA001 `expected_behavior` → `captured_normal_or_empty_but_valid`（对齐 DFIA004 · 保持 C26/default）。DFIA002–DFIA005 未改。草案 sketch 仍为只读历史。
 
 **Permanent exclusions：** 688671 · 301259 · **no DLC006R reopen** · **no company event/metric schema**
 

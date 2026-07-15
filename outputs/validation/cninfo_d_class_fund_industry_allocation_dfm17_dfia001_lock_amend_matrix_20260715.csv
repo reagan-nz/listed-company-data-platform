@@ -1,0 +1,9 @@
+case_id,field,old_value,new_value,mutated,rationale,fixture_sync,vr_sync,counterfactual_acceptable,notes
+DFIA001,expected_behavior,captured_normal,captured_normal_or_empty_but_valid,yes,D-FM-16 expectation_too_strict; align DFIA004; default C26 may be empty after F001V filter,keep_DFIA001_found.json,VR-012_amend_note;approval_table,yes,C26/default kept; approval_task_id=D-FM-11
+DFIA001,industry_code,C26,C26,no,keep_anchor,,,yes,
+DFIA001,query_mode,default,default,no,keep_mode,,,yes,
+DFIA002,expected_behavior,captured_normal,captured_normal,no,unchanged,,,yes,
+DFIA003,expected_behavior,captured_normal,captured_normal,no,unchanged,,,yes,
+DFIA004,expected_behavior,captured_normal_or_empty_but_valid,captured_normal_or_empty_but_valid,no,template_for_DFIA001,,,yes,
+DFIA005,expected_behavior,empty_but_valid,empty_but_valid,no,D-FM-16 transport_not_expectation; keep rdate=20251231,,,no,transport_or_http_error remains; no probe this task
+DFIA005,anchor_rdate,20251231,20251231,no,keep_empty_control,,,no,

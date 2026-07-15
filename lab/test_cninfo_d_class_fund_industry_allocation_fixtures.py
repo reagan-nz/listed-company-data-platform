@@ -240,8 +240,10 @@ class TestFundIndustryAllocationFixtures(unittest.TestCase):
     def test_dfia001_captured_and_dfia005_empty(self) -> None:
         dfia001 = next(d for c, _p, d in self.fixtures if c == "DFIA001")
         self.assertEqual(dfia001["metric_envelope"]["metric_status"], "captured")
+        # D-FM-17：lock 期望放宽为 captured_normal_or_empty_but_valid（found 路径仍合法）
         self.assertEqual(
-            self.universe_by_id["DFIA001"]["expected_behavior"], "captured_normal"
+            self.universe_by_id["DFIA001"]["expected_behavior"],
+            "captured_normal_or_empty_but_valid",
         )
         dfia005 = next(d for c, _p, d in self.fixtures if c == "DFIA005")
         self.assertEqual(dfia005["metric_envelope"]["metric_status"], "empty_but_valid")

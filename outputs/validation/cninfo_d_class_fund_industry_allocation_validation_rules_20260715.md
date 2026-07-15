@@ -28,6 +28,8 @@ _生成时间：2026-07-15 · D-FM-11 · offline draft_
 | VR-013 | **禁止** sole `captured_normal_candidate` 作为唯一成功标准 |
 | VR-014 | DFIA005 期望 empty_but_valid · **不** forced pass |
 
+> **D-FM-17 amend（VR-012 注释）：** DFIA001 `expected_behavior` 由 `captured_normal` → `captured_normal_or_empty_but_valid`（对齐 DFIA004 · 保持 C26/default）。mix 仍含 DFIA002/DFIA003 `captured_normal` + DFIA005 `empty_but_valid` · VR-012 成立。DFIA005 锚点/期望 **未** 改。
+
 ## C — Field Mapping（VR-015–VR-024）
 
 | ID | 规则 |

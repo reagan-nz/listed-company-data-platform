@@ -287,7 +287,8 @@ class TestFundIndustryAllocationFirstSliceRunner(unittest.TestCase):
         }
         rows = runner.load_fund_industry_allocation_first_slice_universe(UNIVERSE_CSV)
         by_id = {r.case_id: r for r in rows}
-        self.assertFalse(
+        # D-FM-17：DFIA001 期望放宽后 empty_but_valid 可接受（对齐 DFIA004）
+        self.assertTrue(
             runner.is_fund_industry_allocation_first_slice_acceptable(
                 by_id["DFIA001"], summary
             )

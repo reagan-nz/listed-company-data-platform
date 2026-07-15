@@ -19,7 +19,7 @@
   "industry_filter_offline": true,
   "filter_industry_code": "C26",
   "expected_logical_table": "d_industry_aggregate",
-  "expected_behavior": "captured_normal",
+  "expected_behavior": "captured_normal_or_empty_but_valid",
   "fixture_refs": [
     "fixtures/d_class/fund_industry_allocation_first_slice/DFIA001_found.json"
   ],
