@@ -1,0 +1,69 @@
+{
+  "generated_at": "2026-07-15T17:04:03Z",
+  "task_id": "C-FM-45",
+  "fingerprint_sha256": "3ad93cd9a8f8a120a498b42de66490f6ec627e3b40f685cc8f979a9d10c167b1",
+  "composition_sha256": "a83413abbe00e17ec73ebcbb0d9265e4b21f0760250ee0b4fef6cac66af24257",
+  "combined_dryrun_status_formula": "dryrun=1053",
+  "combined_dryrun_formula": "combined_dryrun=1053",
+  "sample_denials": [
+    {
+      "proposed": {
+        "combined_dryrun": 1054
+      },
+      "frozen": {
+        "combined_dryrun": 1053
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "combined_dryrun_status_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "combined_dryrun": 1052
+      },
+      "frozen": {
+        "combined_dryrun": 1053
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "combined_dryrun_status_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "combined_dryrun": 0
+      },
+      "frozen": {
+        "combined_dryrun": 1053
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "combined_dryrun_status_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "combined_dryrun": 1053
+      },
+      "frozen": {
+        "combined_dryrun": 1053
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "combined_dryrun_status_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "combined_dryrun_status_composition_identity_lock",
+    "combined_dryrun_coverage": 1053,
+    "composition_sha256": "a83413abbe00e17ec73ebcbb0d9265e4b21f0760250ee0b4fef6cac66af24257",
+    "combined_dryrun_status_formula": "dryrun=1053",
+    "combined_dryrun_formula": "combined_dryrun=1053",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

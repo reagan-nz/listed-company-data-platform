@@ -1,0 +1,21 @@
+# C-FM-45 mock scale unique/surface/additive/tier/dryrun-wall-meta-bundle safety root
+
+task_id: C-FM-45
+gate: PASS_OFFLINE
+cninfo_calls: 0
+hold_recommendation: KEEP_EXECUTE_FALSE
+approved_for_snapshot_rebuild: false
+seal_chain_extended: false
+harvest_unique_union: 2249
+surface_unique: 2251
+harvest_additive: 2261
+unique_surface_additive_formula: 2249/2251/2261
+tier_coverage_status_formula: 7/3314
+combined_dryrun_status_formula: dryrun=1053
+unique_surface_additive_composition_sha256: 3f225c9a5501087ff05878984c5481f75cf31c990e9e2f0b2e763ea165db9be2
+tier_coverage_status_composition_sha256: 7f85bb636500a26ba1268c8630836b0e70fee2cc6cd1fe72a43c7c4eaf4a88ba
+combined_dryrun_status_composition_sha256: a83413abbe00e17ec73ebcbb0d9265e4b21f0760250ee0b4fef6cac66af24257
+cross_unique_surface_additive_tier_dryrun_wall_meta_bundle_sha256: 111ac7f008e38fad1f4f731bbabe264c37dcebb50d5f46e7f572c27c87dffe78
+
+Isolation: MOCK3-46 frozen; this root is C-ROOT-MOCK47.
+No CNINFO live. No production snapshot EXECUTE.

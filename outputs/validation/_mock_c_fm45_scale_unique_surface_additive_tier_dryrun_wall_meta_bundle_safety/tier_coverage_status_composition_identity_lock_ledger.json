@@ -1,0 +1,78 @@
+{
+  "generated_at": "2026-07-15T17:04:03Z",
+  "task_id": "C-FM-45",
+  "fingerprint_sha256": "b7328a3e04080fa88f2aea3048a0c02e3890819342b19b7ce15fcafeeec68af8",
+  "composition_sha256": "7f85bb636500a26ba1268c8630836b0e70fee2cc6cd1fe72a43c7c4eaf4a88ba",
+  "tier_coverage_status_formula": "7/3314",
+  "tier_coverage_formula": "tiers=7;coverage_sum=3314",
+  "sample_denials": [
+    {
+      "proposed": {
+        "tiers": 8,
+        "coverage_sum": 3314
+      },
+      "frozen": {
+        "tiers": 7,
+        "coverage_sum": 3314
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "tier_coverage_status_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "tiers": 7,
+        "coverage_sum": 3313
+      },
+      "frozen": {
+        "tiers": 7,
+        "coverage_sum": 3314
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "tier_coverage_status_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "tiers": 6,
+        "coverage_sum": 3315
+      },
+      "frozen": {
+        "tiers": 7,
+        "coverage_sum": 3314
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "tier_coverage_status_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "tiers": 7,
+        "coverage_sum": 3314
+      },
+      "frozen": {
+        "tiers": 7,
+        "coverage_sum": 3314
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "tier_coverage_status_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "tier_coverage_status_composition_identity_lock",
+    "scale_tier_count": 7,
+    "company_coverage_sum": 3314,
+    "composition_sha256": "7f85bb636500a26ba1268c8630836b0e70fee2cc6cd1fe72a43c7c4eaf4a88ba",
+    "tier_coverage_status_formula": "7/3314",
+    "tier_coverage_formula": "tiers=7;coverage_sum=3314",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
