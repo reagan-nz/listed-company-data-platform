@@ -134,14 +134,29 @@ def _inquiry_document_type(title: str) -> str:
     return "regulatory_inquiry"
 
 
+def _is_shareholder_meeting_title(title: str) -> bool:
+    """标题是否含股东（大）会：完整「股东大会」或简称「股东会」。
+
+    注意：「股东会」不是「股东大会」的子串（中间有「大」），须分别判断。
+    """
+    return "股东大会" in title or "股东会" in title
+
+
 def _filter_meeting_hits(title: str, hits: List[str]) -> List[str]:
-    """股东大会通知（非说明会）归 general，见 routing rules §6 example 9."""
+    """股东大会/股东会通知（非说明会）归 general，见 routing rules §6 example 9。
+
+    B-FM-20：简称「股东会」与完整「股东大会」同等对待。
+    """
     if not hits:
         return hits
     if "说明会" in title or "投资者关系活动记录表" in title:
         return hits
-    if "股东大会" in title and "通知" in title:
-        return [h for h in hits if "股东大会" not in h]
+    if _is_shareholder_meeting_title(title) and "通知" in title:
+        return [
+            h
+            for h in hits
+            if "股东大会" not in h and "股东会" not in h
+        ]
     return hits
 
 
@@ -310,22 +325,26 @@ def _periodic_document_type(title: str, positive: Dict[str, List[str]]) -> Optio
 
 
 def _general_document_type(title: str, patterns: List[str]) -> str:
-    """general 子类型：董事会决议 / 股东大会材料（通知·决议·召开公告）优先细化。
+    """general 子类型：董事会决议 / 股东（大）会材料（通知·决议·召开公告）优先细化。
 
     B-FM-18：harvest 常见「股东大会决议公告」「关于召开…股东大会的公告」（无「通知」）
     旧逻辑一律落 announcement，无法对齐 retrieval strategy 的 shareholder_meeting 族；
     法律意见书 / 会议材料仍保持 announcement，避免把中介见证材料抬成会议材料主类。
+
+    B-FM-20：「股东会」为「股东大会」同义简称（如「临时股东会决议」「召开…股东会的通知」）；
+    「股东会」不是「股东大会」子串，须经 `_is_shareholder_meeting_title` 分别匹配。
     """
     if "董事会" in title and "决议" in title:
         return "board_resolution"
-    if "股东大会" in title and "通知" in title:
+    sm = _is_shareholder_meeting_title(title)
+    if sm and "通知" in title:
         return "shareholder_meeting_material"
-    if "股东大会" in title and "决议" in title:
+    if sm and "决议" in title:
         return "shareholder_meeting_material"
-    # 召开股东大会公告（无「通知」字样；排除法律意见书/会议材料）
+    # 召开股东（大）会公告（无「通知」字样；排除法律意见书/会议材料）
     if (
         "召开" in title
-        and "股东大会" in title
+        and sm
         and "法律意见" not in title
         and "会议材料" not in title
         and "会议资料" not in title

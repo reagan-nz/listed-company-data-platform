@@ -155,6 +155,7 @@ categories:
       - 公告
       - 决议
       - 股东大会
+      - 股东会
       - 董事会
       - 监事会
       - 权益分派
@@ -172,6 +173,8 @@ categories:
       re-classified document_type. Use category-sample validation, NOT random success rate.
       B-FM-18：股东大会决议公告 / 召开…股东大会的公告（无「通知」）document_type=
       shareholder_meeting_material；法律意见书与会议材料仍为 announcement。
+      B-FM-20：「股东会」同义简称（临时/年度股东会决议、召开…股东会的通知/公告）同样
+      document_type=shareholder_meeting_material；法律意见书与会议材料/资料仍为 announcement。
 
 # 延期披露 / 摘要 / 提示性预告等：从 periodic 排除后的候选路由（非独立 source，归入 general 或 future disclosure_related）
 excluded_from_periodic_routing:
