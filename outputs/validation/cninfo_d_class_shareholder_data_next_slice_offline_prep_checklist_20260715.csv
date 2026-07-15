@@ -1,0 +1,29 @@
+item_id,category,status,path_or_ref,notes
+SD-NS-AP-01,universe_lock_csv,ready,outputs/validation/cninfo_d_class_shareholder_data_next_slice_universe_lock_20260715.csv,DSD101-105 locked; multi-rdate 20260331+20251231; approval_task_id=D-FM-32; sketch remains draft history
+SD-NS-AP-02,validation_rules_md,ready,outputs/validation/cninfo_d_class_shareholder_data_next_slice_validation_rules_20260715.md,VR-NS-001–042; does not overwrite first-slice VR-001–042; multi-rdate allowed only here
+SD-NS-AP-03,approval_package_md,ready,outputs/validation/cninfo_d_class_shareholder_data_next_slice_approval_package_20260715.md,STANDING_SCOPE_AUTHORIZED; live/runner NOT_APPROVED; AT live not flipped
+SD-NS-AP-04,command_draft_md,ready,outputs/validation/cninfo_d_class_shareholder_data_next_slice_command_draft_20260715.md,draft only; flags not implemented; do not execute
+SD-NS-AP-05,tier1_fixtures_dir,ready,fixtures/d_class/shareholder_data_next_slice/,8 files; synthetic; cninfo_called=false; multi_rdate_slice=true
+SD-NS-AP-06,fixture_vr_test,ready,lab/test_cninfo_d_class_shareholder_data_next_slice_fixtures.py,offline VR; closed-root lock sha256 freeze
+SD-NS-AP-07,dfm32_evidence_md,ready,outputs/validation/cninfo_d_class_shareholder_data_dfm32_next_slice_approval_package_20260715.md,task wall + gates + allow-list
+SD-NS-AP-08,next_step_recommendation_md,ready,outputs/validation/cninfo_d_class_shareholder_data_next_slice_approval_next_step_recommendation_20260715.md,runner extension next; ESS pause hold; AT live still blocked
+SD-NS-AP-09,fixture_vr_matrix_csv,ready,outputs/validation/cninfo_d_class_shareholder_data_next_slice_fixture_vr_matrix_20260715.csv,written by fixture test tearDown
+SD-NS-STUB-01,next_slice_runner_extension,blocked_until_next_task,n/a,--shareholder-data-next-slice not implemented this round
+SD-NS-STUB-02,next_slice_s4_dryrun,blocked_until_runner,n/a,CNINFO=0 when implemented
+SD-NS-STUB-03,next_slice_bounded_live,forbidden_this_round,n/a,needs lock+runner+standing approve; prefer shared probe=2
+SD-NS-STUB-04,at_next_slice_bounded_live,blocked_no_honest_flip,n/a,controller_execution_allowed=false; live_gate=NOT_APPROVED; found-path NOT_PROVEN
+SD-NS-SAFE-01,at_first_slice_universe_lock_frozen,locked_policy,outputs/validation/cninfo_d_class_abnormal_trading_first_slice_universe_lock_20260715.csv,sha256 must remain d197b961...; no mutate
+SD-NS-SAFE-02,at_next_slice_universe_lock_frozen,locked_policy,outputs/validation/cninfo_d_class_abnormal_trading_next_slice_universe_lock_20260715.csv,sha256 must remain 4847d201...; no mutate
+SD-NS-SAFE-03,sd_first_slice_universe_lock_frozen,locked_policy,outputs/validation/cninfo_d_class_shareholder_data_first_slice_universe_lock_20260715.csv,sha256 must remain 06633a0d...; no mutate
+SD-NS-SAFE-04,fia_next_slice_universe_lock_frozen,locked_policy,outputs/validation/cninfo_d_class_fund_industry_allocation_next_slice_universe_lock_20260715.csv,sha256 must remain c9f2c359...; no mutate
+SD-NS-SAFE-05,fia_first_slice_universe_lock_frozen,locked_policy,outputs/validation/cninfo_d_class_fund_industry_allocation_first_slice_universe_lock_20260715.csv,sha256 must remain 49345c88...; no mutate
+SD-NS-SAFE-06,sd_first_slice_live_root_frozen,locked_policy,outputs/validation/cninfo_d_class_shareholder_data_first_slice/,no overwrite live_report/snapshots
+SD-NS-SAFE-07,at_first_slice_live_root_frozen,locked_policy,outputs/validation/cninfo_d_class_abnormal_trading_first_slice/,no overwrite live_report/snapshots
+SD-NS-SAFE-08,at_next_slice_root_frozen,locked_policy,outputs/validation/cninfo_d_class_abnormal_trading_next_slice/,no mutate dry-run/planned artifacts this task
+SD-NS-SAFE-09,fia_live_roots_frozen,locked_policy,outputs/validation/cninfo_d_class_fund_industry_allocation_first_slice/;outputs/validation/cninfo_d_class_fund_industry_allocation_next_slice/,no mutate
+SD-NS-SAFE-10,ess_h3_h4_forbidden,policy,n/a,paused_pending_devtools; no blind probe
+SD-NS-SAFE-11,no_dlc006r_reopen,policy,n/a,exclude 688671/301259; no DLC006R
+SD-NS-GATE-01,approval_gate,STANDING_SCOPE_AUTHORIZED,d_class_shareholder_data_next_slice_approval_gate,NOT verified; NOT production_ready; standing_scope auth
+SD-NS-GATE-02,fixture_vr_gate,PASS_OFFLINE,d_class_shareholder_data_next_slice_fixture_vr_gate,offline only
+SD-NS-GATE-03,live_gate,NOT_APPROVED,d_class_shareholder_data_next_slice_live_gate,explicit
+SD-NS-GATE-04,runner_gate,NOT_APPROVED,d_class_shareholder_data_next_slice_runner_gate,explicit

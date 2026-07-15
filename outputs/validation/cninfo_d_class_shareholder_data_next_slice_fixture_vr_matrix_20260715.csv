@@ -1,0 +1,13 @@
+fixture,case_id,group,topic,vr,status,note
+DSD101_found.json,DSD101,D,Envelope,VR-NS-025–VR-NS-030,pass,captured
+DSD101_found.json,DSD101,C,Field Mapping,VR-NS-015–VR-NS-024,pass,SECCODE/ENDDATE/F001N-F006N freeze; 6 metrics
+DSD102_found.json,DSD102,D,Envelope,VR-NS-025–VR-NS-030,pass,captured
+DSD102_found.json,DSD102,C,Field Mapping,VR-NS-015–VR-NS-024,pass,SECCODE/ENDDATE/F001N-F006N freeze; 6 metrics
+DSD102_empty.json,DSD102,D,Envelope,VR-NS-025–VR-NS-030,pass,empty_but_valid
+DSD103_found.json,DSD103,D,Envelope,VR-NS-025–VR-NS-030,pass,captured
+DSD103_found.json,DSD103,C,Field Mapping,VR-NS-015–VR-NS-024,pass,SECCODE/ENDDATE/F001N-F006N freeze; 6 metrics
+DSD103_empty.json,DSD103,D,Envelope,VR-NS-025–VR-NS-030,pass,empty_but_valid
+DSD104_found.json,DSD104,D,Envelope,VR-NS-025–VR-NS-030,pass,captured
+DSD104_found.json,DSD104,C,Field Mapping,VR-NS-015–VR-NS-024,pass,SECCODE/ENDDATE/F001N-F006N freeze; 6 metrics
+DSD104_empty.json,DSD104,D,Envelope,VR-NS-025–VR-NS-030,pass,empty_but_valid
+DSD105_empty_but_valid_synthetic.json,DSD105,D,Envelope,VR-NS-025–VR-NS-030,pass,empty_but_valid
