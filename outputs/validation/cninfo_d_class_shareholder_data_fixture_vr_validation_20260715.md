@@ -1,6 +1,6 @@
 # CNINFO D 类 shareholder_data — Tier-1 Fixture VR Validation（Offline）
 
-_生成时间：D-FM-07 · wall≈0.00s_
+_生成时间：D-FM-07 · wall≈0.09s_
 
 > **性质：** Tier-1 fixture offline VR · **CNINFO = 0** · **不是 verified**
 
@@ -16,7 +16,7 @@ _生成时间：D-FM-07 · wall≈0.00s_
 d_class_shareholder_data_fixture_vr_gate = PASS_OFFLINE
 d_class_shareholder_data_first_slice_approval_gate = STANDING_SCOPE_AUTHORIZED
 d_class_shareholder_data_first_slice_live_gate = NOT_APPROVED
-d_class_shareholder_data_first_slice_runner_gate = NOT_APPROVED
+d_class_shareholder_data_first_slice_runner_gate = READY_FOR_APPROVAL
 shareholder_data_component_approved = standing_scope
 ```
 

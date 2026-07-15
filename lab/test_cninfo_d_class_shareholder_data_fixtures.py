@@ -342,7 +342,7 @@ class TestShareholderDataFixtures(unittest.TestCase):
                 "d_class_shareholder_data_fixture_vr_gate = PASS_OFFLINE",
                 "d_class_shareholder_data_first_slice_approval_gate = STANDING_SCOPE_AUTHORIZED",
                 "d_class_shareholder_data_first_slice_live_gate = NOT_APPROVED",
-                "d_class_shareholder_data_first_slice_runner_gate = NOT_APPROVED",
+                "d_class_shareholder_data_first_slice_runner_gate = READY_FOR_APPROVAL",
                 "shareholder_data_component_approved = standing_scope",
                 "```",
                 "",

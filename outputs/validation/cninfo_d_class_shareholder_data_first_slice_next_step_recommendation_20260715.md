@@ -1,24 +1,26 @@
 # CNINFO D 类 shareholder_data — First-Slice Next Step Recommendation
 
-_生成时间：2026-07-15 · D-FM-07_
+_生成时间：2026-07-15 · D-FM-08_
 
 > **approval gate：** `d_class_shareholder_data_first_slice_approval_gate = STANDING_SCOPE_AUTHORIZED`
 >
-> **standing_scope：** full-market shareholder / capital · Level-2 phrase **NOT** required
+> **runner gate：** `d_class_shareholder_data_first_slice_runner_extension_gate = READY_FOR_APPROVAL`
 >
-> **Explicit：** STANDING_SCOPE_AUTHORIZED ≠ live-approved · NOT verified · NOT production_ready
+> **live gate：** `NOT_APPROVED`
+>
+> **standing_scope：** full-market shareholder / capital · Level-2 phrase **NOT** required
 
 ---
 
 ## Primary
 
-**shareholder_data runner extension + S4 dry-run（offline）** · implement `--shareholder-data-first-slice` · planned_snapshots · dry-run 5/5 · **CNINFO = 0** · **无 live**
+**controller commit-boundary** for D-FM-08 shareholder_data runner extension + S4 dry-run package（CNINFO=0 · no live）
 
 | 项 | 内容 |
 |----|------|
-| scope | runner flag + S4 dry-run against universe lock |
+| scope | commit runner + tests + dry-run artifacts + S4 summary |
 | CNINFO / live | **无** |
-| gate after | runner_gate → `READY_FOR_APPROVAL` · live 仍 `NOT_APPROVED` |
+| gate after | package committed · live 仍 `NOT_APPROVED` |
 
 ---
 
@@ -26,8 +28,8 @@ _生成时间：2026-07-15 · D-FM-07_
 
 | 选项 | 条件 |
 |------|------|
-| abnormal_trading bounded real live（DAT001–DAT005） | standing capital scope **allows** bounded live · expected CNINFO ≤ 5 · separate task · require `--approve-d-class-abnormal-trading-first-slice` |
-| fund_industry_allocation planning | deprioritize |
+| implement shareholder_data shared live path（1 CNINFO + SECCODE filter） | 须单独批准 + `controller_execution_allowed` |
+| abnormal_trading bounded real live（DAT001–DAT005） | standing capital scope **allows** · expected CNINFO ≤ 5 · require `--approve-d-class-abnormal-trading-first-slice` |
 
 ---
 
@@ -36,7 +38,7 @@ _生成时间：2026-07-15 · D-FM-07_
 - **不** Level-2 IDLE
 - **不** reopen DLC006R / 301259 / closed event tracks
 - **不** verified / production_ready / bare PASS
-- **不** commit / push（executor）
+- **不** executor commit / push
 - **不** 本包内跑 shareholder_data 真实 live
 
 ---
@@ -44,11 +46,11 @@ _生成时间：2026-07-15 · D-FM-07_
 ## Recommendation Summary
 
 ```text
-primary_recommendation = shareholder_data_runner_extension_s4_dryrun_offline
-secondary_recommendation = abnormal_trading_bounded_live_under_standing_scope
+primary_recommendation = controller_commit_boundary_dfm08_runner_s4
+secondary_recommendation = shareholder_data_shared_live_path_or_abnormal_trading_bounded_live
 approval_gate = STANDING_SCOPE_AUTHORIZED
+runner_gate = READY_FOR_APPROVAL
 live_gate = NOT_APPROVED
-runner_gate = NOT_APPROVED
 standing_scope_auth = full_market_shareholder_capital
 level2_phrase_required = false
 cninfo_calls = 0

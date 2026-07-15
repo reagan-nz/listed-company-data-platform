@@ -2,7 +2,7 @@
 
 _生成时间：2026-07-15 · D-FM-07_
 
-> **性质：** 命令草案 only · **runner 未实现** · **CNINFO = 0** · **无执行**
+> **性质：** 命令草案 · D-FM-08 runner 已实现 · S4 dry-run 已执行 · **CNINFO = 0** · **无 live**
 
 ## S4 dry-run（future · runner 实现后 · CNINFO=0）
 
@@ -41,7 +41,7 @@ python lab/run_cninfo_d_class_tiny_live_validation.py \
 
 | 项 | 状态 |
 |----|------|
-| `--shareholder-data-first-slice` | **未实现** |
-| S4 dry-run | **blocked_until_runner** |
+| `--shareholder-data-first-slice` | **已实现（D-FM-08）** |
+| S4 dry-run | **PASS_OFFLINE（5/5 · shared=1）** |
 | live | **NOT_APPROVED** |
 | CNINFO this task | **0** |

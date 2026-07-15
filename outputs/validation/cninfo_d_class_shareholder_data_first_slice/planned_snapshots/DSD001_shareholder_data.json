@@ -1,0 +1,26 @@
+{
+  "case_id": "DSD001",
+  "company_code": "000001",
+  "company_name": "平安银行",
+  "component": "shareholder_data",
+  "anchor_rdate": "20260331",
+  "query_mode": "rdate_report_period",
+  "planned_requests": [
+    "rdate_report_period_20260331"
+  ],
+  "query_params": [
+    {
+      "rdate": "20260331"
+    }
+  ],
+  "endpoint": "https://www.cninfo.com.cn/data20/shareholeder/data",
+  "records_path": "data.records",
+  "shared_request": true,
+  "seccode_filter_offline": true,
+  "filter_seccode": "000001",
+  "expected_behavior": "captured_normal",
+  "fixture_refs": [
+    "fixtures/d_class/shareholder_data_first_slice/DSD001_found.json"
+  ],
+  "cninfo_called": false
+}

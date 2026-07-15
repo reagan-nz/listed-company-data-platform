@@ -1,0 +1,28 @@
+{
+  "case_id": "DSD003",
+  "company_code": "600000",
+  "company_name": "浦发银行",
+  "component": "shareholder_data",
+  "anchor_rdate": "20260331",
+  "query_mode": "rdate_report_period",
+  "planned_requests": [
+    "rdate_report_period_20260331"
+  ],
+  "query_params": [
+    {
+      "rdate": "20260331"
+    }
+  ],
+  "endpoint": "https://www.cninfo.com.cn/data20/shareholeder/data",
+  "records_path": "data.records",
+  "shared_request": true,
+  "seccode_filter_offline": true,
+  "filter_seccode": "600000",
+  "expected_behavior": "captured_normal_or_empty_but_valid",
+  "fixture_refs": [
+    "fixtures/d_class/shareholder_data_first_slice/DSD003_found.json",
+    "fixtures/d_class/shareholder_data_first_slice/DSD003_empty.json",
+    "fixtures/d_class/shareholder_data_first_slice/DSD003_records_filtered_empty.json"
+  ],
+  "cninfo_called": false
+}
