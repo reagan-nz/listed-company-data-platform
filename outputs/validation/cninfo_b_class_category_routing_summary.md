@@ -1,6 +1,6 @@
 # CNINFO B 类 Category Routing Offline Validation Summary
 
-_生成时间：2026-07-05（离线 title routing validation）_
+_生成时间：2026-07-15（离线 title routing validation）_
 
 ## 1. 目的
 
@@ -20,11 +20,11 @@ _生成时间：2026-07-05（离线 title routing validation）_
 
 | 指标 | 数值 |
 |------|------|
-| total_benchmarks | **16** |
-| route_match_count | **16** |
+| total_benchmarks | **21** |
+| route_match_count | **21** |
 | route_mismatch_count | **0** |
-| document_type_match_count | **16** |
-| ambiguous_count | **0** |
+| document_type_match_count | **21** |
+| ambiguous_count | **1** |
 | periodic_false_positive_caught_count | **4** / **4** |
 
 **总体结论：** **PASS**
@@ -33,8 +33,8 @@ _生成时间：2026-07-05（离线 title routing validation）_
 
 ### `periodic_report`
 
-- total: **3**
-- route_match: **3** / **3**
+- total: **4**
+- route_match: **4** / **4**
 
 ### `inquiry_reply`
 
@@ -48,8 +48,8 @@ _生成时间：2026-07-05（离线 title routing validation）_
 
 ### `general_announcement`
 
-- total: **3**
-- route_match: **3** / **3**
+- total: **6**
+- route_match: **6** / **6**
 
 ### `false_positive_guard`
 

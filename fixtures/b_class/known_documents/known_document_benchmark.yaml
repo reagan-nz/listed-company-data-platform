@@ -123,3 +123,43 @@ documents:
     expected_document_type: announcement
     expected_classification: general_announcement
     benchmark_group: general_announcement
+
+  - benchmark_id: general_004
+    title: "关于回购股份的公告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: general_announcement
+    benchmark_group: general_announcement
+    notes: "Era D2E — general_announcement positive_patterns 含回购但此前无 benchmark 覆盖"
+
+  - benchmark_id: general_005
+    title: "2024年度业绩预告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: general_announcement
+    benchmark_group: general_announcement
+    notes: "Era D2E — general_announcement positive_patterns 含业绩预告但此前无 benchmark 覆盖"
+
+  - benchmark_id: general_006
+    title: "监事会决议公告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: general_announcement
+    benchmark_group: general_announcement
+    notes: "Era D2E — 监事会分支（非董事会决议）document_type=announcement 此前无 benchmark 覆盖"
+
+  - benchmark_id: periodic_004
+    title: "某某公司2024年第三季度报告"
+    expected_route_to: cninfo_periodic_report_pdf
+    expected_document_type: quarterly_report_q3
+    expected_classification: periodic_report
+    benchmark_group: periodic_report
+    notes: "Era D2E — quarterly_report_q3 document_type 此前无 benchmark 覆盖（仅 q1 有覆盖）"
+
+  - benchmark_id: ambiguous_001
+    title: "关于召开2024年年度业绩说明会并回复交易所问询函的公告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: other
+    expected_classification: ambiguous
+    benchmark_group: ambiguous
+    notes: "Era D2E — 同时命中 inquiry 与 meeting 关键词的 ambiguous 分支此前无 benchmark 覆盖（routing rules §5）"
