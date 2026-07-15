@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-07-15T13:49:48Z",
+  "task_id": "C-FM-24",
+  "gate": "PASS_OFFLINE",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "ready_for_execute": false,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+  "idle_not_required_while_awaiting": true,
+  "seal_chain_extended": false,
+  "scale_tier_count": 7,
+  "company_coverage_sum": 3314,
+  "harvest_unique_union": 2249,
+  "harvest_additive": 2261,
+  "overlap_delta": 12,
+  "surface_unique": 2251,
+  "combined_dryrun_coverage": 1053,
+  "resume_total": 29,
+  "notes": "unique-coverage reconciliation (unique=2249/additive=2261/delta=12) + dryrun surface 2251 + phase35 resume lineage safety (29⊆p35) + FM23 continuity + output-root protection (MOCK26 / C-ROOT-002); EXECUTE remains human-held; does not overwrite MOCK3-25"
+}

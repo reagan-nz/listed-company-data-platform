@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-07-15T13:49:48Z",
+  "task_id": "C-FM-24",
+  "company_coverage_sum_additive_tiers": 3314,
+  "harvest_unique_union": 2249,
+  "harvest_additive": 2261,
+  "overlap_delta": 12,
+  "four_batch_union": 1388,
+  "surface_unique_dryrun_harvest": 2251,
+  "dryrun_union": 1053,
+  "dry863_extras": [
+    "000037",
+    "000055"
+  ],
+  "resume_total": 29,
+  "resume_complete": 28,
+  "resume_partial": 1,
+  "resume_fp": "9e61e9f4cd3cac02bf098a67b118a97b4d663acd0314c3551c574ba902c3d969",
+  "pairwise_fp": "7f8e11847b318fc6743d61ce20add195c2345ec5ee7635cab37923f4eec1498a"
+}
