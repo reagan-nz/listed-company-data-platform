@@ -1,0 +1,30 @@
+{
+  "case_id": "DSD103",
+  "probe_key": "sd_ns_rdate_20260331_600519",
+  "company_code": "600519",
+  "company_name": "贵州茅台",
+  "component": "shareholder_data",
+  "anchor_rdate": "20260331",
+  "query_mode": "rdate_report_period",
+  "shared_probe_key": "rdate_report_period_20260331",
+  "planned_requests": [
+    "rdate_report_period_20260331",
+    "rdate_report_period_20251231"
+  ],
+  "query_params": {
+    "rdate": "20260331"
+  },
+  "endpoint": "https://www.cninfo.com.cn/data20/shareholeder/data",
+  "records_path": "data.records",
+  "shared_request": true,
+  "seccode_filter_offline": true,
+  "filter_seccode": "600519",
+  "multi_rdate_slice": true,
+  "expected_behavior": "captured_normal_or_empty_but_valid",
+  "fixture_refs": [
+    "fixtures/d_class/shareholder_data_next_slice/DSD103_found.json",
+    "fixtures/d_class/shareholder_data_next_slice/DSD103_empty.json"
+  ],
+  "cninfo_called": false,
+  "live_found_path_for_20251231": "NOT_PROVEN"
+}

@@ -1,0 +1,29 @@
+metric,value,notes
+task_id,D-FM-33,SD next-slice runner extension + S4 dry-run offline
+cninfo_calls,0,no network
+planned_ok,5/5,DSD101-DSD105
+planned_shared_cninfo_requests,2,rdate_20260331+rdate_20251231
+planned_request_budget_total,5,per-case budget slot
+shared_rdates,20260331;20251231,multi-rdate next-slice only
+company_filter,SECCODE,offline
+runner_extension_gate,READY_FOR_APPROVAL,not live approved
+s4_dryrun_gate,PASS_OFFLINE,not bare PASS
+live_path_gate,READY_FOR_APPROVAL,path wired offline
+live_gate,NOT_APPROVED,approve flag required
+execution_gate,NOT_APPLICABLE,no live this task
+at_next_slice_live_gate,NOT_APPROVED,not flipped
+at_next_slice_live_flipped,false,controller_execution_allowed=false
+tests_runner,23/23 PASS,test_cninfo_d_class_shareholder_data_next_slice_runner.py
+tests_fixtures_regression,20/20 PASS,next_slice_fixtures
+tests_at_next_regression,PASS,temp mock only
+tests_sd_first_regression,PASS,temp mock only
+at_first_lock_sha256,d197b9618dc86c89d2a034addb75c37999baaf58e7455ab8626facd3f02adac2,frozen
+at_next_lock_sha256,4847d2017822f0d3758e0a1f3f034cd57cb35cbca4dd2ad14615427124ca73f6,frozen
+sd_first_lock_sha256,06633a0da42d5ddc669935b64942f4182611017d55907d7076528fc0993917b5,frozen
+sd_next_lock_sha256,c07c2f27546bf11a3ea02b3efaa8adf1886b8a24549afe6dfe035c22978b994f,frozen
+fia_next_lock_sha256,c9f2c3598b48dd823e1ad60c66f326b91d8bf2b6564565b083e13eeb8b9d0515,frozen
+fia_first_lock_sha256,49345c88dee35e568784048aed4bcadcf3adb69fdb7c22495bcd0741f413dc8c,frozen
+live_found_path_20251231,NOT_PROVEN,cite != live found
+ess_h3_h4,paused_pending_devtools,no blind probe
+dlc006r,not_reopened,closed
+ready_for_commit,true,no commit executed by executor

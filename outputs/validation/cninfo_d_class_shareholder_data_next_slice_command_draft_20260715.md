@@ -1,12 +1,12 @@
 # CNINFO D 类 shareholder_data Next-Slice — Command Draft
 
-_生成时间：2026-07-15 · D-FM-32_
+_生成时间：2026-07-15 · D-FM-33 更新（D-FM-32 起草）_
 
-> **性质：** 命令草稿 only · **flags 未实现** · **勿执行** live · **CNINFO=0 本包**
+> **性质：** 命令草稿 · S4 dry-run **已实现** · **勿执行** live · **CNINFO=0 本包**
 >
 > **勿执行** live 命令，直至另批 approve + `controller_execution_allowed`。
 
-## S4 dry-run（draft · not implemented）
+## S4 dry-run（implemented · D-FM-33 已跑 · CNINFO=0）
 
 ```bash
 .venv/bin/python lab/run_cninfo_d_class_tiny_live_validation.py \
@@ -41,15 +41,17 @@ _生成时间：2026-07-15 · D-FM-32_
 | total cap | ≤ 5 |
 | success | ≥3/5 acceptable → `PASS_WITH_CAVEAT` |
 
-## Status This Task（D-FM-32）
+## Status This Task（D-FM-33）
 
 | 项 | 状态 |
 |----|------|
-| `--shareholder-data-next-slice` | **未实现**（draft only） |
-| `--approve-d-class-shareholder-data-next-slice` | **未实现 / 未授权 live** |
+| `--shareholder-data-next-slice` | **已实现** |
+| `--approve-d-class-shareholder-data-next-slice` | **已实现 / 未授权 live** |
+| S4 dry-run | **PASS_OFFLINE** · planned_ok 5/5 · shared=2 · CNINFO=0 |
 | universe lock | **locked** · DSD101–105 |
 | approval_gate | **STANDING_SCOPE_AUTHORIZED** |
 | fixture_vr_gate | **PASS_OFFLINE** |
-| runner_gate | **NOT_APPROVED** |
+| runner_extension_gate | **READY_FOR_APPROVAL** |
+| live_path_gate | **READY_FOR_APPROVAL** |
 | live_gate | **NOT_APPROVED** |
 | AT next-slice live | **未翻转**（本包 honest skip） |

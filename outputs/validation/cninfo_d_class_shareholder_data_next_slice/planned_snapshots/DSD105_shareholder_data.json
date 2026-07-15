@@ -1,0 +1,29 @@
+{
+  "case_id": "DSD105",
+  "probe_key": "sd_ns_rdate_20251231_000004_empty_control",
+  "company_code": "000004",
+  "company_name": "国华退",
+  "component": "shareholder_data",
+  "anchor_rdate": "20251231",
+  "query_mode": "rdate_report_period",
+  "shared_probe_key": "rdate_report_period_20251231",
+  "planned_requests": [
+    "rdate_report_period_20260331",
+    "rdate_report_period_20251231"
+  ],
+  "query_params": {
+    "rdate": "20251231"
+  },
+  "endpoint": "https://www.cninfo.com.cn/data20/shareholeder/data",
+  "records_path": "data.records",
+  "shared_request": true,
+  "seccode_filter_offline": true,
+  "filter_seccode": "000004",
+  "multi_rdate_slice": true,
+  "expected_behavior": "empty_but_valid",
+  "fixture_refs": [
+    "fixtures/d_class/shareholder_data_next_slice/DSD105_empty_but_valid_synthetic.json"
+  ],
+  "cninfo_called": false,
+  "live_found_path_for_20251231": "NOT_PROVEN"
+}
