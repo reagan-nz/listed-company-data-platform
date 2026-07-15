@@ -1,0 +1,44 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class executive_shareholding next-slice offline synthetic · denser-mode cite timeMark=threeMonth varyType=b",
+    "case_id": "DES105",
+    "component": "executive_shareholding",
+    "scenario": "empty_but_valid",
+    "cninfo_called": false,
+    "synthetic": true,
+    "dense_mode_cite": "threeMonth+b",
+    "dense_mode_cite_task": "D-FM-53",
+    "approval_task_id": "D-FM-54",
+    "time_mark": "threeMonth",
+    "vary_type": "b",
+    "tier0_cite": [
+      "fixtures/d_class/phase1/DC006.json"
+    ],
+    "query_params": {
+      "timeMark": "threeMonth",
+      "varyType": "b"
+    },
+    "structure_cite": "fixtures/d_class/phase1/DC006.json",
+    "note_zh": "DC006 仅为字段/envelope 结构 cite；本 fixture 锚 denser-mode threeMonth+b；禁 oneMonth+b 作 sole found；非 live found-path；非 ESS H3/H4"
+  },
+  "market_event": {
+    "event_id": "fixture_des105_esh_601988_empty",
+    "company_code": "601988",
+    "event_type": "executive_shareholding",
+    "event_time": "2026-05-15",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/leader/detail",
+    "source_record_id": "fixture_raw_esh_des105_empty",
+    "event_status": "empty_but_valid",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "executive_shareholding",
+      "query_mode": "timeMark_threeMonth_varyType_b",
+      "query_params": {
+        "timeMark": "threeMonth",
+        "varyType": "b"
+      },
+      "fetch_time": "2026-07-16T01:00:00+08:00",
+      "lineage_status": "discovered"
+    }
+  }
+}

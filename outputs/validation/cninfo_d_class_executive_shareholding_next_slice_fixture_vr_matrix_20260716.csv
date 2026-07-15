@@ -1,0 +1,14 @@
+fixture,case_id,group,topic,vr,status,note
+DES101_found.json,DES101,D,Envelope,VR-ESH-NS-025–VR-ESH-NS-030,pass,captured
+DES101_found.json,DES101,C,Field Mapping,VR-ESH-NS-015–VR-ESH-NS-024,pass,SECCODE/ENDDATE/HUMANNAME/F006N freeze · threeMonth+b
+DES101_empty.json,DES101,D,Envelope,VR-ESH-NS-025–VR-ESH-NS-030,pass,empty_but_valid
+DES102_found.json,DES102,D,Envelope,VR-ESH-NS-025–VR-ESH-NS-030,pass,captured
+DES102_found.json,DES102,C,Field Mapping,VR-ESH-NS-015–VR-ESH-NS-024,pass,SECCODE/ENDDATE/HUMANNAME/F006N freeze · threeMonth+b
+DES102_empty.json,DES102,D,Envelope,VR-ESH-NS-025–VR-ESH-NS-030,pass,empty_but_valid
+DES103_found.json,DES103,D,Envelope,VR-ESH-NS-025–VR-ESH-NS-030,pass,captured
+DES103_found.json,DES103,C,Field Mapping,VR-ESH-NS-015–VR-ESH-NS-024,pass,SECCODE/ENDDATE/HUMANNAME/F006N freeze · threeMonth+b
+DES103_empty.json,DES103,D,Envelope,VR-ESH-NS-025–VR-ESH-NS-030,pass,empty_but_valid
+DES104_found.json,DES104,D,Envelope,VR-ESH-NS-025–VR-ESH-NS-030,pass,captured
+DES104_found.json,DES104,C,Field Mapping,VR-ESH-NS-015–VR-ESH-NS-024,pass,SECCODE/ENDDATE/HUMANNAME/F006N freeze · threeMonth+b
+DES104_empty.json,DES104,D,Envelope,VR-ESH-NS-025–VR-ESH-NS-030,pass,empty_but_valid
+DES105_empty_but_valid_synthetic.json,DES105,D,Envelope,VR-ESH-NS-025–VR-ESH-NS-030,pass,empty_but_valid

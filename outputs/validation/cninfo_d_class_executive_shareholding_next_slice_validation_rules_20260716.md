@@ -1,6 +1,6 @@
 # CNINFO D 类 executive_shareholding — Next-Slice Validation Rules（VR-ESH-NS-001–VR-ESH-NS-042）
 
-_生成时间：2026-07-16 · D-FM-53_
+_生成时间：2026-07-16 · D-FM-53 · lock 更新 D-FM-54_
 
 > **性质：** next-slice VR checklist · **CNINFO = 0** · **不是 verified** · **不覆盖** first-slice VR / DES001–005 证据
 >
@@ -13,7 +13,7 @@ _生成时间：2026-07-16 · D-FM-53_
 | ID | 规则 |
 |----|------|
 | VR-ESH-NS-001 | universe 恰好 **5** 行 · case_id **DES101–DES105**（与 DES001–005 隔离） |
-| VR-ESH-NS-002 | component=`executive_shareholding` · next_slice_include=`yes` · universe_lock_status=`draft_not_locked`（本包） |
+| VR-ESH-NS-002 | component=`executive_shareholding` · next_slice_include=`yes` · universe_lock_status=`locked` · approval_task_id=`D-FM-54`（sketch 仍 `draft_not_locked` 作历史） |
 | VR-ESH-NS-003 | 全案共享 `timeMark=threeMonth` · `varyType=b` · query_mode=`timeMark_threeMonth_varyType_b` · **禁止** `oneMonth`+`b` 作 sole found 锚 |
 | VR-ESH-NS-004 | 永久排除 **688671** · **301259** · exclude_flags 含 `exclude_sparse_oneMonth_b_sole_found_anchor` · `exclude_sole_needs_review` · `exclude_first_slice_DES001_005_mutate` · `exclude_dlc006r` · `exclude_ess_h3_h4` |
 | VR-ESH-NS-005 | endpoint=`https://www.cninfo.com.cn/data20/leader/detail` · records_path=`data.records` · **禁止** 当作 summary endpoint（≠ H4 reopen） |

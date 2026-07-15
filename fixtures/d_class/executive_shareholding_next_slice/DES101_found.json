@@ -1,0 +1,73 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class executive_shareholding next-slice offline synthetic · denser-mode cite timeMark=threeMonth varyType=b",
+    "case_id": "DES101",
+    "component": "executive_shareholding",
+    "scenario": "captured",
+    "cninfo_called": false,
+    "synthetic": true,
+    "dense_mode_cite": "threeMonth+b",
+    "dense_mode_cite_task": "D-FM-53",
+    "approval_task_id": "D-FM-54",
+    "time_mark": "threeMonth",
+    "vary_type": "b",
+    "tier0_cite": [
+      "fixtures/d_class/phase1/DC006.json"
+    ],
+    "query_params": {
+      "timeMark": "threeMonth",
+      "varyType": "b"
+    },
+    "structure_cite": "fixtures/d_class/phase1/DC006.json",
+    "note_zh": "DC006 仅为字段/envelope 结构 cite；本 fixture 锚 denser-mode threeMonth+b；禁 oneMonth+b 作 sole found；非 live found-path；非 ESS H3/H4"
+  },
+  "market_event": {
+    "event_id": "fixture_des101_esh_002415_20260515",
+    "company_code": "002415",
+    "event_type": "executive_shareholding",
+    "event_time": "2026-05-15",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/leader/detail",
+    "source_record_id": "fixture_raw_esh_des101",
+    "event_status": "captured",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "executive_shareholding",
+      "query_mode": "timeMark_threeMonth_varyType_b",
+      "query_params": {
+        "timeMark": "threeMonth",
+        "varyType": "b"
+      },
+      "fetch_time": "2026-07-16T01:00:00+08:00",
+      "raw_record_hash": "sha256:synthetic_esh_des101_captured_threeMonth_b",
+      "raw_record_json": {
+        "SECCODE": "002415",
+        "SECNAME": "海康威视",
+        "ENDDATE": "2026-05-15",
+        "HUMANNAME": "合成高管姓名DES101",
+        "F001V": "合成变动人DES101",
+        "F002V": "董事",
+        "F003V": "本人",
+        "F006N": 35000.0,
+        "F008N": 32.5,
+        "F010V": "二级市场买卖"
+      },
+      "lineage_status": "discovered"
+    }
+  },
+  "executive_shareholding": {
+    "company_code": "002415",
+    "company_name": "海康威视",
+    "executive_name": "合成高管姓名DES101",
+    "share_change_person": "合成变动人DES101",
+    "executive_position": "董事",
+    "relationship": "本人",
+    "changed_shares": 35000.0,
+    "average_transaction_price": 32.5,
+    "change_reason": "二级市场买卖",
+    "shareholding_change_date": "2026-05-15",
+    "change_date": "2026-05-15",
+    "event_date": "2026-05-15",
+    "event_type": "executive_shareholding_change",
+    "quality_status": "pass"
+  }
+}
