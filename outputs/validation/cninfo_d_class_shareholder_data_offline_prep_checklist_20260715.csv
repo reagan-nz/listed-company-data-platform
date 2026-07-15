@@ -1,0 +1,15 @@
+item_id,category,status,notes
+CHK-001,universe_lock,done,DSD001-DSD005 locked from sketch
+CHK-002,validation_rules,done,VR-001–VR-042 draft
+CHK-003,sample_prep,done,Tier0 sample_raw + Tier1 fixtures
+CHK-004,tier1_fixtures,done,9 synthetic files under shareholder_data_first_slice
+CHK-005,command_draft,done,dry-run + live draft; runner not implemented
+CHK-006,runner_dryrun,blocked,S4 blocked_until_runner; no --shareholder-data-first-slice yet
+CHK-007,live_path,blocked,live_not_implemented + no approve flag
+CHK-008,cninfo,blocked,calls=0
+CHK-009,dlc006r,excluded,no reopen
+CHK-010,abnormal_trading_live,excluded,not this package; standing allows separate bounded live task
+CHK-011,commit_push,blocked,executor no commit/push
+CHK-012,fixture_vr_test,done,lab/test_cninfo_d_class_shareholder_data_fixtures.py
+CHK-013,approval_package,done,first_slice_approval_gate=STANDING_SCOPE_AUTHORIZED
+CHK-014,exclusions,locked,exclude_688671;exclude_301259

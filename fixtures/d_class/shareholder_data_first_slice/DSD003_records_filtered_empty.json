@@ -1,0 +1,40 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class shareholder_data first-slice offline synthetic · SECCODE filter miss",
+    "case_id": "DSD003",
+    "component": "shareholder_data",
+    "scenario": "empty_but_valid_after_SECCODE_filter",
+    "cninfo_called": false,
+    "synthetic": true,
+    "tier0_cite": [
+      "fixtures/d_class/shareholder_data/sample_raw.json"
+    ],
+    "query_params": {
+      "rdate": "20260331"
+    },
+    "records_filter": {
+      "raw_records_count": 3,
+      "matched_SECCODE_count": 0,
+      "target_SECCODE": "600000",
+      "other_SECCODEs": ["000001", "000895", "002415"]
+    }
+  },
+  "metric_envelope": {
+    "case_id": "DSD003",
+    "company_code": "600000",
+    "report_period": "2026-03-31",
+    "metric_status": "empty_but_valid",
+    "quality_status": "pass",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/shareholeder/data",
+    "source_record_id": "fixture_raw_sd_dsd003_filter_empty",
+    "lineage": {
+      "registry_source_id": "shareholder_data",
+      "query_mode": "rdate_report_period",
+      "query_params": {
+        "rdate": "20260331"
+      },
+      "fetch_time": "2026-07-15T17:50:00+08:00",
+      "lineage_status": "discovered"
+    }
+  }
+}

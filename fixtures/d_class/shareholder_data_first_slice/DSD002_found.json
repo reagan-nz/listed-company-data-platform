@@ -1,0 +1,62 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class shareholder_data first-slice offline synthetic",
+    "case_id": "DSD002",
+    "component": "shareholder_data",
+    "scenario": "captured",
+    "cninfo_called": false,
+    "synthetic": true,
+    "tier0_cite": [
+      "fixtures/d_class/shareholder_data/sample_raw.json"
+    ],
+    "query_params": {
+      "rdate": "20260331"
+    }
+  },
+  "metric_envelope": {
+    "case_id": "DSD002",
+    "company_code": "000895",
+    "report_period": "2026-03-31",
+    "metric_status": "captured",
+    "quality_status": "pass",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/shareholeder/data",
+    "source_record_id": "fixture_raw_sd_dsd002",
+    "lineage": {
+      "registry_source_id": "shareholder_data",
+      "query_mode": "rdate_report_period",
+      "query_params": {
+        "rdate": "20260331"
+      },
+      "fetch_time": "2026-07-15T17:50:00+08:00",
+      "raw_record_hash": "sha256:synthetic_sd_dsd002_captured",
+      "raw_record_json": {
+        "SECCODE": "000895",
+        "SECNAME": "双汇发展",
+        "ENDDATE": "2026-03-31",
+        "F001N": 120000,
+        "F002N": 118000,
+        "F003N": 1.69,
+        "F004N": 8500,
+        "F005N": 8600,
+        "F006N": -1.16
+      },
+      "lineage_status": "discovered"
+    }
+  },
+  "shareholder_data": {
+    "company_code": "000895",
+    "company_name": "双汇发展",
+    "report_period": "2026-03-31",
+    "metric_count": 6,
+    "quality_status": "pass",
+    "mapping_confidence": "high",
+    "metrics_summary": {
+      "current_shareholder_count": 120000.0,
+      "previous_shareholder_count": 118000.0,
+      "shareholder_count_change_percent": 1.69,
+      "current_avg_shares_per_holder": 8500.0,
+      "previous_avg_shares_per_holder": 8600.0,
+      "avg_shares_per_holder_change_percent": -1.16
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class shareholder_data first-slice offline synthetic",
+    "case_id": "DSD004",
+    "component": "shareholder_data",
+    "scenario": "empty_but_valid",
+    "cninfo_called": false,
+    "synthetic": true,
+    "tier0_cite": [
+      "fixtures/d_class/shareholder_data/sample_raw.json"
+    ],
+    "query_params": {
+      "rdate": "20260331"
+    }
+  },
+  "metric_envelope": {
+    "case_id": "DSD004",
+    "company_code": "002415",
+    "report_period": "2026-03-31",
+    "metric_status": "empty_but_valid",
+    "quality_status": "pass",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/shareholeder/data",
+    "source_record_id": "fixture_raw_sd_dsd004_empty",
+    "lineage": {
+      "registry_source_id": "shareholder_data",
+      "query_mode": "rdate_report_period",
+      "query_params": {
+        "rdate": "20260331"
+      },
+      "fetch_time": "2026-07-15T17:50:00+08:00",
+      "lineage_status": "discovered"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+fixture,case_id,group,topic,vr,status,note
+DSD001_found.json,DSD001,D,Envelope,VR-025–VR-030,pass,captured
+DSD001_found.json,DSD001,C,Field Mapping,VR-015–VR-024,pass,SECCODE/ENDDATE/F001N-F006N → 6 metrics
+DSD002_found.json,DSD002,D,Envelope,VR-025–VR-030,pass,captured
+DSD002_found.json,DSD002,C,Field Mapping,VR-015–VR-024,pass,SECCODE/ENDDATE/F001N-F006N → 6 metrics
+DSD002_empty.json,DSD002,D,Envelope,VR-025–VR-030,pass,empty_but_valid
+DSD003_found.json,DSD003,D,Envelope,VR-025–VR-030,pass,captured
+DSD003_found.json,DSD003,C,Field Mapping,VR-015–VR-024,pass,SECCODE/ENDDATE/F001N-F006N → 6 metrics
+DSD003_empty.json,DSD003,D,Envelope,VR-025–VR-030,pass,empty_but_valid
+DSD003_records_filtered_empty.json,DSD003,D,Envelope,VR-025–VR-030,pass,empty_but_valid
+DSD004_found.json,DSD004,D,Envelope,VR-025–VR-030,pass,captured
+DSD004_found.json,DSD004,C,Field Mapping,VR-015–VR-024,pass,SECCODE/ENDDATE/F001N-F006N → 6 metrics
+DSD004_empty.json,DSD004,D,Envelope,VR-025–VR-030,pass,empty_but_valid
+DSD005_empty_but_valid_synthetic.json,DSD005,D,Envelope,VR-025–VR-030,pass,empty_but_valid
