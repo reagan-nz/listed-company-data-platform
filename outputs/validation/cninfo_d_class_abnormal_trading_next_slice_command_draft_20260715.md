@@ -1,12 +1,12 @@
 # CNINFO D 类 abnormal_trading Next-Slice — Command Draft
 
-_生成时间：2026-07-15 · D-FM-30 起草_
+_生成时间：2026-07-15 · D-FM-31 更新（D-FM-30 起草）_
 
-> **性质：** runner **未实现** · S4 / live **未授权** · **CNINFO = 0** · **不是 verified**
+> **性质：** runner **已实现** · S4 dry-run **已跑 offline** · live **未授权** · **CNINFO = 0** · **不是 verified**
 >
-> **勿执行** 下列命令，直至 runner 扩展 + 另批 approve。
+> **勿执行** live 命令，直至另批 approve + `controller_execution_allowed`。
 
-## S4 dry-run（draft only · 未实现 · 勿跑）
+## S4 dry-run（implemented · D-FM-31 已跑 · CNINFO=0）
 
 ```bash
 cd listed_company_data_collector
@@ -17,7 +17,7 @@ python lab/run_cninfo_d_class_tiny_live_validation.py \
   --output-root outputs/validation/cninfo_d_class_abnormal_trading_next_slice
 ```
 
-## Live（draft only · 未实现 · 禁止本回合）
+## Live（draft only · 路径已接线 · 禁止本回合）
 
 ```bash
 python lab/run_cninfo_d_class_tiny_live_validation.py \
@@ -28,7 +28,7 @@ python lab/run_cninfo_d_class_tiny_live_validation.py \
   --output-root outputs/validation/cninfo_d_class_abnormal_trading_next_slice
 ```
 
-> **禁止** 无另批执行。live_gate / runner_gate 均为 `NOT_APPROVED`。
+> **禁止** 无另批执行。`live_gate=NOT_APPROVED`。prefer shared CNINFO=1。
 
 ## Request Model（locked contract · offline）
 
@@ -43,13 +43,15 @@ python lab/run_cninfo_d_class_tiny_live_validation.py \
 | schema | `d_company_event` · detail[] deferred |
 | forbidden anchor | **2026-07-03** 作 sole found |
 
-## Status This Task（D-FM-30）
+## Status This Task（D-FM-31）
 
 | 项 | 状态 |
 |----|------|
-| `--abnormal-trading-next-slice` | **未实现** |
-| `--approve-d-class-abnormal-trading-next-slice` | **未实现 / 未授权** |
-| S4 dry-run | **blocked_until_runner** |
+| `--abnormal-trading-next-slice` | **已实现** |
+| `--approve-d-class-abnormal-trading-next-slice` | **已实现 / 未授权 live** |
+| S4 dry-run | **PASS_OFFLINE** · planned_ok 5/5 · CNINFO=0 |
+| runner_extension_gate | **READY_FOR_APPROVAL** |
+| live_path_gate | **READY_FOR_APPROVAL** |
 | bounded live | **NOT_APPROVED** |
 | CNINFO this task | **0** |
 | AT first-slice live root | **frozen · 未 mutate** |

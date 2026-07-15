@@ -1,0 +1,7 @@
+caveat_id,caveat_type,severity,forbidden_interpretation,evidence
+CAV-AT-NS-R01,s4_dryrun_not_live,S4 dry-run PASS_OFFLINE does not authorize live,bare PASS / live_ready / verified,dfm31_s4_dryrun
+CAV-AT-NS-R02,runner_ready_not_approved,READY_FOR_APPROVAL is not live approval,approved_for_live=true,runner_extension_gate
+CAV-AT-NS-R03,shared_probe_not_found_path,shared denser-day cite is not company-level found-path,live_found_path_for_DAT101_105=PROVEN,anchor_2026-07-02
+CAV-AT-NS-R04,forbidden_sparse_anchor,2026-07-03 must not be sole found anchor,use_20260703_as_sole_found,VR-NS-003
+CAV-AT-NS-R05,closed_roots_frozen,AT/SD first-slice and FIA first/next-slice live roots must stay frozen,reopen_or_mutate_closed_roots,lock_sha256_checks
+CAV-AT-NS-R06,ess_paused,ESS H3/H4 remain paused_pending_devtools,blind_probe_H3_H4,ess_pause_hold

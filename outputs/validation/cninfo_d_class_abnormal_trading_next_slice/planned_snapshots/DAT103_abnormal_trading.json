@@ -1,0 +1,35 @@
+{
+  "case_id": "DAT103",
+  "probe_key": "at_ns_shared_dense_002415",
+  "company_code": "002415",
+  "company_name": "海康威视",
+  "component": "abnormal_trading",
+  "anchor_tdate": "2026-07-02",
+  "query_mode": "single_day_paged",
+  "shared_probe_key": "single_day_paged_2026-07-02",
+  "planned_requests": [
+    "single_day_paged_2026-07-02"
+  ],
+  "query_params": {
+    "sdate": "2026-07-02",
+    "edate": "2026-07-02",
+    "platecode": "",
+    "orderby": "",
+    "page": 1,
+    "rows": 30
+  },
+  "endpoint": "https://www.cninfo.com.cn/data/statis/getMarketStatisticsData",
+  "records_path": "marketList",
+  "shared_request": true,
+  "company_filter_offline": true,
+  "company_filter_field": "secCode",
+  "filter_company_code": "002415",
+  "forbidden_sole_found_anchor": "2026-07-03",
+  "expected_behavior": "captured_normal_or_empty_but_valid",
+  "fixture_refs": [
+    "fixtures/d_class/abnormal_trading_next_slice/DAT103_found.json",
+    "fixtures/d_class/abnormal_trading_next_slice/DAT103_multi_type_found.json"
+  ],
+  "cninfo_called": false,
+  "detail_nested_deferred": true
+}
