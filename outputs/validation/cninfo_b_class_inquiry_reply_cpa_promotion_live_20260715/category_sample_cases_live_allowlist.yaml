@@ -1,0 +1,21 @@
+# B-FM-03 live allow-list — 仅新晋 inquiry_sample_002（问询函的回复类别窗）
+version: "draft-0.1"
+status: live_sample_scoped_B-FM-03
+verified: false
+notes: B-FM-03 live allow-list only; not a new fixture lineage
+
+cases:
+  - case_id: inquiry_sample_002
+    case_status: ready
+    source_id: cninfo_inquiry_reply_pdf
+    source_category: inquiry_reply_pdf
+    title_pattern: "问询函的回复"
+    date_start: "2025-06-23"
+    date_end: "2025-06-28"
+    expected_min_results: 1
+    expected_document_types:
+      - inquiry_reply
+    false_positive_guard_patterns:
+      - 年度报告全文
+    notes: >-
+      B-FM-03 自 harvest 证据晋升：CPA「问询函的回复」边角窗 BD2E462/BD2E794。

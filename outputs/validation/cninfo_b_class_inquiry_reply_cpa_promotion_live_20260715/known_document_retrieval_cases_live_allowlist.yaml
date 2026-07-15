@@ -1,0 +1,21 @@
+# B-FM-03 live allow-list — 仅新晋 inquiry_known_001（CPA 问询函的回复边角）
+version: "draft-0.1"
+status: live_sample_scoped_B-FM-03
+verified: false
+notes: B-FM-03 live allow-list only; not a new fixture lineage
+
+cases:
+  - case_id: inquiry_known_001
+    case_status: ready
+    source_id: cninfo_inquiry_reply_pdf
+    company_code: "601020"
+    company_name: "华钰矿业"
+    title_pattern: "立信会计师事务所（特殊普通合伙）关于西藏华钰矿业股份有限公司2024年年度报告的信息披露监管问询函的回复"
+    expected_document_type: inquiry_reply
+    date_start: "2025-06-23"
+    date_end: "2025-06-26"
+    expected_route_to: cninfo_inquiry_reply_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-03 自 harvest 证据晋升（依赖 B-FM-02 routing edge）：华钰矿业 601020，
+      BD2E462 / announcement_id=1223973177。全文 title_pattern 消歧。不写 verified；不下载 PDF。

@@ -88,18 +88,22 @@ cases:
       before live validation; do not use random success rate as pass criteria.
 
   - case_id: inquiry_sample_002
-    case_status: placeholder
+    case_status: ready
     source_id: cninfo_inquiry_reply_pdf
     source_category: inquiry_reply_pdf
-    title_pattern: "回复公告"
-    date_start: null
-    date_end: null
+    title_pattern: "问询函的回复"
+    date_start: "2025-06-23"
+    date_end: "2025-06-28"
     expected_min_results: 1
     expected_document_types:
       - inquiry_reply
     false_positive_guard_patterns:
       - 年度报告全文
-    notes: Design-only reply-announcement sample. Real window TBD.
+    notes: >-
+      B-FM-03 自 harvest 证据晋升（依赖 B-FM-02 routing edge）：CPA「问询函的回复」边角窗。
+      华钰矿业 601020 announcement_id=1223973177（2025-06-24，BD2E462）；
+      兰石重装 603169 announcement_id=1224016689（2025-06-27，BD2E794）。
+      来源 slice1 combined + fuller slice2 report。类别抽样全市场窗；不写 verified；不下载 PDF。
 
   # --- meeting notice category sample × 2 ---
   - case_id: meeting_sample_001
