@@ -1,0 +1,38 @@
+# B-FM-19 live allow-list — 仅新晋 shareholder_meeting_known_003/004
+version: "draft-0.1"
+status: live_sample_scoped_B-FM-19
+verified: false
+notes: B-FM-19 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS
+
+cases:
+  - case_id: shareholder_meeting_known_003
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "300463"
+    company_name: "迈克生物"
+    title_pattern: "股东大会决议"
+    expected_document_type: shareholder_meeting_material
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-19 live allow-list（依赖 B-FM-18 route + 本包晋升）：
+      迈克生物 300463，BD2E578 / announcement_id=1224015259。
+      标题「股东大会决议」。不写 verified；不下载 PDF。
+
+  - case_id: shareholder_meeting_known_004
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000708"
+    company_name: "中信特钢"
+    title_pattern: "股东大会的公告"
+    expected_document_type: shareholder_meeting_material
+    date_start: "2025-06-25"
+    date_end: "2025-06-28"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-19 live allow-list（依赖 B-FM-18 route + 本包晋升）：
+      中信特钢 000708，BD2E080 / announcement_id=1223998647。
+      标题「召开…股东大会的公告」（无「通知」）。不写 verified；不下载 PDF。

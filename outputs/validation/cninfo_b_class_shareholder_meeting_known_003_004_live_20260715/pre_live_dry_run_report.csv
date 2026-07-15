@@ -1,0 +1,3 @@
+case_id,case_type,case_status,source_id,title_pattern,date_start,date_end,expected_document_type,expected_route_to,dry_run_status,would_query,query_status,notes
+shareholder_meeting_known_003,known_document,ready,cninfo_general_announcement_pdf,股东大会决议,2025-06-26,2025-06-29,shareholder_meeting_material,cninfo_general_announcement_pdf,ready_for_future_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called
+shareholder_meeting_known_004,known_document,ready,cninfo_general_announcement_pdf,股东大会的公告,2025-06-25,2025-06-28,shareholder_meeting_material,cninfo_general_announcement_pdf,ready_for_future_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called
