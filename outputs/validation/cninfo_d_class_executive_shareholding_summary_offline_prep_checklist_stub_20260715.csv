@@ -1,0 +1,22 @@
+item_id,item,status,artifact_or_ref,notes
+ESS-DISC-01,discovery_planning_md,ready,plans/cninfo_d_class_executive_shareholding_summary_discovery_planning_20260715.md,primary=executive_shareholding_summary; gate=READY_FOR_APPROVAL; endpoint unconfirmed; NOT live-approved
+ESS-DISC-02,candidate_matrix_csv,ready,outputs/validation/cninfo_d_class_executive_shareholding_summary_discovery_candidate_matrix_20260715.csv,rank=1 ESS discovery; FIA scale rank=2 deferred; AT/SD/closed excluded
+ESS-DISC-03,recommendation_md,ready,outputs/validation/cninfo_d_class_executive_shareholding_summary_discovery_recommendation_20260715.md,Level-2 phrase NOT required under standing_scope
+ESS-DISC-04,planning_summary_md,ready,outputs/validation/cninfo_d_class_executive_shareholding_summary_discovery_planning_summary_20260715.md,CNINFO=0; NOT verified
+ESS-DISC-05,endpoint_hypothesis_md,ready,outputs/validation/cninfo_d_class_executive_shareholding_summary_endpoint_hypothesis_20260715.md,H1-H4 unprobed; sibling leader/detail confirmed closed
+ESS-DISC-06,ui_field_sketch_csv,ready,outputs/validation/cninfo_d_class_executive_shareholding_summary_ui_field_sketch_20260715.csv,5 UI columns from priority2 §5.2; raw fields unknown
+ESS-DISC-07,universe_draft_sketch_csv,ready,outputs/validation/cninfo_d_class_executive_shareholding_summary_first_slice_universe_draft_sketch_20260715.csv,DESS001-DESS005; sketch only; not locked
+ESS-DISC-08,next_step_recommendation_md,ready,outputs/validation/cninfo_d_class_executive_shareholding_summary_discovery_next_step_recommendation_20260715.md,bounded endpoint probe next; or FIA scale offline
+ESS-DISC-09,offline_discovery_test,ready,lab/test_cninfo_d_class_executive_shareholding_summary_offline_discovery.py,artifact + registry negative + no network; CNINFO=0
+ESS-STUB-01,vr_checklist_stub,stub_only,this file,full VR draft deferred until endpoint confirmed
+ESS-STUB-02,universe_lock,blocked_until_endpoint_probe,n/a,sketch only; lock after registry draft
+ESS-STUB-03,sample_raw_tier0,blocked_until_endpoint_probe,n/a,no sample_raw until Network capture
+ESS-STUB-04,registry_draft_entry,blocked_until_endpoint_probe,n/a,do not freeze registry as testing_stable without probe
+ESS-STUB-05,runner_extension,forbidden_this_round,n/a,no --executive-shareholding-summary-first-slice implement
+ESS-STUB-06,cninfo_live,forbidden_this_round,n/a,CNINFO=0
+ESS-SAFE-01,exclude_301259_688671,locked_policy,plans + universe sketch,permanent exclude policy retained
+ESS-SAFE-02,no_dlc006r_reopen,locked_policy,known-event closed,explicit non-reopen
+ESS-SAFE-03,no_es_detail_reopen,locked_policy,executive_shareholding first-slice closed,summary is separate source
+ESS-SAFE-04,no_fia_live_root_mutate,locked_policy,D-FM-13/D-FM-18 frozen,do not overwrite FIA live roots
+ESS-SAFE-05,no_at_sd_scale_live,locked_policy,first-slices already live,D-FM-21 does not scale-harden AT/SD live
+ESS-GATE-01,discovery_planning_gate,READY_FOR_APPROVAL,d_class_executive_shareholding_summary_discovery_planning_gate,NOT verified; NOT production_ready; standing_scope auth; endpoint unconfirmed

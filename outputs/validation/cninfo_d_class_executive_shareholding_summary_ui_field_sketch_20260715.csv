@@ -1,0 +1,6 @@
+ui_label,standard_candidate,dimension,confidence,raw_field_status,source_of_truth,notes
+变动统计区间,change_stat_period,period,medium,unknown,cninfo_table_field_semantics_priority2.md §5.2,可能映射 timeMark 或起止区间；须 probe 后确认
+证券代码,company_code,company,high,unknown,cninfo_table_field_semantics_priority2.md §5.2,UI 有证券代码 → company_code_available likely true
+证券简称,company_name,company,high,unknown,cninfo_table_field_semantics_priority2.md §5.2,与 detail SECNAME 同语义候选
+变动类型,change_type,event_type,medium,unknown,cninfo_table_field_semantics_priority2.md §5.2,可能对应 varyType；勿与 detail 行级 change_reason 混用
+高管持股变动数量合计(万股),executive_share_change_total_wan,amount,medium,unknown,cninfo_table_field_semantics_priority2.md §5.2,合计字段；单位万股；非 detail F006N 行级

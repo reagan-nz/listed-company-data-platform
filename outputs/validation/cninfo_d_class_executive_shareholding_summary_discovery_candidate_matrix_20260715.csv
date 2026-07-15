@@ -1,0 +1,14 @@
+component,endpoint_readiness,schema_readiness,prior_slice_status,expected_first_slice_size,risk,recommendation_rank,notes
+executive_shareholding_summary,unconfirmed_ui_only,hypothesis_only,not_registered,5,medium,1,D-FM-21 primary; UI tab 高管持股变动汇总; no Network capture; endpoint hypotheses offline only; CNINFO=0
+fund_industry_allocation_scale,ready,ready_industry_aggregate,first_slice_closure_pass_with_caveat_dfm20,n/a,low,2,FIA first-slice closed; scale/next-slice offline deferred below discovery this round; do not mutate live roots
+abnormal_trading_scale,ready,ready,first_slice_live_done,n/a,high,excluded,AT first-slice already live; no unbounded re-live / scale hardening this round
+shareholder_data_scale,ready,ready_metric_periodic,first_slice_live_done,n/a,medium,excluded,SD first-slice already live; no scale hardening live this round
+executive_shareholding,ready,ready,s5_pass_with_caveat_closed,5,medium,excluded,detail source closed; do not reopen; summary is separate candidate
+shareholder_change,ready,ready,committed_complete,5,low,excluded,do not reopen
+equity_pledge,ready,ready,closed,5,low,excluded,do not reopen
+restricted_shares_unlock,ready,ready,closed,5,medium,excluded,do not reopen
+block_trade,ready,ready,closed,5,low,excluded,do not reopen
+margin_trading,ready,ready,closed,5,low,excluded,do not reopen
+disclosure_schedule,ready,ready,closed,5,low,excluded,do not reopen
+known_event_replacement,ready,ready,closed,2,low,excluded,no DLC006R reopen
+fund_industry_allocation_first_slice_live_roots,ready,ready,frozen_after_dfm20,5,low,excluded,do not reopen or overwrite D-FM-13/D-FM-18 live roots
