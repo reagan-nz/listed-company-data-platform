@@ -1,0 +1,62 @@
+{
+  "generated_at": "2026-07-15T15:27:39Z",
+  "task_id": "C-FM-37",
+  "fingerprint_sha256": "b2af0337e7d4d4d135c223ec8b553c499b51c6061d24323b3edfb88a193bceb8",
+  "resume_improved": 28,
+  "improved_codes_sha256": "8be1b0a704f205387c024d05b3d592d4cc64c6b3b9556546f6e65614001d54e8",
+  "sample_denials": [
+    {
+      "action": "inject",
+      "proposed_n": 29,
+      "proposed_sha256": "8be1b0a704f205387c024d05b3d592d4cc64c6b3b9556546f6e65614001d54e8",
+      "frozen_n": 28,
+      "frozen_sha256": "8be1b0a704f205387c024d05b3d592d4cc64c6b3b9556546f6e65614001d54e8",
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_improved_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "drop",
+      "proposed_n": 27,
+      "proposed_sha256": "8be1b0a704f205387c024d05b3d592d4cc64c6b3b9556546f6e65614001d54e8",
+      "frozen_n": 28,
+      "frozen_sha256": "8be1b0a704f205387c024d05b3d592d4cc64c6b3b9556546f6e65614001d54e8",
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_improved_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "sha_mutate",
+      "proposed_n": 28,
+      "proposed_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "frozen_n": 28,
+      "frozen_sha256": "8be1b0a704f205387c024d05b3d592d4cc64c6b3b9556546f6e65614001d54e8",
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_improved_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "sha_mutate",
+      "proposed_n": 28,
+      "proposed_sha256": "8be1b0a704f205387c024d05b3d592d4cc64c6b3b9556546f6e65614001d54e8",
+      "frozen_n": 28,
+      "frozen_sha256": "8be1b0a704f205387c024d05b3d592d4cc64c6b3b9556546f6e65614001d54e8",
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "resume_improved_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "resume_improved_membership_freeze",
+    "resume_improved": 28,
+    "improved_codes_sha256": "8be1b0a704f205387c024d05b3d592d4cc64c6b3b9556546f6e65614001d54e8",
+    "deny_inject": true,
+    "deny_drop": true,
+    "deny_sha_mutate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

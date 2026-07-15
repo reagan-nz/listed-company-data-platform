@@ -1,0 +1,83 @@
+{
+  "generated_at": "2026-07-15T15:27:39Z",
+  "task_id": "C-FM-37",
+  "fingerprint_sha256": "6b168d4cd1557cb5100f3b3cffc8a92f531d8f6ea8e74b2ce0a1badf46aa1096",
+  "dry863_extras": [
+    "000037",
+    "000055"
+  ],
+  "sample_denials": [
+    {
+      "action": "inject",
+      "proposed_codes": [
+        "000037",
+        "000055",
+        "999999"
+      ],
+      "frozen_codes": [
+        "000037",
+        "000055"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "surface_harvest_delta_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "drop",
+      "proposed_codes": [
+        "000037"
+      ],
+      "frozen_codes": [
+        "000037",
+        "000055"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "surface_harvest_delta_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "replace",
+      "proposed_codes": [
+        "000001",
+        "000002"
+      ],
+      "frozen_codes": [
+        "000037",
+        "000055"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "surface_harvest_delta_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "replace",
+      "proposed_codes": [
+        "000037",
+        "000055"
+      ],
+      "frozen_codes": [
+        "000037",
+        "000055"
+      ],
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "surface_harvest_delta_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "surface_harvest_delta_membership_freeze",
+    "surface_harvest_delta_n": 2,
+    "dry863_extras": [
+      "000037",
+      "000055"
+    ],
+    "deny_inject": true,
+    "deny_drop": true,
+    "deny_replace": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "generated_at": "2026-07-15T15:27:39Z",
+  "task_id": "C-FM-37",
+  "fingerprint_sha256": "e7082649cd625eecc3290d454a3022e229ffff8ae9ab2dd8580c348fb2fc3520",
+  "union_partial": 106,
+  "partial_codes_sha256": "5d5da7030f91e60893627d7fcf208b79f4f09e3edc5c4255fb797c1706672d73",
+  "sample_denials": [
+    {
+      "action": "inject",
+      "proposed_n": 107,
+      "proposed_sha256": "5d5da7030f91e60893627d7fcf208b79f4f09e3edc5c4255fb797c1706672d73",
+      "frozen_n": 106,
+      "frozen_sha256": "5d5da7030f91e60893627d7fcf208b79f4f09e3edc5c4255fb797c1706672d73",
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "partial_codes_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "drop",
+      "proposed_n": 105,
+      "proposed_sha256": "5d5da7030f91e60893627d7fcf208b79f4f09e3edc5c4255fb797c1706672d73",
+      "frozen_n": 106,
+      "frozen_sha256": "5d5da7030f91e60893627d7fcf208b79f4f09e3edc5c4255fb797c1706672d73",
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "partial_codes_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "sha_mutate",
+      "proposed_n": 106,
+      "proposed_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "frozen_n": 106,
+      "frozen_sha256": "5d5da7030f91e60893627d7fcf208b79f4f09e3edc5c4255fb797c1706672d73",
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "partial_codes_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "sha_mutate",
+      "proposed_n": 106,
+      "proposed_sha256": "5d5da7030f91e60893627d7fcf208b79f4f09e3edc5c4255fb797c1706672d73",
+      "frozen_n": 106,
+      "frozen_sha256": "5d5da7030f91e60893627d7fcf208b79f4f09e3edc5c4255fb797c1706672d73",
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "partial_codes_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "partial_codes_membership_freeze",
+    "union_partial": 106,
+    "partial_codes_sha256": "5d5da7030f91e60893627d7fcf208b79f4f09e3edc5c4255fb797c1706672d73",
+    "deny_inject": true,
+    "deny_drop": true,
+    "deny_sha_mutate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

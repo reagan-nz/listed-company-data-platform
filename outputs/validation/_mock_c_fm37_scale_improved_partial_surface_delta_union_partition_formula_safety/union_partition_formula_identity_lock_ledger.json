@@ -1,0 +1,120 @@
+{
+  "generated_at": "2026-07-15T15:27:39Z",
+  "task_id": "C-FM-37",
+  "fingerprint_sha256": "cebf924d13a8b0ca4de93a4d9030074085ed348201a1e60fae13ef6bf175af9d",
+  "union_formula": "2134+106+9=2249",
+  "surface_formula": "2249+2=2251",
+  "sample_denials": [
+    {
+      "proposed": {
+        "unique": 2250,
+        "complete": 2134,
+        "partial": 106,
+        "failed": 9,
+        "surface": 2251,
+        "delta": 2
+      },
+      "frozen": {
+        "unique": 2249,
+        "complete": 2134,
+        "partial": 106,
+        "failed": 9,
+        "surface": 2251,
+        "delta": 2
+      },
+      "union_formula_holds": false,
+      "surface_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "union_partition_formula_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "unique": 2249,
+        "complete": 2135,
+        "partial": 106,
+        "failed": 8,
+        "surface": 2251,
+        "delta": 2
+      },
+      "frozen": {
+        "unique": 2249,
+        "complete": 2134,
+        "partial": 106,
+        "failed": 9,
+        "surface": 2251,
+        "delta": 2
+      },
+      "union_formula_holds": true,
+      "surface_formula_holds": true,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "union_partition_formula_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "unique": 2249,
+        "complete": 2134,
+        "partial": 106,
+        "failed": 9,
+        "surface": 2252,
+        "delta": 2
+      },
+      "frozen": {
+        "unique": 2249,
+        "complete": 2134,
+        "partial": 106,
+        "failed": 9,
+        "surface": 2251,
+        "delta": 2
+      },
+      "union_formula_holds": true,
+      "surface_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "union_partition_formula_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "unique": 2249,
+        "complete": 2134,
+        "partial": 106,
+        "failed": 9,
+        "surface": 2251,
+        "delta": 2
+      },
+      "frozen": {
+        "unique": 2249,
+        "complete": 2134,
+        "partial": 106,
+        "failed": 9,
+        "surface": 2251,
+        "delta": 2
+      },
+      "union_formula_holds": true,
+      "surface_formula_holds": true,
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "union_partition_formula_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "union_partition_formula_identity_lock",
+    "harvest_unique_union": 2249,
+    "union_complete": 2134,
+    "union_partial": 106,
+    "union_failed": 9,
+    "surface_unique": 2251,
+    "surface_harvest_delta_n": 2,
+    "union_formula": "2134+106+9=2249",
+    "surface_formula": "2249+2=2251",
+    "deny_formula_mutate": true,
+    "deny_coverage_inflate": true,
+    "deny_coverage_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
