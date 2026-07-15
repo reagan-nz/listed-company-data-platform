@@ -1,0 +1,31 @@
+{
+  "packet_kind": "pre_execute_decision_await_continuity_seal",
+  "task_id": "C-FM-11",
+  "generated_at": "2026-07-15T12:07:17Z",
+  "gate": "PASS_OFFLINE",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "human_action_required_for_execute": true,
+  "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+  "drift_detected": false,
+  "idle_not_required_while_awaiting": true,
+  "frozen_wall_fingerprint_sha256": "30ff8a3b3841aec0ac21374fcde0ad947fc84227f6e52b3828067d15b3c01ca3",
+  "frozen_exclusion_fingerprint_sha256": "e305e275b4b8e4e28ccd11a396cda5b93c6a3c99925a2956cba79386a08aa2ac",
+  "frozen_boundary_fingerprint_sha256": "c9c00a38e3031b25c70bd462aea2a6bb5927f4acdc9cfc48fc4029e160a04db4",
+  "frozen_attestation_fingerprint_sha256": "4d0a473ce0e741d89c85459d1c5b027c90294ff73f7cdf2dd7b1038453c8e444",
+  "frozen_readiness_fingerprint_sha256": "a380554136c4f0921493b1eafed6a78dc326d5e0a770f8d43f967466b0235e12",
+  "recomputed_readiness_fingerprint_sha256": "a380554136c4f0921493b1eafed6a78dc326d5e0a770f8d43f967466b0235e12",
+  "layer_gates": {
+    "fm_gate_battery": "PASS_OFFLINE",
+    "fm10_artifact_presence": "PASS_OFFLINE",
+    "readiness_fingerprint_drift": "PASS_OFFLINE",
+    "seal_chain_continuity": "PASS_OFFLINE",
+    "decision_await_hold_seal": "PASS_OFFLINE",
+    "protected_csv_registry": "PASS_OFFLINE"
+  },
+  "verified_claim_forbidden": true,
+  "production_ready_claim_forbidden": true,
+  "notes": "本包仅复核 C-FM-10 readiness 指纹零漂移并 seal decision-await hold continuity；不覆盖 MOCK8–12；不翻转 approved；生产 snapshot EXECUTE 仍须独立人批。"
+}
