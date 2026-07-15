@@ -1,0 +1,14 @@
+fixture,case_id,group,topic,vr,status,note
+DFIA101_found.json,DFIA101,D,Envelope,VR-NS-025–VR-NS-030,pass,captured
+DFIA101_found.json,DFIA101,C,Field Mapping,VR-NS-015–VR-NS-024,pass,F001V/ENDDATE/F003N-F005N → 3 metrics
+DFIA101_industry_filtered_empty.json,DFIA101,D,Envelope,VR-NS-025–VR-NS-030,pass,empty_but_valid
+DFIA102_found.json,DFIA102,D,Envelope,VR-NS-025–VR-NS-030,pass,captured
+DFIA102_found.json,DFIA102,C,Field Mapping,VR-NS-015–VR-NS-024,pass,F001V/ENDDATE/F003N-F005N → 3 metrics
+DFIA102_industry_filtered_empty.json,DFIA102,D,Envelope,VR-NS-025–VR-NS-030,pass,empty_but_valid
+DFIA103_found.json,DFIA103,D,Envelope,VR-NS-025–VR-NS-030,pass,captured
+DFIA103_found.json,DFIA103,C,Field Mapping,VR-NS-015–VR-NS-024,pass,F001V/ENDDATE/F003N-F005N → 3 metrics
+DFIA104_found.json,DFIA104,D,Envelope,VR-NS-025–VR-NS-030,pass,captured
+DFIA104_found.json,DFIA104,C,Field Mapping,VR-NS-015–VR-NS-024,pass,F001V/ENDDATE/F003N-F005N → 3 metrics
+DFIA105_found.json,DFIA105,D,Envelope,VR-NS-025–VR-NS-030,pass,captured
+DFIA105_found.json,DFIA105,C,Field Mapping,VR-NS-015–VR-NS-024,pass,F001V/ENDDATE/F003N-F005N → 3 metrics
+DFIA105_empty_but_valid_synthetic.json,DFIA105,D,Envelope,VR-NS-025–VR-NS-030,pass,empty_but_valid

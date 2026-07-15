@@ -1,0 +1,34 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class fund_industry_allocation next-slice offline synthetic · rdate 20251231 empty path still legal under mixed expectation",
+    "case_id": "DFIA105",
+    "component": "fund_industry_allocation",
+    "scenario": "empty_but_valid",
+    "cninfo_called": false,
+    "synthetic": true,
+    "tier0_cite": [
+      "fixtures/d_class/fund_industry_allocation/sample_raw.json"
+    ],
+    "query_params": {
+      "rdate": "20251231"
+    }
+  },
+  "metric_envelope": {
+    "case_id": "DFIA105",
+    "industry_code": "C",
+    "report_period": "2025-12-31",
+    "metric_status": "empty_but_valid",
+    "quality_status": "pass",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/fund/industry",
+    "source_record_id": "fixture_raw_fia_dfia105_empty",
+    "lineage": {
+      "registry_source_id": "fund_industry_allocation",
+      "query_mode": "rdate",
+      "query_params": {
+        "rdate": "20251231"
+      },
+      "fetch_time": "2026-07-15T21:32:00+08:00",
+      "lineage_status": "discovered"
+    }
+  }
+}
