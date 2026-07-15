@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-07-15T12:22:11Z",
+  "task_id": "C-FM-14",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "seal_chain_extended": false,
+  "frozen_extension_fp_sha256": "3d9354e2571b46b5d67787b43aada270882d827bf00d7f91f8d3154c6da5d8ff",
+  "recomputed_extension_fp_sha256": "3d9354e2571b46b5d67787b43aada270882d827bf00d7f91f8d3154c6da5d8ff",
+  "drift_detected": false,
+  "fingerprint": {
+    "row_count": 68,
+    "ok_count": 68,
+    "fail_count": 0,
+    "layers": {
+      "fm_gate_battery": 8,
+      "fm13_artifact_presence": 8,
+      "fingerprint_drift": 6,
+      "frozen_mock_isolation": 18,
+      "harvest_exclusion_consistency": 4,
+      "execute_hold_seal": 6,
+      "protected_csv_registry": 18
+    },
+    "fingerprint_sha256": "8ce3951c29881b114b5b315949d7564459ef8b78255cd4c18ca39784151b576b"
+  }
+}

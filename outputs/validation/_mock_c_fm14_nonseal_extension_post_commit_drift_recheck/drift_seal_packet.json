@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-07-15T12:22:11Z",
+  "task_id": "C-FM-14",
+  "gate": "PASS_OFFLINE",
+  "drift_detected": false,
+  "frozen_extension_fp_sha256": "3d9354e2571b46b5d67787b43aada270882d827bf00d7f91f8d3154c6da5d8ff",
+  "recomputed_extension_fp_sha256": "3d9354e2571b46b5d67787b43aada270882d827bf00d7f91f8d3154c6da5d8ff",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "ready_for_execute": false,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+  "idle_not_required_while_awaiting": true,
+  "seal_chain_extended": false,
+  "notes": "non-seal post-commit drift recheck of C-FM-13 extension; EXECUTE remains human-held; does not overwrite MOCK3-15"
+}
