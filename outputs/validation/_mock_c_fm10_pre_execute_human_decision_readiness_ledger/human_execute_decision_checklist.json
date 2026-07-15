@@ -1,0 +1,37 @@
+{
+  "packet_kind": "pre_execute_human_execute_decision_checklist",
+  "task_id": "C-FM-10",
+  "generated_at": "2026-07-15T12:03:05Z",
+  "gate": "PASS_OFFLINE",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+  "options": [
+    {
+      "option_id": "A",
+      "label": "HOLD_KEEP_EXECUTE_FALSE",
+      "recommended": true,
+      "auto_applied": false,
+      "effect": "保持 approved=false · 不生产 EXECUTE"
+    },
+    {
+      "option_id": "B",
+      "label": "APPROVE_EXECUTE",
+      "recommended": false,
+      "auto_applied": false,
+      "effect": "仅人批可翻转 approved；本包禁止自动翻转"
+    }
+  ],
+  "evidence_paths": {
+    "fm09_handoff": "outputs/validation/_mock_c_fm09_pre_execute_post_commit_seal_attestation/human_execute_decision_handoff_packet.json",
+    "fm09_seal": "outputs/validation/_mock_c_fm09_pre_execute_post_commit_seal_attestation/post_commit_seal_packet.json",
+    "fm09_attestation_fp": "outputs/validation/_mock_c_fm09_pre_execute_post_commit_seal_attestation/attestation_fingerprint.json",
+    "readiness_packet": "outputs/validation/_mock_c_fm10_pre_execute_human_decision_readiness_ledger/human_execute_decision_readiness_packet.json"
+  },
+  "frozen_attestation_fingerprint_sha256": "4d0a473ce0e741d89c85459d1c5b027c90294ff73f7cdf2dd7b1038453c8e444",
+  "verified_claim_forbidden": true,
+  "production_ready_claim_forbidden": true,
+  "notes": "本 checklist 仅冻结人批证据与选项；不翻转 approved；不调用生产 snapshot EXECUTE。"
+}

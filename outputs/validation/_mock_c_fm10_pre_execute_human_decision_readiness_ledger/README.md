@@ -1,0 +1,13 @@
+# C-FM-10 mock pre-EXECUTE human decision readiness ledger root
+
+gate: `PASS_OFFLINE`
+execute_production_snapshot_rebuild: false
+approved_for_snapshot_rebuild: false
+ready_for_execute: false
+decision_status: AWAITING_HUMAN_EXECUTE_DECISION
+decision_option_a: HOLD_KEEP_EXECUTE_FALSE
+does_not_overwrite: _mock_c_fm06_pre_execute_safe_snapshot_wall
+does_not_overwrite: _mock_c_fm07_pre_execute_wall_freeze_drift_recheck
+does_not_overwrite: _mock_c_fm08_pre_execute_controller_commit_boundary
+does_not_overwrite: _mock_c_fm09_pre_execute_post_commit_seal_attestation
+see: [../cninfo_c_class_pre_execute_human_decision_readiness_ledger_20260715.md](../cninfo_c_class_pre_execute_human_decision_readiness_ledger_20260715.md)

@@ -1,0 +1,23 @@
+{
+  "generated_at": "2026-07-15T12:03:05Z",
+  "task_id": "C-FM-10",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "fingerprint": {
+    "row_count": 82,
+    "ok_count": 82,
+    "fail_count": 0,
+    "layers": {
+      "fm_gate_battery": 10,
+      "seal_chain_continuity": 21,
+      "execute_hold_seal": 27,
+      "human_decision_readiness": 9,
+      "protected_csv_registry": 15
+    },
+    "fingerprint_sha256": "a380554136c4f0921493b1eafed6a78dc326d5e0a770f8d43f967466b0235e12"
+  },
+  "frozen_wall_fingerprint_sha256": "30ff8a3b3841aec0ac21374fcde0ad947fc84227f6e52b3828067d15b3c01ca3",
+  "frozen_exclusion_fingerprint_sha256": "e305e275b4b8e4e28ccd11a396cda5b93c6a3c99925a2956cba79386a08aa2ac",
+  "frozen_boundary_fingerprint_sha256": "c9c00a38e3031b25c70bd462aea2a6bb5927f4acdc9cfc48fc4029e160a04db4",
+  "frozen_attestation_fingerprint_sha256": "4d0a473ce0e741d89c85459d1c5b027c90294ff73f7cdf2dd7b1038453c8e444"
+}

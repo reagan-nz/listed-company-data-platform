@@ -1,0 +1,33 @@
+{
+  "packet_kind": "pre_execute_human_decision_readiness_ledger",
+  "task_id": "C-FM-10",
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "cninfo_calls": 0,
+  "human_action_required_for_execute": true,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "ready_for_commit": true,
+  "ready_for_execute": false,
+  "controller_action": "HUMAN_DECISION_READINESS_LEDGER_ONLY",
+  "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+  "decision_option_a": "HOLD_KEEP_EXECUTE_FALSE",
+  "decision_option_a_recommended": true,
+  "decision_option_b": "APPROVE_EXECUTE_REQUIRES_HUMAN",
+  "decision_option_b_auto_applied": false,
+  "verified_claim_forbidden": true,
+  "production_ready_claim_forbidden": true,
+  "frozen_wall_fingerprint_sha256": "30ff8a3b3841aec0ac21374fcde0ad947fc84227f6e52b3828067d15b3c01ca3",
+  "frozen_exclusion_fingerprint_sha256": "e305e275b4b8e4e28ccd11a396cda5b93c6a3c99925a2956cba79386a08aa2ac",
+  "frozen_boundary_fingerprint_sha256": "c9c00a38e3031b25c70bd462aea2a6bb5927f4acdc9cfc48fc4029e160a04db4",
+  "frozen_attestation_fingerprint_sha256": "4d0a473ce0e741d89c85459d1c5b027c90294ff73f7cdf2dd7b1038453c8e444",
+  "notes": "本包在 C-FM-09 commit 后做 human EXECUTE decision readiness ledger：FM-01..09 battery · MOCK8/9/10/11 零漂移 · 四层 KEEP_EXECUTE_FALSE · Option A HOLD 推荐 · Option B APPROVE 仍人批；不覆盖 MOCK8/9/10/11；不翻转 approved_for_snapshot_rebuild；生产 snapshot EXECUTE 仍须独立人批；本 executor 不 commit/push。",
+  "generated_at": "2026-07-15T12:03:05Z",
+  "gate": "PASS_OFFLINE",
+  "layer_gates": {
+    "fm_gate_battery": "PASS_OFFLINE",
+    "seal_chain_continuity": "PASS_OFFLINE",
+    "execute_hold_seal": "PASS_OFFLINE",
+    "human_decision_readiness": "PASS_OFFLINE",
+    "protected_csv_registry": "PASS_OFFLINE"
+  }
+}
