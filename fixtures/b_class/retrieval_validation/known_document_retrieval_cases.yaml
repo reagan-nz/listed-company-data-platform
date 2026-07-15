@@ -290,7 +290,7 @@ cases:
       来源 outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/b_class_erad_next_scale_slice1_combined_report.csv
       行 BD2E244（quality=pass）。不写 verified；不下载 PDF。
 
-  # --- legal_opinion / 法律意见书 × 4（document_type=announcement；非 shareholder_meeting_material）---
+  # --- legal_opinion / 法律意见书 × 6（document_type=announcement；非 shareholder_meeting_material）---
   - case_id: legal_opinion_known_001
     case_status: ready
     source_id: cninfo_general_announcement_pdf
@@ -373,6 +373,51 @@ cases:
       title_pattern 取「差异化分红的法律意见书」。来源
       outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
       b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E442（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  # --- legal_opinion 非会议扩展 × 2（B-FM-31；路由已通；known live 锚点）---
+  - case_id: legal_opinion_known_005
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "688003"
+    company_name: "天准科技"
+    title_pattern: "可转换公司债券的法律意见书"
+    expected_document_type: announcement
+    date_start: "2025-06-22"
+    date_end: "2025-06-25"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-31 自 harvest 证据晋升（可转债法律意见书 known 扩展；B-FM-26 路由已通）：
+      天准科技 688003，浙江六和律师事务所关于苏州天准科技股份有限公司向不特定对象
+      发行可转换公司债券的法律意见书（announcement_id=1223956527，披露日 2025-06-23）。
+      title_pattern 取「可转换公司债券的法律意见书」（与上市保荐书 / 受托管理事务报告 /
+      增持·差异化分红法律意见书可区分）。路由仍为 announcement →
+      cninfo_general_announcement_pdf。来源
+      outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
+      b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E472（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: legal_opinion_known_006
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "600570"
+    company_name: "恒生电子"
+    title_pattern: "调整2024年股票期权激励计划行权价格的法律意见书"
+    expected_document_type: announcement
+    date_start: "2025-06-12"
+    date_end: "2025-06-15"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-31 自 harvest 证据晋升（激励计划行权价格调整法律意见书第二边角；对称 known_005）：
+      恒生电子 600570，北京竞天公诚（杭州）律师事务所关于恒生电子股份有限公司
+      调整2024年股票期权激励计划行权价格的法律意见书（announcement_id=1223877213，
+      披露日 2025-06-13）。title_pattern 取「调整2024年股票期权激励计划行权价格的法律意见书」
+      （短串「股票期权激励计划行权价格的法律意见书」同窗会命中多条 → ambiguous）。
+      与会议法律意见 / 增持 / 差异化分红 / 可转债法律意见书可区分。来源
+      outputs/validation/cninfo_b_class_erad_scale_200/reports/
+      b_class_erad_scale_200_report.csv 行 BD2E168（quality=pass）。
       不写 verified；不下载 PDF。
 
   # --- verification_opinion / 核查意见 × 2（B-FM-27；document_type=announcement；勿落 other）---

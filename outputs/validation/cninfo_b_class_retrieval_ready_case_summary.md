@@ -20,9 +20,9 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 
 | 指标 | 数值 |
 |------|------|
-| total_cases | **46** |
+| total_cases | **48** |
 | placeholder | **2** |
-| ready | **44** |
+| ready | **46** |
 | retired | **0** |
 | invalid_ready | **0** |
 | result | **PASS** |
@@ -47,6 +47,8 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 - `legal_opinion_known_002` (known_document) → `cninfo_general_announcement_pdf`
 - `legal_opinion_known_003` (known_document) → `cninfo_general_announcement_pdf`
 - `legal_opinion_known_004` (known_document) → `cninfo_general_announcement_pdf`
+- `legal_opinion_known_005` (known_document) → `cninfo_general_announcement_pdf`
+- `legal_opinion_known_006` (known_document) → `cninfo_general_announcement_pdf`
 - `verification_opinion_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `verification_opinion_known_002` (known_document) → `cninfo_general_announcement_pdf`
 - `listing_sponsor_known_001` (known_document) → `cninfo_general_announcement_pdf`
