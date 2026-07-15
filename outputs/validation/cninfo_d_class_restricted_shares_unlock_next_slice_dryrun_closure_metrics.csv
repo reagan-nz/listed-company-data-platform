@@ -1,0 +1,37 @@
+metric_group,metric_name,value,gate_impact,notes
+next_slice,total_cases,5,closure,DRU101-DRU105 only
+next_slice,planned_ok,5,closure,D-FM-47 S4 dry-run 5/5; D-FM-48 read-only harden
+next_slice,planned_shared_cninfo_requests,1,closure,tdate_daily_2026-07-03
+next_slice,planned_request_budget_total,5,closure,per-case budget slot sum
+next_slice,live_report_present,no,closure,no live this phase; live_gate NOT_APPROVED
+next_slice,live_acceptable,n/a,closure,execution_gate remains NOT_APPLICABLE
+cninfo,CNINFO_during_dfm47_dryrun,0,s4,offline dry-run only
+cninfo,CNINFO_during_dfm48_closure,0,closure,evidence hardening; no network
+cninfo,shared_probe_prefer,1,planning,prefer one shared denser-day for future live
+caveat,live_found_path_DRU101_105,NOT_PROVEN,closure,cite strength unproven for DRU101-105
+caveat,s4_pass_offline_not_live,yes,closure,PASS_OFFLINE != live authorize
+caveat,runner_ready_not_approved,yes,closure,READY_FOR_APPROVAL != APPROVED
+caveat,forbidden_sparse_anchor_20260608,yes,closure,must not use 2026-06-08 as sole found
+caveat,rsu_live_not_flipped,yes,closure,controller_execution_allowed=false
+safety,pdf_download,0,red_line,no PDF
+safety,ocr,0,red_line,no OCR
+safety,extraction,0,red_line,no extraction
+safety,db_write,0,red_line,no DB
+safety,minio_write,0,red_line,no MinIO
+safety,rag_run,0,red_line,no RAG
+exclusion,688671_excluded,yes,universe,policy retained
+exclusion,301259_excluded,yes,universe,DLC006R not reopened
+track,rsu_next_dryrun_root_frozen,yes,closure,sha256 freeze ledger enforced
+track,rsu_first_slice_frozen,yes,closure,draft + dry-run root untouched
+track,ep_first_next_frozen,yes,closure,locks + dry-run roots untouched
+track,fia_first_next_further_frozen,yes,closure,locks + dry-run roots untouched
+track,at_sd_first_next_frozen,yes,closure,locks + dry-run roots untouched
+gate,approval_gate,STANDING_SCOPE_AUTHORIZED,preserved,D-FM-46
+gate,fixture_vr_gate,PASS_OFFLINE,preserved,D-FM-46
+gate,runner_extension_gate,READY_FOR_APPROVAL,preserved,D-FM-47
+gate,s4_dryrun_gate,PASS_OFFLINE,preserved,D-FM-47; not bare PASS
+gate,live_path_gate,READY_FOR_APPROVAL,preserved,path wired offline
+gate,live_gate,NOT_APPROVED,preserved,approve + controller_execution_allowed required
+gate,execution_gate,NOT_APPLICABLE,preserved,no live this phase
+gate,s4_dryrun_closure_gate,PASS_OFFLINE,closure,dry-run phase closed with caveats; NOT verified
+gate,commit_boundary_gate,READY_FOR_COMMIT_REVIEW,closure,controller commit-boundary next
