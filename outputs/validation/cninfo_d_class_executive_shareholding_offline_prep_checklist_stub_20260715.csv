@@ -1,0 +1,16 @@
+item_id,item,status,artifact_or_ref,notes
+ESH-PLAN-01,next_component_planning_md,ready,plans/cninfo_d_class_executive_shareholding_next_component_planning_20260715.md,primary=executive_shareholding; gate=READY_FOR_APPROVAL; NOT approved
+ESH-PLAN-02,candidate_matrix_csv,ready,outputs/validation/cninfo_d_class_executive_shareholding_next_component_candidate_matrix_20260715.csv,rank=1 executive_shareholding; closed tracks excluded
+ESH-PLAN-03,recommendation_md,ready,outputs/validation/cninfo_d_class_executive_shareholding_next_component_recommendation_20260715.md,human approval phrase documented; NOT claimed approved
+ESH-PLAN-04,planning_summary_md,ready,outputs/validation/cninfo_d_class_executive_shareholding_next_component_planning_summary_20260715.md,CNINFO=0; NOT verified
+ESH-PLAN-05,universe_draft_sketch_csv,ready,outputs/validation/cninfo_d_class_executive_shareholding_first_slice_universe_draft_sketch_20260715.csv,DES001-DES005; sketch only; not locked
+ESH-PLAN-06,next_step_recommendation_md,ready,outputs/validation/cninfo_d_class_executive_shareholding_next_component_next_step_recommendation_20260715.md,await human approve component
+ESH-STUB-01,vr_checklist_stub,stub_only,this file,D-R15-02 prep stub; full VR draft deferred to post-approval offline package
+ESH-STUB-02,schema_prep,blocked_until_approval,n/a,do not start Level-2 schema_prep until component approved
+ESH-STUB-03,sample_fixture_plan,blocked_until_approval,n/a,cite DC006/DLC007 only; no new fixture files this round
+ESH-STUB-04,runner_extension,forbidden_this_round,n/a,no --executive-shareholding-first-slice implement
+ESH-STUB-05,cninfo_live,forbidden_this_round,n/a,CNINFO=0
+ESH-SAFE-01,exclude_301259_688671,locked_policy,plans + universe sketch,permanent first-slice exclude
+ESH-SAFE-02,no_dlc006r_reopen,locked_policy,known-event closed 389cd9c,explicit non-reopen
+ESH-SAFE-03,shareholder_change_closed,locked_policy,COMMITTED_COMPLETE 17bc0fe,do not reopen DSC track
+ESH-GATE-01,planning_gate,READY_FOR_APPROVAL,d_class_executive_shareholding_next_component_planning_gate,NOT approved; NOT verified; NOT production_ready
