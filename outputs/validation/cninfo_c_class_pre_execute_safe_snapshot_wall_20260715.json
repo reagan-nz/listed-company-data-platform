@@ -1,0 +1,104 @@
+{
+  "generated_at": "2026-07-15T09:46:39Z",
+  "task_id": "C-FM-06",
+  "gate": "PASS_OFFLINE",
+  "layer_gates": {
+    "fm_gate_battery": "PASS_OFFLINE",
+    "exclusion_universe_freeze": "PASS_OFFLINE",
+    "dual_layer_qa_freeze": "PASS_OFFLINE",
+    "execute_wall": "PASS_OFFLINE",
+    "protected_csv_registry": "PASS_OFFLINE"
+  },
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "fail_count": 0,
+  "matrix_rows": 36,
+  "output_root": "outputs/validation/_mock_c_fm06_pre_execute_safe_snapshot_wall",
+  "matrix_path": "outputs/validation/_mock_c_fm06_pre_execute_safe_snapshot_wall/wall_matrix.csv",
+  "fingerprint_path": "outputs/validation/_mock_c_fm06_pre_execute_safe_snapshot_wall/wall_fingerprint.json",
+  "fingerprint": {
+    "row_count": 36,
+    "ok_count": 36,
+    "fail_count": 0,
+    "layers": {
+      "fm_gate_battery": 6,
+      "exclusion_universe_freeze": 8,
+      "dual_layer_qa_freeze": 6,
+      "execute_wall": 6,
+      "protected_csv_registry": 10
+    },
+    "fingerprint_sha256": "30ff8a3b3841aec0ac21374fcde0ad947fc84227f6e52b3828067d15b3c01ca3"
+  },
+  "exclusion_fingerprint": {
+    "row_count": 19,
+    "unique_code_count": 18,
+    "unique_codes": [
+      "000003",
+      "000015",
+      "000022",
+      "000024",
+      "000578",
+      "000666",
+      "000689",
+      "000861",
+      "000961",
+      "002280",
+      "301212",
+      "600001",
+      "600005",
+      "600068",
+      "600220",
+      "688031",
+      "688062",
+      "688071"
+    ],
+    "families": {
+      "partial7": 7,
+      "empty_dividend3": 3,
+      "holdout9": 9
+    },
+    "promo_yes_count": 0,
+    "fingerprint_sha256": "e305e275b4b8e4e28ccd11a396cda5b93c6a3c99925a2956cba79386a08aa2ac"
+  },
+  "exclusion_fingerprint_path": "outputs/validation/_mock_c_fm06_pre_execute_safe_snapshot_wall/exclusion_universe_fingerprint.json",
+  "battery_path": "outputs/validation/_mock_c_fm06_pre_execute_safe_snapshot_wall/fm_gate_battery.json",
+  "human_approval_packet_path": "outputs/validation/_mock_c_fm06_pre_execute_safe_snapshot_wall/human_approval_packet.json",
+  "human_approval_packet": {
+    "generated_at": "2026-07-15T09:46:39Z",
+    "task_id": "C-FM-06",
+    "packet_kind": "pre_execute_safe_snapshot_wall_freeze",
+    "gate": "PASS_OFFLINE",
+    "execute_production_snapshot_rebuild": false,
+    "approved_for_snapshot_rebuild": false,
+    "cninfo_calls": 0,
+    "human_action_required_for_execute": true,
+    "hold_recommendation": "KEEP_EXECUTE_FALSE",
+    "layer_gates": {
+      "fm_gate_battery": "PASS_OFFLINE",
+      "exclusion_universe_freeze": "PASS_OFFLINE",
+      "dual_layer_qa_freeze": "PASS_OFFLINE",
+      "execute_wall": "PASS_OFFLINE",
+      "protected_csv_registry": "PASS_OFFLINE"
+    },
+    "exclusion_universe_fingerprint_sha256": "e305e275b4b8e4e28ccd11a396cda5b93c6a3c99925a2956cba79386a08aa2ac",
+    "exclusion_row_count": 19,
+    "caveat_cohort_coverage": "10/10",
+    "verified_claim_forbidden": true,
+    "production_ready_claim_forbidden": true,
+    "notes": "本包仅冻结 pre-EXECUTE 安全墙证据；不翻转 approved_for_snapshot_rebuild；生产 snapshot EXECUTE 仍须独立人批。"
+  },
+  "inputs": {
+    "fm01_gate_json": "outputs/validation/cninfo_c_class_isolated_snapshot_dryrun_repro_check_20260715.json",
+    "fm02_gate_json": "outputs/validation/cninfo_c_class_isolated_snapshot_validation_cohorts_20260715.json",
+    "fm03_gate_json": "outputs/validation/cninfo_c_class_harvest_exclusion_dual_layer_consistency_20260715.json",
+    "fm04_gate_json": "outputs/validation/cninfo_c_class_dual_layer_ledger_resume_lineage_20260715.json",
+    "fm05_gate_json": "outputs/validation/cninfo_c_class_cross_fm_mock_cohort_integrity_20260715.json",
+    "exclusion_universe_csv": "outputs/validation/cninfo_c_class_snapshot_progression_exclusion_universe_20260714.csv",
+    "coverage_csv": "outputs/validation/cninfo_c_class_erad_fuller_market_slice1_qa_closure_dual_layer_index/qa_closure_dual_layer_cohort_coverage.csv",
+    "empty3_index_csv": "outputs/validation/cninfo_c_class_erad_fuller_market_slice1_qa_closure_dual_layer_index/qa_closure_dual_layer_evidence_index.csv",
+    "partial7_index_csv": "outputs/validation/cninfo_c_class_erad_fuller_market_slice1_qa_closure_dual_layer_index/qa_closure_dual_layer_evidence_index_partial7.csv",
+    "protected_roots_csv": "outputs/validation/cninfo_c_class_erad_protected_output_roots.csv"
+  },
+  "mock_root_is_isolated": true
+}

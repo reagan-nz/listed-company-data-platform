@@ -1,0 +1,24 @@
+{
+  "generated_at": "2026-07-15T09:46:39Z",
+  "task_id": "C-FM-06",
+  "packet_kind": "pre_execute_safe_snapshot_wall_freeze",
+  "gate": "PASS_OFFLINE",
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "cninfo_calls": 0,
+  "human_action_required_for_execute": true,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "layer_gates": {
+    "fm_gate_battery": "PASS_OFFLINE",
+    "exclusion_universe_freeze": "PASS_OFFLINE",
+    "dual_layer_qa_freeze": "PASS_OFFLINE",
+    "execute_wall": "PASS_OFFLINE",
+    "protected_csv_registry": "PASS_OFFLINE"
+  },
+  "exclusion_universe_fingerprint_sha256": "e305e275b4b8e4e28ccd11a396cda5b93c6a3c99925a2956cba79386a08aa2ac",
+  "exclusion_row_count": 19,
+  "caveat_cohort_coverage": "10/10",
+  "verified_claim_forbidden": true,
+  "production_ready_claim_forbidden": true,
+  "notes": "本包仅冻结 pre-EXECUTE 安全墙证据；不翻转 approved_for_snapshot_rebuild；生产 snapshot EXECUTE 仍须独立人批。"
+}

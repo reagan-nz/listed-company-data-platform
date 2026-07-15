@@ -1,0 +1,36 @@
+{
+  "generated_at": "2026-07-15T09:46:39Z",
+  "task_id": "C-FM-06",
+  "source_csv": "outputs/validation/cninfo_c_class_snapshot_progression_exclusion_universe_20260714.csv",
+  "fingerprint": {
+    "row_count": 19,
+    "unique_code_count": 18,
+    "unique_codes": [
+      "000003",
+      "000015",
+      "000022",
+      "000024",
+      "000578",
+      "000666",
+      "000689",
+      "000861",
+      "000961",
+      "002280",
+      "301212",
+      "600001",
+      "600005",
+      "600068",
+      "600220",
+      "688031",
+      "688062",
+      "688071"
+    ],
+    "families": {
+      "partial7": 7,
+      "empty_dividend3": 3,
+      "holdout9": 9
+    },
+    "promo_yes_count": 0,
+    "fingerprint_sha256": "e305e275b4b8e4e28ccd11a396cda5b93c6a3c99925a2956cba79386a08aa2ac"
+  }
+}
