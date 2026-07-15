@@ -1,0 +1,41 @@
+# B-FM-52 live allow-list — 仅新晋 board_resolution_known_004 /
+# board_resolution_known_005
+status: live_sample_scoped_B-FM-52
+verified: false
+notes: B-FM-52 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS including board known_001–003, supervisory known_001–004 and B-FM-51
+cases:
+  - case_id: board_resolution_known_004
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "300998"
+    company_name: "宁波方正"
+    title_pattern: "第三届董事会第十四次会议决议公告"
+    expected_document_type: board_resolution
+    date_start: "2025-06-29"
+    date_end: "2025-07-02"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-52 live allow-list（董事会届次决议 known_004）：
+      harvest BD2E658 宁波方正 300998 ann=1224037323 2025-06-30。
+      title_pattern 取「第三届董事会第十四次会议决议公告」
+      （≠ known_002 第四次 / known_003 第五届第五次 / known_005 第十三次）。
+      不写 verified；不下载 PDF。
+
+  - case_id: board_resolution_known_005
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "301511"
+    company_name: "德福科技"
+    title_pattern: "第三届董事会第十三次会议决议公告"
+    expected_document_type: board_resolution
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-52 live allow-list（董事会届次决议 known_005）：
+      harvest BD2E730 德福科技 301511 ann=1224016561 2025-06-27。
+      title_pattern 取「第三届董事会第十三次会议决议公告」
+      （≠ known_002 第四次 / known_004 第十四次 / known_003 第五届第五次）。
+      不写 verified；不下载 PDF。

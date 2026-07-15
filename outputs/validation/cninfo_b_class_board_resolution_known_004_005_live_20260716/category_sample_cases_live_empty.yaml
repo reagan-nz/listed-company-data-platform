@@ -1,0 +1,5 @@
+# B-FM-52 live：category-sample 空（仅跑 known allow-list）
+status: live_sample_scoped_B-FM-52_category_empty
+verified: false
+notes: Empty category-sample allow-list for B-FM-52 bounded live; known-document only.
+cases: []
