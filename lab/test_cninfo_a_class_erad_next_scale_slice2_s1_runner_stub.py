@@ -347,7 +347,7 @@ class TestSlice2S1RunnerStubDocumentation(unittest.TestCase):
         self.assertEqual(len(session2), 50)
         self.assertEqual(session1 | session2, ALLOWED_ERAD_NEXT_SCALE_SLICE2_CASE_IDS)
 
-    def test_runner_test_file_exists_live_path_optional(self) -> None:
+    def test_runner_test_file_exists_live_path_present(self) -> None:
         runner_test = os.path.join(
             _LAB_DIR, "test_cninfo_a_class_erad_next_scale_slice2_runner.py"
         )
@@ -355,8 +355,7 @@ class TestSlice2S1RunnerStubDocumentation(unittest.TestCase):
             _LAB_DIR, "test_cninfo_a_class_erad_next_scale_slice2_live_path.py"
         )
         self.assertTrue(os.path.isfile(runner_test), msg="完整 runner 测试须已创建")
-        # live path 专项测试可为后续任务；本包以 approval-gated live 实现为准
-        _ = live_test
+        self.assertTrue(os.path.isfile(live_test), msg="slice2 live path 专项测试须已创建")
 
 
 if __name__ == "__main__":
