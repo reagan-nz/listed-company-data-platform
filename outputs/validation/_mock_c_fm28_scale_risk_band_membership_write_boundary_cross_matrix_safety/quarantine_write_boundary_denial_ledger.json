@@ -1,0 +1,36 @@
+{
+  "generated_at": "2026-07-15T14:11:47Z",
+  "task_id": "C-FM-28",
+  "fingerprint_sha256": "10a68c46d192aa2d3e3b10580eaf532d7bc6a49296c0191f00a3e83ced0806af",
+  "failed_codes": [
+    "002140",
+    "300055",
+    "300069",
+    "300074",
+    "300540",
+    "300552",
+    "301195",
+    "603885",
+    "605060"
+  ],
+  "denial_count": 27,
+  "doc": {
+    "kind": "quarantine_write_boundary_denial",
+    "failed_n": 9,
+    "failed_codes": [
+      "002140",
+      "300055",
+      "300069",
+      "300074",
+      "300540",
+      "300552",
+      "301195",
+      "603885",
+      "605060"
+    ],
+    "deny_harvest_write": true,
+    "deny_exclusion_write": true,
+    "deny_promote_to_complete": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

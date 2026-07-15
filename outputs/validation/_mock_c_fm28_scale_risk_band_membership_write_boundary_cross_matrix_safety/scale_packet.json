@@ -1,0 +1,54 @@
+{
+  "generated_at": "2026-07-15T14:11:47Z",
+  "task_id": "C-FM-28",
+  "gate": "PASS_OFFLINE",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "ready_for_execute": false,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+  "idle_not_required_while_awaiting": true,
+  "seal_chain_extended": false,
+  "scale_tier_count": 7,
+  "company_coverage_sum": 3314,
+  "harvest_unique_union": 2249,
+  "harvest_additive": 2261,
+  "overlap_delta": 12,
+  "surface_unique": 2251,
+  "combined_dryrun_coverage": 1053,
+  "union_complete": 2134,
+  "union_partial": 106,
+  "union_failed": 9,
+  "resume_total": 29,
+  "resume_improved": 28,
+  "resume_same": 1,
+  "resume_worse": 0,
+  "surface_harvest_delta_n": 2,
+  "dry863_extras": [
+    "000037",
+    "000055"
+  ],
+  "failed_codes": [
+    "002140",
+    "300055",
+    "300069",
+    "300074",
+    "300540",
+    "300552",
+    "301195",
+    "603885",
+    "605060"
+  ],
+  "resume_same_codes": [
+    "301212"
+  ],
+  "partial_risk_bands": {
+    "p35_heavy": 75,
+    "p3_mid": 14,
+    "p2_mid": 12,
+    "fu_light": 5
+  },
+  "residual_safety_coverage": 117,
+  "notes": "risk-band membership (106 exact) + quarantine write-boundary denial (failed=9) + fence absorb denial ({000037,000055}) + residual safety cross-matrix (coverage=117) + FM27 continuity + MOCK30; EXECUTE remains human-held; does not overwrite MOCK3-29"
+}

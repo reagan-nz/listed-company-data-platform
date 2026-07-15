@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-07-15T14:11:47Z",
+  "task_id": "C-FM-28",
+  "fingerprint_sha256": "23d72224e7d1a4de79ccd5061e09de4cb5133b6f1e12822af9e29c897e03389d",
+  "failed_n": 9,
+  "delta_n": 2,
+  "partial_n": 106,
+  "coverage_sum": 117,
+  "doc": {
+    "kind": "residual_safety_cross_matrix",
+    "failed_n": 9,
+    "delta_n": 2,
+    "partial_n": 106,
+    "disjoint_quarantine_fence": true,
+    "disjoint_quarantine_partial": true,
+    "disjoint_fence_partial": true,
+    "coverage_sum": 117,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

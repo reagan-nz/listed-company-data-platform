@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-07-15T14:11:47Z",
+  "task_id": "C-FM-28",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "seal_chain_extended": false,
+  "scale_tier_count": 7,
+  "company_coverage_sum": 3314,
+  "harvest_unique_union": 2249,
+  "overlap_delta": 12,
+  "surface_unique": 2251,
+  "union_complete": 2134,
+  "union_partial": 106,
+  "union_failed": 9,
+  "resume_improved": 28,
+  "resume_same": 1,
+  "surface_harvest_delta_n": 2,
+  "partial_risk_bands": {
+    "p35_heavy": 75,
+    "p3_mid": 14,
+    "p2_mid": 12,
+    "fu_light": 5
+  },
+  "residual_safety_coverage": 117,
+  "frozen_fps": {
+    "partial_risk_band_membership": "bfb3cecfe39ccad2e35b066980a63ae866ddd5f5027238f8f4223a64259979f7",
+    "quarantine_write_boundary_denial": "10a68c46d192aa2d3e3b10580eaf532d7bc6a49296c0191f00a3e83ced0806af",
+    "fence_absorb_denial_battery": "df88f767d1bb298f09688e80938fbaea83fbb0de610fd94d435c9dd894c9f0ed",
+    "residual_safety_cross_matrix": "23d72224e7d1a4de79ccd5061e09de4cb5133b6f1e12822af9e29c897e03389d",
+    "fm27_failed_disposition_quarantine": "d8a70c1a820dacbf344c059b52a94bd84b7649acd7a58e0bba2f81930c007daa",
+    "fm27_surface_delta_pending_fence": "2d711e4444256a8c0cf483b62269c16fff183422dc61b59715b3c74dc3ff86ad",
+    "fm27_partial_risk_band_rollup": "fbb51d7701bc85ac6727f77ab08a4348d00cb13429b151bc7ffc99047e6dbf90"
+  },
+  "observed_fps": {
+    "partial_risk_band_membership": "bfb3cecfe39ccad2e35b066980a63ae866ddd5f5027238f8f4223a64259979f7",
+    "quarantine_write_boundary_denial": "10a68c46d192aa2d3e3b10580eaf532d7bc6a49296c0191f00a3e83ced0806af",
+    "fence_absorb_denial_battery": "df88f767d1bb298f09688e80938fbaea83fbb0de610fd94d435c9dd894c9f0ed",
+    "residual_safety_cross_matrix": "23d72224e7d1a4de79ccd5061e09de4cb5133b6f1e12822af9e29c897e03389d"
+  },
+  "fingerprint": {
+    "row_count": 138,
+    "ok_count": 138,
+    "fail_count": 0,
+    "layers": {
+      "fm27_continuity": 6,
+      "partial_risk_band_membership": 7,
+      "quarantine_write_boundary_denial": 7,
+      "fence_absorb_denial_battery": 6,
+      "residual_safety_cross_matrix": 7,
+      "protected_write_guard": 5,
+      "output_root_protection": 7,
+      "frozen_mock_isolation": 31,
+      "protected_csv_registry": 33,
+      "fm_gate_battery": 22,
+      "execute_hold_seal": 7
+    },
+    "fingerprint_sha256": "662b5669e5c5aaf23f7b856d4a34160a8aa37c4a0cfd1896e65181b36ed2dee3"
+  }
+}

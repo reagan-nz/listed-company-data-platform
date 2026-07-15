@@ -1,0 +1,112 @@
+{
+  "generated_at": "2026-07-15T14:11:47Z",
+  "task_id": "C-FM-28",
+  "gate": "PASS_OFFLINE",
+  "layer_gates": {
+    "fm27_continuity": "PASS_OFFLINE",
+    "partial_risk_band_membership": "PASS_OFFLINE",
+    "quarantine_write_boundary_denial": "PASS_OFFLINE",
+    "fence_absorb_denial_battery": "PASS_OFFLINE",
+    "residual_safety_cross_matrix": "PASS_OFFLINE",
+    "output_root_protection": "PASS_OFFLINE",
+    "frozen_mock_isolation": "PASS_OFFLINE",
+    "protected_csv_registry": "PASS_OFFLINE",
+    "fm_gate_battery": "PASS_OFFLINE",
+    "execute_hold_seal": "PASS_OFFLINE"
+  },
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "ready_for_execute": false,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+  "idle_not_required_while_awaiting": true,
+  "fail_count": 0,
+  "matrix_rows": 138,
+  "scale_tier_count": 7,
+  "company_coverage_sum": 3314,
+  "harvest_unique_union": 2249,
+  "harvest_additive": 2261,
+  "overlap_delta": 12,
+  "surface_unique": 2251,
+  "union_complete": 2134,
+  "union_partial": 106,
+  "union_failed": 9,
+  "resume_total": 29,
+  "resume_improved": 28,
+  "resume_same": 1,
+  "resume_worse": 0,
+  "surface_harvest_delta_n": 2,
+  "dry863_extras": [
+    "000037",
+    "000055"
+  ],
+  "failed_codes": [
+    "002140",
+    "300055",
+    "300069",
+    "300074",
+    "300540",
+    "300552",
+    "301195",
+    "603885",
+    "605060"
+  ],
+  "resume_same_codes": [
+    "301212"
+  ],
+  "partial_risk_bands": {
+    "p35_heavy": 75,
+    "p3_mid": 14,
+    "p2_mid": 12,
+    "fu_light": 5
+  },
+  "residual_safety_coverage": 117,
+  "output_root": "outputs/validation/_mock_c_fm28_scale_risk_band_membership_write_boundary_cross_matrix_safety",
+  "matrix_path": "outputs/validation/_mock_c_fm28_scale_risk_band_membership_write_boundary_cross_matrix_safety/scale_matrix.csv",
+  "fingerprint_path": "outputs/validation/_mock_c_fm28_scale_risk_band_membership_write_boundary_cross_matrix_safety/scale_fingerprint.json",
+  "fingerprint": {
+    "row_count": 138,
+    "ok_count": 138,
+    "fail_count": 0,
+    "layers": {
+      "fm27_continuity": 6,
+      "partial_risk_band_membership": 7,
+      "quarantine_write_boundary_denial": 7,
+      "fence_absorb_denial_battery": 6,
+      "residual_safety_cross_matrix": 7,
+      "protected_write_guard": 5,
+      "output_root_protection": 7,
+      "frozen_mock_isolation": 31,
+      "protected_csv_registry": 33,
+      "fm_gate_battery": 22,
+      "execute_hold_seal": 7
+    },
+    "fingerprint_sha256": "662b5669e5c5aaf23f7b856d4a34160a8aa37c4a0cfd1896e65181b36ed2dee3"
+  },
+  "membership_path": "outputs/validation/_mock_c_fm28_scale_risk_band_membership_write_boundary_cross_matrix_safety/partial_risk_band_membership_ledger.json",
+  "quarantine_write_path": "outputs/validation/_mock_c_fm28_scale_risk_band_membership_write_boundary_cross_matrix_safety/quarantine_write_boundary_denial_ledger.json",
+  "fence_absorb_path": "outputs/validation/_mock_c_fm28_scale_risk_band_membership_write_boundary_cross_matrix_safety/fence_absorb_denial_ledger.json",
+  "cross_matrix_path": "outputs/validation/_mock_c_fm28_scale_risk_band_membership_write_boundary_cross_matrix_safety/residual_safety_cross_matrix_ledger.json",
+  "battery_path": "outputs/validation/_mock_c_fm28_scale_risk_band_membership_write_boundary_cross_matrix_safety/fm_gate_battery.json",
+  "packet_path": "outputs/validation/_mock_c_fm28_scale_risk_band_membership_write_boundary_cross_matrix_safety/scale_packet.json",
+  "observed_fps": {
+    "partial_risk_band_membership": "bfb3cecfe39ccad2e35b066980a63ae866ddd5f5027238f8f4223a64259979f7",
+    "quarantine_write_boundary_denial": "10a68c46d192aa2d3e3b10580eaf532d7bc6a49296c0191f00a3e83ced0806af",
+    "fence_absorb_denial_battery": "df88f767d1bb298f09688e80938fbaea83fbb0de610fd94d435c9dd894c9f0ed",
+    "residual_safety_cross_matrix": "23d72224e7d1a4de79ccd5061e09de4cb5133b6f1e12822af9e29c897e03389d"
+  },
+  "inputs": {
+    "harvest_863_status": "outputs/harvest/cninfo_c_class/quality/company_harvest_status.csv",
+    "harvest_phase35_status": "outputs/harvest/cninfo_c_class/phase35_batch_500_001/quality/company_harvest_status.csv",
+    "harvest_phase3_status": "outputs/harvest/cninfo_c_class/phase3_batch_500_001/quality/company_harvest_status.csv",
+    "harvest_phase2_status": "outputs/harvest/cninfo_c_class/phase2_smoke_200/quality/company_harvest_status.csv",
+    "harvest_fuller_status": "outputs/harvest/cninfo_c_class/fuller_market_slice1_200/quality/company_harvest_status.csv",
+    "harvest_phase35_resume_status": "outputs/harvest/cninfo_c_class/phase35_batch_500_001_resume/quality/company_harvest_status.csv",
+    "fm01_snapshot_status": "outputs/validation/_mock_snapshot_batch_standard_dryrun_isolated/quality/company_snapshot_status.csv",
+    "exclusion_universe": "outputs/validation/cninfo_c_class_snapshot_progression_exclusion_universe_20260714.csv",
+    "fm27_packet": "outputs/validation/_mock_c_fm27_scale_residual_disposition_quarantine_pending_fence_safety/scale_packet.json"
+  },
+  "mock_root_is_isolated": true,
+  "seal_chain_extended": false
+}

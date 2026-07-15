@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-07-15T14:11:47Z",
+  "task_id": "C-FM-28",
+  "fingerprint_sha256": "df88f767d1bb298f09688e80938fbaea83fbb0de610fd94d435c9dd894c9f0ed",
+  "delta_codes": [
+    "000037",
+    "000055"
+  ],
+  "dry_status": {
+    "000037": "pending",
+    "000055": "pending"
+  },
+  "denial_count": 4,
+  "doc": {
+    "kind": "fence_absorb_denial_battery",
+    "delta_n": 2,
+    "delta_codes": [
+      "000037",
+      "000055"
+    ],
+    "deny_absorb_harvest": true,
+    "deny_absorb_exclusion": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
