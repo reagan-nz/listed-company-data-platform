@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-07-15T14:00:58Z",
+  "task_id": "C-FM-26",
+  "fingerprint_sha256": "43298ff9949dad24d6088ab4e174de4a25e2afb1ef509fa419dbeaeaa76a4171",
+  "same_codes": [
+    "301212"
+  ],
+  "base_status": "partial",
+  "resume_status": "partial",
+  "doc": {
+    "kind": "resume_same_hold_ledger",
+    "same_n": 1,
+    "same_codes": [
+      "301212"
+    ],
+    "base_status": "partial",
+    "resume_status": "partial",
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-07-15T14:00:58Z",
+  "task_id": "C-FM-26",
+  "fingerprint_sha256": "da84d8027f9aa3bb6d530885de1dff78ea52416b01fe1f1df5511c70268b6eb5",
+  "surface_unique": 2251,
+  "harvest_unique": 2249,
+  "delta_codes": [
+    "000037",
+    "000055"
+  ],
+  "doc": {
+    "kind": "surface_minus_harvest_delta",
+    "surface_unique": 2251,
+    "harvest_unique": 2249,
+    "delta_n": 2,
+    "delta_codes": [
+      "000037",
+      "000055"
+    ],
+    "disposition": "pending_dryrun_only_not_in_harvest_not_in_exclusion"
+  }
+}

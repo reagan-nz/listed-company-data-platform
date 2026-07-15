@@ -1,0 +1,51 @@
+{
+  "generated_at": "2026-07-15T14:00:58Z",
+  "task_id": "C-FM-26",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "seal_chain_extended": false,
+  "scale_tier_count": 7,
+  "company_coverage_sum": 3314,
+  "harvest_unique_union": 2249,
+  "overlap_delta": 12,
+  "surface_unique": 2251,
+  "union_complete": 2134,
+  "union_partial": 106,
+  "union_failed": 9,
+  "resume_improved": 28,
+  "resume_same": 1,
+  "surface_harvest_delta_n": 2,
+  "frozen_fps": {
+    "failed_residual": "f1ba366b5176964310aeff70973493f991877ce9cab7c6c22f084ddc051982ea",
+    "partial_residual": "2fb60ea3ea7ee3bacb64bad3a288adefa28f1fc1319eca6a3e05048be8be1b20",
+    "surface_harvest_delta": "da84d8027f9aa3bb6d530885de1dff78ea52416b01fe1f1df5511c70268b6eb5",
+    "resume_same_hold": "43298ff9949dad24d6088ab4e174de4a25e2afb1ef509fa419dbeaeaa76a4171",
+    "fm25_status_rollup": "bf2c366446cb04846f4432ce6bb60de2d8009b20ff19b0cf64280065397529a9",
+    "fm25_resume_delta": "d7aa3a92f479398b94c7a2a569d2b7dc6b18d1d4d7c2916a8a232d2bac4f3ad1"
+  },
+  "observed_fps": {
+    "failed_residual": "f1ba366b5176964310aeff70973493f991877ce9cab7c6c22f084ddc051982ea",
+    "partial_residual": "2fb60ea3ea7ee3bacb64bad3a288adefa28f1fc1319eca6a3e05048be8be1b20",
+    "surface_harvest_delta": "da84d8027f9aa3bb6d530885de1dff78ea52416b01fe1f1df5511c70268b6eb5",
+    "resume_same_hold": "43298ff9949dad24d6088ab4e174de4a25e2afb1ef509fa419dbeaeaa76a4171"
+  },
+  "fingerprint": {
+    "row_count": 127,
+    "ok_count": 127,
+    "fail_count": 0,
+    "layers": {
+      "fm25_continuity": 6,
+      "failed_residual_code_ledger": 5,
+      "partial_residual_code_ledger": 5,
+      "surface_harvest_delta_recon": 6,
+      "resume_same_hold": 6,
+      "protected_write_guard": 5,
+      "output_root_protection": 7,
+      "frozen_mock_isolation": 29,
+      "protected_csv_registry": 31,
+      "fm_gate_battery": 20,
+      "execute_hold_seal": 7
+    },
+    "fingerprint_sha256": "a599b6050de82508521ddc712be74794218ab95c26404eebc4e848141cb0c459"
+  }
+}
