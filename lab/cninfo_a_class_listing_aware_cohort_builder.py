@@ -6,7 +6,8 @@ A-class listing-aware next cohort 构建器（纯离线 · CNINFO = 0）。
 
 选取规则（本构建器冻结）：
 1. 源：company_basic_profile ∩ full_market_2024 名称/交易所
-2. 排除 A cumulative：scale-200 ∪ slice1 ∪ slice2 S1（S3 另含 listing-aware S2）
+2. 排除 A cumulative：scale-200 ∪ slice1 ∪ slice2 S1
+   （S3 另含 listing-aware S2；S4 另含 listing-aware S2+S3）
 3. ST-EXCLUDE（名称命中 *ST / S*ST）
 4. 非 BSE（4/8/92 前缀）
 5. 按 company_code 升序；为候选分配 case_id 与 report_type/expected_period 后
@@ -15,9 +16,10 @@ A-class listing-aware next cohort 构建器（纯离线 · CNINFO = 0）。
 
 切片：
 - S2：AD2E601–650（`--slice s2`）
-- S3：AD2E651–700（默认 · `--slice s3`）
+- S3：AD2E651–700（`--slice s3`）
+- S4：AD2E701–750（默认 · `--slice s4`）
 
-禁止：CNINFO live、伪造上市日、mutate 封闭 S1 live 根、静默改写 expected_period。
+禁止：CNINFO live、伪造上市日、mutate 封闭 S1/S2/S3 live 根、静默改写 expected_period。
 """
 
 from __future__ import annotations
@@ -89,9 +91,27 @@ DEFAULT_S3_REJECT_LEDGER_CSV = os.path.join(
     "cninfo_a_class_erad_next_scale_listing_aware_s3_reject_ledger_20260715.csv",
 )
 
+# A-FM-03：listing-aware S4（AD2E701–750）；A exclude 含 S2 + S3
+DEFAULT_A_EXCLUDE_S4_UNIVERSE_CSVS: Tuple[str, ...] = DEFAULT_A_EXCLUDE_S3_UNIVERSE_CSVS + (
+    DEFAULT_S3_OUTPUT_UNIVERSE_CSV,
+)
+DEFAULT_S4_OUTPUT_UNIVERSE_CSV = os.path.join(
+    _BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_erad_next_scale_listing_aware_s4_plus50_universe_20260715.csv",
+)
+DEFAULT_S4_REJECT_LEDGER_CSV = os.path.join(
+    _BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_erad_next_scale_listing_aware_s4_reject_ledger_20260715.csv",
+)
+
 COHORT_LABEL = "next_scale_listing_aware"
 CASE_ID_START = 601
 CASE_ID_START_S3 = 651
+CASE_ID_START_S4 = 701
 DEFAULT_TARGET_SIZE = 50
 ST_NAME_PATTERN = re.compile(r"(?:\*?ST|S\*ST)")
 UNIVERSE_COLUMNS = ["company_code", "company_name", "case_id", "cohort"]
@@ -454,24 +474,44 @@ def build_and_write_s3_plus50(
     return result
 
 
+def build_and_write_s4_plus50(
+    *,
+    universe_csv: str = DEFAULT_S4_OUTPUT_UNIVERSE_CSV,
+    reject_ledger_csv: str = DEFAULT_S4_REJECT_LEDGER_CSV,
+    target_size: int = DEFAULT_TARGET_SIZE,
+) -> BuildResult:
+    """构建 listing-aware S4 +50 universe（AD2E701–750 · 排除 S2+S3）并落盘。"""
+    result = build_listing_aware_cohort(
+        target_size=target_size,
+        case_id_start=CASE_ID_START_S4,
+        a_exclude_csvs=DEFAULT_A_EXCLUDE_S4_UNIVERSE_CSVS,
+    )
+    write_universe_csv(result.selected, universe_csv)
+    write_reject_ledger(result.rejected, reject_ledger_csv)
+    return result
+
+
 def main(argv: Optional[Iterable[str]] = None) -> int:
-    """CLI：生成 listing-aware universe（offline · 默认 S3）。"""
+    """CLI：生成 listing-aware universe（offline · 默认 S4）。"""
     import argparse
 
     parser = argparse.ArgumentParser(description="listing-aware A cohort builder（CNINFO=0）")
     parser.add_argument(
         "--slice",
-        choices=("s2", "s3"),
-        default="s3",
-        help="s2=AD2E601-650；s3=AD2E651-700（默认）",
+        choices=("s2", "s3", "s4"),
+        default="s4",
+        help="s2=AD2E601-650；s3=AD2E651-700；s4=AD2E701-750（默认）",
     )
     args = parser.parse_args(list(argv) if argv is not None else None)
     if args.slice == "s2":
         result = build_and_write_default_plus50()
         universe_path = DEFAULT_OUTPUT_UNIVERSE_CSV
-    else:
+    elif args.slice == "s3":
         result = build_and_write_s3_plus50()
         universe_path = DEFAULT_S3_OUTPUT_UNIVERSE_CSV
+    else:
+        result = build_and_write_s4_plus50()
+        universe_path = DEFAULT_S4_OUTPUT_UNIVERSE_CSV
     print(
         f"listing_aware_cohort_built slice={args.slice} size={len(result.selected)} "
         f"rejected={len(result.rejected)} a_exclude={result.a_exclude_count} "
