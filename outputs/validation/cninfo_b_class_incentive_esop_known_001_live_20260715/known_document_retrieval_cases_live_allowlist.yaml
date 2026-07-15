@@ -1,0 +1,38 @@
+# B-FM-35 live allow-list — 仅新晋 incentive_trading_self_inspection_known_001 /
+# employee_stock_ownership_plan_known_001
+status: live_sample_scoped_B-FM-35
+verified: false
+notes: B-FM-35 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS
+cases:
+  - case_id: incentive_trading_self_inspection_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000786"
+    company_name: "北新建材"
+    title_pattern: "买卖公司股票的自查报告"
+    expected_document_type: announcement
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-35 live allow-list（激励买卖自查报告）：
+      harvest BD2E087 北新建材 000786 ann=1224017800 2025-06-27。
+      不写 verified；不下载 PDF。
+
+  - case_id: employee_stock_ownership_plan_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000301"
+    company_name: "东方盛虹"
+    title_pattern: "第二期员工持股计划（草案）(修订稿）"
+    expected_document_type: announcement
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-35 live allow-list（员工持股计划草案）：
+      harvest BD2E062 东方盛虹 000301 ann=1224016542 2025-06-27。
+      title_pattern 消歧「第二期员工持股计划（草案）(修订稿）」。
+      不写 verified；不下载 PDF。

@@ -177,6 +177,8 @@ categories:
       - 独立董事提名人声明与承诺  # B-FM-33：治理披露边角
       - 资产评估说明  # B-FM-34：窄；勿裸「说明」
       - 审计报告  # B-FM-34：独立审计报告边角；含「年度报告」/「年报」仍优先 periodic
+      - 买卖公司股票的自查报告  # B-FM-35：窄；勿裸「自查报告」
+      - 员工持股计划  # B-FM-35：ESOP 草案/修订稿边角
     exclusion_patterns: []
     route_to:
       source_id: cninfo_general_announcement_pdf
@@ -213,6 +215,9 @@ categories:
       B-FM-34：「资产评估说明」/独立「审计报告」（无「年度报告」/「年报」子串）旧逻辑落
       other；窄 pattern 一律 announcement（勿裸「说明」；含年报字样的审计报告仍走
       periodic Priority 3；不扩 schema）。
+      B-FM-35：「买卖公司股票的自查报告」/「员工持股计划」旧逻辑落 other；窄
+      pattern 一律 announcement（勿裸「自查报告」；不硬推章程/制度/薪酬/名单/简报；
+      不扩 schema）。
 
 # 延期披露 / 摘要 / 提示性预告等：从 periodic 排除后的候选路由（非独立 source，归入 general 或 future disclosure_related）
 excluded_from_periodic_routing:
