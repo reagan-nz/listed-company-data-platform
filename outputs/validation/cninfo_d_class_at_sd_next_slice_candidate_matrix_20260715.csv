@@ -1,0 +1,12 @@
+option_id,option,status,cninfo_budget,risk,recommendation_rank,notes
+AT_SD_NEXT_SLICE_SCALE_OFFLINE,AT DAT101-105 denser-day sketch + SD DSD101-105 multi-rdate sketch offline,primary_executed,0,medium,1,D-FM-28; first-slice AT/SD frozen; FIA next-slice closed untouched; no runner/live
+AT_FOUND_PATH_SCALE_OFFLINE,abnormal_trading found-path / denser-day next-slice offline,primary_executed_component,0,medium,1a,within-package prefer; PENDING_DENSE_DAY_CITE; no sole needs_review; shared tdate prefer=1
+SD_MULTI_RDATE_SCALE_OFFLINE,shareholder_data multi-rdate next-slice offline,primary_executed_component,0,low,1b,retain 20260331; add 20251231 mixed; shared probes prefer=2
+FIA_FURTHER_SCALE_PLANNING,fund_industry_allocation further-scale beyond DFIA101-105,deferred,0,medium,2,D-FM-27 just closed; no unbounded live; human另批
+ESS_DEVTOOLS_PAUSE_HOLD,executive_shareholding_summary pause pending DevTools Network capture,hold_documented,0,medium,3,no H3/H4 blind retry
+ESS_H3_H4_BLIND_PROBE,leader/total or leader/detail guess probe,forbidden,>=1,high,excluded,explicit non-recommendation
+AT_FIRST_SLICE_RELIVE,re-live DAT001-005 or overwrite AT live_report,forbidden,>=1,high,excluded,D-FM-15 evidence frozen; no DAT001 brush
+SD_FIRST_SLICE_RELIVE,re-live DSD001-005 or overwrite SD live_report,forbidden,>=1,high,excluded,D-FM-14 evidence frozen
+FIA_FIRST_OR_NEXT_SLICE_MUTATE,mutate FIA first-slice or next-slice live roots/locks,forbidden,>=1,high,excluded,D-FM-20/27 closed; CAV-FIA-NS-007
+LEVEL2_IDLE,wait for Level-2 phrase,forbidden,0,n/a,excluded,standing_scope auth; Level-2 NOT required
+DLC006R_REOPEN,known-event DLC006R,forbidden,>=1,high,excluded,permanent non-reopen
