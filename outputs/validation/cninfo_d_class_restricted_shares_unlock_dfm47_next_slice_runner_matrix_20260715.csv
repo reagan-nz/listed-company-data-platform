@@ -1,0 +1,6 @@
+case_id,company_code,component,anchor_tdate,query_mode,shared_probe_key,planned_endpoint,cninfo_call_planned,dryrun_status,fixture_refs,forbidden_sole_found_anchor
+DRU101,300992,restricted_shares_unlock,2026-07-03,tdate_daily,tdate_daily_2026-07-03,https://www.cninfo.com.cn/data20/liftBan/detail,shared,planned_ok,DRU101_found.json;DRU101_empty.json,2026-06-08
+DRU102,000895,restricted_shares_unlock,2026-07-03,tdate_daily,tdate_daily_2026-07-03,https://www.cninfo.com.cn/data20/liftBan/detail,shared,planned_ok,DRU102_found.json;DRU102_empty.json,2026-06-08
+DRU103,600000,restricted_shares_unlock,2026-07-03,tdate_daily,tdate_daily_2026-07-03,https://www.cninfo.com.cn/data20/liftBan/detail,shared,planned_ok,DRU103_found.json;DRU103_empty.json,2026-06-08
+DRU104,002415,restricted_shares_unlock,2026-07-03,tdate_daily,tdate_daily_2026-07-03,https://www.cninfo.com.cn/data20/liftBan/detail,shared,planned_ok,DRU104_found.json;DRU104_empty.json,2026-06-08
+DRU105,601988,restricted_shares_unlock,2026-07-03,tdate_daily,tdate_daily_2026-07-03,https://www.cninfo.com.cn/data20/liftBan/detail,shared,planned_ok,DRU105_empty_but_valid_synthetic.json,2026-06-08
