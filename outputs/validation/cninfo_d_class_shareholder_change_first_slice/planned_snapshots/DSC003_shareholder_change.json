@@ -1,0 +1,28 @@
+{
+  "case_id": "DSC003",
+  "company_code": "600000",
+  "company_name": "浦发银行",
+  "component": "shareholder_change",
+  "market": "sse_main",
+  "anchor_tdate": "2026-07-03",
+  "query_type": "inc",
+  "expected_behavior": "captured_normal_or_empty_but_valid",
+  "mode": "dry_run",
+  "endpoint": "https://www.cninfo.com.cn/data20/shareholeder/detail",
+  "planned_params": [
+    {
+      "type": "inc",
+      "tdate": "2026-07-03"
+    }
+  ],
+  "planned_request_labels": [
+    "type_inc_tdate_2026-07-03"
+  ],
+  "cninfo_called": false,
+  "pdf_download": false,
+  "ocr": false,
+  "extraction": false,
+  "db_write": false,
+  "minio_write": false,
+  "rag_run": false
+}
