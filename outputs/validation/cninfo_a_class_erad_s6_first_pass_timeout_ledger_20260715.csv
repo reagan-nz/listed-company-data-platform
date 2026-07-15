@@ -1,0 +1,19 @@
+case_id,company_code,company_name,market,cninfo_request_count,retrieval_status,quality_status,classification,notes
+AD2E801,301131,聚赛龙,SZSE,0,not_found,needs_review,session_burst_network_timeout_not_name_defect,S6 first-pass only; isolated retry recovered; do not permanent-blacklist
+AD2E802,301132,满坤科技,SZSE,0,not_found,needs_review,session_burst_network_timeout_not_name_defect,S6 first-pass only; isolated retry recovered; do not permanent-blacklist
+AD2E803,301138,华研精机,SZSE,0,not_found,needs_review,session_burst_network_timeout_not_name_defect,S6 first-pass only; isolated retry recovered; do not permanent-blacklist
+AD2E804,301157,华塑科技,SZSE,0,not_found,needs_review,session_burst_network_timeout_not_name_defect,S6 first-pass only; isolated retry recovered; do not permanent-blacklist
+AD2E805,301159,三维天地,SZSE,0,not_found,needs_review,session_burst_network_timeout_not_name_defect,S6 first-pass only; isolated retry recovered; do not permanent-blacklist
+AD2E806,301161,唯万密封,SZSE,0,not_found,needs_review,session_burst_network_timeout_not_name_defect,S6 first-pass only; isolated retry recovered; do not permanent-blacklist
+AD2E807,301162,国能日新,SZSE,0,not_found,needs_review,session_burst_network_timeout_not_name_defect,S6 first-pass only; isolated retry recovered; do not permanent-blacklist
+AD2E808,301183,东田微,SZSE,0,not_found,needs_review,session_burst_network_timeout_not_name_defect,S6 first-pass only; isolated retry recovered; do not permanent-blacklist
+AD2E809,301186,超达装备,SZSE,0,not_found,needs_review,session_burst_network_timeout_not_name_defect,S6 first-pass only; isolated retry recovered; do not permanent-blacklist
+AD2E810,301189,奥尼电子,SZSE,0,not_found,needs_review,session_burst_network_timeout_not_name_defect,S6 first-pass only; isolated retry recovered; do not permanent-blacklist
+AD2E819,301268,铭利达,SZSE,2,not_found,needs_review,session_burst_network_timeout_not_name_defect,S6 first-pass only; isolated retry recovered; do not permanent-blacklist
+AD2E820,301280,珠城科技,SZSE,1,not_found,needs_review,session_burst_network_timeout_not_name_defect,S6 first-pass only; isolated retry recovered; do not permanent-blacklist
+AD2E821,301287,康力源,SZSE,0,not_found,needs_review,session_burst_network_timeout_not_name_defect,S6 first-pass only; isolated retry recovered; do not permanent-blacklist
+AD2E822,301293,三博脑科,SZSE,0,not_found,needs_review,session_burst_network_timeout_not_name_defect,S6 first-pass only; isolated retry recovered; do not permanent-blacklist
+AD2E823,301295,美硕科技,SZSE,0,not_found,needs_review,session_burst_network_timeout_not_name_defect,S6 first-pass only; isolated retry recovered; do not permanent-blacklist
+AD2E824,301303,真兰仪表,SZSE,0,not_found,needs_review,session_burst_network_timeout_not_name_defect,S6 first-pass only; isolated retry recovered; do not permanent-blacklist
+AD2E825,301307,美利信,SZSE,0,not_found,needs_review,session_burst_network_timeout_not_name_defect,S6 first-pass only; isolated retry recovered; do not permanent-blacklist
+AD2E826,301308,江波龙,SZSE,0,not_found,needs_review,session_burst_network_timeout_not_name_defect,S6 first-pass only; isolated retry recovered; do not permanent-blacklist

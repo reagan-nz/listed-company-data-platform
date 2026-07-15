@@ -312,6 +312,80 @@ class ListingAwareCohortBuilderTests(unittest.TestCase):
                 ["000004", "000005"],
             )
 
+    def test_prefix_concentration_cap_skips_excess_same_prefix(self) -> None:
+        """同前缀超过上限时记 prefix_concentration_exclude 并改选其他前缀。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            profile_dir = tmp_path / "profiles"
+            profile_dir.mkdir()
+            yaml_path = tmp_path / "fm.yaml"
+            exclude_csv = tmp_path / "a_exclude.csv"
+            companies = [
+                {"stock_code": "301001", "short_name": "创甲"},
+                {"stock_code": "301002", "short_name": "创乙"},
+                {"stock_code": "301003", "short_name": "创丙"},
+                {"stock_code": "600001", "short_name": "沪丁"},
+                {"stock_code": "600002", "short_name": "沪戊"},
+            ]
+            _write_yaml(yaml_path, companies)
+            _write_exclude_csv(exclude_csv, [])
+            for code in ("301001", "301002", "301003", "600001", "600002"):
+                _write_profile(profile_dir, code, "2010-01-01")
+            result = builder.build_listing_aware_cohort(
+                target_size=3,
+                case_id_start=builder.CASE_ID_START_S7,
+                a_exclude_csvs=[str(exclude_csv)],
+                profile_dir=str(profile_dir),
+                full_market_yaml=str(yaml_path),
+                max_same_prefix=2,
+            )
+            self.assertEqual(result.cninfo_calls, 0)
+            codes = [r.company_code for r in result.selected]
+            self.assertEqual(codes, ["301001", "301002", "600001"])
+            self.assertEqual(result.selected[0].case_id, "AD2E851")
+            stages = {r.reject_stage for r in result.rejected}
+            self.assertIn("prefix_concentration_exclude", stages)
+            prefix_hits = [
+                r for r in result.rejected if r.reject_stage == "prefix_concentration_exclude"
+            ]
+            self.assertEqual(prefix_hits[0].company_code, "301003")
+
+    def test_s7_case_id_start_excludes_prior_codes(self) -> None:
+        """S7 从 851 起编；已占用码不得入选。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            profile_dir = tmp_path / "profiles"
+            profile_dir.mkdir()
+            yaml_path = tmp_path / "fm.yaml"
+            exclude_csv = tmp_path / "a_exclude.csv"
+            companies = [
+                {"stock_code": "000001", "short_name": "已占用甲"},
+                {"stock_code": "000004", "short_name": "可选壬"},
+                {"stock_code": "000005", "short_name": "可选癸"},
+            ]
+            _write_yaml(yaml_path, companies)
+            _write_exclude_csv(exclude_csv, ["000001"])
+            for code, ld in (
+                ("000001", "2010-01-01"),
+                ("000004", "2010-01-01"),
+                ("000005", "2010-01-01"),
+            ):
+                _write_profile(profile_dir, code, ld)
+            result = builder.build_listing_aware_cohort(
+                target_size=2,
+                case_id_start=builder.CASE_ID_START_S7,
+                a_exclude_csvs=[str(exclude_csv)],
+                profile_dir=str(profile_dir),
+                full_market_yaml=str(yaml_path),
+                max_same_prefix=25,
+            )
+            self.assertEqual(result.selected[0].case_id, "AD2E851")
+            self.assertEqual(result.selected[1].case_id, "AD2E852")
+            self.assertEqual(
+                [r.company_code for r in result.selected],
+                ["000004", "000005"],
+            )
+
 
 if __name__ == "__main__":
     unittest.main()
