@@ -1,0 +1,41 @@
+# B-FM-42 live allow-list — 仅新晋 bond_trustee_report_known_002 /
+# tracking_rating_report_known_002
+status: live_sample_scoped_B-FM-42
+verified: false
+notes: B-FM-42 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS including known_001
+cases:
+  - case_id: bond_trustee_report_known_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000027"
+    company_name: "深圳能源"
+    title_pattern: "股份有限公司公司债券受托管理事务报告（2024年度）"
+    expected_document_type: announcement
+    date_start: "2025-06-29"
+    date_end: "2025-07-02"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-42 live allow-list（公司债券受托管理事务报告 known_002）：
+      harvest BD2E054 深圳能源 000027 ann=1224039075 2025-06-30。
+      title_pattern 取「股份有限公司公司债券受托管理事务报告（2024年度）」
+      （≠可转债 known_001；勿裸「受托管理事务报告」）。
+      不写 verified；不下载 PDF。
+
+  - case_id: tracking_rating_report_known_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000783"
+    company_name: "长江证券"
+    title_pattern: "股份有限公司2025年跟踪评级报告"
+    expected_document_type: announcement
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-42 live allow-list（主体2025年跟踪评级报告 known_002）：
+      harvest BD2E086 长江证券 000783 ann=1224015907 2025-06-27。
+      title_pattern 取「股份有限公司2025年跟踪评级报告」
+      （≠可转债定期跟踪 known_001 宽串「跟踪评级报告」单独作本案 pattern）。
+      不写 verified；不下载 PDF。

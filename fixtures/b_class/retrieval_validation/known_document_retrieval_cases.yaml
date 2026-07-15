@@ -509,7 +509,7 @@ cases:
       b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E482（quality=pass）。
       不写 verified；不下载 PDF。
 
-  # --- bond_trustee_report / tracking_rating_report × 2（B-FM-29；document_type=announcement；勿落 other）---
+  # --- bond_trustee_report / tracking_rating_report × 4（B-FM-29 known_001；B-FM-42 known_002；document_type=announcement；勿落 other）---
   - case_id: bond_trustee_report_known_001
     case_status: ready
     source_id: cninfo_general_announcement_pdf
@@ -533,6 +533,30 @@ cases:
       b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E254（quality=pass）。
       不写 verified；不下载 PDF。
 
+  - case_id: bond_trustee_report_known_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000027"
+    company_name: "深圳能源"
+    title_pattern: "股份有限公司公司债券受托管理事务报告（2024年度）"
+    expected_document_type: announcement
+    date_start: "2025-06-29"
+    date_end: "2025-07-02"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-42 自 harvest 证据晋升（公司债券受托管理事务报告 known_002；对称
+      known_001 可转债受托）：深圳能源 000027，深圳能源集团股份有限公司公司债券
+      受托管理事务报告（2024年度）（announcement_id=1224039075，披露日 2025-06-30）。
+      路由已由 B-FM-29 硬化（「受托管理事务报告」→ announcement）；本包不改路由。
+      title_pattern 取「股份有限公司公司债券受托管理事务报告（2024年度）」：
+      覆盖普通公司债，且不命中「…可转换公司债券受托管理事务报告…」（中间无
+      「股份有限公司公司债券」连续子串）。短串「受托管理事务报告」同窗可能多命中，
+      故不用。与 known_001 / 保荐书 / 跟踪评级 / 法律意见书可区分。来源
+      outputs/validation/cninfo_b_class_erad_scale_200/reports/
+      b_class_erad_scale_200_report.csv 行 BD2E054（quality=pass）。
+      不写 verified；不下载 PDF。
+
   - case_id: tracking_rating_report_known_001
     case_status: ready
     source_id: cninfo_general_announcement_pdf
@@ -552,6 +576,29 @@ cases:
       title_pattern 取「跟踪评级报告」（覆盖「定期跟踪评级报告」子串）。来源
       outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
       b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E408（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: tracking_rating_report_known_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000783"
+    company_name: "长江证券"
+    title_pattern: "股份有限公司2025年跟踪评级报告"
+    expected_document_type: announcement
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-42 自 harvest 证据晋升（主体年度跟踪评级报告 known_002；对称 known_001
+      可转债定期跟踪评级）：长江证券 000783，长江证券股份有限公司2025年跟踪评级报告
+      （announcement_id=1224015907，披露日 2025-06-27）。路由已由 B-FM-29 硬化
+      （「跟踪评级报告」→ announcement）；本包不改路由。title_pattern 取
+      「股份有限公司2025年跟踪评级报告」（覆盖主体「…2025年跟踪评级报告」，
+      且不命中 known_001「…可转换公司债券定期跟踪评级报告」）。与受托管理 /
+      保荐书 / 法律意见书可区分。来源
+      outputs/validation/cninfo_b_class_erad_scale_200/reports/
+      b_class_erad_scale_200_report.csv 行 BD2E086（quality=pass）。
       不写 verified；不下载 PDF。
 
   # --- continuous_supervision / 持续督导 × 2（B-FM-30；document_type=announcement；勿进 annual_report / other）---

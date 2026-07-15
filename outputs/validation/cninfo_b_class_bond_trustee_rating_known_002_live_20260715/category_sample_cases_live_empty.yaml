@@ -1,0 +1,5 @@
+# B-FM-42 live — category-sample 空（本包仅 known-document allow-list）
+status: live_sample_scoped_B-FM-42_category_empty
+verified: false
+notes: Empty category-sample allow-list for B-FM-42 bounded live
+cases: []
