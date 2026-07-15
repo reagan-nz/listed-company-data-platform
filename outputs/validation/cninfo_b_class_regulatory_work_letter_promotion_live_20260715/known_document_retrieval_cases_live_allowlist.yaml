@@ -1,0 +1,22 @@
+# B-FM-13 live allow-list — 仅 B-FM-12 新晋 inquiry_known_004（监管工作函专项说明）
+version: "draft-0.1"
+status: live_sample_scoped_B-FM-13
+verified: false
+notes: B-FM-13 live allow-list only; not a new fixture lineage
+
+cases:
+  - case_id: inquiry_known_004
+    case_status: ready
+    source_id: cninfo_inquiry_reply_pdf
+    company_code: "600715"
+    company_name: "文投控股"
+    title_pattern: "中兴财光华会计师事务所（特殊普通合伙）关于对文投控股股份有限公司2024年年度报告的信息披露监管工作函的专项说明"
+    expected_document_type: inquiry_reply
+    date_start: "2025-04-27"
+    date_end: "2025-04-30"
+    expected_route_to: cninfo_inquiry_reply_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-13 live allow-list（依赖 B-FM-12 晋升 / B-FM-11 routing edge）：
+      文投控股 600715，BD2E433 / announcement_id=1223358761。
+      全文 title_pattern 消歧。不写 verified；不下载 PDF。

@@ -1,0 +1,25 @@
+# B-FM-13 live allow-list — 仅 B-FM-12 新晋 inquiry_sample_003（监管工作函全市场类别窗）
+version: "draft-0.1"
+status: live_sample_scoped_B-FM-13
+verified: false
+notes: B-FM-13 live allow-list only; not a new fixture lineage
+
+cases:
+  - case_id: inquiry_sample_003
+    case_status: ready
+    source_id: cninfo_inquiry_reply_pdf
+    source_category: inquiry_reply_pdf
+    title_pattern: "监管工作函"
+    date_start: "2025-04-26"
+    date_end: "2025-04-30"
+    expected_min_results: 1
+    expected_document_types:
+      - inquiry_reply
+      - regulatory_inquiry
+    false_positive_guard_patterns:
+      - 年度报告全文
+    notes: >-
+      B-FM-13 live allow-list（依赖 B-FM-12 晋升 / B-FM-11 routing edge）：
+      监管工作函全市场窗；锚点 BD2E433 / 文投控股 600715。
+      FP guard 用「年度报告全文」避免误伤含年报子串的工作函标题。
+      不写 verified；不下载 PDF。
