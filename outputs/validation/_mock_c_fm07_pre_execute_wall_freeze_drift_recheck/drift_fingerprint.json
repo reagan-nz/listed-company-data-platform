@@ -1,0 +1,65 @@
+{
+  "generated_at": "2026-07-15T09:53:56Z",
+  "task_id": "C-FM-07",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "fingerprint": {
+    "row_count": 40,
+    "ok_count": 40,
+    "fail_count": 0,
+    "layers": {
+      "fm_gate_battery": 7,
+      "fm06_artifact_presence": 8,
+      "fingerprint_drift": 6,
+      "execute_hold_seal": 7,
+      "protected_csv_registry": 12
+    },
+    "fingerprint_sha256": "a97f5914dab40198895e07a4dd37247765d4e9a304ee9be995161cf904136aeb"
+  },
+  "frozen_wall_fingerprint_sha256": "30ff8a3b3841aec0ac21374fcde0ad947fc84227f6e52b3828067d15b3c01ca3",
+  "frozen_exclusion_fingerprint_sha256": "e305e275b4b8e4e28ccd11a396cda5b93c6a3c99925a2956cba79386a08aa2ac",
+  "recomputed_wall_fingerprint": {
+    "row_count": 36,
+    "ok_count": 36,
+    "fail_count": 0,
+    "layers": {
+      "fm_gate_battery": 6,
+      "exclusion_universe_freeze": 8,
+      "dual_layer_qa_freeze": 6,
+      "execute_wall": 6,
+      "protected_csv_registry": 10
+    },
+    "fingerprint_sha256": "30ff8a3b3841aec0ac21374fcde0ad947fc84227f6e52b3828067d15b3c01ca3"
+  },
+  "recomputed_exclusion_fingerprint": {
+    "row_count": 19,
+    "unique_code_count": 18,
+    "unique_codes": [
+      "000003",
+      "000015",
+      "000022",
+      "000024",
+      "000578",
+      "000666",
+      "000689",
+      "000861",
+      "000961",
+      "002280",
+      "301212",
+      "600001",
+      "600005",
+      "600068",
+      "600220",
+      "688031",
+      "688062",
+      "688071"
+    ],
+    "families": {
+      "partial7": 7,
+      "empty_dividend3": 3,
+      "holdout9": 9
+    },
+    "promo_yes_count": 0,
+    "fingerprint_sha256": "e305e275b4b8e4e28ccd11a396cda5b93c6a3c99925a2956cba79386a08aa2ac"
+  }
+}
