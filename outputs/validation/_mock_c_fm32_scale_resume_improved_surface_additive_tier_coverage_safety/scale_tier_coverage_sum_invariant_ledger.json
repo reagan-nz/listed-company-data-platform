@@ -1,0 +1,44 @@
+{
+  "generated_at": "2026-07-15T14:41:34Z",
+  "task_id": "C-FM-32",
+  "fingerprint_sha256": "f0e042eb6de4d9ffce7ce6749dca04aaaca0a093ae86d7dbd76cdb128656e576",
+  "scale_tier_count": 7,
+  "company_coverage_sum": 3314,
+  "sample_denials": [
+    {
+      "proposed": {
+        "scale_tier_count": 8,
+        "company_coverage_sum": 3314
+      },
+      "frozen": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3314
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "scale_tier_coverage_sum_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3314
+      },
+      "frozen": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3314
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "scale_tier_coverage_sum_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "scale_tier_coverage_sum_invariant_lock",
+    "scale_tier_count": 7,
+    "company_coverage_sum": 3314,
+    "mutation_allowed": false,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

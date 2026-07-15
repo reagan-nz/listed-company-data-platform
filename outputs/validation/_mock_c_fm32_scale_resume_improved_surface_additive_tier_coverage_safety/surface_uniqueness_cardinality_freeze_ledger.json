@@ -1,0 +1,30 @@
+{
+  "generated_at": "2026-07-15T14:41:34Z",
+  "task_id": "C-FM-32",
+  "fingerprint_sha256": "1fdef7d90894540c9a9dd2b492c3ae484716ede254c52697dec6aec016fe63eb",
+  "surface_unique": 2251,
+  "sample_denials": [
+    {
+      "action": "inject",
+      "code": "999999",
+      "allowed": false,
+      "reason": "surface_membership_change_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "drop",
+      "code": "000037",
+      "allowed": false,
+      "reason": "surface_membership_change_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "surface_uniqueness_cardinality_freeze",
+    "surface_unique": 2251,
+    "deny_inject": true,
+    "deny_drop": true,
+    "deny_cardinality_mutation": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "generated_at": "2026-07-15T14:41:34Z",
+  "task_id": "C-FM-32",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "seal_chain_extended": false,
+  "scale_tier_count": 7,
+  "company_coverage_sum": 3314,
+  "harvest_unique_union": 2249,
+  "harvest_additive": 2261,
+  "overlap_delta": 12,
+  "surface_unique": 2251,
+  "union_complete": 2134,
+  "union_partial": 106,
+  "union_failed": 9,
+  "resume_improved": 28,
+  "resume_same": 1,
+  "resume_worse": 0,
+  "surface_harvest_delta_n": 2,
+  "partial_risk_bands": {
+    "p35_heavy": 75,
+    "p3_mid": 14,
+    "p2_mid": 12,
+    "fu_light": 5
+  },
+  "residual_safety_coverage": 117,
+  "complete_codes_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431",
+  "partial_codes_sha256": "5d5da7030f91e60893627d7fcf208b79f4f09e3edc5c4255fb797c1706672d73",
+  "failed_codes_sha256": "fb74a9df6bbecf75a7c2b354491a80c4b294c3c1cd392ec429bd8d16b74a14f6",
+  "winner_map_sha256": "ff2c6a28b361498b0dbf163ad1d1779041e1dd4e772b652e6382e1d4051fbb07",
+  "improved_codes_sha256": "8be1b0a704f205387c024d05b3d592d4cc64c6b3b9556546f6e65614001d54e8",
+  "batch_priority": [
+    "h863",
+    "p35",
+    "p3",
+    "p2",
+    "fu"
+  ],
+  "frozen_fps": {
+    "resume_improved_write_boundary": "b6e217521fe8a318473c583332bf83dac079107d81ea097aa73aff029b5a3b54",
+    "surface_uniqueness_cardinality_freeze": "1fdef7d90894540c9a9dd2b492c3ae484716ede254c52697dec6aec016fe63eb",
+    "harvest_additive_cardinality_freeze": "dbcdc6b778b059c71e732c3f4d93ca77682dca04aa5b97704d34fedd3967487b",
+    "scale_tier_coverage_sum_invariant": "f0e042eb6de4d9ffce7ce6749dca04aaaca0a093ae86d7dbd76cdb128656e576",
+    "fm31_failed_promotion_denial": "8b581766d5dfbecacecbf37cbadec2d2abb5d846913545e82bf11b46447c47c9",
+    "fm31_partial_demotion_to_failed_denial": "6a232823808d17f67af8a8189faa01ad810fec18d4abe4d27e48d1da90e77d28",
+    "fm31_batch_priority_order_freeze": "8470ed60a660340ef61dcfbb6a88c7532bd11f814008c75453b4788c3dabaf98",
+    "fm31_resume_delta_taxonomy_freeze": "e96f85868931736b993ba1e7e445cdda66e48ee6f966ad1f19d5fc22a093b33d"
+  },
+  "observed_fps": {
+    "resume_improved_write_boundary": "b6e217521fe8a318473c583332bf83dac079107d81ea097aa73aff029b5a3b54",
+    "surface_uniqueness_cardinality_freeze": "1fdef7d90894540c9a9dd2b492c3ae484716ede254c52697dec6aec016fe63eb",
+    "harvest_additive_cardinality_freeze": "dbcdc6b778b059c71e732c3f4d93ca77682dca04aa5b97704d34fedd3967487b",
+    "scale_tier_coverage_sum_invariant": "f0e042eb6de4d9ffce7ce6749dca04aaaca0a093ae86d7dbd76cdb128656e576"
+  },
+  "fingerprint": {
+    "row_count": 146,
+    "ok_count": 146,
+    "fail_count": 0,
+    "layers": {
+      "fm31_continuity": 8,
+      "resume_improved_write_boundary": 6,
+      "surface_uniqueness_cardinality_freeze": 6,
+      "harvest_additive_cardinality_freeze": 5,
+      "scale_tier_coverage_sum_invariant": 5,
+      "protected_write_guard": 5,
+      "output_root_protection": 7,
+      "frozen_mock_isolation": 34,
+      "protected_csv_registry": 37,
+      "fm_gate_battery": 26,
+      "execute_hold_seal": 7
+    },
+    "fingerprint_sha256": "a29de24a0ada76470686dbffa768508094eb32ba034117d560bd381737c51de5"
+  }
+}

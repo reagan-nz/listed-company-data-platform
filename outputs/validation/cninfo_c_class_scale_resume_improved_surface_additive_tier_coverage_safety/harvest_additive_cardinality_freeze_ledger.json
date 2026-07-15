@@ -1,0 +1,46 @@
+{
+  "generated_at": "2026-07-15T14:41:34Z",
+  "task_id": "C-FM-32",
+  "fingerprint_sha256": "dbcdc6b778b059c71e732c3f4d93ca77682dca04aa5b97704d34fedd3967487b",
+  "harvest_additive": 2261,
+  "harvest_unique_union": 2249,
+  "overlap_delta": 12,
+  "sample_denials": [
+    {
+      "proposed": {
+        "harvest_additive": 2260,
+        "harvest_unique_union": 2249
+      },
+      "frozen": {
+        "harvest_additive": 2261,
+        "harvest_unique_union": 2249
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "harvest_additive_cardinality_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "harvest_additive": 2261,
+        "harvest_unique_union": 2249
+      },
+      "frozen": {
+        "harvest_additive": 2261,
+        "harvest_unique_union": 2249
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "harvest_additive_cardinality_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "harvest_additive_cardinality_freeze",
+    "harvest_additive": 2261,
+    "harvest_unique_union": 2249,
+    "deny_additive_mutation": true,
+    "deny_unique_mutation": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

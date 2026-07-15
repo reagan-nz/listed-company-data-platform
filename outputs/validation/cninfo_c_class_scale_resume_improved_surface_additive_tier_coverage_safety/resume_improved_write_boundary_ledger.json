@@ -1,0 +1,91 @@
+{
+  "generated_at": "2026-07-15T14:41:34Z",
+  "task_id": "C-FM-32",
+  "fingerprint_sha256": "b6e217521fe8a318473c583332bf83dac079107d81ea097aa73aff029b5a3b54",
+  "improved_n": 28,
+  "improved_codes_sha256": "8be1b0a704f205387c024d05b3d592d4cc64c6b3b9556546f6e65614001d54e8",
+  "denial_count": 9,
+  "sample_denials": [
+    {
+      "code": "001216",
+      "action": "force_regress",
+      "bucket": "improved",
+      "allowed": false,
+      "reason": "resume_improved_write_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "001216",
+      "action": "status_rewrite",
+      "bucket": "improved",
+      "allowed": false,
+      "reason": "resume_improved_write_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "001216",
+      "action": "bucket_reclass",
+      "bucket": "improved",
+      "allowed": false,
+      "reason": "resume_improved_write_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "002098",
+      "action": "force_regress",
+      "bucket": "improved",
+      "allowed": false,
+      "reason": "resume_improved_write_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "002098",
+      "action": "status_rewrite",
+      "bucket": "improved",
+      "allowed": false,
+      "reason": "resume_improved_write_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "002098",
+      "action": "bucket_reclass",
+      "bucket": "improved",
+      "allowed": false,
+      "reason": "resume_improved_write_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "002124",
+      "action": "force_regress",
+      "bucket": "improved",
+      "allowed": false,
+      "reason": "resume_improved_write_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "002124",
+      "action": "status_rewrite",
+      "bucket": "improved",
+      "allowed": false,
+      "reason": "resume_improved_write_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "002124",
+      "action": "bucket_reclass",
+      "bucket": "improved",
+      "allowed": false,
+      "reason": "resume_improved_write_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "resume_improved_write_boundary",
+    "improved_n": 28,
+    "improved_codes_sha256": "8be1b0a704f205387c024d05b3d592d4cc64c6b3b9556546f6e65614001d54e8",
+    "deny_force_regress": true,
+    "deny_status_rewrite": true,
+    "deny_bucket_reclass": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
