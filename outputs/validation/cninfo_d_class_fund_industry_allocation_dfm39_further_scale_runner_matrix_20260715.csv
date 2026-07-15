@@ -1,0 +1,21 @@
+metric,value,notes
+task_id,D-FM-39,d-class-executor
+phase,fund_industry_allocation_further_scale_runner_extension_s4_dryrun_offline,
+prefer_taken,fia_further_scale_runner_extension_s4_dryrun,
+cninfo_calls,0,no network
+live_executed,false,controller_execution_allowed=false
+locked_cases,DFIA201-DFIA205,universe lock D-FM-38
+planned_ok,5/5,S4 dry-run
+planned_shared_probes,3,default;rdate_20260331;rdate_20251231
+runner_extension_gate,READY_FOR_APPROVAL,
+s4_dryrun_gate,PASS_OFFLINE,
+live_path_gate,READY_FOR_APPROVAL,
+live_gate,NOT_APPROVED,
+approval_gate,STANDING_SCOPE_AUTHORIZED,from D-FM-38
+fixture_vr_gate,PASS_OFFLINE,from D-FM-38
+freeze_fia_first_next,true,sha256 attested
+freeze_at_sd_dryrun,true,sha256 attested
+ess_h3_h4,forbidden,paused_pending_devtools
+dlc006r_reopen,false,
+ready_for_commit,true,executor does not commit
+allow_list,further_scale_runner_flags_dryrun_artifacts_docs_tests,excludes console logs

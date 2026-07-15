@@ -1,0 +1,29 @@
+{
+  "case_id": "DFIA201",
+  "probe_key": "fia_fs_default_B",
+  "industry_code": "B",
+  "industry_name": "采矿业",
+  "component": "fund_industry_allocation",
+  "query_mode": "default",
+  "anchor_rdate": "",
+  "shared_probe_key": "default",
+  "planned_requests": [
+    "default",
+    "rdate_20260331",
+    "rdate_20251231"
+  ],
+  "query_params": {},
+  "endpoint": "https://www.cninfo.com.cn/data20/fund/industry",
+  "records_path": "data.records",
+  "shared_request": true,
+  "industry_filter_offline": true,
+  "industry_filter_mode": "coarse_A_B_star",
+  "filter_industry_code": "B",
+  "expected_logical_table": "d_industry_aggregate",
+  "expected_behavior": "captured_normal_or_empty_but_valid",
+  "fixture_refs": [
+    "fixtures/d_class/fund_industry_allocation_further_scale/DFIA201_found.json",
+    "fixtures/d_class/fund_industry_allocation_further_scale/DFIA201_industry_filtered_empty.json"
+  ],
+  "cninfo_called": false
+}
