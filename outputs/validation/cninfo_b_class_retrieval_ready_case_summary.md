@@ -20,9 +20,9 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 
 | 指标 | 数值 |
 |------|------|
-| total_cases | **90** |
+| total_cases | **92** |
 | placeholder | **2** |
-| ready | **88** |
+| ready | **90** |
 | retired | **0** |
 | invalid_ready | **0** |
 | result | **PASS** |
@@ -58,6 +58,7 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 - `verification_opinion_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `verification_opinion_known_002` (known_document) → `cninfo_general_announcement_pdf`
 - `verification_opinion_known_003` (known_document) → `cninfo_general_announcement_pdf`
+- `verification_opinion_known_004` (known_document) → `cninfo_general_announcement_pdf`
 - `listing_sponsor_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `equity_change_report_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `bond_trustee_report_known_001` (known_document) → `cninfo_general_announcement_pdf`
@@ -69,6 +70,7 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 - `continuous_supervision_annual_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `continuous_supervision_annual_known_002` (known_document) → `cninfo_general_announcement_pdf`
 - `continuous_supervision_annual_known_003` (known_document) → `cninfo_general_announcement_pdf`
+- `continuous_supervision_annual_known_004` (known_document) → `cninfo_general_announcement_pdf`
 - `continuous_supervision_training_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `nonstandard_audit_opinion_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `raised_funds_usage_report_known_001` (known_document) → `cninfo_general_announcement_pdf`

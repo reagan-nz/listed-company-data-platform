@@ -1,0 +1,41 @@
+# B-FM-53 live allow-list — 仅新晋 verification_opinion_known_004 /
+# continuous_supervision_annual_known_004
+status: live_sample_scoped_B-FM-53
+verified: false
+notes: B-FM-53 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS including board known_004/005, vo/supervision known_001–003
+cases:
+  - case_id: verification_opinion_known_004
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "002827"
+    company_name: "高争民爆"
+    title_pattern: "激励对象名单的核查意见"
+    expected_document_type: announcement
+    date_start: "2025-06-22"
+    date_end: "2025-06-25"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-53 live allow-list（激励对象名单核查意见 known_004）：
+      harvest BD2E550 高争民爆 002827 ann=1223956618 2025-06-23。
+      title_pattern 取「激励对象名单的核查意见」
+      （≠ known_001 等额置换 / known_002 限售流通 / known_003 节余补流）。
+      不写 verified；不下载 PDF。
+
+  - case_id: continuous_supervision_annual_known_004
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "603107"
+    company_name: "上海汽配"
+    title_pattern: "上海汽车空调配件股份有限公司2024年度持续督导年度报告书"
+    expected_document_type: announcement
+    date_start: "2025-04-20"
+    date_end: "2025-04-23"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-53 live allow-list（持续督导年度报告书 known_004）：
+      harvest BD2E785 上海汽配 603107 ann=1223185374 2025-04-21。
+      title_pattern 取「上海汽车空调配件股份有限公司2024年度持续督导年度报告书」
+      （≠ known_001 宽串单独作本案 / known_002 国检 / known_003 可转债）。
+      不写 verified；不下载 PDF。

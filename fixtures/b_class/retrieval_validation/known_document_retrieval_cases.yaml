@@ -560,7 +560,7 @@ cases:
       b_class_erad_scale_200_report.csv 行 BD2E168（quality=pass）。
       不写 verified；不下载 PDF。
 
-  # --- verification_opinion / 核查意见 × 3（B-FM-27 known_001/002；B-FM-45 known_003；勿落 other）---
+  # --- verification_opinion / 核查意见 × 4（B-FM-27 known_001/002；B-FM-45 known_003；B-FM-53 known_004；勿落 other）---
   - case_id: verification_opinion_known_001
     case_status: ready
     source_id: cninfo_general_announcement_pdf
@@ -625,6 +625,31 @@ cases:
       限售流通 / 激励对象名单核查意见互斥；勿裸「核查意见」）。来源
       outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
       b_class_erad_fuller_next_slice2_report.csv 行 BD2E524（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: verification_opinion_known_004
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "002827"
+    company_name: "高争民爆"
+    title_pattern: "激励对象名单的核查意见"
+    expected_document_type: announcement
+    date_start: "2025-06-22"
+    date_end: "2025-06-25"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-53 自 harvest 证据晋升（激励对象名单核查意见 known_004；对称
+      known_001 等额置换 / known_002 限售流通 / known_003 节余补流；闭合
+      known_003 注明的激励名单核查子类型）：高争民爆 002827，监事会关于公司2025年
+      限制性股票激励计划激励对象名单的核查意见及公示情况说明
+      （announcement_id=1223956618，披露日 2025-06-23）。路由已由 B-FM-27
+      「核查意见」硬化为 announcement；本包不改路由。title_pattern 取
+      「激励对象名单的核查意见」（覆盖「…激励对象名单的核查意见及公示…」；
+      不命中 known_001–003 募资/限售/节余串；勿裸「核查意见」）。与激励对象名单
+      正文（incentive_object_list）及法律意见书可区分。来源
+      outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
+      b_class_erad_fuller_next_slice2_report.csv 行 BD2E550（quality=pass）。
       不写 verified；不下载 PDF。
 
   # --- listing_sponsor / equity_change_report × 2（B-FM-28；document_type=announcement；勿落 other）---
@@ -813,7 +838,7 @@ cases:
       reports/b_class_erad_scale_200_report.csv 行 BD2E051（quality=pass）。
       不写 verified；不下载 PDF。
 
-  # --- continuous_supervision / 持续督导 × 3（B-FM-30 known_001；B-FM-43 known_002；B-FM-47 known_003；document_type=announcement；勿进 annual_report / other）---
+  # --- continuous_supervision / 持续督导 × 4（B-FM-30 known_001；B-FM-43 known_002；B-FM-47 known_003；B-FM-53 known_004；document_type=announcement；勿进 annual_report / other）---
   - case_id: continuous_supervision_annual_known_001
     case_status: ready
     source_id: cninfo_general_announcement_pdf
@@ -884,6 +909,32 @@ cases:
       与真·年度报告 / 培训情况报告 / 变更保荐代表人公告可区分。来源
       outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
       b_class_erad_fuller_next_slice2_report.csv 行 BD2E779（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: continuous_supervision_annual_known_004
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "603107"
+    company_name: "上海汽配"
+    title_pattern: "上海汽车空调配件股份有限公司2024年度持续督导年度报告书"
+    expected_document_type: announcement
+    date_start: "2025-04-20"
+    date_end: "2025-04-23"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-53 自 harvest 证据晋升（持续督导年度报告书 known_004；对称
+      known_001 宽串 / known_002 国检集团全称 / known_003 可转债督导）：上海汽配
+      603107，民生证券股份有限公司关于上海汽车空调配件股份有限公司2024年度
+      持续督导年度报告书（announcement_id=1223185374，披露日 2025-04-21）。
+      路由已由 B-FM-30 硬化（「持续督导」→ announcement；勿进 annual_report）；
+      本包不改路由。title_pattern 取
+      「上海汽车空调配件股份有限公司2024年度持续督导年度报告书」
+      （≠ known_001 宽串单独作本案 pattern；≠ known_002/003）。
+      harvest 标注 announcement_type=periodic_report 仍须经路由落 announcement。
+      与真·年度报告 / 培训情况报告 / 变更保荐代表人公告可区分。来源
+      outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
+      b_class_erad_fuller_next_slice2_report.csv 行 BD2E785（quality=pass）。
       不写 verified；不下载 PDF。
 
   - case_id: continuous_supervision_training_known_001
