@@ -1,0 +1,16 @@
+item_id,category,status,notes
+CHK-001,universe_lock,done,DFIA001-DFIA005 locked from sketch
+CHK-002,validation_rules,done,VR-001–VR-042 draft
+CHK-003,sample_prep,done,Tier0 sample_raw + Tier1 fixtures
+CHK-004,tier1_fixtures,done,7 synthetic files under fund_industry_allocation_first_slice
+CHK-005,command_draft,done,dry-run + live draft; runner NOT implemented
+CHK-006,runner_dryrun,blocked_until_runner,--fund-industry-allocation-first-slice not implemented
+CHK-007,live_path,blocked_until_runner,no live path this package
+CHK-008,cninfo,done,calls=0 this task
+CHK-009,dlc006r,excluded,no reopen
+CHK-010,shareholder_abnormal_live,excluded,not this package; standing allows separate bounded live task
+CHK-011,commit_push,blocked,executor no commit/push
+CHK-012,fixture_vr_test,done,lab/test_cninfo_d_class_fund_industry_allocation_fixtures.py
+CHK-013,approval_package,done,first_slice_approval_gate=STANDING_SCOPE_AUTHORIZED
+CHK-014,exclusions,locked,exclude_688671;exclude_301259;no_company_code;exclude_company_event_schema
+CHK-015,planning_gate,kept,d_class_fund_industry_allocation_next_component_planning_gate=READY_FOR_APPROVAL

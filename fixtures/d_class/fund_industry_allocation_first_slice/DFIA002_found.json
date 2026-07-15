@@ -1,0 +1,58 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class fund_industry_allocation first-slice offline synthetic · default cross-section non-empty",
+    "case_id": "DFIA002",
+    "component": "fund_industry_allocation",
+    "scenario": "captured_cross_section",
+    "cninfo_called": false,
+    "synthetic": true,
+    "tier0_cite": [
+      "fixtures/d_class/fund_industry_allocation/sample_raw.json"
+    ],
+    "query_params": {},
+    "cross_section": {
+      "row_count": 19,
+      "sample_industry_codes": ["C26", "C27", "I65"]
+    }
+  },
+  "metric_envelope": {
+    "case_id": "DFIA002",
+    "industry_code": "*",
+    "report_period": "2026-03-31",
+    "metric_status": "captured",
+    "quality_status": "pass",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/fund/industry",
+    "source_record_id": "fixture_raw_fia_dfia002",
+    "lineage": {
+      "registry_source_id": "fund_industry_allocation",
+      "query_mode": "default",
+      "query_params": {},
+      "fetch_time": "2026-07-15T20:09:00+08:00",
+      "raw_record_hash": "sha256:synthetic_fia_dfia002_cross_section",
+      "raw_record_json": {
+        "F001V": "C27",
+        "F002V": "医药制造业",
+        "ENDDATE": "2026-03-31",
+        "F003N": 180,
+        "F004N": 980.12,
+        "F005N": 6.2
+      },
+      "lineage_status": "discovered"
+    }
+  },
+  "fund_industry_allocation": {
+    "industry_code": "*",
+    "industry_name": "全行业截面_default",
+    "report_period": "2026-03-31",
+    "cross_section_row_count": 19,
+    "sample_industry_code": "C27",
+    "metric_count": 3,
+    "quality_status": "pass",
+    "mapping_confidence": "high",
+    "metrics_summary": {
+      "fund_coverage_count": 180.0,
+      "industry_scale_100m_yuan": 980.12,
+      "net_asset_ratio_percent": 6.2
+    }
+  }
+}
