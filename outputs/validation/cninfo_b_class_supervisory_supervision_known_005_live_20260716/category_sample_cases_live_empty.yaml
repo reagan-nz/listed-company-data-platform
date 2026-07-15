@@ -1,0 +1,5 @@
+# B-FM-54：空 category-sample（known-document allow-list live 专用）
+status: live_sample_scoped_B-FM-54_category_empty
+verified: false
+notes: B-FM-54 本包不做 category-sample live；空列表
+cases: []

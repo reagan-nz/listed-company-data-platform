@@ -1,0 +1,41 @@
+# B-FM-54 live allow-list — 仅新晋 supervisory_board_known_005 /
+# continuous_supervision_annual_known_005
+status: live_sample_scoped_B-FM-54
+verified: false
+notes: B-FM-54 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS including B-FM-53 vo/supervision known_004 and supervisory known_001–004
+cases:
+  - case_id: supervisory_board_known_005
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "300107"
+    company_name: "建新股份"
+    title_pattern: "第六届监事会第十二次会议决议公告"
+    expected_document_type: announcement
+    date_start: "2025-05-27"
+    date_end: "2025-05-30"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-54 live allow-list（监事会决议 known_005）：
+      harvest BD2E322 建新股份 300107 ann=1223713207 2025-05-28。
+      title_pattern 取「第六届监事会第十二次会议决议公告」
+      （≠ known_001–004 届次/次数/助词变体）。
+      不写 verified；不下载 PDF。
+
+  - case_id: continuous_supervision_annual_known_005
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "603150"
+    company_name: "万朗磁塑"
+    title_pattern: "安徽万朗磁塑股份有限公司2024年度持续督导年度报告书"
+    expected_document_type: announcement
+    date_start: "2025-04-28"
+    date_end: "2025-05-01"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-54 live allow-list（持续督导年度报告书 known_005）：
+      harvest BD2E791 万朗磁塑 603150 ann=1223409628 2025-04-29。
+      title_pattern 取「安徽万朗磁塑股份有限公司2024年度持续督导年度报告书」
+      （≠ known_001 宽串单独作本案 / known_002–004）。
+      不写 verified；不下载 PDF。

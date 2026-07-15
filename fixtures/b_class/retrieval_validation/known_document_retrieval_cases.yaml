@@ -338,7 +338,7 @@ cases:
       b_class_erad_fuller_next_slice2_session2_report.csv 行 BD2E730（quality=pass）。
       不写 verified；不下载 PDF。
 
-  # --- supervisory_board / 监事会决议 × 4（document_type=announcement；非 board_resolution）---
+  # --- supervisory_board / 监事会决议 × 5（document_type=announcement；非 board_resolution）---
   - case_id: supervisory_board_known_001
     case_status: ready
     source_id: cninfo_general_announcement_pdf
@@ -428,6 +428,30 @@ cases:
       （含年报→periodic）可区分。来源
       outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
       b_class_erad_fuller_next_slice2_session2_report.csv 行 BD2E778（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: supervisory_board_known_005
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "300107"
+    company_name: "建新股份"
+    title_pattern: "第六届监事会第十二次会议决议公告"
+    expected_document_type: announcement
+    date_start: "2025-05-27"
+    date_end: "2025-05-30"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-54 自 harvest 证据晋升（监事会决议 known_005；届次全锚定余量案；
+      闭合 B-FM-53 注明的 BD2E322）：建新股份 300107，建新股份第六届监事会第十二次会议决议公告
+      （announcement_id=1223713207，披露日 2025-05-28）。路由已有 general_006
+      「监事会决议公告」→ announcement；本包不改路由。title_pattern 取
+      「第六届监事会第十二次会议决议公告」：与 known_001「第二十四次会议决议公告」、
+      known_002「第二十二次会议决议的公告」、known_003「第四届监事会第五次会议决议公告」、
+      known_004「第四届监事会第三十次会议决议公告」及董事会「董事会决议公告」可区分。
+      与「监事会关于…年度报告的审核意见」（含年报→periodic）可区分。来源
+      outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
+      b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E322（quality=pass）。
       不写 verified；不下载 PDF。
 
   # --- legal_opinion / 法律意见书 × 6（document_type=announcement；非 shareholder_meeting_material）---
@@ -838,7 +862,7 @@ cases:
       reports/b_class_erad_scale_200_report.csv 行 BD2E051（quality=pass）。
       不写 verified；不下载 PDF。
 
-  # --- continuous_supervision / 持续督导 × 4（B-FM-30 known_001；B-FM-43 known_002；B-FM-47 known_003；B-FM-53 known_004；document_type=announcement；勿进 annual_report / other）---
+  # --- continuous_supervision / 持续督导 × 5（B-FM-30 known_001；B-FM-43 known_002；B-FM-47 known_003；B-FM-53 known_004；B-FM-54 known_005；document_type=announcement；勿进 annual_report / other）---
   - case_id: continuous_supervision_annual_known_001
     case_status: ready
     source_id: cninfo_general_announcement_pdf
@@ -935,6 +959,31 @@ cases:
       与真·年度报告 / 培训情况报告 / 变更保荐代表人公告可区分。来源
       outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
       b_class_erad_fuller_next_slice2_report.csv 行 BD2E785（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: continuous_supervision_annual_known_005
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "603150"
+    company_name: "万朗磁塑"
+    title_pattern: "安徽万朗磁塑股份有限公司2024年度持续督导年度报告书"
+    expected_document_type: announcement
+    date_start: "2025-04-28"
+    date_end: "2025-05-01"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-54 自 harvest 证据晋升（持续督导年度报告书 known_005；对称
+      known_001 宽串 / known_002–004 公司全称或可转债）：万朗磁塑 603150，
+      国元证券股份有限公司关于安徽万朗磁塑股份有限公司2024年度持续督导年度报告书
+      （announcement_id=1223409628，披露日 2025-04-29）。路由已由 B-FM-30 硬化
+      （「持续督导」→ announcement；勿进 annual_report）；本包不改路由。
+      title_pattern 取「安徽万朗磁塑股份有限公司2024年度持续督导年度报告书」
+      （≠ known_001 宽串单独作本案 pattern；≠ known_002/003/004）。
+      harvest 标注 announcement_type=periodic_report 仍须经路由落 announcement。
+      与真·年度报告 / 培训情况报告 / 变更保荐代表人公告可区分。来源
+      outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
+      b_class_erad_fuller_next_slice2_report.csv 行 BD2E791（quality=pass）。
       不写 verified；不下载 PDF。
 
   - case_id: continuous_supervision_training_known_001
