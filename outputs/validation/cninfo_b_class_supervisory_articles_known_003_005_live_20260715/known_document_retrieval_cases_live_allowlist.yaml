@@ -1,0 +1,41 @@
+# B-FM-50 live allow-list — 仅新晋 supervisory_board_known_003 /
+# company_articles_known_005
+status: live_sample_scoped_B-FM-50
+verified: false
+notes: B-FM-50 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS including supervisory known_001/002, articles known_001–004, ESOP known_003 and B-FM-49
+cases:
+  - case_id: supervisory_board_known_003
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "301265"
+    company_name: "华新科技"
+    title_pattern: "第四届监事会第五次会议决议公告"
+    expected_document_type: announcement
+    date_start: "2025-06-22"
+    date_end: "2025-06-25"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-50 live allow-list（监事会届次决议 known_003）：
+      harvest BD2E702 华新科技 301265 ann=1223955287 2025-06-23。
+      title_pattern 取「第四届监事会第五次会议决议公告」
+      （≠ known_001/002 届次变体 / 董事会决议）。
+      不写 verified；不下载 PDF。
+
+  - case_id: company_articles_known_005
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "301068"
+    company_name: "大地海洋"
+    title_pattern: "修订《公司章程》完成工商变更登记"
+    expected_document_type: announcement
+    date_start: "2025-06-10"
+    date_end: "2025-06-13"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-50 live allow-list（公司章程工商变更修订 known_005）：
+      harvest BD2E674 大地海洋 301068 ann=1223848298 2025-06-11。
+      title_pattern 取「修订《公司章程》完成工商变更登记」
+      （≠修订公告 known_004 / 章程正文修订串 / 纯工商变更无章程）。
+      不写 verified；不下载 PDF。

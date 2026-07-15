@@ -268,7 +268,7 @@ cases:
       b_class_erad_fuller_next_slice2_report.csv 行 BD2E648（quality=pass）。
       不写 verified；不下载 PDF。
 
-  # --- supervisory_board / 监事会决议 × 2（document_type=announcement；非 board_resolution）---
+  # --- supervisory_board / 监事会决议 × 3（document_type=announcement；非 board_resolution）---
   - case_id: supervisory_board_known_001
     case_status: ready
     source_id: cninfo_general_announcement_pdf
@@ -312,6 +312,29 @@ cases:
       announcement → cninfo_general_announcement_pdf（监事会分支，非 board_resolution）。
       来源 outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/b_class_erad_next_scale_slice1_combined_report.csv
       行 BD2E244（quality=pass）。不写 verified；不下载 PDF。
+
+  - case_id: supervisory_board_known_003
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "301265"
+    company_name: "华新科技"
+    title_pattern: "第四届监事会第五次会议决议公告"
+    expected_document_type: announcement
+    date_start: "2025-06-22"
+    date_end: "2025-06-25"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-50 自 harvest 证据晋升（监事会决议 known_003；届次+次数全锚定子类型；
+      闭合 B-FM-49 推迟的 BD2E702）：华新科技 301265，第四届监事会第五次会议决议公告
+      （announcement_id=1223955287，披露日 2025-06-23）。路由已有 general_006
+      「监事会决议公告」→ announcement；本包不改路由。title_pattern 取
+      「第四届监事会第五次会议决议公告」：覆盖届次全锚定边角，且不命中 known_001
+      「第二十四次会议决议公告」、known_002「第二十二次会议决议的公告」及董事会
+      「董事会决议公告」。与「监事会关于…年度报告的审核意见」（含年报→periodic）
+      可区分。来源 outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
+      b_class_erad_fuller_next_slice2_session2_report.csv 行 BD2E702（quality=pass）。
+      不写 verified；不下载 PDF。
 
   # --- legal_opinion / 法律意见书 × 6（document_type=announcement；非 shareholder_meeting_material）---
   - case_id: legal_opinion_known_001
@@ -1134,6 +1157,31 @@ cases:
       勿裸「章程」。与管理制度/薪酬/名单/ESOP 可区分。来源
       outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
       b_class_erad_fuller_next_slice2_session2_report.csv 行 BD2E736（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: company_articles_known_005
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "301068"
+    company_name: "大地海洋"
+    title_pattern: "修订《公司章程》完成工商变更登记"
+    expected_document_type: announcement
+    date_start: "2025-06-10"
+    date_end: "2025-06-13"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-50 自 harvest 证据晋升（公司章程工商变更修订边角 known_005；闭合 B-FM-49
+      推迟的 BD2E674）：大地海洋 301068，关于变更公司注册资本、修订《公司章程》完成
+      工商变更登记的公告（announcement_id=1223848298，披露日 2025-06-11）。
+      路由已由 B-FM-36 硬化（「公司章程」→ announcement）；本包不改路由。
+      title_pattern 取「修订《公司章程》完成工商变更登记」：覆盖工商变更+修订章程
+      子类型，且不命中 known_004「关于修订《公司章程》的公告」（无连续「完成工商
+      变更登记」）、known_001/002 章程正文修订串、known_003 短标题，以及纯
+      「完成工商变更登记并换发营业执照」类无章程标题。勿裸「章程」/「工商变更」。
+      与管理制度/薪酬/名单/ESOP 可区分。来源
+      outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
+      b_class_erad_fuller_next_slice2_session2_report.csv 行 BD2E674（quality=pass）。
       不写 verified；不下载 PDF。
 
   # --- raised_funds_management_system / 募集资金管理制度（B-FM-36；对称第二边角）---
