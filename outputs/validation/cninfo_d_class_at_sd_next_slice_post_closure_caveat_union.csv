@@ -1,0 +1,13 @@
+caveat_id,track,caveat_type,disposition,blocking_live,source,forbidden_interpretation,required_hold
+CAV-ATSD-PC-01,BOTH,s4_dryrun_not_live,accept_with_caveat,no,D-FM-34/35,PASS_OFFLINE means live-approved or verified,retain PASS_OFFLINE != live
+CAV-ATSD-PC-02,BOTH,runner_ready_not_approved,retained,no,D-FM-31/33,READY_FOR_APPROVAL means approved_for_live,retain until explicit approve flag
+CAV-ATSD-PC-03,AT,shared_probe_not_found_path,retained,no,D-FM-35,denser-day cite equals company-level found-path for DAT101-105,live_found_path remains NOT_PROVEN
+CAV-ATSD-PC-04,SD,unproven_rdate_20251231,retained,no,D-FM-34,20251231 equals proven live found-path for DSD104-105,live_found_path_20251231 remains NOT_PROVEN
+CAV-ATSD-PC-05,AT,forbidden_sparse_anchor,enforced,n/a,D-FM-35,use 2026-07-03 as sole found anchor,keep forbidden_sole_found_anchor=2026-07-03
+CAV-ATSD-PC-06,SD,multi_rdate_next_slice_only,retained,n/a,D-FM-34,rewrite first-slice VR-008 via next-slice,do not mutate first-slice VR-008
+CAV-ATSD-PC-07,BOTH,at_sd_live_not_flipped,enforced,yes,D-FM-36,flip AT or SD live without approve + controller_execution_allowed,at_next_live_flipped=false; sd_next_live_flipped=false
+CAV-ATSD-PC-08,BOTH,closed_roots_frozen,enforced,n/a,D-FM-34/35/36,rewrite AT/SD first/next dry-run or FIA first/next live roots,sha256 freeze attestation MATCH only
+CAV-ATSD-PC-09,BOTH,dlc006r_closed,enforced,n/a,policy,reopen DLC006R / 301259 / 688671,exclude flags retained
+CAV-ATSD-PC-10,BOTH,ess_paused,retained,n/a,policy,blind probe ESS H3/H4 or Level-2 IDLE,paused_pending_devtools only
+CAV-ATSD-PC-11,BOTH,not_verified_not_production_ready,retained,n/a,D-FM-36,claim verified or production_ready or bare PASS,language remain PASS_OFFLINE / NOT_APPROVED
+CAV-ATSD-PC-12,BOTH,dual_track_live_budget_distinct,retained,no,D-FM-36,merge AT+SD into one shared CNINFO budget,AT prefer 1; SD prefer 2; separate approve

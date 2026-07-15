@@ -1,0 +1,36 @@
+metric_group,metric_name,value,gate_impact,notes
+dual_track,at_s4_dryrun_closure_gate,PASS_OFFLINE,readiness,D-FM-35 preserved
+dual_track,sd_s4_dryrun_closure_gate,PASS_OFFLINE,readiness,D-FM-34 preserved
+dual_track,at_planned_ok,5/5,readiness,DAT101-105
+dual_track,sd_planned_ok,5/5,readiness,DSD101-105
+dual_track,at_shared_probe_prefer,1,readiness,2026-07-02 single_day_paged
+dual_track,sd_shared_probe_prefer,2,readiness,20260331 + 20251231
+dual_track,at_live_gate,NOT_APPROVED,hold,controller_execution_allowed=false
+dual_track,sd_live_gate,NOT_APPROVED,hold,controller_execution_allowed=false
+dual_track,at_execution_gate,NOT_APPLICABLE,hold,no live this phase
+dual_track,sd_execution_gate,NOT_APPLICABLE,hold,no live this phase
+dual_track,at_live_report_present,no,hold,ABSENT_OK
+dual_track,sd_live_report_present,no,hold,ABSENT_OK
+dual_track,at_next_live_flipped,false,red_line,must remain false
+dual_track,sd_next_live_flipped,false,red_line,must remain false
+dual_track,freeze_attestation_rows_match,10,readiness,locks + dry-run roots MATCH; live reports ABSENT_OK
+cninfo,CNINFO_during_dfm36_readiness,0,closure,offline dual-track ledger only
+cninfo,CNINFO_during_dfm34_closure,0,preserved,SD closure prior
+cninfo,CNINFO_during_dfm35_closure,0,preserved,AT closure prior
+caveat,blocking_live_caveats,2,hold,live_gate NOT_APPROVED on AT and SD
+caveat,nonblocking_open_caveats,4,readiness,found-path NOT_PROVEN + runner_ready + s4_not_live retained
+safety,pdf_download,0,red_line,no PDF
+safety,ocr,0,red_line,no OCR
+safety,extraction,0,red_line,no extraction
+safety,db_write,0,red_line,no DB
+safety,minio_write,0,red_line,no MinIO
+safety,rag_run,0,red_line,no RAG
+exclusion,688671_excluded,yes,universe,policy retained
+exclusion,301259_excluded,yes,universe,DLC006R not reopened
+track,at_next_dryrun_root_frozen,yes,closure,sha256 MATCH
+track,sd_next_dryrun_root_frozen,yes,closure,sha256 MATCH
+track,at_sd_first_slice_frozen,yes,closure,locks untouched
+track,fia_first_next_live_frozen,yes,closure,locks untouched
+gate,dual_track_post_closure_readiness_gate,PASS_OFFLINE,closure,NOT verified; NOT production_ready; NOT live-ready
+gate,commit_boundary_gate,READY_FOR_COMMIT_REVIEW,closure,controller commit-boundary next
+gate,controller_execution_allowed,false,red_line,no AT/SD live flip

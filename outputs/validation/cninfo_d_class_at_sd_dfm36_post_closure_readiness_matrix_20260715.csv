@@ -1,0 +1,4 @@
+track,case_band,planned_ok,shared_probes,s4_dryrun_gate,s4_dryrun_closure_gate,live_gate,execution_gate,live_report,live_found_path,freeze_attestation,cninfo_this_task,live_flipped
+AT,DAT101-DAT105,5/5,1,PASS_OFFLINE,PASS_OFFLINE,NOT_APPROVED,NOT_APPLICABLE,ABSENT,NOT_PROVEN,MATCH,0,false
+SD,DSD101-DSD105,5/5,2,PASS_OFFLINE,PASS_OFFLINE,NOT_APPROVED,NOT_APPLICABLE,ABSENT,NOT_PROVEN_20251231,MATCH,0,false
+BOTH,dual_track_post_closure,10/10,1+2,PASS_OFFLINE,PASS_OFFLINE,NOT_APPROVED,NOT_APPLICABLE,ABSENT,NOT_PROVEN,MATCH,0,false

@@ -1,0 +1,35 @@
+track,dimension,item,status,gate_or_value,blocking_live,evidence_ref,notes
+AT,phase,s4_dryrun,closed,PASS_OFFLINE,no,cninfo_d_class_abnormal_trading_dfm31_next_slice_runner_s4_dryrun_20260715.md,planned_ok 5/5; shared=1; CNINFO=0
+AT,phase,s4_dryrun_closure,closed,PASS_OFFLINE,no,cninfo_d_class_abnormal_trading_dfm35_next_slice_dryrun_offline_closure_20260715.md,freeze + caveat; NOT verified
+SD,phase,s4_dryrun,closed,PASS_OFFLINE,no,cninfo_d_class_shareholder_data_dfm33_next_slice_runner_s4_dryrun_20260715.md,planned_ok 5/5; shared=2; CNINFO=0
+SD,phase,s4_dryrun_closure,closed,PASS_OFFLINE,no,cninfo_d_class_shareholder_data_dfm34_next_slice_dryrun_offline_closure_20260715.md,freeze + caveat; NOT verified
+AT,gate,approval_gate,preserved,STANDING_SCOPE_AUTHORIZED,no,D-FM-30,standing_scope shareholder/capital/FIA/AT/SD
+SD,gate,approval_gate,preserved,STANDING_SCOPE_AUTHORIZED,no,D-FM-32,standing_scope shareholder/capital/FIA/AT/SD
+AT,gate,fixture_vr_gate,preserved,PASS_OFFLINE,no,D-FM-30,NOT verified
+SD,gate,fixture_vr_gate,preserved,PASS_OFFLINE,no,D-FM-32,NOT verified
+AT,gate,runner_extension_gate,preserved,READY_FOR_APPROVAL,no,D-FM-31,READY_FOR_APPROVAL != approved
+SD,gate,runner_extension_gate,preserved,READY_FOR_APPROVAL,no,D-FM-33,READY_FOR_APPROVAL != approved
+AT,gate,live_path_gate,preserved,READY_FOR_APPROVAL,no,D-FM-31,path wired; not live
+SD,gate,live_path_gate,preserved,READY_FOR_APPROVAL,no,D-FM-33,path wired; not live
+AT,gate,s4_dryrun_gate,preserved,PASS_OFFLINE,no,D-FM-31,not bare PASS
+SD,gate,s4_dryrun_gate,preserved,PASS_OFFLINE,no,D-FM-33,not bare PASS
+AT,gate,s4_dryrun_closure_gate,preserved,PASS_OFFLINE,no,D-FM-35,not live authorize
+SD,gate,s4_dryrun_closure_gate,preserved,PASS_OFFLINE,no,D-FM-34,not live authorize
+AT,gate,live_gate,hold,NOT_APPROVED,yes,controller_execution_allowed=false,explicit approve required
+SD,gate,live_gate,hold,NOT_APPROVED,yes,controller_execution_allowed=false,explicit approve required
+AT,gate,execution_gate,hold,NOT_APPLICABLE,yes,no live this phase,must stay NOT_APPLICABLE until approve
+SD,gate,execution_gate,hold,NOT_APPLICABLE,yes,no live this phase,must stay NOT_APPLICABLE until approve
+AT,budget,shared_probe_prefer,ready_offline,1,no,single_day_paged_2026-07-02,prefer CNINFO=1 for future bounded live
+SD,budget,shared_probe_prefer,ready_offline,2,no,rdate_20260331+rdate_20251231,prefer CNINFO=2 for future bounded live
+AT,caveat,live_found_path,open_nonblocking,NOT_PROVEN,no,DAT101-105,cite strength unproven; denser-day != found-path
+SD,caveat,live_found_path_20251231,open_nonblocking,NOT_PROVEN,no,DSD104-105,must not claim 20251231 found-path
+AT,freeze,next_slice_dryrun_root,frozen,sha256_attested,n/a,cninfo_d_class_abnormal_trading_next_slice_dryrun_artifact_freeze_ledger.csv,no rewrite / no dry-run rerun
+SD,freeze,next_slice_dryrun_root,frozen,sha256_attested,n/a,cninfo_d_class_shareholder_data_next_slice_dryrun_artifact_freeze_ledger.csv,no rewrite / no dry-run rerun
+BOTH,freeze,first_slice_roots,frozen,sha256_attested,n/a,AT/SD first-slice locks+live,closed first-slice must stay frozen
+BOTH,freeze,fia_first_next_live,frozen,sha256_attested,n/a,FIA first/next locks+live,do not mutate closed FIA roots
+BOTH,policy,controller_execution_allowed,false,false,yes,D-FM-36 task yaml,no AT/SD live flip this package
+BOTH,policy,dlc006r,closed,not_reopened,n/a,exclude_301259;exclude_688671,do not reopen DLC006R
+BOTH,policy,ess_h3_h4,paused,paused_pending_devtools,n/a,ESS pause hold,no blind probe; no Level-2 IDLE
+BOTH,readiness,dual_track_post_closure,PASS_OFFLINE,PASS_OFFLINE,no,D-FM-36 this ledger,ready for controller commit-boundary; NOT live-ready
+BOTH,readiness,live_flip,blocked,NOT_APPROVED,yes,need explicit approve + controller_execution_allowed,AT and SD both blocked
+BOTH,next,primary_after_commit,deferred_offline_or_approve,human_choice,n/a,post_closure_next_step_recommendation,FIA further-scale OR equity-pledge/ES/shareholder_change OR bounded live after approve
