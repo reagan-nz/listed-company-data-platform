@@ -96,7 +96,20 @@ def _load_yaml(path: str) -> Dict[str, Any]:
 
 
 def _inquiry_document_type(title: str) -> str:
-    reply_markers = ["回复公告", "回复函", "回复的公告", "问询函回复", "关注函回复"]
+    """区分 inquiry_reply（公司/中介回复）与 regulatory_inquiry（问询/关注函原文）。
+
+    真实 harvest 中 CPA 回复常以「问询函的回复」结尾（无「回复公告」连续后缀），
+    旧 marker 会误判为 regulatory_inquiry；「延期回复…问询函」仍保留为 regulatory_inquiry。
+    """
+    reply_markers = [
+        "回复公告",
+        "回复函",
+        "回复的公告",
+        "问询函回复",
+        "问询函的回复",  # CPA 等：…监管问询函的回复（无「公告」后缀）
+        "关注函回复",
+        "关注函的回复",
+    ]
     inquiry_markers = ["问询函", "监管问询函", "关注函", "年报问询函"]
     reply_hits = _match_any(title, reply_markers)
     inquiry_hits = _match_any(title, inquiry_markers)
