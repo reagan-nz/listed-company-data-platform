@@ -362,6 +362,11 @@ def _general_document_type(title: str, patterns: List[str]) -> str:
     子串「非标意见」，旧逻辑落 other；「前次募集资金使用情况报告」亦无 general
     positive_patterns。凡含「非标准审计意见」或「募集资金使用情况报告」一律
     announcement（窄 pattern；不泛化「专项说明」；不扩 schema）。
+
+    B-FM-33：「独立董事专门会议的审核意见」/「独立董事提名人声明与承诺」无 general
+    positive_patterns，旧逻辑落 other。窄 pattern 一律 announcement（勿裸
+    「审核意见」——以免波及监事会/董事会「…年度报告的审核意见」periodic 路径；
+    不扩 schema）。
     """
     # 法律意见书/法律意见：中介见证材料，保持 announcement（会议与非会议均适用）
     if "法律意见" in title:
@@ -389,6 +394,12 @@ def _general_document_type(title: str, patterns: List[str]) -> str:
         return "announcement"
     # 募集资金使用情况报告：前次/当期募资使用说明，保持 announcement（勿落 other）
     if "募集资金使用情况报告" in title:
+        return "announcement"
+    # 独立董事专门会议的审核意见：治理会议文书（窄；勿裸「审核意见」）
+    if "独立董事专门会议的审核意见" in title:
+        return "announcement"
+    # 独立董事提名人声明与承诺：提名人治理披露，保持 announcement（勿落 other）
+    if "独立董事提名人声明与承诺" in title:
         return "announcement"
     if "董事会" in title and "决议" in title:
         return "board_resolution"

@@ -1,0 +1,40 @@
+# B-FM-33 live allow-list — 仅新晋 independent_director_meeting_review_known_001 /
+# independent_director_nominee_declaration_known_001
+# 独立董事专门会议审核意见 / 提名人声明与承诺；排除全部已 LIVE_PASS
+status: live_sample_scoped_B-FM-33
+generated: "2026-07-15"
+notes: B-FM-33 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS
+cases:
+  - case_id: independent_director_meeting_review_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "600616"
+    company_name: "金枫酒业"
+    title_pattern: "独立董事专门会议的审核意见"
+    expected_document_type: announcement
+    date_start: "2025-06-19"
+    date_end: "2025-06-22"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-33 live allow-list（独立董事专门会议的审核意见）：
+      金枫酒业 600616，披露日约 2025-06-20。
+      pattern「独立董事专门会议的审核意见」（窄；勿裸「审核意见」）。
+      不写 verified；不下载 PDF。
+
+  - case_id: independent_director_nominee_declaration_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "002003"
+    company_name: "伟星股份"
+    title_pattern: "独立董事提名人声明与承诺（张永炬）"
+    expected_document_type: announcement
+    date_start: "2025-06-23"
+    date_end: "2025-06-26"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-33 live allow-list（独立董事提名人声明与承诺边角）：
+      伟星股份 002003，披露日约 2025-06-24。
+      pattern「独立董事提名人声明与承诺（张永炬）」（含姓名消歧）。
+      不写 verified；不下载 PDF。

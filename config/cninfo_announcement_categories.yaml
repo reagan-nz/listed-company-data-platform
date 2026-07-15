@@ -173,6 +173,8 @@ categories:
       - 持续督导
       - 非标准审计意见
       - 募集资金使用情况报告
+      - 独立董事专门会议的审核意见  # B-FM-33：窄；勿裸「审核意见」
+      - 独立董事提名人声明与承诺  # B-FM-33：治理披露边角
     exclusion_patterns: []
     route_to:
       source_id: cninfo_general_announcement_pdf
@@ -203,6 +205,9 @@ categories:
       「非标意见」子串）及「前次募集资金使用情况报告」旧逻辑落 other；含
       「非标准审计意见」或「募集资金使用情况报告」一律 announcement（窄 pattern；
       不泛化「专项说明」；不扩 schema）。
+      B-FM-33：「独立董事专门会议的审核意见」/「独立董事提名人声明与承诺」旧逻辑落
+      other；窄 pattern 一律 announcement（勿裸「审核意见」波及年报审核意见
+      periodic 路径；不扩 schema）。
 
 # 延期披露 / 摘要 / 提示性预告等：从 periodic 排除后的候选路由（非独立 source，归入 general 或 future disclosure_related）
 excluded_from_periodic_routing:

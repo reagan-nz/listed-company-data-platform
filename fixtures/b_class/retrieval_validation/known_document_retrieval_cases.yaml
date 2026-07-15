@@ -645,6 +645,52 @@ cases:
       b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E234（quality=pass）。
       不写 verified；不下载 PDF。
 
+  # --- independent_director_meeting_review / 独立董事专门会议审核意见（B-FM-33；勿落 other）---
+  - case_id: independent_director_meeting_review_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "600616"
+    company_name: "金枫酒业"
+    title_pattern: "独立董事专门会议的审核意见"
+    expected_document_type: announcement
+    date_start: "2025-06-19"
+    date_end: "2025-06-22"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-33 自 harvest 证据晋升（独立董事专门会议审核意见 routing 边角：旧逻辑落 other）：
+      金枫酒业 600616，金枫酒业2025年第二次独立董事专门会议的审核意见
+      （announcement_id=1223951163，披露日 2025-06-20）。B-FM-33 前无 general
+      positive_patterns，落 other；硬化后 announcement。title_pattern 取窄串
+      「独立董事专门会议的审核意见」（勿裸「审核意见」，以免波及监事会/董事会
+      「…年度报告的审核意见」periodic 路径）。与年报审核意见 / 章程制度 / 法律意见可区分。
+      来源 outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
+      b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E426（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  # --- independent_director_nominee_declaration / 独立董事提名人声明与承诺（B-FM-33；对称第二边角）---
+  - case_id: independent_director_nominee_declaration_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "002003"
+    company_name: "伟星股份"
+    title_pattern: "独立董事提名人声明与承诺（张永炬）"
+    expected_document_type: announcement
+    date_start: "2025-06-23"
+    date_end: "2025-06-26"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-33 自 harvest 证据晋升（独立董事提名人声明与承诺第二边角；对称 meeting_review）：
+      伟星股份 002003，独立董事提名人声明与承诺（张永炬）（announcement_id=1223973877，
+      披露日 2025-06-24）。标题无「公告」等 general positive_patterns（B-FM-33 前），落 other；
+      硬化后 announcement。title_pattern 取「独立董事提名人声明与承诺（张永炬）」
+      （含提名人姓名，避免同窗多条提名人声明歧义）。与专门会议审核意见 /
+      章程制度 / 薪酬方案等低价值 other 边角可区分。来源
+      outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
+      b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E264（quality=pass）。
+      不写 verified；不下载 PDF。
+
   # --- shareholder_meeting_material × 4 ---
   - case_id: shareholder_meeting_known_001
     case_status: ready
