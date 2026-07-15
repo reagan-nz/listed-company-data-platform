@@ -1,6 +1,6 @@
 # CNINFO B 类 Non-periodic Document Fixture Seed Summary
 
-_生成时间：2026-07-05（offline known-document benchmark → non-periodic metadata）_
+_生成时间：2026-07-15（offline known-document benchmark → non-periodic metadata）_
 
 ## 1. 目的
 
@@ -22,10 +22,10 @@ _生成时间：2026-07-05（offline known-document benchmark → non-periodic m
 
 | 指标 | 数值 |
 |------|------|
-| benchmark_total | **16** |
-| seeded_non_periodic | **13** |
-| skipped_periodic | **3** |
-| schema_pass | **13** |
+| benchmark_total | **34** |
+| seeded_non_periodic | **26** |
+| skipped_periodic | **8** |
+| schema_pass | **26** |
 | schema_fail | **0** |
 | raw_file_seeded | **0** |
 
@@ -33,7 +33,7 @@ _生成时间：2026-07-05（offline known-document benchmark → non-periodic m
 
 - `cninfo_inquiry_reply_pdf`: **3**
 - `cninfo_meeting_notice_pdf`: **3**
-- `cninfo_general_announcement_pdf`: **7**
+- `cninfo_general_announcement_pdf`: **20**
 
 ## 5. 按 document_type 统计
 
@@ -43,30 +43,37 @@ _生成时间：2026-07-05（offline known-document benchmark → non-periodic m
 - `investor_relations_activity`: **1**
 - `board_resolution`: **1**
 - `shareholder_meeting_material`: **1**
-- `announcement`: **5**
-- `other`: **0**
+- `announcement`: **17**
+- `other`: **1**
+
+## 6. false_positive_reason 同源覆盖（fixture metadata）
+
+- `announcement_preview`: **4**
+- `wrong_company`: **4**
+- `(none)`: **18**
 
 Document fixture：`fixtures/b_class/document/non_periodic_document_fixtures.jsonl`
 
-## 6. 质量边界
+## 7. 质量边界
 
 - 这些是 **offline title fixtures**，不是 CNINFO corpus parsing 结果。
 - **没有真实 CNINFO retrieval**；`retrieval_status=found` 仅表示 benchmark 路由命中，非 Phase 1 式 coverage。
 - **没有 `pdf_url`**；不能代表 retrieval coverage%。
 - `source_confidence=candidate`；**未升级**为 `testing_stable_sample`。
 - **不写 verified**。
+- `wrong_period` 行仍 route periodic，**不**进入本 non_periodic fixture（见 skipped_periodic）。
 
 ### raw_file
 
 Non-periodic fixtures 为 **title-only metadata**，无 `pdf_url`，**不生成** `b_raw_file` fixture。
 `non_periodic_raw_file_fixtures.jsonl` 为空文件；待后续小样本 CNINFO 请求补 URL 后再派生 raw_file。
 
-## 7. 下一步
+## 8. 下一步
 
-1. 后续用真实 known-document benchmark 替换离线标题样例。
-2. 允许小样本请求后再补 `pdf_url`。
-3. 有 `pdf_url` 后再派生 `b_raw_file`。
-4. **暂不解析 PDF。**
+1. 可选：同步 parse_run dry-run（当前可能仍停在旧 non_periodic 行数）。
+2. 可选：`unrelated_announcement` false_positive lineage（validation_design §7）。
+3. 后续用真实 known-document benchmark 替换离线标题样例。
+4. **暂不解析 PDF；不重开 BD2E624。**
 
 ## 附录
 

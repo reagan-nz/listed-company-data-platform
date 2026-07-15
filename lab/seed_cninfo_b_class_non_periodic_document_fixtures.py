@@ -78,13 +78,14 @@ def build_document(entry: Dict[str, Any]) -> Dict[str, Any]:
     document_type = entry["expected_document_type"]
     title = entry["title"]
 
+    # 含 expected_false_positive_reason，使 schema fixture 与 routing benchmark FP lineage 同源
     raw_metadata = {
         "benchmark_row": {
             k: entry.get(k)
             for k in (
                 "benchmark_id", "company_code", "company_name", "title",
                 "expected_route_to", "expected_document_type", "expected_classification",
-                "benchmark_group", "notes",
+                "expected_false_positive_reason", "benchmark_group", "notes",
             )
         }
     }

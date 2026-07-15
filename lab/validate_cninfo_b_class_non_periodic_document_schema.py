@@ -147,6 +147,15 @@ def write_summary_md(
     by_doc_type = Counter(
         r.get("document_type", "") for r in seed_rows if r.get("seed_status") == "seeded"
     )
+    # 从已校验 fixture 统计 FP lineage（与 routing benchmark 同源字段）
+    fixture_records = load_jsonl(fixtures_path)
+    by_fp = Counter(
+        ((rec.get("raw_metadata_json") or {}).get("benchmark_row") or {}).get(
+            "expected_false_positive_reason"
+        )
+        or "(none)"
+        for rec in fixture_records
+    )
 
     doc_types_order = [
         "inquiry_reply", "regulatory_inquiry", "meeting_notice",
@@ -202,27 +211,34 @@ def write_summary_md(
 
     lines.extend([
         "",
+        "## 6. false_positive_reason 同源覆盖（fixture metadata）",
+        "",
+        f"- `announcement_preview`: **{by_fp.get('announcement_preview', 0)}**",
+        f"- `wrong_company`: **{by_fp.get('wrong_company', 0)}**",
+        f"- `(none)`: **{by_fp.get('(none)', 0)}**",
+        "",
         f"Document fixture：`{os.path.relpath(fixtures_path, BASE_DIR)}`",
         "",
-        "## 6. 质量边界",
+        "## 7. 质量边界",
         "",
         "- 这些是 **offline title fixtures**，不是 CNINFO corpus parsing 结果。",
         "- **没有真实 CNINFO retrieval**；`retrieval_status=found` 仅表示 benchmark 路由命中，非 Phase 1 式 coverage。",
         "- **没有 `pdf_url`**；不能代表 retrieval coverage%。",
         "- `source_confidence=candidate`；**未升级**为 `testing_stable_sample`。",
         "- **不写 verified**。",
+        "- `wrong_period` 行仍 route periodic，**不**进入本 non_periodic fixture（见 skipped_periodic）。",
         "",
         "### raw_file",
         "",
         "Non-periodic fixtures 为 **title-only metadata**，无 `pdf_url`，**不生成** `b_raw_file` fixture。",
         "`non_periodic_raw_file_fixtures.jsonl` 为空文件；待后续小样本 CNINFO 请求补 URL 后再派生 raw_file。",
         "",
-        "## 7. 下一步",
+        "## 8. 下一步",
         "",
-        "1. 后续用真实 known-document benchmark 替换离线标题样例。",
-        "2. 允许小样本请求后再补 `pdf_url`。",
-        "3. 有 `pdf_url` 后再派生 `b_raw_file`。",
-        "4. **暂不解析 PDF。**",
+        "1. 可选：同步 parse_run dry-run（当前可能仍停在旧 non_periodic 行数）。",
+        "2. 可选：`unrelated_announcement` false_positive lineage（validation_design §7）。",
+        "3. 后续用真实 known-document benchmark 替换离线标题样例。",
+        "4. **暂不解析 PDF；不重开 BD2E624。**",
         "",
         "## 附录",
         "",
