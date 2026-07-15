@@ -1,0 +1,22 @@
+# B-FM-09 live allow-list — 仅新晋 regulatory_known_001（警示函监管函件原文）
+version: "draft-0.1"
+status: live_sample_scoped_B-FM-09
+verified: false
+notes: B-FM-09 live allow-list only; not a new fixture lineage
+
+cases:
+  - case_id: regulatory_known_001
+    case_status: ready
+    source_id: cninfo_inquiry_reply_pdf
+    company_code: "300792"
+    company_name: "壹网壹创"
+    title_pattern: "关于收到浙江证监局警示函的公告"
+    expected_document_type: regulatory_inquiry
+    date_start: "2025-06-22"
+    date_end: "2025-06-25"
+    expected_route_to: cninfo_inquiry_reply_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-09 live allow-list（依赖 B-FM-08 晋升 / B-FM-07 routing edge）：
+      壹网壹创 300792，BD2E626 / announcement_id=1223957037。
+      不写 verified；不下载 PDF。

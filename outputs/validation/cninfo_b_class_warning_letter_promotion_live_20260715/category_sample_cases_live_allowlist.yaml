@@ -1,0 +1,25 @@
+# B-FM-09 live allow-list — 仅新晋 inquiry_sample_001（警示函全市场类别窗）
+version: "draft-0.1"
+status: live_sample_scoped_B-FM-09
+verified: false
+notes: B-FM-09 live allow-list only; not a new fixture lineage
+
+cases:
+  - case_id: inquiry_sample_001
+    case_status: ready
+    source_id: cninfo_inquiry_reply_pdf
+    source_category: inquiry_reply_pdf
+    title_pattern: "警示函"
+    date_start: "2025-06-21"
+    date_end: "2025-06-25"
+    expected_min_results: 1
+    expected_document_types:
+      - regulatory_inquiry
+      - inquiry_reply
+    false_positive_guard_patterns:
+      - 年度报告
+      - 半年度报告
+    notes: >-
+      B-FM-09 live allow-list（依赖 B-FM-08 晋升 / B-FM-07 routing edge）：
+      警示函全市场窗；锚点 BD2E626 / 壹网壹创 300792。
+      不写 verified；不下载 PDF。

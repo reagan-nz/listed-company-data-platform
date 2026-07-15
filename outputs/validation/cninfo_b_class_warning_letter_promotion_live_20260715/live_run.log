@@ -1,0 +1,6 @@
+SUMMARY  ready=2  query_executed=3  pass=2  fail=0  ambiguous=0  result=LIVE_PASS
+CSV   outputs/validation/cninfo_b_class_warning_letter_promotion_live_20260715/cninfo_b_class_warning_letter_promotion_live_20260715_report.csv
+MD    outputs/validation/cninfo_b_class_warning_letter_promotion_live_20260715/cninfo_b_class_warning_letter_promotion_live_20260715_summary.md
+real 14.32
+user 0.19
+sys 0.05

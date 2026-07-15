@@ -1,0 +1,3 @@
+case_id,case_type,case_status,source_id,title_pattern,date_start,date_end,expected_document_type,expected_route_to,dry_run_status,would_query,query_status,notes
+regulatory_known_001,known_document,ready,cninfo_inquiry_reply_pdf,关于收到浙江证监局警示函的公告,2025-06-22,2025-06-25,regulatory_inquiry,cninfo_inquiry_reply_pdf,ready_for_future_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called
+inquiry_sample_001,category_sample,ready,cninfo_inquiry_reply_pdf,警示函,2025-06-21,2025-06-25,"regulatory_inquiry,inquiry_reply",,ready_for_category_sample_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called
