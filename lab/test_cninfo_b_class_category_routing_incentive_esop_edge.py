@@ -44,6 +44,8 @@ BOARD = "第七届董事会第十一次会议决议公告"
 BARE_ZHIDU = "某事项管理制度"  # 裸管理制度仍 other（B-FM-39 未泛化）
 MINGDAN = "英科再生资源股份有限公司2025年限制性股票激励计划激励对象名单（授予日）"
 JIANBAO = "2025年5月畜牧行业销售简报"
+BARE_MINGDAN = "某事项名单"
+BARE_JIANBAO = "某事项经营简报"
 
 
 class TestIncentiveEsopRoutingEdge(unittest.TestCase):
@@ -75,11 +77,15 @@ class TestIncentiveEsopRoutingEdge(unittest.TestCase):
         self.assertEqual(r.predicted_document_type, "other")
 
     def test_low_value_edges_still_other(self) -> None:
-        """名单/简报/裸管理制度仍落 other（本包不硬推）。"""
-        for title in (BARE_ZHIDU, MINGDAN, JIANBAO):
+        """裸管理制度/名单/简报仍落 other（激励对象名单/销售简报由 B-FM-41 承接）。"""
+        for title in (BARE_ZHIDU, BARE_MINGDAN, BARE_JIANBAO):
             with self.subTest(title=title):
                 r = routing.route_title(title, self.config)
                 self.assertEqual(r.predicted_document_type, "other")
+        for title in (MINGDAN, JIANBAO):
+            with self.subTest(title=title):
+                r = routing.route_title(title, self.config)
+                self.assertEqual(r.predicted_document_type, "announcement")
 
     def test_prior_paths_not_regressed(self) -> None:
         r_av = routing.route_title(ASSET_VAL, self.config)

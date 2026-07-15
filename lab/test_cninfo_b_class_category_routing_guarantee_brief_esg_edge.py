@@ -31,9 +31,10 @@ CATEGORIES = routing.DEFAULT_CATEGORIES
 # harvest 证据标题（只读引用；本测不请求 CNINFO）
 GUARANTEE_BRIEF = "光明地产关于对外担保的情况简报"  # BD2E432
 ESG = "2024 Environmental, Social and Corporate Governance Report"  # BD2E166
-BARE_JIANBAO = "某行业销售简报"  # 不得因裸「简报」抬成 announcement
+BARE_JIANBAO = "某事项经营简报"  # 不得因裸「简报」抬成 announcement（勿含「销售简报」）
 BARE_QINGKUANG = "某事项情况简报"  # 不得因裸「情况简报」抬成 announcement
 BARE_ESG = "某公司 ESG 专项说明"  # 不得因裸「ESG」抬成 announcement
+BARE_MINGDAN = "某事项名单"  # 不得因裸「名单」抬成 announcement（激励对象名单由 B-FM-41 承接）
 MINGDAN = "英科再生资源股份有限公司2025年限制性股票激励计划激励对象名单（授予日）"
 JIANBAO = "2025年5月畜牧行业销售简报"
 GUARANTEE_SYS = "海量数据对外担保管理制度"
@@ -67,18 +68,18 @@ class TestGuaranteeBriefEsgRoutingEdge(unittest.TestCase):
         self.assertIn("Corporate Governance Report", r.matched_patterns)
 
     def test_bare_brief_or_esg_not_lifted(self) -> None:
-        """裸「简报」/「情况简报」/「ESG」不得因本包泛化抬成 announcement。"""
-        for title in (BARE_JIANBAO, BARE_QINGKUANG, BARE_ESG):
+        """裸「简报」/「情况简报」/「ESG」/「名单」不得因本包泛化抬成 announcement。"""
+        for title in (BARE_JIANBAO, BARE_QINGKUANG, BARE_ESG, BARE_MINGDAN):
             with self.subTest(title=title):
                 r = routing.route_title(title, self.config)
                 self.assertEqual(r.predicted_document_type, "other")
 
-    def test_remaining_low_value_still_other(self) -> None:
-        """激励名单/销售简报仍落 other（本包不硬推）。"""
+    def test_incentive_list_sales_brief_by_bfm41(self) -> None:
+        """激励对象名单/销售简报由 B-FM-41 承接为 announcement（本包不重开）。"""
         for title in (MINGDAN, JIANBAO):
             with self.subTest(title=title):
                 r = routing.route_title(title, self.config)
-                self.assertEqual(r.predicted_document_type, "other")
+                self.assertEqual(r.predicted_document_type, "announcement")
 
     def test_prior_paths_not_regressed(self) -> None:
         r_gs = routing.route_title(GUARANTEE_SYS, self.config)

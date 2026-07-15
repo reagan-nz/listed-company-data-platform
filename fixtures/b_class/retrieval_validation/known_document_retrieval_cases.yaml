@@ -1010,6 +1010,53 @@ cases:
       b_class_erad_scale_200_report.csv 行 BD2E166（quality=pass）。
       不写 verified；不下载 PDF。
 
+  # --- incentive_object_list / 激励对象名单（B-FM-41；闭合 remaining other）---
+  - case_id: incentive_object_list_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "688087"
+    company_name: "英科再生"
+    title_pattern: "股份有限公司2025年限制性股票激励计划激励对象名单（授予日）"
+    expected_document_type: announcement
+    date_start: "2025-06-22"
+    date_end: "2025-06-25"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-41 自 harvest 证据晋升（激励对象名单 routing 边角：旧逻辑落 other）：
+      英科再生 688087，英科再生资源股份有限公司2025年限制性股票激励计划激励对象名单（授予日）
+      （announcement_id=1223956395，披露日 2025-06-23）。标题无「公告」等 general
+      positive_patterns（B-FM-41 前），落 other；硬化后 announcement。
+      路由 pattern 为窄串「激励对象名单」（勿裸「名单」）。title_pattern 取
+      「股份有限公司2025年限制性股票激励计划激励对象名单（授予日）」以区分同窗
+      「…委员会关于…激励对象名单（授予日）的核查意见」（ann=1223956390）。
+      与销售简报/对外担保情况简报/ESG 可区分。来源
+      outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
+      b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E484（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  # --- sales_brief / 销售简报（B-FM-41；对称第二边角）---
+  - case_id: sales_brief_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000735"
+    company_name: "罗牛山"
+    title_pattern: "销售简报"
+    expected_document_type: announcement
+    date_start: "2025-06-10"
+    date_end: "2025-06-13"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-41 自 harvest 证据晋升（销售简报第二边角；对称激励对象名单）：
+      罗牛山 000735，2025年5月畜牧行业销售简报（announcement_id=1223846612，
+      披露日 2025-06-11）。标题无「公告」等 general positive_patterns（B-FM-41 前），
+      落 other；硬化后 announcement。title_pattern 取窄串「销售简报」（勿裸「简报」；
+      ≠「对外担保的情况简报」）。与激励对象名单/ESG 可区分。来源
+      outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
+      b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E210（quality=pass）。
+      不写 verified；不下载 PDF。
+
   # --- shareholder_meeting_material × 4 ---
   - case_id: shareholder_meeting_known_001
     case_status: ready

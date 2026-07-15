@@ -189,6 +189,8 @@ categories:
       - 薪酬与考核方案  # B-FM-39：窄；勿裸「薪酬」/「考核方案」
       - 对外担保的情况简报  # B-FM-40：窄；≠对外担保管理制度；勿裸「简报」/「情况简报」
       - Corporate Governance Report  # B-FM-40：窄 ESG 英文检索键；勿裸「ESG」/「Report」；CNINFO 拒长逗号串
+      - 激励对象名单  # B-FM-41：窄；勿裸「名单」；≠授予限制性股票公告
+      - 销售简报  # B-FM-41：窄；勿裸「简报」；≠对外担保的情况简报
     exclusion_patterns: []
     route_to:
       source_id: cninfo_general_announcement_pdf
@@ -243,6 +245,9 @@ categories:
       B-FM-40：「对外担保的情况简报」/英文 ESG（Corporate Governance Report）旧逻辑落
       other；窄 pattern 一律 announcement（勿裸「简报」/「情况简报」/「ESG」/
       「Report」；激励名单/销售简报仍可 other；≠对外担保管理制度；不扩 schema）。
+      B-FM-41：「激励对象名单」/「销售简报」旧逻辑落 other；窄 pattern 一律
+      announcement（勿裸「名单」/「简报」；≠对外担保的情况简报；闭合 remaining other；
+      不扩 schema）。
 
 # 延期披露 / 摘要 / 提示性预告等：从 periodic 排除后的候选路由（非独立 source，归入 general 或 future disclosure_related）
 excluded_from_periodic_routing:

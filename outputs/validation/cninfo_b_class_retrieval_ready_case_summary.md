@@ -20,9 +20,9 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 
 | 指标 | 数值 |
 |------|------|
-| total_cases | **66** |
+| total_cases | **68** |
 | placeholder | **2** |
-| ready | **64** |
+| ready | **66** |
 | retired | **0** |
 | invalid_ready | **0** |
 | result | **PASS** |
@@ -75,6 +75,8 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 - `compensation_assessment_plan_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `external_guarantee_situation_brief_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `esg_report_known_001` (known_document) → `cninfo_general_announcement_pdf`
+- `incentive_object_list_known_001` (known_document) → `cninfo_general_announcement_pdf`
+- `sales_brief_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `shareholder_meeting_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `shareholder_meeting_known_002` (known_document) → `cninfo_general_announcement_pdf`
 - `shareholder_meeting_known_003` (known_document) → `cninfo_general_announcement_pdf`

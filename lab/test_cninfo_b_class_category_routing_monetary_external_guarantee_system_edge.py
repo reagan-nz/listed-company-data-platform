@@ -35,6 +35,8 @@ BARE_SYS = "某事项管理制度"  # 不得因裸「管理制度」抬成 annou
 GUARANTEE_BRIEF = "光明地产关于对外担保的情况简报"  # BD2E432；≠管理制度
 MINGDAN = "英科再生资源股份有限公司2025年限制性股票激励计划激励对象名单（授予日）"
 JIANBAO = "2025年5月畜牧行业销售简报"
+BARE_MINGDAN = "某事项名单"
+BARE_JIANBAO = "某事项经营简报"
 ESG = "2024 Environmental, Social and Corporate Governance Report"
 ARTICLES = "安徽古麒绒材股份有限公司章程（2025年6月修订）"
 RAISED_SYS = "广西绿城水务股份有限公司募集资金管理制度（2025年6月修订）"
@@ -73,11 +75,15 @@ class TestMonetaryExternalGuaranteeSystemRoutingEdge(unittest.TestCase):
         self.assertEqual(r_bare.predicted_document_type, "other")
 
     def test_guarantee_brief_and_low_value_still_other(self) -> None:
-        """激励名单/销售简报仍落 other（担保简报/ESG 由 B-FM-40 承接）。"""
-        for title in (MINGDAN, JIANBAO):
+        """裸名单/简报仍落 other（激励对象名单/销售简报由 B-FM-41 承接）。"""
+        for title in (BARE_MINGDAN, BARE_JIANBAO):
             with self.subTest(title=title):
                 r = routing.route_title(title, self.config)
                 self.assertEqual(r.predicted_document_type, "other")
+        for title in (MINGDAN, JIANBAO):
+            with self.subTest(title=title):
+                r = routing.route_title(title, self.config)
+                self.assertEqual(r.predicted_document_type, "announcement")
 
     def test_prior_paths_not_regressed(self) -> None:
         r_art = routing.route_title(ARTICLES, self.config)

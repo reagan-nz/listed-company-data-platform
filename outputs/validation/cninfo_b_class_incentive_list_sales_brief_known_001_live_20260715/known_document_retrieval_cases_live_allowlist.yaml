@@ -1,0 +1,40 @@
+# B-FM-41 live allow-list — 仅新晋 incentive_object_list_known_001 /
+# sales_brief_known_001
+status: live_sample_scoped_B-FM-41
+verified: false
+notes: B-FM-41 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS
+cases:
+  - case_id: incentive_object_list_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "688087"
+    company_name: "英科再生"
+    title_pattern: "股份有限公司2025年限制性股票激励计划激励对象名单（授予日）"
+    expected_document_type: announcement
+    date_start: "2025-06-22"
+    date_end: "2025-06-25"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-41 live allow-list（激励对象名单）：
+      harvest BD2E484 英科再生 688087 ann=1223956395 2025-06-23。
+      title_pattern 取「股份有限公司2025年…激励对象名单（授予日）」以区分同窗核查意见；
+      路由仍靠「激励对象名单」（勿裸「名单」）。
+      不写 verified；不下载 PDF。
+
+  - case_id: sales_brief_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000735"
+    company_name: "罗牛山"
+    title_pattern: "销售简报"
+    expected_document_type: announcement
+    date_start: "2025-06-10"
+    date_end: "2025-06-13"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-41 live allow-list（销售简报）：
+      harvest BD2E210 罗牛山 000735 ann=1223846612 2025-06-11。
+      title_pattern 窄串「销售简报」（勿裸「简报」；≠对外担保的情况简报）。
+      不写 verified；不下载 PDF。

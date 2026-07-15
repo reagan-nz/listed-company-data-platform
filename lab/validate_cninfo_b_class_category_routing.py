@@ -400,6 +400,10 @@ def _general_document_type(title: str, patterns: List[str]) -> str:
     general positive_patterns，旧逻辑落 other。窄 pattern 一律 announcement
     （勿裸「简报」/「情况简报」/「ESG」/「Report」；激励名单/销售简报仍可 other；
     ≠对外担保管理制度；不扩 schema）。
+
+    B-FM-41：「激励对象名单」/「销售简报」无 general positive_patterns，旧逻辑落
+    other。窄 pattern 一律 announcement（勿裸「名单」/「简报」；≠对外担保的情况
+    简报；闭合 remaining other；不扩 schema）。
     """
     # 法律意见书/法律意见：中介见证材料，保持 announcement（会议与非会议均适用）
     if "法律意见" in title:
@@ -475,6 +479,12 @@ def _general_document_type(title: str, patterns: List[str]) -> str:
         return "announcement"
     # 英文 ESG：Corporate Governance Report 检索键（窄；勿裸 Report/ESG；CNINFO 拒长逗号串）
     if "Corporate Governance Report" in title:
+        return "announcement"
+    # 激励对象名单：限制性股票激励计划激励对象名单（窄；勿裸「名单」）
+    if "激励对象名单" in title:
+        return "announcement"
+    # 销售简报：行业销售简报等经营披露（窄；勿裸「简报」；≠对外担保的情况简报）
+    if "销售简报" in title:
         return "announcement"
     if "董事会" in title and "决议" in title:
         return "board_resolution"
