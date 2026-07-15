@@ -1,0 +1,41 @@
+# B-FM-43 live allow-list — 仅新晋 continuous_supervision_annual_known_002 /
+# company_articles_known_002
+status: live_sample_scoped_B-FM-43
+verified: false
+notes: B-FM-43 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS including known_001 and B-FM-42
+cases:
+  - case_id: continuous_supervision_annual_known_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "603060"
+    company_name: "国检集团"
+    title_pattern: "国检测试控股集团股份有限公司2024年度持续督导年度报告书"
+    expected_document_type: announcement
+    date_start: "2025-04-26"
+    date_end: "2025-04-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-43 live allow-list（持续督导年度报告书 known_002）：
+      harvest BD2E775 国检集团 603060 ann=1223348104 2025-04-27。
+      title_pattern 取「国检测试控股集团股份有限公司2024年度持续督导年度报告书」
+      （≠恒立液压 known_001 宽串「持续督导年度报告书」）。
+      不写 verified；不下载 PDF。
+
+  - case_id: company_articles_known_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "300160"
+    company_name: "秀强股份"
+    title_pattern: "秀强玻璃工艺股份有限公司章程（2025年6月修订）"
+    expected_document_type: announcement
+    date_start: "2025-06-19"
+    date_end: "2025-06-22"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-43 live allow-list（公司章程 known_002）：
+      harvest BD2E330 秀强股份 300160 ann=1223952124 2025-06-20。
+      title_pattern 取「秀强玻璃工艺股份有限公司章程（2025年6月修订）」
+      （≠古麒 known_001 宽串「公司章程（2025年6月修订）」）。
+      不写 verified；不下载 PDF。
