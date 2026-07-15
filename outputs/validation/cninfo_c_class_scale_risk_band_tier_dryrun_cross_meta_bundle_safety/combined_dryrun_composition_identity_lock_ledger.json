@@ -1,0 +1,67 @@
+{
+  "generated_at": "2026-07-15T16:26:26Z",
+  "task_id": "C-FM-42",
+  "fingerprint_sha256": "377a7751726206001db5efa01c10103b96e6820de244de62f6d5ea78d261c9ae",
+  "composition_sha256": "c9dc304d81cc6aad68062a89f3b69f76e594c79a91de548cbc6b516385cce383",
+  "combined_dryrun_formula": "combined_dryrun=1053",
+  "sample_denials": [
+    {
+      "proposed": {
+        "combined_dryrun": 1054
+      },
+      "frozen": {
+        "combined_dryrun": 1053
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "combined_dryrun_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "combined_dryrun": 1052
+      },
+      "frozen": {
+        "combined_dryrun": 1053
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "combined_dryrun_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "combined_dryrun": 0
+      },
+      "frozen": {
+        "combined_dryrun": 1053
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "combined_dryrun_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "combined_dryrun": 1053
+      },
+      "frozen": {
+        "combined_dryrun": 1053
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "combined_dryrun_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "combined_dryrun_composition_identity_lock",
+    "combined_dryrun_coverage": 1053,
+    "composition_sha256": "c9dc304d81cc6aad68062a89f3b69f76e594c79a91de548cbc6b516385cce383",
+    "combined_dryrun_formula": "combined_dryrun=1053",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
