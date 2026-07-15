@@ -64,6 +64,7 @@ categories:
       - 集体接待日
       - 投资者开放日
       - 监管问询函
+      - 警示函
       # unrelated_announcement（validation_design §7 其他无关公告）
       - 补充公告
       - 更正公告
@@ -95,6 +96,7 @@ categories:
       - 回复公告
       - 监管问询函
       - 关注函
+      - 警示函
       - 回复函
       - 年报问询函
     exclusion_patterns: []
@@ -105,6 +107,7 @@ categories:
     registry_status: candidate
     notes: >-
       MUST NOT route to periodic_report. Phase 1 periodic exclusions are POSITIVE here.
+      B-FM-07：警示函为 harvest 已见监管函件边角（收到…警示函 → regulatory_inquiry）。
       Not yet independently validated.
 
   meeting_notice:
