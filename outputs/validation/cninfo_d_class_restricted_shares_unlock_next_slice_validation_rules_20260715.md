@@ -1,19 +1,21 @@
 # CNINFO D 类 restricted_shares_unlock（ES / 限售解禁）— Next-Slice Validation Rules（VR-RSU-NS-001–VR-RSU-NS-042）
 
-_生成时间：2026-07-15 · D-FM-45_
+_生成时间：2026-07-15 · D-FM-45 起草 · D-FM-46 lock 更新_
 
 > **性质：** next-slice VR checklist · **CNINFO = 0** · **不是 verified** · **不覆盖** first-slice VR / DRU001–005 证据
 >
 > **范围：** DRU101–DRU105 · shared denser-day cite `anchor_tdate=2026-07-03` · **禁** `2026-06-08` 作 found 唯一锚
 >
 > **命名：** ES = **限售解禁 / equity structure** = component `restricted_shares_unlock`（非 executive_shareholding）
+>
+> **D-FM-46：** universe_lock_status 晋升为 `locked` · `approval_task_id=D-FM-46` · sketch CSV 保留为只读历史
 
 ## A — Universe & Query（VR-RSU-NS-001–VR-RSU-NS-008）
 
 | ID | 规则 |
 |----|------|
 | VR-RSU-NS-001 | universe 恰好 **5** 行 · case_id **DRU101–DRU105**（与 DRU001–005 隔离） |
-| VR-RSU-NS-002 | component=`restricted_shares_unlock` · next_slice_include=`yes` · universe_lock_status=`draft_not_locked`（本包）· 未来 lock 另批 |
+| VR-RSU-NS-002 | component=`restricted_shares_unlock` · next_slice_include=`yes` · universe_lock_status=`locked` · approval_task_id=`D-FM-46` · sketch 仍 `draft_not_locked`（只读历史） |
 | VR-RSU-NS-003 | 全案共享 `anchor_tdate=2026-07-03` · query `tdate_daily` · **禁止** `2026-06-08` 作 sole found 锚 |
 | VR-RSU-NS-004 | 永久排除 **688671** · **301259** · exclude_flags 含 `exclude_sparse_day_20260608_sole_found_anchor` · `exclude_sole_needs_review` · `exclude_first_slice_DRU001_005_mutate` |
 | VR-RSU-NS-005 | endpoint=`https://www.cninfo.com.cn/data20/liftBan/detail` · records_path=`data.records` |

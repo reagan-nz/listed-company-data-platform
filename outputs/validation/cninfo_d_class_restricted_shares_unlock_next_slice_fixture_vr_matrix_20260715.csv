@@ -1,0 +1,14 @@
+fixture,case_id,group,topic,vr,status,note
+DRU101_found.json,DRU101,D,Envelope,VR-RSU-NS-025–VR-RSU-NS-030,pass,captured
+DRU101_found.json,DRU101,C,Field Mapping,VR-RSU-NS-015–VR-RSU-NS-024,pass,SECCODE/F003D/F004N/F005N/F008N freeze
+DRU101_empty.json,DRU101,D,Envelope,VR-RSU-NS-025–VR-RSU-NS-030,pass,empty_but_valid
+DRU102_found.json,DRU102,D,Envelope,VR-RSU-NS-025–VR-RSU-NS-030,pass,captured
+DRU102_found.json,DRU102,C,Field Mapping,VR-RSU-NS-015–VR-RSU-NS-024,pass,SECCODE/F003D/F004N/F005N/F008N freeze
+DRU102_empty.json,DRU102,D,Envelope,VR-RSU-NS-025–VR-RSU-NS-030,pass,empty_but_valid
+DRU103_found.json,DRU103,D,Envelope,VR-RSU-NS-025–VR-RSU-NS-030,pass,captured
+DRU103_found.json,DRU103,C,Field Mapping,VR-RSU-NS-015–VR-RSU-NS-024,pass,SECCODE/F003D/F004N/F005N/F008N freeze
+DRU103_empty.json,DRU103,D,Envelope,VR-RSU-NS-025–VR-RSU-NS-030,pass,empty_but_valid
+DRU104_found.json,DRU104,D,Envelope,VR-RSU-NS-025–VR-RSU-NS-030,pass,captured
+DRU104_found.json,DRU104,C,Field Mapping,VR-RSU-NS-015–VR-RSU-NS-024,pass,SECCODE/F003D/F004N/F005N/F008N freeze
+DRU104_empty.json,DRU104,D,Envelope,VR-RSU-NS-025–VR-RSU-NS-030,pass,empty_but_valid
+DRU105_empty_but_valid_synthetic.json,DRU105,D,Envelope,VR-RSU-NS-025–VR-RSU-NS-030,pass,empty_but_valid

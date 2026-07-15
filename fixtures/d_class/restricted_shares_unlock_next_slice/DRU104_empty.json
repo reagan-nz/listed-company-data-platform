@@ -1,0 +1,40 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class restricted_shares_unlock next-slice offline synthetic · denser-day cite 2026-07-03",
+    "case_id": "DRU104",
+    "component": "restricted_shares_unlock",
+    "scenario": "empty_but_valid",
+    "cninfo_called": false,
+    "synthetic": true,
+    "dense_day_cite": "2026-07-03",
+    "dense_day_cite_task": "D-FM-45",
+    "approval_task_id": "D-FM-46",
+    "tier0_cite": [
+      "fixtures/d_class/restricted_shares_unlock/sample_raw.json"
+    ],
+    "query_params": {
+      "tdate": "2026-07-03"
+    },
+    "structure_cite": "fixtures/d_class/restricted_shares_unlock/sample_raw.json",
+    "note_zh": "sample_raw 仅为字段结构 cite；本 fixture 锚 denser-day 2026-07-03；非 live found-path"
+  },
+  "market_event": {
+    "event_id": "fixture_dru104_rsu_002415_empty",
+    "company_code": "002415",
+    "event_type": "restricted_shares_unlock",
+    "event_time": "2026-07-03",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/liftBan/detail",
+    "source_record_id": "fixture_raw_rsu_dru104_empty",
+    "event_status": "empty_but_valid",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "restricted_shares_unlock",
+      "query_mode": "tdate_daily",
+      "query_params": {
+        "tdate": "2026-07-03"
+      },
+      "fetch_time": "2026-07-15T23:40:00+08:00",
+      "lineage_status": "discovered"
+    }
+  }
+}

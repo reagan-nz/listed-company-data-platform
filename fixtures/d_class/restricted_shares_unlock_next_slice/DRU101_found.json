@@ -1,0 +1,62 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class restricted_shares_unlock next-slice offline synthetic · denser-day cite 2026-07-03",
+    "case_id": "DRU101",
+    "component": "restricted_shares_unlock",
+    "scenario": "captured",
+    "cninfo_called": false,
+    "synthetic": true,
+    "dense_day_cite": "2026-07-03",
+    "dense_day_cite_task": "D-FM-45",
+    "approval_task_id": "D-FM-46",
+    "tier0_cite": [
+      "fixtures/d_class/restricted_shares_unlock/sample_raw.json"
+    ],
+    "query_params": {
+      "tdate": "2026-07-03"
+    },
+    "structure_cite": "fixtures/d_class/restricted_shares_unlock/sample_raw.json",
+    "note_zh": "sample_raw 仅为字段结构 cite；本 fixture 锚 denser-day 2026-07-03；非 live found-path"
+  },
+  "market_event": {
+    "event_id": "fixture_dru101_rsu_300992_20260703",
+    "company_code": "300992",
+    "event_type": "restricted_shares_unlock",
+    "event_time": "2026-07-03",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/liftBan/detail",
+    "source_record_id": "fixture_raw_rsu_dru101",
+    "event_status": "captured",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "restricted_shares_unlock",
+      "query_mode": "tdate_daily",
+      "query_params": {
+        "tdate": "2026-07-03"
+      },
+      "fetch_time": "2026-07-15T23:40:00+08:00",
+      "raw_record_hash": "sha256:synthetic_rsu_dru101_captured_20260703",
+      "raw_record_json": {
+        "SECCODE": "300992",
+        "SECNAME": "泰福泵业",
+        "DECLAREDATE": "2026-07-01",
+        "F003D": "2026-07-03",
+        "F004N": 592000.0,
+        "F005N": 0.6209,
+        "F008N": 592000.0
+      },
+      "lineage_status": "discovered"
+    }
+  },
+  "restricted_shares_unlock": {
+    "company_code": "300992",
+    "company_name": "泰福泵业",
+    "announcement_date": "2026-07-01",
+    "unlock_date": "2026-07-03",
+    "event_date": "2026-07-03",
+    "unlock_amount": 592000.0,
+    "unlock_ratio": 0.6209,
+    "tradable_amount": 592000.0,
+    "event_type": "restricted_shares_unlock",
+    "quality_status": "pass"
+  }
+}
