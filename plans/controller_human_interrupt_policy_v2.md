@@ -222,3 +222,16 @@ Forbidden:
 - treating `READY_FOR_APPROVAL` as approved  
 - continuing live after interrupt reason was only push  
 - silencing S3 conflicts to keep the loop green
+
+
+
+---
+
+
+# 11. Relationship to Mission Execution Engine v3 Approval Guidance Layer
+
+
+[controller_mission_execution_engine_v3.md §10.1](controller_mission_execution_engine_v3.md)（architecture design only · 未启用）定义了一个纯呈现层：当某轨 `stop_reason = HUMAN_GATE_BLOCKED` 时，把 §6 的 exact phrase、§6 末行的 scope 限定、以及该轨的具体 blocked action 拼装展示给人类，减少查找成本。
+
+
+**本文件 §6 的 exact-phrase 判定规则不受影响、不被该层修改或放宽。** Approval Guidance Layer 明确规定：不推断批准、不接受 paraphrase、不绕过本文件的判定权威——若两者冲突，本文件优先。该层只在判定**尚未满足**时生成提示，不参与判定本身。
