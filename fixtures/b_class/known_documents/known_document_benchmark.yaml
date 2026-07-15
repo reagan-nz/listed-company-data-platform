@@ -208,3 +208,40 @@ documents:
     expected_classification: excluded_from_periodic_but_routed
     benchmark_group: false_positive_guard
     notes: "Run11 — 更正公告不得路由为 periodic 全文（_periodic_blocked）；与补充公告对称"
+
+  # Run 12 — wrong_company 交叉披露 lineage（与 announcement_preview 相邻但语义不同）
+  - benchmark_id: periodic_false_positive_010
+    title: "关于披露冀东水泥半年报的提示性公告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: excluded_from_periodic_but_routed
+    expected_false_positive_reason: wrong_company
+    benchmark_group: false_positive_guard
+    notes: "Run12 — Phase 1 P1-AUD-022 类；含提示性公告但主体为他司报告 → fp=wrong_company（非 announcement_preview）"
+
+  - benchmark_id: periodic_false_positive_011
+    title: "关于披露他司报告的提示性公告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: excluded_from_periodic_but_routed
+    expected_false_positive_reason: wrong_company
+    benchmark_group: false_positive_guard
+    notes: "Run12 — 显式他司交叉披露；fp=wrong_company"
+
+  - benchmark_id: periodic_false_positive_012
+    title: "关于披露他司2024年半年度报告的提示性公告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: excluded_from_periodic_but_routed
+    expected_false_positive_reason: wrong_company
+    benchmark_group: false_positive_guard
+    notes: "Run12 — 他司 + 半年度报告交叉披露；fp=wrong_company"
+
+  - benchmark_id: periodic_false_positive_013
+    title: "关于披露某某股份有限公司2024年年度报告的公告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: excluded_from_periodic_but_routed
+    expected_false_positive_reason: wrong_company
+    benchmark_group: false_positive_guard
+    notes: "Run12 — 无提示性公告字样的实体名交叉披露；须 fp=wrong_company（非空）"

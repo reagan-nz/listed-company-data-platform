@@ -16,6 +16,7 @@ from __future__ import annotations
 import argparse
 import csv
 import os
+import re
 import sys
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -37,7 +38,25 @@ FALSE_POSITIVE_REASONS = {
     "inquiry_reply_as_report": "inquiry_reply_as_report",
     "meeting_notice_as_report": "meeting_notice_as_report",
     "announcement_preview": "announcement_preview",
+    "wrong_company": "wrong_company",
 }
+
+# 本公司报告期提示：「关于披露第一季度报告…」——非交叉披露
+_OWN_PERIOD_AFTER_GUANYU = re.compile(
+    r"关于披露"
+    r"(?:20\d{2}年)?"
+    r"(?:第?[一二三四]季度|一季度|三季度|半年度?|年度|"
+    r"年报|半年报|季度报告|"
+    r"第一季度报告|第三季度报告|半年度报告|年度报告)"
+)
+
+# 交叉披露他司报告：「关于披露冀东水泥半年报…」「关于披露某某股份…年度报告」
+_CROSS_ENTITY_REPORT = re.compile(
+    r"关于披露"
+    r"(.+?)"
+    r"(?:年报|半年报|半年度报告|年度报告|第一季度报告|第三季度报告|"
+    r"一季度报告|三季度报告|季度报告|报告)"
+)
 
 
 @dataclass
@@ -91,6 +110,33 @@ def _periodic_blocked(title: str) -> bool:
     return any(b in title for b in blockers)
 
 
+def _is_wrong_company_cross_disclosure(title: str) -> bool:
+    """Phase 1 wrong_company：交叉披露他司报告（与本公司 announcement_preview 相邻但语义不同）。
+
+    例：
+    - 关于披露冀东水泥半年报的提示性公告 → True
+    - 关于披露他司报告的提示性公告 → True
+    - 关于披露第一季度报告的提示性公告 → False（本公司报告期提示）
+    - 关于延期披露… → False（延期披露优先；且「关于披露」是其子串）
+    """
+    if not title:
+        return False
+    # 「关于延期披露」含子串「关于披露」，须先排除
+    if "延期披露" in title:
+        return False
+    if "他司" in title or "其他公司" in title:
+        return True
+    if "关于披露" not in title:
+        return False
+    if _OWN_PERIOD_AFTER_GUANYU.search(title):
+        return False
+    m = _CROSS_ENTITY_REPORT.search(title)
+    if not m:
+        return False
+    entity = m.group(1)
+    return bool(entity and not re.fullmatch(r"[\d年月日\s的]*", entity))
+
+
 def _excluded_false_positive_reason(
     hits: List[str],
     *,
@@ -102,6 +148,9 @@ def _excluded_false_positive_reason(
     haystack = joined + title
     if block_key == "delayed_disclosure" or "延期披露" in haystack:
         return FALSE_POSITIVE_REASONS["delayed_disclosure_notice"]
+    # wrong_company 优先于 announcement_preview（交叉披露标题常同时含「提示性公告」）
+    if block_key == "wrong_company" or _is_wrong_company_cross_disclosure(title):
+        return FALSE_POSITIVE_REASONS["wrong_company"]
     if block_key == "announcement_preview" or any(
         p in haystack for p in ("披露提示性公告", "提示性公告", "预告公告")
     ):
@@ -216,7 +265,7 @@ def route_title(title: str, config: Dict[str, Any]) -> RouteResult:
         excluded_from_periodic = True
         matched.extend(periodic_exclusion_hits)
 
-    # Priority 4: excluded_from_periodic_routing (delayed / summary / preview)
+    # Priority 4: excluded_from_periodic_routing (delayed / summary / preview / wrong_company)
     for key, block in excluded_cfg.items():
         if not isinstance(block, dict):
             continue
