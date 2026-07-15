@@ -20,9 +20,9 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 
 | 指标 | 数值 |
 |------|------|
-| total_cases | **26** |
+| total_cases | **27** |
 | placeholder | **2** |
-| ready | **24** |
+| ready | **25** |
 | retired | **0** |
 | invalid_ready | **0** |
 | result | **PASS** |
@@ -42,6 +42,7 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 - `ir_activity_known_003` (known_document) → `cninfo_meeting_notice_pdf`
 - `board_resolution_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `shareholder_meeting_known_001` (known_document) → `cninfo_general_announcement_pdf`
+- `shareholder_meeting_known_002` (known_document) → `cninfo_general_announcement_pdf`
 - `general_sample_001` (category_sample) → `cninfo_general_announcement_pdf`
 - `general_sample_002` (category_sample) → `cninfo_general_announcement_pdf`
 - `general_sample_003` (category_sample) → `cninfo_general_announcement_pdf`
