@@ -80,6 +80,7 @@ phase1_report_title_exclusions_shared:
   - 投资者说明会
   - 监管问询函
   - 警示函
+  - 监管工作函
   - 预告公告
   - 说明会
   - 交流会
@@ -146,6 +147,7 @@ sources:
       - 投资者说明会
       - 监管问询函
       - 警示函
+      - 监管工作函
       - 预告公告
       - 说明会
       - 交流会
@@ -290,6 +292,7 @@ sources:
         - 监管问询函
         - 关注函
         - 警示函
+        - 监管工作函
         - 回复函
     title_exclusion_patterns: []
     period_required: false

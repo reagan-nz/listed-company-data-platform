@@ -65,6 +65,7 @@ categories:
       - 投资者开放日
       - 监管问询函
       - 警示函
+      - 监管工作函
       # unrelated_announcement（validation_design §7 其他无关公告）
       - 补充公告
       - 更正公告
@@ -97,6 +98,7 @@ categories:
       - 监管问询函
       - 关注函
       - 警示函
+      - 监管工作函
       - 回复函
       - 年报问询函
     exclusion_patterns: []
@@ -108,6 +110,8 @@ categories:
     notes: >-
       MUST NOT route to periodic_report. Phase 1 periodic exclusions are POSITIVE here.
       B-FM-07：警示函为 harvest 已见监管函件边角（收到…警示函 → regulatory_inquiry）。
+      B-FM-11：监管工作函为 harvest 已见边角（CPA「监管工作函的专项说明」→ inquiry_reply；
+      收到…监管工作函 → regulatory_inquiry）；须从 periodic 排除，避免含「年度报告」误进年报。
       Not yet independently validated.
 
   meeting_notice:

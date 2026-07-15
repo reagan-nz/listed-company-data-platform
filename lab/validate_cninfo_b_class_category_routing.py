@@ -101,6 +101,8 @@ def _inquiry_document_type(title: str) -> str:
     真实 harvest 中 CPA 回复常以「问询函的回复」结尾（无「回复公告」连续后缀），
     旧 marker 会误判为 regulatory_inquiry；「延期回复…问询函」仍保留为 regulatory_inquiry。
     B-FM-07：警示函纳入监管函件原文（与关注函同档）；「警示函的回复」走 inquiry_reply。
+    B-FM-11：监管工作函纳入监管函件边角；CPA「监管工作函的专项说明」走 inquiry_reply；
+    「收到…监管工作函」走 regulatory_inquiry。含「年度报告」的工作函标题须先于 periodic 命中。
     """
     reply_markers = [
         "回复公告",
@@ -112,8 +114,19 @@ def _inquiry_document_type(title: str) -> str:
         "关注函的回复",
         "警示函回复",
         "警示函的回复",
+        "监管工作函的专项说明",  # CPA：…监管工作函的专项说明
+        "监管工作函专项说明",
+        "监管工作函的回复",
+        "监管工作函回复",
     ]
-    inquiry_markers = ["问询函", "监管问询函", "关注函", "年报问询函", "警示函"]
+    inquiry_markers = [
+        "问询函",
+        "监管问询函",
+        "关注函",
+        "年报问询函",
+        "警示函",
+        "监管工作函",
+    ]
     reply_hits = _match_any(title, reply_markers)
     inquiry_hits = _match_any(title, inquiry_markers)
     if reply_hits:
