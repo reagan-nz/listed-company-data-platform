@@ -1,0 +1,4 @@
+caveat_family,expected_count,indexed_pass_count,index_status,audit_csv_ref,notes
+empty_dividend,3,3,indexed_pass,outputs/validation/cninfo_c_class_erad_fuller_market_slice1_qa_closure_dual_layer_index/qa_closure_dual_layer_evidence_index.csv,C-R16-02 sibling index; not overwritten by C-R16-03
+partial,7,7,indexed_pass,outputs/validation/cninfo_c_class_partial7_dual_layer_present_audit/partial7_dual_layer_present_audit.csv,C-R16-03 partial7 dual-layer index
+all_caveats,10,10,indexed_pass,qa_closure_dual_layer_cohort_coverage.csv,empty3+partial7 = 10 caveat cases

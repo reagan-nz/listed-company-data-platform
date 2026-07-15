@@ -1,0 +1,12 @@
+metric_key,metric_value,notes
+dual_layer_partial7_audited_count,7,C-R16-03 QA closure dual-layer evidence index (partial7)
+dual_layer_partial7_indexed_pass_count,7,index_status=indexed_pass
+dual_layer_partial7_gate,PASS_OFFLINE,upstream_audit_gate=PASS_OFFLINE
+dual_layer_empty3_indexed_pass_count_readonly,3,read-only from prior empty3 index; not mutated
+dual_layer_full_caveat_cohort_indexed_pass_count,10,empty3+partial7 cumulative
+dual_layer_full_caveat_cohort_expected_count,10,10 caveat cases in slice1 PASS_WITH_CAVEAT
+dual_layer_partial7_audit_csv_ref,outputs/validation/cninfo_c_class_partial7_dual_layer_present_audit/partial7_dual_layer_present_audit.csv,machine-checkable partial7 present audit
+dual_layer_partial7_rule_matrix_ref,outputs/validation/cninfo_c_class_partial7_dual_layer_present_audit/dual_layer_rule_check_matrix.csv,DLVR-P01–P04 per-case matrix
+original_qa_closure_caveat_ledger_mutated,false,append-only sibling index; closed ledger untouched
+empty3_index_overwritten,false,C-R16-02 index preserved as sibling
+cninfo_calls,0,offline only
