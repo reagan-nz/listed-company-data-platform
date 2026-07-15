@@ -1,0 +1,59 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class fund_industry_allocation further-scale offline synthetic · rdate 20260331 coarse A found",
+    "case_id": "DFIA202",
+    "component": "fund_industry_allocation",
+    "scenario": "captured",
+    "cninfo_called": false,
+    "synthetic": true,
+    "tier0_cite": [
+      "fixtures/d_class/fund_industry_allocation/sample_raw.json"
+    ],
+    "live_evidence_cite": [
+      "outputs/validation/cninfo_d_class_fund_industry_allocation_next_slice/live_snapshots/DFIA103_fund_industry_allocation.json sample_records F001V=A"
+    ],
+    "query_params": {
+      "rdate": "20260331"
+    }
+  },
+  "metric_envelope": {
+    "case_id": "DFIA202",
+    "industry_code": "A",
+    "report_period": "2026-03-31",
+    "metric_status": "captured",
+    "quality_status": "pass",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/fund/industry",
+    "source_record_id": "fixture_raw_fia_dfia202",
+    "lineage": {
+      "registry_source_id": "fund_industry_allocation",
+      "query_mode": "rdate",
+      "query_params": {
+        "rdate": "20260331"
+      },
+      "fetch_time": "2026-07-15T22:52:00+08:00",
+      "raw_record_hash": "sha256:synthetic_fia_dfia202_captured_A",
+      "raw_record_json": {
+        "F001V": "A",
+        "F002V": "农、林、牧、渔业",
+        "ENDDATE": "2026-03-31",
+        "F003N": 2176,
+        "F004N": 400.57,
+        "F005N": 0.11
+      },
+      "lineage_status": "discovered"
+    }
+  },
+  "fund_industry_allocation": {
+    "industry_code": "A",
+    "industry_name": "农、林、牧、渔业",
+    "report_period": "2026-03-31",
+    "metric_count": 3,
+    "quality_status": "pass",
+    "mapping_confidence": "high",
+    "metrics_summary": {
+      "fund_coverage_count": 2176.0,
+      "industry_scale_100m_yuan": 400.57,
+      "net_asset_ratio_percent": 0.11
+    }
+  }
+}

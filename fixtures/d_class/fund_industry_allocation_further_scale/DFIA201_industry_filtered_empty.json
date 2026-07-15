@@ -1,0 +1,40 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class fund_industry_allocation further-scale offline synthetic · F001V=B filter miss",
+    "case_id": "DFIA201",
+    "component": "fund_industry_allocation",
+    "scenario": "empty_but_valid_after_industry_filter",
+    "cninfo_called": false,
+    "synthetic": true,
+    "tier0_cite": [
+      "fixtures/d_class/fund_industry_allocation/sample_raw.json"
+    ],
+    "query_params": {},
+    "records_filter": {
+      "raw_records_count": 3,
+      "matched_industry_code_count": 0,
+      "target_industry_code": "B",
+      "other_industry_codes": [
+        "A",
+        "C",
+        "I"
+      ]
+    }
+  },
+  "metric_envelope": {
+    "case_id": "DFIA201",
+    "industry_code": "B",
+    "report_period": "2026-06-30",
+    "metric_status": "empty_but_valid",
+    "quality_status": "pass",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/fund/industry",
+    "source_record_id": "fixture_raw_fia_dfia201_filter_empty",
+    "lineage": {
+      "registry_source_id": "fund_industry_allocation",
+      "query_mode": "default",
+      "query_params": {},
+      "fetch_time": "2026-07-15T22:52:00+08:00",
+      "lineage_status": "discovered"
+    }
+  }
+}
