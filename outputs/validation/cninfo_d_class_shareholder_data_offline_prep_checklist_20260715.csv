@@ -3,9 +3,9 @@ CHK-001,universe_lock,done,DSD001-DSD005 locked from sketch
 CHK-002,validation_rules,done,VR-001–VR-042 draft
 CHK-003,sample_prep,done,Tier0 sample_raw + Tier1 fixtures
 CHK-004,tier1_fixtures,done,9 synthetic files under shareholder_data_first_slice
-CHK-005,command_draft,done,dry-run + live draft; runner implemented D-FM-08
+CHK-005,command_draft,done,dry-run + live draft; runner + live path D-FM-09
 CHK-006,runner_dryrun,done,S4 dry-run 5/5 planned_ok; planned_shared=1; CNINFO=0
-CHK-007,live_path,blocked,live_not_implemented; approve flag exists; live_gate=NOT_APPROVED
+CHK-007,live_path,done,shared live path implemented; offline mock 4/5 PASS_WITH_CAVEAT; live_path_gate=READY_FOR_APPROVAL; live_gate=NOT_APPROVED
 CHK-008,cninfo,done,calls=0 this task
 CHK-009,dlc006r,excluded,no reopen
 CHK-010,abnormal_trading_live,excluded,not this package; standing allows separate bounded live task

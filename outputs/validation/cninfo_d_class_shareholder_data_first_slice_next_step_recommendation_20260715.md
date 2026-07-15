@@ -1,10 +1,12 @@
 # CNINFO D 类 shareholder_data — First-Slice Next Step Recommendation
 
-_生成时间：2026-07-15 · D-FM-08_
+_生成时间：2026-07-15 · D-FM-09_
 
 > **approval gate：** `d_class_shareholder_data_first_slice_approval_gate = STANDING_SCOPE_AUTHORIZED`
 >
 > **runner gate：** `d_class_shareholder_data_first_slice_runner_extension_gate = READY_FOR_APPROVAL`
+>
+> **live_path gate：** `READY_FOR_APPROVAL`
 >
 > **live gate：** `NOT_APPROVED`
 >
@@ -14,12 +16,12 @@ _生成时间：2026-07-15 · D-FM-08_
 
 ## Primary
 
-**controller commit-boundary** for D-FM-08 shareholder_data runner extension + S4 dry-run package（CNINFO=0 · no live）
+**controller commit-boundary** for D-FM-09 shareholder_data shared live-path + offline mock package（CNINFO=0 · no real live）
 
 | 项 | 内容 |
 |----|------|
-| scope | commit runner + tests + dry-run artifacts + S4 summary |
-| CNINFO / live | **无** |
+| scope | commit live path + tests + dry-run gate refresh + D-FM-09 summaries |
+| CNINFO / live | **无真实** |
 | gate after | package committed · live 仍 `NOT_APPROVED` |
 
 ---
@@ -28,7 +30,7 @@ _生成时间：2026-07-15 · D-FM-08_
 
 | 选项 | 条件 |
 |------|------|
-| implement shareholder_data shared live path（1 CNINFO + SECCODE filter） | 须单独批准 + `controller_execution_allowed` |
+| shareholder_data bounded real live（DSD001–DSD005 · shared=1） | 须 `controller_execution_allowed` + `--approve-d-class-shareholder-data-first-slice` · expected CNINFO = **1** |
 | abnormal_trading bounded real live（DAT001–DAT005） | standing capital scope **allows** · expected CNINFO ≤ 5 · require `--approve-d-class-abnormal-trading-first-slice` |
 
 ---
@@ -39,17 +41,18 @@ _生成时间：2026-07-15 · D-FM-08_
 - **不** reopen DLC006R / 301259 / closed event tracks
 - **不** verified / production_ready / bare PASS
 - **不** executor commit / push
-- **不** 本包内跑 shareholder_data 真实 live
+- **不** 在 `controller_execution_allowed=false` 时跑真实 live
 
 ---
 
 ## Recommendation Summary
 
 ```text
-primary_recommendation = controller_commit_boundary_dfm08_runner_s4
-secondary_recommendation = shareholder_data_shared_live_path_or_abnormal_trading_bounded_live
+primary_recommendation = controller_commit_boundary_dfm09_shared_live_path_offline_mock
+secondary_recommendation = shareholder_data_or_abnormal_trading_bounded_live_when_controller_allows
 approval_gate = STANDING_SCOPE_AUTHORIZED
 runner_gate = READY_FOR_APPROVAL
+live_path_gate = READY_FOR_APPROVAL
 live_gate = NOT_APPROVED
 standing_scope_auth = full_market_shareholder_capital
 level2_phrase_required = false

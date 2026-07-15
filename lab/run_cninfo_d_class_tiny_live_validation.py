@@ -1683,9 +1683,11 @@ SHAREHOLDER_DATA_FIRST_SLICE_DRYRUN_SUMMARY_MD = os.path.join(
 )
 
 SHAREHOLDER_DATA_FIRST_SLICE_RUNNER_GATE = "READY_FOR_APPROVAL"
-SHAREHOLDER_DATA_FIRST_SLICE_LIVE_PATH_GATE = "NOT_APPROVED"
+SHAREHOLDER_DATA_FIRST_SLICE_LIVE_PATH_GATE = "READY_FOR_APPROVAL"
+SHAREHOLDER_DATA_FIRST_SLICE_LIVE_GATE = "NOT_APPROVED"
 SHAREHOLDER_DATA_FIRST_SLICE_EXECUTION_GATE_PASS = "PASS_WITH_CAVEAT"
 SHAREHOLDER_DATA_FIRST_SLICE_EXECUTION_GATE_FAIL = "FAIL_REVIEW_REQUIRED"
+SHAREHOLDER_DATA_FIRST_SLICE_SHARED_REQUEST_CASE_ID = "SHARED_RDATE"
 SHAREHOLDER_DATA_FIRST_SLICE_EXPECTED_UNIVERSE_SIZE = 5
 SHAREHOLDER_DATA_FIRST_SLICE_ALLOWED_CASE_IDS: Set[str] = {
     "DSD001",
@@ -1811,6 +1813,9 @@ SHAREHOLDER_DATA_FIRST_SLICE_FIXTURE_MISSING = (
 )
 SHAREHOLDER_DATA_FIRST_SLICE_LIVE_NOT_IMPLEMENTED = (
     "shareholder_data_first_slice_live_not_implemented"
+)
+SHAREHOLDER_DATA_FIRST_SLICE_SHARED_REQUEST_REQUIRED = (
+    "shareholder_data_first_slice_shared_request_required"
 )
 
 SHAREHOLDER_DATA_FIRST_SLICE_DRYRUN_REPORT_COLUMNS = [
@@ -9580,7 +9585,8 @@ def write_shareholder_data_first_slice_dryrun_summary(
         "",
         "```text",
         f"d_class_shareholder_data_first_slice_runner_extension_gate = {SHAREHOLDER_DATA_FIRST_SLICE_RUNNER_GATE}",
-        f"d_class_shareholder_data_first_slice_live_gate = {SHAREHOLDER_DATA_FIRST_SLICE_LIVE_PATH_GATE}",
+        f"d_class_shareholder_data_first_slice_live_path_gate = {SHAREHOLDER_DATA_FIRST_SLICE_LIVE_PATH_GATE}",
+        f"d_class_shareholder_data_first_slice_live_gate = {SHAREHOLDER_DATA_FIRST_SLICE_LIVE_GATE}",
         "approval_status = STANDING_SCOPE_AUTHORIZED_OFFLINE",
         "approved_for_live = false",
         "```",
@@ -9678,12 +9684,143 @@ def validate_shareholder_data_first_slice_request_caps(stats: LiveStats) -> List
                 f"{SHAREHOLDER_DATA_FIRST_SLICE_PER_CASE_CAP_EXCEEDED}:"
                 f"{case_id}={count}"
             )
+        # 共享路径：禁止按公司拆出额外 CNINFO 请求
+        if (
+            case_id != SHAREHOLDER_DATA_FIRST_SLICE_SHARED_REQUEST_CASE_ID
+            and count > 0
+        ):
+            issues.append(
+                f"{SHAREHOLDER_DATA_FIRST_SLICE_SHARED_REQUEST_REQUIRED}:"
+                f"non_shared_case={case_id}={count}"
+            )
     if stats.cninfo_requests > SHAREHOLDER_DATA_FIRST_SLICE_TOTAL_MAX_REQUESTS:
         issues.append(
             f"{SHAREHOLDER_DATA_FIRST_SLICE_TOTAL_CAP_EXCEEDED}:"
             f"{stats.cninfo_requests}"
         )
+    # prefer 1 shared：超过 planned_shared 即失败
+    if stats.cninfo_requests > SHAREHOLDER_DATA_FIRST_SLICE_PLANNED_SHARED_REQUESTS:
+        issues.append(
+            f"{SHAREHOLDER_DATA_FIRST_SLICE_SHARED_PLAN_MISMATCH}:"
+            f"cninfo_requests={stats.cninfo_requests}"
+        )
     return issues
+
+
+def assess_shareholder_data_first_slice_shared_case(
+    row: ShareholderDataFirstSliceRow,
+    company_records: List[Dict[str, Any]],
+    http_status: int,
+    last_error: str,
+    endpoint: str,
+    used_params: Dict[str, Any],
+    shared_cninfo_requests: int,
+) -> Dict[str, str]:
+    """基于共享截面 + SECCODE 过滤结果，生成单案 live summary。"""
+    record_count = len(company_records)
+    empty_but_valid = "no"
+    needs_review = "no"
+    notes_parts: List[str] = [
+        "shared_rdate_request=1",
+        "seccode_filter=yes",
+        f"query_mode={SHAREHOLDER_DATA_FIRST_SLICE_QUERY_MODE}",
+    ]
+
+    if last_error in ("rate_limited",) or last_error.startswith("network_error"):
+        retrieval_status = (
+            "http_error" if last_error.startswith("network_error") else "blocked"
+        )
+        quality_status = "blocked"
+        lineage_status = "needs_review"
+        notes_parts.append(last_error)
+    elif last_error.startswith("http_") or last_error == "invalid_json":
+        retrieval_status = "http_error"
+        quality_status = "blocked"
+        lineage_status = "needs_review"
+        notes_parts.append(last_error)
+    elif record_count == 0:
+        retrieval_status = "empty_but_valid"
+        quality_status = "pass"
+        lineage_status = "discovered"
+        empty_but_valid = "yes"
+        notes_parts.append(
+            "company-level zero rows after SECCODE filter; legal empty per quality policy"
+        )
+    else:
+        retrieval_status = "found"
+        lineage_status = "discovered"
+        quality_status = "pass"
+        if row.expected_behavior == "needs_review_candidate":
+            needs_review = "yes"
+            quality_status = "needs_review"
+            lineage_status = "needs_review"
+            notes_parts.append("needs_review candidate")
+        else:
+            notes_parts.append(f"found {record_count} row(s) for company")
+
+    return {
+        "case_id": row.case_id,
+        "company_code": row.company_code,
+        "company_name": row.company_name,
+        "component": row.component,
+        "expected_behavior": row.expected_behavior,
+        "retrieval_status": retrieval_status,
+        "quality_status": quality_status,
+        "lineage_status": lineage_status,
+        "record_count": str(record_count),
+        "empty_but_valid": empty_but_valid,
+        "needs_review": needs_review,
+        "endpoint_used": endpoint,
+        "cninfo_request_count": str(shared_cninfo_requests),
+        "db_write": "no",
+        "minio_write": "no",
+        "rag_run": "no",
+        "notes": "; ".join(notes_parts),
+        "_http_status": str(http_status),
+        "_used_params": used_params,
+        "_sample_records": company_records[:3],
+    }
+
+
+def write_shareholder_data_first_slice_live_snapshot(
+    row: ShareholderDataFirstSliceRow,
+    summary: Dict[str, str],
+    output_paths: Dict[str, str],
+) -> str:
+    snapshot_path = os.path.join(
+        output_paths["live_snapshots"],
+        f"{row.case_id}_{row.component}.json",
+    )
+    used_params = summary.get("_used_params") or {}
+    sample_records = summary.get("_sample_records") or []
+    with open(snapshot_path, "w", encoding="utf-8") as f:
+        json.dump(
+            {
+                "case_id": row.case_id,
+                "company_code": row.company_code,
+                "component": row.component,
+                "endpoint": summary.get(
+                    "endpoint_used", SHAREHOLDER_DATA_FIRST_SLICE_ENDPOINT
+                ),
+                "params": used_params,
+                "query_mode": SHAREHOLDER_DATA_FIRST_SLICE_QUERY_MODE,
+                "shared_request": True,
+                "seccode_filter": True,
+                "filter_seccode": row.company_code,
+                "http_status": int(summary.get("_http_status") or 0),
+                "record_count": int(summary.get("record_count") or 0),
+                "sample_records": sample_records,
+                "cninfo_called": True,
+                "db_write": False,
+                "minio_write": False,
+                "rag_run": False,
+            },
+            f,
+            ensure_ascii=False,
+            indent=2,
+        )
+        f.write("\n")
+    return snapshot_path
 
 
 def compute_shareholder_data_first_slice_execution_gate(
@@ -9792,6 +9929,9 @@ def write_shareholder_data_first_slice_live_summary(
     output_paths: Dict[str, str],
 ) -> str:
     acceptable = sum(1 for r in live_rows if r["acceptable"] == "yes")
+    shared = stats.case_request_counts.get(
+        SHAREHOLDER_DATA_FIRST_SLICE_SHARED_REQUEST_CASE_ID, 0
+    )
     lines = [
         "# CNINFO D 类 shareholder_data First-Slice Live Summary",
         "",
@@ -9805,6 +9945,7 @@ def write_shareholder_data_first_slice_live_summary(
         "|------|-----|",
         f"| cases | **{len(live_rows)}** |",
         f"| acceptable | **{acceptable}/{len(live_rows)}** |",
+        f"| shared_cninfo_requests | **{shared}** |",
         f"| CNINFO requests | **{stats.cninfo_requests}** |",
         f"| DB writes | **{stats.db_writes}** |",
         f"| MinIO writes | **{stats.minio_writes}** |",
@@ -9814,6 +9955,7 @@ def write_shareholder_data_first_slice_live_summary(
         "",
         "```text",
         f"d_class_shareholder_data_first_slice_live_path_gate = {SHAREHOLDER_DATA_FIRST_SLICE_LIVE_PATH_GATE}",
+        f"d_class_shareholder_data_first_slice_live_gate = {SHAREHOLDER_DATA_FIRST_SLICE_LIVE_GATE}",
         f"d_class_shareholder_data_first_slice_execution_gate = {gate}",
         "```",
         "",
@@ -9833,12 +9975,133 @@ def execute_shareholder_data_first_slice_live(
     universe_rows: List[ShareholderDataFirstSliceRow],
     output_paths: Dict[str, str],
 ) -> int:
-    """shareholder_data 第一切片 live 路径骨架；本任务仍 NOT_APPROVED · 拒绝真实执行。"""
-    print(
-        f"ERROR: {SHAREHOLDER_DATA_FIRST_SLICE_LIVE_NOT_IMPLEMENTED}",
-        file=sys.stderr,
+    """shareholder_data 第一切片 live：1 次共享 rdate 截面 + 离线 SECCODE 过滤。"""
+    endpoints = load_registry_endpoints()
+    source_configs = load_table_source_configs()
+    component_cfg = copy.deepcopy(
+        source_configs.get(SHAREHOLDER_DATA_FIRST_SLICE_COMPONENT, {})
     )
-    return 2
+    endpoint = endpoints.get(
+        SHAREHOLDER_DATA_FIRST_SLICE_COMPONENT,
+        component_cfg.get("api_url", SHAREHOLDER_DATA_FIRST_SLICE_ENDPOINT),
+    )
+    component_cfg["api_url"] = endpoint
+
+    for row in universe_rows:
+        planned = compute_shareholder_data_first_slice_planned_requests(row)
+        if planned > SHAREHOLDER_DATA_FIRST_SLICE_PER_CASE_MAX_REQUESTS:
+            print(
+                f"ERROR: {SHAREHOLDER_DATA_FIRST_SLICE_PER_CASE_CAP_EXCEEDED}:"
+                f"planned={planned}",
+                file=sys.stderr,
+            )
+            return 2
+
+    shared_plan = compute_shareholder_data_first_slice_planned_shared(
+        universe_rows[0].anchor_rdate if universe_rows else SHAREHOLDER_DATA_FIRST_SLICE_ANCHOR_RDATE
+    )
+    if shared_plan != SHAREHOLDER_DATA_FIRST_SLICE_PLANNED_SHARED_REQUESTS:
+        print(
+            f"ERROR: {SHAREHOLDER_DATA_FIRST_SLICE_SHARED_PLAN_MISMATCH}:"
+            f"got={shared_plan}",
+            file=sys.stderr,
+        )
+        return 2
+
+    session = requests.Session()
+    stats = LiveStats()
+    # 全切片共享同一 rdate params（不按公司拆请求）
+    shared_params = _build_shareholder_data_first_slice_params(universe_rows[0])[0]
+    payload, http_status, last_error = _cninfo_request(
+        session,
+        component_cfg,
+        shared_params,
+        stats,
+        SHAREHOLDER_DATA_FIRST_SLICE_SHARED_REQUEST_CASE_ID,
+    )
+    all_records = _extract_records(payload) if payload is not None else []
+
+    case_summaries: Dict[str, Dict[str, str]] = {}
+    for row in sorted(universe_rows, key=lambda r: r.case_id):
+        company_records = _filter_company_records(all_records, row.company_code)
+        summary = assess_shareholder_data_first_slice_shared_case(
+            row,
+            company_records,
+            http_status,
+            last_error,
+            endpoint,
+            shared_params,
+            stats.cninfo_requests,
+        )
+        write_shareholder_data_first_slice_live_snapshot(row, summary, output_paths)
+        # 报告字段不含内部辅助键
+        public_summary = {
+            k: v
+            for k, v in summary.items()
+            if not k.startswith("_")
+        }
+        case_summaries[row.case_id] = public_summary
+        print(
+            f"{row.case_id} {public_summary['retrieval_status']}: "
+            f"records={public_summary['record_count']} "
+            f"shared_requests={stats.cninfo_requests}",
+            flush=True,
+        )
+
+    cap_issues = validate_shareholder_data_first_slice_request_caps(stats)
+    if cap_issues:
+        print(
+            "ERROR: shareholder_data first-slice request cap validation failed: "
+            f"{cap_issues}",
+            file=sys.stderr,
+        )
+        return 2
+
+    gate = compute_shareholder_data_first_slice_execution_gate(
+        universe_rows, case_summaries
+    )
+    if stats.db_writes or stats.minio_writes or stats.rag_runs:
+        gate = SHAREHOLDER_DATA_FIRST_SLICE_EXECUTION_GATE_FAIL
+
+    live_rows = [
+        build_shareholder_data_first_slice_live_row(
+            row, case_summaries[row.case_id]
+        )
+        for row in sorted(universe_rows, key=lambda r: r.case_id)
+        if row.case_id in case_summaries
+    ]
+
+    report_path = write_shareholder_data_first_slice_live_report(
+        live_rows, output_paths
+    )
+    quality_path = write_shareholder_data_first_slice_quality_report(
+        live_rows, output_paths
+    )
+    summary_path = write_shareholder_data_first_slice_live_summary(
+        live_rows, stats, gate, output_paths
+    )
+
+    print(
+        f"mode=shareholder_data_first_slice_live cases={len(live_rows)} "
+        f"acceptable={sum(1 for r in live_rows if r['acceptable'] == 'yes')}/"
+        f"{len(live_rows)} cninfo_calls={stats.cninfo_requests} "
+        f"shared_request=1"
+    )
+    print(
+        f"gate=d_class_shareholder_data_first_slice_execution_gate={gate}"
+    )
+    print(
+        "live_path_gate=d_class_shareholder_data_first_slice_live_path_gate="
+        f"{SHAREHOLDER_DATA_FIRST_SLICE_LIVE_PATH_GATE}"
+    )
+    print(
+        "live_gate=d_class_shareholder_data_first_slice_live_gate="
+        f"{SHAREHOLDER_DATA_FIRST_SLICE_LIVE_GATE}"
+    )
+    print(f"live_report={report_path}")
+    print(f"quality_report={quality_path}")
+    print(f"live_summary={summary_path}")
+    return 0 if gate == SHAREHOLDER_DATA_FIRST_SLICE_EXECUTION_GATE_PASS else 1
 
 
 def run_shareholder_data_first_slice(args: argparse.Namespace) -> int:
@@ -9894,8 +10157,12 @@ def run_shareholder_data_first_slice(args: argparse.Namespace) -> int:
         f"{SHAREHOLDER_DATA_FIRST_SLICE_RUNNER_GATE}"
     )
     print(
-        "live_gate=d_class_shareholder_data_first_slice_live_gate="
+        "live_path_gate=d_class_shareholder_data_first_slice_live_path_gate="
         f"{SHAREHOLDER_DATA_FIRST_SLICE_LIVE_PATH_GATE}"
+    )
+    print(
+        "live_gate=d_class_shareholder_data_first_slice_live_gate="
+        f"{SHAREHOLDER_DATA_FIRST_SLICE_LIVE_GATE}"
     )
     print(f"dryrun_report={report_path}")
     print(f"dryrun_summary={summary_path}")

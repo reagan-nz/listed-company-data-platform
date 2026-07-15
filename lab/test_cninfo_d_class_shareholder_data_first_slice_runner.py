@@ -82,6 +82,10 @@ class TestShareholderDataFirstSliceRunner(unittest.TestCase):
             result.stdout,
         )
         self.assertIn(
+            "d_class_shareholder_data_first_slice_live_path_gate=READY_FOR_APPROVAL",
+            result.stdout,
+        )
+        self.assertIn(
             "d_class_shareholder_data_first_slice_live_gate=NOT_APPROVED",
             result.stdout,
         )
@@ -260,28 +264,110 @@ class TestShareholderDataFirstSliceRunner(unittest.TestCase):
             result.stderr,
         )
 
-    def test_live_with_approval_still_not_implemented(self) -> None:
-        with mock.patch("requests.get") as get_mock, mock.patch(
-            "requests.post"
-        ) as post_mock:
-            result = _run(
-                [
-                    "--live",
-                    "--shareholder-data-first-slice",
-                    "--approve-d-class-shareholder-data-first-slice",
-                    "--universe-csv",
-                    UNIVERSE_CSV,
-                    "--output-root",
-                    OUTPUT_ROOT,
-                ]
+    def test_live_with_approval_mock_shared_path_cninfo_zero(self) -> None:
+        """离线 mock live：1 次共享截面 + SECCODE 过滤 · 不触网 · CNINFO=0。"""
+        rows = runner.load_shareholder_data_first_slice_universe(UNIVERSE_CSV)
+
+        def _fake_cninfo_request(session, source_cfg, params_override, stats, case_id):
+            self.assertEqual(
+                case_id, runner.SHAREHOLDER_DATA_FIRST_SLICE_SHARED_REQUEST_CASE_ID
             )
-            get_mock.assert_not_called()
-            post_mock.assert_not_called()
-        self.assertEqual(result.returncode, 2)
-        self.assertIn(
-            "shareholder_data_first_slice_live_not_implemented",
-            result.stderr,
-        )
+            self.assertEqual(params_override, {"rdate": "20260331"})
+            stats.cninfo_requests += 1
+            stats.case_request_counts[case_id] = (
+                stats.case_request_counts.get(case_id, 0) + 1
+            )
+            # 稀疏截面：无目标 SECCODE → 全案 empty；DSD001 mismatch → 4/5
+            return (
+                {
+                    "data": {
+                        "records": [
+                            {
+                                "SECCODE": "999999",
+                                "SECNAME": "其他公司",
+                                "ENDDATE": "2026-03-31",
+                                "F001N": 1,
+                            }
+                        ]
+                    }
+                },
+                200,
+                "",
+            )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            out_root = os.path.join(
+                tmp, "cninfo_d_class_shareholder_data_first_slice"
+            )
+            output_paths = runner.ensure_output_layout(out_root, "live")
+            with mock.patch(
+                "run_cninfo_d_class_tiny_live_validation._cninfo_request",
+                side_effect=_fake_cninfo_request,
+            ), mock.patch("requests.get") as get_mock, mock.patch(
+                "requests.post"
+            ) as post_mock:
+                rc = runner.execute_shareholder_data_first_slice_live(
+                    rows, output_paths
+                )
+                get_mock.assert_not_called()
+                post_mock.assert_not_called()
+            self.assertEqual(rc, 0)
+            live_report = os.path.join(
+                output_paths["reports"],
+                "d_class_shareholder_data_first_slice_live_report.csv",
+            )
+            quality_report = os.path.join(
+                output_paths["reports"],
+                "d_class_shareholder_data_first_slice_quality_report.csv",
+            )
+            live_summary = os.path.join(
+                output_paths["reports"],
+                "d_class_shareholder_data_first_slice_live_summary.md",
+            )
+            self.assertTrue(os.path.isfile(live_report))
+            self.assertTrue(os.path.isfile(quality_report))
+            self.assertTrue(os.path.isfile(live_summary))
+            with open(live_report, newline="", encoding="utf-8") as f:
+                reader = csv.DictReader(f)
+                self.assertEqual(
+                    list(reader.fieldnames or []),
+                    runner.SHAREHOLDER_DATA_FIRST_SLICE_LIVE_REPORT_COLUMNS,
+                )
+                live_rows = {r["case_id"]: r for r in reader}
+            self.assertEqual(len(live_rows), 5)
+            self.assertEqual(live_rows["DSD001"]["acceptable"], "no")
+            self.assertEqual(
+                live_rows["DSD001"]["failure_type"], "expectation_mismatch"
+            )
+            for case_id in ("DSD002", "DSD003", "DSD004", "DSD005"):
+                self.assertEqual(live_rows[case_id]["acceptable"], "yes")
+                self.assertEqual(
+                    live_rows[case_id]["retrieval_status"], "empty_but_valid"
+                )
+            for case_id, row in live_rows.items():
+                self.assertIn("shared_rdate_request=1", row["notes"])
+                self.assertIn("seccode_filter=yes", row["notes"])
+                snap = os.path.join(
+                    output_paths["live_snapshots"],
+                    f"{case_id}_shareholder_data.json",
+                )
+                self.assertTrue(os.path.isfile(snap), snap)
+            with open(live_summary, encoding="utf-8") as f:
+                content = f.read()
+            self.assertIn(
+                "d_class_shareholder_data_first_slice_live_path_gate = READY_FOR_APPROVAL",
+                content,
+            )
+            self.assertIn(
+                "d_class_shareholder_data_first_slice_live_gate = NOT_APPROVED",
+                content,
+            )
+            self.assertIn(
+                "d_class_shareholder_data_first_slice_execution_gate = PASS_WITH_CAVEAT",
+                content,
+            )
+            self.assertIn("shared_cninfo_requests | **1**", content)
+            self.assertIn("NOT verified", content)
 
     def test_live_path_execute_function_exists(self) -> None:
         self.assertTrue(
@@ -394,6 +480,10 @@ class TestShareholderDataFirstSliceRunner(unittest.TestCase):
         self.assertIn("planned_shared_cninfo_requests | **1**", summary)
         self.assertIn(
             "d_class_shareholder_data_first_slice_runner_extension_gate = READY_FOR_APPROVAL",
+            summary,
+        )
+        self.assertIn(
+            "d_class_shareholder_data_first_slice_live_path_gate = READY_FOR_APPROVAL",
             summary,
         )
         self.assertIn(

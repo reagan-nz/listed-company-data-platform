@@ -1,10 +1,10 @@
 # CNINFO D 类 shareholder_data First-Slice — Command Draft
 
-_生成时间：2026-07-15 · D-FM-07_
+_生成时间：2026-07-15 · D-FM-09_
 
-> **性质：** 命令草案 · D-FM-08 runner 已实现 · S4 dry-run 已执行 · **CNINFO = 0** · **无 live**
+> **性质：** 命令草案 · D-FM-09 shared live-path 已实现 · offline mock PASS · **CNINFO = 0** · **真实 live 未授权**
 
-## S4 dry-run（future · runner 实现后 · CNINFO=0）
+## S4 dry-run（CNINFO=0）
 
 ```bash
 cd listed_company_data_collector
@@ -15,10 +15,10 @@ python lab/run_cninfo_d_class_tiny_live_validation.py \
   --output-root outputs/validation/cninfo_d_class_shareholder_data_first_slice
 ```
 
-## Live（future · NOT authorized this task）
+## Live（path ready · NOT authorized this task）
 
 ```bash
-# DO NOT RUN until runner + --approve-d-class-shareholder-data-first-slice
+# DO NOT RUN until controller_execution_allowed=true
 python lab/run_cninfo_d_class_tiny_live_validation.py \
   --live \
   --shareholder-data-first-slice \
@@ -35,13 +35,14 @@ python lab/run_cninfo_d_class_tiny_live_validation.py \
 | rdate | `20260331` |
 | prefer | **1 shared** CNINFO 全市场截面 · 离线按 SECCODE 过滤 DSD001–DSD005 |
 | total cap | ≤ **5** |
-| planned | **1**（shared） |
+| planned / live shared | **1**（`SHARED_RDATE`） |
 
 ## Status This Task
 
 | 项 | 状态 |
 |----|------|
-| `--shareholder-data-first-slice` | **已实现（D-FM-08）** |
+| `--shareholder-data-first-slice` | **已实现** |
 | S4 dry-run | **PASS_OFFLINE（5/5 · shared=1）** |
-| live | **NOT_APPROVED** |
+| live path | **READY_FOR_APPROVAL**（offline mock 4/5） |
+| live | **NOT_APPROVED**（无真实执行） |
 | CNINFO this task | **0** |
