@@ -1,0 +1,49 @@
+{
+  "generated_at": "2026-07-15T13:42:09Z",
+  "task_id": "C-FM-23",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "seal_chain_extended": false,
+  "scale_tier_count": 7,
+  "company_coverage_sum": 3314,
+  "combined_dryrun_coverage": 1053,
+  "combined_dryrun_fp": "82caf6cadb33cc4820dc115d94649521c55732f29b9156b622f21747da1a5683",
+  "observed_fps": {
+    "fm01_863": "cb0cf6b116c59e0326b380f31efedb73fefcf30e54d3ce1dd14db91efe508759",
+    "fm02_190": "6dc30af0fe8e8ade2f10da8599891005fde0158e324c9a1273112a461f04971c",
+    "fm03_harvest_863": "b25006b906a7ad14a96c703a896dd7fc18741d2c3e03886e87c01b898ba76278",
+    "phase35_500": "0aa3faad0387d7833769997fb705370105f56ba5204b4ec8878e432df27b9664",
+    "phase3_500": "72daace1d7d04194f37c75662c72b28411358dd1c1d9de9a9ceebc4e041c09e2",
+    "phase2_200": "7eb5cf4f55a4f1feb3cf52a38db11e268d48417d9c54afc44f5e8983f956a56f",
+    "fuller_200": "3dad6198d15db75c8192d7b91a7dac8e0aace04a047d34246e030a9b4678f599"
+  },
+  "frozen_fps": {
+    "fm01_863": "cb0cf6b116c59e0326b380f31efedb73fefcf30e54d3ce1dd14db91efe508759",
+    "fm02_190": "6dc30af0fe8e8ade2f10da8599891005fde0158e324c9a1273112a461f04971c",
+    "fm03_harvest_863": "b25006b906a7ad14a96c703a896dd7fc18741d2c3e03886e87c01b898ba76278",
+    "phase35_500": "0aa3faad0387d7833769997fb705370105f56ba5204b4ec8878e432df27b9664",
+    "phase3_500": "72daace1d7d04194f37c75662c72b28411358dd1c1d9de9a9ceebc4e041c09e2",
+    "phase2_200": "7eb5cf4f55a4f1feb3cf52a38db11e268d48417d9c54afc44f5e8983f956a56f",
+    "fuller_200": "3dad6198d15db75c8192d7b91a7dac8e0aace04a047d34246e030a9b4678f599",
+    "combined_dryrun_1053": "82caf6cadb33cc4820dc115d94649521c55732f29b9156b622f21747da1a5683"
+  },
+  "fingerprint": {
+    "row_count": 141,
+    "ok_count": 141,
+    "fail_count": 0,
+    "layers": {
+      "scale_lineage_registry": 11,
+      "multi_cohort_repro_fingerprint": 9,
+      "multi_batch_harvest_exclusion_dual_layer": 11,
+      "isolated_combined_dryrun_scale": 5,
+      "scale_lineage_hardening": 14,
+      "protected_write_guard": 5,
+      "output_root_protection_hardening": 6,
+      "frozen_mock_isolation": 27,
+      "protected_csv_registry": 29,
+      "fm_gate_battery": 17,
+      "execute_hold_seal": 7
+    },
+    "fingerprint_sha256": "856b1d15d045ece336de08b9ed27b777379558a4cee0db6f5bcf367d64c6ac5e"
+  }
+}
