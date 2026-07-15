@@ -577,5 +577,228 @@ class TestExecutiveShareholdingFirstSliceRunner(unittest.TestCase):
         )
 
 
+class TestExecutiveShareholdingFirstSliceS5Closure(unittest.TestCase):
+    """S5 closure 离线校验：acceptable 规则 + live/quality/ledger schema（无 CNINFO）。"""
+
+    LIVE_REPORT = os.path.join(
+        OUTPUT_ROOT,
+        "reports",
+        "d_class_executive_shareholding_first_slice_live_report.csv",
+    )
+    QUALITY_REPORT = os.path.join(
+        OUTPUT_ROOT,
+        "reports",
+        "d_class_executive_shareholding_first_slice_quality_report.csv",
+    )
+    OUTCOME_LEDGER = os.path.join(
+        BASE_DIR,
+        "outputs",
+        "validation",
+        "cninfo_d_class_executive_shareholding_first_slice_live_outcome_ledger.csv",
+    )
+    CLOSURE_METRICS = os.path.join(
+        BASE_DIR,
+        "outputs",
+        "validation",
+        "cninfo_d_class_executive_shareholding_first_slice_closure_metrics.csv",
+    )
+    CAVEAT_LEDGER = os.path.join(
+        BASE_DIR,
+        "outputs",
+        "validation",
+        "cninfo_d_class_executive_shareholding_first_slice_final_caveat_ledger.csv",
+    )
+    EFFECTIVE_RESULT = os.path.join(
+        BASE_DIR,
+        "outputs",
+        "validation",
+        "cninfo_d_class_executive_shareholding_first_slice_effective_result.csv",
+    )
+
+    def _row(self, case_id: str) -> runner.ExecutiveShareholdingFirstSliceRow:
+        return _es_row_from_dict(
+            next(r for r in _read_universe_rows() if r["case_id"] == case_id)
+        )
+
+    def test_empty_but_valid_acceptable_when_expectation_allows(self) -> None:
+        summary = {
+            "retrieval_status": "empty_but_valid",
+            "quality_status": "pass",
+            "record_count": "0",
+        }
+        for case_id in ("DES002", "DES003", "DES004", "DES005"):
+            with self.subTest(case_id=case_id):
+                row = self._row(case_id)
+                self.assertTrue(
+                    runner.is_executive_shareholding_first_slice_acceptable(
+                        row, summary
+                    )
+                )
+                self.assertEqual(
+                    runner.assess_executive_shareholding_first_slice_failure_type(
+                        row, summary
+                    ),
+                    "",
+                )
+
+    def test_des001_empty_is_expectation_mismatch(self) -> None:
+        row = self._row("DES001")
+        self.assertEqual(row.expected_behavior, "captured_normal_or_needs_review")
+        summary = {
+            "retrieval_status": "empty_but_valid",
+            "quality_status": "pass",
+            "record_count": "0",
+        }
+        self.assertFalse(
+            runner.is_executive_shareholding_first_slice_acceptable(row, summary)
+        )
+        self.assertEqual(
+            runner.assess_executive_shareholding_first_slice_failure_type(
+                row, summary
+            ),
+            "expectation_mismatch",
+        )
+
+    def test_des001_found_or_needs_review_with_rows_is_acceptable(self) -> None:
+        row = self._row("DES001")
+        for rs in ("found", "needs_review"):
+            with self.subTest(retrieval_status=rs):
+                summary = {
+                    "retrieval_status": rs,
+                    "quality_status": (
+                        "needs_review" if rs == "needs_review" else "pass"
+                    ),
+                    "record_count": "1",
+                }
+                self.assertTrue(
+                    runner.is_executive_shareholding_first_slice_acceptable(
+                        row, summary
+                    )
+                )
+
+    def test_execution_gate_four_of_five_sparse_window(self) -> None:
+        rows = [_es_row_from_dict(r) for r in _read_universe_rows()]
+        summaries = {
+            r.case_id: {
+                "retrieval_status": "empty_but_valid",
+                "quality_status": "pass",
+                "record_count": "0",
+            }
+            for r in rows
+        }
+        gate = runner.compute_executive_shareholding_first_slice_execution_gate(
+            rows, summaries
+        )
+        self.assertEqual(
+            gate, runner.EXECUTIVE_SHAREHOLDING_FIRST_SLICE_EXECUTION_GATE_PASS
+        )
+        acceptable = sum(
+            1
+            for r in rows
+            if runner.is_executive_shareholding_first_slice_acceptable(
+                r, summaries[r.case_id]
+            )
+        )
+        self.assertEqual(acceptable, 4)
+
+    def test_live_report_schema_and_des001_row(self) -> None:
+        if not os.path.isfile(self.LIVE_REPORT):
+            self.skipTest("live report not present")
+        with open(self.LIVE_REPORT, newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            self.assertEqual(
+                list(reader.fieldnames or []),
+                runner.EXECUTIVE_SHAREHOLDING_FIRST_SLICE_LIVE_REPORT_COLUMNS,
+            )
+            rows = list(reader)
+        self.assertEqual(len(rows), 5)
+        by_id = {r["case_id"]: r for r in rows}
+        self.assertEqual(by_id["DES001"]["acceptable"], "no")
+        self.assertEqual(by_id["DES001"]["failure_type"], "expectation_mismatch")
+        self.assertEqual(by_id["DES001"]["retrieval_status"], "empty_but_valid")
+        for case_id in ("DES002", "DES003", "DES004", "DES005"):
+            self.assertEqual(by_id[case_id]["acceptable"], "yes")
+            self.assertEqual(by_id[case_id]["failure_type"], "")
+
+    def test_quality_report_schema_matches_live_acceptable(self) -> None:
+        if not os.path.isfile(self.QUALITY_REPORT):
+            self.skipTest("quality report not present")
+        with open(self.QUALITY_REPORT, newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            self.assertEqual(
+                list(reader.fieldnames or []),
+                runner.EXECUTIVE_SHAREHOLDING_FIRST_SLICE_QUALITY_REPORT_COLUMNS,
+            )
+            q_rows = {r["case_id"]: r for r in reader}
+        with open(self.LIVE_REPORT, newline="", encoding="utf-8") as f:
+            live_rows = {r["case_id"]: r for r in csv.DictReader(f)}
+        for case_id in runner.EXECUTIVE_SHAREHOLDING_FIRST_SLICE_ALLOWED_CASE_IDS:
+            self.assertEqual(
+                q_rows[case_id]["acceptable"], live_rows[case_id]["acceptable"]
+            )
+            self.assertEqual(
+                q_rows[case_id]["failure_type"], live_rows[case_id]["failure_type"]
+            )
+
+    def test_outcome_ledger_schema_and_cross_check(self) -> None:
+        if not os.path.isfile(self.OUTCOME_LEDGER):
+            self.skipTest("outcome ledger not present")
+        expected_cols = [
+            "case_id",
+            "company_code",
+            "company_name",
+            "time_mark",
+            "vary_type",
+            "expected_behavior",
+            "retrieval_status",
+            "quality_status",
+            "record_count",
+            "outcome",
+            "acceptable",
+            "failure_type",
+            "cninfo_request_count",
+            "notes",
+        ]
+        with open(self.OUTCOME_LEDGER, newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            self.assertEqual(list(reader.fieldnames or []), expected_cols)
+            ledger = {r["case_id"]: r for r in reader}
+        self.assertEqual(len(ledger), 5)
+        self.assertEqual(ledger["DES001"]["acceptable"], "no")
+        self.assertEqual(ledger["DES001"]["failure_type"], "expectation_mismatch")
+        self.assertEqual(ledger["DES001"]["outcome"], "empty_but_valid")
+        for case_id in ("DES002", "DES003", "DES004", "DES005"):
+            self.assertEqual(ledger[case_id]["acceptable"], "yes")
+
+    def test_closure_artifacts_present_and_des001_caveat(self) -> None:
+        for path in (
+            self.CLOSURE_METRICS,
+            self.CAVEAT_LEDGER,
+            self.EFFECTIVE_RESULT,
+        ):
+            self.assertTrue(os.path.isfile(path), msg=path)
+        with open(self.CAVEAT_LEDGER, newline="", encoding="utf-8") as f:
+            caveats = list(csv.DictReader(f))
+        des001 = next(c for c in caveats if c["caveat_id"] == "CAV-DES-004")
+        self.assertEqual(des001["case_id"], "DES001")
+        self.assertEqual(des001["company_code"], "002415")
+        self.assertEqual(
+            des001["caveat_type"], "expectation_mismatch_on_sparse_window"
+        )
+        self.assertIn("accept_with_caveat", des001["allowed_interpretation"])
+        with open(self.CLOSURE_METRICS, newline="", encoding="utf-8") as f:
+            metrics = {r["metric_name"]: r["value"] for r in csv.DictReader(f)}
+        self.assertEqual(metrics["acceptable"], "4")
+        self.assertEqual(metrics["CNINFO_during_closure"], "0")
+        self.assertEqual(metrics["closure_gate"], "PASS_WITH_CAVEAT")
+        with open(self.EFFECTIVE_RESULT, newline="", encoding="utf-8") as f:
+            eff = {r["case_id"]: r for r in csv.DictReader(f)}
+        self.assertEqual(eff["DES001"]["acceptable"], "no")
+        self.assertEqual(
+            eff["DES001"]["failure_type"],
+            "expectation_mismatch_on_sparse_window",
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
