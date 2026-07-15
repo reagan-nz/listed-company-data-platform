@@ -1,0 +1,6 @@
+case_id,industry_code,industry_name,query_mode,anchor_rdate,shared_probe_key,expected_behavior,dryrun_status,planned_request_count,cninfo_called,live_found_path_DFIA201_205,fixture_tier1_refs,final_effective_status,notes
+DFIA201,B,采矿业,default,,default,captured_normal_or_empty_but_valid,planned_ok,1,false,NOT_PROVEN,DFIA201_found.json;DFIA201_industry_filtered_empty.json,s4_planned_ok_shared_default,D-FM-39 dry-run only; not live
+DFIA202,A,农、林、牧、渔业,rdate,20260331,rdate_20260331,captured_normal,planned_ok,1,false,NOT_PROVEN,DFIA202_found.json,s4_planned_ok_shared_rdate_20260331,rdate diversify; cite != live found-path
+DFIA203,*,全行业截面_rdate_20251231,rdate,20251231,rdate_20251231,captured_normal,planned_ok,1,false,NOT_PROVEN,DFIA203_found.json,s4_planned_ok_shared_rdate_20251231,cross-section *; not live-proven
+DFIA204,A,农、林、牧、渔业,rdate,20251231,rdate_20251231,captured_normal_or_empty_but_valid,planned_ok,1,false,NOT_PROVEN,DFIA204_found.json;DFIA204_empty_but_valid_synthetic.json,s4_planned_ok_shared_rdate_20251231,mixed found/empty; not live
+DFIA205,B,采矿业,rdate,20251231,rdate_20251231,captured_normal_or_empty_but_valid,planned_ok,1,false,NOT_PROVEN,DFIA205_found.json;DFIA205_empty_but_valid_synthetic.json,s4_planned_ok_shared_rdate_20251231,mixed found/empty; not live

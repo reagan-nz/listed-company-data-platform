@@ -1,10 +1,12 @@
-# CNINFO D 类 fund_industry_allocation Further-Scale — Command Draft（D-FM-39 更新）
+# CNINFO D 类 fund_industry_allocation Further-Scale — Command Draft（D-FM-40 更新）
 
-_生成时间：2026-07-15 · D-FM-39_
+_生成时间：2026-07-15 · D-FM-40 更新（D-FM-39 起草 · S4）_
 
-> **性质：** 命令草稿 · **flags 已实现** · **S4 dry-run 已跑** · **live 仍禁** · **CNINFO = 0** · **不是 verified**
+> **性质：** 命令草稿 · **flags 已实现** · **S4 dry-run 已跑并 frozen** · **live 仍禁** · **CNINFO = 0** · **不是 verified**
+>
+> **勿重跑** dry-run 覆盖 frozen FIA further-scale dry-run 根（D-FM-40 freeze）。
 
-## S4 dry-run（已实现 · 本回合已执行 · CNINFO=0）
+## S4 dry-run（implemented · D-FM-39 已跑 · D-FM-40 frozen · CNINFO=0）
 
 ```bash
 cd listed_company_data_collector
@@ -14,6 +16,8 @@ cd listed_company_data_collector
   --universe-csv outputs/validation/cninfo_d_class_fund_industry_allocation_further_scale_universe_lock_20260715.csv \
   --output-root outputs/validation/cninfo_d_class_fund_industry_allocation_further_scale
 ```
+
+> **D-FM-40：** 上述命令 **不要** 再对正式根执行；产物已 sha256 freeze。
 
 ## Future Live（已接线 · 勿执行 · controller_execution_allowed=false）
 
@@ -39,13 +43,14 @@ cd listed_company_data_collector
 | schema | `d_industry_aggregate` only · **no** company_code |
 | industry filter | coarse **A / B / \*** · **不**以 C26 作唯一 found 锚 |
 
-## Status This Task（D-FM-39）
+## Status This Task（D-FM-40）
 
 | 项 | 状态 |
 |----|------|
-| `--fund-industry-allocation-further-scale` | **已实现** |
+| `--fund-industry-allocation-further-scale` | **已实现**（D-FM-39） |
 | `--approve-d-class-fund-industry-allocation-further-scale` | **已实现**（live 仍须显式批准） |
-| S4 dry-run | **PASS_OFFLINE** · planned_ok **5/5** · CNINFO=0 |
+| S4 dry-run | **PASS_OFFLINE** · planned_ok **5/5** · CNINFO=0 · **frozen** |
+| S4 dry-run closure | **PASS_OFFLINE**（D-FM-40 · freeze + caveat） |
 | runner_extension_gate | **READY_FOR_APPROVAL** |
 | live_path_gate | **READY_FOR_APPROVAL** |
 | live_gate | **NOT_APPROVED** · controller_execution_allowed=false |
