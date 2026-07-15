@@ -1,0 +1,43 @@
+{
+  "generated_at": "2026-07-15T09:31:20Z",
+  "task_id": "C-FM-05",
+  "gate": "PASS_OFFLINE",
+  "layer_gates": {
+    "mock_cohort_registry": "PASS_OFFLINE",
+    "fingerprint_chain": "PASS_OFFLINE",
+    "protected_write_guard": "PASS_OFFLINE",
+    "protected_csv_registry": "PASS_OFFLINE",
+    "fm_gate_battery": "PASS_OFFLINE"
+  },
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "fail_count": 0,
+  "matrix_rows": 33,
+  "output_root": "outputs/validation/_mock_c_fm05_cross_fm_mock_cohort_integrity",
+  "matrix_path": "outputs/validation/_mock_c_fm05_cross_fm_mock_cohort_integrity/integrity_matrix.csv",
+  "fingerprint_path": "outputs/validation/_mock_c_fm05_cross_fm_mock_cohort_integrity/integrity_fingerprint.json",
+  "fingerprint": {
+    "row_count": 33,
+    "ok_count": 33,
+    "fail_count": 0,
+    "layers": {
+      "mock_cohort_registry": 9,
+      "fingerprint_chain": 5,
+      "protected_write_guard": 5,
+      "protected_csv_registry": 9,
+      "fm_gate_battery": 5
+    },
+    "fingerprint_sha256": "b11a394ede6071e1ba60e5ee1e1f518f91789e31364b48d14a300bf485c54d4b"
+  },
+  "registry_path": "outputs/validation/_mock_c_fm05_cross_fm_mock_cohort_integrity/mock_cohort_registry.json",
+  "battery_path": "outputs/validation/_mock_c_fm05_cross_fm_mock_cohort_integrity/fm_gate_battery.json",
+  "inputs": {
+    "fm01_gate_json": "outputs/validation/cninfo_c_class_isolated_snapshot_dryrun_repro_check_20260715.json",
+    "fm02_gate_json": "outputs/validation/cninfo_c_class_isolated_snapshot_validation_cohorts_20260715.json",
+    "fm03_gate_json": "outputs/validation/cninfo_c_class_harvest_exclusion_dual_layer_consistency_20260715.json",
+    "fm04_gate_json": "outputs/validation/cninfo_c_class_dual_layer_ledger_resume_lineage_20260715.json",
+    "protected_roots_csv": "outputs/validation/cninfo_c_class_erad_protected_output_roots.csv",
+    "harvest_863_status": "outputs/harvest/cninfo_c_class/quality/company_harvest_status.csv"
+  },
+  "mock_root_is_isolated": true
+}
