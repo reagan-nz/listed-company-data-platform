@@ -1,0 +1,31 @@
+{
+  "case_id": "DES005",
+  "company_code": "601988",
+  "company_name": "中国银行",
+  "component": "executive_shareholding",
+  "market": "sse_main",
+  "time_mark": "oneMonth",
+  "vary_type": "b",
+  "expected_behavior": "empty_but_valid",
+  "mode": "dry_run",
+  "endpoint": "https://www.cninfo.com.cn/data20/leader/detail",
+  "planned_params": [
+    {
+      "timeMark": "oneMonth",
+      "varyType": "b"
+    }
+  ],
+  "planned_request_labels": [
+    "timeMark_oneMonth_varyType_b"
+  ],
+  "tier1_fixture_refs": [
+    "fixtures/d_class/executive_shareholding_first_slice/DES005_empty_but_valid_synthetic.json"
+  ],
+  "cninfo_called": false,
+  "pdf_download": false,
+  "ocr": false,
+  "extraction": false,
+  "db_write": false,
+  "minio_write": false,
+  "rag_run": false
+}

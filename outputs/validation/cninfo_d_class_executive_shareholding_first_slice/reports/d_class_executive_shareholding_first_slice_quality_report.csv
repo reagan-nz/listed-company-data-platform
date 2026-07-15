@@ -1,0 +1,6 @@
+case_id,component,time_mark,vary_type,expected_behavior,retrieval_status,record_count,quality_status,acceptable,failure_type,cninfo_request_count,notes
+DES001,executive_shareholding,oneMonth,b,captured_normal_or_needs_review,empty_but_valid,0,pass,no,expectation_mismatch,1,company-level zero rows; legal empty per quality policy
+DES002,executive_shareholding,oneMonth,b,captured_normal_or_empty_but_valid,empty_but_valid,0,pass,yes,,1,company-level zero rows; legal empty per quality policy
+DES003,executive_shareholding,oneMonth,b,captured_normal_or_empty_but_valid,empty_but_valid,0,pass,yes,,1,company-level zero rows; legal empty per quality policy
+DES004,executive_shareholding,oneMonth,b,captured_normal_or_empty_but_valid,empty_but_valid,0,pass,yes,,1,company-level zero rows; legal empty per quality policy
+DES005,executive_shareholding,oneMonth,b,empty_but_valid,empty_but_valid,0,pass,yes,,1,company-level zero rows; legal empty per quality policy

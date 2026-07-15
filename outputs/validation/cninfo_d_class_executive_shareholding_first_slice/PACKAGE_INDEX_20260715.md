@@ -1,12 +1,12 @@
 # CNINFO D 类 executive_shareholding First-Slice — Package Index
 
-_生成时间：2026-07-15 · task **D-R16-01** · updated **D-R16-02**_
+_生成时间：2026-07-15 · task **D-R16-01** · updated **D-R16-02** · **D-FM-01 S4/S5**_
 
-> **性质：** offline approval package index · **CNINFO = 0** · **无 live** · **无 runner** · **无 commit** · **无 push**
+> **性质：** first-slice package index · S4 dry-run + S5 live **已执行** · **NOT verified** · **NOT production_ready** · **无 commit** · **无 push**
 >
-> **Gate：** `d_class_executive_shareholding_next_component_planning_gate = READY_FOR_APPROVAL`
+> **Execution gate：** `d_class_executive_shareholding_first_slice_execution_gate = PASS_WITH_CAVEAT`（4/5）
 >
-> **Flags：** `component_approved=false` · **NOT verified** · **NOT production_ready**
+> **Standing auth：** D mission · executive_shareholding 无需单独 Level-2 短语
 
 ---
 
@@ -20,42 +20,52 @@ _生成时间：2026-07-15 · task **D-R16-01** · updated **D-R16-02**_
 | sample prep | `../cninfo_d_class_executive_shareholding_sample_prep_20260715.md` |
 | command draft | `../cninfo_d_class_executive_shareholding_first_slice_command_draft_20260715.md` |
 | offline checklist | `../cninfo_d_class_executive_shareholding_offline_prep_checklist_20260715.csv` |
-| Run 15 stub（read-only） | `../cninfo_d_class_executive_shareholding_offline_prep_checklist_stub_20260715.csv` |
-| universe sketch（source） | `../cninfo_d_class_executive_shareholding_first_slice_universe_draft_sketch_20260715.csv` |
 | Tier-1 fixture VR matrix（D-R16-02） | `../cninfo_d_class_executive_shareholding_fixture_vr_matrix_20260715.csv` |
 | Tier-1 fixture VR summary（D-R16-02） | `../cninfo_d_class_executive_shareholding_fixture_vr_validation_20260715.md` |
+| S4 dry-run evidence（D-FM-01） | `../cninfo_d_class_executive_shareholding_first_slice_s4_dryrun_evidence_20260715.md` |
+| S5 live evidence（D-FM-01） | `../cninfo_d_class_executive_shareholding_first_slice_s5_live_evidence_20260715.md` |
+| S4/S5 completion note | `../cninfo_d_class_executive_shareholding_s4_s5_completion_note_20260715.md` |
+| live outcome ledger | `../cninfo_d_class_executive_shareholding_first_slice_live_outcome_ledger.csv` |
 
-## Tier-0 Cite Only
+## Runner Artifacts（this dir）
 
-| ID | 路径 |
-|----|------|
-| DC006 | `../../../fixtures/d_class/phase1/DC006.json` |
-| DLC007 | `../cninfo_d_class_phase1_tiny_live_universe_calibrated.csv`（row DLC007） |
+| 角色 | 路径 |
+|------|------|
+| dryrun report | `reports/d_class_executive_shareholding_first_slice_dryrun_report.csv` |
+| dryrun summary | `reports/d_class_executive_shareholding_first_slice_dryrun_summary.md` |
+| live report | `reports/d_class_executive_shareholding_first_slice_live_report.csv` |
+| quality report | `reports/d_class_executive_shareholding_first_slice_quality_report.csv` |
+| live summary | `reports/d_class_executive_shareholding_first_slice_live_summary.md` |
+| planned_snapshots | `planned_snapshots/DES00{1-5}_executive_shareholding.json` |
+| live_snapshots | `live_snapshots/`（local-only · commit boundary 政策） |
 
-## Tier-1 Synthetic Fixtures（D-R16-02 · offline stubs）
+## Tier-1 Synthetic Fixtures
 
 | case_id | 文件 |
 |---------|------|
 | DES001 | `../../../fixtures/d_class/executive_shareholding_first_slice/DES001_needs_review_synthetic.json` |
-| DES002 | `DES002_found.json` · `DES002_empty.json` |
-| DES003 | `DES003_found.json` · `DES003_empty.json` |
-| DES004 | `DES004_found.json` · `DES004_empty.json` |
+| DES002–004 | found + empty 双态 |
 | DES005 | `DES005_empty_but_valid_synthetic.json` |
 
-离线校验：`lab/test_cninfo_d_class_executive_shareholding_fixtures.py`
+Tests：`lab/test_cninfo_d_class_executive_shareholding_fixtures.py` · `lab/test_cninfo_d_class_executive_shareholding_first_slice_runner.py`
 
-## Not Present（correct · blocked）
+## S4/S5 Status
 
-- `reports/` · `live_snapshots/` · `planned_snapshots/` — **not created**
-- runner flag `--executive-shareholding-first-slice` — **not implemented**
+| Step | Status |
+|------|--------|
+| runner `--executive-shareholding-first-slice` | **implemented** |
+| S4 dry-run | **5/5 planned_ok** · CNINFO=0 |
+| S5 live | **4/5 acceptable** · CNINFO=5 · **PASS_WITH_CAVEAT**（DES001 sparse caveat） |
 
-## Next Human Gate
+## Next Gate
 
-> **I approve D-class executive_shareholding as the next Era D component.**
+Offline closure + controller **commit boundary**（executor 不得自行 commit/push）
 
 ```text
-planning_gate = READY_FOR_APPROVAL
-component_approved = false
-cninfo_calls = 0
-ready_for_commit = true  # D-R16-02 artifacts ready; commit 仅当 Controller 明确授权
+execution_gate = PASS_WITH_CAVEAT
+cninfo_calls_s4 = 0
+cninfo_calls_s5 = 5
+verified = false
+production_ready = false
+ready_for_commit = true
 ```

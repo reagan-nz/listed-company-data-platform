@@ -1,0 +1,6 @@
+case_id,company_code,company_name,time_mark,vary_type,expected_behavior,retrieval_status,quality_status,record_count,outcome,acceptable,failure_type,cninfo_request_count,notes
+DES001,002415,海康威视,oneMonth,b,captured_normal_or_needs_review,empty_but_valid,pass,0,empty_but_valid,no,expectation_mismatch,1,company-level zero rows; legal empty per quality policy
+DES002,000895,双汇发展,oneMonth,b,captured_normal_or_empty_but_valid,empty_but_valid,pass,0,empty_but_valid,yes,,1,company-level zero rows; legal empty per quality policy
+DES003,600000,浦发银行,oneMonth,b,captured_normal_or_empty_but_valid,empty_but_valid,pass,0,empty_but_valid,yes,,1,company-level zero rows; legal empty per quality policy
+DES004,000550,江铃汽车,oneMonth,b,captured_normal_or_empty_but_valid,empty_but_valid,pass,0,empty_but_valid,yes,,1,company-level zero rows; legal empty per quality policy
+DES005,601988,中国银行,oneMonth,b,empty_but_valid,empty_but_valid,pass,0,empty_but_valid,yes,,1,company-level zero rows; legal empty per quality policy
