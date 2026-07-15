@@ -532,7 +532,7 @@ cases:
       b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E482（quality=pass）。
       不写 verified；不下载 PDF。
 
-  # --- bond_trustee_report / tracking_rating_report × 4（B-FM-29 known_001；B-FM-42 known_002；document_type=announcement；勿落 other）---
+  # --- bond_trustee_report / tracking_rating_report × 5（B-FM-29 known_001；B-FM-42 known_002；B-FM-47 bond_trustee known_003；document_type=announcement；勿落 other）---
   - case_id: bond_trustee_report_known_001
     case_status: ready
     source_id: cninfo_general_announcement_pdf
@@ -578,6 +578,31 @@ cases:
       故不用。与 known_001 / 保荐书 / 跟踪评级 / 法律意见书可区分。来源
       outputs/validation/cninfo_b_class_erad_scale_200/reports/
       b_class_erad_scale_200_report.csv 行 BD2E054（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: bond_trustee_report_known_003
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000157"
+    company_name: "中联重科"
+    title_pattern: "公开发行公司债券（第一期）受托管理事务报告（2024年度）"
+    expected_document_type: announcement
+    date_start: "2025-06-29"
+    date_end: "2025-07-02"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-47 自 harvest 证据晋升（普通公司债券分期受托管理事务报告 known_003；对称
+      known_001 可转债受托 / known_002 普通公司债整包受托）：中联重科 000157，
+      中联重科股份有限公司2019年面向合格投资者公开发行公司债券（第一期）受托管理事务
+      报告（2024年度）（announcement_id=1224036909，披露日 2025-06-30）。路由已由
+      B-FM-29 硬化（「受托管理事务报告」→ announcement）；本包不改路由。
+      title_pattern 取「公开发行公司债券（第一期）受托管理事务报告（2024年度）」：
+      覆盖分期普通公司债受托，且不命中 known_001「…可转换公司债券受托…」与
+      known_002「股份有限公司公司债券受托…」（本案标题在「股份有限公司」与
+      「公司债券」之间含发行期次描述）。与保荐书 / 跟踪评级 / 法律意见书可区分。
+      来源 outputs/validation/cninfo_b_class_erad_scale_200/reports/
+      b_class_erad_scale_200_report.csv 行 BD2E061（quality=pass）。
       不写 verified；不下载 PDF。
 
   - case_id: tracking_rating_report_known_001
@@ -648,7 +673,7 @@ cases:
       reports/b_class_erad_scale_200_report.csv 行 BD2E051（quality=pass）。
       不写 verified；不下载 PDF。
 
-  # --- continuous_supervision / 持续督导 × 2（B-FM-30；document_type=announcement；勿进 annual_report / other）---
+  # --- continuous_supervision / 持续督导 × 3（B-FM-30 known_001；B-FM-43 known_002；B-FM-47 known_003；document_type=announcement；勿进 annual_report / other）---
   - case_id: continuous_supervision_annual_known_001
     case_status: ready
     source_id: cninfo_general_announcement_pdf
@@ -694,6 +719,31 @@ cases:
       与真·年度报告 / 培训情况报告 / 变更保荐代表人公告可区分。来源
       outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
       b_class_erad_fuller_next_slice2_report.csv 行 BD2E775（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: continuous_supervision_annual_known_003
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "603077"
+    company_name: "和邦生物"
+    title_pattern: "可转换公司债券之2024年持续督导年度报告书"
+    expected_document_type: announcement
+    date_start: "2025-04-27"
+    date_end: "2025-04-30"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-47 自 harvest 证据晋升（可转债持续督导年度报告书 known_003；对称
+      known_001/002 普通持续督导年度）：和邦生物 603077，首创证券关于和邦生物向不特定
+      对象发行可转换公司债券之2024年持续督导年度报告书（announcement_id=1223365250，
+      披露日 2025-04-28）。路由已由 B-FM-30 硬化（「持续督导」→ announcement；
+      勿进 annual_report）；本包不改路由。title_pattern 取
+      「可转换公司债券之2024年持续督导年度报告书」：覆盖可转债督导子类型，且不命中
+      known_001 宽串单独检索语境下的恒立液压案与 known_002 国检集团公司全称串。
+      harvest 标注 announcement_type=periodic_report 仍须经路由落 announcement。
+      与真·年度报告 / 培训情况报告 / 变更保荐代表人公告可区分。来源
+      outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
+      b_class_erad_fuller_next_slice2_report.csv 行 BD2E779（quality=pass）。
       不写 verified；不下载 PDF。
 
   - case_id: continuous_supervision_training_known_001

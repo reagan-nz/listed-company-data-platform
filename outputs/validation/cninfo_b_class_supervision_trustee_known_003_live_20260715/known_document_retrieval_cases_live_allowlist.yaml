@@ -1,0 +1,41 @@
+# B-FM-47 live allow-list — 仅新晋 continuous_supervision_annual_known_003 /
+# bond_trustee_report_known_003
+status: live_sample_scoped_B-FM-47
+verified: false
+notes: B-FM-47 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS including supervision/trustee known_001/002 and B-FM-46
+cases:
+  - case_id: continuous_supervision_annual_known_003
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "603077"
+    company_name: "和邦生物"
+    title_pattern: "可转换公司债券之2024年持续督导年度报告书"
+    expected_document_type: announcement
+    date_start: "2025-04-27"
+    date_end: "2025-04-30"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-47 live allow-list（可转债持续督导年度 known_003）：
+      harvest BD2E779 和邦生物 603077 ann=1223365250 2025-04-28。
+      title_pattern 取「可转换公司债券之2024年持续督导年度报告书」
+      （≠恒立液压 / 国检集团 known_001/002）。
+      不写 verified；不下载 PDF。
+
+  - case_id: bond_trustee_report_known_003
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000157"
+    company_name: "中联重科"
+    title_pattern: "公开发行公司债券（第一期）受托管理事务报告（2024年度）"
+    expected_document_type: announcement
+    date_start: "2025-06-29"
+    date_end: "2025-07-02"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-47 live allow-list（普通公司债券分期受托 known_003）：
+      harvest BD2E061 中联重科 000157 ann=1224036909 2025-06-30。
+      title_pattern 取「公开发行公司债券（第一期）受托管理事务报告（2024年度）」
+      （≠可转债受托 known_001 / 普通公司债整包 known_002）。
+      不写 verified；不下载 PDF。
