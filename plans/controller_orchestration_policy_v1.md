@@ -130,7 +130,7 @@ Does not:
 - modify code;
 - write tests;
 - approve commit;
-- approve live execution.
+- approve **scope expansion**, destructive actions, or push（2026-07-15 修订：live execution within an already-authorized mission scope no longer requires a separate approval step for the reviewer to withhold — see [human interrupt v2 §12](controller_human_interrupt_policy_v2.md)）.
 
 
 ---
@@ -449,14 +449,17 @@ Stop.
 # 6. Forbidden Automatic Actions
 
 
+**2026-07-15 修订（Scope-Driven Execution Model）：** "call CNINFO without approved live task" 已更新——CNINFO/live 任务只要属于**已授权的 mission scope**、且满足安全边界（human interrupt v2 §12），Controller **可以**执行，不需要为每次任务单独申请 live 批准。Controller 仍然不能：silently expand scope（即在没有人类表态的情况下把执行范围扩大到未授权的方向）、push、执行破坏性动作。
+
+
 Controller must never:
 
-- commit;
+- commit（此处指 push 相关的发布性提交路径，本地 explicit-path commit 见 commit autonomy v2）;
 - push;
 - git add .;
-- expand scope without approval;
-- call CNINFO without approved live task;
-- execute retry/live because a plan exists;
+- **silently** expand scope beyond what has been authorized（即在没有人类表态"做 X"的情况下自行决定新方向，而不是指 scope 内的正常执行）;
+- call CNINFO for a task **outside** any authorized mission scope（scope 内的 CNINFO/live 是允许的，见上方修订说明）;
+- execute retry/live because a plan exists **without** the underlying track/component scope being authorized;
 - promote disclosure evidence into structured capture;
 - mark:
 

@@ -61,6 +61,7 @@ Controller **may** auto-commit when package is purely:
 | Isolated source | track-local runners/guards/builders already reviewed or low-risk offline tooling |
 | Bounded artifacts | schema drafts under `schemas/` paired with portrait/tooling packages |
 | Control-adjacent docs | **new** controller policy design docs under `plans/controller_*`（not silent rewrite of live PROJECT_CONTROL without explicit package） |
+| **CNINFO live 执行成果**（2026-07-15 · Scope-Driven Execution Amendment） | 已授权 scope 内 CNINFO live 抓取产出的 report/summary/quality-report/evidence（`outputs/validation/` 下），以及实现该 scope 所需的 runner/collector 源码变更——见 [human interrupt v2 §12](controller_human_interrupt_policy_v2.md)；不需要为每次 live 执行单独申请批准才能提交 |
 
 
 Preferred: **one domain per commit**（C evidence ≠ D plans ≠ portrait schema）.

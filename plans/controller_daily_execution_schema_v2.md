@@ -97,7 +97,7 @@ TrackPlan:
   allowed_action: "<one bounded action>"
   forbidden_actions:
     - push
-    - live_without_approval
+    - live_without_authorized_scope   # 2026-07-15 修订，取代 live_without_approval：CNINFO live 本身允许；禁止的是脱离已授权 scope 的 live 扩张（见 human interrupt v2 §12）
     - git_add_dot
     # ...
   required_agent: "a-class-executor" | "b-class-executor" | "c-class-executor" | "d-class-executor"

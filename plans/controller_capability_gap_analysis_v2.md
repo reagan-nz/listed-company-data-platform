@@ -42,7 +42,7 @@ gap_statement:          # e.g. 7 partial cases
 root_cause:             # evidence-backed · or unknown
 impact_on_mission:
 next_tasks:             # actionable · generator-ready
-blocked_by:             # approval / live / none
+blocked_by:             # scope_missing / technical_failure / destructive_approval / push / none — 2026-07-15 修订：不再用 "approval"/"live" 泛指（live 本身在已授权 scope 内不是 blocker，见 human interrupt v2 §12）
 evidence_paths:
 ```
 

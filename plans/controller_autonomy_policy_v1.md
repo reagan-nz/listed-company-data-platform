@@ -26,22 +26,29 @@ A human approval should authorize a bounded workflow, not a single command.
 ## Level 0 — Always Require Human Approval
 
 
+**2026-07-15 修订（Scope-Driven Execution Model，权威见 [controller_human_interrupt_policy_v2.md §12](controller_human_interrupt_policy_v2.md)）：** 本节原列出的 "external live execution" 与 "CNINFO access when not already approved" 两项**不再**属于 Level 0——CNINFO/live execution 在已授权的 mission scope 内不需要单独批准，属于 Level 1 自主执行范围（见下）。此修订不删除本文件、不改变其历史结构，仅更新这两项的判定标准。
+
+
 Human approval is required before:
 
 
-- external live execution;
-- CNINFO access when not already approved;
-- production data mutation;
+- production data mutation（事实上不可逆的部分，见 human interrupt v2 §3.4）;
 - database migration;
 - schema-breaking changes;
 - push to remote repositories;
-- expanding task scope;
+- expanding task scope beyond what has been authorized（scope 本身的决定，而非 scope 内的执行）;
 - changing approval boundaries;
 - promoting evidence classification;
 - changing verified / production_ready status.
 
 
-The Controller must stop.
+The Controller must stop for the items above.
+
+
+**不再需要 Level 0 批准（已移至 Level 1 自主执行，条件：操作在已授权 mission scope 内）：**
+
+
+- CNINFO access / external live execution — 一旦 mission scope 已被人类授权，live 抓取、文档下载、数据集刷新属于自主执行的正常工程步骤（implementation → test → dry-run → live → validate → evidence → commit），不需要为每次执行单独批准。
 
 
 ---
@@ -169,34 +176,24 @@ Not allowed:
 The Controller must request approval again if:
 
 
-1. Scope expands.
+1. Scope expands **beyond the authorized track/component direction**.
 
 Example:
 
-300-company task becomes 500-company task.
+300-company task becomes 500-company task（该新数量未被人类授权过）.
 
 
-2. Risk category changes.
-
-Example:
-
-Offline task becomes live execution.
+2. **（2026-07-15 修订）** Offline task becomes live execution — **不再**自动触发重新批准，只要该 live 执行仍属于已授权的 mission scope（见 [human interrupt v2 §12](controller_human_interrupt_policy_v2.md)）。若 live 执行超出已授权 scope（例如换了完全不同的 track/component），才按第 1 条"scope 扩张"处理。
 
 
-3. New external access is required.
-
-
-Example:
-
-CNINFO/API/network access.
+3. **（2026-07-15 修订）** New external access（例如 CNINFO/API/network access）**不再单独**触发重新批准，只要该访问服务于已授权的 scope。
 
 
 4. Approval boundary changes.
 
-
 Example:
 
-Commit approval becomes push approval.
+Commit approval becomes push approval（push 仍是唯一始终需要人类批准的动作，不因 scope 授权而改变）.
 
 
 ---

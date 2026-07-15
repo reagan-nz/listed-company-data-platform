@@ -62,11 +62,12 @@ Controller **must** stop and ask human before continuing when any applies:
 
 ## 3.2 Approvals
 
+**修订（2026-07-15 · Scope-Driven Execution Amendment，见 §12）：** 本节原列出的 CNINFO live / component 批准 / snapshot rebuild 批准 / gate 促升 四类，**不再**属于 §3 必须停机清单。一旦人类已经**授权某轨/某能力方向**（scope 决策），实现 → 测试 → dry-run → CNINFO live → 验证 → evidence → commit 属于该 scope 内的正常工程执行，见 §12。
 
-- new CNINFO live / resume-live / retry-live without spent scoped approval  
-- component approval (e.g. D `shareholder_change` while `READY_FOR_APPROVAL`)  
-- flipping `approved_for_snapshot_rebuild` from false → true  
-- any gate promotion to verified / production_ready / testing_stable_sample  
+本节此后只保留两类硬性批准边界：
+
+- **scope 本身不明确或存在冲突**（例如：两个 track 声称同一能力方向、mission 目标本身有歧义）— 这不是"批准某个动作"，是"批准要做什么"，仍须人类决定。
+- **verified / production_ready / testing_stable_sample 等 gate 促升声明** — 这类声明会被下游当作"已验证的事实"引用，一旦错误升级难以撤销其影响（其他轨可能已经基于错误声明做出决策），因此保留为人控（见 §3.4 的"事实上不可逆"标准，而不是因为它是 CNINFO/live 动作本身）。
 
 
 ## 3.3 Conflicts / ownership
@@ -116,6 +117,10 @@ Controller **must not** stop solely for:
 - **known WAITING_APPROVAL** already on the approval queue（do not re-page）  
 - existing blockers already listed in PROJECT_CONTROL / prior daily report  
 - continuing independent tracks while another track waits approval  
+- **implementing source code within an already-authorized track/component scope**（2026-07-15 amendment）  
+- **running unit / integration tests, regression tests**  
+- **CNINFO live collection / crawling / document download / dataset refresh within authorized scope**（2026-07-15 amendment — see §12; this was previously listed under §3.2 and is now explicitly non-interrupting）  
+- **local commits of the resulting implementation, tests, or collected evidence**（subject to commit autonomy v2, still never push）
 
 
 If these items fail technically, record PARTIAL/FAILED in the daily report — that is **not** automatically a human interrupt unless §3 also triggers.
@@ -152,15 +157,20 @@ Do not ask vague “should I continue?”.
 # 6. Exact-phrase examples (non-exhaustive)
 
 
-| Situation | Example phrase |
-|-----------|----------------|
-| Push main | `I approve push main to origin.` |
-| D component | `I approve D-class shareholder_change as the next Era D component.` |
-| C snapshot rebuild | `I approve C-class snapshot rebuild for <exact universe>.` |
-| Live scope | `I approve <track> <exact live scope id> live.` |
+**2026-07-15 修订：** 以下表格中的 "D component" / "C snapshot rebuild" / "Live scope" 三行**不再是执行门**——一旦track/component的scope已被授权（例如已有一次"我批准 D-class shareholder_change 作为下一个 Era D component"），implementation → test → dry-run → **CNINFO live** → validate → evidence → commit 都属于该 scope 内的自主执行，不需要为每个阶段重新逐字匹配批准短语（见 §12）。这三行保留在表中仅作为**scope 授权**记录格式的参考，不再是"live 需要逐字短语才能跑"的意思。
+
+`Push main` 是本表**唯一**仍然是硬性执行门的行。
+
+| Situation | Example phrase | 性质 |
+|-----------|----------------|------|
+| Push main | `I approve push main to origin.` | **执行门（硬性）** |
+| Destructive / irreversible external action | `I approve <exact destructive action> on <exact target>.` | **执行门（硬性）** |
+| D component scope | `I approve D-class shareholder_change as the next Era D component.` | Scope 授权记录（非逐次执行门） |
+| C snapshot rebuild scope | `I approve C-class snapshot rebuild for <exact universe>.` | Scope 授权记录（非逐次执行门） |
+| Live/track scope | `I approve <track> <exact scope id>.` | Scope 授权记录（非逐次执行门） |
 
 
-Phrases authorize **only** the named scope. They do not authorize push unless push is named.
+Push / destructive 短语仍然**只授权其命名的范围**，不因为命名了 scope 就自动授权 push。Scope 授权短语一旦给出，覆盖该 scope 下 §12 定义的全部工程生命周期（不需要为 live/commit 再单独批准）。
 
 
 
@@ -228,10 +238,74 @@ Forbidden:
 ---
 
 
-# 11. Relationship to Mission Execution Engine v3 Approval Guidance Layer
+# 11. Relationship to Mission Execution Engine v3 Approval Information Layer
 
 
-[controller_mission_execution_engine_v3.md §10.1](controller_mission_execution_engine_v3.md)（architecture design only · 未启用）定义了一个纯呈现层：当某轨 `stop_reason = HUMAN_GATE_BLOCKED` 时，把 §6 的 exact phrase、§6 末行的 scope 限定、以及该轨的具体 blocked action 拼装展示给人类，减少查找成本。
+[controller_mission_execution_engine_v3.md §10.1](controller_mission_execution_engine_v3.md)（**2026-07-15 更名：Approval Guidance Layer → Approval Information Layer**）定义了一个纯呈现层：告知人类当前 mission scope、pending push、destructive action 警示。它不再围绕 `HUMAN_GATE_BLOCKED` 的 exact-phrase 判定组织（该 stop_reason 已收窄，见 §12），而是围绕 §12 定义的两类硬性执行门（push / 不可逆外部动作）组织提示。
 
 
-**本文件 §6 的 exact-phrase 判定规则不受影响、不被该层修改或放宽。** Approval Guidance Layer 明确规定：不推断批准、不接受 paraphrase、不绕过本文件的判定权威——若两者冲突，本文件优先。该层只在判定**尚未满足**时生成提示，不参与判定本身。
+**本文件 §6 中 push / destructive 两行的 exact-phrase 判定规则不受影响、不被该层修改或放宽。** 对于已收窄出 §3.2 之外的 scope 授权类短语，该层记录 scope 历史供人类查阅，但**不**据此生成任何"仍在等待批准"的提示——scope 一旦授权，下游执行是自主的。
+
+
+
+---
+
+
+# 12. Scope-Driven Execution Amendment（2026-07-15 · Major）
+
+
+## 12.1 变更性质
+
+
+这是对本政策的**架构性修订**，不是新增политика层。人类明确要求：approval-driven execution（每个动作都要批准）→ scope-driven execution（一次授权方向，agent 自主完成全生命周期）。见 `controller_mission_execution_engine_v3.md §10` 同步修订。
+
+
+## 12.2 新的角色划分
+
+
+| 角色 | 职责 |
+|------|------|
+| Human | project owner / scope setter / final push authority |
+| Agent | engineering team：implementation / test / dry-run / **CNINFO live 执行** / validation / evidence / local commit |
+
+
+## 12.3 硬性执行门（仅两类，取代原 §3.2 四类）
+
+
+1. **Push to remote**（push / force-push / remote branch modification）— 不变，仍是 §3.1 的硬性门。
+2. **事实上不可逆的外部动作** — 例如：删除历史证据 / destructive migration / 无回滚路径的生产 mutation / 变更外部系统且不可撤销。这类动作**不因为"是 CNINFO 相关"而被门控**，而是因为其后果不可逆。
+
+
+## 12.4 一旦 scope 被授权，以下全部自主执行，不逐项批准
+
+
+实现（implementation）· 单元/集成测试 · dry-run · **CNINFO live 抓取 / 下载 / API-browser collection** · validation · evidence 生成 · local commit · 继续下一个有价值任务。
+
+
+## 12.5 CNINFO live 执行的状态词表（取代 `HUMAN_GATE_BLOCKED` 用于此场景）
+
+
+CNINFO/live 执行不再分类为 `HUMAN_GATE_BLOCKED`。改用（定义见 [track stop reason v2 §2.1](controller_track_stop_reason_policy_v2.md)）：
+
+
+```text
+READY | RUNNING | COMPLETED | FAILED | WAITING_RETRY
+```
+
+
+只有以下情况才停机请求人类：技术故障（`FAILED` 且重试耗尽）· 安全问题 · scope 本身不明确 · 需要 push。
+
+
+## 12.6 不受本修订影响（仍然人控）
+
+
+- push / force-push / remote history rewrite（§3.1）
+- 事实不可逆的外部/生产动作（§3.4，收窄后的判定标准见 §12.3.2）
+- scope 本身模糊或冲突时的**首次**方向决策（人类仍需说"做 X"，但一旦说了，如何做由 agent 决定）
+- verified / production_ready / testing_stable_sample 等下游会被当作既定事实引用的 gate 促升声明
+
+
+## 12.7 历史记录（不删除，仅标注失效）
+
+
+§3.2 原四类（CNINFO live 批准 / component 批准 / snapshot rebuild 批准 / gate 促升）中，**前三类**自 2026-07-15 起不再是执行门（改为 §12.4 自主执行范围内），仅**第四类（gate 促升）**保留人控，理由见 §12.6 最后一条。§6 表格中对应三行改为"scope 授权记录"而非"逐次执行门"（已在 §6 标注）。

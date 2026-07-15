@@ -146,35 +146,42 @@ Soft fairness remains: do not drain one easy track’s entire queue while other 
 
 ---
 
-# 6. Example — D after offline package
+# 6. Example — D after offline package（2026-07-15 更新，对齐 Scope-Driven Execution Model）
 
 
-D finishes shareholder_change offline package.
+D finishes shareholder_change offline package. Component scope（shareholder_change）已被人类授权。
 
 
-**Wrong：** D stops permanently · day reports `NO_VALUABLE_SAFE_TASK` because live is blocked.
+**Wrong：** D stops permanently · day reports `NO_VALUABLE_SAFE_TASK` or `HUMAN_GATE_BLOCKED` because live/runner implementation is treated as approval-gated.
 
 
 **Right：**
 
 
 ```text
-D Autonomous Queue（examples）:
+D Autonomous Queue（examples，scope 已授权后）:
   next validation / VR matrix task
   next evidence mapping refinement
   next fixture offline validation
+  S4 runner implementation           # NEW — 属于 scope 内自主执行，不是审批缺口
+  S5 CNINFO live execution            # NEW — 同上
 ```
 
 
-If Autonomous Queue empty and only S4/S5 live/runner remain:
+If the D component scope is **authorized**, S4/S5 implementation and live execution **belong to the Autonomous Queue** — they use `exec_status = READY|RUNNING|COMPLETED|FAILED|WAITING_RETRY`（[track stop reason v2 §2.1](controller_track_stop_reason_policy_v2.md)), not `HUMAN_GATE_BLOCKED`.
+
+
+`D stop_reason = HUMAN_GATE_BLOCKED`（now `HUMAN_DECISION_REQUIRED`）only applies when:
 
 
 ```text
-D stop_reason = HUMAN_GATE_BLOCKED
+- D's next step is push, or
+- D's next step is a truly irreversible/destructive production action, or
+- the shareholder_change scope itself has NOT yet been authorized by a human
 ```
 
 
-**not** global `NO_VALUABLE_SAFE_TASK` solely because D’s live path is blocked（other tracks may still have autonomous work）.
+**not** global `NO_VALUABLE_SAFE_TASK` solely because D's live path is blocked（other tracks may still have autonomous work）— this hard rule from track stop reason v2 §4 is unchanged.
 
 
 

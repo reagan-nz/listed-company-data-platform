@@ -150,7 +150,7 @@ Controller must record:
 2. `ahead` / `behind` vs `origin/main`  
 3. dirty inventory classed as: source · plans · evidence · runtime · bak-exception  
 4. active Controller Queue items  
-5. open live / commit / component / push approvals  
+5. open **scope authorization** state（2026-07-15：取代"live/component approvals"逐次批准概念）· open push approvals（commit 本身不需要逐次批准，见 commit autonomy v2）  
 6. per-track `current_stage` / `current_gate` / `next_allowed_task` / `blocked_actions`  
 7. worktree branch tips vs main tip  
 8. known HOLD / WAITING_APPROVAL / BLOCKED reasons  
@@ -330,10 +330,10 @@ A run with 0 track-agent dispatches while discovery could have produced safe tra
 
 
 - decide or execute push  
-- bypass WAITING_APPROVAL  
+- bypass WAITING_APPROVAL（scope-undecided / destructive / push cases only，见 2026-07-15 修订）  
 - edit `PROJECT_CONTROL.md` policy sections without Controller ownership of that task  
 - change gates / claim verified / production_ready  
-- run CNINFO unless live approval spent for that exact scope  
+- run CNINFO unless the task operates inside an **authorized mission scope**（2026-07-15 修订，取代旧的"exact live approval spent"逐次批准概念——scope 一次授权后，其内的 CNINFO/live 任务不需要逐次批准，见 [human interrupt v2 §12](controller_human_interrupt_policy_v2.md)）  
 - `git add .` / `-A`  
 - mutate protected production harvest/snapshot roots outside explicit scope  
 

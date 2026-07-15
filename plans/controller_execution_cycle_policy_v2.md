@@ -84,7 +84,7 @@ When refreshing **or after every completed task**, Controller must:
 6. Select the **highest-value safe** next target（dynamic queue — do **not** drain a fixed todo list）.  
 7. **Route** track work to owning agent（§3.2）.  
 8. Prefer offline / capability-advancing work over speculative live.  
-9. Never select missing Level-2 approval actions · never invent live READY to fill budget.  
+9. Never select tasks requiring missing scope authorization, missing destructive-action approval, or missing push approval（2026-07-15 修订，取代旧的"Level-2 approval"概念——见 [human interrupt v2 §12](controller_human_interrupt_policy_v2.md)）· never invent live READY to fill budget.  
 10. Do not prefer controller maintenance while mission/evidence targets exist after replan.  
 11. After execute/validate/commit/memory → return to step 1（[mission replanning loop v2](controller_mission_replanning_loop_v2.md)）.  
 
@@ -125,8 +125,8 @@ Controller **must**:
 Discovery/generation rules:
 
 
-1. Candidates must be **offline-safe** unless an exact live approval is already spent for that scope.  
-2. Candidates must **not** bypass HOLD live bans · snapshot block · WAITING_APPROVAL component gates.  
+1. Candidates must be **offline-safe**, unless **the task operates inside an authorized scope**（2026-07-15 修订，取代"exact live approval already spent"逐次批准概念 — 一旦 track/component 方向被授权一次，其内的 CNINFO/live 任务视为 offline-safe 同级，见 [human interrupt v2 §12](controller_human_interrupt_policy_v2.md)）.  
+2. Candidates must **not** bypass push gates · destructive-action gates · scope-undecided gates（HOLD/WAITING_APPROVAL 现仅覆盖这三类，不再覆盖已授权 scope 内的 live/component 执行）.  
 3. Candidates that pass safety are promoted to READY for this cycle’s ranking.  
 4. After a completed task, run [continuation policy v2](controller_task_continuation_policy_v2.md) before declaring the track idle.  
 5. If generation yields nothing new, run [stuck detection v2](controller_stuck_detection_policy_v2.md) — do not endlessly repeat.  

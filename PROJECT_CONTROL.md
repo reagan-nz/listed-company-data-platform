@@ -79,8 +79,8 @@ Local commit/merge may be autonomous under policy · **push remains human-gated*
 | evidence_paths | live report · effective **294** · unresolved **6** · cumulative **486** · commit `4118974` · merge `71a83c1` · prior boundary package (**39** whole-file) |
 | known_caveats | unresolved AD2E216/270/284/308/323/373 · OPTION 1 excluded mixed shared files · bulk raw_metadata 300 excluded · WT soft note: scale-200 dryrun_summary dirt outside include list · live_path post-live guard test known fail |
 | next_allowed_task | **post-integration HOLD** · no live retry · no gate upgrade · optional later offline caveat planning only with new scope |
-| blocked_actions | push · live rerun · CNINFO · `git add .` / `-A` · PDF/DB/RAG · verified · production_ready · mutate scale-200/Phase3 production roots |
-| last_verified_at | 2026-07-14 (state reconciliation · Git history) |
+| blocked_actions | push · verified / production_ready claims · `git add .` / `-A` · PDF/DB/RAG (mission-scope red line, unchanged) · destructive mutation of scale-200/Phase3 production roots · reopening the closed `4118974`/`71a83c1` package without a newly authorized scope (`scope_missing`, not an approval gap). **NOT blocked (2026-07-15 sync):** CNINFO live collection / runner implementation for the already-authorized `erad_a_scale_500_slice2` scope (Run 10 scope authorization) — autonomous under the Scope-Driven Execution Model; still subject to the existing regression-reviewer process gate for shared-runner edits to `run_cninfo_a_class_phase2_metadata_expansion.py` — that is an internal engineering-quality gate, not a human-approval gate. |
+| last_verified_at | 2026-07-14 (state reconciliation · Git history) · 2026-07-15 (blocked_actions synced to Scope-Driven Execution Model — no other fields changed) |
 
 ---
 
@@ -97,8 +97,8 @@ Local commit/merge may be autonomous under policy · **push remains human-gated*
 | evidence_paths | slice2 report CSV · merge closure · boundary package (**36** whole-file) · commit `f0bff3a` · unresolved ledger **1** (BD2E624 historical) · post-retry unresolved ledger **0** · [wave3 report](outputs/validation/cninfo_b_class_bd2e624_isolated_retry_execution_report_wave3_20260714.md) · [bd2e624 merge closure](outputs/validation/cninfo_b_class_bd2e624_merge_closure_20260714.md) · [lineage refresh](outputs/validation/cninfo_b_class_bd2e624_lineage_refresh_20260714.md) |
 | known_caveats | BD2E624 **recovered** via isolated retry side-track · slice2 主 row historical `network_error` preserved · 8 empty_response acceptable_edge · mixed shared files **excluded** from commit (OPTION 1) · bulk sidecars excluded · retry_v2 sidecars recovered via Option C where applicable · cumulative **798** proposed · **NOT verified** |
 | next_allowed_task | **post-integration HOLD** · BD2E624 merge closure **closed**（`PASS_WITH_CAVEAT`）· cumulative lineage refresh applied · **no further BD2E624 live** · no gate upgrade to bare PASS |
-| blocked_actions | push · rerun · live · gate upgrade · `git add .` · `git add -A` · PDF/DB/RAG · verified · production_ready · mutate scale-200/slice1 roots |
-| last_verified_at | 2026-07-14 (state reconciliation · Git history) |
+| blocked_actions | push · gate upgrade to bare PASS / verified / production_ready · `git add .` / `git add -A` · PDF/DB/RAG (unchanged) · mutate scale-200/slice1 production roots · reopening closed BD2E624 (closed by track decision, not by approval gate). **NOT blocked (2026-07-15 sync):** CNINFO live collection for any newly-discovered B disclosure/event capability gap — autonomous within B scope once a gap is found, no separate live-approval phrase required. Current honest state: **no such gap is currently open** (last discovery was the offline routing-benchmark expansion, `CAPABILITY_ADVANCED`, committed in Run 9) — this is `no_open_scope`, not `approval_missing`. |
+| last_verified_at | 2026-07-14 (state reconciliation · Git history) · 2026-07-15 (blocked_actions synced to Scope-Driven Execution Model — no other fields changed) |
 | prior commits | scale-200 `e738fa9` · slice1 `350cdda` · fuller slice2 `f0bff3a` — **NOT pushed** |
 
 ---
@@ -117,8 +117,8 @@ Local commit/merge may be autonomous under policy · **push remains human-gated*
 | evidence_paths | `outputs/harvest/cninfo_c_class/fuller_market_slice1_200/quality/company_harvest_status.csv` · bak `...bak_pre_offline_rebuild_20260713T100619Z` · `outputs/validation/cninfo_c_class_erad_fuller_market_slice1_qa_closure_summary.md` · caveat ledger · metrics · reconcile CSV · qa_closure_audit/ |
 | known_caveats | partial CE1E002/003/034/061/067/070/071 · empty-dividend CE1E176/188/193 · harvest ≠ snapshot · Session 2 historical resume caveat |
 | next_allowed_task | **hold** · optional later slice2 planning (separate approval) · **not** snapshot rebuild |
-| blocked_actions | live without new approval · 863/phase3/phase35 mutation · snapshot rebuild · commit/push harvest bulk without boundary · verified / production_ready / bare PASS |
-| last_verified_at | 2026-07-13 (E2E orchestration pilot) |
+| blocked_actions | push · **snapshot rebuild EXECUTE** / 863·phase3·phase35 production mutation（destructive/production-promotion action — remains human-gated under the new model: `execute_production_snapshot_rebuild = false`）· commit/push harvest bulk without boundary review · verified / production_ready / bare PASS. **NOT blocked (2026-07-15 sync):** snapshot **preparation** (status-ledger rebuild) and **validation** (QA closure) — these were never actually approval-gated (`approved_for_snapshot_rebuild = true`, preparation path only, already spent AQ-C-SNAP C-GEN-20260714-06) and remain autonomous. Do not confuse "snapshot preparation complete" with "production promotion complete" — they are separate fields (see `current_gate`). CNINFO live for a newly-scoped harvest resume (e.g. the 7 `partial` cases) would be autonomous **once explicitly scoped** — currently **not yet scoped**, so classify as `scope_missing`, not `approval_missing`. |
+| last_verified_at | 2026-07-13 (E2E orchestration pilot) · 2026-07-15 (blocked_actions synced to Scope-Driven Execution Model — no other fields changed) |
 
 ---
 
@@ -133,8 +133,8 @@ Local commit/merge may be autonomous under policy · **push remains human-gated*
 | evidence_paths | equity_pledge commit `85abad0` · shareholder_change planning package · known-event `389cd9c` |
 | known_caveats | disclosure→structured promotion **forbidden** · DLC006R/301259 separate disclosure lineage · `disclosure_schedule` `d37ce0a` **not** on current `main` (side-branch risk) · several D commits **NOT pushed** |
 | next_allowed_task | **Human approve** shareholder_change as next component (Level 2) — queue unchanged · **not executed** by this upgrade |
-| blocked_actions | live · CNINFO · targeted probe · runner without package · reopen DLC006R/301259 · claim verified · push without approval |
-| last_verified_at | 2026-07-13 |
+| blocked_actions | push · claim verified / production_ready · reopening closed DLC006R/301259 (closed-track red line, unrelated to the approval model) · destructive/production promotion actions. **NOT blocked (2026-07-15 sync):** CNINFO live collection / S4 runner implementation for `shareholder_change` — component scope was authorized (AQ-D-SC, spent Run 6; re-confirmed with exact phrase in Run 10) — autonomous under the Scope-Driven Execution Model; still subject to the existing regression-reviewer process gate for shared-runner edits to `run_cninfo_d_class_tiny_live_validation.py` (an engineering-quality gate, not a human-approval gate). "targeted probe" restriction now applies **only** where it would reopen the closed DLC006R track, not as a blanket ban. "runner without package" no longer applies — the D-08 implementation design package already exists. |
+| last_verified_at | 2026-07-13 · 2026-07-15 (blocked_actions synced to Scope-Driven Execution Model — no other fields changed) |
 
 ---
 

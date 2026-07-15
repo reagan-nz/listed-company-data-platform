@@ -93,12 +93,14 @@ A task may touch multiple classes; use the **highest** class it materially advan
 Discovery examples（must still pass safety）:
 
 
-| Track | Example safe autonomous candidates |
-|-------|--------------------------------------|
-| A | coverage expansion **analysis** · missing-scope / unresolved caveat offline packaging · attribute-gap ledger（no live） |
-| B | new disclosure/event **preparation** · deferred-case offline triage notes · extraction-gap matrix（no live） |
-| C | QA/evidence **improvement** · caveat ledger hardening · validation completeness offline（no snapshot flip） |
-| D | offline **component preparation** · approval-ready planning refresh · universe sketch（no unapproved live） |
+**2026-07-15 修订（Scope-Driven Execution Model）：** 下表原假设"live = 一律未批准"，仅列 offline 候选。现改为：**若 track/component 的 mission scope 已被授权**，implementation / live / data collection 任务与 offline 候选在同一个 Autonomous Queue 内按 §5 factors 正常竞争排名，不再单独排除。下表更新为区分"scope 未授权"与"scope 已授权"两种情况：
+
+| Track | scope 未授权时的安全候选 | scope 已授权后额外可用候选 |
+|-------|--------------------------|------------------------------|
+| A | coverage expansion **analysis** · missing-scope / unresolved caveat offline packaging · attribute-gap ledger | + runner implementation · CNINFO live execution · data refresh |
+| B | new disclosure/event **preparation** · deferred-case offline triage notes · extraction-gap matrix | + CNINFO live collection · document retrieval |
+| C | QA/evidence **improvement** · caveat ledger hardening · validation completeness offline | + snapshot/quality execution within authorized scope（**仍不含** verified/production_ready 促升，见 human interrupt v2 §12） |
+| D | offline **component preparation** · planning refresh · universe sketch | + S4 runner implementation · S5 CNINFO live execution |
 
 
 
@@ -147,8 +149,7 @@ Avoid:
 | D — shareholder/capital | shareholder coverage · ownership events · capital structure completeness |
 
 
-HOLD / WAITING_APPROVAL blocks **live / approval-gated** actions — **not** all offline discovery.  
-Known gates stay on the approval queue without global stop. Discovered offline candidates that do not bypass those gates may still be READY.
+**2026-07-15 修订：** HOLD / WAITING_APPROVAL 现在只覆盖 push、事实不可逆动作、或 scope 本身未授权的方向——**不再**覆盖已授权 scope 内的 live / implementation（those are Autonomous Queue, see task generator v2 §3.1）. Known gates（push / destructive / scope-undecided）stay on the approval queue without global stop. Discovered candidates（offline **或** scope 内 live）that do not bypass those narrowed gates may still be READY.
 
 
 
