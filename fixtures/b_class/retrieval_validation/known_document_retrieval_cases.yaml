@@ -964,6 +964,52 @@ cases:
       b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E296（quality=pass）。
       不写 verified；不下载 PDF。
 
+  # --- external_guarantee_situation_brief / 对外担保的情况简报（B-FM-40；勿落 other）---
+  - case_id: external_guarantee_situation_brief_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "600708"
+    company_name: "光明地产"
+    title_pattern: "对外担保的情况简报"
+    expected_document_type: announcement
+    date_start: "2025-06-19"
+    date_end: "2025-06-22"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-40 自 harvest 证据晋升（对外担保情况简报 routing 边角：旧逻辑落 other）：
+      光明地产 600708，光明地产关于对外担保的情况简报（announcement_id=1223951749，
+      披露日 2025-06-20）。B-FM-40 前无 general positive_patterns，落 other；硬化后
+      announcement。title_pattern 取窄串「对外担保的情况简报」（≠「对外担保管理制度」；
+      勿裸「简报」/「情况简报」）。与激励名单/销售简报/ESG 可区分。来源
+      outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
+      b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E432（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  # --- esg_report / 英文 ESG 报告（B-FM-40；对称第二边角）---
+  - case_id: esg_report_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "300661"
+    company_name: "圣邦股份"
+    title_pattern: "Corporate Governance Report"
+    expected_document_type: announcement
+    date_start: "2025-06-29"
+    date_end: "2025-07-02"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-40 自 harvest 证据晋升（英文 ESG 报告第二边角；对称对外担保情况简报）：
+      圣邦股份 300661，2024 Environmental, Social and Corporate Governance Report
+      （announcement_id=1224040090，披露日 2025-06-30）。标题无「公告」等 general
+      positive_patterns（B-FM-40 前），落 other；硬化后 announcement。
+      title_pattern 取窄串「Corporate Governance Report」（CNINFO searchKey 拒长逗号
+      英文串「Environmental, Social and Corporate Governance」返 0；勿裸「ESG」/
+      「Report」）。与激励名单/销售简报/对外担保情况简报可区分。来源
+      outputs/validation/cninfo_b_class_erad_scale_200/reports/
+      b_class_erad_scale_200_report.csv 行 BD2E166（quality=pass）。
+      不写 verified；不下载 PDF。
+
   # --- shareholder_meeting_material × 4 ---
   - case_id: shareholder_meeting_known_001
     case_status: ready

@@ -79,8 +79,8 @@ class TestInedGmWorkRulesRoutingEdge(unittest.TestCase):
         self.assertEqual(r_rules.predicted_document_type, "other")
 
     def test_remaining_low_value_edges_still_other(self) -> None:
-        """名单/简报/ESG/裸管理制度仍落 other（本包不硬推）。"""
-        for title in (BARE_ZHIDU, MINGDAN, JIANBAO, ESG):
+        """名单/销售简报/裸管理制度仍落 other（ESG 由 B-FM-40 承接）。"""
+        for title in (BARE_ZHIDU, MINGDAN, JIANBAO):
             with self.subTest(title=title):
                 r = routing.route_title(title, self.config)
                 self.assertEqual(r.predicted_document_type, "other")

@@ -1,0 +1,39 @@
+# B-FM-40 live allow-list — 仅新晋 external_guarantee_situation_brief_known_001 /
+# esg_report_known_001
+status: live_sample_scoped_B-FM-40
+verified: false
+notes: B-FM-40 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS
+cases:
+  - case_id: external_guarantee_situation_brief_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "600708"
+    company_name: "光明地产"
+    title_pattern: "对外担保的情况简报"
+    expected_document_type: announcement
+    date_start: "2025-06-19"
+    date_end: "2025-06-22"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-40 live allow-list（对外担保的情况简报）：
+      harvest BD2E432 光明地产 600708 ann=1223951749 2025-06-20。
+      title_pattern 窄串「对外担保的情况简报」（≠对外担保管理制度；勿裸「简报」）。
+      不写 verified；不下载 PDF。
+
+  - case_id: esg_report_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "300661"
+    company_name: "圣邦股份"
+    title_pattern: "Corporate Governance Report"
+    expected_document_type: announcement
+    date_start: "2025-06-29"
+    date_end: "2025-07-02"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-40 live allow-list（英文 ESG 报告）：
+      harvest BD2E166 圣邦股份 300661 ann=1224040090 2025-06-30。
+      title_pattern 窄串「Corporate Governance Report」（CNINFO 拒长逗号英文串；勿裸「ESG」）。
+      不写 verified；不下载 PDF。

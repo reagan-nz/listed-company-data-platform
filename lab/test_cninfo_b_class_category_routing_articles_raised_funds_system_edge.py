@@ -80,8 +80,8 @@ class TestArticlesRaisedFundsSystemRoutingEdge(unittest.TestCase):
         self.assertEqual(r_sys.predicted_document_type, "other")
 
     def test_remaining_low_value_edges_still_other(self) -> None:
-        """名单/简报/ESG 仍落 other（本包不硬推）。"""
-        for title in (MINGDAN, JIANBAO, ESG):
+        """激励名单/销售简报仍落 other（ESG 由 B-FM-40 承接）。"""
+        for title in (MINGDAN, JIANBAO):
             with self.subTest(title=title):
                 r = routing.route_title(title, self.config)
                 self.assertEqual(r.predicted_document_type, "other")
