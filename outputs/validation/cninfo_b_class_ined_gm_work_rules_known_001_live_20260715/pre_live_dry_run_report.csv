@@ -1,0 +1,3 @@
+case_id,case_type,case_status,source_id,title_pattern,date_start,date_end,expected_document_type,expected_route_to,dry_run_status,would_query,query_status,notes
+independent_ned_work_system_known_001,known_document,ready,cninfo_general_announcement_pdf,独立非执行董事工作制度,2025-06-26,2025-06-29,announcement,cninfo_general_announcement_pdf,ready_for_future_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called
+general_manager_work_rules_known_001,known_document,ready,cninfo_general_announcement_pdf,总经理工作细则（2025年6月修订）,2025-06-25,2025-06-28,announcement,cninfo_general_announcement_pdf,ready_for_future_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called

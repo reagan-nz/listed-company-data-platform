@@ -1,0 +1,38 @@
+# B-FM-37 live allow-list — 仅新晋 independent_ned_work_system_known_001 /
+# general_manager_work_rules_known_001
+status: live_sample_scoped_B-FM-37
+verified: false
+notes: B-FM-37 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS
+cases:
+  - case_id: independent_ned_work_system_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "688187"
+    company_name: "时代电气"
+    title_pattern: "独立非执行董事工作制度"
+    expected_document_type: announcement
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-37 live allow-list（独立非执行董事工作制度）：
+      harvest BD2E181 时代电气 688187 ann=1224017477 2025-06-27。
+      不写 verified；不下载 PDF。
+
+  - case_id: general_manager_work_rules_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "600328"
+    company_name: "中盐化工"
+    title_pattern: "总经理工作细则（2025年6月修订）"
+    expected_document_type: announcement
+    date_start: "2025-06-25"
+    date_end: "2025-06-28"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-37 live allow-list（总经理工作细则）：
+      harvest BD2E384 中盐化工 600328 ann=1223997454 2025-06-26。
+      title_pattern 取「总经理工作细则（2025年6月修订）」消歧（勿裸「工作细则」）。
+      不写 verified；不下载 PDF。

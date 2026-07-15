@@ -181,6 +181,8 @@ categories:
       - 员工持股计划  # B-FM-35：ESOP 草案/修订稿边角
       - 公司章程  # B-FM-36：窄；勿裸「章程」
       - 募集资金管理制度  # B-FM-36：窄；勿裸「管理制度」/「制度」
+      - 独立非执行董事工作制度  # B-FM-37：窄；勿裸「工作制度」/「制度」
+      - 总经理工作细则  # B-FM-37：窄；勿裸「工作细则」/「细则」
     exclusion_patterns: []
     route_to:
       source_id: cninfo_general_announcement_pdf
@@ -223,6 +225,9 @@ categories:
       B-FM-36：「公司章程」/「募集资金管理制度」旧逻辑落 other；窄 pattern 一律
       announcement（勿裸「章程」/「管理制度」/「制度」；货币资金/对外担保/分子公司
       等一般管理制度、薪酬/名单/简报/ESG 仍可 other；不扩 schema）。
+      B-FM-37：「独立非执行董事工作制度」/「总经理工作细则」旧逻辑落 other；窄
+      pattern 一律 announcement（勿裸「工作制度」/「工作细则」/「细则」；货币资金/
+      对外担保/分子公司等一般管理制度、薪酬/名单/简报/ESG 仍可 other；不扩 schema）。
 
 # 延期披露 / 摘要 / 提示性预告等：从 periodic 排除后的候选路由（非独立 source，归入 general 或 future disclosure_related）
 excluded_from_periodic_routing:
