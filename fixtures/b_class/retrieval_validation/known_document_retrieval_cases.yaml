@@ -420,7 +420,7 @@ cases:
       b_class_erad_scale_200_report.csv 行 BD2E168（quality=pass）。
       不写 verified；不下载 PDF。
 
-  # --- verification_opinion / 核查意见 × 2（B-FM-27；document_type=announcement；勿落 other）---
+  # --- verification_opinion / 核查意见 × 3（B-FM-27 known_001/002；B-FM-45 known_003；勿落 other）---
   - case_id: verification_opinion_known_001
     case_status: ready
     source_id: cninfo_general_announcement_pdf
@@ -462,6 +462,29 @@ cases:
       title_pattern 取「限售股上市流通的核查意见」。来源
       outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
       b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E466（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: verification_opinion_known_003
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "002560"
+    company_name: "通达股份"
+    title_pattern: "节余募集资金永久补充流动资金的核查意见"
+    expected_document_type: announcement
+    date_start: "2025-06-24"
+    date_end: "2025-06-27"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-45 自 harvest 证据晋升（募资结项/节余补流核查意见第三边角；对称
+      known_001 等额置换 / known_002 限售流通）：通达股份 002560，国泰海通证券
+      股份有限公司关于河南通达电缆股份有限公司募集资金投资项目结项并将节余募集
+      资金永久补充流动资金的核查意见（announcement_id=1223981802，披露日
+      2025-06-25）。路由已由 B-FM-27「核查意见」硬化为 announcement；本包不改路由。
+      title_pattern 取「节余募集资金永久补充流动资金的核查意见」（与等额置换 /
+      限售流通 / 激励对象名单核查意见互斥；勿裸「核查意见」）。来源
+      outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
+      b_class_erad_fuller_next_slice2_report.csv 行 BD2E524（quality=pass）。
       不写 verified；不下载 PDF。
 
   # --- listing_sponsor / equity_change_report × 2（B-FM-28；document_type=announcement；勿落 other）---
@@ -739,7 +762,7 @@ cases:
       b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E426（quality=pass）。
       不写 verified；不下载 PDF。
 
-  # --- independent_director_nominee_declaration / 独立董事提名人声明与承诺（B-FM-33；对称第二边角）---
+  # --- independent_director_nominee_declaration / 独立董事提名人声明与承诺（B-FM-33 known_001；B-FM-45 known_002）---
   - case_id: independent_director_nominee_declaration_known_001
     case_status: ready
     source_id: cninfo_general_announcement_pdf
@@ -760,6 +783,29 @@ cases:
       章程制度 / 薪酬方案等低价值 other 边角可区分。来源
       outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
       b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E264（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: independent_director_nominee_declaration_known_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000088"
+    company_name: "盐田港"
+    title_pattern: "独立董事提名人声明与承诺（冯天俊）"
+    expected_document_type: announcement
+    date_start: "2025-06-19"
+    date_end: "2025-06-22"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-45 自 harvest 证据晋升（独立董事提名人声明与承诺 known_002；对称
+      known_001 伟星股份张永炬）：盐田港 000088，独立董事提名人声明与承诺（冯天俊）
+      （announcement_id=1223951151，披露日 2025-06-20）。路由已由 B-FM-33
+      「独立董事提名人声明与承诺」硬化为 announcement；本包不改路由。
+      title_pattern 取「独立董事提名人声明与承诺（冯天俊）」（含提名人姓名，
+      与 known_001 张永炬互斥；勿裸「提名人声明」）。与专门会议审核意见 /
+      年报工作制度 / 核查意见可区分。来源
+      outputs/validation/cninfo_b_class_erad_scale_200/reports/
+      b_class_erad_scale_200_report.csv 行 BD2E059（quality=pass）。
       不写 verified；不下载 PDF。
 
   # --- asset_valuation_explanation / 资产评估说明（B-FM-34；勿落 other）---

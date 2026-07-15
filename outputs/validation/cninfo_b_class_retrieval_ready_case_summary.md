@@ -20,9 +20,9 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 
 | 指标 | 数值 |
 |------|------|
-| total_cases | **74** |
+| total_cases | **76** |
 | placeholder | **2** |
-| ready | **72** |
+| ready | **74** |
 | retired | **0** |
 | invalid_ready | **0** |
 | result | **PASS** |
@@ -51,6 +51,7 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 - `legal_opinion_known_006` (known_document) → `cninfo_general_announcement_pdf`
 - `verification_opinion_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `verification_opinion_known_002` (known_document) → `cninfo_general_announcement_pdf`
+- `verification_opinion_known_003` (known_document) → `cninfo_general_announcement_pdf`
 - `listing_sponsor_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `equity_change_report_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `bond_trustee_report_known_001` (known_document) → `cninfo_general_announcement_pdf`
@@ -64,6 +65,7 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 - `raised_funds_usage_report_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `independent_director_meeting_review_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `independent_director_nominee_declaration_known_001` (known_document) → `cninfo_general_announcement_pdf`
+- `independent_director_nominee_declaration_known_002` (known_document) → `cninfo_general_announcement_pdf`
 - `asset_valuation_explanation_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `audit_report_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `incentive_trading_self_inspection_known_001` (known_document) → `cninfo_general_announcement_pdf`

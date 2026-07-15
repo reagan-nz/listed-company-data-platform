@@ -1,0 +1,41 @@
+# B-FM-45 live allow-list — 仅新晋 independent_director_nominee_declaration_known_002 /
+# verification_opinion_known_003
+status: live_sample_scoped_B-FM-45
+verified: false
+notes: B-FM-45 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS including nominee/VO known_001 and B-FM-44
+cases:
+  - case_id: independent_director_nominee_declaration_known_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000088"
+    company_name: "盐田港"
+    title_pattern: "独立董事提名人声明与承诺（冯天俊）"
+    expected_document_type: announcement
+    date_start: "2025-06-19"
+    date_end: "2025-06-22"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-45 live allow-list（独立董事提名人声明与承诺 known_002）：
+      harvest BD2E059 盐田港 000088 ann=1223951151 2025-06-20。
+      title_pattern 取「独立董事提名人声明与承诺（冯天俊）」
+      （≠伟星 known_001「独立董事提名人声明与承诺（张永炬）」）。
+      不写 verified；不下载 PDF。
+
+  - case_id: verification_opinion_known_003
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "002560"
+    company_name: "通达股份"
+    title_pattern: "节余募集资金永久补充流动资金的核查意见"
+    expected_document_type: announcement
+    date_start: "2025-06-24"
+    date_end: "2025-06-27"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-45 live allow-list（核查意见 known_003 募资结项/节余补流）：
+      harvest BD2E524 通达股份 002560 ann=1223981802 2025-06-25。
+      title_pattern 取「节余募集资金永久补充流动资金的核查意见」
+      （≠等额置换 known_001 / 限售流通 known_002）。
+      不写 verified；不下载 PDF。
