@@ -1,0 +1,6 @@
+case_id,industry_code,query_mode,anchor_rdate,expected_behavior,shared_probe_key,scale_delta_vs_first_slice,evidence_cite,universe_lock_status,cninfo_this_round,notes
+DFIA101,A,default,,captured_normal_or_empty_but_valid,default,coarse_A_replaces_C26_default_filter,D-FM-13_DFIA002_sample,draft_not_locked,0,rolling default may omit A; mixed ok
+DFIA102,C,default,,captured_normal_or_empty_but_valid,default,coarse_C_default_filter,D-FM-13_DFIA002_sample,draft_not_locked,0,manufacturing largest on sample
+DFIA103,*,rdate,20260331,captured_normal,rdate_20260331,retain_proven_cross_section,D-FM-13_DFIA003_found_19,draft_not_locked,0,shared with DFIA104
+DFIA104,B,rdate,20260331,captured_normal,rdate_20260331,coarse_B_rdate_filter,D-FM-13_DFIA003_sample,draft_not_locked,0,offline F001V=B
+DFIA105,C,rdate,20251231,captured_normal_or_empty_but_valid,rdate_20251231,retire_empty_control_use_mixed_C,D-FM-18_DFIA005_found_19,draft_not_locked,0,20251231 stale empty_control retired

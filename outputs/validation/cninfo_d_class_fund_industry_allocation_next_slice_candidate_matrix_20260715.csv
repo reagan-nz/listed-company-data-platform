@@ -1,0 +1,10 @@
+option_id,option,status,cninfo_budget,risk,recommendation_rank,notes
+FIA_NEXT_SLICE_SCALE_OFFLINE,fund_industry_allocation next-slice DFIA101-105 coarse A/B/C + proven rdates offline sketch,primary_executed,0,low,1,D-FM-23; first-slice frozen; C26 not reused as sole found anchor; shared probes prefer<=3
+AT_SCALE_HARDENING_OFFLINE,abnormal_trading scale hardening offline,deferred,0,medium,2,first-slice 4/5 already closed; no new evidence gap this round
+SD_SCALE_HARDENING_OFFLINE,shareholder_data scale hardening offline,deferred,0,medium,3,first-slice 5/5 already closed; no re-live
+ESS_DEVTOOLS_PAUSE_HOLD,executive_shareholding_summary pause pending DevTools Network capture,hold_documented,0,medium,4,D-FM-22 H1/H2 404; endpoint unconfirmed; no H3/H4 blind retry
+ESS_H3_H4_BLIND_PROBE,leader/total or leader/detail guess probe,forbidden,>=1,high,excluded,explicit non-recommendation after FAIL_REVIEW_REQUIRED
+FIA_FIRST_SLICE_RELIVE,re-live DFIA001-005 or overwrite live_report,forbidden,>=3,high,excluded,layered evidence must stay; closure PASS_WITH_CAVEAT
+AT_SD_ES_LIVE_REOPEN,reopen AT/SD/ES live roots,forbidden,>=1,high,excluded,closed live roots frozen
+LEVEL2_IDLE,wait for Level-2 phrase,forbidden,0,n/a,excluded,standing_scope auth; Level-2 NOT required
+DLC006R_REOPEN,known-event DLC006R,forbidden,>=1,high,excluded,permanent non-reopen

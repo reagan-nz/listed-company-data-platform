@@ -1,0 +1,21 @@
+item_id,item,status,artifact_or_ref,notes
+FIA-NS-01,next_slice_scale_planning_md,ready,plans/cninfo_d_class_fund_industry_allocation_next_slice_scale_planning_20260715.md,primary=FIA next-slice scale; gate=READY_FOR_APPROVAL; CNINFO=0
+FIA-NS-02,candidate_matrix_csv,ready,outputs/validation/cninfo_d_class_fund_industry_allocation_next_slice_candidate_matrix_20260715.csv,rank=1 FIA scale; ESS H3/H4 excluded; AT/SD deferred
+FIA-NS-03,recommendation_md,ready,outputs/validation/cninfo_d_class_fund_industry_allocation_next_slice_recommendation_20260715.md,Level-2 phrase NOT required; NOT verified
+FIA-NS-04,planning_summary_md,ready,outputs/validation/cninfo_d_class_fund_industry_allocation_next_slice_planning_summary_20260715.md,CNINFO=0; first-slice frozen
+FIA-NS-05,universe_draft_sketch_csv,ready,outputs/validation/cninfo_d_class_fund_industry_allocation_next_slice_universe_draft_sketch_20260715.csv,DFIA101-DFIA105; draft_not_locked; coarse A/B/C
+FIA-NS-06,next_step_recommendation_md,ready,outputs/validation/cninfo_d_class_fund_industry_allocation_next_slice_next_step_recommendation_20260715.md,approval package offline next; ESS pause hold
+FIA-NS-07,scale_offline_smoke_test,ready,lab/test_cninfo_d_class_fund_industry_allocation_next_slice_scale_offline.py,sketch+matrix+freeze checks; CNINFO=0
+FIA-NS-08,dfm23_evidence_md,ready,outputs/validation/cninfo_d_class_fund_industry_allocation_dfm23_next_slice_scale_offline_20260715.md,task wall + gates + allow-list
+FIA-NS-09,dfm23_matrix_csv,ready,outputs/validation/cninfo_d_class_fund_industry_allocation_dfm23_next_slice_scale_matrix_20260715.csv,case-level scale matrix
+FIA-NS-STUB-01,next_slice_universe_lock,blocked_until_next_task,n/a,sketch only; lock in future approval package
+FIA-NS-STUB-02,next_slice_tier1_fixtures,blocked_until_next_task,n/a,cite first-slice live samples only; no new fixture root yet
+FIA-NS-STUB-03,next_slice_runner_extension,forbidden_this_round,n/a,no --fund-industry-allocation-next-slice implement
+FIA-NS-STUB-04,cninfo_live,forbidden_this_round,n/a,CNINFO=0
+FIA-NS-SAFE-01,first_slice_universe_lock_frozen,locked_policy,outputs/validation/cninfo_d_class_fund_industry_allocation_first_slice_universe_lock_20260715.csv,sha256 must remain 49345c88...; no mutate
+FIA-NS-SAFE-02,first_slice_live_root_frozen,locked_policy,outputs/validation/cninfo_d_class_fund_industry_allocation_first_slice/,no overwrite live_report/snapshots
+FIA-NS-SAFE-03,no_ess_h3_h4,locked_policy,D-FM-22 FAIL_REVIEW_REQUIRED,DevTools path only; no blind retry
+FIA-NS-SAFE-04,no_dlc006r_reopen,locked_policy,known-event closed,explicit non-reopen
+FIA-NS-SAFE-05,no_company_event_schema,locked_policy,company_code_available=false,d_industry_aggregate only
+FIA-NS-SAFE-06,no_at_sd_es_relive,locked_policy,closed live roots,D-FM-23 does not re-live AT/SD/ES/FIA first-slice
+FIA-NS-GATE-01,planning_gate,READY_FOR_APPROVAL,d_class_fund_industry_allocation_next_slice_scale_planning_gate,NOT verified; NOT production_ready; standing_scope auth
