@@ -1,8 +1,10 @@
 # CNINFO D 类 abnormal_trading First-Slice — Command Draft
 
-_生成时间：2026-07-15 · D-FM-03_
+_生成时间：2026-07-15 · D-FM-15 更新_
 
-## S4 dry-run（authorized this task · CNINFO=0）
+> **性质：** runner **已实现** · S4 dry-run **已跑** · bounded live **已执行**（D-FM-15 · CNINFO counted=5 · 4/5 PASS_WITH_CAVEAT）
+
+## S4 dry-run（CNINFO=0）
 
 ```bash
 cd listed_company_data_collector
@@ -13,10 +15,9 @@ python lab/run_cninfo_d_class_tiny_live_validation.py \
   --output-root outputs/validation/cninfo_d_class_abnormal_trading_first_slice
 ```
 
-## Live（path implemented · NOT authorized this task · controller_execution_allowed=false）
+## Live（D-FM-15 已执行 · 勿无界重跑）
 
 ```bash
-# DO NOT RUN until controller_execution_allowed
 python lab/run_cninfo_d_class_tiny_live_validation.py \
   --live \
   --abnormal-trading-first-slice \
@@ -25,4 +26,24 @@ python lab/run_cninfo_d_class_tiny_live_validation.py \
   --output-root outputs/validation/cninfo_d_class_abnormal_trading_first_slice
 ```
 
-Live path 已实现（D-FM-05）；无批准拒绝；有批准将发 CNINFO（≤5）。本任务仅 offline mock，**未**跑真实 live。
+## Request Model（locked contract）
+
+| 项 | 值 |
+|----|-----|
+| query_mode | `single_day_paged` |
+| anchor_tdate | `2026-07-03`（sdate=edate） |
+| records_path | `marketList` · 公司过滤 |
+| prefer | **5** 独立 per-case 请求 · per-case ≤1 · total ≤20 |
+| planned / live counted | **5** |
+| detail[] nested | **deferred** |
+
+## Status This Task（D-FM-15）
+
+| 项 | 状态 |
+|----|------|
+| `--abnormal-trading-first-slice` | **已实现** |
+| S4 dry-run | **PASS_OFFLINE（5/5 planned）** |
+| live path | **READY_FOR_APPROVAL** |
+| bounded live | **EXECUTED** · counted CNINFO=**5** · acceptable=**4/5** · `PASS_WITH_CAVEAT` |
+| live_gate | **NOT_APPROVED**（常量） |
+| DAT001 caveat | sparse-day `expectation_mismatch`（空行 vs captured_normal_or_needs_review） |
