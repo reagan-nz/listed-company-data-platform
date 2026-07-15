@@ -1,0 +1,37 @@
+# B-FM-27 live allow-list — 仅新晋 verification_opinion_known_001 / known_002
+# 保荐机构核查意见（募资置换 / 限售流通）；排除全部已 LIVE_PASS
+status: live_sample_scoped_B-FM-27
+generated: "2026-07-15"
+notes: B-FM-27 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS
+cases:
+  - case_id: verification_opinion_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "601360"
+    company_name: "三六零"
+    title_pattern: "募集资金等额置换的核查意见"
+    expected_document_type: announcement
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-27 live allow-list（募资置换核查意见；闭合 other 误落）：
+      三六零 601360，披露日约 2025-06-27。
+      pattern「募集资金等额置换的核查意见」。不写 verified；不下载 PDF。
+
+  - case_id: verification_opinion_known_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "601089"
+    company_name: "福元医药"
+    title_pattern: "限售股上市流通的核查意见"
+    expected_document_type: announcement
+    date_start: "2025-06-23"
+    date_end: "2025-06-26"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-27 live allow-list（限售流通核查意见边角）：
+      福元医药 601089，披露日约 2025-06-24。
+      pattern「限售股上市流通的核查意见」。不写 verified；不下载 PDF。

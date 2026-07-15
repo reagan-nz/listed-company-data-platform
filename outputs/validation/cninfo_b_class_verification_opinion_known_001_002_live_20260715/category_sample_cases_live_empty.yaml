@@ -1,0 +1,5 @@
+# B-FM-27 — 空 category-sample（仅跑 verification_opinion_known_001/002）
+version: "draft-0.1"
+status: live_sample_scoped_B-FM-27_empty_category
+generated: "2026-07-15"
+cases: []

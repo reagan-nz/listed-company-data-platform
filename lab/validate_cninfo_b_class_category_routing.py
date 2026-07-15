@@ -337,9 +337,16 @@ def _general_document_type(title: str, patterns: List[str]) -> str:
     B-FM-26：非会议类法律意见书（增持/差异化分红/可转债等）标题常无 general
     positive_patterns，旧逻辑落 other；含「决议」的会议法律意见亦会被抬成
     shareholder_meeting_material。凡含「法律意见」一律 announcement（不扩 schema）。
+
+    B-FM-27：保荐机构等「核查意见」（募资置换/限售流通等）标题常无「公告」等
+    general positive_patterns，旧逻辑落 other。凡含「核查意见」一律 announcement
+    （不扩 schema；不抬成 board_resolution / shareholder_meeting_material）。
     """
     # 法律意见书/法律意见：中介见证材料，保持 announcement（会议与非会议均适用）
     if "法律意见" in title:
+        return "announcement"
+    # 核查意见：保荐/中介核查材料，保持 announcement（勿落 other）
+    if "核查意见" in title:
         return "announcement"
     if "董事会" in title and "决议" in title:
         return "board_resolution"

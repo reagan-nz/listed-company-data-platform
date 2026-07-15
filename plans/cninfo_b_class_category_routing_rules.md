@@ -55,6 +55,7 @@ Phase 1 为 **定期报告 effective found** 定义的 exclusion 列表，在 B 
 | 摘要 / 解读 | `cninfo_general_announcement_pdf` | `announcement` / `other`（非 report 主 corpus） |
 | 董事会决议 / 股东（大）会通知·决议·召开公告（非说明会；不含法律意见书/会议材料；「股东会」=「股东大会」同义） | `cninfo_general_announcement_pdf` | `board_resolution` / `shareholder_meeting_material` |
 | 法律意见书 / 法律意见（会议与非会议：增持、差异化分红、可转债等；B-FM-26） | `cninfo_general_announcement_pdf` | `announcement`（勿落 `other`；勿抬成会议材料） |
+| 核查意见（保荐机构募资置换/限售流通等；B-FM-27） | `cninfo_general_announcement_pdf` | `announcement`（勿落 `other`） |
 
 **原则：** `retrieval_status=title_excluded` 仅表示 **未进入 periodic_report**；应尝试次级路由，并设 `classification_status=title_excluded_from_periodic_but_routed` 或 `ambiguous`。
 
