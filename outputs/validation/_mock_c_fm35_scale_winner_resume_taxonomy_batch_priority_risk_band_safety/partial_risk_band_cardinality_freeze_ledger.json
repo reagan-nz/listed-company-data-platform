@@ -1,0 +1,99 @@
+{
+  "generated_at": "2026-07-15T15:12:52Z",
+  "task_id": "C-FM-35",
+  "fingerprint_sha256": "5b634b3a7dc546b7f686ff377a74693a86531d12e967b89b679c7a1f27836953",
+  "partial_risk_bands": {
+    "p35_heavy": 75,
+    "p3_mid": 14,
+    "p2_mid": 12,
+    "fu_light": 5
+  },
+  "sample_denials": [
+    {
+      "proposed_bands": {
+        "p35_heavy": 76,
+        "p3_mid": 14,
+        "p2_mid": 12,
+        "fu_light": 5
+      },
+      "frozen_bands": {
+        "p35_heavy": 75,
+        "p3_mid": 14,
+        "p2_mid": 12,
+        "fu_light": 5
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "partial_risk_band_cardinality_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_bands": {
+        "p35_heavy": 75,
+        "p3_mid": 14,
+        "p2_mid": 12,
+        "fu_light": 4
+      },
+      "frozen_bands": {
+        "p35_heavy": 75,
+        "p3_mid": 14,
+        "p2_mid": 12,
+        "fu_light": 5
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "partial_risk_band_cardinality_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_bands": {
+        "p35_heavy": 75,
+        "p3_mid": 14,
+        "p2_mid": 12,
+        "xx_light": 5
+      },
+      "frozen_bands": {
+        "p35_heavy": 75,
+        "p3_mid": 14,
+        "p2_mid": 12,
+        "fu_light": 5
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "partial_risk_band_cardinality_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_bands": {
+        "p35_heavy": 75,
+        "p3_mid": 14,
+        "p2_mid": 12,
+        "fu_light": 5
+      },
+      "frozen_bands": {
+        "p35_heavy": 75,
+        "p3_mid": 14,
+        "p2_mid": 12,
+        "fu_light": 5
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "partial_risk_band_cardinality_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "partial_risk_band_cardinality_freeze",
+    "partial_risk_bands": {
+      "p35_heavy": 75,
+      "p3_mid": 14,
+      "p2_mid": 12,
+      "fu_light": 5
+    },
+    "band_sum": 106,
+    "deny_band_inflate": true,
+    "deny_band_deflate": true,
+    "deny_band_rekey": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "generated_at": "2026-07-15T15:12:52Z",
+  "task_id": "C-FM-35",
+  "gate": "PASS_OFFLINE",
+  "layer_gates": {
+    "fm34_continuity": "PASS_OFFLINE",
+    "winner_map_sha256_lock": "PASS_OFFLINE",
+    "resume_taxonomy_codeset_sha256_lock": "PASS_OFFLINE",
+    "batch_priority_order_freeze": "PASS_OFFLINE",
+    "partial_risk_band_cardinality_freeze": "PASS_OFFLINE",
+    "output_root_protection": "PASS_OFFLINE",
+    "frozen_mock_isolation": "PASS_OFFLINE",
+    "protected_csv_registry": "PASS_OFFLINE",
+    "fm_gate_battery": "PASS_OFFLINE",
+    "execute_hold_seal": "PASS_OFFLINE"
+  },
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "ready_for_execute": false,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+  "idle_not_required_while_awaiting": true,
+  "fail_count": 0,
+  "matrix_rows": 153,
+  "scale_tier_count": 7,
+  "company_coverage_sum": 3314,
+  "harvest_unique_union": 2249,
+  "harvest_additive": 2261,
+  "overlap_delta": 12,
+  "surface_unique": 2251,
+  "combined_dryrun_coverage": 1053,
+  "union_complete": 2134,
+  "union_partial": 106,
+  "union_failed": 9,
+  "resume_total": 29,
+  "resume_improved": 28,
+  "resume_same": 1,
+  "resume_worse": 0,
+  "surface_harvest_delta_n": 2,
+  "dry863_extras": [
+    "000037",
+    "000055"
+  ],
+  "failed_codes": [
+    "002140",
+    "300055",
+    "300069",
+    "300074",
+    "300540",
+    "300552",
+    "301195",
+    "603885",
+    "605060"
+  ],
+  "resume_same_codes": [
+    "301212"
+  ],
+  "partial_risk_bands": {
+    "p35_heavy": 75,
+    "p3_mid": 14,
+    "p2_mid": 12,
+    "fu_light": 5
+  },
+  "residual_safety_coverage": 117,
+  "complete_codes_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431",
+  "partial_codes_sha256": "5d5da7030f91e60893627d7fcf208b79f4f09e3edc5c4255fb797c1706672d73",
+  "failed_codes_sha256": "fb74a9df6bbecf75a7c2b354491a80c4b294c3c1cd392ec429bd8d16b74a14f6",
+  "winner_map_sha256": "ff2c6a28b361498b0dbf163ad1d1779041e1dd4e772b652e6382e1d4051fbb07",
+  "improved_codes_sha256": "8be1b0a704f205387c024d05b3d592d4cc64c6b3b9556546f6e65614001d54e8",
+  "same_codes_sha256": "2896da9453ebb1a999cf3074dc4753d776587b6a385ab9d5a5ed0fe9942bf5d6",
+  "worse_codes_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "batch_priority": [
+    "h863",
+    "p35",
+    "p3",
+    "p2",
+    "fu"
+  ],
+  "output_root": "outputs/validation/_mock_c_fm35_cli_test_tmp",
+  "matrix_path": "outputs/validation/_mock_c_fm35_cli_test_tmp/scale_matrix.csv",
+  "fingerprint_path": "outputs/validation/_mock_c_fm35_cli_test_tmp/scale_fingerprint.json",
+  "fingerprint": {
+    "row_count": 153,
+    "ok_count": 153,
+    "fail_count": 0,
+    "layers": {
+      "fm34_continuity": 8,
+      "winner_map_sha256_lock": 5,
+      "resume_taxonomy_codeset_sha256_lock": 5,
+      "batch_priority_order_freeze": 5,
+      "partial_risk_band_cardinality_freeze": 5,
+      "protected_write_guard": 5,
+      "output_root_protection": 7,
+      "frozen_mock_isolation": 37,
+      "protected_csv_registry": 40,
+      "fm_gate_battery": 29,
+      "execute_hold_seal": 7
+    },
+    "fingerprint_sha256": "26ce2e54ac95de65bc3bfa7f2688e966f2eb6b5dd97e5c8b6aa80817bbeee648"
+  },
+  "winner_map_path": "outputs/validation/_mock_c_fm35_cli_test_tmp/winner_map_sha256_lock_ledger.json",
+  "resume_taxonomy_path": "outputs/validation/_mock_c_fm35_cli_test_tmp/resume_taxonomy_codeset_sha256_lock_ledger.json",
+  "batch_priority_path": "outputs/validation/_mock_c_fm35_cli_test_tmp/batch_priority_order_freeze_ledger.json",
+  "partial_risk_band_path": "outputs/validation/_mock_c_fm35_cli_test_tmp/partial_risk_band_cardinality_freeze_ledger.json",
+  "battery_path": "outputs/validation/_mock_c_fm35_cli_test_tmp/fm_gate_battery.json",
+  "packet_path": "outputs/validation/_mock_c_fm35_cli_test_tmp/scale_packet.json",
+  "observed_fps": {
+    "winner_map_sha256_lock": "56d85b2152b814d18b9b6ab510a583b635e57a6da72ed750cdcc4d0ad4759377",
+    "resume_taxonomy_codeset_sha256_lock": "3a0acb3b796dff56415539b60dd8a765ca752a180e29f8808d3abd516fe95591",
+    "batch_priority_order_freeze": "83abddccc8e699ac3c8e7bc9d5fb0ea7ec139c53f596b39ae8957b5350a0c566",
+    "partial_risk_band_cardinality_freeze": "5b634b3a7dc546b7f686ff377a74693a86531d12e967b89b679c7a1f27836953"
+  },
+  "inputs": {
+    "fm34_packet": "outputs/validation/_mock_c_fm34_scale_surface_delta_combined_dryrun_cross_identity_partition_codeset_safety/scale_packet.json",
+    "fm34_gate": "outputs/validation/cninfo_c_class_scale_surface_delta_combined_dryrun_cross_identity_partition_codeset_safety_20260715.json"
+  },
+  "mock_root_is_isolated": true,
+  "seal_chain_extended": false
+}

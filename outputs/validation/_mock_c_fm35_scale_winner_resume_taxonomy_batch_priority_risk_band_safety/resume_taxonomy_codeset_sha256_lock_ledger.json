@@ -1,0 +1,60 @@
+{
+  "generated_at": "2026-07-15T15:12:52Z",
+  "task_id": "C-FM-35",
+  "fingerprint_sha256": "3a0acb3b796dff56415539b60dd8a765ca752a180e29f8808d3abd516fe95591",
+  "improved_codes_sha256": "8be1b0a704f205387c024d05b3d592d4cc64c6b3b9556546f6e65614001d54e8",
+  "same_codes_sha256": "2896da9453ebb1a999cf3074dc4753d776587b6a385ab9d5a5ed0fe9942bf5d6",
+  "worse_codes_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "sample_denials": [
+    {
+      "bucket": "improved",
+      "proposed_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "frozen_sha256": "8be1b0a704f205387c024d05b3d592d4cc64c6b3b9556546f6e65614001d54e8",
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_taxonomy_codeset_sha256_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "bucket": "same",
+      "proposed_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "frozen_sha256": "2896da9453ebb1a999cf3074dc4753d776587b6a385ab9d5a5ed0fe9942bf5d6",
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_taxonomy_codeset_sha256_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "bucket": "worse",
+      "proposed_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "frozen_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_taxonomy_codeset_sha256_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "bucket": "same",
+      "proposed_sha256": "2896da9453ebb1a999cf3074dc4753d776587b6a385ab9d5a5ed0fe9942bf5d6",
+      "frozen_sha256": "2896da9453ebb1a999cf3074dc4753d776587b6a385ab9d5a5ed0fe9942bf5d6",
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "resume_taxonomy_codeset_sha256_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "resume_taxonomy_codeset_sha256_lock",
+    "resume_improved": 28,
+    "resume_same": 1,
+    "resume_worse": 0,
+    "improved_codes_sha256": "8be1b0a704f205387c024d05b3d592d4cc64c6b3b9556546f6e65614001d54e8",
+    "same_codes_sha256": "2896da9453ebb1a999cf3074dc4753d776587b6a385ab9d5a5ed0fe9942bf5d6",
+    "worse_codes_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "deny_improved_codeset_mutation": true,
+    "deny_same_codeset_mutation": true,
+    "deny_worse_codeset_mutation": true,
+    "deny_taxonomy_cardinality_mutation": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

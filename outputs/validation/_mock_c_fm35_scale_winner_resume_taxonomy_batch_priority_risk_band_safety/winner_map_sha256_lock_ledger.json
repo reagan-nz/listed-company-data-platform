@@ -1,0 +1,30 @@
+{
+  "generated_at": "2026-07-15T15:12:52Z",
+  "task_id": "C-FM-35",
+  "fingerprint_sha256": "56d85b2152b814d18b9b6ab510a583b635e57a6da72ed750cdcc4d0ad4759377",
+  "winner_map_sha256": "ff2c6a28b361498b0dbf163ad1d1779041e1dd4e772b652e6382e1d4051fbb07",
+  "sample_denials": [
+    {
+      "proposed_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "frozen_sha256": "ff2c6a28b361498b0dbf163ad1d1779041e1dd4e772b652e6382e1d4051fbb07",
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "winner_map_sha256_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_sha256": "ff2c6a28b361498b0dbf163ad1d1779041e1dd4e772b652e6382e1d4051fbb07",
+      "frozen_sha256": "ff2c6a28b361498b0dbf163ad1d1779041e1dd4e772b652e6382e1d4051fbb07",
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "winner_map_sha256_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "winner_map_sha256_lock",
+    "winner_map_sha256": "ff2c6a28b361498b0dbf163ad1d1779041e1dd4e772b652e6382e1d4051fbb07",
+    "deny_winner_map_mutation": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

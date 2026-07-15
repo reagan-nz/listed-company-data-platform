@@ -1,0 +1,112 @@
+{
+  "generated_at": "2026-07-15T15:12:52Z",
+  "task_id": "C-FM-35",
+  "fingerprint_sha256": "83abddccc8e699ac3c8e7bc9d5fb0ea7ec139c53f596b39ae8957b5350a0c566",
+  "batch_priority": [
+    "h863",
+    "p35",
+    "p3",
+    "p2",
+    "fu"
+  ],
+  "sample_denials": [
+    {
+      "action": "reorder",
+      "proposed_priority": [
+        "p35",
+        "h863",
+        "p3",
+        "p2",
+        "fu"
+      ],
+      "frozen_priority": [
+        "h863",
+        "p35",
+        "p3",
+        "p2",
+        "fu"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "batch_priority_order_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "inject",
+      "proposed_priority": [
+        "h863",
+        "p35",
+        "p3",
+        "p2",
+        "fu",
+        "xx"
+      ],
+      "frozen_priority": [
+        "h863",
+        "p35",
+        "p3",
+        "p2",
+        "fu"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "batch_priority_order_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "drop",
+      "proposed_priority": [
+        "h863",
+        "p35",
+        "p3",
+        "p2"
+      ],
+      "frozen_priority": [
+        "h863",
+        "p35",
+        "p3",
+        "p2",
+        "fu"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "batch_priority_order_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "replace",
+      "proposed_priority": [
+        "h863",
+        "p35",
+        "p3",
+        "p2",
+        "fu"
+      ],
+      "frozen_priority": [
+        "h863",
+        "p35",
+        "p3",
+        "p2",
+        "fu"
+      ],
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "batch_priority_order_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "batch_priority_order_freeze",
+    "batch_priority": [
+      "h863",
+      "p35",
+      "p3",
+      "p2",
+      "fu"
+    ],
+    "deny_reorder": true,
+    "deny_inject": true,
+    "deny_drop": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
