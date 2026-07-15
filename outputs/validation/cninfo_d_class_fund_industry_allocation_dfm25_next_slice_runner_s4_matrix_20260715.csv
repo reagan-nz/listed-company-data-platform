@@ -1,0 +1,15 @@
+metric,value,notes
+task_id,D-FM-25,FIA next-slice runner + S4 dry-run
+cninfo_calls,0,offline only
+planned_ok,5/5,DFIA101-DFIA105
+planned_shared_probes,3,default;rdate_20260331;rdate_20251231
+runner_extension_gate,READY_FOR_APPROVAL,--fund-industry-allocation-next-slice implemented
+s4_dryrun_gate,PASS_OFFLINE,CNINFO=0
+live_path_gate,READY_FOR_APPROVAL,execute path exists; mock-tested
+live_gate,NOT_APPROVED,no approve; no live executed
+approval_gate,STANDING_SCOPE_AUTHORIZED,from D-FM-24
+fixture_vr_gate,PASS_OFFLINE,from D-FM-24
+first_slice_roots_mutated,no,FIA/ES/AT/SD frozen
+ess_h3_h4,forbidden,not touched
+level2_idle,forbidden,not executed
+ready_for_commit,true,controller commit-boundary

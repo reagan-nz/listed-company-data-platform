@@ -1,0 +1,31 @@
+{
+  "case_id": "DFIA105",
+  "probe_key": "fia_ns_rdate_20251231_C",
+  "industry_code": "C",
+  "industry_name": "制造业",
+  "component": "fund_industry_allocation",
+  "query_mode": "rdate",
+  "anchor_rdate": "20251231",
+  "shared_probe_key": "rdate_20251231",
+  "planned_requests": [
+    "default",
+    "rdate_20260331",
+    "rdate_20251231"
+  ],
+  "query_params": {
+    "rdate": "20251231"
+  },
+  "endpoint": "https://www.cninfo.com.cn/data20/fund/industry",
+  "records_path": "data.records",
+  "shared_request": true,
+  "industry_filter_offline": true,
+  "industry_filter_mode": "coarse_A_B_C_or_star",
+  "filter_industry_code": "C",
+  "expected_logical_table": "d_industry_aggregate",
+  "expected_behavior": "captured_normal_or_empty_but_valid",
+  "fixture_refs": [
+    "fixtures/d_class/fund_industry_allocation_next_slice/DFIA105_found.json",
+    "fixtures/d_class/fund_industry_allocation_next_slice/DFIA105_empty_but_valid_synthetic.json"
+  ],
+  "cninfo_called": false
+}
