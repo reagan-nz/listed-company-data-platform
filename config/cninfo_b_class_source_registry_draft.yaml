@@ -82,6 +82,8 @@ phase1_report_title_exclusions_shared:
   - 预告公告
   - 说明会
   - 交流会
+  - 集体接待日
+  - 投资者开放日
   - 问询函
   - 回复公告
   - 关于披露
@@ -343,6 +345,10 @@ sources:
         - 交流会
         - 股东大会通知
         - 董事会会议通知
+      investor_relations_activity:
+        - 投资者关系活动记录表
+        - 集体接待日
+        - 投资者开放日
     title_exclusion_patterns: []
     period_required: false
     company_required: true
@@ -374,4 +380,4 @@ sources:
     notes: >-
       Meeting / IR activity corpus. Phase 1 periodic exclusions for 说明会/业绩说明会 are
       POSITIVE here. Not a substitute for periodic reports. query_endpoint null until
-      Phase2 probe. deferred_phase2=true.
+      Phase2 probe. deferred_phase2=true. B-FM-04 同步集体接待日/投资者开放日 IR 边角。

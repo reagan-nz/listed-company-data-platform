@@ -270,7 +270,15 @@ def _excluded_false_positive_reason(
 
 
 def _meeting_document_type(title: str) -> str:
+    """区分 meeting_notice（说明会等）与 investor_relations_activity（IR 活动记录/接待）。
+
+    harvest 中「投资者网上集体接待日」「投资者开放日」常无「说明会」后缀，旧规则
+    会落入 general_announcement；与「…集体接待日暨…业绩说明会」并存时仍以说明会
+    为主记 meeting_notice（BD2E088）。
+    """
     if "投资者关系活动记录表" in title:
+        return "investor_relations_activity"
+    if ("集体接待日" in title or "投资者开放日" in title) and "说明会" not in title:
         return "investor_relations_activity"
     return "meeting_notice"
 

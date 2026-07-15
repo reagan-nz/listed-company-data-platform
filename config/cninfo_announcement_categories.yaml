@@ -61,6 +61,8 @@ categories:
       - 关于披露
       - 解读
       - 交流会
+      - 集体接待日
+      - 投资者开放日
       - 监管问询函
       # unrelated_announcement（validation_design §7 其他无关公告）
       - 补充公告
@@ -118,6 +120,8 @@ categories:
       - 投资者说明会
       - 投资者关系活动记录表
       - 交流会
+      - 集体接待日
+      - 投资者开放日
       - 股东大会通知
       - 董事会会议通知
     exclusion_patterns: []
@@ -128,6 +132,8 @@ categories:
     registry_status: candidate
     notes: >-
       IR / meeting corpus. Not a substitute for periodic reports. Not yet validated.
+      B-FM-04：集体接待日 / 投资者开放日 为 harvest 已见 IR 边角（无说明会后缀时
+      document_type=investor_relations_activity）。
 
   general_announcement:
     category_name_cn: 普通公告 PDF
