@@ -1,0 +1,41 @@
+# B-FM-49 live allow-list — 仅新晋 company_articles_known_004 /
+# employee_stock_ownership_plan_known_003
+status: live_sample_scoped_B-FM-49
+verified: false
+notes: B-FM-49 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS including articles known_001–003 and ESOP known_001/002 and B-FM-48
+cases:
+  - case_id: company_articles_known_004
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "301577"
+    company_name: "美信科技"
+    title_pattern: "关于修订《公司章程》的公告"
+    expected_document_type: announcement
+    date_start: "2025-06-18"
+    date_end: "2025-06-21"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-49 live allow-list（公司章程修订公告 known_004）：
+      harvest BD2E736 美信科技 301577 ann=1224673306 2025-06-19。
+      title_pattern 取「关于修订《公司章程》的公告」
+      （≠章程正文修订串 / 短标题 / 工商变更修订标题）。
+      不写 verified；不下载 PDF。
+
+  - case_id: employee_stock_ownership_plan_known_003
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "603203"
+    company_name: "快克智能"
+    title_pattern: "员工持股计划购买价格"
+    expected_document_type: announcement
+    date_start: "2025-06-23"
+    date_end: "2025-06-26"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-49 live allow-list（员工持股计划购买价格调整 known_003）：
+      harvest BD2E800 快克智能 603203 ann=1223972100 2025-06-24。
+      title_pattern 取「员工持股计划购买价格」
+      （≠草案修订稿 / 持有人会议决议）。
+      不写 verified；不下载 PDF。

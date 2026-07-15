@@ -20,9 +20,9 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 
 | 指标 | 数值 |
 |------|------|
-| total_cases | **82** |
+| total_cases | **84** |
 | placeholder | **2** |
-| ready | **80** |
+| ready | **82** |
 | retired | **0** |
 | invalid_ready | **0** |
 | result | **PASS** |
@@ -75,9 +75,11 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 - `incentive_trading_self_inspection_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `employee_stock_ownership_plan_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `employee_stock_ownership_plan_known_002` (known_document) → `cninfo_general_announcement_pdf`
+- `employee_stock_ownership_plan_known_003` (known_document) → `cninfo_general_announcement_pdf`
 - `company_articles_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `company_articles_known_002` (known_document) → `cninfo_general_announcement_pdf`
 - `company_articles_known_003` (known_document) → `cninfo_general_announcement_pdf`
+- `company_articles_known_004` (known_document) → `cninfo_general_announcement_pdf`
 - `raised_funds_management_system_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `independent_ned_work_system_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `general_manager_work_rules_known_001` (known_document) → `cninfo_general_announcement_pdf`
