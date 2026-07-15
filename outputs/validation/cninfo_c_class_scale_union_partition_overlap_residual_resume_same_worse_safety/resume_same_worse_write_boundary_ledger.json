@@ -1,0 +1,54 @@
+{
+  "generated_at": "2026-07-15T14:53:12Z",
+  "task_id": "C-FM-33",
+  "fingerprint_sha256": "c2623992e1e63b1b8789a43c47aaf6bcabae5de6ecd1662a09e588e5b40c9908",
+  "resume_same": 1,
+  "resume_worse": 0,
+  "same_codes_sha256": "2896da9453ebb1a999cf3074dc4753d776587b6a385ab9d5a5ed0fe9942bf5d6",
+  "sample_denials": [
+    {
+      "code": "301212",
+      "action": "force_improve",
+      "bucket": "same",
+      "allowed": false,
+      "reason": "resume_same_write_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "301212",
+      "action": "status_reclass",
+      "bucket": "same",
+      "allowed": false,
+      "reason": "resume_same_write_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "301212",
+      "action": "bucket_reclass",
+      "bucket": "same",
+      "allowed": false,
+      "reason": "resume_same_write_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "inject_worse",
+      "bucket": "worse",
+      "frozen_resume_worse": 0,
+      "allowed": false,
+      "reason": "resume_worse_inject_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "resume_same_worse_write_boundary",
+    "resume_same": 1,
+    "resume_worse": 0,
+    "same_codes": [
+      "301212"
+    ],
+    "deny_same_force_improve": true,
+    "deny_same_reclass": true,
+    "deny_worse_inject": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

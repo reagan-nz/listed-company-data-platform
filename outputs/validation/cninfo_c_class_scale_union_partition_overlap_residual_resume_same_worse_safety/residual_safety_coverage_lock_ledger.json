@@ -1,0 +1,30 @@
+{
+  "generated_at": "2026-07-15T14:53:12Z",
+  "task_id": "C-FM-33",
+  "fingerprint_sha256": "56a5b3978d7cd9e96710b012af416125c14cf301aa3b9ed81d4e52ce0c46ecf9",
+  "residual_safety_coverage": 117,
+  "sample_denials": [
+    {
+      "proposed_residual_safety_coverage": 116,
+      "frozen_residual_safety_coverage": 117,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "residual_safety_coverage_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_residual_safety_coverage": 117,
+      "frozen_residual_safety_coverage": 117,
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "residual_safety_coverage_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "residual_safety_coverage_lock",
+    "residual_safety_coverage": 117,
+    "mutation_allowed": false,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

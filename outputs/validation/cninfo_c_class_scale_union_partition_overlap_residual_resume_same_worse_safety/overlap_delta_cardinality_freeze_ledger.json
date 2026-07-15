@@ -1,0 +1,32 @@
+{
+  "generated_at": "2026-07-15T14:53:12Z",
+  "task_id": "C-FM-33",
+  "fingerprint_sha256": "bb2fec2da48551d74b22c3a68a971793331bb88cff5937e8d1c4dbe0f9af30c7",
+  "overlap_delta": 12,
+  "sample_denials": [
+    {
+      "proposed_overlap_delta": 13,
+      "frozen_overlap_delta": 12,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "overlap_delta_cardinality_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_overlap_delta": 12,
+      "frozen_overlap_delta": 12,
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "overlap_delta_cardinality_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "overlap_delta_cardinality_freeze",
+    "overlap_delta": 12,
+    "deny_overlap_inflate": true,
+    "deny_overlap_deflate": true,
+    "deny_cardinality_mutation": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

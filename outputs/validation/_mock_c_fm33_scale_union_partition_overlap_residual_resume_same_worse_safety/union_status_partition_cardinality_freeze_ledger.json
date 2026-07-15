@@ -1,0 +1,52 @@
+{
+  "generated_at": "2026-07-15T14:53:12Z",
+  "task_id": "C-FM-33",
+  "fingerprint_sha256": "2c0bbb7b1704dd8246eb37db6f617458e7de71d6ca89592e0c21aa4cff56cf34",
+  "union_complete": 2134,
+  "union_partial": 106,
+  "union_failed": 9,
+  "sample_denials": [
+    {
+      "proposed": {
+        "union_complete": 2133,
+        "union_partial": 107,
+        "union_failed": 9
+      },
+      "frozen": {
+        "union_complete": 2134,
+        "union_partial": 106,
+        "union_failed": 9
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "union_status_partition_cardinality_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "union_complete": 2134,
+        "union_partial": 106,
+        "union_failed": 9
+      },
+      "frozen": {
+        "union_complete": 2134,
+        "union_partial": 106,
+        "union_failed": 9
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "union_status_partition_cardinality_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "union_status_partition_cardinality_freeze",
+    "union_complete": 2134,
+    "union_partial": 106,
+    "union_failed": 9,
+    "partition_sum": 2249,
+    "deny_partition_mutation": true,
+    "deny_status_rebalance": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
