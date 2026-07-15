@@ -1,0 +1,6 @@
+case_id,company_code,anchor_tdate,query_mode,expected_behavior,dryrun_status,cninfo_call_planned,shared_probe_key,fixture_refs,cninfo_called,live_found_path_DEP101_105,notes
+DEP101,000001,2026-07-02,tdate_daily,captured_normal_or_empty_but_valid,planned_ok,shared,tdate_daily_2026-07-02,DEP101_found.json;DEP101_empty.json,false,NOT_PROVEN,S4 offline planned; denser-day cite
+DEP102,000895,2026-07-02,tdate_daily,captured_normal_or_empty_but_valid,planned_ok,shared,tdate_daily_2026-07-02,DEP102_found.json;DEP102_empty.json,false,NOT_PROVEN,S4 offline planned
+DEP103,600000,2026-07-02,tdate_daily,captured_normal_or_empty_but_valid,planned_ok,shared,tdate_daily_2026-07-02,DEP103_found.json;DEP103_empty.json,false,NOT_PROVEN,S4 offline planned
+DEP104,002415,2026-07-02,tdate_daily,captured_normal_or_empty_but_valid,planned_ok,shared,tdate_daily_2026-07-02,DEP104_found.json;DEP104_empty.json,false,NOT_PROVEN,S4 offline planned
+DEP105,601988,2026-07-02,tdate_daily,empty_but_valid,planned_ok,shared,tdate_daily_2026-07-02,DEP105_empty_but_valid_synthetic.json,false,NOT_PROVEN,empty control retained

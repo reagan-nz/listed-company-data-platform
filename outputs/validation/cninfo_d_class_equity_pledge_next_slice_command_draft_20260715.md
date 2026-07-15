@@ -1,12 +1,12 @@
 # CNINFO D 类 equity_pledge Next-Slice — Command Draft
 
-_生成时间：2026-07-15 · D-FM-42_
+_生成时间：2026-07-15 · D-FM-43_
 
-> **性质：** runner **未实现** · S4 dry-run **未跑** · live **未授权** · **CNINFO = 0** · **不是 verified**
+> **性质：** runner **已接线** · S4 dry-run **已跑（offline）** · live **未授权** · **CNINFO = 0** · **不是 verified**
 >
-> **勿执行** 下列命令，直至另批 runner 实现 +（live 时）explicit approve + `controller_execution_allowed`。
+> Live 命令 **勿执行**，直至 explicit approve + `controller_execution_allowed`。
 
-## S4 dry-run（draft only · 未实现 · 禁止本回合执行）
+## S4 dry-run（已实现 · 本任务已执行 · CNINFO=0）
 
 ```bash
 cd listed_company_data_collector
@@ -17,9 +17,7 @@ python lab/run_cninfo_d_class_tiny_live_validation.py \
   --output-root outputs/validation/cninfo_d_class_equity_pledge_next_slice
 ```
 
-> **D-FM-42：** `--equity-pledge-next-slice` **尚未接线**。上列为未来形状草案。
-
-## Live（draft only · 路径未接线 · 禁止本回合）
+## Live（路径已接线 · 门禁未开 · 禁止本回合）
 
 ```bash
 python lab/run_cninfo_d_class_tiny_live_validation.py \
@@ -32,7 +30,7 @@ python lab/run_cninfo_d_class_tiny_live_validation.py \
 
 > **禁止** 无另批执行。`live_gate=NOT_APPROVED`。prefer shared CNINFO=1（同日截面 · 离线按 SECCODE 过滤 DEP101–105）。
 
-## Request Model（locked contract · offline）
+## Request Model（locked contract）
 
 | 项 | 值 |
 |----|-----|
@@ -45,16 +43,16 @@ python lab/run_cninfo_d_class_tiny_live_validation.py \
 | schema | `d_company_event` |
 | forbidden anchor | **2026-07-03** 作 sole found |
 
-## Status This Task（D-FM-42）
+## Status This Task（D-FM-43）
 
 | 项 | 状态 |
 |----|------|
-| `--equity-pledge-next-slice` | **未实现** |
-| `--approve-d-class-equity-pledge-next-slice` | **未实现 / 未授权 live** |
-| S4 dry-run | **blocked_until_runner** |
+| `--equity-pledge-next-slice` | **已实现** |
+| `--approve-d-class-equity-pledge-next-slice` | **已接线 / 未授权 live** |
+| S4 dry-run | **PASS_OFFLINE**（5/5 planned_ok · shared=1） |
 | approval_gate | **STANDING_SCOPE_AUTHORIZED** |
 | fixture_vr_gate | **PASS_OFFLINE** |
-| runner_gate | **NOT_APPROVED** |
+| runner_extension_gate | **READY_FOR_APPROVAL** |
 | live_gate | **NOT_APPROVED** |
 | CNINFO this task | **0** |
 | EP first-slice live root | **frozen · 未 mutate** |
