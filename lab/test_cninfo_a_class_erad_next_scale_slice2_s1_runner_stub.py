@@ -1,10 +1,11 @@
 """
-A-class Era D next-scale slice2 S1 +100 runner 桩测试（A-GEN-20260714-12）。
+A-class Era D next-scale slice2 S1 +100 runner 设计/冻结证据冒烟测试（A-GEN-20260714-12）。
 
 引用 A-11 runner design：
   outputs/validation/cninfo_a_class_erad_next_scale_slice2_s1_runner_design_20260714.md
 
-本文件仅校验设计常量/冻结路径/阻塞态；不实现 runner、不调用 CNINFO、不 mutate universe CSV。
+完整 runner 行为见 lab/test_cninfo_a_class_erad_next_scale_slice2_runner.py。
+本文件保留设计常量/冻结 universe 只读校验，并与已实现 runner 符号对齐。
 
 运行：
     python lab/test_cninfo_a_class_erad_next_scale_slice2_s1_runner_stub.py
@@ -35,7 +36,8 @@ RUNNER = os.path.join(_LAB_DIR, "run_cninfo_a_class_phase2_metadata_expansion.py
 
 TASK_ID = "A-GEN-20260714-12"
 DESIGN_TASK_ID = "A-GEN-20260714-11"
-RUNNER_EXTENSION_GATE = "DESIGN_ONLY"
+# runner 已实现 dry-run；gate 与实现态对齐（仍非 live / 非 verified）
+RUNNER_EXTENSION_GATE = "READY_FOR_APPROVAL"
 
 FLAG_ERAD_SLICE2 = "--erad-a-scale-500-slice2"
 FLAG_APPROVE_SLICE2 = "--approve-a-class-erad-scale-500-slice2"
@@ -294,37 +296,32 @@ class TestSlice2S1FrozenUniverseReadOnly(unittest.TestCase):
         self.assertEqual(len(hits), 0, msg=f"ST 命中: {[r['company_code'] for r in hits]}")
 
 
-class TestSlice2S1RunnerBlockedImplementation(unittest.TestCase):
-    """runner 尚未实现 slice2 · 阻塞态显式断言。"""
+class TestSlice2S1RunnerImplementedSmoke(unittest.TestCase):
+    """runner 已实现 slice2 · 与设计常量 / 符号对齐的冒烟断言。"""
 
-    def test_runner_extension_gate_is_design_only(self) -> None:
-        self.assertEqual(RUNNER_EXTENSION_GATE, "DESIGN_ONLY")
+    def test_runner_extension_gate_ready_for_approval(self) -> None:
+        self.assertEqual(RUNNER_EXTENSION_GATE, "READY_FOR_APPROVAL")
+        self.assertEqual(runner.ERAD_NEXT_SCALE_SLICE2_RUNNER_GATE, "READY_FOR_APPROVAL")
 
-    def test_slice2_flag_not_registered_in_argparse(self) -> None:
-        result = _run([FLAG_ERAD_SLICE2, "--dry-run"])
-        self.assertNotEqual(result.returncode, 0)
-        self.assertIn("unrecognized arguments", result.stderr)
-        self.assertIn(FLAG_ERAD_SLICE2, result.stderr)
-
-    def test_approve_slice2_flag_not_registered(self) -> None:
-        result = _run([FLAG_APPROVE_SLICE2, "--dry-run"])
-        self.assertNotEqual(result.returncode, 0)
-        self.assertIn("unrecognized arguments", result.stderr)
-
-    def test_dry_run_subprocess_cninfo_zero_by_non_execution(self) -> None:
+    def test_slice2_flag_registered_and_dry_run_ok(self) -> None:
         with mock.patch("requests.get") as get_mock, mock.patch("requests.post") as post_mock:
             result = _run(SLICE2_BASE_ARGS + ["--dry-run"])
             get_mock.assert_not_called()
             post_mock.assert_not_called()
-        self.assertNotEqual(result.returncode, 0, msg="slice2 模式未实现 · 须拒绝执行")
+        self.assertEqual(result.returncode, 0, msg=result.stderr + result.stdout)
+        self.assertIn("planned_ok=100", result.stdout)
+        self.assertIn("cninfo_calls=0", result.stdout)
 
-    def test_planned_runner_symbols_absent(self) -> None:
+    def test_approve_slice2_flag_registered(self) -> None:
+        # 无 --live 时 approve 可出现；live 无 approve 须拒绝
+        result = _run(SLICE2_BASE_ARGS + ["--live"])
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(ERAD_NEXT_SCALE_SLICE2_APPROVAL_REQUIRED, result.stderr)
+        self.assertNotIn("unrecognized arguments", result.stderr)
+
+    def test_planned_runner_symbols_present(self) -> None:
         missing = [name for name in PLANNED_RUNNER_SYMBOLS if not hasattr(runner, name)]
-        self.assertEqual(
-            missing,
-            PLANNED_RUNNER_SYMBOLS,
-            msg=f"以下符号尚未在 runner 中实现（预期阻塞）: {missing}",
-        )
+        self.assertEqual(missing, [], msg=f"以下符号尚未在 runner 中实现: {missing}")
 
     def test_write_blocked_roots_documented(self) -> None:
         for root in WRITE_BLOCKED_ROOTS:
@@ -337,7 +334,7 @@ class TestSlice2S1RunnerBlockedImplementation(unittest.TestCase):
 
 
 class TestSlice2S1RunnerStubDocumentation(unittest.TestCase):
-    """文档化未来实现须覆盖的 flag / session 形状。"""
+    """文档化 flag / session 形状与测试文件落地状态。"""
 
     def test_incompatible_flags_documented(self) -> None:
         self.assertIn("--erad-a-scale-500-slice1", INCOMPATIBLE_FLAGS)
@@ -350,21 +347,16 @@ class TestSlice2S1RunnerStubDocumentation(unittest.TestCase):
         self.assertEqual(len(session2), 50)
         self.assertEqual(session1 | session2, ALLOWED_ERAD_NEXT_SCALE_SLICE2_CASE_IDS)
 
-    def test_future_test_files_documented(self) -> None:
-        future_runner_test = os.path.join(
+    def test_runner_test_file_exists_live_path_optional(self) -> None:
+        runner_test = os.path.join(
             _LAB_DIR, "test_cninfo_a_class_erad_next_scale_slice2_runner.py"
         )
-        future_live_test = os.path.join(
+        live_test = os.path.join(
             _LAB_DIR, "test_cninfo_a_class_erad_next_scale_slice2_live_path.py"
         )
-        self.assertFalse(
-            os.path.isfile(future_runner_test),
-            msg="完整 runner 测试尚未创建（阻塞 · 符合预期）",
-        )
-        self.assertFalse(
-            os.path.isfile(future_live_test),
-            msg="live path 测试尚未创建（阻塞 · 符合预期）",
-        )
+        self.assertTrue(os.path.isfile(runner_test), msg="完整 runner 测试须已创建")
+        # live path 专项测试可为后续任务；本包以 approval-gated live 实现为准
+        _ = live_test
 
 
 if __name__ == "__main__":

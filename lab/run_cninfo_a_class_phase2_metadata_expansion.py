@@ -126,6 +126,51 @@ ERAD_NEXT_SCALE_SLICE1_B_SLICE1_UNIVERSE = os.path.join(
     "validation",
     "cninfo_b_class_erad_next_scale_candidate_universe_draft.csv",
 )
+DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_UNIVERSE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_erad_next_scale_slice2_s1_plus100_candidate_universe_20260714.csv",
+)
+DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_OUTPUT_ROOT = os.path.join(
+    BASE_DIR, "outputs", "validation", "cninfo_a_class_erad_next_scale_slice2_s1"
+)
+ERAD_NEXT_SCALE_SLICE2_SCALE200_EFFECTIVE_LEDGER = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_erad_scale_200_effective_accepted_ledger.csv",
+)
+ERAD_NEXT_SCALE_SLICE2_SLICE1_EFFECTIVE_LEDGER = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_erad_next_scale_slice1_effective_accepted_ledger.csv",
+)
+ERAD_NEXT_SCALE_SLICE2_AB_182_LEDGER = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_slice2_ab_overlap_182_ledger_20260714.csv",
+)
+ERAD_NEXT_SCALE_SLICE2_B_SCALE200_UNIVERSE = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_b_class_erad_scale_200_universe_draft.csv",
+)
+ERAD_NEXT_SCALE_SLICE2_B_SLICE1_UNIVERSE = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_b_class_erad_next_scale_slice1_effective_accepted_ledger.csv",
+)
+ERAD_NEXT_SCALE_SLICE2_B_SLICE2_UNIVERSE = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_b_class_erad_fuller_next_slice_candidate_universe_draft.csv",
+)
 DEFAULT_A3M017_RETRY_OUTPUT_ROOT = os.path.join(
     BASE_DIR, "outputs", "validation", "cninfo_a_class_phase3_a3m017_isolated_retry"
 )
@@ -648,6 +693,78 @@ ERAD_SLICE1_LIVE_QUALITY_COLUMNS = LIVE_QUALITY_COLUMNS + [
     "prior_in_scale_200",
 ]
 
+REQUIRED_ERAD_NEXT_SCALE_SLICE2_UNIVERSE_SIZE = 100
+ERAD_NEXT_SCALE_SLICE2_PLANNED_REQUESTS_PER_CASE = 2
+ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP = 240
+ERAD_NEXT_SCALE_SLICE2_RUNNER_GATE = "READY_FOR_APPROVAL"
+ERAD_NEXT_SCALE_SLICE2_COHORT = "next_scale_slice2"
+ALLOWED_ERAD_NEXT_SCALE_SLICE2_CASE_IDS: Set[str] = {
+    f"AD2E{i:03d}" for i in range(501, 601)
+}
+ERAD_NEXT_SCALE_SLICE2_UNIVERSE_CSV_REQUIRED = "erad_a_scale_500_slice2_universe_csv_required"
+ERAD_NEXT_SCALE_SLICE2_OUTPUT_ROOT_VIOLATION = (
+    "output_root_must_be_under_cninfo_a_class_erad_next_scale_slice2_s1"
+)
+ERAD_NEXT_SCALE_SLICE2_UNIVERSE_SIZE_VIOLATION = (
+    "erad_a_next_scale_slice2_universe_size_must_equal_100"
+)
+ERAD_NEXT_SCALE_SLICE2_APPROVAL_REQUIRED = "approve_a_class_erad_scale_500_slice2_required"
+ERAD_NEXT_SCALE_SLICE2_WRONG_APPROVAL = "approve_a_class_erad_scale_500_slice2_wrong_flag"
+ERAD_NEXT_SCALE_SLICE2_INCOMPATIBLE_WITH_OTHER_MODES = (
+    "erad_a_scale_500_slice2_incompatible_with_other_modes"
+)
+ERAD_SLICE2_CASE_ID_NOT_ALLOWED = "erad_a_slice2_case_id_not_allowed"
+ERAD_SLICE2_PRIOR_CASE_FORBIDDEN = "erad_a_slice2_prior_ad2e001_500_case_forbidden"
+ERAD_SLICE2_INCLUDE_REQUIRED = "erad_include_must_be_yes"
+ERAD_SLICE2_COHORT_INVALID = "erad_a_slice2_cohort_must_be_next_scale_slice2"
+ERAD_SLICE2_PRIOR_SCALE_200_INVALID = "erad_a_slice2_prior_in_scale_200_must_be_no"
+ERAD_SLICE2_OVERLAP_A_ALL = "erad_a_slice2_overlap_l_a1_a_all_u"
+ERAD_SLICE2_OVERLAP_A_CUM_EFF = "erad_a_slice2_overlap_l_a2_a_cum_eff"
+ERAD_SLICE2_OVERLAP_A_S200 = "erad_a_slice2_overlap_l_a3_a_s200_u"
+ERAD_SLICE2_OVERLAP_A_S1 = "erad_a_slice2_overlap_l_a4_a_s1_u"
+ERAD_SLICE2_OVERLAP_B_CUM = "erad_a_slice2_overlap_l_b1_b_cum"
+ERAD_SLICE2_OVERLAP_B_S200 = "erad_a_slice2_overlap_l_b2_b_s200_u"
+ERAD_SLICE2_OVERLAP_B_S1 = "erad_a_slice2_overlap_l_b3_b_s1_u"
+ERAD_SLICE2_OVERLAP_B_S2 = "erad_a_slice2_overlap_l_b4_b_s2_u"
+ERAD_SLICE2_OVERLAP_AB_182 = "erad_a_slice2_overlap_ab_182"
+ERAD_SLICE2_ST_NAME_HIT = "erad_a_slice2_ld4_st_name_hit"
+ERAD_SLICE2_REQUEST_CAP_EXCEEDED = "erad_a_next_scale_slice2_request_cap_exceeded"
+ERAD_SLICE2_CASE_RANGE_INVALID = "erad_a_slice2_case_range_invalid"
+ERAD_SLICE2_SCALE_200_ROOT_WRITE_FORBIDDEN = "erad_a_slice2_scale_200_root_write_forbidden"
+ERAD_SLICE2_FAILED_RETRY_ROOT_WRITE_FORBIDDEN = (
+    "erad_a_slice2_failed_retry_root_write_forbidden"
+)
+ERAD_SLICE2_SLICE1_ROOT_WRITE_FORBIDDEN = "erad_a_slice2_slice1_root_write_forbidden"
+ERAD_SLICE2_ACCEPTABLE_THRESHOLD = 90
+ERAD_SLICE2_EXECUTION_GATE_PASS = "PASS_WITH_CAVEAT"
+ERAD_NEXT_SCALE_SLICE2_LIVE_PATH_GATE = "READY_FOR_APPROVAL"
+ERAD_NEXT_SCALE_SLICE2_S1_MOCK_TEST_PARENT = os.path.join(
+    DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_OUTPUT_ROOT, "_mock_test"
+)
+ERAD_NEXT_SCALE_SLICE2_S1_MOCK_LIVE_TEST_PARENT = os.path.join(
+    DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_OUTPUT_ROOT, "_mock_live_test"
+)
+ERAD_NEXT_SCALE_SLICE2_INCLUDE_REASON = (
+    "next_scale_slice2_s1_st_exclude;zero_prior_overlap;metadata_only_no_pdf"
+)
+ERAD_SLICE2_ST_NAME_PATTERN = re.compile(r"(?:\*?ST|S\*ST)")
+ERAD_NEXT_SCALE_SLICE2_DRYRUN_COLUMNS = [
+    "case_id", "company_code", "company_name", "market", "report_type", "expected_period",
+    "cohort", "prior_in_scale_200", "erad_include", "planned_source", "planned_endpoint",
+    "planned_output_root", "pdf_download", "pdf_parse", "ocr", "extraction", "db_write",
+    "minio_write", "rag_run", "cninfo_call_planned", "planned_request_count_case",
+    "dryrun_status", "notes",
+]
+ERAD_SLICE2_LIVE_REPORT_COLUMNS = LIVE_REPORT_COLUMNS + [
+    "cohort",
+    "prior_in_scale_200",
+    "lineage_evidence_mode",
+]
+ERAD_SLICE2_LIVE_QUALITY_COLUMNS = LIVE_QUALITY_COLUMNS + [
+    "cohort",
+    "prior_in_scale_200",
+]
+
 RETRY_DRYRUN_COLUMNS = [
     "case_id",
     "company_code",
@@ -872,6 +989,22 @@ class EraDScale200UniverseCase:
 
 @dataclass
 class EraDNextScaleSlice1UniverseCase:
+    case_id: str
+    company_code: str
+    company_name: str
+    market: str
+    report_type: str
+    expected_period: str
+    expected_title_keywords: str
+    excluded_title_keywords: str
+    cohort: str
+    prior_in_scale_200: str
+    include_reason: str
+    erad_include: str
+
+
+@dataclass
+class EraDNextScaleSlice2UniverseCase:
     case_id: str
     company_code: str
     company_name: str
@@ -3553,6 +3686,7 @@ def enforce_erad_scale_200_approval_gate(args: argparse.Namespace) -> None:
         (getattr(args, "approve_a_class_phase3_50_company_expansion", False), ERAD_SCALE_200_WRONG_APPROVAL),
         (getattr(args, "approve_a_class_phase3_a3m017_isolated_retry", False), ERAD_SCALE_200_WRONG_APPROVAL),
         (getattr(args, "approve_a_class_erad_scale_500_slice1", False), ERAD_SCALE_200_WRONG_APPROVAL),
+        (getattr(args, "approve_a_class_erad_scale_500_slice2", False), ERAD_SCALE_200_WRONG_APPROVAL),
         (args.approve_a_class_tiny_live_metadata, ERAD_SCALE_200_WRONG_APPROVAL),
         (args.approve_phase1_tiny_live_metadata, ERAD_SCALE_200_WRONG_APPROVAL),
     )
@@ -4069,6 +4203,7 @@ def enforce_erad_failed_retry_approval_gate(args: argparse.Namespace) -> None:
         (getattr(args, "approve_a_class_phase3_a3m017_isolated_retry", False), ERAD_FAILED_RETRY_WRONG_APPROVAL),
         (getattr(args, "approve_a_class_erad_scale_200", False), ERAD_FAILED_RETRY_WRONG_APPROVAL),
         (getattr(args, "approve_a_class_erad_scale_500_slice1", False), ERAD_FAILED_RETRY_WRONG_APPROVAL),
+        (getattr(args, "approve_a_class_erad_scale_500_slice2", False), ERAD_FAILED_RETRY_WRONG_APPROVAL),
         (args.approve_a_class_tiny_live_metadata, ERAD_FAILED_RETRY_WRONG_APPROVAL),
         (args.approve_phase1_tiny_live_metadata, ERAD_FAILED_RETRY_WRONG_APPROVAL),
     )
@@ -4691,6 +4826,7 @@ def enforce_erad_next_scale_slice1_approval_gate(args: argparse.Namespace) -> No
         (getattr(args, "approve_a_class_phase3_a3m017_isolated_retry", False), ERAD_NEXT_SCALE_SLICE1_WRONG_APPROVAL),
         (getattr(args, "approve_a_class_erad_scale_200", False), ERAD_NEXT_SCALE_SLICE1_WRONG_APPROVAL),
         (getattr(args, "approve_a_class_erad_scale_200_failed_retry", False), ERAD_NEXT_SCALE_SLICE1_WRONG_APPROVAL),
+        (getattr(args, "approve_a_class_erad_scale_500_slice2", False), ERAD_NEXT_SCALE_SLICE1_WRONG_APPROVAL),
         (args.approve_a_class_tiny_live_metadata, ERAD_NEXT_SCALE_SLICE1_WRONG_APPROVAL),
         (args.approve_phase1_tiny_live_metadata, ERAD_NEXT_SCALE_SLICE1_WRONG_APPROVAL),
     )
@@ -5197,6 +5333,760 @@ def write_erad_next_scale_slice1_live_summary(
     return summary_path
 
 
+
+def _erad_a_slice2_case_number(case_id: str) -> int:
+    return int(case_id.replace("AD2E", ""))
+
+
+def _derive_a_slice2_report_fields(case_num: int) -> Tuple[str, str, str, str]:
+    """按 case 序号推导 report_type / period / title keywords（case_num 501–600 · mod-10 同 slice1）。"""
+    idx = case_num - 501
+    slot = idx % 10
+    if slot < 7:
+        return (
+            "annual_report",
+            "2024-12-31",
+            "年度报告",
+            "半年度报告|一季度报告|三季度报告|英文|English",
+        )
+    if slot == 7:
+        return (
+            "semi_annual_report",
+            "2024-06-30",
+            "半年度报告",
+            "年度报告|一季度报告|三季度报告|英文|English",
+        )
+    if slot == 8:
+        return (
+            "quarterly_report_q1",
+            "2024-03-31",
+            "一季度报告",
+            "年度报告|半年度报告|三季度报告|英文|English",
+        )
+    return (
+        "quarterly_report_q3",
+        "2024-09-30",
+        "三季度报告",
+        "年度报告|半年度报告|一季度报告|英文|English",
+    )
+
+
+def load_erad_next_scale_slice2_universe(path: str) -> List[EraDNextScaleSlice2UniverseCase]:
+    """加载 slice2 S1 +100 冻结 universe（4 列 CSV）；派生运行字段，不 mutate 源文件。"""
+    cases: List[EraDNextScaleSlice2UniverseCase] = []
+    with open(path, newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            case_id = str(row.get("case_id", "")).strip()
+            company_code = str(row.get("company_code", "")).strip()
+            company_name = str(row.get("company_name", "")).strip()
+            cohort = str(row.get("cohort", "")).strip()
+            case_num = (
+                _erad_a_slice2_case_number(case_id)
+                if ERAD_SCALE_200_CASE_ID_PATTERN.match(case_id)
+                else 0
+            )
+            report_type, expected_period, title_kw, excluded_kw = _derive_a_slice2_report_fields(
+                case_num
+            )
+            cases.append(
+                EraDNextScaleSlice2UniverseCase(
+                    case_id=case_id,
+                    company_code=company_code,
+                    company_name=company_name,
+                    market=_market_label_from_code(company_code),
+                    report_type=report_type,
+                    expected_period=expected_period,
+                    expected_title_keywords=title_kw,
+                    excluded_title_keywords=excluded_kw,
+                    cohort=cohort,
+                    prior_in_scale_200="no",
+                    include_reason=ERAD_NEXT_SCALE_SLICE2_INCLUDE_REASON,
+                    erad_include="yes",
+                )
+            )
+    return cases
+
+
+def slice2_to_phase2_case(case: EraDNextScaleSlice2UniverseCase) -> Phase2UniverseCase:
+    return Phase2UniverseCase(
+        case_id=case.case_id,
+        company_code=case.company_code,
+        company_name=case.company_name,
+        market=case.market,
+        report_type=case.report_type,
+        expected_period=case.expected_period,
+        expected_title_keywords=case.expected_title_keywords,
+        excluded_title_keywords=case.excluded_title_keywords,
+        risk_level="medium",
+        phase1_overlap="no",
+        phase2_include="yes",
+        reason=case.include_reason,
+    )
+
+
+def validate_erad_next_scale_slice2_case(case: EraDNextScaleSlice2UniverseCase) -> List[str]:
+    issues: List[str] = []
+    if case.case_id not in ALLOWED_ERAD_NEXT_SCALE_SLICE2_CASE_IDS:
+        issues.append(f"{ERAD_SLICE2_CASE_ID_NOT_ALLOWED}:{case.case_id}")
+    case_num = (
+        _erad_a_slice2_case_number(case.case_id)
+        if ERAD_SCALE_200_CASE_ID_PATTERN.match(case.case_id)
+        else 0
+    )
+    if case_num and case_num <= 500:
+        issues.append(f"{ERAD_SLICE2_PRIOR_CASE_FORBIDDEN}:{case.case_id}")
+    if case.erad_include != "yes":
+        issues.append(ERAD_SLICE2_INCLUDE_REQUIRED)
+    if case.cohort != ERAD_NEXT_SCALE_SLICE2_COHORT:
+        issues.append(ERAD_SLICE2_COHORT_INVALID)
+    if case.prior_in_scale_200 != "no":
+        issues.append(ERAD_SLICE2_PRIOR_SCALE_200_INVALID)
+    if not case.company_code:
+        issues.append("company_code_missing")
+    if not case.company_name:
+        issues.append("company_name_missing")
+    if case.report_type not in tiny_live.VALID_REPORT_TYPES:
+        issues.append(f"invalid_report_type:{case.report_type}")
+    if not case.expected_period:
+        issues.append("expected_period_missing")
+    if ERAD_SLICE2_ST_NAME_PATTERN.search(case.company_name or ""):
+        issues.append(f"{ERAD_SLICE2_ST_NAME_HIT}:{case.company_code}")
+    issues.extend(validate_universe_code_name(slice2_to_phase2_case(case)))
+    return issues
+
+
+def validate_erad_next_scale_slice2_universe_size(
+    cases: List[EraDNextScaleSlice2UniverseCase],
+) -> Tuple[bool, str]:
+    included = [c for c in cases if c.erad_include == "yes"]
+    if len(included) != REQUIRED_ERAD_NEXT_SCALE_SLICE2_UNIVERSE_SIZE:
+        return (
+            False,
+            f"{ERAD_NEXT_SCALE_SLICE2_UNIVERSE_SIZE_VIOLATION}: got {len(included)} "
+            f"expected {REQUIRED_ERAD_NEXT_SCALE_SLICE2_UNIVERSE_SIZE}",
+        )
+    case_ids = {c.case_id for c in included}
+    if case_ids != ALLOWED_ERAD_NEXT_SCALE_SLICE2_CASE_IDS:
+        return False, f"{ERAD_SLICE2_CASE_ID_NOT_ALLOWED}: unexpected case set"
+    return True, ""
+
+
+def validate_erad_next_scale_slice2_duplicate_codes(
+    cases: List[EraDNextScaleSlice2UniverseCase],
+) -> List[str]:
+    issues: List[str] = []
+    seen: Dict[str, str] = {}
+    for case in cases:
+        if case.erad_include != "yes":
+            continue
+        if case.company_code in seen:
+            issues.append(f"{case.case_id}:{DUPLICATE_COMPANY_CODE_REJECTED}")
+        else:
+            seen[case.company_code] = case.case_id
+    return issues
+
+
+def lint_erad_next_scale_slice2_overlap(
+    cases: List[EraDNextScaleSlice2UniverseCase],
+) -> List[str]:
+    """离线 overlap lint：A/B cumulative · AB_182 · L-D4 ST。"""
+    issues: List[str] = []
+    slice2_codes = {c.company_code for c in cases if c.erad_include == "yes"}
+    a_s200 = _load_company_codes_from_csv(DEFAULT_ERAD_SCALE_200_UNIVERSE_CSV, "company_code")
+    a_s1 = _load_company_codes_from_csv(DEFAULT_ERAD_NEXT_SCALE_SLICE1_UNIVERSE_CSV, "company_code")
+    a_all = a_s200 | a_s1
+    a_cum_eff = _load_company_codes_from_csv(
+        ERAD_NEXT_SCALE_SLICE2_SCALE200_EFFECTIVE_LEDGER, "company_code"
+    ) | _load_company_codes_from_csv(
+        ERAD_NEXT_SCALE_SLICE2_SLICE1_EFFECTIVE_LEDGER, "company_code"
+    )
+    b_s200 = _load_company_codes_from_csv(
+        ERAD_NEXT_SCALE_SLICE2_B_SCALE200_UNIVERSE, "company_code"
+    )
+    b_s1 = _load_company_codes_from_csv(
+        ERAD_NEXT_SCALE_SLICE2_B_SLICE1_UNIVERSE, "company_code"
+    )
+    b_s2 = _load_company_codes_from_csv(
+        ERAD_NEXT_SCALE_SLICE2_B_SLICE2_UNIVERSE, "company_code"
+    )
+    b_cum = b_s200 | b_s1 | b_s2
+    ab_182 = _load_company_codes_from_csv(ERAD_NEXT_SCALE_SLICE2_AB_182_LEDGER, "company_code")
+
+    checks = (
+        (a_all, ERAD_SLICE2_OVERLAP_A_ALL),
+        (a_cum_eff, ERAD_SLICE2_OVERLAP_A_CUM_EFF),
+        (a_s200, ERAD_SLICE2_OVERLAP_A_S200),
+        (a_s1, ERAD_SLICE2_OVERLAP_A_S1),
+        (b_cum, ERAD_SLICE2_OVERLAP_B_CUM),
+        (b_s200, ERAD_SLICE2_OVERLAP_B_S200),
+        (b_s1, ERAD_SLICE2_OVERLAP_B_S1),
+        (b_s2, ERAD_SLICE2_OVERLAP_B_S2),
+        (ab_182, ERAD_SLICE2_OVERLAP_AB_182),
+    )
+    for ref_codes, err_code in checks:
+        overlap = slice2_codes & ref_codes
+        if overlap:
+            issues.append(f"{err_code}:count={len(overlap)}")
+
+    st_hits = [
+        c.company_code
+        for c in cases
+        if c.erad_include == "yes" and ERAD_SLICE2_ST_NAME_PATTERN.search(c.company_name or "")
+    ]
+    if st_hits:
+        issues.append(f"{ERAD_SLICE2_ST_NAME_HIT}:count={len(st_hits)}")
+    return issues
+
+
+def validate_erad_next_scale_slice2_universe_csv_path(universe_csv: str) -> Tuple[bool, str]:
+    expected = os.path.normpath(os.path.abspath(DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_UNIVERSE_CSV))
+    actual = os.path.normpath(os.path.abspath(universe_csv))
+    if actual != expected:
+        return False, ERAD_NEXT_SCALE_SLICE2_UNIVERSE_CSV_REQUIRED
+    return True, ""
+
+
+def validate_erad_next_scale_slice2_output_root(output_root: str) -> Tuple[bool, str]:
+    """Era D A-class next-scale slice2 输出仅允许 slice2 S1 隔离根。"""
+    root = _normalize_output_root(output_root)
+    allowed = _normalize_output_root(DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_OUTPUT_ROOT)
+    blocked = (
+        (PHASE1_OUTPUT_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
+        (DEFAULT_OUTPUT_ROOT, PHASE2_EXPANSION_WRITE_FORBIDDEN),
+        (DEFAULT_RETRY_OUTPUT_ROOT, RETRY_V1_WRITE_FORBIDDEN),
+        (DEFAULT_RETRY_V2_OUTPUT_ROOT, RETRY_V2_WRITE_FORBIDDEN),
+        (DEFAULT_RETRY_V3_OUTPUT_ROOT, RETRY_V3_OUTPUT_ROOT_VIOLATION),
+        (PRECHECK_OUTPUT_ROOT, PRECHECK_WRITE_FORBIDDEN),
+        (DEFAULT_PHASE3_OUTPUT_ROOT, PHASE3_OUTPUT_ROOT_VIOLATION),
+        (DEFAULT_A3M017_RETRY_OUTPUT_ROOT, "a3m017_isolated_retry_output_root_forbidden"),
+        (DEFAULT_ERAD_SCALE_200_OUTPUT_ROOT, ERAD_SLICE2_SCALE_200_ROOT_WRITE_FORBIDDEN),
+        (
+            DEFAULT_ERAD_FAILED_RETRY_OUTPUT_ROOT,
+            ERAD_SLICE2_FAILED_RETRY_ROOT_WRITE_FORBIDDEN,
+        ),
+        (DEFAULT_ERAD_NEXT_SCALE_SLICE1_OUTPUT_ROOT, ERAD_SLICE2_SLICE1_ROOT_WRITE_FORBIDDEN),
+        (C_CLASS_HARVEST_ROOT, "c_class_harvest_output_root_forbidden"),
+        (B_CLASS_VALIDATION_PREFIX, "b_class_validation_output_root_forbidden"),
+        (C_CLASS_VALIDATION_PREFIX, "c_class_validation_output_root_forbidden"),
+        (D_CLASS_VALIDATION_PREFIX, "d_class_validation_output_root_forbidden"),
+    )
+    for path, err in blocked:
+        p = _normalize_output_root(path)
+        if root == p or root.startswith(p + os.sep):
+            return False, err
+    if root == allowed or root.startswith(allowed + os.sep):
+        return True, ""
+    return False, ERAD_NEXT_SCALE_SLICE2_OUTPUT_ROOT_VIOLATION
+
+
+def enforce_erad_next_scale_slice2_approval_gate(args: argparse.Namespace) -> None:
+    wrong = (
+        (args.approve_a_class_phase2_metadata_expansion, ERAD_NEXT_SCALE_SLICE2_WRONG_APPROVAL),
+        (args.approve_a_class_phase2_failed_retry, ERAD_NEXT_SCALE_SLICE2_WRONG_APPROVAL),
+        (args.approve_a_class_phase2_network_recovery_retry_v2, ERAD_NEXT_SCALE_SLICE2_WRONG_APPROVAL),
+        (args.approve_a_class_phase2_retry_v3, ERAD_NEXT_SCALE_SLICE2_WRONG_APPROVAL),
+        (getattr(args, "approve_a_class_phase3_50_company_expansion", False), ERAD_NEXT_SCALE_SLICE2_WRONG_APPROVAL),
+        (getattr(args, "approve_a_class_phase3_a3m017_isolated_retry", False), ERAD_NEXT_SCALE_SLICE2_WRONG_APPROVAL),
+        (getattr(args, "approve_a_class_erad_scale_200", False), ERAD_NEXT_SCALE_SLICE2_WRONG_APPROVAL),
+        (getattr(args, "approve_a_class_erad_scale_200_failed_retry", False), ERAD_NEXT_SCALE_SLICE2_WRONG_APPROVAL),
+        (getattr(args, "approve_a_class_erad_scale_500_slice1", False), ERAD_NEXT_SCALE_SLICE2_WRONG_APPROVAL),
+        (args.approve_a_class_tiny_live_metadata, ERAD_NEXT_SCALE_SLICE2_WRONG_APPROVAL),
+        (args.approve_phase1_tiny_live_metadata, ERAD_NEXT_SCALE_SLICE2_WRONG_APPROVAL),
+    )
+    for enabled, code in wrong:
+        if enabled:
+            print(f"ERROR: {code}", file=sys.stderr)
+            sys.exit(2)
+    if args.mode == "live" and not getattr(args, "approve_a_class_erad_scale_500_slice2", False):
+        print(f"ERROR: {ERAD_NEXT_SCALE_SLICE2_APPROVAL_REQUIRED}", file=sys.stderr)
+        sys.exit(2)
+
+
+def enforce_erad_next_scale_slice2_request_cap(total_planned: int) -> Tuple[bool, str]:
+    if total_planned > ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP:
+        return (
+            False,
+            f"{ERAD_SLICE2_REQUEST_CAP_EXCEEDED}:{total_planned}>{ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP}",
+        )
+    return True, ""
+
+
+def parse_erad_a_slice2_case_range(case_range: str) -> Tuple[str, str]:
+    parts = case_range.split(":")
+    if len(parts) != 2:
+        raise ValueError(ERAD_SLICE2_CASE_RANGE_INVALID)
+    start_id = parts[0].strip()
+    end_id = parts[1].strip()
+    if start_id not in ALLOWED_ERAD_NEXT_SCALE_SLICE2_CASE_IDS:
+        raise ValueError(f"{ERAD_SLICE2_CASE_RANGE_INVALID}:start={start_id}")
+    if end_id not in ALLOWED_ERAD_NEXT_SCALE_SLICE2_CASE_IDS:
+        raise ValueError(f"{ERAD_SLICE2_CASE_RANGE_INVALID}:end={end_id}")
+    if _erad_a_slice2_case_number(start_id) > _erad_a_slice2_case_number(end_id):
+        raise ValueError(f"{ERAD_SLICE2_CASE_RANGE_INVALID}:order")
+    return start_id, end_id
+
+
+def filter_erad_a_next_scale_slice2_cases_by_range(
+    cases: List[EraDNextScaleSlice2UniverseCase],
+    case_range: Optional[str],
+) -> List[EraDNextScaleSlice2UniverseCase]:
+    if not case_range:
+        return cases
+    start_id, end_id = parse_erad_a_slice2_case_range(case_range)
+    start_num = _erad_a_slice2_case_number(start_id)
+    end_num = _erad_a_slice2_case_number(end_id)
+    return [
+        c
+        for c in cases
+        if start_num <= _erad_a_slice2_case_number(c.case_id) <= end_num
+    ]
+
+
+def build_erad_next_scale_slice2_dryrun_row(
+    case: EraDNextScaleSlice2UniverseCase,
+    issues: List[str],
+    output_root: str,
+) -> Dict[str, str]:
+    source_id = REPORT_TYPE_SOURCE_ID.get(case.report_type, "unknown_source")
+    status = "planned_ok" if not issues else "universe_invalid"
+    notes = (
+        f"erad-a-scale-500-slice2 dry-run; CNINFO not called; metadata only; "
+        f"matching_logic={MATCHING_LOGIC_VERSION}; "
+        f"planned_requests={ERAD_NEXT_SCALE_SLICE2_PLANNED_REQUESTS_PER_CASE}; "
+        f"ad2e001_500_lineage_reference_only=yes; slice1_production_root_write=no"
+        if not issues
+        else "; ".join(issues)
+    )
+    return {
+        "case_id": case.case_id,
+        "company_code": case.company_code,
+        "company_name": case.company_name,
+        "market": case.market,
+        "report_type": case.report_type,
+        "expected_period": case.expected_period,
+        "cohort": case.cohort,
+        "prior_in_scale_200": case.prior_in_scale_200,
+        "erad_include": case.erad_include,
+        "planned_source": source_id,
+        "planned_endpoint": planned_endpoints_for_case(slice2_to_phase2_case(case)),
+        "planned_output_root": output_root,
+        "pdf_download": "0",
+        "pdf_parse": "0",
+        "ocr": "0",
+        "extraction": "0",
+        "db_write": "0",
+        "minio_write": "0",
+        "rag_run": "0",
+        "cninfo_call_planned": "0",
+        "planned_request_count_case": str(ERAD_NEXT_SCALE_SLICE2_PLANNED_REQUESTS_PER_CASE),
+        "dryrun_status": status,
+        "notes": notes,
+    }
+
+
+def process_erad_next_scale_slice2_dry_run(
+    cases: List[EraDNextScaleSlice2UniverseCase],
+    output_root: str,
+) -> Tuple[List[Dict[str, str]], List[str]]:
+    rows: List[Dict[str, str]] = []
+    universe_issues: List[str] = list(validate_erad_next_scale_slice2_duplicate_codes(cases))
+    universe_issues.extend(lint_erad_next_scale_slice2_overlap(cases))
+    for case in cases:
+        if case.erad_include != "yes":
+            continue
+        issues = validate_erad_next_scale_slice2_case(case)
+        if issues:
+            universe_issues.append(f"{case.case_id}:{';'.join(issues)}")
+        rows.append(build_erad_next_scale_slice2_dryrun_row(case, issues, output_root))
+    return rows, universe_issues
+
+
+def write_erad_next_scale_slice2_dryrun_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "a_class_erad_next_scale_slice2_s1_dryrun_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=ERAD_NEXT_SCALE_SLICE2_DRYRUN_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def compute_erad_next_scale_slice2_runner_gate(
+    universe_issues: List[str],
+    case_count: int,
+    total_planned: int,
+) -> str:
+    if universe_issues or case_count != REQUIRED_ERAD_NEXT_SCALE_SLICE2_UNIVERSE_SIZE:
+        return "FAIL"
+    ok_cap, _ = enforce_erad_next_scale_slice2_request_cap(total_planned)
+    if not ok_cap:
+        return "FAIL"
+    return ERAD_NEXT_SCALE_SLICE2_RUNNER_GATE
+
+
+def write_erad_next_scale_slice2_dryrun_summary(
+    rows: List[Dict[str, str]],
+    output_paths: Dict[str, str],
+    universe_issues: List[str],
+    gate: str,
+    total_planned: int,
+) -> str:
+    planned_ok = sum(1 for row in rows if row["dryrun_status"] == "planned_ok")
+    total = len(rows)
+    lines = [
+        "# CNINFO A 类 Era D Next-Scale Slice2 S1 — Dry-run 摘要",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** Era D A-class next-scale slice2 S1 dry-run · **无 CNINFO** · **无 live** · **无 PDF**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        "| mode | erad_a_scale_500_slice2_dry_run |",
+        f"| universe size | {total} |",
+        f"| planned_ok | {planned_ok} |",
+        f"| cohort | next_scale_slice2（AD2E501–600） |",
+        f"| planned_requests_total | {total_planned} (cap ≤ {ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP}) |",
+        f"| matching_logic | **{MATCHING_LOGIC_VERSION}** |",
+        "| CNINFO calls | **0** |",
+        "",
+        "## Overlap lint",
+        "",
+        "- L-A1..L-A4 / L-B1..L-B4 / AB_182: **0 overlap**（若无 universe issues）",
+        "- L-D4 ST 名称命中: **0**",
+        "",
+        "## Safety",
+        "",
+        "- metadata only: **yes**",
+        f"- output isolation: `{output_paths['root']}`",
+        "- scale-200 / slice1 / failed_retry / Phase 3 / A3M017 roots untouched: **yes**",
+        "- verified: **no**",
+        "- production_ready: **no**",
+        "",
+        "## Gate",
+        "",
+        "```text",
+        f"a_class_erad_next_scale_slice2_s1_runner_extension_gate = {gate}",
+        "```",
+        "",
+        "**不是 PASS** · **不是 live_ready** · **不是 verified** · **Approval status: NOT_APPROVED**",
+        "",
+    ]
+    if universe_issues:
+        lines.extend(["## Universe issues", ""] + [f"- {item}" for item in universe_issues] + [""])
+    summary_path = os.path.join(
+        output_paths["reports"], "a_class_erad_next_scale_slice2_s1_dryrun_summary.md"
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+    return summary_path
+
+
+def is_allowed_erad_a_slice2_mock_test_output_root(output_root: str) -> bool:
+    root = _normalize_output_root(output_root)
+    for parent_path in (
+        ERAD_NEXT_SCALE_SLICE2_S1_MOCK_TEST_PARENT,
+        ERAD_NEXT_SCALE_SLICE2_S1_MOCK_LIVE_TEST_PARENT,
+    ):
+        parent = _normalize_output_root(parent_path)
+        if root.startswith(parent + os.sep):
+            return True
+    return False
+
+
+def is_production_erad_a_next_scale_slice2_output_root(output_root: str) -> bool:
+    root = _normalize_output_root(output_root)
+    if is_allowed_erad_a_slice2_mock_test_output_root(root):
+        return False
+    allowed = _normalize_output_root(DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_OUTPUT_ROOT)
+    return root == allowed or root.startswith(allowed + os.sep)
+
+
+def safe_cleanup_erad_a_slice2_test_output_root(temp_root: str) -> None:
+    """测试 teardown 仅允许删除 slice2 _mock_* 子目录；拒绝生产 output root。"""
+    import shutil
+
+    if _is_under_prefix(temp_root, DEFAULT_PHASE3_OUTPUT_ROOT):
+        raise RuntimeError("拒绝清理 Phase 3 生产 output root")
+    if _is_under_prefix(temp_root, DEFAULT_ERAD_SCALE_200_OUTPUT_ROOT):
+        raise RuntimeError("拒绝清理 Era D scale-200 生产 output root")
+    if _is_under_prefix(temp_root, DEFAULT_ERAD_FAILED_RETRY_OUTPUT_ROOT):
+        raise RuntimeError("拒绝清理 Era D failed-retry 生产 output root")
+    if _is_under_prefix(temp_root, DEFAULT_ERAD_NEXT_SCALE_SLICE1_OUTPUT_ROOT):
+        raise RuntimeError("拒绝清理 Era D next-scale slice1 生产 output root")
+    if is_production_erad_a_next_scale_slice2_output_root(temp_root):
+        raise RuntimeError("拒绝清理 Era D next-scale slice2 生产 output root")
+    if not is_allowed_erad_a_slice2_mock_test_output_root(temp_root):
+        raise RuntimeError("拒绝清理非 mock 测试目录")
+    shutil.rmtree(temp_root, ignore_errors=True)
+
+
+def is_erad_next_scale_slice2_case_acceptable(row: Dict[str, str]) -> bool:
+    if row.get("pdf_downloaded") not in ("0", "no", ""):
+        return False
+    if row.get("pdf_parsed") not in ("0", "no", ""):
+        return False
+    status = row.get("retrieval_status", "")
+    quality = row.get("quality_status", "")
+    lineage = row.get("lineage_status", "")
+    if status in ("network_error", "not_found", "universe_invalid"):
+        return False
+    if status == "found":
+        return True
+    if status in ("discovered", "matching_pass"):
+        return True
+    if lineage == "discovered":
+        return True
+    if status == "needs_review" or quality == "needs_review":
+        return bool(lineage)
+    return False
+
+
+def build_erad_next_scale_slice2_live_report_row(
+    case: EraDNextScaleSlice2UniverseCase,
+    record: Dict[str, Any],
+    cninfo_request_count: int,
+) -> Dict[str, str]:
+    row = build_live_report_row(slice2_to_phase2_case(case), record, cninfo_request_count)
+    notes = str(record.get("notes") or "")
+    row["notes"] = (
+        f"erad-a-scale-500-slice2 live; matching_logic={MATCHING_LOGIC_VERSION}; "
+        f"lineage_evidence_mode=fresh_metadata; ad2e001_500_lineage_reference_only=yes; "
+        f"slice1_production_root_write=no; PDF not downloaded; {notes}"
+    ).strip()
+    row["cohort"] = case.cohort
+    row["prior_in_scale_200"] = case.prior_in_scale_200
+    row["lineage_evidence_mode"] = "fresh_metadata"
+    return row
+
+
+def process_erad_a_next_scale_slice2_live(
+    cases: List[EraDNextScaleSlice2UniverseCase],
+    output_paths: Dict[str, str],
+    stats: tiny_live.LiveStats,
+) -> Tuple[List[Dict[str, str]], List[str]]:
+    """Era D A-class next-scale slice2 live：100 新码 fresh_metadata only；须 approval gate。"""
+    rows: List[Dict[str, str]] = []
+    universe_issues: List[str] = []
+    for case in cases:
+        if case.erad_include != "yes":
+            continue
+        issues = validate_erad_next_scale_slice2_case(case)
+        if issues:
+            universe_issues.append(f"{case.case_id}:{';'.join(issues)}")
+            rows.append(
+                build_erad_next_scale_slice2_live_report_row(
+                    case,
+                    {
+                        "retrieval_status": "universe_invalid",
+                        "quality_status": "blocked",
+                        "lineage_status": "needs_review",
+                        "announcement_id": "",
+                        "announcement_title": "",
+                        "announcement_time": "",
+                        "title_match_status": "fail",
+                        "period_match_status": "fail",
+                        "pdf_url_present": "no",
+                        "adjunct_url_present": "no",
+                        "notes": "; ".join(issues),
+                    },
+                    0,
+                )
+            )
+            stats.failure_count += 1
+            continue
+        tl_case = to_tiny_live_case(slice2_to_phase2_case(case))
+        before_requests = stats.cninfo_requests
+        record = tiny_live.execute_live_case(tl_case, stats)
+        case_cninfo_requests = stats.cninfo_requests - before_requests
+        if stats.cninfo_requests > ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP:
+            universe_issues.append(
+                f"cninfo_request_cap_exceeded:{stats.cninfo_requests}>{ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP}"
+            )
+            break
+        live_row = build_erad_next_scale_slice2_live_report_row(
+            case, record, case_cninfo_requests
+        )
+        snapshot_path = os.path.join(output_paths["raw_metadata"], f"{case.case_id}.json")
+        with open(snapshot_path, "w", encoding="utf-8") as f:
+            json.dump(
+                {
+                    "case_id": case.case_id,
+                    "case": {
+                        "case_id": case.case_id,
+                        "company_code": case.company_code,
+                        "company_name": case.company_name,
+                        "market": case.market,
+                        "report_type": case.report_type,
+                        "expected_period": case.expected_period,
+                        "cohort": case.cohort,
+                        "prior_in_scale_200": case.prior_in_scale_200,
+                        "include_reason": case.include_reason,
+                        "erad_include": case.erad_include,
+                    },
+                    "mode": "erad_a_scale_500_slice2_live",
+                    "lineage_evidence_mode": "fresh_metadata",
+                    "ad2e001_500_lineage_reference_only": True,
+                    "slice1_production_root_write": False,
+                    "cninfo_called": True,
+                    "cninfo_request_count": case_cninfo_requests,
+                    "pdf_download_enabled": False,
+                    "pdf_parse_enabled": False,
+                    "matching_logic": MATCHING_LOGIC_VERSION,
+                    "record": live_row,
+                    "raw_announcement": record.get("_raw_announcement"),
+                    "org_id": record.get("_org_id"),
+                },
+                f,
+                ensure_ascii=False,
+                indent=2,
+            )
+        rows.append(live_row)
+        print(
+            f"case_id={case.case_id} cohort={case.cohort} company_code={case.company_code} "
+            f"retrieval_status={live_row['retrieval_status']} "
+            f"quality={live_row.get('quality_status', 'n/a')}",
+            flush=True,
+        )
+    return rows, universe_issues
+
+
+def compute_erad_next_scale_slice2_execution_gate(
+    rows: List[Dict[str, str]],
+    universe_issues: List[str],
+    stats: tiny_live.LiveStats,
+    expected_case_count: int,
+) -> str:
+    if has_red_line_violation(stats, rows):
+        return "FAIL_REVIEW_REQUIRED"
+    if universe_issues:
+        return "FAIL_REVIEW_REQUIRED"
+    if stats.cninfo_requests > ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP:
+        return "FAIL_REVIEW_REQUIRED"
+    if len(rows) != expected_case_count:
+        return "FAIL_REVIEW_REQUIRED"
+    threshold = ERAD_SLICE2_ACCEPTABLE_THRESHOLD
+    if expected_case_count < REQUIRED_ERAD_NEXT_SCALE_SLICE2_UNIVERSE_SIZE:
+        threshold = max(1, int(expected_case_count * 0.9))
+    acceptable_count = sum(
+        1 for row in rows if is_erad_next_scale_slice2_case_acceptable(row)
+    )
+    if acceptable_count >= threshold:
+        return ERAD_SLICE2_EXECUTION_GATE_PASS
+    return "FAIL_REVIEW_REQUIRED"
+
+
+def write_erad_next_scale_slice2_live_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "a_class_erad_next_scale_slice2_s1_live_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=ERAD_SLICE2_LIVE_REPORT_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_erad_next_scale_slice2_live_quality_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"], "a_class_erad_next_scale_slice2_s1_live_quality_report.csv"
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=ERAD_SLICE2_LIVE_QUALITY_COLUMNS)
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({k: row.get(k, "") for k in ERAD_SLICE2_LIVE_QUALITY_COLUMNS})
+    return report_path
+
+
+def write_erad_next_scale_slice2_live_summary(
+    output_paths: Dict[str, str],
+    stats: tiny_live.LiveStats,
+    rows: List[Dict[str, str]],
+    universe_issues: List[str],
+    gate: str,
+    expected_case_count: int,
+) -> str:
+    acceptable_count = sum(
+        1 for row in rows if is_erad_next_scale_slice2_case_acceptable(row)
+    )
+    failed_count = sum(
+        1
+        for row in rows
+        if row.get("retrieval_status")
+        in ("network_error", "not_found", "universe_invalid")
+    )
+    needs_review_count = sum(
+        1 for row in rows if row.get("quality_status") == "needs_review"
+    )
+    threshold = ERAD_SLICE2_ACCEPTABLE_THRESHOLD
+    if expected_case_count < REQUIRED_ERAD_NEXT_SCALE_SLICE2_UNIVERSE_SIZE:
+        threshold = max(1, int(expected_case_count * 0.9))
+    lines = [
+        "# CNINFO A 类 Era D Next-Scale Slice2 S1 — Live 执行摘要",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** Era D A-class next-scale slice2 S1 live metadata validation · **无 PDF** · **不是 verified**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        "| mode | erad_a_scale_500_slice2_live |",
+        f"| universe size | {len(rows)} |",
+        f"| expected case count | {expected_case_count} |",
+        f"| acceptable | {acceptable_count} |",
+        f"| failed | {failed_count} |",
+        f"| needs_review | {needs_review_count} |",
+        f"| CNINFO requests | {stats.cninfo_requests} (cap ≤ {ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP}) |",
+        f"| matching_logic | **{MATCHING_LOGIC_VERSION}** |",
+        f"| execution gate | `{gate}` |",
+        f"| acceptance threshold | ≥{threshold}/{expected_case_count} → PASS_WITH_CAVEAT |",
+        "",
+        "## Isolation",
+        "",
+        "Writes **only** under slice2 S1 root; **does not mutate** scale-200 / slice1 / failed-retry / Phase 3.",
+        "",
+        "## Safety",
+        "",
+        "- metadata only: **yes**",
+        f"- output isolation: `{output_paths['root']}`",
+        "- verified: **no**",
+        "- production_ready: **no**",
+        "",
+        "## Gate",
+        "",
+        "```text",
+        f"a_class_erad_next_scale_slice2_s1_live_path_gate = {ERAD_NEXT_SCALE_SLICE2_LIVE_PATH_GATE}",
+        f"a_class_erad_next_scale_slice2_s1_execution_gate = {gate}",
+        "```",
+        "",
+        f"- acceptance threshold: **≥ {threshold}/{expected_case_count}** → PASS_WITH_CAVEAT",
+        "",
+        "**不是 PASS** · **不是 verified** · **不是 production_ready**",
+        "",
+    ]
+    if universe_issues:
+        lines.extend(["## Universe issues", ""] + [f"- {item}" for item in universe_issues] + [""])
+    summary_path = os.path.join(
+        output_paths["reports"], "a_class_erad_next_scale_slice2_s1_live_summary.md"
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+    return summary_path
+
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="CNINFO A-class Phase2 metadata expansion（dry-run default）"
@@ -5281,9 +6171,21 @@ def build_parser() -> argparse.ArgumentParser:
         help="显式批准 A-class Era D next-scale slice1 live",
     )
     parser.add_argument(
+        "--erad-a-scale-500-slice2",
+        dest="erad_a_scale_500_slice2",
+        action="store_true",
+        help="100-case Era D A-class next-scale slice2 S1 模式（AD2E501–600 · dry-run 默认）",
+    )
+    parser.add_argument(
+        "--approve-a-class-erad-scale-500-slice2",
+        dest="approve_a_class_erad_scale_500_slice2",
+        action="store_true",
+        help="显式批准 A-class Era D next-scale slice2 S1 live",
+    )
+    parser.add_argument(
         "--case-range",
         default=None,
-        help="可选 case_id 范围（如 AD2E201:AD2E350）用于 slice1 session split",
+        help="可选 case_id 范围（如 AD2E201:AD2E350 或 AD2E501:AD2E550）用于 session split",
     )
     parser.add_argument(
         "--approve-a-class-phase3-50-company-expansion",
@@ -5328,10 +6230,140 @@ def main(argv: Optional[List[str]] = None) -> int:
         return 2
 
 
+    if getattr(args, "erad_a_scale_500_slice2", False):
+        if (
+            getattr(args, "erad_a_scale_200", False)
+            or getattr(args, "erad_a_scale_200_failed_retry", False)
+            or getattr(args, "erad_a_scale_500_slice1", False)
+            or args.phase3_50
+            or args.retry_v3
+            or args.retry_failed_only
+        ):
+            print(f"ERROR: {ERAD_NEXT_SCALE_SLICE2_INCOMPATIBLE_WITH_OTHER_MODES}", file=sys.stderr)
+            return 2
+        if args.universe_csv is None:
+            print(f"ERROR: {ERAD_NEXT_SCALE_SLICE2_UNIVERSE_CSV_REQUIRED}", file=sys.stderr)
+            return 2
+        if args.output_root is None:
+            args.output_root = DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_OUTPUT_ROOT
+        enforce_forbidden_options(args)
+        if args.mode == "live":
+            enforce_erad_next_scale_slice2_approval_gate(args)
+        ok_csv, csv_err = validate_erad_next_scale_slice2_universe_csv_path(args.universe_csv)
+        if not ok_csv:
+            print(f"ERROR: {csv_err}", file=sys.stderr)
+            return 2
+        ok_root, root_err = validate_erad_next_scale_slice2_output_root(args.output_root)
+        if not ok_root:
+            print(f"ERROR: {root_err}", file=sys.stderr)
+            return 2
+        if not os.path.isfile(args.universe_csv):
+            print(f"ERROR: universe not found: {args.universe_csv}", file=sys.stderr)
+            return 2
+        case_range = getattr(args, "case_range", None)
+        if case_range:
+            try:
+                parse_erad_a_slice2_case_range(case_range)
+            except ValueError as exc:
+                print(f"ERROR: {exc}", file=sys.stderr)
+                return 2
+        if args.limit is not None and not case_range:
+            if args.limit != REQUIRED_ERAD_NEXT_SCALE_SLICE2_UNIVERSE_SIZE:
+                print(
+                    f"ERROR: {ERAD_NEXT_SCALE_SLICE2_UNIVERSE_SIZE_VIOLATION}: limit={args.limit}",
+                    file=sys.stderr,
+                )
+                return 2
+        normalized_root = _normalize_output_root(args.output_root)
+        output_paths = ensure_output_layout(normalized_root)
+        slice2_cases = load_erad_next_scale_slice2_universe(args.universe_csv)
+        included = [c for c in slice2_cases if c.erad_include == "yes"]
+        included = filter_erad_a_next_scale_slice2_cases_by_range(included, case_range)
+        if args.limit is not None:
+            included = included[: args.limit]
+        if not case_range:
+            ok_size, size_err = validate_erad_next_scale_slice2_universe_size(included)
+            if not ok_size:
+                print(f"ERROR: {size_err}", file=sys.stderr)
+                return 2
+        elif not included:
+            print(f"ERROR: {ERAD_SLICE2_CASE_RANGE_INVALID}:empty_subset", file=sys.stderr)
+            return 2
+        expected_case_count = len(included)
+        if args.mode == "dry_run":
+            rows, universe_issues = process_erad_next_scale_slice2_dry_run(included, normalized_root)
+            total_planned = sum(
+                int(r.get("planned_request_count_case", "0")) for r in rows
+            )
+            ok_cap, cap_err = enforce_erad_next_scale_slice2_request_cap(total_planned)
+            if not ok_cap:
+                universe_issues.append(cap_err)
+            report_path = write_erad_next_scale_slice2_dryrun_report(rows, output_paths)
+            if case_range:
+                gate = ERAD_NEXT_SCALE_SLICE2_RUNNER_GATE if not universe_issues else "FAIL"
+            else:
+                gate = compute_erad_next_scale_slice2_runner_gate(
+                    universe_issues, len(included), total_planned
+                )
+            summary_path = write_erad_next_scale_slice2_dryrun_summary(
+                rows, output_paths, universe_issues, gate, total_planned
+            )
+            planned_ok = sum(1 for row in rows if row["dryrun_status"] == "planned_ok")
+            print(
+                f"mode=erad_a_scale_500_slice2_dry_run cases={len(included)} "
+                f"planned_ok={planned_ok} cninfo_calls=0"
+            )
+            print(f"planned_request_count_total={total_planned}")
+            print(
+                f"gate=a_class_erad_next_scale_slice2_s1_runner_extension_gate={gate}"
+            )
+            print(f"erad_slice2_dryrun_report={report_path}")
+            print(f"erad_slice2_dryrun_summary={summary_path}")
+            if universe_issues:
+                return 1
+            return 0
+        stats = tiny_live.LiveStats()
+        rows, universe_issues = process_erad_a_next_scale_slice2_live(
+            included, output_paths, stats
+        )
+        if stats.cninfo_requests > ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP:
+            universe_issues.append(
+                f"{ERAD_SLICE2_REQUEST_CAP_EXCEEDED}: actual={stats.cninfo_requests} "
+                f"cap={ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP}"
+            )
+        gate = compute_erad_next_scale_slice2_execution_gate(
+            rows, universe_issues, stats, expected_case_count
+        )
+        report_path = write_erad_next_scale_slice2_live_report(rows, output_paths)
+        quality_path = write_erad_next_scale_slice2_live_quality_report(rows, output_paths)
+        summary_path = write_erad_next_scale_slice2_live_summary(
+            output_paths, stats, rows, universe_issues, gate, expected_case_count
+        )
+        acceptable_count = sum(
+            1 for row in rows if is_erad_next_scale_slice2_case_acceptable(row)
+        )
+        print(
+            f"mode=erad_a_scale_500_slice2_live cases={len(included)} "
+            f"executed={len(rows)} acceptable={acceptable_count} "
+            f"cninfo_calls={stats.cninfo_requests}"
+        )
+        print(f"gate=a_class_erad_next_scale_slice2_s1_execution_gate={gate}")
+        print(
+            f"gate=a_class_erad_next_scale_slice2_s1_live_path_gate="
+            f"{ERAD_NEXT_SCALE_SLICE2_LIVE_PATH_GATE}"
+        )
+        print(f"erad_slice2_live_report={report_path}")
+        print(f"erad_slice2_live_quality={quality_path}")
+        print(f"erad_slice2_live_summary={summary_path}")
+        if universe_issues or gate == "FAIL_REVIEW_REQUIRED":
+            return 1
+        return 0
+
     if getattr(args, "erad_a_scale_500_slice1", False):
         if (
             getattr(args, "erad_a_scale_200", False)
             or getattr(args, "erad_a_scale_200_failed_retry", False)
+            or getattr(args, "erad_a_scale_500_slice2", False)
             or args.phase3_50
             or args.retry_v3
             or args.retry_failed_only
@@ -5459,6 +6491,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     if getattr(args, "erad_a_scale_200_failed_retry", False):
         if (
             getattr(args, "erad_a_scale_500_slice1", False)
+            or getattr(args, "erad_a_scale_500_slice2", False)
             or getattr(args, "erad_a_scale_200", False)
             or args.phase3_50
             or args.retry_v3
@@ -5579,6 +6612,9 @@ def main(argv: Optional[List[str]] = None) -> int:
             return 2
         if getattr(args, "erad_a_scale_500_slice1", False):
             print(f"ERROR: {ERAD_NEXT_SCALE_SLICE1_INCOMPATIBLE_WITH_OTHER_MODES}", file=sys.stderr)
+            return 2
+        if getattr(args, "erad_a_scale_500_slice2", False):
+            print(f"ERROR: {ERAD_NEXT_SCALE_SLICE2_INCOMPATIBLE_WITH_OTHER_MODES}", file=sys.stderr)
             return 2
         if args.universe_csv is None:
             print(f"ERROR: {ERAD_SCALE_200_UNIVERSE_CSV_REQUIRED}", file=sys.stderr)
