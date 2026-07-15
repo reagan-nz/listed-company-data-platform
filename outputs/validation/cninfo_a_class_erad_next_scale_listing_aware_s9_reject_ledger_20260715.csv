@@ -1,0 +1,302 @@
+company_code,company_name,reject_stage,failure_class,listing_date,expected_period_attempted,notes
+000001,平安银行,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000002,万科A,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000006,深振业A,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000007,全新好,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000008,神州高铁,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000009,中国宝安,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000011,深物业A,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000012,南玻A,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000014,沙河股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000017,深中华A,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000019,深粮控股,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000020,深华发A,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000021,深科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000025,特力A,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000026,飞亚达,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000029,深深房A,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000030,富奥股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000032,深桑达A,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000034,神州数码,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000035,中国天楹,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000036,华联控股,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000037,深南电A,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000039,中集集团,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000042,中洲控股,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000045,深纺织A,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000048,京基智农,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000049,德赛电池,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000050,深天马A,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000055,方大集团,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000058,深赛格,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000059,华锦股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000060,中金岭南,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000061,农产品,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000062,深圳华强,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000063,中兴通讯,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000065,北方国际,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000066,中国长城,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000068,华控赛格,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000069,华侨城A,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000070,特发信息,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000088,盐田港,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000089,深圳机场,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000090,天健集团,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000096,广聚能源,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000099,中信海直,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000100,TCL科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000151,中成股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000153,丰原药业,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000155,川能动力,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000156,华数传媒,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000157,中联重科,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000158,常山北明,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000159,国际实业,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000166,申万宏源,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000301,东方盛虹,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000333,美的集团,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000338,潍柴动力,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000400,许继电气,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000419,通程控股,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000420,吉林化纤,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000426,兴业银锡,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000430,张家界,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000498,山东路桥,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000520,凤凰航运,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000528,柳工,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000550,江铃汽车,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000557,西部创业,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000559,万向钱潮,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000576,甘化科工,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000589,贵州轮胎,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000595,*ST宝实,st_exclude,st_name_hit,,,S1 ST-EXCLUDE 策略延续
+000596,古井贡酒,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000619,海螺新材,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000629,钒钛股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000630,铜陵有色,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000632,ST三木,st_exclude,st_name_hit,,,S1 ST-EXCLUDE 策略延续
+000637,茂化实华,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000655,金岭矿业,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000656,*ST金科,st_exclude,st_name_hit,,,S1 ST-EXCLUDE 策略延续
+000663,永安林业,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000669,ST金鸿,st_exclude,st_name_hit,,,S1 ST-EXCLUDE 策略延续
+000670,盈方微,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000677,ST海龙,st_exclude,st_name_hit,,,S1 ST-EXCLUDE 策略延续
+000710,贝瑞基因,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000711,ST京蓝,st_exclude,st_name_hit,,,S1 ST-EXCLUDE 策略延续
+000713,国投丰乐,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000723,美锦能源,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000729,燕京啤酒,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000735,罗牛山,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000736,中交发展,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000752,*ST西发,st_exclude,st_name_hit,,,S1 ST-EXCLUDE 策略延续
+000756,新华制药,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000757,浩物股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000761,本钢板材,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000777,中核科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000786,北新建材,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000789,万年青,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000795,英洛华,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000803,山高环能,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000833,粤桂股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000838,*ST发展,st_exclude,st_name_hit,,,S1 ST-EXCLUDE 策略延续
+000858,五粮液,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000859,国风新材,prefix_concentration_exclude,prefix_concentration_cap,,,本片前缀 000 已达上限 25；跳过以降低 mono-prefix 批处理 timeout 风险
+000860,顺鑫农业,prefix_concentration_exclude,prefix_concentration_cap,,,本片前缀 000 已达上限 25；跳过以降低 mono-prefix 批处理 timeout 风险
+000878,云南铜业,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000881,中广核技,prefix_concentration_exclude,prefix_concentration_cap,,,本片前缀 000 已达上限 25；跳过以降低 mono-prefix 批处理 timeout 风险
+000890,法尔胜,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000895,双汇发展,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000900,现代投资,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000905,厦门港务,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000906,浙商中拓,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000910,大亚圣象,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000913,钱江摩托,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000919,金陵药业,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000920,沃顿科技,prefix_concentration_exclude,prefix_concentration_cap,,,本片前缀 000 已达上限 25；跳过以降低 mono-prefix 批处理 timeout 风险
+000923,河钢资源,prefix_concentration_exclude,prefix_concentration_cap,,,本片前缀 000 已达上限 25；跳过以降低 mono-prefix 批处理 timeout 风险
+000926,福星股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000928,中钢国际,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000930,中粮科技,prefix_concentration_exclude,prefix_concentration_cap,,,本片前缀 000 已达上限 25；跳过以降低 mono-prefix 批处理 timeout 风险
+000933,神火股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000935,四川双马,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000937,冀中能源,prefix_concentration_exclude,prefix_concentration_cap,,,本片前缀 000 已达上限 25；跳过以降低 mono-prefix 批处理 timeout 风险
+000949,新乡化纤,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000957,中通客车,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000960,锡业股份,prefix_concentration_exclude,prefix_concentration_cap,,,本片前缀 000 已达上限 25；跳过以降低 mono-prefix 批处理 timeout 风险
+000962,东方钽业,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000965,天保基建,prefix_concentration_exclude,prefix_concentration_cap,,,本片前缀 000 已达上限 25；跳过以降低 mono-prefix 批处理 timeout 风险
+000967,盈峰环境,prefix_concentration_exclude,prefix_concentration_cap,,,本片前缀 000 已达上限 25；跳过以降低 mono-prefix 批处理 timeout 风险
+000968,蓝焰控股,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000975,山金国际,prefix_concentration_exclude,prefix_concentration_cap,,,本片前缀 000 已达上限 25；跳过以降低 mono-prefix 批处理 timeout 风险
+000980,众泰汽车,prefix_concentration_exclude,prefix_concentration_cap,,,本片前缀 000 已达上限 25；跳过以降低 mono-prefix 批处理 timeout 风险
+000981,山子高科,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000987,越秀资本,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+000993,闽东电力,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001202,炬申股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001205,盛航股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001210,金房能源,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001211,双枪科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001216,华瓷股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001217,华尔泰,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001219,青岛食品,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001221,悍高集团,listing_period_gate,listing_gap_true_not_found,2025-07-30,2024-12-31,期望报告期早于上市日；hisAnnouncement 空结果属预期
+001231,农心科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001233,海安集团,listing_period_gate,listing_gap_true_not_found,2025-11-25,2024-12-31,期望报告期早于上市日；hisAnnouncement 空结果属预期
+001248,华润新能源,listing_period_gate,listing_gap_true_not_found,2026-07-02,2024-12-31,期望报告期早于上市日；hisAnnouncement 空结果属预期
+001267,汇绿生态,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001269,欧晶科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001282,三联锻造,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001283,豪鹏科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001285,瑞立科密,listing_period_gate,listing_gap_true_not_found,2025-09-30,2024-12-31,期望报告期早于上市日；hisAnnouncement 空结果属预期
+001298,好上好,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001300,三柏硕,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001301,尚太科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001308,康冠科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001317,三羊马,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001324,长青科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001326,联域股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001331,胜通能源,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001335,信凯科技,listing_period_gate,listing_gap_true_not_found,2025-04-15,2024-12-31,期望报告期早于上市日；hisAnnouncement 空结果属预期
+001337,四川黄金,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001359,平安电工,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001380,华纬科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001382,新亚电缆,listing_period_gate,listing_gap_true_not_found,2025-03-21,2024-12-31,期望报告期早于上市日；hisAnnouncement 空结果属预期
+001390,古麒绒材,listing_period_gate,listing_gap_true_not_found,2025-05-29,2024-12-31,期望报告期早于上市日；hisAnnouncement 空结果属预期
+001872,招商港口,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+001979,招商蛇口,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002003,伟星股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002004,华邦健康,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002006,精工科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002012,凯恩股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002017,东信和平,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002019,亿帆医药,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002024,ST易购,st_exclude,st_name_hit,,,S1 ST-EXCLUDE 策略延续
+002031,巨轮智能,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002037,保利联合,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002040,南京港,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002041,登海种业,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002042,华孚时尚,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002045,国光电器,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002048,宁波华翔,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002054,德美化工,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002055,ST得润,st_exclude,st_name_hit,,,S1 ST-EXCLUDE 策略延续
+002057,中钢天源,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002059,云南旅游,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002060,广东建工,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002064,华峰化学,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002065,东华软件,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002066,瑞泰科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002072,凯瑞德,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002073,软控股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002075,沙钢股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002076,星光股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002081,金螳螂,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002083,孚日股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002086,东方海洋,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002096,易普力,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002097,山河智能,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002098,浔兴股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002103,广博股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002105,信隆健康,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002108,沧州明珠,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002112,三变科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002116,中国海诚,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002117,东港股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002123,梦网科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002124,天邦食品,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002136,安纳达,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002140,东华科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002145,钛能化学,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002150,正泰电源,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002152,广电运通,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002154,报喜鸟,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002169,智光电气,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002171,楚江新材,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002175,*ST东智,st_exclude,st_name_hit,,,S1 ST-EXCLUDE 策略延续
+002177,御银股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002180,奔图科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002184,海得控制,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002193,ST如意,st_exclude,st_name_hit,,,S1 ST-EXCLUDE 策略延续
+002197,证通电子,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002199,*ST东晶,st_exclude,st_name_hit,,,S1 ST-EXCLUDE 策略延续
+002202,金风科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002203,海亮股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002205,国统股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002212,天融信,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002214,*ST大立,st_exclude,st_name_hit,,,S1 ST-EXCLUDE 策略延续
+002226,江南化工,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002228,合兴包装,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002234,民和股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002235,安妮股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002237,恒邦股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002238,天威视讯,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002239,奥特佳,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002247,聚力文化,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002255,海陆重工,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002257,立立电子,listing_period_gate,true_not_found_likely_unlisted,,2024-12-31,listing_date/F006D 为空；疑似未完成上市或无正式上市日
+002258,利尔化学,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002267,陕天然气,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002268,电科网安,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002275,桂林三金,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002282,博深股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002290,禾盛新材,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002293,罗莱生活,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002302,西部建设,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002303,美盈森,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002304,洋河股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002312,川发龙蟒,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002315,焦点科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002317,众生药业,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002320,海峡股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002322,理工能科,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002328,新朋股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002329,皇氏集团,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002338,奥普光电,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002340,格林美,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002343,慈文传媒,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002348,高乐股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002355,兴民智通,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002358,森源电气,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002360,ST同德,st_exclude,st_name_hit,,,S1 ST-EXCLUDE 策略延续
+002361,神剑股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002362,汉王科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002364,中恒电气,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002369,卓翼科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002374,中锐股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002375,亚厦股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002385,大北农,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002386,天原股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002387,维信诺,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002391,长青股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002400,省广集团,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002407,多氟多,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002420,毅昌科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002428,云南锗业,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002430,杭氧股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002452,长高电气,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002454,松芝股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002456,欧菲光,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002467,二六三,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002484,江海股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002485,ST雪发,st_exclude,st_name_hit,,,S1 ST-EXCLUDE 策略延续
+002486,嘉麟杰,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002488,金固股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002490,山东墨龙,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002493,荣盛石化,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002500,山西证券,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002507,涪陵榨菜,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002512,ST达华,st_exclude,st_name_hit,,,S1 ST-EXCLUDE 策略延续
+002513,蓝丰生化,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002523,天桥起重,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002525,胜景山河,listing_period_gate,true_not_found_likely_unlisted,,2024-06-30,listing_date/F006D 为空；疑似未完成上市或无正式上市日
+002528,*ST英飞,st_exclude,st_name_hit,,,S1 ST-EXCLUDE 策略延续
+002538,ST司特,st_exclude,st_name_hit,,,S1 ST-EXCLUDE 策略延续
+002545,东方铁塔,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002546,新联电子,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002549,凯美特气,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002556,辉隆股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002560,通达股份,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002573,清新环境,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002593,日上集团,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
+002595,豪迈科技,a_cumulative_exclude,already_in_a_universe,,,同轨 A cumulative 已占用；禁止重跑
