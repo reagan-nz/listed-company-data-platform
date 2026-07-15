@@ -1,0 +1,37 @@
+# B-FM-34 live allow-list — 仅新晋 asset_valuation_explanation_known_001 /
+# audit_report_known_001
+status: live_sample_scoped_B-FM-34
+verified: false
+notes: B-FM-34 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS
+cases:
+  - case_id: asset_valuation_explanation_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "600702"
+    company_name: "舍得酒业"
+    title_pattern: "资产评估说明"
+    expected_document_type: announcement
+    date_start: "2025-06-25"
+    date_end: "2025-06-28"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-34 live allow-list（资产评估说明）：
+      harvest BD2E430 舍得酒业 600702 ann=1223999581 2025-06-26。
+      不写 verified；不下载 PDF。
+
+  - case_id: audit_report_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "603198"
+    company_name: "迎驾贡酒"
+    title_pattern: "迎驾贡酒2024年审计报告"
+    expected_document_type: announcement
+    date_start: "2025-06-21"
+    date_end: "2025-06-24"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-34 live allow-list（独立审计报告边角）：
+      harvest BD2E798 迎驾贡酒 603198 ann=1223955004 2025-06-22。
+      不写 verified；不下载 PDF。

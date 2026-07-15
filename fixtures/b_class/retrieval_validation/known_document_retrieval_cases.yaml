@@ -691,6 +691,52 @@ cases:
       b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E264（quality=pass）。
       不写 verified；不下载 PDF。
 
+  # --- asset_valuation_explanation / 资产评估说明（B-FM-34；勿落 other）---
+  - case_id: asset_valuation_explanation_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "600702"
+    company_name: "舍得酒业"
+    title_pattern: "资产评估说明"
+    expected_document_type: announcement
+    date_start: "2025-06-25"
+    date_end: "2025-06-28"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-34 自 harvest 证据晋升（资产评估说明 routing 边角：旧逻辑落 other）：
+      舍得酒业 600702，舍得酒业拟进行资产收购所涉及的位于遂宁市射洪县沱牌镇四处住宅用、
+      商业用房地产市场价值资产评估说明（announcement_id=1223999581，披露日 2025-06-26）。
+      B-FM-34 前无 general positive_patterns，落 other；硬化后 announcement。
+      title_pattern 取窄串「资产评估说明」（勿裸「说明」）。与章程/制度/薪酬等低价值
+      other 边角及真·年报可区分。来源
+      outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
+      b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E430（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  # --- audit_report / 独立审计报告（B-FM-34；对称第二边角；勿误进 annual_report）---
+  - case_id: audit_report_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "603198"
+    company_name: "迎驾贡酒"
+    title_pattern: "迎驾贡酒2024年审计报告"
+    expected_document_type: announcement
+    date_start: "2025-06-21"
+    date_end: "2025-06-24"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-34 自 harvest 证据晋升（独立审计报告第二边角；对称 asset_valuation）：
+      迎驾贡酒 603198，迎驾贡酒2024年审计报告-容诚审字[2025]230Z0521号（修订版）
+      （announcement_id=1223955004，披露日 2025-06-22）。标题含「审计报告」但无
+      「年度报告」/「年报」子串，B-FM-34 前落 other；硬化后 announcement（含年报字样的
+      「…年度报告审计报告」仍走 periodic）。title_pattern 取「迎驾贡酒2024年审计报告」
+      消歧。与章程/制度/激励名单等低价值 other 边角可区分。来源
+      outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
+      b_class_erad_fuller_next_slice2_report.csv 行 BD2E798（quality=pass）。
+      不写 verified；不下载 PDF。
+
   # --- shareholder_meeting_material × 4 ---
   - case_id: shareholder_meeting_known_001
     case_status: ready

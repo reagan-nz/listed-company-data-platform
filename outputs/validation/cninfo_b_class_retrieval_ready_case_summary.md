@@ -20,9 +20,9 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 
 | 指标 | 数值 |
 |------|------|
-| total_cases | **52** |
+| total_cases | **54** |
 | placeholder | **2** |
-| ready | **50** |
+| ready | **52** |
 | retired | **0** |
 | invalid_ready | **0** |
 | result | **PASS** |
@@ -61,6 +61,8 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 - `raised_funds_usage_report_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `independent_director_meeting_review_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `independent_director_nominee_declaration_known_001` (known_document) → `cninfo_general_announcement_pdf`
+- `asset_valuation_explanation_known_001` (known_document) → `cninfo_general_announcement_pdf`
+- `audit_report_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `shareholder_meeting_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `shareholder_meeting_known_002` (known_document) → `cninfo_general_announcement_pdf`
 - `shareholder_meeting_known_003` (known_document) → `cninfo_general_announcement_pdf`

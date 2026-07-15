@@ -61,6 +61,7 @@ Phase 1 为 **定期报告 effective found** 定义的 exclusion 列表，在 B 
 | 持续督导年度报告书 / 持续督导培训情况的报告（保荐机构督导材料；B-FM-30） | `cninfo_general_announcement_pdf` | `announcement`（勿进 `annual_report`；勿落 `other`） |
 | 非标准审计意见消除专项说明 / 前次募集资金使用情况报告（B-FM-32；窄 pattern，不泛化「专项说明」） | `cninfo_general_announcement_pdf` | `announcement`（勿落 `other`） |
 | 独立董事专门会议的审核意见 / 独立董事提名人声明与承诺（B-FM-33；窄 pattern，勿裸「审核意见」） | `cninfo_general_announcement_pdf` | `announcement`（勿落 `other`） |
+| 资产评估说明 / 独立审计报告（B-FM-34；窄 pattern，勿裸「说明」；含「年度报告」/「年报」的审计报告仍 periodic） | `cninfo_general_announcement_pdf` | `announcement`（勿落 `other`） |
 
 **原则：** `retrieval_status=title_excluded` 仅表示 **未进入 periodic_report**；应尝试次级路由，并设 `classification_status=title_excluded_from_periodic_but_routed` 或 `ambiguous`。
 

@@ -367,6 +367,11 @@ def _general_document_type(title: str, patterns: List[str]) -> str:
     positive_patterns，旧逻辑落 other。窄 pattern 一律 announcement（勿裸
     「审核意见」——以免波及监事会/董事会「…年度报告的审核意见」periodic 路径；
     不扩 schema）。
+
+    B-FM-34：「资产评估说明」/独立「审计报告」（标题无「年度报告」/「年报」时
+    periodic 未先命中）无 general positive_patterns，旧逻辑落 other。窄
+    pattern 一律 announcement（勿裸「说明」；含年报字样的审计报告仍由
+    Priority 3 periodic 处理；不扩 schema）。
     """
     # 法律意见书/法律意见：中介见证材料，保持 announcement（会议与非会议均适用）
     if "法律意见" in title:
@@ -400,6 +405,12 @@ def _general_document_type(title: str, patterns: List[str]) -> str:
         return "announcement"
     # 独立董事提名人声明与承诺：提名人治理披露，保持 announcement（勿落 other）
     if "独立董事提名人声明与承诺" in title:
+        return "announcement"
+    # 资产评估说明：评估机构估值说明文书（窄；勿裸「说明」）
+    if "资产评估说明" in title:
+        return "announcement"
+    # 审计报告：独立 CPA 审计报告（本函数仅在 periodic 未先命中时调用）
+    if "审计报告" in title:
         return "announcement"
     if "董事会" in title and "决议" in title:
         return "board_resolution"
