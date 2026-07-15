@@ -1,0 +1,13 @@
+component,endpoint_readiness,schema_readiness,prior_slice_status,expected_first_slice_size,risk,recommendation_rank,notes
+shareholder_data,ready,ready_metric_periodic,live_path_offline_mock_dfm09_0761c90,5,medium,excluded_inflight,D-FM-09 shared live-path offline mock committed; real live NOT_APPROVED; do not expand in D-FM-10
+abnormal_trading,ready,ready_main_event_detail_deferred,live_path_offline_mock_dfm05,5,high,excluded_inflight,D-FM-05 live-path offline mock; real live NOT_APPROVED; do not expand in D-FM-10
+executive_shareholding,ready,ready,s5_pass_with_caveat_d_fm02,5,medium,excluded,S5 closure PASS_WITH_CAVEAT; do not reopen
+shareholder_change,ready,ready,committed_complete,5,low,excluded,do not reopen
+equity_pledge,ready,ready,closed,5,low,excluded,do not reopen
+restricted_shares_unlock,ready,ready,closed,5,medium,excluded,do not reopen
+block_trade,ready,ready,closed,5,low,excluded,do not reopen
+margin_trading,ready,ready,closed,5,low,excluded,do not reopen
+disclosure_schedule,ready,ready,closed,5,low,excluded,do not reopen
+known_event_replacement,ready,ready,closed,2,low,excluded,no DLC006R reopen
+fund_industry_allocation,ready,ready_industry_aggregate,not_yet_first_sliced,5,low,1,P2 primary now; company_code_available=false; d_industry_aggregate; Phase2 19-row + empty rdate precedent; standing D
+executive_shareholding_summary,not_registered,n/a,out_of_scope,n/a,medium,excluded,future discovery; not this planning round

@@ -1,0 +1,18 @@
+item_id,item,status,artifact_or_ref,notes
+FIA-PLAN-01,next_component_planning_md,ready,plans/cninfo_d_class_fund_industry_allocation_next_component_planning_20260715.md,primary=fund_industry_allocation; gate=READY_FOR_APPROVAL; standing_scope; NOT live-approved
+FIA-PLAN-02,candidate_matrix_csv,ready,outputs/validation/cninfo_d_class_fund_industry_allocation_next_component_candidate_matrix_20260715.csv,rank=1 fund_industry_allocation; shareholder_data/abnormal_trading inflight excluded; closed tracks excluded
+FIA-PLAN-03,recommendation_md,ready,outputs/validation/cninfo_d_class_fund_industry_allocation_next_component_recommendation_20260715.md,Level-2 phrase NOT required under standing_scope
+FIA-PLAN-04,planning_summary_md,ready,outputs/validation/cninfo_d_class_fund_industry_allocation_next_component_planning_summary_20260715.md,CNINFO=0; NOT verified
+FIA-PLAN-05,universe_draft_sketch_csv,ready,outputs/validation/cninfo_d_class_fund_industry_allocation_first_slice_universe_draft_sketch_20260715.csv,DFIA001-DFIA005; sketch only; not locked
+FIA-PLAN-06,next_step_recommendation_md,ready,outputs/validation/cninfo_d_class_fund_industry_allocation_next_component_next_step_recommendation_20260715.md,approval package offline next; or controller shareholder_data/abnormal_trading live
+FIA-PLAN-07,tier0_mapper_smoke_test,ready,lab/test_cninfo_d_class_fund_industry_allocation_offline_prep.py,sample_raw→3 metrics + sketch CSV checks; CNINFO=0
+FIA-STUB-01,vr_checklist_stub,stub_only,this file,full VR draft deferred to post-planning approval package
+FIA-STUB-02,universe_lock,blocked_until_next_task,n/a,sketch only; lock in approval package task
+FIA-STUB-03,tier1_fixtures,blocked_until_next_task,n/a,cite sample_raw only this round; no first_slice fixture root yet
+FIA-STUB-04,runner_extension,forbidden_this_round,n/a,no --fund-industry-allocation-first-slice implement
+FIA-STUB-05,cninfo_live,forbidden_this_round,n/a,CNINFO=0
+FIA-SAFE-01,exclude_301259_688671,locked_policy,plans + universe sketch,permanent first-slice exclude policy retained
+FIA-SAFE-02,no_dlc006r_reopen,locked_policy,known-event closed,explicit non-reopen
+FIA-SAFE-03,no_company_event_schema,locked_policy,company_code_available=false,must use d_industry_aggregate only
+FIA-SAFE-04,no_shareholder_or_abnormal_live,locked_policy,controller_execution_allowed=false,D-FM-10 does not run shareholder_data/abnormal_trading real live
+FIA-GATE-01,planning_gate,READY_FOR_APPROVAL,d_class_fund_industry_allocation_next_component_planning_gate,NOT verified; NOT production_ready; standing_scope auth
