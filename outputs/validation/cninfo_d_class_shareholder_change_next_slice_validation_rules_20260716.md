@@ -1,19 +1,21 @@
 # CNINFO D 类 shareholder_change — Next-Slice Validation Rules（VR-SC-NS-001–VR-SC-NS-042）
 
-_生成时间：2026-07-16 · D-FM-49_
+_生成时间：2026-07-16 · D-FM-49 · D-FM-50 lock 更新_
 
 > **性质：** next-slice VR checklist · **CNINFO = 0** · **不是 verified** · **不覆盖** first-slice VR / DSC001–005 证据
 >
 > **范围：** DSC101–DSC105 · shared denser-mode cite `type=desc` + `anchor_tdate=2026-07-03` · **禁** `type=inc`+`2026-07-03` 作 found 唯一锚
 >
 > **命名：** SC = 股东增减持 = component `shareholder_change` · endpoint 拼写 **shareholeder**（不修正）
+>
+> **D-FM-50：** universe_lock_status 晋升为 `locked` · `approval_task_id=D-FM-50` · sketch 仍为只读 `draft_not_locked` 历史
 
 ## A — Universe & Query（VR-SC-NS-001–VR-SC-NS-008）
 
 | ID | 规则 |
 |----|------|
 | VR-SC-NS-001 | universe 恰好 **5** 行 · case_id **DSC101–DSC105**（与 DSC001–005 隔离） |
-| VR-SC-NS-002 | component=`shareholder_change` · next_slice_include=`yes` · universe_lock_status=`draft_not_locked`（本包） |
+| VR-SC-NS-002 | component=`shareholder_change` · next_slice_include=`yes` · universe_lock_status=`locked` · approval_task_id=`D-FM-50` |
 | VR-SC-NS-003 | 全案共享 `query_type=desc` · `anchor_tdate=2026-07-03` · query_mode=`type_desc_tdate_daily` · **禁止** `type=inc`+`2026-07-03` 作 sole found 锚 |
 | VR-SC-NS-004 | 永久排除 **688671** · **301259** · exclude_flags 含 `exclude_sparse_inc_20260703_sole_found_anchor` · `exclude_sole_needs_review` · `exclude_first_slice_DSC001_005_mutate` · `exclude_dlc006r` |
 | VR-SC-NS-005 | endpoint=`https://www.cninfo.com.cn/data20/shareholeder/detail` · records_path=`data.records` · 拼写 **shareholeder** 不修正 |

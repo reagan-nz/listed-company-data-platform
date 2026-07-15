@@ -1,0 +1,69 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class shareholder_change next-slice offline synthetic · denser-mode cite type=desc tdate=2026-07-03",
+    "case_id": "DSC104",
+    "component": "shareholder_change",
+    "scenario": "captured",
+    "cninfo_called": false,
+    "synthetic": true,
+    "dense_mode_cite": "2026-07-03",
+    "dense_mode_cite_task": "D-FM-49",
+    "approval_task_id": "D-FM-50",
+    "query_type": "desc",
+    "tier0_cite": [
+      "fixtures/d_class/shareholder_change_desc/sample_raw.json",
+      "fixtures/d_class/phase1/DC005.json"
+    ],
+    "query_params": {
+      "type": "desc",
+      "tdate": "2026-07-03"
+    },
+    "structure_cite": "fixtures/d_class/shareholder_change_desc/sample_raw.json",
+    "note_zh": "sample_raw/DC005 仅为字段/envelope 结构 cite；本 fixture 锚 denser-mode type=desc+2026-07-03；禁 type=inc 作 sole found；非 live found-path"
+  },
+  "market_event": {
+    "event_id": "fixture_dsc104_sc_002415_20260703",
+    "company_code": "002415",
+    "event_type": "shareholder_change",
+    "event_time": "2026-07-03",
+    "source_endpoint": "https://www.cninfo.com.cn/data20/shareholeder/detail",
+    "source_record_id": "fixture_raw_sc_dsc104",
+    "event_status": "captured",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "shareholder_change",
+      "query_mode": "type_desc_tdate_daily",
+      "query_params": {
+        "type": "desc",
+        "tdate": "2026-07-03"
+      },
+      "fetch_time": "2026-07-16T00:30:00+08:00",
+      "raw_record_hash": "sha256:synthetic_sc_dsc104_captured_20260703",
+      "raw_record_json": {
+        "SECCODE": "002415",
+        "SECNAME": "海康威视",
+        "DECLAREDATE": "2026-07-02",
+        "VARYDATE": "2026-07-03",
+        "F002V": "合成股东名称DSC104",
+        "F004N": 260000.0,
+        "F005N": 0.03,
+        "F007V": "32.10"
+      },
+      "lineage_status": "discovered"
+    }
+  },
+  "shareholder_change": {
+    "company_code": "002415",
+    "company_name": "海康威视",
+    "shareholder_name": "合成股东名称DSC104",
+    "announcement_date": "2026-07-02",
+    "change_date": "2026-07-03",
+    "event_date": "2026-07-03",
+    "change_amount": 260000.0,
+    "change_ratio": 0.03,
+    "change_price": "32.10",
+    "change_type": "desc",
+    "event_type": "shareholder_change",
+    "quality_status": "pass"
+  }
+}

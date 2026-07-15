@@ -1,0 +1,14 @@
+fixture,case_id,group,topic,vr,status,note
+DSC101_found.json,DSC101,D,Envelope,VR-SC-NS-025–VR-SC-NS-030,pass,captured
+DSC101_found.json,DSC101,C,Field Mapping,VR-SC-NS-015–VR-SC-NS-024,pass,SECCODE/VARYDATE/F004N/F005N/F007V freeze · change_type=desc
+DSC101_empty.json,DSC101,D,Envelope,VR-SC-NS-025–VR-SC-NS-030,pass,empty_but_valid
+DSC102_found.json,DSC102,D,Envelope,VR-SC-NS-025–VR-SC-NS-030,pass,captured
+DSC102_found.json,DSC102,C,Field Mapping,VR-SC-NS-015–VR-SC-NS-024,pass,SECCODE/VARYDATE/F004N/F005N/F007V freeze · change_type=desc
+DSC102_empty.json,DSC102,D,Envelope,VR-SC-NS-025–VR-SC-NS-030,pass,empty_but_valid
+DSC103_found.json,DSC103,D,Envelope,VR-SC-NS-025–VR-SC-NS-030,pass,captured
+DSC103_found.json,DSC103,C,Field Mapping,VR-SC-NS-015–VR-SC-NS-024,pass,SECCODE/VARYDATE/F004N/F005N/F007V freeze · change_type=desc
+DSC103_empty.json,DSC103,D,Envelope,VR-SC-NS-025–VR-SC-NS-030,pass,empty_but_valid
+DSC104_found.json,DSC104,D,Envelope,VR-SC-NS-025–VR-SC-NS-030,pass,captured
+DSC104_found.json,DSC104,C,Field Mapping,VR-SC-NS-015–VR-SC-NS-024,pass,SECCODE/VARYDATE/F004N/F005N/F007V freeze · change_type=desc
+DSC104_empty.json,DSC104,D,Envelope,VR-SC-NS-025–VR-SC-NS-030,pass,empty_but_valid
+DSC105_empty_but_valid_synthetic.json,DSC105,D,Envelope,VR-SC-NS-025–VR-SC-NS-030,pass,empty_but_valid
