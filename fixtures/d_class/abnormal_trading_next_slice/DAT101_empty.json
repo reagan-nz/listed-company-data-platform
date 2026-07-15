@@ -1,0 +1,47 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class abnormal_trading next-slice offline synthetic · denser-day cite 2026-07-02",
+    "case_id": "DAT101",
+    "component": "abnormal_trading",
+    "scenario": "empty_but_valid",
+    "cninfo_called": false,
+    "synthetic": true,
+    "dense_day_cite": "2026-07-02",
+    "dense_day_cite_task": "D-FM-29",
+    "tier0_cite": [
+      "fixtures/d_class/abnormal_trading/sample_raw.json"
+    ],
+    "query_params": {
+      "sdate": "2026-07-02",
+      "edate": "2026-07-02",
+      "platecode": "",
+      "orderby": "",
+      "page": 1,
+      "rows": 30
+    }
+  },
+  "market_event": {
+    "event_id": "fixture_dat101_abn_000895_empty",
+    "company_code": "000895",
+    "event_type": "abnormal_trading",
+    "event_time": "2026-07-02",
+    "source_endpoint": "https://www.cninfo.com.cn/data/statis/getMarketStatisticsData",
+    "source_record_id": "fixture_raw_abn_dat101_empty",
+    "event_status": "empty_but_valid",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "abnormal_trading",
+      "query_mode": "single_day_paged",
+      "query_params": {
+        "sdate": "2026-07-02",
+        "edate": "2026-07-02",
+        "platecode": "",
+        "orderby": "",
+        "page": 1,
+        "rows": 30
+      },
+      "fetch_time": "2026-07-15T21:00:00+08:00",
+      "lineage_status": "discovered"
+    }
+  }
+}

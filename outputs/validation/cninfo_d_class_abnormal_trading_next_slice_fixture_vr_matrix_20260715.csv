@@ -1,0 +1,15 @@
+fixture,case_id,group,topic,vr,status,note
+DAT101_found.json,DAT101,D,Envelope,VR-NS-025–VR-NS-030,pass,captured
+DAT101_found.json,DAT101,C,Field Mapping,VR-NS-015–VR-NS-024,pass,secCode/tradeTime/type freeze; detail deferred
+DAT101_empty.json,DAT101,D,Envelope,VR-NS-025–VR-NS-030,pass,empty_but_valid
+DAT102_found.json,DAT102,D,Envelope,VR-NS-025–VR-NS-030,pass,captured
+DAT102_found.json,DAT102,C,Field Mapping,VR-NS-015–VR-NS-024,pass,secCode/tradeTime/type freeze; detail deferred
+DAT102_empty.json,DAT102,D,Envelope,VR-NS-025–VR-NS-030,pass,empty_but_valid
+DAT103_found.json,DAT103,D,Envelope,VR-NS-025–VR-NS-030,pass,captured
+DAT103_found.json,DAT103,C,Field Mapping,VR-NS-015–VR-NS-024,pass,secCode/tradeTime/type freeze; detail deferred
+DAT103_multi_type_found.json,DAT103,D,Envelope,VR-NS-025–VR-NS-030,pass,captured
+DAT103_multi_type_found.json,DAT103,C,Field Mapping,VR-NS-015–VR-NS-024,pass,secCode/tradeTime/type freeze; detail deferred
+DAT104_found.json,DAT104,D,Envelope,VR-NS-025–VR-NS-030,pass,captured
+DAT104_found.json,DAT104,C,Field Mapping,VR-NS-015–VR-NS-024,pass,secCode/tradeTime/type freeze; detail deferred
+DAT104_empty.json,DAT104,D,Envelope,VR-NS-025–VR-NS-030,pass,empty_but_valid
+DAT105_empty_but_valid_synthetic.json,DAT105,D,Envelope,VR-NS-025–VR-NS-030,pass,empty_but_valid

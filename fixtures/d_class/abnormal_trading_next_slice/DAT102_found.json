@@ -1,0 +1,77 @@
+{
+  "_fixture_meta": {
+    "purpose": "D-class abnormal_trading next-slice offline synthetic · denser-day cite 2026-07-02",
+    "case_id": "DAT102",
+    "component": "abnormal_trading",
+    "scenario": "captured",
+    "cninfo_called": false,
+    "synthetic": true,
+    "dense_day_cite": "2026-07-02",
+    "dense_day_cite_task": "D-FM-29",
+    "tier0_cite": [
+      "fixtures/d_class/abnormal_trading/sample_raw.json"
+    ],
+    "structure_cite": "fixtures/d_class/abnormal_trading_first_slice/DAT003_found.json",
+    "query_params": {
+      "sdate": "2026-07-02",
+      "edate": "2026-07-02",
+      "platecode": "",
+      "orderby": "",
+      "page": 1,
+      "rows": 30
+    }
+  },
+  "market_event": {
+    "event_id": "fixture_dat102_abn_600000_20260702",
+    "company_code": "600000",
+    "event_type": "abnormal_trading",
+    "event_time": "2026-07-02",
+    "source_endpoint": "https://www.cninfo.com.cn/data/statis/getMarketStatisticsData",
+    "source_record_id": "fixture_raw_abn_dat102",
+    "event_status": "captured",
+    "quality_status": "pass",
+    "lineage": {
+      "registry_source_id": "abnormal_trading",
+      "query_mode": "single_day_paged",
+      "query_params": {
+        "sdate": "2026-07-02",
+        "edate": "2026-07-02",
+        "platecode": "",
+        "orderby": "",
+        "page": 1,
+        "rows": 30
+      },
+      "fetch_time": "2026-07-15T21:00:00+08:00",
+      "raw_record_hash": "sha256:synthetic_abn_dat102_captured_20260702",
+      "raw_record_json": {
+        "secCode": "600000",
+        "secName": "浦发银行",
+        "tradeTime": "2026-07-02",
+        "type": "涨幅偏离值达7%",
+        "buyTotal": null,
+        "sellTotal": null,
+        "buyPercent": null,
+        "sellPercent": null,
+        "detail": [
+          {
+            "buyOrgName": "合成买入营业部DAT102",
+            "buyOrgBuyTotal": "100,000.00",
+            "buyOrgSellTotal": "0.00",
+            "sellOrgName": "合成卖出营业部DAT102",
+            "sellOrgBuyTotal": "0.00",
+            "sellOrgSellTotal": "100,000.00"
+          }
+        ]
+      },
+      "lineage_status": "discovered"
+    }
+  },
+  "abnormal_trading": {
+    "company_code": "600000",
+    "company_name": "浦发银行",
+    "trade_date": "2026-07-02",
+    "public_information_reason": "涨幅偏离值达7%",
+    "quality_status": "pass",
+    "detail_nested_deferred": true
+  }
+}
