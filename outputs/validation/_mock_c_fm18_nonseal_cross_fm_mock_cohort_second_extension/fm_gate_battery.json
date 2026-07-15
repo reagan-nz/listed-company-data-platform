@@ -1,0 +1,28 @@
+{
+  "generated_at": "2026-07-15T13:17:23Z",
+  "task_id": "C-FM-18",
+  "gate": "PASS_OFFLINE",
+  "layer_gates": {
+    "nonseal_cohort_registry": "PASS_OFFLINE",
+    "fingerprint_chain": "PASS_OFFLINE",
+    "nonseal_chain_continuity": "PASS_OFFLINE",
+    "frozen_mock_isolation": "PASS_OFFLINE",
+    "harvest_exclusion_consistency": "PASS_OFFLINE",
+    "protected_write_guard": "PASS_OFFLINE",
+    "protected_csv_registry": "PASS_OFFLINE",
+    "fm_gate_battery": "PASS_OFFLINE"
+  },
+  "fm01_gate": "PASS_OFFLINE",
+  "fm02_gate": "PASS_OFFLINE",
+  "fm03_gate": "PASS_OFFLINE",
+  "fm04_gate": "PASS_OFFLINE",
+  "fm05_gate": "PASS_OFFLINE",
+  "fm12_gate": "PASS_OFFLINE",
+  "fm13_gate": "PASS_OFFLINE",
+  "fm14_gate": "PASS_OFFLINE",
+  "fm15_gate": "PASS_OFFLINE",
+  "fm16_gate": "PASS_OFFLINE",
+  "fm17_gate": "PASS_OFFLINE",
+  "cninfo_calls": 0,
+  "seal_chain_extended": false
+}

@@ -1,0 +1,28 @@
+{
+  "generated_at": "2026-07-15T13:17:23Z",
+  "task_id": "C-FM-18",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "seal_chain_extended": false,
+  "frozen_extension_fp_sha256": "3d9354e2571b46b5d67787b43aada270882d827bf00d7f91f8d3154c6da5d8ff",
+  "frozen_drift_fp_sha256": "8ce3951c29881b114b5b315949d7564459ef8b78255cd4c18ca39784151b576b",
+  "frozen_boundary_fp_sha256": "3dc855f0de7a04758293d54ce38b97b0c659270c7d34d3ad03ae51c3ee0fd698",
+  "frozen_attestation_fp_sha256": "d0cb247d8d7fd6caefc2e034e16382906f2894cb90c52a73071869583b68031c",
+  "frozen_readiness_fp_sha256": "a5e9f38528e691e91622f16b07280f0652438207084c64b4595857caf90964ea",
+  "fingerprint": {
+    "row_count": 106,
+    "ok_count": 106,
+    "fail_count": 0,
+    "layers": {
+      "nonseal_cohort_registry": 23,
+      "fingerprint_chain": 12,
+      "nonseal_chain_continuity": 6,
+      "frozen_mock_isolation": 22,
+      "harvest_exclusion_consistency": 4,
+      "protected_write_guard": 5,
+      "protected_csv_registry": 22,
+      "fm_gate_battery": 12
+    },
+    "fingerprint_sha256": "aa00b8c93ba0f2e0c193c8b239248afff2668b5ad7250d6c93ecbfe540999259"
+  }
+}
