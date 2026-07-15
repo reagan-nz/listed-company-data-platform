@@ -212,7 +212,8 @@ class AtSdNextSliceScaleOfflineTests(unittest.TestCase):
         self.assertEqual(len(sd_rows), 5)
         self.assertEqual(sd_rows[0]["case_id"], "DSD001")
 
-    def test_at_universe_sketch_five_cases_pending_dense_day(self) -> None:
+    def test_at_universe_sketch_five_cases_dense_day_cited(self) -> None:
+        """D-FM-29 后 sketch 解析为 2026-07-02；仍 draft_not_locked · 禁 2026-07-03。"""
         rows = _load_csv(AT_SKETCH_CSV)
         self.assertEqual(len(rows), 5)
         self.assertEqual(tuple(r["case_id"] for r in rows), AT_CASE_IDS)
@@ -220,7 +221,7 @@ class AtSdNextSliceScaleOfflineTests(unittest.TestCase):
             self.assertEqual(row["component"], "abnormal_trading")
             self.assertEqual(row["next_slice_include"], "yes")
             self.assertEqual(row["universe_lock_status"], "draft_not_locked")
-            self.assertEqual(row["anchor_tdate"], "PENDING_DENSE_DAY_CITE")
+            self.assertEqual(row["anchor_tdate"], "2026-07-02")
             self.assertNotIn(row["anchor_tdate"], FORBIDDEN_AT_TDATE)
             self.assertIn("exclude_688671", row["exclude_flags"])
             self.assertIn("exclude_301259", row["exclude_flags"])
@@ -295,6 +296,7 @@ class AtSdNextSliceScaleOfflineTests(unittest.TestCase):
 
         self.assertIn("DAT101", planning)
         self.assertIn("DSD101", planning)
+        # D-FM-28 规划快照仍保留 PENDING 门禁原文；sketch 已由 D-FM-29 解析
         self.assertIn("PENDING_DENSE_DAY_CITE", planning)
         self.assertIn(
             "d_class_at_sd_next_slice_scale_planning_gate = READY_FOR_APPROVAL",

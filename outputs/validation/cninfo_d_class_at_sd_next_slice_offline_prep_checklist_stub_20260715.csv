@@ -3,14 +3,14 @@ ATSD-NS-01,at_sd_scale_planning_md,ready,plans/cninfo_d_class_at_sd_next_slice_s
 ATSD-NS-02,candidate_matrix_csv,ready,outputs/validation/cninfo_d_class_at_sd_next_slice_candidate_matrix_20260715.csv,rank=1 AT/SD; FIA further deferred; ESS H3/H4 excluded
 ATSD-NS-03,recommendation_md,ready,outputs/validation/cninfo_d_class_at_sd_next_slice_recommendation_20260715.md,Level-2 phrase NOT required; NOT verified
 ATSD-NS-04,planning_summary_md,ready,outputs/validation/cninfo_d_class_at_sd_next_slice_planning_summary_20260715.md,CNINFO=0; first-slice frozen; FIA untouched
-ATSD-NS-05,at_universe_draft_sketch_csv,ready,outputs/validation/cninfo_d_class_abnormal_trading_next_slice_universe_draft_sketch_20260715.csv,DAT101-DAT105; PENDING_DENSE_DAY_CITE; draft_not_locked
+ATSD-NS-05,at_universe_draft_sketch_csv,ready,outputs/validation/cninfo_d_class_abnormal_trading_next_slice_universe_draft_sketch_20260715.csv,DAT101-DAT105; anchor=2026-07-02 D-FM-29 cite; draft_not_locked
 ATSD-NS-06,sd_universe_draft_sketch_csv,ready,outputs/validation/cninfo_d_class_shareholder_data_next_slice_universe_draft_sketch_20260715.csv,DSD101-DSD105; 20260331+20251231; draft_not_locked
 ATSD-NS-07,next_step_recommendation_md,ready,outputs/validation/cninfo_d_class_at_sd_next_slice_next_step_recommendation_20260715.md,denser-day cite / SD approval next; ESS pause hold
 ATSD-NS-08,scale_offline_smoke_test,ready,lab/test_cninfo_d_class_at_sd_next_slice_scale_offline.py,sketch+matrix+freeze checks; CNINFO=0
 ATSD-NS-09,dfm28_evidence_md,ready,outputs/validation/cninfo_d_class_at_sd_dfm28_next_slice_scale_offline_20260715.md,task wall + gates + allow-list
 ATSD-NS-10,dfm28_matrix_csv,ready,outputs/validation/cninfo_d_class_at_sd_dfm28_next_slice_scale_matrix_20260715.csv,AT+SD case-level scale matrix
 ATSD-NS-11,caveat_ledger_csv,ready,outputs/validation/cninfo_d_class_at_sd_next_slice_final_caveat_ledger.csv,CAV-AT-NS / CAV-SD-NS
-ATSD-NS-STUB-01,at_next_slice_universe_lock,blocked_until_dense_day_cite,n/a,PENDING_DENSE_DAY_CITE must resolve before lock
+ATSD-NS-STUB-01,at_next_slice_universe_lock,blocked_until_approval_package,n/a,D-FM-29 cite=2026-07-02; lock still requires approval package
 ATSD-NS-STUB-02,sd_next_slice_universe_lock,blocked_until_next_task,n/a,sketch only; lock in future approval package
 ATSD-NS-STUB-03,next_slice_tier1_fixtures,blocked_until_next_task,n/a,cite first-slice fixtures; no new fixture root yet
 ATSD-NS-STUB-04,next_slice_runner_extension,forbidden_this_round,n/a,no --abnormal-trading-next-slice / --shareholder-data-next-slice
