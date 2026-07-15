@@ -1,0 +1,96 @@
+{
+  "generated_at": "2026-07-15T15:44:47Z",
+  "task_id": "C-FM-39",
+  "fingerprint_sha256": "9e6438ffa64e52a5ed512f9848a4075347c78757d8cae473fb698d45f164c3d7",
+  "resume_formula": "28+1+0=29",
+  "sample_denials": [
+    {
+      "proposed": {
+        "improved": 29,
+        "same": 1,
+        "worse": 0,
+        "total": 30
+      },
+      "frozen": {
+        "improved": 28,
+        "same": 1,
+        "worse": 0,
+        "total": 29
+      },
+      "resume_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_formula_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "improved": 28,
+        "same": 0,
+        "worse": 0,
+        "total": 28
+      },
+      "frozen": {
+        "improved": 28,
+        "same": 1,
+        "worse": 0,
+        "total": 29
+      },
+      "resume_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_formula_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "improved": 28,
+        "same": 1,
+        "worse": 1,
+        "total": 30
+      },
+      "frozen": {
+        "improved": 28,
+        "same": 1,
+        "worse": 0,
+        "total": 29
+      },
+      "resume_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_formula_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "improved": 28,
+        "same": 1,
+        "worse": 0,
+        "total": 29
+      },
+      "frozen": {
+        "improved": 28,
+        "same": 1,
+        "worse": 0,
+        "total": 29
+      },
+      "resume_formula_holds": true,
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "resume_formula_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "resume_formula_identity_lock",
+    "resume_improved": 28,
+    "resume_same": 1,
+    "resume_worse": 0,
+    "resume_total": 29,
+    "resume_formula": "28+1+0=29",
+    "deny_formula_mutate": true,
+    "deny_resume_inflate": true,
+    "deny_resume_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

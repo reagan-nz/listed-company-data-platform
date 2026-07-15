@@ -1,0 +1,48 @@
+{
+  "generated_at": "2026-07-15T15:44:47Z",
+  "task_id": "C-FM-39",
+  "fingerprint_sha256": "e652acc962993e51c8c7fc6f30eefea118031ac9b9a7fa38437acbd4721793c5",
+  "combined_dryrun_coverage": 1053,
+  "sample_denials": [
+    {
+      "proposed_combined_dryrun_coverage": 1054,
+      "frozen_combined_dryrun_coverage": 1053,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "combined_dryrun_coverage_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_combined_dryrun_coverage": 1052,
+      "frozen_combined_dryrun_coverage": 1053,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "combined_dryrun_coverage_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_combined_dryrun_coverage": 0,
+      "frozen_combined_dryrun_coverage": 1053,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "combined_dryrun_coverage_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_combined_dryrun_coverage": 1053,
+      "frozen_combined_dryrun_coverage": 1053,
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "combined_dryrun_coverage_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "combined_dryrun_coverage_identity_lock",
+    "combined_dryrun_coverage": 1053,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "deny_coverage_mutate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
