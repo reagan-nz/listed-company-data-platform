@@ -1,0 +1,35 @@
+cases:
+- case_id: independent_director_annual_report_work_system_known_001
+  case_status: ready
+  source_id: cninfo_general_announcement_pdf
+  company_code: '600066'
+  company_name: 宇通客车
+  title_pattern: 独立董事年度报告工作制度
+  expected_document_type: announcement
+  date_start: '2025-04-24'
+  date_end: '2025-04-27'
+  expected_route_to: cninfo_general_announcement_pdf
+  expected_pdf_url_available: true
+  notes: B-FM-44 自 harvest 证据晋升（独立董事年度报告工作制度 routing 边角：旧逻辑因 子串「年度报告」误进 annual_report
+    / periodic）：宇通客车 600066，独立董事年度 报告工作制度（announcement_id=1223314160，披露日 2025-04-25）。B-FM-44
+    前 `_periodic_document_type` 命中「年度报告」→ periodic；硬化后 announcement。 title_pattern
+    取窄串「独立董事年度报告工作制度」（勿裸「工作制度」/「年度报告」； ≠独立非执行董事工作制度；≠真·公司年度报告）。与提名人声明/专门会议审核意见 可区分。来源
+    outputs/validation/cninfo_b_class_erad_scale_200/reports/ b_class_erad_scale_200_report.csv
+    行 BD2E028（quality=pass）。 不写 verified；不下载 PDF。
+- case_id: independent_director_annual_report_work_system_known_002
+  case_status: ready
+  source_id: cninfo_general_announcement_pdf
+  company_code: '301198'
+  company_name: 喜悦智行
+  title_pattern: 独立董事年报工作制度
+  expected_document_type: announcement
+  date_start: '2025-06-03'
+  date_end: '2025-06-06'
+  expected_route_to: cninfo_general_announcement_pdf
+  expected_pdf_url_available: true
+  notes: B-FM-44 自 harvest 证据晋升（独立董事年报工作制度 known_002；对称 known_001 「年度报告」全称变体）：喜悦智行
+    301198，独立董事年报工作制度 （announcement_id=1223763870，披露日 2025-06-04）。旧逻辑因子串「年报」误进 annual_report；硬化后
+    announcement。title_pattern 取窄串「独立董事年报工作制度」 （勿裸「年报」/「工作制度」；与 known_001「独立董事年度报告工作制度」互斥；
+    ≠独立非执行董事工作制度）。来源 outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
+    b_class_erad_fuller_next_slice2_report.csv 行 BD2E695（quality=pass）。 不写 verified；不下载
+    PDF。

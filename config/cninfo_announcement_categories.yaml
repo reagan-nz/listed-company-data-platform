@@ -183,6 +183,8 @@ categories:
       - 募集资金管理制度  # B-FM-36：窄；勿裸「管理制度」/「制度」
       - 独立非执行董事工作制度  # B-FM-37：窄；勿裸「工作制度」/「制度」
       - 总经理工作细则  # B-FM-37：窄；勿裸「工作细则」/「细则」
+      - 独立董事年度报告工作制度  # B-FM-44：窄；含子串「年度报告」须先于 periodic；勿裸「工作制度」
+      - 独立董事年报工作制度  # B-FM-44：窄；含子串「年报」须先于 periodic；≠独立非执行董事工作制度
       - 货币资金管理制度  # B-FM-38：窄；勿裸「管理制度」/「制度」
       - 对外担保管理制度  # B-FM-38：窄；勿裸「管理制度」；与「对外担保的情况简报」可区分
       - 子公司管理制度  # B-FM-39：窄；覆盖「分、子公司管理制度」；勿裸「管理制度」/「制度」
@@ -248,6 +250,9 @@ categories:
       B-FM-41：「激励对象名单」/「销售简报」旧逻辑落 other；窄 pattern 一律
       announcement（勿裸「名单」/「简报」；≠对外担保的情况简报；闭合 remaining other；
       不扩 schema）。
+      B-FM-44：独立董事「年度报告工作制度」/「年报工作制度」含子串「年度报告」/
+      「年报」会误进 periodic；窄 pattern 一律 announcement（勿裸「工作制度」/
+      「年报」；≠独立非执行董事工作制度；真·年度报告仍 periodic；不扩 schema）。
 
 # 延期披露 / 摘要 / 提示性预告等：从 periodic 排除后的候选路由（非独立 source，归入 general 或 future disclosure_related）
 excluded_from_periodic_routing:
