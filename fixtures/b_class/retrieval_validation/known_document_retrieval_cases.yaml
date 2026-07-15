@@ -268,7 +268,30 @@ cases:
       b_class_erad_fuller_next_slice2_report.csv 行 BD2E648（quality=pass）。
       不写 verified；不下载 PDF。
 
-  # --- supervisory_board / 监事会决议 × 3（document_type=announcement；非 board_resolution）---
+  - case_id: board_resolution_known_003
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "301027"
+    company_name: "华蓝集团"
+    title_pattern: "第五届董事会第五次会议决议公告"
+    expected_document_type: board_resolution
+    date_start: "2025-06-29"
+    date_end: "2025-07-02"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-51 自 harvest 证据晋升（董事会决议 known_003；另一届次全锚定边角；
+      对称 supervisory known_004）：华蓝集团 301027，第五届董事会第五次会议决议公告
+      （announcement_id=1224036271，披露日 2025-06-30）。路由已有董事会决议 →
+      board_resolution；本包不改路由。title_pattern 取
+      「第五届董事会第五次会议决议公告」：与 known_002
+      「第三届董事会第四次会议决议公告」及 known_001 宽串「董事会决议公告」可区分。
+      勿裸「决议公告」。与监事会届次决议可区分。来源
+      outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
+      b_class_erad_fuller_next_slice2_session2_report.csv 行 BD2E668（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  # --- supervisory_board / 监事会决议 × 4（document_type=announcement；非 board_resolution）---
   - case_id: supervisory_board_known_001
     case_status: ready
     source_id: cninfo_general_announcement_pdf
@@ -334,6 +357,30 @@ cases:
       「董事会决议公告」。与「监事会关于…年度报告的审核意见」（含年报→periodic）
       可区分。来源 outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
       b_class_erad_fuller_next_slice2_session2_report.csv 行 BD2E702（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: supervisory_board_known_004
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "603069"
+    company_name: "海汽集团"
+    title_pattern: "第四届监事会第三十次会议决议公告"
+    expected_document_type: announcement
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-51 自 harvest 证据晋升（监事会决议 known_004；届次全锚定另一案；
+      闭合 B-FM-50 推迟的 BD2E778）：海汽集团 603069，海汽集团第四届监事会第三十次会议决议公告
+      （announcement_id=1224016686，披露日 2025-06-27）。路由已有 general_006
+      「监事会决议公告」→ announcement；本包不改路由。title_pattern 取
+      「第四届监事会第三十次会议决议公告」：与 known_003
+      「第四届监事会第五次会议决议公告」、known_001/002 次数/助词变体及董事会
+      「董事会决议公告」可区分。与「监事会关于…年度报告的审核意见」
+      （含年报→periodic）可区分。来源
+      outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
+      b_class_erad_fuller_next_slice2_session2_report.csv 行 BD2E778（quality=pass）。
       不写 verified；不下载 PDF。
 
   # --- legal_opinion / 法律意见书 × 6（document_type=announcement；非 shareholder_meeting_material）---

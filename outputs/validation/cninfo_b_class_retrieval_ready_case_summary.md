@@ -20,9 +20,9 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 
 | 指标 | 数值 |
 |------|------|
-| total_cases | **86** |
+| total_cases | **88** |
 | placeholder | **2** |
-| ready | **84** |
+| ready | **86** |
 | retired | **0** |
 | invalid_ready | **0** |
 | result | **PASS** |
@@ -42,9 +42,11 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 - `ir_activity_known_003` (known_document) → `cninfo_meeting_notice_pdf`
 - `board_resolution_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `board_resolution_known_002` (known_document) → `cninfo_general_announcement_pdf`
+- `board_resolution_known_003` (known_document) → `cninfo_general_announcement_pdf`
 - `supervisory_board_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `supervisory_board_known_002` (known_document) → `cninfo_general_announcement_pdf`
 - `supervisory_board_known_003` (known_document) → `cninfo_general_announcement_pdf`
+- `supervisory_board_known_004` (known_document) → `cninfo_general_announcement_pdf`
 - `legal_opinion_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `legal_opinion_known_002` (known_document) → `cninfo_general_announcement_pdf`
 - `legal_opinion_known_003` (known_document) → `cninfo_general_announcement_pdf`

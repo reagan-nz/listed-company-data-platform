@@ -1,0 +1,41 @@
+# B-FM-51 live allow-list — 仅新晋 supervisory_board_known_004 /
+# board_resolution_known_003
+status: live_sample_scoped_B-FM-51
+verified: false
+notes: B-FM-51 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS including supervisory known_001–003, board known_001/002, articles known_005 and B-FM-50
+cases:
+  - case_id: supervisory_board_known_004
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "603069"
+    company_name: "海汽集团"
+    title_pattern: "第四届监事会第三十次会议决议公告"
+    expected_document_type: announcement
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-51 live allow-list（监事会届次决议 known_004）：
+      harvest BD2E778 海汽集团 603069 ann=1224016686 2025-06-27。
+      title_pattern 取「第四届监事会第三十次会议决议公告」
+      （≠ known_001–003 届次/助词变体 / 董事会决议）。
+      不写 verified；不下载 PDF。
+
+  - case_id: board_resolution_known_003
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "301027"
+    company_name: "华蓝集团"
+    title_pattern: "第五届董事会第五次会议决议公告"
+    expected_document_type: board_resolution
+    date_start: "2025-06-29"
+    date_end: "2025-07-02"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-51 live allow-list（董事会届次决议 known_003）：
+      harvest BD2E668 华蓝集团 301027 ann=1224036271 2025-06-30。
+      title_pattern 取「第五届董事会第五次会议决议公告」
+      （≠ known_001 宽串 / known_002 第三届第四次 / 监事会决议）。
+      不写 verified；不下载 PDF。
