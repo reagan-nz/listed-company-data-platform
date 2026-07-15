@@ -1,0 +1,6 @@
+case_id,company_code,company_name,anchor_tdate,shared_probe_key,query_type,expected_behavior,dryrun_status,planned_request_count,cninfo_called,live_found_path_DSC101_105,fixture_tier1_refs,final_effective_status,notes
+DSC101,000550,江铃汽车,2026-07-03,type_desc_tdate_daily_2026-07-03,desc,captured_normal_or_empty_but_valid,planned_ok,1,false,NOT_PROVEN,DSC101_found.json;DSC101_empty.json,s4_planned_ok_shared_2026-07-03,D-FM-51 dry-run only; not live
+DSC102,000895,双汇发展,2026-07-03,type_desc_tdate_daily_2026-07-03,desc,captured_normal_or_empty_but_valid,planned_ok,1,false,NOT_PROVEN,DSC102_found.json;DSC102_empty.json,s4_planned_ok_shared_2026-07-03,SZSE diversify; cite != live found-path
+DSC103,600000,浦发银行,2026-07-03,type_desc_tdate_daily_2026-07-03,desc,captured_normal_or_empty_but_valid,planned_ok,1,false,NOT_PROVEN,DSC103_found.json;DSC103_empty.json,s4_planned_ok_shared_2026-07-03,SSE diversify; not live-proven
+DSC104,002415,海康威视,2026-07-03,type_desc_tdate_daily_2026-07-03,desc,captured_normal_or_empty_but_valid,planned_ok,1,false,NOT_PROVEN,DSC104_found.json;DSC104_empty.json,s4_planned_ok_shared_2026-07-03,mixed found/empty; not live
+DSC105,601988,中国银行,2026-07-03,type_desc_tdate_daily_2026-07-03,desc,empty_but_valid,planned_ok,1,false,NOT_PROVEN,DSC105_empty_but_valid_synthetic.json,s4_planned_ok_empty_control_2026-07-03,empty control; do not forced pass
