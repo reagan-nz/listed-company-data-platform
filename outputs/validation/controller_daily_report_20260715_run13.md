@@ -5,6 +5,7 @@ _Mission Execution Engine v4 Upgrade — Asynchronous Continuous Autonomous Exec
 | Item | Value |
 |------|-------|
 | HEAD start | `972ecdf` |
+| HEAD end | `d7274f6` |
 | Nature | **Architecture upgrade**（非同步多波执行周期） |
 | Engine delivered | `mission_execution_engine_v4` |
 | Async demo | counterfactual replay of Run 12 under v4 scheduler |
