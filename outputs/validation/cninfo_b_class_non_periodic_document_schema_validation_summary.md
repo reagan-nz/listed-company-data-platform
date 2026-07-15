@@ -22,10 +22,10 @@ _生成时间：2026-07-15（offline known-document benchmark → non-periodic m
 
 | 指标 | 数值 |
 |------|------|
-| benchmark_total | **34** |
-| seeded_non_periodic | **26** |
+| benchmark_total | **38** |
+| seeded_non_periodic | **30** |
 | skipped_periodic | **8** |
-| schema_pass | **26** |
+| schema_pass | **30** |
 | schema_fail | **0** |
 | raw_file_seeded | **0** |
 
@@ -33,7 +33,7 @@ _生成时间：2026-07-15（offline known-document benchmark → non-periodic m
 
 - `cninfo_inquiry_reply_pdf`: **3**
 - `cninfo_meeting_notice_pdf`: **3**
-- `cninfo_general_announcement_pdf`: **20**
+- `cninfo_general_announcement_pdf`: **24**
 
 ## 5. 按 document_type 统计
 
@@ -43,14 +43,15 @@ _生成时间：2026-07-15（offline known-document benchmark → non-periodic m
 - `investor_relations_activity`: **1**
 - `board_resolution`: **1**
 - `shareholder_meeting_material`: **1**
-- `announcement`: **17**
+- `announcement`: **21**
 - `other`: **1**
 
 ## 6. false_positive_reason 同源覆盖（fixture metadata）
 
 - `announcement_preview`: **4**
 - `wrong_company`: **4**
-- `(none)`: **18**
+- `unrelated_announcement`: **6**
+- `(none)`: **16**
 
 Document fixture：`fixtures/b_class/document/non_periodic_document_fixtures.jsonl`
 
@@ -71,7 +72,7 @@ Non-periodic fixtures 为 **title-only metadata**，无 `pdf_url`，**不生成*
 ## 8. 下一步
 
 1. 可选：同步 parse_run dry-run（当前可能仍停在旧 non_periodic 行数）。
-2. 可选：`unrelated_announcement` false_positive lineage（validation_design §7）。
+2. validation_design §7 标题路由 FP 类已齐；后续价值在 retrieval/live 验证，非再开离线 FP lineage。
 3. 后续用真实 known-document benchmark 替换离线标题样例。
 4. **暂不解析 PDF；不重开 BD2E624。**
 

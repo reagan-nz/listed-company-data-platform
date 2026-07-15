@@ -40,7 +40,18 @@ FALSE_POSITIVE_REASONS = {
     "announcement_preview": "announcement_preview",
     "wrong_company": "wrong_company",
     "wrong_period": "wrong_period",
+    "unrelated_announcement": "unrelated_announcement",
 }
+
+# validation_design §7 unrelated_announcement：含报告字样但非全文的其他无关公告关键词
+_UNRELATED_ANNOUNCEMENT_MARKERS = (
+    "补充公告",
+    "更正公告",
+    "取消披露",
+    "审计机构",
+    "内部控制评价报告",
+    "非标意见",
+)
 
 # 本公司报告期提示：「关于披露第一季度报告…」——非交叉披露
 _OWN_PERIOD_AFTER_GUANYU = re.compile(
@@ -206,6 +217,19 @@ def _apply_wrong_period_fp(
     )
 
 
+def _is_unrelated_announcement(title: str, hits: Optional[List[str]] = None) -> bool:
+    """含报告字样但非定期全文，且不属于 delayed/summary/preview/wrong_company。"""
+    if not title:
+        return False
+    haystack = "".join(hits or []) + title
+    if any(m in haystack for m in _UNRELATED_ANNOUNCEMENT_MARKERS):
+        return True
+    # _periodic_blocked 路径：补充/更正/取消（取消披露已在 markers；裸「取消」仍覆盖）
+    if _periodic_blocked(title):
+        return True
+    return False
+
+
 def _excluded_false_positive_reason(
     hits: List[str],
     *,
@@ -226,6 +250,9 @@ def _excluded_false_positive_reason(
         return FALSE_POSITIVE_REASONS["announcement_preview"]
     if block_key == "report_summary" or any(p in haystack for p in ("摘要", "解读")):
         return FALSE_POSITIVE_REASONS["summary"]
+    # §7 最后一类：其他无关公告（补充/更正/审计机构/内控评价等）
+    if block_key == "unrelated_announcement" or _is_unrelated_announcement(title, hits):
+        return FALSE_POSITIVE_REASONS["unrelated_announcement"]
     return ""
 
 
@@ -339,7 +366,7 @@ def route_title(
         excluded_from_periodic = True
         matched.extend(periodic_exclusion_hits)
 
-    # Priority 4: excluded_from_periodic_routing (delayed / summary / preview / wrong_company)
+    # Priority 4: excluded_from_periodic_routing (delayed / summary / preview / wrong_company / unrelated)
     for key, block in excluded_cfg.items():
         if not isinstance(block, dict):
             continue

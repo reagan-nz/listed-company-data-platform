@@ -96,8 +96,9 @@ documents:
     expected_route_to: cninfo_general_announcement_pdf
     expected_document_type: announcement
     expected_classification: excluded_from_periodic_but_routed
+    expected_false_positive_reason: unrelated_announcement
     benchmark_group: false_positive_guard
-    notes: "含报告字样但非定期报告全文"
+    notes: "Run12W4 — 含报告字样但非全文；fp=unrelated_announcement（§7 其他无关公告）"
 
   - benchmark_id: periodic_false_positive_004
     title: "2024年第三季度报告摘要"
@@ -210,8 +211,9 @@ documents:
     expected_route_to: cninfo_general_announcement_pdf
     expected_document_type: announcement
     expected_classification: excluded_from_periodic_but_routed
+    expected_false_positive_reason: unrelated_announcement
     benchmark_group: false_positive_guard
-    notes: "Run11 — 更正公告不得路由为 periodic 全文（_periodic_blocked）；与补充公告对称"
+    notes: "Run12W4 — 更正公告不得路由为 periodic 全文；fp=unrelated_announcement（非 preview）"
 
   # Run 12 — wrong_company 交叉披露 lineage（与 announcement_preview 相邻但语义不同）
   - benchmark_id: periodic_false_positive_010
@@ -290,3 +292,40 @@ documents:
     expected_false_positive_reason: wrong_period
     benchmark_group: false_positive_guard
     notes: "Run12W2 — 同年错季（Q3 vs expected Q1）；fp=wrong_period"
+
+  # Run 12 Wave 4 — unrelated_announcement 其他无关公告 lineage（validation_design §7 最后一类）
+  - benchmark_id: periodic_false_positive_018
+    title: "关于取消披露2024年年度报告的公告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: excluded_from_periodic_but_routed
+    expected_false_positive_reason: unrelated_announcement
+    benchmark_group: false_positive_guard
+    notes: "Run12W4 — 取消披露含年度报告字样；fp=unrelated_announcement"
+
+  - benchmark_id: periodic_false_positive_019
+    title: "关于聘任2024年年度报告审计机构的公告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: excluded_from_periodic_but_routed
+    expected_false_positive_reason: unrelated_announcement
+    benchmark_group: false_positive_guard
+    notes: "Run12W4 — 审计机构变更/聘任；修复前误 route periodic；fp=unrelated_announcement"
+
+  - benchmark_id: periodic_false_positive_020
+    title: "某某公司2024年年度报告内部控制评价报告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: excluded_from_periodic_but_routed
+    expected_false_positive_reason: unrelated_announcement
+    benchmark_group: false_positive_guard
+    notes: "Run12W4 — 内控评价报告含子串年度报告；非年报全文；fp=unrelated_announcement"
+
+  - benchmark_id: periodic_false_positive_021
+    title: "关于2024年年度报告非标意见涉及事项的专项说明"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: excluded_from_periodic_but_routed
+    expected_false_positive_reason: unrelated_announcement
+    benchmark_group: false_positive_guard
+    notes: "Run12W4 — 非标意见专项说明；修复前误 route periodic；fp=unrelated_announcement"

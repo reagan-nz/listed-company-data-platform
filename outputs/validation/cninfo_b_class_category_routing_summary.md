@@ -20,12 +20,12 @@ _生成时间：2026-07-15（离线 title routing validation）_
 
 | 指标 | 数值 |
 |------|------|
-| total_benchmarks | **34** |
-| route_match_count | **34** |
+| total_benchmarks | **38** |
+| route_match_count | **38** |
 | route_mismatch_count | **0** |
-| document_type_match_count | **34** |
+| document_type_match_count | **38** |
 | ambiguous_count | **1** |
-| periodic_false_positive_caught_count | **17** / **17** |
+| periodic_false_positive_caught_count | **21** / **21** |
 
 **总体结论：** **PASS**
 
@@ -53,8 +53,8 @@ _生成时间：2026-07-15（离线 title routing validation）_
 
 ### `false_positive_guard`
 
-- total: **17**
-- route_match: **17** / **17**
+- total: **21**
+- route_match: **21** / **21**
 
 ## 5. 错误案例
 

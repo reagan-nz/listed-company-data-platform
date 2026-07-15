@@ -62,6 +62,13 @@ categories:
       - 解读
       - 交流会
       - 监管问询函
+      # unrelated_announcement（validation_design §7 其他无关公告）
+      - 补充公告
+      - 更正公告
+      - 取消披露
+      - 审计机构
+      - 内部控制评价报告
+      - 非标意见
     route_to:
       source_id: cninfo_periodic_report_pdf
       source_layer: document_corpus
@@ -204,6 +211,26 @@ excluded_from_periodic_routing:
       Cross-company disclosure tip (Phase 1 P1-AUD-022 class). Must not count as
       target issuer periodic full text. Entity-name forms (关于披露冀东水泥半年报…)
       are detected by validator heuristic; explicit 他司 patterns listed here.
+
+  # validation_design §7 最后一类：含报告字样但非定期全文的其他无关公告
+  # 例：补充/更正/取消披露、审计机构变更、内部控制评价报告、非标意见专项说明
+  # 非例：某某公司2024年年度报告（正式全文）；披露提示性公告 → announcement_preview
+  unrelated_announcement:
+    positive_patterns:
+      - 补充公告
+      - 更正公告
+      - 取消披露
+      - 审计机构
+      - 内部控制评价报告
+      - 非标意见
+    suggested_document_types:
+      - announcement
+    route_to:
+      source_id: cninfo_general_announcement_pdf
+    notes: >-
+      Catch-all for titles that mention periodic-report keywords but are not the
+      full report text and are not covered by delayed/summary/preview/wrong_company.
+      Must emit false_positive_reason=unrelated_announcement.
 
 # Sub Issue 2 旧 category_key → 新 routing 映射（供脚本迁移参考，非运行时路由）
 legacy_category_key_map:
