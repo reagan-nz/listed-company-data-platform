@@ -226,10 +226,40 @@ rejected_tasks:         # 持久化拒绝记录，每条含 task_id + reason_rej
 track_wave_index:       # 本轨内部波次计数（A-wave-1, A-wave-2, …）
 lifecycle:              # READY|EXECUTING|VALIDATING|COMMITTED|REFRESHING|IDLE_NO_TASK
 blocked_by_other_tracks:# 必须恒为 false（禁止因他轨未完成而阻塞本轨队列推进）
+queue_depth:            # len(active_task?1:0 + queued_tasks)；活跃轨 >= 1，prefer 2
 ```
 
 
 一轨 `queued_tasks` 头任务完成后，Controller 应立即对该轨做 refill 与下一次 dispatch 评估——**不等待**其他轨队列排空。
+
+
+
+## 7.3 Queue depth + agent ownership（v4 · Run 14 regression fix）
+
+
+活跃轨（存在有价值 `offline_safe` / 已授权 live 任务时）：
+
+
+```text
+queue_depth >= 1
+prefer queue_depth = 2   # active_task + one successor in queued_tasks
+```
+
+
+每个 `active_task` / `queued_tasks[]` 项必须携带：
+
+
+```text
+track: A|B|C|D
+executor: a-class-executor|b-class-executor|c-class-executor|d-class-executor
+controller_execution_allowed: false
+```
+
+
+完成后：移除完成任务 → successor 晋升 `active_task` → generate 新 successor 维持 prefer depth 2 → `dispatch(executor)`。
+
+
+**禁止：** Controller 因异步方便而亲自实现轨能力；异步只改变调度屏障，不改变执行所有权。
 
 
 

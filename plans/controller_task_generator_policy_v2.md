@@ -156,6 +156,8 @@ objective:            # one sentence capability intent
 expected_capability_improvement:
 risk_level:           # low | medium | high
 required_agent:       # a-class-executor | b-class-executor | c-class-executor | d-class-executor
+executor:             # REQUIRED alias of required_agent（v4 ownership）
+controller_execution_allowed: false   # REQUIRED · 恒 false · 禁止 Controller 代执行
 estimated_effort:     # S | M | L  or qualitative · never fake calendar ETA
 safety_class:         # offline_safe | approval_gated | live_gated
 maps_to_goal:         # cite track mission goal
@@ -164,6 +166,9 @@ approval_bypass:      # must be false
 
 
 Optional useful fields: `depends_on` · `milestone_id` · `predecessor_task_id` · `gap_id`.
+
+
+**v4 ownership：** 缺 `executor` / `controller_execution_allowed` 的候选不得晋升 READY；Controller 发现自身正在实现轨代码时必须中止并改派 `executor`。
 
 
 
