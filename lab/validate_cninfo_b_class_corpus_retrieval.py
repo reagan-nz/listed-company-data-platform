@@ -251,13 +251,14 @@ def _process_case(
             }
         would_live = "true"
         if case_type == "category_sample" and not _is_live_guard_case(case):
-            would_live = "false"
+            # 正向 category-sample 与 guard 均可 live metadata（B-FM-01）
+            would_live = "true"
         qs = "not_executed_dry_run" if dry_run else "live_mode_not_implemented"
         dry_status = "ready_for_future_live_validation"
         if case_type == "category_sample" and _is_live_guard_case(case):
             dry_status = "ready_for_guard_live_validation"
         elif case_type == "category_sample":
-            dry_status = "ready_category_sample_live_deferred"
+            dry_status = "ready_for_category_sample_live_validation"
             qs = "not_executed_dry_run"
         return {
             "case_id": case_id,
@@ -319,6 +320,7 @@ def run_dry_run(
             if r["dry_run_status"] in (
                 "ready_for_future_live_validation",
                 "ready_for_guard_live_validation",
+                "ready_for_category_sample_live_validation",
             )
         ),
         "query_executed": 0,
@@ -345,7 +347,12 @@ def _compute_live_result(stats: Dict[str, int]) -> str:
         return "FAIL"
     if stats.get("fail", 0) > 0 or stats.get("ambiguous", 0) > 0:
         return "PARTIAL"
-    if stats.get("pass", 0) == stats.get("query_executed", 0) and stats.get("query_executed", 0) > 0:
+    # 每 case 可多次 CNINFO（topSearch + query，或 sse+szse）；以 case pass 对齐 ready
+    if (
+        stats.get("pass", 0) > 0
+        and stats.get("pass", 0) == stats.get("ready_cases", 0)
+        and stats.get("query_executed", 0) > 0
+    ):
         return "LIVE_PASS"
     return "PARTIAL"
 
@@ -740,6 +747,14 @@ def _is_live_guard_case(case: Dict[str, Any]) -> bool:
     return str(case.get("case_id", "")).startswith("periodic_guard_")
 
 
+def _is_live_positive_category_sample(case: Dict[str, Any]) -> bool:
+    """正向 category-sample（非 periodic_guard_*）可做全市场 metadata 抽样 live。"""
+    if str(case.get("case_status")) != "ready":
+        return False
+    cid = str(case.get("case_id", ""))
+    return bool(cid) and not _is_live_guard_case(case)
+
+
 def _dedupe_announcements(records: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     seen: Set[str] = set()
     out: List[Dict[str, Any]] = []
@@ -917,6 +932,183 @@ def process_live_guard_case(
     ), query_count
 
 
+def process_live_category_sample(
+    case: Dict[str, Any],
+    registry_ids: Set[str],
+    document_types: Set[str],
+    categories_config: Dict[str, Any],
+) -> Tuple[Dict[str, str], int]:
+    """Live metadata 正向 category-sample：全市场标题抽样 + 类型/路由审计（不下载 PDF）。"""
+    ok, issues = _validate_ready_case(case, "category_sample", registry_ids, document_types)
+    expected_types = [str(t) for t in (case.get("expected_document_types") or [])]
+    base_kwargs = {
+        "source_id": str(case.get("source_id", "")),
+        "company_code": "",
+        "company_name": "",
+        "title_pattern": str(case.get("title_pattern", "")),
+        "expected_document_type": ",".join(expected_types),
+        "expected_route_to": str(case.get("source_id", "")),
+        "date_start": str(case.get("date_start", "")),
+        "date_end": str(case.get("date_end", "")),
+    }
+    if not ok:
+        return _live_row_from_case(
+            case,
+            **base_kwargs,
+            query_status="skipped_invalid_ready",
+            retrieval_status="request_failed",
+            case_result="skipped",
+            classification_status="unknown",
+            notes="; ".join(issues),
+        ), 0
+
+    title_pattern = str(case.get("title_pattern", ""))
+    date_start = str(case.get("date_start", ""))
+    date_end = str(case.get("date_end", ""))
+    se_date = f"{date_start} ~ {date_end}"
+    expected_min = int(case.get("expected_min_results") or 0)
+
+    all_records: List[Dict[str, Any]] = []
+    query_count = 0
+    last_query_status = "executed"
+    last_error = ""
+
+    for column in ("sse", "szse"):
+        payload = build_query_payload("", "", column, title_pattern, se_date)
+        records, query_status, err = fetch_announcements(payload)
+        query_count += 1
+        last_query_status = query_status
+        last_error = err
+        time.sleep(SLEEP_SECONDS)
+        if query_status != "executed":
+            break
+        all_records.extend(records)
+
+    if last_query_status != "executed":
+        return _live_row_from_case(
+            case,
+            **base_kwargs,
+            query_status=last_query_status,
+            retrieval_status="request_failed",
+            case_result="fail",
+            classification_status="unknown",
+            notes=last_error or "CNINFO request failed",
+        ), query_count
+
+    title_hits: List[Dict[str, Any]] = []
+    false_positive_hits: List[Dict[str, Any]] = []
+    type_mismatch_hits: List[Dict[str, Any]] = []
+
+    for rec in _dedupe_announcements(all_records):
+        title = _strip_html_tags(str(rec.get("announcementTitle") or ""))
+        if not _title_matches(title, title_pattern):
+            continue
+        pdf_url = build_pdf_url(rec.get("adjunctUrl"))
+        predicted_doc, predicted_route, class_status, fp_reason = _classify_match(
+            title,
+            categories_config,
+            expected_types[0] if expected_types else "announcement",
+            str(case.get("source_id", "")),
+        )
+        entry = {
+            "title": title,
+            "date": _format_announcement_date(rec.get("announcementTime")),
+            "pdf_available": bool(pdf_url),
+            "predicted_document_type": predicted_doc,
+            "predicted_route_to": predicted_route,
+            "classification_status": class_status,
+            "false_positive_reason": fp_reason,
+            "sec_code": str(rec.get("secCode") or ""),
+        }
+        if (
+            predicted_route == PERIODIC_REPORT_ROUTE
+            or predicted_doc in PERIODIC_DOC_TYPES
+        ):
+            false_positive_hits.append(entry)
+            continue
+        if expected_types and predicted_doc not in expected_types:
+            type_mismatch_hits.append(entry)
+            continue
+        title_hits.append(entry)
+
+    if false_positive_hits:
+        bad = false_positive_hits[0]
+        return _live_row_from_case(
+            case,
+            **base_kwargs,
+            query_status="executed",
+            retrieval_status="found",
+            matched_title=bad["title"],
+            matched_date=bad["date"],
+            matched_pdf_url_available=str(bad["pdf_available"]).lower(),
+            predicted_document_type=bad["predicted_document_type"],
+            predicted_route_to=bad["predicted_route_to"],
+            classification_status="misclassified",
+            case_result="fail",
+            false_positive_reason="category_sample_as_periodic_report",
+            notes=(
+                f"category-sample fail: {len(false_positive_hits)} title(s) misrouted "
+                f"to periodic_report; PDF not downloaded"
+            ),
+        ), query_count
+
+    if type_mismatch_hits and not title_hits:
+        bad = type_mismatch_hits[0]
+        return _live_row_from_case(
+            case,
+            **base_kwargs,
+            query_status="executed",
+            retrieval_status="found",
+            matched_title=bad["title"],
+            matched_date=bad["date"],
+            matched_pdf_url_available=str(bad["pdf_available"]).lower(),
+            predicted_document_type=bad["predicted_document_type"],
+            predicted_route_to=bad["predicted_route_to"],
+            classification_status="misclassified",
+            case_result="fail",
+            false_positive_reason="",
+            notes=(
+                f"category-sample fail: title matched but document_type not in "
+                f"expected={expected_types}; PDF not downloaded"
+            ),
+        ), query_count
+
+    if len(title_hits) >= expected_min:
+        good = title_hits[0]
+        return _live_row_from_case(
+            case,
+            **base_kwargs,
+            query_status="executed",
+            retrieval_status="found",
+            matched_title=good["title"],
+            matched_date=good["date"],
+            matched_pdf_url_available=str(good["pdf_available"]).lower(),
+            predicted_document_type=good["predicted_document_type"],
+            predicted_route_to=good["predicted_route_to"],
+            classification_status="classified_correctly",
+            case_result="pass",
+            false_positive_reason="",
+            notes=(
+                f"category-sample pass: {len(title_hits)} hit(s) "
+                f"(min={expected_min}); scanned={len(all_records)}; PDF not downloaded"
+            ),
+        ), query_count
+
+    return _live_row_from_case(
+        case,
+        **base_kwargs,
+        query_status="executed",
+        retrieval_status="not_found",
+        case_result="fail",
+        classification_status="not_found",
+        matched_pdf_url_available="false",
+        notes=(
+            f"category-sample fail: hits={len(title_hits)} < expected_min={expected_min}; "
+            f"type_mismatch={len(type_mismatch_hits)}; scanned={len(all_records)}"
+        ),
+    ), query_count
+
+
 def run_live_metadata(
     known_path: str,
     category_path: str,
@@ -961,6 +1153,10 @@ def run_live_metadata(
         c for c in _load_cases(category_path)
         if str(c.get("case_status")) == "ready" and _is_live_guard_case(c)
     ]
+    ready_category_samples = [
+        c for c in _load_cases(category_path)
+        if _is_live_positive_category_sample(c)
+    ]
 
     rows: List[Dict[str, str]] = []
     query_executed = 0
@@ -976,13 +1172,20 @@ def run_live_metadata(
         )
         rows.append(row)
         query_executed += qcount
+    for case in ready_category_samples:
+        row, qcount = process_live_category_sample(
+            case, registry_ids, document_types, categories_config
+        )
+        rows.append(row)
+        query_executed += qcount
 
-    ready_total = len(ready_known) + len(ready_guards)
+    ready_total = len(ready_known) + len(ready_guards) + len(ready_category_samples)
     stats = {
         "total_cases": len(rows),
         "ready_cases": ready_total,
         "ready_known": len(ready_known),
         "ready_guards": len(ready_guards),
+        "ready_category_samples": len(ready_category_samples),
         "invalid_ready": 0,
         "query_executed": query_executed,
         "pass": sum(1 for r in rows if r["case_result"] == "pass"),
@@ -1081,15 +1284,15 @@ def write_live_summary_md(
         "- **PDF 未下载**；**PDF 未解析**；未生成 chunk / embedding。",
         "- **不代表** corpus parsing 成功；**不代表** RAG 可用。",
         "- **不写 verified**；**不升级** source status。",
-        "- placeholder / non-guard category-sample case **未请求** CNINFO。",
+        "- placeholder category-sample case **未请求** CNINFO。",
         "- guard case（`periodic_guard_*`）仅做 route/type false-positive 审计。",
+        "- 正向 category-sample（`*_sample_*` ready）做全市场 metadata 抽样 + 类型审计。",
         "",
         "## 6. 下一步",
         "",
-        "1. 若 3/3 pass，可补 `board_resolution_known_001` / `periodic_guard_002` 等 ready case。",
+        "1. 若 category-sample live pass，可继续补 inquiry/meeting 类 placeholder。",
         "2. 若 fail，先分析 query params / title matching / date window。",
-        "3. 后续再考虑 category-sample live validation。",
-        "4. **暂不下载 PDF**；parse pipeline 仍保持 dry-run。",
+        "3. **暂不下载 PDF**；parse pipeline 仍保持 dry-run。",
         "",
         "## 附录",
         "",
@@ -1132,6 +1335,7 @@ def write_summary_md(
         if r["dry_run_status"] in (
             "ready_for_future_live_validation",
             "ready_for_guard_live_validation",
+            "ready_for_category_sample_live_validation",
         )
     ]
 

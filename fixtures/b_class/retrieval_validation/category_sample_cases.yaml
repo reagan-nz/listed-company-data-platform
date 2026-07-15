@@ -10,12 +10,12 @@ verified: false
 cases:
   # --- general announcement × 3 ---
   - case_id: general_sample_001
-    case_status: placeholder
+    case_status: ready
     source_id: cninfo_general_announcement_pdf
     source_category: announcement_pdf
     title_pattern: "董事会决议公告"
-    date_start: null
-    date_end: null
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
     expected_min_results: 1
     expected_document_types:
       - board_resolution
@@ -26,37 +26,47 @@ cases:
       - 第一季度报告
       - 第三季度报告
     notes: >-
-      Design-only category sample; requires real date window and sample companies
-      before live validation.
+      B-FM-01 自 harvest 证据晋升：博源化工 000683，九届二十九次董事会决议公告
+      （announcement_id=1224014247，披露日 2025-06-27）。来源
+      outputs/validation/cninfo_b_class_erad_scale_200/reports/b_class_erad_scale_200_report.csv
+      行 BD2E078（quality=pass）。类别抽样全市场窗；不写 verified；不下载 PDF。
 
   - case_id: general_sample_002
-    case_status: placeholder
+    case_status: ready
     source_id: cninfo_general_announcement_pdf
     source_category: announcement_pdf
     title_pattern: "权益分派"
-    date_start: null
-    date_end: null
+    date_start: "2025-06-17"
+    date_end: "2025-06-20"
     expected_min_results: 1
     expected_document_types:
       - announcement
     false_positive_guard_patterns:
       - 年度报告
       - 摘要
-    notes: Placeholder dividend-related announcement sample. Real date window TBD.
+    notes: >-
+      B-FM-01 自 harvest 证据晋升：中金岭南 000060，关于2024年度权益分派实施公告
+      （announcement_id=1223933551，披露日 2025-06-19）。来源
+      outputs/validation/cninfo_b_class_erad_scale_200/reports/b_class_erad_scale_200_report.csv
+      行 BD2E057（quality=pass）；同窗另有古井贡酒等。不写 verified；不下载 PDF。
 
   - case_id: general_sample_003
-    case_status: placeholder
+    case_status: ready
     source_id: cninfo_general_announcement_pdf
     source_category: announcement_pdf
     title_pattern: "回购"
-    date_start: null
-    date_end: null
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
     expected_min_results: 1
     expected_document_types:
       - announcement
     false_positive_guard_patterns:
       - 年度报告
-    notes: Design-only; share repurchase announcement corpus probe. No live dates yet.
+    notes: >-
+      B-FM-01 自 harvest 证据晋升：威孚高科 000581，关于部分回购股份注销完成暨股份变动的公告
+      （announcement_id=1224013428，披露日 2025-06-27）。来源
+      outputs/validation/cninfo_b_class_erad_scale_200/reports/b_class_erad_scale_200_report.csv
+      行 BD2E072（quality=pass）。不写 verified；不下载 PDF。
 
   # --- inquiry reply category sample × 2 ---
   - case_id: inquiry_sample_001
@@ -93,12 +103,12 @@ cases:
 
   # --- meeting notice category sample × 2 ---
   - case_id: meeting_sample_001
-    case_status: placeholder
+    case_status: ready
     source_id: cninfo_meeting_notice_pdf
     source_category: meeting_notice_pdf
     title_pattern: "说明会"
-    date_start: null
-    date_end: null
+    date_start: "2025-06-09"
+    date_end: "2025-06-12"
     expected_min_results: 1
     expected_document_types:
       - meeting_notice
@@ -107,8 +117,10 @@ cases:
       - 年度报告
       - 第一季度报告
     notes: >-
-      IR/meeting corpus sample. Phase 1 periodic exclusions are POSITIVE here.
-      Requires real date window before live run.
+      B-FM-01 自 harvest 证据晋升：海光信息 688041，关于召开重大资产重组事项投资者说明会的公告
+      （announcement_id=1223836435，披露日 2025-06-10）。来源
+      outputs/validation/cninfo_b_class_erad_scale_200/reports/b_class_erad_scale_200_report.csv
+      行 BD2E177（quality=pass）；同窗另有盐湖股份业绩说明会。不写 verified；不下载 PDF。
 
   - case_id: meeting_sample_002
     case_status: placeholder
