@@ -1,6 +1,6 @@
 # CNINFO D 类 fund_industry_allocation — First-Slice Next Step Recommendation
 
-_生成时间：2026-07-15 · D-FM-19 更新（承接 D-FM-18）_
+_生成时间：2026-07-15 · D-FM-20 更新（承接 D-FM-19）_
 
 > **approval gate：** `d_class_fund_industry_allocation_first_slice_approval_gate = STANDING_SCOPE_AUTHORIZED`
 >
@@ -12,13 +12,11 @@ _生成时间：2026-07-15 · D-FM-19 更新（承接 D-FM-18）_
 >
 > **live gate：** `NOT_APPROVED`（常量）
 >
-> **D-FM-16 review gate：** `PASS_OFFLINE`
+> **D-FM-19 amend gate：** `PASS_OFFLINE`
 >
-> **D-FM-17 amend gate：** `d_class_fund_industry_allocation_dfm17_dfia001_lock_amend_gate = PASS_OFFLINE`
+> **D-FM-20 closure gate：** `d_class_fund_industry_allocation_first_slice_closure_gate = PASS_WITH_CAVEAT`
 >
-> **D-FM-18 probe gate：** `d_class_fund_industry_allocation_dfia005_single_probe_gate = PASS_WITH_CAVEAT`
->
-> **D-FM-19 amend gate：** `d_class_fund_industry_allocation_dfm19_dfia005_lock_amend_gate = PASS_OFFLINE`
+> **commit boundary gate：** `READY_FOR_COMMIT_REVIEW`
 >
 > **standing_scope：** full-market shareholder / capital · Level-2 phrase **NOT** required
 >
@@ -28,14 +26,16 @@ _生成时间：2026-07-15 · D-FM-19 更新（承接 D-FM-18）_
 
 ## Primary
 
-**controller commit-boundary** for D-FM-19（DFIA005 lock amend + VR/planned/dryrun/test sync · CNINFO=0）· executor **不** commit/push
+**controller commit-boundary** for D-FM-20（FIA first-slice offline closure package · CNINFO=0）· executor **不** commit/push
 
 | 项 | 内容 |
 |----|------|
-| scope | 仅 DFIA005 `expected_behavior` · 保持 rdate=20251231 · **不** overwrite 5-case live_report |
-| DFIA005 expected | `empty_but_valid` → **`captured_normal_or_empty_but_valid`** |
-| caveat cleared | `empty_control_anchor_stale`（期望层） |
-| gate after | amend_gate=`PASS_OFFLINE`；execution_gate 仍为 `PASS_WITH_CAVEAT` |
+| scope | closure metrics / effective result / caveat ledger / decision / summary / review / tests |
+| universe lock | **未修改** |
+| live_report | **未 overwrite**（layered evidence 诚实保留） |
+| counterfactual | **5/5** |
+| caveat | `layered_evidence_overlay` retained |
+| gate after | closure_gate=`PASS_WITH_CAVEAT` · commit_boundary=`READY_FOR_COMMIT_REVIEW` |
 
 ---
 
@@ -55,31 +55,29 @@ _生成时间：2026-07-15 · D-FM-19 更新（承接 D-FM-18）_
 - **不** verified / production_ready / bare PASS
 - **不** executor commit / push
 - **不** 将 industry aggregate 写入 company event/metric schema
-- **不** 为刷满 5/5 重复无界 FIA / SD / AT live 重试
-- **不** 本批再改 DFIA001 · **不** 另选 empty rdate live discovery
+- **不** 为刷满指标重复无界 FIA / SD / AT live 重试
+- **不** 伪装单次统一 5-case live（overwrite live_report）
 
 ---
 
 ## Recommendation Summary
 
 ```text
-primary_recommendation = controller_commit_boundary_dfm19_dfia005_lock_amend
+primary_recommendation = controller_commit_boundary_dfm20_fia_first_slice_closure
 secondary_recommendation = next_capital_discovery_or_fia_scale_offline
 approval_gate = STANDING_SCOPE_AUTHORIZED
 runner_extension_gate = READY_FOR_APPROVAL
 live_path_gate = READY_FOR_APPROVAL
 execution_gate = PASS_WITH_CAVEAT
 live_gate = NOT_APPROVED
-dfm16_review_gate = PASS_OFFLINE
-dfm17_amend_gate = PASS_OFFLINE
-dfm18_probe_gate = PASS_WITH_CAVEAT
 dfm19_amend_gate = PASS_OFFLINE
-caveat_cleared = empty_control_anchor_stale
+dfm20_closure_gate = PASS_WITH_CAVEAT
+commit_boundary_gate = READY_FOR_COMMIT_REVIEW
 counterfactual_acceptable = 5/5
+layered_evidence = true
 standing_scope_auth = full_market_shareholder_capital
 level2_phrase_required = false
 cninfo_calls = 0
-universe_lock_mutated = true
-mutate_scope = DFIA005.expected_behavior_only
+universe_lock_mutated = false
 ready_for_commit = true
 ```

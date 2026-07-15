@@ -440,5 +440,158 @@ class TestFundIndustryAllocationFirstSliceRunner(unittest.TestCase):
             )
 
 
+class TestFundIndustryAllocationFirstSliceDfm20Closure(unittest.TestCase):
+    """D-FM-20 first-slice offline closure：反事实 5/5 + 产物 schema（无 CNINFO）。"""
+
+    VALIDATION = os.path.join(BASE_DIR, "outputs", "validation")
+    CLOSURE_METRICS = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_fund_industry_allocation_first_slice_closure_metrics.csv",
+    )
+    CAVEAT_LEDGER = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_fund_industry_allocation_first_slice_final_caveat_ledger.csv",
+    )
+    EFFECTIVE_RESULT = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_fund_industry_allocation_first_slice_effective_result.csv",
+    )
+    CLOSURE_MATRIX = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_fund_industry_allocation_dfm20_first_slice_closure_matrix_20260715.csv",
+    )
+    LIVE_REPORT = os.path.join(
+        OUTPUT_ROOT,
+        "reports",
+        "d_class_fund_industry_allocation_first_slice_live_report.csv",
+    )
+
+    def _row(self, case_id: str):
+        rows = runner.load_fund_industry_allocation_first_slice_universe(UNIVERSE_CSV)
+        return next(r for r in rows if r.case_id == case_id)
+
+    def test_counterfactual_overlay_five_of_five(self) -> None:
+        rows = runner.load_fund_industry_allocation_first_slice_universe(UNIVERSE_CSV)
+        summaries = {
+            "DFIA001": {
+                "retrieval_status": "empty_but_valid",
+                "quality_status": "pass",
+                "record_count": "0",
+            },
+            "DFIA002": {
+                "retrieval_status": "found",
+                "quality_status": "pass",
+                "record_count": "16",
+            },
+            "DFIA003": {
+                "retrieval_status": "found",
+                "quality_status": "pass",
+                "record_count": "19",
+            },
+            "DFIA004": {
+                "retrieval_status": "empty_but_valid",
+                "quality_status": "pass",
+                "record_count": "0",
+            },
+            "DFIA005": {
+                "retrieval_status": "found",
+                "quality_status": "pass",
+                "record_count": "19",
+            },
+        }
+        acceptable = sum(
+            1
+            for r in rows
+            if runner.is_fund_industry_allocation_first_slice_acceptable(
+                r, summaries[r.case_id]
+            )
+        )
+        self.assertEqual(acceptable, 5)
+        self.assertEqual(
+            self._row("DFIA001").expected_behavior,
+            "captured_normal_or_empty_but_valid",
+        )
+        self.assertEqual(
+            self._row("DFIA005").expected_behavior,
+            "captured_normal_or_empty_but_valid",
+        )
+
+    def test_dfm13_only_with_current_lock_is_four_of_five(self) -> None:
+        rows = runner.load_fund_industry_allocation_first_slice_universe(UNIVERSE_CSV)
+        summaries = {
+            "DFIA001": {
+                "retrieval_status": "empty_but_valid",
+                "quality_status": "pass",
+                "record_count": "0",
+            },
+            "DFIA002": {
+                "retrieval_status": "found",
+                "quality_status": "pass",
+                "record_count": "16",
+            },
+            "DFIA003": {
+                "retrieval_status": "found",
+                "quality_status": "pass",
+                "record_count": "19",
+            },
+            "DFIA004": {
+                "retrieval_status": "empty_but_valid",
+                "quality_status": "pass",
+                "record_count": "0",
+            },
+            "DFIA005": {
+                "retrieval_status": "http_error",
+                "quality_status": "blocked",
+                "record_count": "0",
+            },
+        }
+        acceptable = sum(
+            1
+            for r in rows
+            if runner.is_fund_industry_allocation_first_slice_acceptable(
+                r, summaries[r.case_id]
+            )
+        )
+        self.assertEqual(acceptable, 4)
+
+    def test_closure_artifacts_present_and_layered_caveat(self) -> None:
+        for path in (
+            self.CLOSURE_METRICS,
+            self.CAVEAT_LEDGER,
+            self.EFFECTIVE_RESULT,
+            self.CLOSURE_MATRIX,
+        ):
+            self.assertTrue(os.path.isfile(path), msg=path)
+        with open(self.CAVEAT_LEDGER, newline="", encoding="utf-8") as f:
+            caveats = list(csv.DictReader(f))
+        layered = next(c for c in caveats if c["caveat_id"] == "CAV-FIA-002")
+        self.assertEqual(layered["caveat_type"], "layered_evidence_overlay")
+        self.assertIn("layered", layered["allowed_interpretation"])
+        with open(self.CLOSURE_METRICS, newline="", encoding="utf-8") as f:
+            metrics = {r["metric_name"]: r["value"] for r in csv.DictReader(f)}
+        self.assertEqual(metrics["acceptable_counterfactual"], "5")
+        self.assertEqual(metrics["CNINFO_during_closure"], "0")
+        self.assertEqual(metrics["closure_gate"], "PASS_WITH_CAVEAT")
+        with open(self.EFFECTIVE_RESULT, newline="", encoding="utf-8") as f:
+            eff = {r["case_id"]: r for r in csv.DictReader(f)}
+        self.assertEqual(len(eff), 5)
+        for case_id in ("DFIA001", "DFIA002", "DFIA003", "DFIA004", "DFIA005"):
+            self.assertEqual(eff[case_id]["acceptable"], "yes")
+        self.assertEqual(eff["DFIA005"]["retrieval_status"], "found")
+        self.assertEqual(eff["DFIA005"]["record_count"], "19")
+        self.assertIn("dfm18", eff["DFIA005"]["source_of_final_result"])
+
+    def test_historical_live_report_not_overwritten(self) -> None:
+        if not os.path.isfile(self.LIVE_REPORT):
+            self.skipTest("live report not present")
+        with open(self.LIVE_REPORT, newline="", encoding="utf-8") as f:
+            live = {r["case_id"]: r for r in csv.DictReader(f)}
+        # D-FM-13 capture-time 行保留；closure 不得伪装为统一 5/5 live
+        self.assertEqual(live["DFIA001"]["acceptable"], "no")
+        self.assertEqual(live["DFIA001"]["failure_type"], "expectation_mismatch")
+        self.assertEqual(live["DFIA005"]["retrieval_status"], "http_error")
+        self.assertEqual(live["DFIA005"]["acceptable"], "no")
+
+
 if __name__ == "__main__":
     unittest.main()

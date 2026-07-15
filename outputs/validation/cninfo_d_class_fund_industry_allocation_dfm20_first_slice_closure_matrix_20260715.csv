@@ -1,0 +1,6 @@
+case_id,industry_code,query_mode,anchor_rdate,lock_expected_behavior,dfm13_retrieval,dfm13_records,dfm13_acceptable_at_live,overlay_retrieval,overlay_records,overlay_source,effective_acceptable,final_effective_status,failure_type,notes
+DFIA001,C26,default,,captured_normal_or_empty_but_valid,empty_but_valid,0,no,empty_but_valid,0,dfm13_live,yes,first_slice_default_C26_empty_but_valid_after_dfia001_amend,,D-FM-17 amend cleared expectation_mismatch; empty legal under mixed
+DFIA002,*,default,,captured_normal,found,16,yes,found,16,dfm13_live,yes,first_slice_default_cross_section_found,,unchanged from D-FM-13
+DFIA003,*,rdate,20260331,captured_normal,found,19,yes,found,19,dfm13_live,yes,first_slice_rdate_20260331_cross_section_found,,unchanged from D-FM-13
+DFIA004,C26,rdate,20260331,captured_normal_or_empty_but_valid,empty_but_valid,0,yes,empty_but_valid,0,dfm13_live,yes,first_slice_rdate_20260331_C26_empty_but_valid,,unchanged from D-FM-13
+DFIA005,*,rdate,20251231,captured_normal_or_empty_but_valid,http_error,0,no,found,19,dfm18_single_probe,yes,first_slice_rdate_20251231_found_after_transport_clear_and_dfia005_amend,,D-FM-18 transport clear + D-FM-19 mixed expectation; live_report not overwritten

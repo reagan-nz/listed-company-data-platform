@@ -1,0 +1,30 @@
+metric_group,metric_name,value,gate_impact,notes
+first_slice,total_cases,5,closure,DFIA001-DFIA005 only
+first_slice,acceptable_counterfactual,5,closure,5/5 after D-FM-17+D-FM-18+D-FM-19 overlay; VR-030 forbids bare PASS
+first_slice,acceptable_dfm13_raw,3,historical,D-FM-13 live_report at capture time (pre-amend expectations)
+first_slice,acceptable_dfm13_with_current_lock,4,historical,D-FM-13 retrieval + current lock without D-FM-18 overlay
+first_slice,found,3,closure,DFIA002/003 (D-FM-13) + DFIA005 (D-FM-18)
+first_slice,empty_but_valid,2,closure,DFIA001/004 industry-filter empty legal under mixed
+first_slice,http_error_residual,0,closure,DFIA005 transport cleared by D-FM-18; not re-opened as failure
+first_slice,unresolved_blocking,0,closure,layered-evidence caveat retained; not blocking
+cninfo,CNINFO_during_dfm13_live,2,execution,shared probes counted success HTTP; rdate_20251231 timeout not in stats
+cninfo,CNINFO_during_dfm18_probe,1,execution,DFIA005 single-probe only
+cninfo,CNINFO_during_closure,0,closure,D-FM-20 offline packaging; no live
+cninfo,request_cap_first_slice,5,planning,total cap; prefer shared probes <=3
+caveat,layered_evidence_not_single_live,yes,closure,effective 5/5 uses D-FM-13 + D-FM-18 overlay; live_report.csv remains historical
+caveat,dfia001_default_C26_empty,yes,closure,latest default cross-section lacked C26 after F001V filter
+caveat,dfia005_phase2_empty_control_stale,yes,closure,rdate=20251231 now returns rows; empty synthetic fixture kept legal
+safety,pdf_download,0,red_line,no PDF
+safety,ocr,0,red_line,no OCR
+safety,extraction,0,red_line,no extraction
+safety,db_write,0,red_line,no DB
+safety,minio_write,0,red_line,no MinIO
+safety,rag_run,0,red_line,no RAG
+exclusion,company_event_schema_write,no,red_line,industry aggregate only; company_code_available=false
+exclusion,688671_excluded,yes,universe,policy retained; no company bind
+exclusion,301259_excluded,yes,universe,DLC006R not reopened
+track,executive_shareholding_closed,yes,closure,not reopened
+track,abnormal_trading_not_re_lived,yes,closure,not re-lived this task
+track,shareholder_data_not_re_lived,yes,closure,not re-lived this task
+gate,execution_gate,PASS_WITH_CAVEAT,preserved,d_class_fund_industry_allocation_first_slice_execution_gate
+gate,closure_gate,PASS_WITH_CAVEAT,closure,counterfactual 5/5 with layered-evidence caveat; never bare PASS; NOT verified
