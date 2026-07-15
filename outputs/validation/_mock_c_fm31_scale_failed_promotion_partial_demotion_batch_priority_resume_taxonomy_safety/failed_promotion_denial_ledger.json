@@ -1,0 +1,70 @@
+{
+  "generated_at": "2026-07-15T14:32:36Z",
+  "task_id": "C-FM-31",
+  "fingerprint_sha256": "8b581766d5dfbecacecbf37cbadec2d2abb5d846913545e82bf11b46447c47c9",
+  "failed_n": 9,
+  "failed_codes_sha256": "fb74a9df6bbecf75a7c2b354491a80c4b294c3c1cd392ec429bd8d16b74a14f6",
+  "winner_batches": {
+    "p3": 3,
+    "p35": 6
+  },
+  "denial_count": 18,
+  "sample_denials": [
+    {
+      "code": "002140",
+      "from_status": "failed",
+      "to_status": "partial",
+      "allowed": false,
+      "reason": "failed_promotion_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "002140",
+      "from_status": "failed",
+      "to_status": "complete",
+      "allowed": false,
+      "reason": "failed_promotion_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "300055",
+      "from_status": "failed",
+      "to_status": "partial",
+      "allowed": false,
+      "reason": "failed_promotion_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "300055",
+      "from_status": "failed",
+      "to_status": "complete",
+      "allowed": false,
+      "reason": "failed_promotion_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "300069",
+      "from_status": "failed",
+      "to_status": "partial",
+      "allowed": false,
+      "reason": "failed_promotion_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "300069",
+      "from_status": "failed",
+      "to_status": "complete",
+      "allowed": false,
+      "reason": "failed_promotion_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "failed_promotion_denial",
+    "failed_n": 9,
+    "failed_codes_sha256": "fb74a9df6bbecf75a7c2b354491a80c4b294c3c1cd392ec429bd8d16b74a14f6",
+    "deny_promote_to_partial": true,
+    "deny_promote_to_complete": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

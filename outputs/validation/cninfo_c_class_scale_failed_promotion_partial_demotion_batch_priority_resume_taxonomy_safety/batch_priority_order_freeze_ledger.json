@@ -1,0 +1,86 @@
+{
+  "generated_at": "2026-07-15T14:32:36Z",
+  "task_id": "C-FM-31",
+  "fingerprint_sha256": "8470ed60a660340ef61dcfbb6a88c7532bd11f814008c75453b4788c3dabaf98",
+  "batch_priority": [
+    "h863",
+    "p35",
+    "p3",
+    "p2",
+    "fu"
+  ],
+  "sample_denials": [
+    {
+      "proposed_priority": [
+        "fu",
+        "p2",
+        "p3",
+        "p35",
+        "h863"
+      ],
+      "frozen_priority": [
+        "h863",
+        "p35",
+        "p3",
+        "p2",
+        "fu"
+      ],
+      "matches_frozen": false,
+      "reorder_allowed": false,
+      "reason": "batch_priority_order_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_priority": [
+        "p35",
+        "p3",
+        "p2",
+        "fu",
+        "h863"
+      ],
+      "frozen_priority": [
+        "h863",
+        "p35",
+        "p3",
+        "p2",
+        "fu"
+      ],
+      "matches_frozen": false,
+      "reorder_allowed": false,
+      "reason": "batch_priority_order_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_priority": [
+        "h863",
+        "p35",
+        "p3",
+        "p2",
+        "fu"
+      ],
+      "frozen_priority": [
+        "h863",
+        "p35",
+        "p3",
+        "p2",
+        "fu"
+      ],
+      "matches_frozen": true,
+      "reorder_allowed": false,
+      "reason": "batch_priority_order_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "batch_priority_order_freeze",
+    "batch_priority": [
+      "h863",
+      "p35",
+      "p3",
+      "p2",
+      "fu"
+    ],
+    "deny_priority_reorder": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

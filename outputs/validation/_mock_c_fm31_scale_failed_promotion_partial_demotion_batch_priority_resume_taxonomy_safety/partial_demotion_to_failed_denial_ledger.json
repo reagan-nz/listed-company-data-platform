@@ -1,0 +1,71 @@
+{
+  "generated_at": "2026-07-15T14:32:36Z",
+  "task_id": "C-FM-31",
+  "fingerprint_sha256": "6a232823808d17f67af8a8189faa01ad810fec18d4abe4d27e48d1da90e77d28",
+  "partial_n": 106,
+  "partial_codes_sha256": "5d5da7030f91e60893627d7fcf208b79f4f09e3edc5c4255fb797c1706672d73",
+  "winner_batches": {
+    "fu": 5,
+    "p2": 12,
+    "p3": 14,
+    "p35": 75
+  },
+  "denial_count": 106,
+  "sample_denials": [
+    {
+      "code": "000003",
+      "from_status": "partial",
+      "to_status": "failed",
+      "allowed": false,
+      "reason": "partial_demotion_to_failed_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "000015",
+      "from_status": "partial",
+      "to_status": "failed",
+      "allowed": false,
+      "reason": "partial_demotion_to_failed_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "000022",
+      "from_status": "partial",
+      "to_status": "failed",
+      "allowed": false,
+      "reason": "partial_demotion_to_failed_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "000024",
+      "from_status": "partial",
+      "to_status": "failed",
+      "allowed": false,
+      "reason": "partial_demotion_to_failed_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "000038",
+      "from_status": "partial",
+      "to_status": "failed",
+      "allowed": false,
+      "reason": "partial_demotion_to_failed_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "code": "000430",
+      "from_status": "partial",
+      "to_status": "failed",
+      "allowed": false,
+      "reason": "partial_demotion_to_failed_forbidden_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "partial_demotion_to_failed_denial",
+    "partial_n": 106,
+    "partial_codes_sha256": "5d5da7030f91e60893627d7fcf208b79f4f09e3edc5c4255fb797c1706672d73",
+    "deny_demote_to_failed": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
