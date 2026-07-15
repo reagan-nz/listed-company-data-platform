@@ -147,7 +147,7 @@ cases:
       outputs/validation/cninfo_b_class_erad_scale_200/reports/b_class_erad_scale_200_report.csv
       行 BD2E177（quality=pass）。不写 verified；不下载 PDF。
 
-  # --- investor_relations_activity × 2 ---
+  # --- investor_relations_activity × 3 ---
   - case_id: ir_activity_known_001
     case_status: ready
     source_id: cninfo_meeting_notice_pdf
@@ -184,6 +184,25 @@ cases:
       且无「说明会」后缀；同构证据另有 BD2E206 永安林业（1223513724）。来源
       outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/b_class_erad_next_scale_slice1_combined_report.csv
       行 BD2E202（quality=pass）。不写 verified；不下载 PDF。
+
+  - case_id: ir_activity_known_003
+    case_status: ready
+    source_id: cninfo_meeting_notice_pdf
+    company_code: "000949"
+    company_name: "新乡化纤"
+    title_pattern: "投资者开放日"
+    expected_document_type: investor_relations_activity
+    date_start: "2025-06-02"
+    date_end: "2025-06-05"
+    expected_route_to: cninfo_meeting_notice_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-06 自 harvest 证据晋升（依赖 B-FM-04 routing edge）：新乡化纤 000949，
+      关于举办投资者开放日活动的公告
+      （announcement_id=1223746795，披露日 2025-06-03）。标题含「投资者开放日」
+      且无「说明会」后缀；与集体接待日 known_002 / 活动记录表 known_001 可区分。来源
+      outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/b_class_erad_next_scale_slice1_combined_report.csv
+      行 BD2E232（quality=pass）。不写 verified；不下载 PDF。
 
   # --- board_resolution × 1 ---
   - case_id: board_resolution_known_001

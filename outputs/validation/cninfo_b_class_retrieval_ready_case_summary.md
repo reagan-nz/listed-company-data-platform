@@ -20,9 +20,9 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 
 | 指标 | 数值 |
 |------|------|
-| total_cases | **22** |
+| total_cases | **24** |
 | placeholder | **5** |
-| ready | **17** |
+| ready | **19** |
 | retired | **0** |
 | invalid_ready | **0** |
 | result | **PASS** |
@@ -37,6 +37,7 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 - `meeting_known_002` (known_document) → `cninfo_meeting_notice_pdf`
 - `ir_activity_known_001` (known_document) → `cninfo_meeting_notice_pdf`
 - `ir_activity_known_002` (known_document) → `cninfo_meeting_notice_pdf`
+- `ir_activity_known_003` (known_document) → `cninfo_meeting_notice_pdf`
 - `board_resolution_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `shareholder_meeting_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `general_sample_001` (category_sample) → `cninfo_general_announcement_pdf`
@@ -45,6 +46,7 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 - `inquiry_sample_002` (category_sample) → `cninfo_inquiry_reply_pdf`
 - `meeting_sample_001` (category_sample) → `cninfo_meeting_notice_pdf`
 - `ir_activity_sample_001` (category_sample) → `cninfo_meeting_notice_pdf`
+- `ir_activity_sample_002` (category_sample) → `cninfo_meeting_notice_pdf`
 - `periodic_guard_002` (category_sample) → `cninfo_general_announcement_pdf`
 
 ## 5. Invalid ready 明细
