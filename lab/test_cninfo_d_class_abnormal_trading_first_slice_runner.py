@@ -237,28 +237,210 @@ class TestAbnormalTradingFirstSliceRunner(unittest.TestCase):
             result.stderr,
         )
 
-    def test_live_with_approval_still_not_implemented(self) -> None:
-        with mock.patch("requests.get") as get_mock, mock.patch(
-            "requests.post"
-        ) as post_mock:
-            result = _run(
-                [
-                    "--live",
-                    "--abnormal-trading-first-slice",
-                    "--approve-d-class-abnormal-trading-first-slice",
-                    "--universe-csv",
-                    UNIVERSE_CSV,
-                    "--output-root",
-                    OUTPUT_ROOT,
-                ]
-            )
-            get_mock.assert_not_called()
-            post_mock.assert_not_called()
-        self.assertEqual(result.returncode, 2)
-        self.assertIn(
-            "abnormal_trading_first_slice_live_not_implemented",
-            result.stderr,
+    def test_live_path_execute_function_exists(self) -> None:
+        self.assertTrue(
+            hasattr(runner, "execute_abnormal_trading_first_slice_live")
         )
+        self.assertTrue(
+            callable(runner.execute_abnormal_trading_first_slice_live)
+        )
+
+    def test_live_with_approval_mock_writes_reports_cninfo_zero(self) -> None:
+        """离线 mock live：不触网 · 写 live/quality/summary · CNINFO=0。"""
+        rows = runner.load_abnormal_trading_first_slice_universe(UNIVERSE_CSV)
+
+        def _fake_execute_live_case(
+            case,
+            source_cfg,
+            endpoint,
+            session,
+            stats,
+            output_paths,
+            param_list=None,
+        ):
+            # 模拟 per-case 计数但不发 HTTP
+            stats.cninfo_requests += 1
+            stats.case_request_counts[case.case_id] = (
+                stats.case_request_counts.get(case.case_id, 0) + 1
+            )
+            if case.case_id == "DAT001":
+                return {
+                    "case_id": case.case_id,
+                    "company_code": case.company_code,
+                    "company_name": case.company_name,
+                    "component": case.component,
+                    "expected_behavior": case.expected_behavior,
+                    "retrieval_status": "empty_but_valid",
+                    "quality_status": "pass",
+                    "lineage_status": "discovered",
+                    "record_count": "0",
+                    "empty_but_valid": "yes",
+                    "needs_review": "no",
+                    "endpoint_used": endpoint,
+                    "cninfo_request_count": "1",
+                    "db_write": "no",
+                    "minio_write": "no",
+                    "rag_run": "no",
+                    "notes": "mock sparse empty for DAT001",
+                }
+            if case.case_id == "DAT005":
+                return {
+                    "case_id": case.case_id,
+                    "company_code": case.company_code,
+                    "company_name": case.company_name,
+                    "component": case.component,
+                    "expected_behavior": case.expected_behavior,
+                    "retrieval_status": "empty_but_valid",
+                    "quality_status": "pass",
+                    "lineage_status": "discovered",
+                    "record_count": "0",
+                    "empty_but_valid": "yes",
+                    "needs_review": "no",
+                    "endpoint_used": endpoint,
+                    "cninfo_request_count": "1",
+                    "db_write": "no",
+                    "minio_write": "no",
+                    "rag_run": "no",
+                    "notes": "mock empty_but_valid control",
+                }
+            return {
+                "case_id": case.case_id,
+                "company_code": case.company_code,
+                "company_name": case.company_name,
+                "component": case.component,
+                "expected_behavior": case.expected_behavior,
+                "retrieval_status": "empty_but_valid",
+                "quality_status": "pass",
+                "lineage_status": "discovered",
+                "record_count": "0",
+                "empty_but_valid": "yes",
+                "needs_review": "no",
+                "endpoint_used": endpoint,
+                "cninfo_request_count": "1",
+                "db_write": "no",
+                "minio_write": "no",
+                "rag_run": "no",
+                "notes": "mock empty_but_valid sparse day",
+            }
+
+        with tempfile.TemporaryDirectory() as tmp:
+            out_root = os.path.join(tmp, "cninfo_d_class_abnormal_trading_first_slice")
+            output_paths = runner.ensure_output_layout(out_root, "live")
+            with mock.patch(
+                "run_cninfo_d_class_tiny_live_validation.execute_live_case",
+                side_effect=_fake_execute_live_case,
+            ), mock.patch("requests.get") as get_mock, mock.patch(
+                "requests.post"
+            ) as post_mock:
+                rc = runner.execute_abnormal_trading_first_slice_live(
+                    rows, output_paths
+                )
+                get_mock.assert_not_called()
+                post_mock.assert_not_called()
+            # DAT001 empty 对 needs_review 期望不可接受；DAT002–005 empty 可接受 → 4/5
+            self.assertEqual(rc, 0)
+            live_report = os.path.join(
+                output_paths["reports"],
+                "d_class_abnormal_trading_first_slice_live_report.csv",
+            )
+            quality_report = os.path.join(
+                output_paths["reports"],
+                "d_class_abnormal_trading_first_slice_quality_report.csv",
+            )
+            live_summary = os.path.join(
+                output_paths["reports"],
+                "d_class_abnormal_trading_first_slice_live_summary.md",
+            )
+            self.assertTrue(os.path.isfile(live_report))
+            self.assertTrue(os.path.isfile(quality_report))
+            self.assertTrue(os.path.isfile(live_summary))
+            with open(live_report, newline="", encoding="utf-8") as f:
+                reader = csv.DictReader(f)
+                self.assertEqual(
+                    list(reader.fieldnames or []),
+                    runner.ABNORMAL_TRADING_FIRST_SLICE_LIVE_REPORT_COLUMNS,
+                )
+                live_rows = {r["case_id"]: r for r in reader}
+            self.assertEqual(len(live_rows), 5)
+            self.assertEqual(live_rows["DAT001"]["acceptable"], "no")
+            self.assertEqual(
+                live_rows["DAT001"]["failure_type"], "expectation_mismatch"
+            )
+            for case_id in ("DAT002", "DAT003", "DAT004", "DAT005"):
+                self.assertEqual(live_rows[case_id]["acceptable"], "yes")
+            with open(live_summary, encoding="utf-8") as f:
+                content = f.read()
+            self.assertIn(
+                "d_class_abnormal_trading_first_slice_live_path_gate = READY_FOR_APPROVAL",
+                content,
+            )
+            self.assertIn(
+                "d_class_abnormal_trading_first_slice_execution_gate = PASS_WITH_CAVEAT",
+                content,
+            )
+            self.assertIn("NOT verified", content)
+
+    def test_empty_but_valid_acceptable_rules(self) -> None:
+        summary = {
+            "retrieval_status": "empty_but_valid",
+            "quality_status": "pass",
+            "record_count": "0",
+        }
+        rows = runner.load_abnormal_trading_first_slice_universe(UNIVERSE_CSV)
+        by_id = {r.case_id: r for r in rows}
+        self.assertFalse(
+            runner.is_abnormal_trading_first_slice_acceptable(
+                by_id["DAT001"], summary
+            )
+        )
+        for case_id in ("DAT002", "DAT003", "DAT004", "DAT005"):
+            self.assertTrue(
+                runner.is_abnormal_trading_first_slice_acceptable(
+                    by_id[case_id], summary
+                )
+            )
+
+    def test_dat001_found_or_needs_review_acceptable(self) -> None:
+        row = next(
+            r
+            for r in runner.load_abnormal_trading_first_slice_universe(UNIVERSE_CSV)
+            if r.case_id == "DAT001"
+        )
+        for rs, qs in (("found", "pass"), ("needs_review", "needs_review")):
+            with self.subTest(retrieval_status=rs):
+                summary = {
+                    "retrieval_status": rs,
+                    "quality_status": qs,
+                    "record_count": "1",
+                }
+                self.assertTrue(
+                    runner.is_abnormal_trading_first_slice_acceptable(row, summary)
+                )
+
+    def test_execution_gate_three_of_five(self) -> None:
+        rows = runner.load_abnormal_trading_first_slice_universe(UNIVERSE_CSV)
+        summaries = {
+            r.case_id: {
+                "retrieval_status": "empty_but_valid",
+                "quality_status": "pass",
+                "record_count": "0",
+            }
+            for r in rows
+        }
+        gate = runner.compute_abnormal_trading_first_slice_execution_gate(
+            rows, summaries
+        )
+        self.assertEqual(
+            gate, runner.ABNORMAL_TRADING_FIRST_SLICE_EXECUTION_GATE_PASS
+        )
+        acceptable = sum(
+            1
+            for r in rows
+            if runner.is_abnormal_trading_first_slice_acceptable(
+                r, summaries[r.case_id]
+            )
+        )
+        self.assertEqual(acceptable, 4)
 
     def test_default_universe_csv_rejected(self) -> None:
         result = _run(

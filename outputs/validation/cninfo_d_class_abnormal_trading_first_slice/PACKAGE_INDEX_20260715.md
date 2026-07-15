@@ -1,12 +1,12 @@
 # CNINFO D 类 abnormal_trading First-Slice — Package Index
 
-_生成时间：2026-07-15 · task **D-FM-03**_
+_生成时间：2026-07-15 · task **D-FM-03** · live-path **D-FM-05**_
 
 > **Runner gate：** `d_class_abnormal_trading_first_slice_runner_extension_gate = READY_FOR_APPROVAL`
 >
 > **Standing auth：** D mission · abnormal_trading offline/S4 **无需**单独 Level-2 短语
 >
-> **Live：** **NOT APPROVED** · live_not_implemented
+> **Live path：** **implemented**（D-FM-05 offline mock）· **NOT APPROVED** for real CNINFO
 >
 > **CNINFO：** **0** · **NOT verified** · **NOT production_ready**
 
@@ -24,6 +24,8 @@ _生成时间：2026-07-15 · task **D-FM-03**_
 | fixture VR summary | `../cninfo_d_class_abnormal_trading_fixture_vr_validation_20260715.md` |
 | S4 dry-run evidence | `../cninfo_d_class_abnormal_trading_first_slice_s4_dryrun_evidence_20260715.md` |
 | runner extension summary | `../cninfo_d_class_abnormal_trading_first_slice_runner_extension_summary_20260715.md` |
+| D-FM-05 live-path offline | `../cninfo_d_class_abnormal_trading_dfm05_live_path_offline_mock_20260715.md` |
+| live-path summary | `../cninfo_d_class_abnormal_trading_first_slice_live_path_summary_20260715.md` |
 | planning | `../../plans/cninfo_d_class_abnormal_trading_next_component_planning_20260715.md` |
 | dryrun report | `reports/d_class_abnormal_trading_first_slice_dryrun_report.csv` |
 | dryrun summary | `reports/d_class_abnormal_trading_first_slice_dryrun_summary.md` |

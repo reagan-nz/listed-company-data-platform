@@ -13,10 +13,10 @@ python lab/run_cninfo_d_class_tiny_live_validation.py \
   --output-root outputs/validation/cninfo_d_class_abnormal_trading_first_slice
 ```
 
-## Live（NOT authorized · controller_execution_allowed=false）
+## Live（path implemented · NOT authorized this task · controller_execution_allowed=false）
 
 ```bash
-# DO NOT RUN
+# DO NOT RUN until controller_execution_allowed
 python lab/run_cninfo_d_class_tiny_live_validation.py \
   --live \
   --abnormal-trading-first-slice \
@@ -25,4 +25,4 @@ python lab/run_cninfo_d_class_tiny_live_validation.py \
   --output-root outputs/validation/cninfo_d_class_abnormal_trading_first_slice
 ```
 
-Live path 本任务为 **`abnormal_trading_first_slice_live_not_implemented`**（批准后仍拒绝 CNINFO）。
+Live path 已实现（D-FM-05）；无批准拒绝；有批准将发 CNINFO（≤5）。本任务仅 offline mock，**未**跑真实 live。

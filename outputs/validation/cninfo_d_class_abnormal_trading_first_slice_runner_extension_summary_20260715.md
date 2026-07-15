@@ -15,7 +15,7 @@ _生成时间：2026-07-15 09:06:30 UTC_
 | approval flag | `--approve-d-class-abnormal-trading-first-slice` |
 | fixture test | `lab/test_cninfo_d_class_abnormal_trading_fixtures.py`（**12/12 PASS**） |
 | runner test | `lab/test_cninfo_d_class_abnormal_trading_first_slice_runner.py`（**14/14 PASS**） |
-| live path | **not implemented**（`abnormal_trading_first_slice_live_not_implemented`） |
+| live path | **implemented**（D-FM-05 · offline mock PASS · 真实 live NOT_APPROVED） |
 
 ---
 
@@ -45,7 +45,7 @@ _生成时间：2026-07-15 09:06:30 UTC_
 - Tier-1 fixtures required
 - write-block: v1/v2 tiny-live · known-event · executive_shareholding · shareholder_change · other first-slice roots
 - live without approval → reject before CNINFO
-- live with approval → **live_not_implemented** before CNINFO
+- live with approval → `execute_abnormal_trading_first_slice_live`（须 controller_execution_allowed）
 - PDF/OCR/extraction/DB/MinIO/RAG/verified/production_ready blocked
 
 ---
@@ -65,4 +65,4 @@ approved_for_live = false
 
 ## Next Step
 
-Controller commit-boundary for D-FM-03 offline/S4 package · **或** live-path implementation（offline mock only · 须另批 · **无 CNINFO** 直至 controller_execution_allowed）
+Controller commit-boundary for D-FM-05 live-path offline mock · **或** 待 `controller_execution_allowed` 后 bounded live（CNINFO ≤5）

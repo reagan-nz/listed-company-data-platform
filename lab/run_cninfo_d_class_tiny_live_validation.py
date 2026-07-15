@@ -1608,6 +1608,47 @@ ABNORMAL_TRADING_FIRST_SLICE_DRYRUN_REPORT_COLUMNS = [
     "notes",
 ]
 
+ABNORMAL_TRADING_FIRST_SLICE_LIVE_REPORT_COLUMNS = [
+    "case_id",
+    "company_code",
+    "company_name",
+    "component",
+    "market",
+    "anchor_tdate",
+    "expected_behavior",
+    "retrieval_status",
+    "quality_status",
+    "lineage_status",
+    "record_count",
+    "empty_but_valid",
+    "needs_review",
+    "endpoint_used",
+    "cninfo_request_count",
+    "acceptable",
+    "failure_type",
+    "pdf_download",
+    "ocr",
+    "extraction",
+    "db_write",
+    "minio_write",
+    "rag_run",
+    "notes",
+]
+
+ABNORMAL_TRADING_FIRST_SLICE_QUALITY_REPORT_COLUMNS = [
+    "case_id",
+    "component",
+    "anchor_tdate",
+    "expected_behavior",
+    "retrieval_status",
+    "record_count",
+    "quality_status",
+    "acceptable",
+    "failure_type",
+    "cninfo_request_count",
+    "notes",
+]
+
 
 
 BLOCK_TRADE_FIRST_SLICE_DRYRUN_REPORT_COLUMNS = [
@@ -8407,16 +8448,327 @@ def write_abnormal_trading_first_slice_dryrun_summary(
     return summary_path
 
 
+def abnormal_trading_first_slice_row_to_universe_case(
+    row: AbnormalTradingFirstSliceRow,
+) -> UniverseCase:
+    """将 abnormal_trading 第一切片 universe 行转为探测用 UniverseCase。"""
+    return UniverseCase(
+        case_id=row.case_id,
+        company_code=row.company_code,
+        company_name=row.company_name,
+        component=row.component,
+        market=row.market,
+        risk_level="",
+        expected_behavior=row.expected_behavior,
+        reason=row.notes,
+    )
+
+
+def is_abnormal_trading_first_slice_acceptable(
+    row: AbnormalTradingFirstSliceRow,
+    summary: Dict[str, str],
+) -> bool:
+    """第一切片 acceptable 判定；禁止 disclosure-only 升级为 captured_normal。"""
+    rs = summary.get("retrieval_status", "")
+    qs = summary.get("quality_status", "")
+    eb = row.expected_behavior
+    try:
+        rc = int(summary.get("record_count", "0"))
+    except ValueError:
+        rc = 0
+    if "disclosure" in row.notes.lower() and rs != "found":
+        return False
+    if eb == "empty_but_valid" and rs == "empty_but_valid" and rc == 0:
+        return True
+    if "empty_but_valid" in eb and rs == "empty_but_valid" and rc == 0:
+        return True
+    if "captured_normal_or_empty_but_valid" in eb and (
+        (rs == "found" and rc >= 1) or (rs == "empty_but_valid" and rc == 0)
+    ):
+        return qs in ("pass", "needs_review", "")
+    if "captured_normal_or_needs_review" in eb and (
+        (rs == "found" and rc >= 1) or (rs == "needs_review" and rc >= 1)
+    ):
+        return qs in ("pass", "needs_review", "")
+    if "captured_normal" in eb and rs == "found" and rc >= 1 and qs in (
+        "pass",
+        "needs_review",
+    ):
+        return True
+    if rs == "found" and rc >= 1 and qs in ("pass", "needs_review"):
+        return True
+    if rs == "needs_review" and rc >= 1 and qs == "needs_review":
+        return "needs_review" in eb or "captured_normal" in eb
+    return False
+
+
+def assess_abnormal_trading_first_slice_failure_type(
+    row: AbnormalTradingFirstSliceRow,
+    summary: Dict[str, str],
+) -> str:
+    if is_abnormal_trading_first_slice_acceptable(row, summary):
+        return ""
+    rs = summary.get("retrieval_status", "")
+    if rs in ("http_error", "blocked"):
+        return "transport_or_http_error"
+    return "expectation_mismatch"
+
+
+def validate_abnormal_trading_first_slice_request_caps(stats: LiveStats) -> List[str]:
+    issues: List[str] = []
+    for case_id, count in stats.case_request_counts.items():
+        if count > ABNORMAL_TRADING_FIRST_SLICE_PER_CASE_MAX_REQUESTS:
+            issues.append(
+                f"{ABNORMAL_TRADING_FIRST_SLICE_PER_CASE_CAP_EXCEEDED}:"
+                f"{case_id}={count}"
+            )
+    if stats.cninfo_requests > ABNORMAL_TRADING_FIRST_SLICE_TOTAL_MAX_REQUESTS:
+        issues.append(
+            f"{ABNORMAL_TRADING_FIRST_SLICE_TOTAL_CAP_EXCEEDED}:"
+            f"{stats.cninfo_requests}"
+        )
+    return issues
+
+
+def compute_abnormal_trading_first_slice_execution_gate(
+    universe_rows: List[AbnormalTradingFirstSliceRow],
+    case_summaries: Dict[str, Dict[str, str]],
+) -> str:
+    """abnormal_trading 第一切片 live 执行 gate；≥3/5 acceptable → PASS_WITH_CAVEAT。"""
+    acceptable = 0
+    for row in universe_rows:
+        summary = case_summaries.get(row.case_id, {})
+        if is_abnormal_trading_first_slice_acceptable(row, summary):
+            acceptable += 1
+    if acceptable >= 3:
+        return ABNORMAL_TRADING_FIRST_SLICE_EXECUTION_GATE_PASS
+    return ABNORMAL_TRADING_FIRST_SLICE_EXECUTION_GATE_FAIL
+
+
+def build_abnormal_trading_first_slice_live_row(
+    row: AbnormalTradingFirstSliceRow,
+    summary: Dict[str, str],
+) -> Dict[str, str]:
+    acceptable = is_abnormal_trading_first_slice_acceptable(row, summary)
+    failure_type = assess_abnormal_trading_first_slice_failure_type(row, summary)
+    return {
+        "case_id": row.case_id,
+        "company_code": row.company_code,
+        "company_name": row.company_name,
+        "component": row.component,
+        "market": row.market,
+        "anchor_tdate": row.anchor_tdate,
+        "expected_behavior": row.expected_behavior,
+        "retrieval_status": summary.get("retrieval_status", ""),
+        "quality_status": summary.get("quality_status", ""),
+        "lineage_status": summary.get("lineage_status", ""),
+        "record_count": summary.get("record_count", "0"),
+        "empty_but_valid": summary.get("empty_but_valid", "no"),
+        "needs_review": summary.get("needs_review", "no"),
+        "endpoint_used": summary.get(
+            "endpoint_used", ABNORMAL_TRADING_FIRST_SLICE_ENDPOINT
+        ),
+        "cninfo_request_count": summary.get("cninfo_request_count", "0"),
+        "acceptable": "yes" if acceptable else "no",
+        "failure_type": failure_type,
+        "pdf_download": "no",
+        "ocr": "no",
+        "extraction": "no",
+        "db_write": "no",
+        "minio_write": "no",
+        "rag_run": "no",
+        "notes": summary.get("notes", ""),
+    }
+
+
+def write_abnormal_trading_first_slice_live_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"],
+        "d_class_abnormal_trading_first_slice_live_report.csv",
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(
+            f, fieldnames=ABNORMAL_TRADING_FIRST_SLICE_LIVE_REPORT_COLUMNS
+        )
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_abnormal_trading_first_slice_quality_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    quality_rows = [
+        {
+            "case_id": r["case_id"],
+            "component": r["component"],
+            "anchor_tdate": r["anchor_tdate"],
+            "expected_behavior": r["expected_behavior"],
+            "retrieval_status": r["retrieval_status"],
+            "record_count": r["record_count"],
+            "quality_status": r["quality_status"],
+            "acceptable": r["acceptable"],
+            "failure_type": r["failure_type"],
+            "cninfo_request_count": r["cninfo_request_count"],
+            "notes": r["notes"],
+        }
+        for r in rows
+    ]
+    report_path = os.path.join(
+        output_paths["reports"],
+        "d_class_abnormal_trading_first_slice_quality_report.csv",
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(
+            f, fieldnames=ABNORMAL_TRADING_FIRST_SLICE_QUALITY_REPORT_COLUMNS
+        )
+        writer.writeheader()
+        writer.writerows(quality_rows)
+    return report_path
+
+
+def write_abnormal_trading_first_slice_live_summary(
+    live_rows: List[Dict[str, str]],
+    stats: LiveStats,
+    gate: str,
+    output_paths: Dict[str, str],
+) -> str:
+    acceptable = sum(1 for r in live_rows if r["acceptable"] == "yes")
+    lines = [
+        "# CNINFO D 类 abnormal_trading First-Slice Live Summary",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** abnormal_trading first-slice live summary · **NOT APPROVED for production**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        f"| cases | **{len(live_rows)}** |",
+        f"| acceptable | **{acceptable}/{len(live_rows)}** |",
+        f"| CNINFO requests | **{stats.cninfo_requests}** |",
+        f"| DB writes | **{stats.db_writes}** |",
+        f"| MinIO writes | **{stats.minio_writes}** |",
+        f"| RAG runs | **{stats.rag_runs}** |",
+        "",
+        "## Gates",
+        "",
+        "```text",
+        f"d_class_abnormal_trading_first_slice_live_path_gate = {ABNORMAL_TRADING_FIRST_SLICE_LIVE_PATH_GATE}",
+        f"d_class_abnormal_trading_first_slice_execution_gate = {gate}",
+        "```",
+        "",
+        "**NOT verified** · **NOT production_ready**",
+        "",
+    ]
+    summary_path = os.path.join(
+        output_paths["reports"],
+        "d_class_abnormal_trading_first_slice_live_summary.md",
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    return summary_path
+
+
 def execute_abnormal_trading_first_slice_live(
     universe_rows: List[AbnormalTradingFirstSliceRow],
     output_paths: Dict[str, str],
 ) -> int:
-    """live 路径尚未实现；批准后仍拒绝，保证 CNINFO=0。"""
-    print(
-        f"ERROR: {ABNORMAL_TRADING_FIRST_SLICE_LIVE_NOT_IMPLEMENTED}",
-        file=sys.stderr,
+    """abnormal_trading 第一切片 live；DAT001–DAT005 · single_day_paged · marketList 公司过滤。"""
+    endpoints = load_registry_endpoints()
+    source_configs = load_table_source_configs()
+    component_cfg = copy.deepcopy(
+        source_configs.get(ABNORMAL_TRADING_FIRST_SLICE_COMPONENT, {})
     )
-    return 2
+    endpoint = endpoints.get(
+        ABNORMAL_TRADING_FIRST_SLICE_COMPONENT,
+        component_cfg.get("api_url", ABNORMAL_TRADING_FIRST_SLICE_ENDPOINT),
+    )
+
+    for row in universe_rows:
+        planned = compute_abnormal_trading_first_slice_planned_requests(row)
+        if planned > ABNORMAL_TRADING_FIRST_SLICE_PER_CASE_MAX_REQUESTS:
+            print(
+                f"ERROR: {ABNORMAL_TRADING_FIRST_SLICE_PER_CASE_CAP_EXCEEDED}:"
+                f"planned={planned}",
+                file=sys.stderr,
+            )
+            return 2
+
+    session = requests.Session()
+    stats = LiveStats()
+    case_summaries: Dict[str, Dict[str, str]] = {}
+
+    for row in sorted(universe_rows, key=lambda r: r.case_id):
+        case = abnormal_trading_first_slice_row_to_universe_case(row)
+        row_cfg = copy.deepcopy(component_cfg)
+        # 独立 params：仅 single_day_paged；不走 generic multi-probe
+        param_list = _build_abnormal_trading_first_slice_params(row)
+        summary = execute_live_case(
+            case,
+            row_cfg,
+            endpoint,
+            session,
+            stats,
+            output_paths,
+            param_list=param_list,
+        )
+        case_summaries[row.case_id] = summary
+        print(
+            f"{row.case_id} {summary['retrieval_status']}: "
+            f"records={summary['record_count']} "
+            f"requests={summary['cninfo_request_count']}",
+            flush=True,
+        )
+
+    cap_issues = validate_abnormal_trading_first_slice_request_caps(stats)
+    if cap_issues:
+        print(
+            "ERROR: abnormal_trading first-slice request cap validation failed: "
+            f"{cap_issues}",
+            file=sys.stderr,
+        )
+        return 2
+
+    gate = compute_abnormal_trading_first_slice_execution_gate(
+        universe_rows, case_summaries
+    )
+    if stats.db_writes or stats.minio_writes or stats.rag_runs:
+        gate = ABNORMAL_TRADING_FIRST_SLICE_EXECUTION_GATE_FAIL
+
+    live_rows = [
+        build_abnormal_trading_first_slice_live_row(
+            row, case_summaries[row.case_id]
+        )
+        for row in sorted(universe_rows, key=lambda r: r.case_id)
+        if row.case_id in case_summaries
+    ]
+
+    report_path = write_abnormal_trading_first_slice_live_report(
+        live_rows, output_paths
+    )
+    quality_path = write_abnormal_trading_first_slice_quality_report(
+        live_rows, output_paths
+    )
+    summary_path = write_abnormal_trading_first_slice_live_summary(
+        live_rows, stats, gate, output_paths
+    )
+
+    print(
+        f"mode=abnormal_trading_first_slice_live cases={len(live_rows)} "
+        f"acceptable={sum(1 for r in live_rows if r['acceptable'] == 'yes')}/"
+        f"{len(live_rows)} cninfo_calls={stats.cninfo_requests}"
+    )
+    print(
+        f"gate=d_class_abnormal_trading_first_slice_execution_gate={gate}"
+    )
+    print(f"live_report={report_path}")
+    print(f"quality_report={quality_path}")
+    print(f"live_summary={summary_path}")
+    return 0 if gate == ABNORMAL_TRADING_FIRST_SLICE_EXECUTION_GATE_PASS else 1
 
 
 def run_abnormal_trading_first_slice(args: argparse.Namespace) -> int:
