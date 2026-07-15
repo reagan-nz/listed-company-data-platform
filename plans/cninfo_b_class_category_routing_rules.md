@@ -53,7 +53,7 @@ Phase 1 为 **定期报告 effective found** 定义的 exclusion 列表，在 B 
 | 说明会 / 业绩说明会 / 投资者说明会 / 投资者关系活动记录表 | `cninfo_meeting_notice_pdf` | `meeting_notice` / `investor_relations_activity` |
 | 延期披露 / 关于延期披露 | `cninfo_general_announcement_pdf` | `announcement`（disclosure_related） |
 | 摘要 / 解读 | `cninfo_general_announcement_pdf` | `announcement` / `other`（非 report 主 corpus） |
-| 董事会决议 / 股东大会通知（非说明会） | `cninfo_general_announcement_pdf` | `board_resolution` / `shareholder_meeting_material` |
+| 董事会决议 / 股东大会通知·决议·召开公告（非说明会；不含法律意见书/会议材料） | `cninfo_general_announcement_pdf` | `board_resolution` / `shareholder_meeting_material` |
 
 **原则：** `retrieval_status=title_excluded` 仅表示 **未进入 periodic_report**；应尝试次级路由，并设 `classification_status=title_excluded_from_periodic_but_routed` 或 `ambiguous`。
 
@@ -100,6 +100,8 @@ Phase 1 为 **定期报告 effective found** 定义的 exclusion 列表，在 B 
 | 7 | 关于深圳证券交易所问询函的回复公告 | `cninfo_inquiry_reply_pdf` | `inquiry_reply` | |
 | 8 | 2024年度业绩说明会投资者关系活动记录表 | `cninfo_meeting_notice_pdf` | `investor_relations_activity` | periodic exclusion |
 | 9 | 关于召开2024年年度股东大会的通知 | `cninfo_general_announcement_pdf` | `shareholder_meeting_material` | 非说明会 |
+| 9b | 2025年第二次临时股东大会决议公告 | `cninfo_general_announcement_pdf` | `shareholder_meeting_material` | B-FM-18；非董事会决议 |
+| 9c | 关于召开2025年第二次临时股东大会的公告 | `cninfo_general_announcement_pdf` | `shareholder_meeting_material` | B-FM-18；无「通知」字样 |
 | 10 | 关于延期披露2024年年度报告的公告 | `cninfo_general_announcement_pdf` | `announcement` | `delayed_disclosure_notice` |
 
 ---

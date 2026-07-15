@@ -170,6 +170,8 @@ categories:
     notes: >-
       Broad fallback corpus. Titles excluded from periodic_report may land here with
       re-classified document_type. Use category-sample validation, NOT random success rate.
+      B-FM-18：股东大会决议公告 / 召开…股东大会的公告（无「通知」）document_type=
+      shareholder_meeting_material；法律意见书与会议材料仍为 announcement。
 
 # 延期披露 / 摘要 / 提示性预告等：从 periodic 排除后的候选路由（非独立 source，归入 general 或 future disclosure_related）
 excluded_from_periodic_routing:

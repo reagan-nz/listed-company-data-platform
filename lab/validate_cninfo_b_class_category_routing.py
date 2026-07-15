@@ -310,9 +310,26 @@ def _periodic_document_type(title: str, positive: Dict[str, List[str]]) -> Optio
 
 
 def _general_document_type(title: str, patterns: List[str]) -> str:
+    """general 子类型：董事会决议 / 股东大会材料（通知·决议·召开公告）优先细化。
+
+    B-FM-18：harvest 常见「股东大会决议公告」「关于召开…股东大会的公告」（无「通知」）
+    旧逻辑一律落 announcement，无法对齐 retrieval strategy 的 shareholder_meeting 族；
+    法律意见书 / 会议材料仍保持 announcement，避免把中介见证材料抬成会议材料主类。
+    """
     if "董事会" in title and "决议" in title:
         return "board_resolution"
     if "股东大会" in title and "通知" in title:
+        return "shareholder_meeting_material"
+    if "股东大会" in title and "决议" in title:
+        return "shareholder_meeting_material"
+    # 召开股东大会公告（无「通知」字样；排除法律意见书/会议材料）
+    if (
+        "召开" in title
+        and "股东大会" in title
+        and "法律意见" not in title
+        and "会议材料" not in title
+        and "会议资料" not in title
+    ):
         return "shareholder_meeting_material"
     if "监事会" in title:
         return "announcement"
