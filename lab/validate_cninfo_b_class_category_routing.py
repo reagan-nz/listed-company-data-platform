@@ -386,6 +386,11 @@ def _general_document_type(title: str, patterns: List[str]) -> str:
     positive_patterns，旧逻辑落 other。窄 pattern 一律 announcement（勿裸
     「工作制度」/「工作细则」/「细则」；一般管理制度与薪酬/名单/简报/ESG 仍可
     other；不扩 schema）。
+
+    B-FM-38：「货币资金管理制度」/「对外担保管理制度」无 general
+    positive_patterns，旧逻辑落 other。窄 pattern 一律 announcement（勿裸
+    「管理制度」/「制度」；分子公司管理制度与薪酬/名单/简报/ESG 仍可 other；
+    与「对外担保的情况简报」可区分；不扩 schema）。
     """
     # 法律意见书/法律意见：中介见证材料，保持 announcement（会议与非会议均适用）
     if "法律意见" in title:
@@ -443,6 +448,12 @@ def _general_document_type(title: str, patterns: List[str]) -> str:
         return "announcement"
     # 总经理工作细则：经营层职责细则（窄；勿裸「工作细则」/「细则」）
     if "总经理工作细则" in title:
+        return "announcement"
+    # 货币资金管理制度：资金内控制度文本（窄；勿裸「管理制度」）
+    if "货币资金管理制度" in title:
+        return "announcement"
+    # 对外担保管理制度：担保内控制度文本（窄；勿裸「管理制度」；≠对外担保简报）
+    if "对外担保管理制度" in title:
         return "announcement"
     if "董事会" in title and "决议" in title:
         return "board_resolution"

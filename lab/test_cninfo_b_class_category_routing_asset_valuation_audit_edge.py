@@ -45,7 +45,7 @@ NONSTANDARD = (
 )
 SM_RES = "2025年第二次临时股东大会决议公告"
 BOARD = "第七届董事会第十一次会议决议公告"
-ZHIDU = "货币资金管理制度"
+ZHIDU = "分、子公司管理制度（2025年6月）"  # 分子公司管理制度仍 other（B-FM-38 未推）
 
 
 class TestAssetValuationAuditRoutingEdge(unittest.TestCase):

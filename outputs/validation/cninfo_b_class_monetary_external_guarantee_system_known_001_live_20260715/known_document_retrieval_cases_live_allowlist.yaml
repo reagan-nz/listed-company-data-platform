@@ -1,0 +1,39 @@
+# B-FM-38 live allow-list — 仅新晋 monetary_funds_management_system_known_001 /
+# external_guarantee_management_system_known_001
+status: live_sample_scoped_B-FM-38
+verified: false
+notes: B-FM-38 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS
+cases:
+  - case_id: monetary_funds_management_system_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "300513"
+    company_name: "恒实科技"
+    title_pattern: "货币资金管理制度"
+    expected_document_type: announcement
+    date_start: "2025-05-28"
+    date_end: "2025-05-31"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-38 live allow-list（货币资金管理制度）：
+      harvest BD2E586 恒实科技 300513 ann=1223719020 2025-05-29。
+      title_pattern 窄串「货币资金管理制度」（勿裸「管理制度」）。
+      不写 verified；不下载 PDF。
+
+  - case_id: external_guarantee_management_system_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "603138"
+    company_name: "海量数据"
+    title_pattern: "对外担保管理制度"
+    expected_document_type: announcement
+    date_start: "2025-06-25"
+    date_end: "2025-06-28"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-38 live allow-list（对外担保管理制度）：
+      harvest BD2E790 海量数据 603138 ann=1223999873 2025-06-26。
+      title_pattern 窄串「对外担保管理制度」（勿裸「管理制度」；≠对外担保情况简报）。
+      不写 verified；不下载 PDF。

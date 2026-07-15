@@ -65,6 +65,7 @@ Phase 1 为 **定期报告 effective found** 定义的 exclusion 列表，在 B 
 | 买卖公司股票的自查报告 / 员工持股计划（B-FM-35；窄 pattern，勿裸「自查报告」；不硬推章程/制度/薪酬） | `cninfo_general_announcement_pdf` | `announcement`（勿落 `other`） |
 | 公司章程 / 募集资金管理制度（B-FM-36；窄 pattern，勿裸「章程」/「管理制度」；一般管理制度/薪酬/名单/简报/ESG 可仍 other） | `cninfo_general_announcement_pdf` | `announcement`（勿落 `other`） |
 | 独立非执行董事工作制度 / 总经理工作细则（B-FM-37；窄 pattern，勿裸「工作制度」/「工作细则」；一般管理制度/薪酬/名单/简报/ESG 可仍 other） | `cninfo_general_announcement_pdf` | `announcement`（勿落 `other`） |
+| 货币资金管理制度 / 对外担保管理制度（B-FM-38；窄 pattern，勿裸「管理制度」；分子公司/薪酬/名单/简报/ESG 可仍 other；≠对外担保情况简报） | `cninfo_general_announcement_pdf` | `announcement`（勿落 `other`） |
 
 **原则：** `retrieval_status=title_excluded` 仅表示 **未进入 periodic_report**；应尝试次级路由，并设 `classification_status=title_excluded_from_periodic_but_routed` 或 `ambiguous`。
 
