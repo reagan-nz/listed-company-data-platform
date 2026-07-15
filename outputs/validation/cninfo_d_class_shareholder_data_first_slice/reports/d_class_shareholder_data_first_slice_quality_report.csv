@@ -1,0 +1,6 @@
+case_id,component,anchor_rdate,expected_behavior,retrieval_status,record_count,quality_status,acceptable,failure_type,cninfo_request_count,notes
+DSD001,shareholder_data,20260331,captured_normal,found,1,pass,yes,,1,shared_rdate_request=1; seccode_filter=yes; query_mode=rdate_report_period; found 1 row(s) for company
+DSD002,shareholder_data,20260331,captured_normal_or_empty_but_valid,found,1,pass,yes,,1,shared_rdate_request=1; seccode_filter=yes; query_mode=rdate_report_period; found 1 row(s) for company
+DSD003,shareholder_data,20260331,captured_normal_or_empty_but_valid,found,1,pass,yes,,1,shared_rdate_request=1; seccode_filter=yes; query_mode=rdate_report_period; found 1 row(s) for company
+DSD004,shareholder_data,20260331,captured_normal_or_empty_but_valid,found,1,pass,yes,,1,shared_rdate_request=1; seccode_filter=yes; query_mode=rdate_report_period; found 1 row(s) for company
+DSD005,shareholder_data,20260331,empty_but_valid,empty_but_valid,0,pass,yes,,1,shared_rdate_request=1; seccode_filter=yes; query_mode=rdate_report_period; company-level zero rows after SECCODE filter; legal empty per quality policy

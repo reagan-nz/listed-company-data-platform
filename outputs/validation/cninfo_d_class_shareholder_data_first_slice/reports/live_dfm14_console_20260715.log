@@ -1,0 +1,15 @@
+DSD001 found: records=1 shared_requests=1
+DSD002 found: records=1 shared_requests=1
+DSD003 found: records=1 shared_requests=1
+DSD004 found: records=1 shared_requests=1
+DSD005 empty_but_valid: records=0 shared_requests=1
+mode=shareholder_data_first_slice_live cases=5 acceptable=5/5 cninfo_calls=1 shared_request=1
+gate=d_class_shareholder_data_first_slice_execution_gate=PASS_WITH_CAVEAT
+live_path_gate=d_class_shareholder_data_first_slice_live_path_gate=READY_FOR_APPROVAL
+live_gate=d_class_shareholder_data_first_slice_live_gate=NOT_APPROVED
+live_report=/Users/zhao/Desktop/97/实操/数据收集测试/listed_company_data_collector/outputs/validation/cninfo_d_class_shareholder_data_first_slice/reports/d_class_shareholder_data_first_slice_live_report.csv
+quality_report=/Users/zhao/Desktop/97/实操/数据收集测试/listed_company_data_collector/outputs/validation/cninfo_d_class_shareholder_data_first_slice/reports/d_class_shareholder_data_first_slice_quality_report.csv
+live_summary=/Users/zhao/Desktop/97/实操/数据收集测试/listed_company_data_collector/outputs/validation/cninfo_d_class_shareholder_data_first_slice/reports/d_class_shareholder_data_first_slice_live_summary.md
+real 11.96
+user 0.32
+sys 0.05
