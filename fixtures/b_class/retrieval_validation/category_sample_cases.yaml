@@ -107,6 +107,26 @@ cases:
       兰石重装 603169 announcement_id=1224016689（2025-06-27，BD2E794）。
       来源 slice1 combined + fuller slice2 report。类别抽样全市场窗；不写 verified；不下载 PDF。
 
+  - case_id: inquiry_sample_003
+    case_status: ready
+    source_id: cninfo_inquiry_reply_pdf
+    source_category: inquiry_reply_pdf
+    title_pattern: "监管工作函"
+    date_start: "2025-04-26"
+    date_end: "2025-04-30"
+    expected_min_results: 1
+    expected_document_types:
+      - inquiry_reply
+      - regulatory_inquiry
+    false_positive_guard_patterns:
+      - 年度报告全文
+    notes: >-
+      B-FM-12 自 harvest 证据晋升（依赖 B-FM-11 routing edge）：监管工作函全市场窗。
+      文投控股 600715 announcement_id=1223358761（2025-04-28，BD2E433）。
+      窗内 CPA「监管工作函的专项说明」应为 inquiry_reply；「收到…监管工作函」允许
+      regulatory_inquiry。标题可含「年度报告」子串，故 FP guard 用「年度报告全文」而非裸
+      「年度报告」。来源 slice1 combined report。不写 verified；不下载 PDF。
+
   # --- meeting notice category sample × 2 ---
   - case_id: meeting_sample_001
     case_status: ready

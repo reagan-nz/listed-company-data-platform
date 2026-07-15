@@ -67,6 +67,26 @@ cases:
       inquiry reply announcement. Keep placeholder until manual checklist review;
       do not mark ready; do not write verified.
 
+  - case_id: inquiry_known_004
+    case_status: ready
+    source_id: cninfo_inquiry_reply_pdf
+    company_code: "600715"
+    company_name: "文投控股"
+    title_pattern: "中兴财光华会计师事务所（特殊普通合伙）关于对文投控股股份有限公司2024年年度报告的信息披露监管工作函的专项说明"
+    expected_document_type: inquiry_reply
+    date_start: "2025-04-27"
+    date_end: "2025-04-30"
+    expected_route_to: cninfo_inquiry_reply_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-12 自 harvest 证据晋升（依赖 B-FM-11 routing edge）：文投控股 600715，
+      中兴财光华会计师事务所（特殊普通合伙）关于对文投控股股份有限公司2024年年度报告的
+      信息披露监管工作函的专项说明（announcement_id=1223358761，披露日 2025-04-28）。
+      标题含「年度报告」子串但以「监管工作函的专项说明」结尾；title_pattern 用全文以避免
+      同窗歧义。与 CPA「问询函的回复」known_001 / 「回复公告」known_002 可区分。来源
+      outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/b_class_erad_next_scale_slice1_combined_report.csv
+      行 BD2E433（quality=pass）。不写 verified；不下载 PDF。
+
   # --- regulatory_inquiry × 3 ---
   - case_id: regulatory_known_001
     case_status: ready
