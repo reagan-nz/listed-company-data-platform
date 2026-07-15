@@ -1,0 +1,39 @@
+{
+  "packet_kind": "nonseal_extension_human_execute_decision_checklist",
+  "task_id": "C-FM-17",
+  "generated_at": "2026-07-15T12:35:33Z",
+  "gate": "PASS_OFFLINE",
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "ready_for_execute": false,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+  "idle_not_required_while_awaiting": true,
+  "seal_chain_extended": false,
+  "drift_detected": false,
+  "options": [
+    {
+      "id": "A",
+      "label": "HOLD_KEEP_EXECUTE_FALSE",
+      "recommended": true,
+      "auto_applied": false,
+      "notes": "默认推荐：继续 HOLD；不翻转 approved"
+    },
+    {
+      "id": "B",
+      "label": "APPROVE_EXECUTE_REQUIRES_HUMAN",
+      "recommended": false,
+      "auto_applied": false,
+      "notes": "仅人批可批准 EXECUTE；本包不自动应用"
+    }
+  ],
+  "evidence_roots": {
+    "fm13_mock": "outputs/validation/_mock_c_fm13_nonseal_cross_fm_mock_cohort_extension",
+    "fm14_mock": "outputs/validation/_mock_c_fm14_nonseal_extension_post_commit_drift_recheck",
+    "fm15_mock": "outputs/validation/_mock_c_fm15_nonseal_extension_controller_commit_boundary",
+    "fm16_mock": "outputs/validation/_mock_c_fm16_nonseal_extension_post_commit_seal_attestation",
+    "fm17_mock": "outputs/validation/_mock_c_fm17_nonseal_extension_human_decision_readiness_ledger"
+  },
+  "frozen_attestation_fp_sha256": "d0cb247d8d7fd6caefc2e034e16382906f2894cb90c52a73071869583b68031c",
+  "notes": "本 checklist 仅冻结非 seal 人批证据与选项；不翻转 approved；不因 AWAITING 而要求 IDLE；不执行 production snapshot。"
+}
