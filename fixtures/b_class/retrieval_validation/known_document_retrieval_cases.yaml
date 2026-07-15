@@ -245,7 +245,7 @@ cases:
       longer session-specific title not returned by search). Checklist reviewed;
       routes to cninfo_general_announcement_pdf. Do not write verified.
 
-  # --- supervisory_board / 监事会决议 × 1（document_type=announcement；非 board_resolution）---
+  # --- supervisory_board / 监事会决议 × 2（document_type=announcement；非 board_resolution）---
   - case_id: supervisory_board_known_001
     case_status: ready
     source_id: cninfo_general_announcement_pdf
@@ -267,6 +267,28 @@ cases:
       路由为 announcement → cninfo_general_announcement_pdf（监事会分支，非董事会决议）。
       来源 outputs/validation/cninfo_b_class_erad_scale_200/reports/b_class_erad_scale_200_report.csv
       行 BD2E091（quality=pass；phase3 B3E091）。不写 verified；不下载 PDF。
+
+  - case_id: supervisory_board_known_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "001231"
+    company_name: "农心科技"
+    title_pattern: "第二十二次会议决议的公告"
+    expected_document_type: announcement
+    date_start: "2025-06-25"
+    date_end: "2025-06-28"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-24 自 harvest 证据晋升（闭合 B-FM-23 下一边角：监事会决议「的」助词变体）：
+      农心科技 001231，农心作物科技股份有限公司第二届监事会第二十二次会议决议的公告
+      （announcement_id=1223998915，披露日 2025-06-26）。title_pattern 取
+      「第二十二次会议决议的公告」（含「的」助词；非连续「会议决议公告」；届次锚定
+      避免同窗多条「会议决议的公告」歧义），与 known_001
+      「第二十四次会议决议公告」及董事会「董事会决议公告」可区分；路由仍为
+      announcement → cninfo_general_announcement_pdf（监事会分支，非 board_resolution）。
+      来源 outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/b_class_erad_next_scale_slice1_combined_report.csv
+      行 BD2E244（quality=pass）。不写 verified；不下载 PDF。
 
   # --- shareholder_meeting_material × 4 ---
   - case_id: shareholder_meeting_known_001

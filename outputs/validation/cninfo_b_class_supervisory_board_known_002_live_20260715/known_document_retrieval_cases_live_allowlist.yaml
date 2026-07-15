@@ -1,0 +1,24 @@
+# B-FM-24 live allow-list — 仅新晋 supervisory_board_known_002
+version: "draft-0.1"
+status: live_sample_scoped_B-FM-24
+verified: false
+notes: B-FM-24 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS
+
+cases:
+  - case_id: supervisory_board_known_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "001231"
+    company_name: "农心科技"
+    title_pattern: "第二十二次会议决议的公告"
+    expected_document_type: announcement
+    date_start: "2025-06-25"
+    date_end: "2025-06-28"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-24 live allow-list（依赖 general_006 监事会→announcement route + 本包晋升）：
+      农心科技 001231，BD2E244 / announcement_id=1223998915。
+      标题「农心作物科技股份有限公司第二届监事会第二十二次会议决议的公告」。
+      pattern「第二十二次会议决议的公告」（「的」助词 + 届次锚定；首跑「会议决议的公告」
+      同窗 ambiguous×3，已收紧）。不写 verified；不下载 PDF。
