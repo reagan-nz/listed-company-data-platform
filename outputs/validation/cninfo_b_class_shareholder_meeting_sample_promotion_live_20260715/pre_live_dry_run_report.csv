@@ -1,0 +1,2 @@
+case_id,case_type,case_status,source_id,title_pattern,date_start,date_end,expected_document_type,expected_route_to,dry_run_status,would_query,query_status,notes
+meeting_sample_002,category_sample,ready,cninfo_general_announcement_pdf,股东大会通知,2025-06-22,2025-06-26,"shareholder_meeting_material,meeting_notice,announcement",,ready_for_category_sample_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called

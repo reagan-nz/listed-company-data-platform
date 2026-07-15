@@ -1,0 +1,6 @@
+# B-FM-15 live allow-list — known 空（本包仅 category-sample；known_001 已 B-R16 LIVE_PASS）
+version: "draft-0.1"
+status: live_allowlist_empty
+verified: false
+notes: B-FM-15 live allow-list only; not a new fixture lineage
+cases: []

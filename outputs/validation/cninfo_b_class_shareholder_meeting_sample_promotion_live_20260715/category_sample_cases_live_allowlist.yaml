@@ -1,0 +1,26 @@
+# B-FM-15 live allow-list — 仅 B-FM-14 新晋 meeting_sample_002（股东大会通知全市场类别窗）
+version: "draft-0.1"
+status: live_sample_scoped_B-FM-15
+verified: false
+notes: B-FM-15 live allow-list only; not a new fixture lineage
+
+cases:
+  - case_id: meeting_sample_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    source_category: announcement_pdf
+    title_pattern: "股东大会通知"
+    date_start: "2025-06-22"
+    date_end: "2025-06-26"
+    expected_min_results: 1
+    expected_document_types:
+      - shareholder_meeting_material
+      - meeting_notice
+      - announcement
+    false_positive_guard_patterns:
+      - 年度报告
+    notes: >-
+      B-FM-15 live allow-list（依赖 B-FM-14 晋升 / B-R16-01 known_001 锚点）：
+      股东大会通知全市场窗；锚点 BD2E574 / 航天智造 300446 / ann=1223974102。
+      纯「股东大会通知」期望 general；窗内「…通知暨…说明会」允许 meeting_notice。
+      不写 verified；不下载 PDF。
