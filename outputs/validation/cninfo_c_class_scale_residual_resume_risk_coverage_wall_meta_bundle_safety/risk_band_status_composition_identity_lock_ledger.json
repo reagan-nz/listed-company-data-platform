@@ -1,0 +1,127 @@
+{
+  "generated_at": "2026-07-15T16:50:40Z",
+  "task_id": "C-FM-44",
+  "fingerprint_sha256": "c736c0e10b2b0b558b689e6254dde7717465732b82cfb806b1b54ae9428a147b",
+  "composition_sha256": "e5edcd539f0bb5332a31ba93828dec64bb1dbebf3f23af3cd4e1a416dc612ebe",
+  "risk_band_status_formula": "75/14/12/5",
+  "risk_band_formula": "75+14+12+5=106",
+  "sample_denials": [
+    {
+      "proposed": {
+        "bands": {
+          "p35_heavy": 76,
+          "p3_mid": 14,
+          "p2_mid": 12,
+          "fu_light": 5
+        },
+        "partial": 107
+      },
+      "frozen": {
+        "bands": {
+          "p35_heavy": 75,
+          "p3_mid": 14,
+          "p2_mid": 12,
+          "fu_light": 5
+        },
+        "partial": 106
+      },
+      "risk_band_formula_holds": true,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "risk_band_status_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "bands": {
+          "p35_heavy": 75,
+          "p3_mid": 14,
+          "p2_mid": 12,
+          "fu_light": 4
+        },
+        "partial": 105
+      },
+      "frozen": {
+        "bands": {
+          "p35_heavy": 75,
+          "p3_mid": 14,
+          "p2_mid": 12,
+          "fu_light": 5
+        },
+        "partial": 106
+      },
+      "risk_band_formula_holds": true,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "risk_band_status_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "bands": {
+          "p35_heavy": 70,
+          "p3_mid": 16,
+          "p2_mid": 12,
+          "fu_light": 8
+        },
+        "partial": 106
+      },
+      "frozen": {
+        "bands": {
+          "p35_heavy": 75,
+          "p3_mid": 14,
+          "p2_mid": 12,
+          "fu_light": 5
+        },
+        "partial": 106
+      },
+      "risk_band_formula_holds": true,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "risk_band_status_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "bands": {
+          "p35_heavy": 75,
+          "p3_mid": 14,
+          "p2_mid": 12,
+          "fu_light": 5
+        },
+        "partial": 106
+      },
+      "frozen": {
+        "bands": {
+          "p35_heavy": 75,
+          "p3_mid": 14,
+          "p2_mid": 12,
+          "fu_light": 5
+        },
+        "partial": 106
+      },
+      "risk_band_formula_holds": true,
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "risk_band_status_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "risk_band_status_composition_identity_lock",
+    "partial_risk_bands": {
+      "p35_heavy": 75,
+      "p3_mid": 14,
+      "p2_mid": 12,
+      "fu_light": 5
+    },
+    "union_partial": 106,
+    "composition_sha256": "e5edcd539f0bb5332a31ba93828dec64bb1dbebf3f23af3cd4e1a416dc612ebe",
+    "risk_band_status_formula": "75/14/12/5",
+    "risk_band_formula": "75+14+12+5=106",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

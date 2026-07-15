@@ -1,0 +1,340 @@
+{
+  "generated_at": "2026-07-15T16:50:40Z",
+  "task_id": "C-FM-44",
+  "fingerprint_sha256": "4ca6b2202822d2c476ad8fd7e8310cda4e43469b60d2e64b5612eb256646222b",
+  "bundle_sha256": "62c93806b14c3d79b381310c1ec2d45fd7ca89f4816fc0c9293d48006ed688c3",
+  "compositions": {
+    "residual_formula_composition": {
+      "formula": "106+9+2=117",
+      "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+    },
+    "resume_taxonomy_composition": {
+      "formula": "28/1/0",
+      "composition_sha256": "e9b719d9acd0a7685a512349abbb80da3823edd47e589691a270457c0efdc470"
+    },
+    "risk_band_status_composition": {
+      "formula": "75/14/12/5",
+      "composition_sha256": "e5edcd539f0bb5332a31ba93828dec64bb1dbebf3f23af3cd4e1a416dc612ebe"
+    },
+    "cross_stable_metrics_wall_meta_bundle": {
+      "bundle_sha256": "ed331490393a9e65b839e4eb30f0b628662a407eaa03b998ec204eb55fc50102"
+    },
+    "stable_metrics_wall": {
+      "harvest_unique_union": 2249,
+      "surface_unique": 2251,
+      "harvest_additive": 2261,
+      "union_status": "2134/106/9",
+      "overlap_delta": 12,
+      "residual_safety_coverage": 117,
+      "resume_taxonomy": "28/1/0",
+      "tier_coverage": "7/3314",
+      "combined_dryrun_coverage": 1053,
+      "risk_band": "75/14/12/5",
+      "coverage": 117
+    }
+  },
+  "sample_denials": [
+    {
+      "proposed_compositions": {
+        "residual_formula_composition": {
+          "formula": "106+9+2=117",
+          "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+        },
+        "resume_taxonomy_composition": {
+          "formula": "28/1/0",
+          "composition_sha256": "e9b719d9acd0a7685a512349abbb80da3823edd47e589691a270457c0efdc470"
+        },
+        "risk_band_status_composition": {
+          "formula": "75/14/12/5",
+          "composition_sha256": "e5edcd539f0bb5332a31ba93828dec64bb1dbebf3f23af3cd4e1a416dc612ebe"
+        },
+        "cross_stable_metrics_wall_meta_bundle": {
+          "bundle_sha256": "ed331490393a9e65b839e4eb30f0b628662a407eaa03b998ec204eb55fc50102"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        },
+        "union_status_composition": {
+          "formula": "2134/106/9",
+          "composition_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      },
+      "frozen_compositions": {
+        "residual_formula_composition": {
+          "formula": "106+9+2=117",
+          "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+        },
+        "resume_taxonomy_composition": {
+          "formula": "28/1/0",
+          "composition_sha256": "e9b719d9acd0a7685a512349abbb80da3823edd47e589691a270457c0efdc470"
+        },
+        "risk_band_status_composition": {
+          "formula": "75/14/12/5",
+          "composition_sha256": "e5edcd539f0bb5332a31ba93828dec64bb1dbebf3f23af3cd4e1a416dc612ebe"
+        },
+        "cross_stable_metrics_wall_meta_bundle": {
+          "bundle_sha256": "ed331490393a9e65b839e4eb30f0b628662a407eaa03b998ec204eb55fc50102"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_residual_resume_risk_coverage_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "residual_formula_composition": {
+          "formula": "106+9+2=117",
+          "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+        },
+        "resume_taxonomy_composition": {
+          "formula": "28/1/0",
+          "composition_sha256": "e9b719d9acd0a7685a512349abbb80da3823edd47e589691a270457c0efdc470"
+        },
+        "cross_stable_metrics_wall_meta_bundle": {
+          "bundle_sha256": "ed331490393a9e65b839e4eb30f0b628662a407eaa03b998ec204eb55fc50102"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "frozen_compositions": {
+        "residual_formula_composition": {
+          "formula": "106+9+2=117",
+          "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+        },
+        "resume_taxonomy_composition": {
+          "formula": "28/1/0",
+          "composition_sha256": "e9b719d9acd0a7685a512349abbb80da3823edd47e589691a270457c0efdc470"
+        },
+        "risk_band_status_composition": {
+          "formula": "75/14/12/5",
+          "composition_sha256": "e5edcd539f0bb5332a31ba93828dec64bb1dbebf3f23af3cd4e1a416dc612ebe"
+        },
+        "cross_stable_metrics_wall_meta_bundle": {
+          "bundle_sha256": "ed331490393a9e65b839e4eb30f0b628662a407eaa03b998ec204eb55fc50102"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_residual_resume_risk_coverage_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "residual_formula_composition": {
+          "formula": "106+9+2=116",
+          "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+        },
+        "resume_taxonomy_composition": {
+          "formula": "28/1/0",
+          "composition_sha256": "e9b719d9acd0a7685a512349abbb80da3823edd47e589691a270457c0efdc470"
+        },
+        "risk_band_status_composition": {
+          "formula": "75/14/12/5",
+          "composition_sha256": "e5edcd539f0bb5332a31ba93828dec64bb1dbebf3f23af3cd4e1a416dc612ebe"
+        },
+        "cross_stable_metrics_wall_meta_bundle": {
+          "bundle_sha256": "ed331490393a9e65b839e4eb30f0b628662a407eaa03b998ec204eb55fc50102"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "frozen_compositions": {
+        "residual_formula_composition": {
+          "formula": "106+9+2=117",
+          "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+        },
+        "resume_taxonomy_composition": {
+          "formula": "28/1/0",
+          "composition_sha256": "e9b719d9acd0a7685a512349abbb80da3823edd47e589691a270457c0efdc470"
+        },
+        "risk_band_status_composition": {
+          "formula": "75/14/12/5",
+          "composition_sha256": "e5edcd539f0bb5332a31ba93828dec64bb1dbebf3f23af3cd4e1a416dc612ebe"
+        },
+        "cross_stable_metrics_wall_meta_bundle": {
+          "bundle_sha256": "ed331490393a9e65b839e4eb30f0b628662a407eaa03b998ec204eb55fc50102"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_residual_resume_risk_coverage_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "residual_formula_composition": {
+          "formula": "106+9+2=117",
+          "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+        },
+        "resume_taxonomy_composition": {
+          "formula": "28/1/0",
+          "composition_sha256": "e9b719d9acd0a7685a512349abbb80da3823edd47e589691a270457c0efdc470"
+        },
+        "risk_band_status_composition": {
+          "formula": "75/14/12/5",
+          "composition_sha256": "e5edcd539f0bb5332a31ba93828dec64bb1dbebf3f23af3cd4e1a416dc612ebe"
+        },
+        "cross_stable_metrics_wall_meta_bundle": {
+          "bundle_sha256": "ed331490393a9e65b839e4eb30f0b628662a407eaa03b998ec204eb55fc50102"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "frozen_compositions": {
+        "residual_formula_composition": {
+          "formula": "106+9+2=117",
+          "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+        },
+        "resume_taxonomy_composition": {
+          "formula": "28/1/0",
+          "composition_sha256": "e9b719d9acd0a7685a512349abbb80da3823edd47e589691a270457c0efdc470"
+        },
+        "risk_band_status_composition": {
+          "formula": "75/14/12/5",
+          "composition_sha256": "e5edcd539f0bb5332a31ba93828dec64bb1dbebf3f23af3cd4e1a416dc612ebe"
+        },
+        "cross_stable_metrics_wall_meta_bundle": {
+          "bundle_sha256": "ed331490393a9e65b839e4eb30f0b628662a407eaa03b998ec204eb55fc50102"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "cross_residual_resume_risk_coverage_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "cross_residual_resume_risk_coverage_wall_meta_bundle_identity_lock",
+    "compositions": {
+      "residual_formula_composition": {
+        "formula": "106+9+2=117",
+        "composition_sha256": "9b5c24bb6ee7aa9546c1dee68ec94a8b48b9a83f344c7b4e6629f83c63f80c44"
+      },
+      "resume_taxonomy_composition": {
+        "formula": "28/1/0",
+        "composition_sha256": "e9b719d9acd0a7685a512349abbb80da3823edd47e589691a270457c0efdc470"
+      },
+      "risk_band_status_composition": {
+        "formula": "75/14/12/5",
+        "composition_sha256": "e5edcd539f0bb5332a31ba93828dec64bb1dbebf3f23af3cd4e1a416dc612ebe"
+      },
+      "cross_stable_metrics_wall_meta_bundle": {
+        "bundle_sha256": "ed331490393a9e65b839e4eb30f0b628662a407eaa03b998ec204eb55fc50102"
+      },
+      "stable_metrics_wall": {
+        "harvest_unique_union": 2249,
+        "surface_unique": 2251,
+        "harvest_additive": 2261,
+        "union_status": "2134/106/9",
+        "overlap_delta": 12,
+        "residual_safety_coverage": 117,
+        "resume_taxonomy": "28/1/0",
+        "tier_coverage": "7/3314",
+        "combined_dryrun_coverage": 1053,
+        "risk_band": "75/14/12/5",
+        "coverage": 117
+      }
+    },
+    "bundle_sha256": "62c93806b14c3d79b381310c1ec2d45fd7ca89f4816fc0c9293d48006ed688c3",
+    "deny_composition_mutate": true,
+    "deny_bundle_inflate": true,
+    "deny_bundle_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

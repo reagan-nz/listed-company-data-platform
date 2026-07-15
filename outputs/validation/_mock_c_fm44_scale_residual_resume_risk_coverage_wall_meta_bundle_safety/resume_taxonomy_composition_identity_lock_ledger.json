@@ -1,0 +1,100 @@
+{
+  "generated_at": "2026-07-15T16:50:40Z",
+  "task_id": "C-FM-44",
+  "fingerprint_sha256": "51d983f3e10691548a3f172a2b3b9292d2b4655fc92dfb409067b9e70ef3c7b7",
+  "composition_sha256": "e9b719d9acd0a7685a512349abbb80da3823edd47e589691a270457c0efdc470",
+  "resume_taxonomy_formula": "28/1/0",
+  "resume_formula": "28+1+0=29",
+  "sample_denials": [
+    {
+      "proposed": {
+        "improved": 29,
+        "same": 1,
+        "worse": 0,
+        "total": 30
+      },
+      "frozen": {
+        "improved": 28,
+        "same": 1,
+        "worse": 0,
+        "total": 29
+      },
+      "resume_formula_holds": true,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_taxonomy_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "improved": 28,
+        "same": 0,
+        "worse": 0,
+        "total": 28
+      },
+      "frozen": {
+        "improved": 28,
+        "same": 1,
+        "worse": 0,
+        "total": 29
+      },
+      "resume_formula_holds": true,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_taxonomy_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "improved": 28,
+        "same": 1,
+        "worse": 1,
+        "total": 30
+      },
+      "frozen": {
+        "improved": 28,
+        "same": 1,
+        "worse": 0,
+        "total": 29
+      },
+      "resume_formula_holds": true,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_taxonomy_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "improved": 28,
+        "same": 1,
+        "worse": 0,
+        "total": 29
+      },
+      "frozen": {
+        "improved": 28,
+        "same": 1,
+        "worse": 0,
+        "total": 29
+      },
+      "resume_formula_holds": true,
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "resume_taxonomy_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "resume_taxonomy_composition_identity_lock",
+    "resume_improved": 28,
+    "resume_same": 1,
+    "resume_worse": 0,
+    "resume_total": 29,
+    "composition_sha256": "e9b719d9acd0a7685a512349abbb80da3823edd47e589691a270457c0efdc470",
+    "resume_taxonomy_formula": "28/1/0",
+    "resume_formula": "28+1+0=29",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
