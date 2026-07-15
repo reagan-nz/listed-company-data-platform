@@ -167,6 +167,8 @@ categories:
       - 核查意见
       - 保荐书
       - 权益变动报告书
+      - 受托管理事务报告
+      - 跟踪评级报告
     exclusion_patterns: []
     route_to:
       source_id: cninfo_general_announcement_pdf
@@ -186,6 +188,9 @@ categories:
       document_type=announcement（勿落 other；不扩 schema）。
       B-FM-28：上市保荐书 / 简式权益变动报告书等标题常无「公告」等 general
       positive_patterns，旧逻辑落 other；含「保荐书」或「权益变动报告书」一律
+      document_type=announcement（勿落 other；不扩 schema）。
+      B-FM-29：债券受托管理事务报告 / 跟踪评级报告等标题常无「公告」等 general
+      positive_patterns，旧逻辑落 other；含「受托管理事务报告」或「跟踪评级报告」一律
       document_type=announcement（勿落 other；不扩 schema）。
 
 # 延期披露 / 摘要 / 提示性预告等：从 periodic 排除后的候选路由（非独立 source，归入 general 或 future disclosure_related）

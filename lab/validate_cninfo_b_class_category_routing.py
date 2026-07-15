@@ -345,6 +345,10 @@ def _general_document_type(title: str, patterns: List[str]) -> str:
     B-FM-28：上市保荐书 / 简式权益变动报告书等标题常无「公告」等 general
     positive_patterns，旧逻辑落 other。凡含「保荐书」或「权益变动报告书」一律
     announcement（不扩 schema；不抬成 board_resolution / shareholder_meeting_material）。
+
+    B-FM-29：债券「受托管理事务报告」/「跟踪评级报告」等标题常无「公告」等 general
+    positive_patterns，旧逻辑落 other。凡含「受托管理事务报告」或「跟踪评级报告」一律
+    announcement（不扩 schema；不抬成 board_resolution / shareholder_meeting_material）。
     """
     # 法律意见书/法律意见：中介见证材料，保持 announcement（会议与非会议均适用）
     if "法律意见" in title:
@@ -357,6 +361,12 @@ def _general_document_type(title: str, patterns: List[str]) -> str:
         return "announcement"
     # 权益变动报告书：简式/详式权益变动，保持 announcement（勿落 other）
     if "权益变动报告书" in title:
+        return "announcement"
+    # 受托管理事务报告：债券受托管理人年度事务报告，保持 announcement（勿落 other）
+    if "受托管理事务报告" in title:
+        return "announcement"
+    # 跟踪评级报告：主体/债券跟踪评级，保持 announcement（勿落 other）
+    if "跟踪评级报告" in title:
         return "announcement"
     if "董事会" in title and "决议" in title:
         return "board_resolution"

@@ -57,6 +57,7 @@ Phase 1 为 **定期报告 effective found** 定义的 exclusion 列表，在 B 
 | 法律意见书 / 法律意见（会议与非会议：增持、差异化分红、可转债等；B-FM-26） | `cninfo_general_announcement_pdf` | `announcement`（勿落 `other`；勿抬成会议材料） |
 | 核查意见（保荐机构募资置换/限售流通等；B-FM-27） | `cninfo_general_announcement_pdf` | `announcement`（勿落 `other`） |
 | 保荐书 / 权益变动报告书（上市保荐书、简式权益变动等；B-FM-28） | `cninfo_general_announcement_pdf` | `announcement`（勿落 `other`） |
+| 受托管理事务报告 / 跟踪评级报告（债券受托管理、主体/债项跟踪评级；B-FM-29） | `cninfo_general_announcement_pdf` | `announcement`（勿落 `other`） |
 
 **原则：** `retrieval_status=title_excluded` 仅表示 **未进入 periodic_report**；应尝试次级路由，并设 `classification_status=title_excluded_from_periodic_but_routed` 或 `ambiguous`。
 

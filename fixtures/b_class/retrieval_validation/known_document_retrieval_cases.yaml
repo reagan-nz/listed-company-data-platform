@@ -464,6 +464,51 @@ cases:
       b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E482（quality=pass）。
       不写 verified；不下载 PDF。
 
+  # --- bond_trustee_report / tracking_rating_report × 2（B-FM-29；document_type=announcement；勿落 other）---
+  - case_id: bond_trustee_report_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "001317"
+    company_name: "三羊马"
+    title_pattern: "可转换公司债券受托管理事务报告（2024年度）"
+    expected_document_type: announcement
+    date_start: "2025-06-24"
+    date_end: "2025-06-27"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-29 自 harvest 证据晋升（债券受托管理事务报告 routing 边角：旧逻辑落 other）：
+      三羊马 001317，申港证券股份有限公司关于三羊马(重庆)物流股份有限公司向不特定对象
+      发行可转换公司债券受托管理事务报告（2024年度）（announcement_id=1223979550，
+      披露日 2025-06-25）。标题无「公告」等 general positive_patterns（B-FM-29 前），
+      落 other；硬化后为 announcement。title_pattern 取「可转换公司债券受托管理事务报告（2024年度）」
+      （短串「受托管理事务报告」同窗会同时命中「第一次临时…（2025年度）」→ ambiguous）。
+      与保荐书 / 权益变动报告书 / 跟踪评级报告 / 法律意见书可区分。来源
+      outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
+      b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E254（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: tracking_rating_report_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "600521"
+    company_name: "华海药业"
+    title_pattern: "跟踪评级报告"
+    expected_document_type: announcement
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-29 自 harvest 证据晋升（跟踪评级报告第二边角；对称 bond_trustee）：
+      华海药业 600521，2020年浙江华海药业股份有限公司公开发行可转换公司债券定期
+      跟踪评级报告（announcement_id=1224013532，披露日 2025-06-27）。同样无
+      general positive_patterns，旧逻辑落 other；硬化后 announcement。
+      title_pattern 取「跟踪评级报告」（覆盖「定期跟踪评级报告」子串）。来源
+      outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
+      b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E408（quality=pass）。
+      不写 verified；不下载 PDF。
+
   # --- shareholder_meeting_material × 4 ---
   - case_id: shareholder_meeting_known_001
     case_status: ready

@@ -1,0 +1,3 @@
+case_id,case_type,case_status,source_id,title_pattern,date_start,date_end,expected_document_type,expected_route_to,dry_run_status,would_query,query_status,notes
+bond_trustee_report_known_001,known_document,ready,cninfo_general_announcement_pdf,可转换公司债券受托管理事务报告（2024年度）,2025-06-24,2025-06-27,announcement,cninfo_general_announcement_pdf,ready_for_future_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called
+tracking_rating_report_known_001,known_document,ready,cninfo_general_announcement_pdf,跟踪评级报告,2025-06-26,2025-06-29,announcement,cninfo_general_announcement_pdf,ready_for_future_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called
