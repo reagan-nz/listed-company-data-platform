@@ -533,6 +533,43 @@ class ListingAwareCohortBuilderTests(unittest.TestCase):
             )
             self.assertEqual(f"AD2E{1100:03d}", "AD2E1100")
 
+    def test_s12_case_id_start_excludes_prior_codes(self) -> None:
+        """S12 从 1101 起编；已占用码不得入选；1150 号可格式化为 AD2E1150。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            profile_dir = tmp_path / "profiles"
+            profile_dir.mkdir()
+            yaml_path = tmp_path / "fm.yaml"
+            exclude_csv = tmp_path / "a_exclude.csv"
+            companies = [
+                {"stock_code": "000001", "short_name": "已占用甲"},
+                {"stock_code": "000004", "short_name": "可选子"},
+                {"stock_code": "000005", "short_name": "可选丑"},
+            ]
+            _write_yaml(yaml_path, companies)
+            _write_exclude_csv(exclude_csv, ["000001"])
+            for code, ld in (
+                ("000001", "2010-01-01"),
+                ("000004", "2010-01-01"),
+                ("000005", "2010-01-01"),
+            ):
+                _write_profile(profile_dir, code, ld)
+            result = builder.build_listing_aware_cohort(
+                target_size=2,
+                case_id_start=builder.CASE_ID_START_S12,
+                a_exclude_csvs=[str(exclude_csv)],
+                profile_dir=str(profile_dir),
+                full_market_yaml=str(yaml_path),
+                max_same_prefix=25,
+            )
+            self.assertEqual(result.selected[0].case_id, "AD2E1101")
+            self.assertEqual(result.selected[1].case_id, "AD2E1102")
+            self.assertEqual(
+                [r.company_code for r in result.selected],
+                ["000004", "000005"],
+            )
+            self.assertEqual(f"AD2E{1150:03d}", "AD2E1150")
+
 
 if __name__ == "__main__":
     unittest.main()
