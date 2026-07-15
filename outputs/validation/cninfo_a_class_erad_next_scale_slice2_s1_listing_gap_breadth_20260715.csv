@@ -1,0 +1,4 @@
+case_id,company_code,company_name,report_type,expected_period,listing_date,root_cause,failure_class,cninfo_request_count
+AD2E578,688605,先锋精科,semi_annual_report,2024-06-30,2024-12-12,expected_period_before_listing,listing_gap_true_not_found,3
+AD2E590,688688,蚂蚁集团,quarterly_report_q3,2024-09-30,,unlisted_or_listing_date_null,true_not_found_likely,3
+AD2E598,688758,赛分科技,semi_annual_report,2024-06-30,2025-01-10,expected_period_before_listing,listing_gap_true_not_found,3
