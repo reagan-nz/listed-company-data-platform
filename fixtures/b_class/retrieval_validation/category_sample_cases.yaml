@@ -144,6 +144,28 @@ cases:
       Design-only; may route to general_announcement per routing rules. Audit
       classification on live sample.
 
+  # --- IR activity category sample（集体接待日边角；依赖 B-FM-04）---
+  - case_id: ir_activity_sample_001
+    case_status: ready
+    source_id: cninfo_meeting_notice_pdf
+    source_category: meeting_notice_pdf
+    title_pattern: "投资者网上集体接待日"
+    date_start: "2025-05-08"
+    date_end: "2025-05-22"
+    expected_min_results: 1
+    expected_document_types:
+      - investor_relations_activity
+      - meeting_notice
+    false_positive_guard_patterns:
+      - 年度报告
+      - 第一季度报告
+    notes: >-
+      B-FM-05 自 harvest 证据晋升（依赖 B-FM-04 routing edge）：集体接待日全市场窗。
+      吉林化纤 000420 announcement_id=1223605360（2025-05-20，BD2E202）；
+      永安林业 000663 announcement_id=1223513724（2025-05-09，BD2E206）。
+      窗内若出现「集体接待日暨…业绩说明会」允许 meeting_notice；纯接待日应为
+      investor_relations_activity。来源 slice1 combined report。不写 verified；不下载 PDF。
+
   # --- periodic false positive guard × 2 ---
   - case_id: periodic_guard_001
     case_status: placeholder
