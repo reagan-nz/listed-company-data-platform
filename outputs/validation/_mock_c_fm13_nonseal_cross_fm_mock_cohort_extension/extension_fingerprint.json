@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-07-15T12:16:13Z",
+  "task_id": "C-FM-13",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "seal_chain_extended": false,
+  "fingerprint": {
+    "row_count": 69,
+    "ok_count": 69,
+    "fail_count": 0,
+    "layers": {
+      "mock_cohort_registry": 13,
+      "fingerprint_chain": 7,
+      "frozen_mock_isolation": 16,
+      "harvest_exclusion_consistency": 4,
+      "protected_write_guard": 5,
+      "protected_csv_registry": 17,
+      "fm_gate_battery": 7
+    },
+    "fingerprint_sha256": "3d9354e2571b46b5d67787b43aada270882d827bf00d7f91f8d3154c6da5d8ff"
+  }
+}

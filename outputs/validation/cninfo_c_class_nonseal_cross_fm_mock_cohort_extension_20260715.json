@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-07-15T12:16:13Z",
+  "task_id": "C-FM-13",
+  "gate": "PASS_OFFLINE",
+  "layer_gates": {
+    "nonseal_cohort_registry": "PASS_OFFLINE",
+    "fingerprint_chain": "PASS_OFFLINE",
+    "frozen_mock_isolation": "PASS_OFFLINE",
+    "harvest_exclusion_consistency": "PASS_OFFLINE",
+    "protected_write_guard": "PASS_OFFLINE",
+    "protected_csv_registry": "PASS_OFFLINE",
+    "fm_gate_battery": "PASS_OFFLINE"
+  },
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "ready_for_execute": false,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+  "idle_not_required_while_awaiting": true,
+  "fail_count": 0,
+  "matrix_rows": 69,
+  "output_root": "outputs/validation/_mock_c_fm13_nonseal_cross_fm_mock_cohort_extension",
+  "matrix_path": "outputs/validation/_mock_c_fm13_nonseal_cross_fm_mock_cohort_extension/extension_matrix.csv",
+  "fingerprint_path": "outputs/validation/_mock_c_fm13_nonseal_cross_fm_mock_cohort_extension/extension_fingerprint.json",
+  "fingerprint": {
+    "row_count": 69,
+    "ok_count": 69,
+    "fail_count": 0,
+    "layers": {
+      "mock_cohort_registry": 13,
+      "fingerprint_chain": 7,
+      "frozen_mock_isolation": 16,
+      "harvest_exclusion_consistency": 4,
+      "protected_write_guard": 5,
+      "protected_csv_registry": 17,
+      "fm_gate_battery": 7
+    },
+    "fingerprint_sha256": "3d9354e2571b46b5d67787b43aada270882d827bf00d7f91f8d3154c6da5d8ff"
+  },
+  "registry_path": "outputs/validation/_mock_c_fm13_nonseal_cross_fm_mock_cohort_extension/nonseal_mock_cohort_registry.json",
+  "battery_path": "outputs/validation/_mock_c_fm13_nonseal_cross_fm_mock_cohort_extension/fm_gate_battery.json",
+  "packet_path": "outputs/validation/_mock_c_fm13_nonseal_cross_fm_mock_cohort_extension/extension_packet.json",
+  "inputs": {
+    "fm01_gate_json": "outputs/validation/cninfo_c_class_isolated_snapshot_dryrun_repro_check_20260715.json",
+    "fm02_gate_json": "outputs/validation/cninfo_c_class_isolated_snapshot_validation_cohorts_20260715.json",
+    "fm03_gate_json": "outputs/validation/cninfo_c_class_harvest_exclusion_dual_layer_consistency_20260715.json",
+    "fm04_gate_json": "outputs/validation/cninfo_c_class_dual_layer_ledger_resume_lineage_20260715.json",
+    "fm05_gate_json": "outputs/validation/cninfo_c_class_cross_fm_mock_cohort_integrity_20260715.json",
+    "fm12_gate_json": "outputs/validation/cninfo_c_class_dryrun_fingerprint_lineage_isolation_20260715.json",
+    "protected_roots_csv": "outputs/validation/cninfo_c_class_erad_protected_output_roots.csv",
+    "harvest_863_status": "outputs/harvest/cninfo_c_class/quality/company_harvest_status.csv",
+    "fm03_mock_root": "outputs/validation/_mock_c_fm03_harvest_exclusion_dual_layer_consistency",
+    "fm05_mock_root": "outputs/validation/_mock_c_fm05_cross_fm_mock_cohort_integrity",
+    "fm12_mock_root": "outputs/validation/_mock_c_fm12_dryrun_fingerprint_lineage_isolation"
+  },
+  "mock_root_is_isolated": true,
+  "seal_chain_extended": false
+}

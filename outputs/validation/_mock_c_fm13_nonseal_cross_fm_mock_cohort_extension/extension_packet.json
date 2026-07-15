@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-07-15T12:16:13Z",
+  "task_id": "C-FM-13",
+  "gate": "PASS_OFFLINE",
+  "capability": [
+    "nonseal_cross_fm_mock_cohort_registry_extension",
+    "fingerprint_chain_fm01_05_12",
+    "frozen_mock_cohort_write_isolation_mock3_14",
+    "harvest_exclusion_dual_layer_consistency"
+  ],
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "ready_for_execute": false,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+  "idle_not_required_while_awaiting": true,
+  "seal_chain_extended": false,
+  "notes": "non-seal-chain offline QA extension; EXECUTE remains human-held; does not overwrite MOCK3-14"
+}

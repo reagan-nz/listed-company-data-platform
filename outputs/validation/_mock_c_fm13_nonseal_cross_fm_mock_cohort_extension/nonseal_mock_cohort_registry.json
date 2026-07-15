@@ -1,0 +1,87 @@
+{
+  "generated_at": "2026-07-15T12:16:13Z",
+  "task_id": "C-FM-13",
+  "seal_chain_extended": false,
+  "cohorts": [
+    {
+      "cohort_id": "fm01_standard_isolated_dryrun",
+      "root_rel": "outputs/validation/_mock_snapshot_batch_standard_dryrun_isolated",
+      "root_id": "C-ROOT-MOCK3",
+      "required_files": [
+        "quality/company_snapshot_status.csv",
+        "quality/company_snapshot_error.csv",
+        "dryrun_report.csv",
+        "dryrun_summary.md"
+      ],
+      "fingerprint_kind": "dryrun",
+      "gate_json_rel": "outputs/validation/cninfo_c_class_isolated_snapshot_dryrun_repro_check_20260715.json"
+    },
+    {
+      "cohort_id": "fm02_slice1_190_validation",
+      "root_rel": "outputs/validation/_mock_c_fm02_slice1_190_validation_cohort",
+      "root_id": "C-ROOT-MOCK4",
+      "required_files": [
+        "quality/company_snapshot_status.csv",
+        "dryrun_report.csv",
+        "dryrun_summary.md",
+        "filtered_universe_included.yaml",
+        "cohort_lineage_matrix.csv"
+      ],
+      "fingerprint_kind": "dryrun",
+      "gate_json_rel": "outputs/validation/cninfo_c_class_isolated_snapshot_validation_cohorts_20260715.json"
+    },
+    {
+      "cohort_id": "fm03_harvest_exclusion_consistency",
+      "root_rel": "outputs/validation/_mock_c_fm03_harvest_exclusion_dual_layer_consistency",
+      "root_id": "C-ROOT-MOCK5",
+      "required_files": [
+        "consistency_matrix.csv",
+        "harvest_863_structural_fingerprint.json",
+        "README.md"
+      ],
+      "fingerprint_kind": "harvest_863",
+      "gate_json_rel": "outputs/validation/cninfo_c_class_harvest_exclusion_dual_layer_consistency_20260715.json"
+    },
+    {
+      "cohort_id": "fm04_ledger_resume_lineage",
+      "root_rel": "outputs/validation/_mock_c_fm04_dual_layer_ledger_resume_lineage",
+      "root_id": "C-ROOT-MOCK6",
+      "required_files": [
+        "lineage_matrix.csv",
+        "lineage_fingerprint.json",
+        "fm_gate_battery.json",
+        "README.md"
+      ],
+      "fingerprint_kind": "lineage_matrix",
+      "gate_json_rel": "outputs/validation/cninfo_c_class_dual_layer_ledger_resume_lineage_20260715.json"
+    },
+    {
+      "cohort_id": "fm05_cross_fm_mock_cohort_integrity",
+      "root_rel": "outputs/validation/_mock_c_fm05_cross_fm_mock_cohort_integrity",
+      "root_id": "C-ROOT-MOCK7",
+      "required_files": [
+        "integrity_matrix.csv",
+        "integrity_fingerprint.json",
+        "mock_cohort_registry.json",
+        "fm_gate_battery.json",
+        "README.md"
+      ],
+      "fingerprint_kind": "integrity_matrix",
+      "gate_json_rel": "outputs/validation/cninfo_c_class_cross_fm_mock_cohort_integrity_20260715.json"
+    },
+    {
+      "cohort_id": "fm12_dryrun_fingerprint_lineage_isolation",
+      "root_rel": "outputs/validation/_mock_c_fm12_dryrun_fingerprint_lineage_isolation",
+      "root_id": "C-ROOT-MOCK14",
+      "required_files": [
+        "isolation_matrix.csv",
+        "isolation_fingerprint.json",
+        "fm_gate_battery.json",
+        "lineage_isolation_packet.json",
+        "README.md"
+      ],
+      "fingerprint_kind": "isolation_matrix",
+      "gate_json_rel": "outputs/validation/cninfo_c_class_dryrun_fingerprint_lineage_isolation_20260715.json"
+    }
+  ]
+}
