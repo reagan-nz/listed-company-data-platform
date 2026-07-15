@@ -1,8 +1,8 @@
 # CNINFO D 类 fund_industry_allocation First-Slice — Command Draft
 
-_生成时间：2026-07-15 · D-FM-12 更新_
+_生成时间：2026-07-15 · D-FM-13 更新_
 
-> **性质：** runner **已实现** · S4 dry-run **已跑** · **CNINFO = 0** · **真实 live 未授权**
+> **性质：** runner **已实现** · S4 dry-run **已跑** · bounded live **已执行**（D-FM-13 · CNINFO counted=2 · 3/5 PASS_WITH_CAVEAT）
 
 ## S4 dry-run（已实现 · CNINFO=0）
 
@@ -15,10 +15,9 @@ python lab/run_cninfo_d_class_tiny_live_validation.py \
   --output-root outputs/validation/cninfo_d_class_fund_industry_allocation_first_slice
 ```
 
-## Live（NOT authorized this task）
+## Live（D-FM-13 已执行 · 勿无界重跑）
 
 ```bash
-# DO NOT RUN until live gate + human approve
 python lab/run_cninfo_d_class_tiny_live_validation.py \
   --live \
   --fund-industry-allocation-first-slice \
@@ -36,14 +35,16 @@ python lab/run_cninfo_d_class_tiny_live_validation.py \
 | prefer | **≤3 shared probes**：default · rdate=`20260331` · rdate=`20251231` · 离线按 F001V 过滤 DFIA |
 | total cap | ≤ **5** |
 | planned shared | **3**（`SHARED_PROBE`） |
+| live params | first-slice 强制 `params_location=form`（避免 registry `none` 丢弃 rdate） |
 | schema | `d_industry_aggregate` only · **no** company_code |
 
-## Status This Task
+## Status This Task（D-FM-13）
 
 | 项 | 状态 |
 |----|------|
 | `--fund-industry-allocation-first-slice` | **已实现**（D-FM-12） |
 | S4 dry-run | **PASS_OFFLINE** · CNINFO=0 · planned_shared=3 |
-| live path | **READY_FOR_APPROVAL**（代码就绪 · 须 approve flag） |
-| live | **NOT_APPROVED** |
-| CNINFO this task | **0** |
+| live path form fix | **已落地**（D-FM-13） |
+| bounded live | **EXECUTED** · counted CNINFO=**2** · acceptable=**3/5** · `PASS_WITH_CAVEAT` |
+| live_gate | **NOT_APPROVED**（常量） |
+| CNINFO this task | **2**（成功 HTTP；另 1 探针 timeout 未计入） |

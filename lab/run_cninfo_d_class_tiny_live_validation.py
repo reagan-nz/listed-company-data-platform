@@ -11416,6 +11416,9 @@ def execute_fund_industry_allocation_first_slice_live(
         component_cfg.get("api_url", FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_ENDPOINT),
     )
     component_cfg["api_url"] = endpoint
+    # first-slice 共享探针依赖 rdate override；registry params_location=none 会静默丢弃参数
+    if str(component_cfg.get("params_location") or "").lower() == "none":
+        component_cfg["params_location"] = "form"
 
     for row in universe_rows:
         planned = compute_fund_industry_allocation_first_slice_planned_requests(row)

@@ -1,6 +1,6 @@
 # CNINFO D 类 fund_industry_allocation First-Slice Dry-run Summary
 
-_生成时间：2026-07-15 12:17:03 UTC_
+_生成时间：2026-07-15 12:23:11 UTC_
 
 > **性质：** fund_industry_allocation first-slice dry-run only · **CNINFO calls = 0** · **NOT APPROVED for live**
 

@@ -320,6 +320,11 @@ class TestFundIndustryAllocationFirstSliceRunner(unittest.TestCase):
 
         def _fake_cninfo_request(session, source_cfg, params_override, stats, case_id):
             call_ids.append(case_id)
+            # registry 默认 params_location=none 会丢弃 rdate；live path 必须强制 form
+            self.assertEqual(
+                str(source_cfg.get("params_location") or "").lower(),
+                "form",
+            )
             stats.cninfo_requests += 1
             stats.case_request_counts[case_id] = (
                 stats.case_request_counts.get(case_id, 0) + 1
