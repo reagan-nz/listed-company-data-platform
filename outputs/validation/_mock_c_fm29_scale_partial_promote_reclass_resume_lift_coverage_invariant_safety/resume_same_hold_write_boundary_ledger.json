@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-07-15T14:18:27Z",
+  "task_id": "C-FM-29",
+  "fingerprint_sha256": "fae9752ee9cb88168a5805db623a51a50546f39606ac97a2032d51c3bc3e6abf",
+  "resume_same_codes": [
+    "301212"
+  ],
+  "denial_count": 3,
+  "doc": {
+    "kind": "resume_same_hold_write_boundary",
+    "resume_same_n": 1,
+    "resume_same_codes": [
+      "301212"
+    ],
+    "deny_harvest_write": true,
+    "deny_force_improve": true,
+    "deny_promote_to_complete": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

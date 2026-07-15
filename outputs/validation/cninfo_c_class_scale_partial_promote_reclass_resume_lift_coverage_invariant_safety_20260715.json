@@ -1,0 +1,105 @@
+{
+  "generated_at": "2026-07-15T14:18:27Z",
+  "task_id": "C-FM-29",
+  "gate": "PASS_OFFLINE",
+  "layer_gates": {
+    "fm28_continuity": "PASS_OFFLINE",
+    "partial_promote_reclass_denial": "PASS_OFFLINE",
+    "resume_same_hold_write_boundary": "PASS_OFFLINE",
+    "residual_lift_denial": "PASS_OFFLINE",
+    "coverage_invariant_lock": "PASS_OFFLINE",
+    "output_root_protection": "PASS_OFFLINE",
+    "frozen_mock_isolation": "PASS_OFFLINE",
+    "protected_csv_registry": "PASS_OFFLINE",
+    "fm_gate_battery": "PASS_OFFLINE",
+    "execute_hold_seal": "PASS_OFFLINE"
+  },
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "ready_for_execute": false,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+  "idle_not_required_while_awaiting": true,
+  "fail_count": 0,
+  "matrix_rows": 138,
+  "scale_tier_count": 7,
+  "company_coverage_sum": 3314,
+  "harvest_unique_union": 2249,
+  "harvest_additive": 2261,
+  "overlap_delta": 12,
+  "surface_unique": 2251,
+  "union_complete": 2134,
+  "union_partial": 106,
+  "union_failed": 9,
+  "resume_total": 29,
+  "resume_improved": 28,
+  "resume_same": 1,
+  "resume_worse": 0,
+  "surface_harvest_delta_n": 2,
+  "dry863_extras": [
+    "000037",
+    "000055"
+  ],
+  "failed_codes": [
+    "002140",
+    "300055",
+    "300069",
+    "300074",
+    "300540",
+    "300552",
+    "301195",
+    "603885",
+    "605060"
+  ],
+  "resume_same_codes": [
+    "301212"
+  ],
+  "partial_risk_bands": {
+    "p35_heavy": 75,
+    "p3_mid": 14,
+    "p2_mid": 12,
+    "fu_light": 5
+  },
+  "residual_safety_coverage": 117,
+  "output_root": "outputs/validation/_mock_c_fm29_scale_partial_promote_reclass_resume_lift_coverage_invariant_safety",
+  "matrix_path": "outputs/validation/_mock_c_fm29_scale_partial_promote_reclass_resume_lift_coverage_invariant_safety/scale_matrix.csv",
+  "fingerprint_path": "outputs/validation/_mock_c_fm29_scale_partial_promote_reclass_resume_lift_coverage_invariant_safety/scale_fingerprint.json",
+  "fingerprint": {
+    "row_count": 138,
+    "ok_count": 138,
+    "fail_count": 0,
+    "layers": {
+      "fm28_continuity": 6,
+      "partial_promote_reclass_denial": 7,
+      "resume_same_hold_write_boundary": 7,
+      "residual_lift_denial": 5,
+      "coverage_invariant_lock": 5,
+      "protected_write_guard": 5,
+      "output_root_protection": 7,
+      "frozen_mock_isolation": 32,
+      "protected_csv_registry": 34,
+      "fm_gate_battery": 23,
+      "execute_hold_seal": 7
+    },
+    "fingerprint_sha256": "12c1a3016d600d011f2d5cefd1995ba96a066bb652580abfe082ecd3d90f427d"
+  },
+  "promote_reclass_path": "outputs/validation/_mock_c_fm29_scale_partial_promote_reclass_resume_lift_coverage_invariant_safety/partial_promote_reclass_denial_ledger.json",
+  "resume_same_path": "outputs/validation/_mock_c_fm29_scale_partial_promote_reclass_resume_lift_coverage_invariant_safety/resume_same_hold_write_boundary_ledger.json",
+  "residual_lift_path": "outputs/validation/_mock_c_fm29_scale_partial_promote_reclass_resume_lift_coverage_invariant_safety/residual_lift_denial_ledger.json",
+  "coverage_lock_path": "outputs/validation/_mock_c_fm29_scale_partial_promote_reclass_resume_lift_coverage_invariant_safety/coverage_invariant_lock_ledger.json",
+  "battery_path": "outputs/validation/_mock_c_fm29_scale_partial_promote_reclass_resume_lift_coverage_invariant_safety/fm_gate_battery.json",
+  "packet_path": "outputs/validation/_mock_c_fm29_scale_partial_promote_reclass_resume_lift_coverage_invariant_safety/scale_packet.json",
+  "observed_fps": {
+    "partial_promote_reclass_denial": "8c6ddf947d2660666ab139b6fb399fdbefb4ae369f0adcb3e4803cb5920af651",
+    "resume_same_hold_write_boundary": "fae9752ee9cb88168a5805db623a51a50546f39606ac97a2032d51c3bc3e6abf",
+    "residual_lift_denial": "70217be897007208e64049d2da24bd95f5092bc9087d66d9d1361d6097f8302f",
+    "coverage_invariant_lock": "b6681b0accae1477a347b600a78b08cd349943e6944393e11c8262230afda189"
+  },
+  "inputs": {
+    "fm28_packet": "outputs/validation/_mock_c_fm28_scale_risk_band_membership_write_boundary_cross_matrix_safety/scale_packet.json",
+    "fm28_gate": "outputs/validation/cninfo_c_class_scale_risk_band_membership_write_boundary_cross_matrix_safety_20260715.json"
+  },
+  "mock_root_is_isolated": true,
+  "seal_chain_extended": false
+}

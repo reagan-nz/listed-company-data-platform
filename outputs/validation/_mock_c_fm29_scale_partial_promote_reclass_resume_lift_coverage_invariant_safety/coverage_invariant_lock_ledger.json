@@ -1,0 +1,19 @@
+{
+  "generated_at": "2026-07-15T14:18:27Z",
+  "task_id": "C-FM-29",
+  "fingerprint_sha256": "b6681b0accae1477a347b600a78b08cd349943e6944393e11c8262230afda189",
+  "failed_n": 9,
+  "delta_n": 2,
+  "partial_n": 106,
+  "coverage_sum": 117,
+  "doc": {
+    "kind": "coverage_invariant_lock",
+    "failed_n": 9,
+    "delta_n": 2,
+    "partial_n": 106,
+    "coverage_sum": 117,
+    "equation": "9+2+106=117",
+    "mutation_allowed": false,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

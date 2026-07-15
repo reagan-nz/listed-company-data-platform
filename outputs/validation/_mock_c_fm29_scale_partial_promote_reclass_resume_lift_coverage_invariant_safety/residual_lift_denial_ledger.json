@@ -1,0 +1,44 @@
+{
+  "generated_at": "2026-07-15T14:18:27Z",
+  "task_id": "C-FM-29",
+  "fingerprint_sha256": "70217be897007208e64049d2da24bd95f5092bc9087d66d9d1361d6097f8302f",
+  "failed_codes": [
+    "002140",
+    "300055",
+    "300069",
+    "300074",
+    "300540",
+    "300552",
+    "301195",
+    "603885",
+    "605060"
+  ],
+  "delta_codes": [
+    "000037",
+    "000055"
+  ],
+  "denial_count": 11,
+  "doc": {
+    "kind": "residual_lift_denial",
+    "failed_n": 9,
+    "failed_codes": [
+      "002140",
+      "300055",
+      "300069",
+      "300074",
+      "300540",
+      "300552",
+      "301195",
+      "603885",
+      "605060"
+    ],
+    "delta_n": 2,
+    "delta_codes": [
+      "000037",
+      "000055"
+    ],
+    "deny_quarantine_lift": true,
+    "deny_fence_lift": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
