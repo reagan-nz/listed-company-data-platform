@@ -1,0 +1,18 @@
+{
+  "packet_kind": "nonseal_extension_post_commit_seal",
+  "task_id": "C-FM-16",
+  "gate": "PASS_OFFLINE",
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "ready_for_execute": false,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+  "idle_not_required_while_awaiting": true,
+  "seal_chain_extended": false,
+  "drift_detected": false,
+  "frozen_extension_fp_sha256": "3d9354e2571b46b5d67787b43aada270882d827bf00d7f91f8d3154c6da5d8ff",
+  "frozen_drift_fp_sha256": "8ce3951c29881b114b5b315949d7564459ef8b78255cd4c18ca39784151b576b",
+  "frozen_boundary_fp_sha256": "3dc855f0de7a04758293d54ce38b97b0c659270c7d34d3ad03ae51c3ee0fd698",
+  "recomputed_boundary_fp_sha256": "3dc855f0de7a04758293d54ce38b97b0c659270c7d34d3ad03ae51c3ee0fd698",
+  "generated_at": "2026-07-15T12:31:10Z"
+}
