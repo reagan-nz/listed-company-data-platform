@@ -1,0 +1,29 @@
+{
+  "generated_at": "2026-07-15T14:06:25Z",
+  "task_id": "C-FM-27",
+  "fingerprint_sha256": "2d711e4444256a8c0cf483b62269c16fff183422dc61b59715b3c74dc3ff86ad",
+  "delta_codes": [
+    "000037",
+    "000055"
+  ],
+  "dry_status": {
+    "000037": "pending",
+    "000055": "pending"
+  },
+  "doc": {
+    "kind": "surface_delta_pending_fence",
+    "delta_n": 2,
+    "delta_codes": [
+      "000037",
+      "000055"
+    ],
+    "dry_status": {
+      "000037": "pending",
+      "000055": "pending"
+    },
+    "disposition": "pending_dryrun_only_fence",
+    "absorb_into_harvest_allowed": false,
+    "absorb_into_exclusion_allowed": false,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

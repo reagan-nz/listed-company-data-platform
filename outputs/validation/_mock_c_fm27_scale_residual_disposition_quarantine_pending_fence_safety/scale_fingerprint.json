@@ -1,0 +1,56 @@
+{
+  "generated_at": "2026-07-15T14:06:25Z",
+  "task_id": "C-FM-27",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "seal_chain_extended": false,
+  "scale_tier_count": 7,
+  "company_coverage_sum": 3314,
+  "harvest_unique_union": 2249,
+  "overlap_delta": 12,
+  "surface_unique": 2251,
+  "union_complete": 2134,
+  "union_partial": 106,
+  "union_failed": 9,
+  "resume_improved": 28,
+  "resume_same": 1,
+  "surface_harvest_delta_n": 2,
+  "partial_risk_bands": {
+    "p35_heavy": 75,
+    "p3_mid": 14,
+    "p2_mid": 12,
+    "fu_light": 5
+  },
+  "frozen_fps": {
+    "failed_disposition_quarantine": "d8a70c1a820dacbf344c059b52a94bd84b7649acd7a58e0bba2f81930c007daa",
+    "surface_delta_pending_fence": "2d711e4444256a8c0cf483b62269c16fff183422dc61b59715b3c74dc3ff86ad",
+    "partial_risk_band_rollup": "fbb51d7701bc85ac6727f77ab08a4348d00cb13429b151bc7ffc99047e6dbf90",
+    "fm26_failed_residual": "f1ba366b5176964310aeff70973493f991877ce9cab7c6c22f084ddc051982ea",
+    "fm26_partial_residual": "2fb60ea3ea7ee3bacb64bad3a288adefa28f1fc1319eca6a3e05048be8be1b20",
+    "fm26_surface_harvest_delta": "da84d8027f9aa3bb6d530885de1dff78ea52416b01fe1f1df5511c70268b6eb5",
+    "fm26_resume_same_hold": "43298ff9949dad24d6088ab4e174de4a25e2afb1ef509fa419dbeaeaa76a4171"
+  },
+  "observed_fps": {
+    "failed_disposition_quarantine": "d8a70c1a820dacbf344c059b52a94bd84b7649acd7a58e0bba2f81930c007daa",
+    "surface_delta_pending_fence": "2d711e4444256a8c0cf483b62269c16fff183422dc61b59715b3c74dc3ff86ad",
+    "partial_risk_band_rollup": "fbb51d7701bc85ac6727f77ab08a4348d00cb13429b151bc7ffc99047e6dbf90"
+  },
+  "fingerprint": {
+    "row_count": 127,
+    "ok_count": 127,
+    "fail_count": 0,
+    "layers": {
+      "fm26_continuity": 6,
+      "failed_residual_disposition_quarantine": 6,
+      "surface_delta_pending_fence": 6,
+      "partial_risk_band_rollup": 7,
+      "protected_write_guard": 5,
+      "output_root_protection": 7,
+      "frozen_mock_isolation": 30,
+      "protected_csv_registry": 32,
+      "fm_gate_battery": 21,
+      "execute_hold_seal": 7
+    },
+    "fingerprint_sha256": "269c8e375a25cdb5efde0db955a98aa8d32fccad14e5954abaeb53431646146a"
+  }
+}

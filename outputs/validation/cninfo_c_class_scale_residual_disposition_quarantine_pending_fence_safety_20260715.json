@@ -1,0 +1,107 @@
+{
+  "generated_at": "2026-07-15T14:06:25Z",
+  "task_id": "C-FM-27",
+  "gate": "PASS_OFFLINE",
+  "layer_gates": {
+    "fm26_continuity": "PASS_OFFLINE",
+    "failed_residual_disposition_quarantine": "PASS_OFFLINE",
+    "surface_delta_pending_fence": "PASS_OFFLINE",
+    "partial_risk_band_rollup": "PASS_OFFLINE",
+    "output_root_protection": "PASS_OFFLINE",
+    "frozen_mock_isolation": "PASS_OFFLINE",
+    "protected_csv_registry": "PASS_OFFLINE",
+    "fm_gate_battery": "PASS_OFFLINE",
+    "execute_hold_seal": "PASS_OFFLINE"
+  },
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "ready_for_execute": false,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+  "idle_not_required_while_awaiting": true,
+  "fail_count": 0,
+  "matrix_rows": 127,
+  "scale_tier_count": 7,
+  "company_coverage_sum": 3314,
+  "harvest_unique_union": 2249,
+  "harvest_additive": 2261,
+  "overlap_delta": 12,
+  "surface_unique": 2251,
+  "union_complete": 2134,
+  "union_partial": 106,
+  "union_failed": 9,
+  "resume_total": 29,
+  "resume_improved": 28,
+  "resume_same": 1,
+  "resume_worse": 0,
+  "surface_harvest_delta_n": 2,
+  "dry863_extras": [
+    "000037",
+    "000055"
+  ],
+  "failed_codes": [
+    "002140",
+    "300055",
+    "300069",
+    "300074",
+    "300540",
+    "300552",
+    "301195",
+    "603885",
+    "605060"
+  ],
+  "resume_same_codes": [
+    "301212"
+  ],
+  "partial_risk_bands": {
+    "p35_heavy": 75,
+    "p3_mid": 14,
+    "p2_mid": 12,
+    "fu_light": 5
+  },
+  "output_root": "outputs/validation/_mock_c_fm27_scale_residual_disposition_quarantine_pending_fence_safety",
+  "matrix_path": "outputs/validation/_mock_c_fm27_scale_residual_disposition_quarantine_pending_fence_safety/scale_matrix.csv",
+  "fingerprint_path": "outputs/validation/_mock_c_fm27_scale_residual_disposition_quarantine_pending_fence_safety/scale_fingerprint.json",
+  "fingerprint": {
+    "row_count": 127,
+    "ok_count": 127,
+    "fail_count": 0,
+    "layers": {
+      "fm26_continuity": 6,
+      "failed_residual_disposition_quarantine": 6,
+      "surface_delta_pending_fence": 6,
+      "partial_risk_band_rollup": 7,
+      "protected_write_guard": 5,
+      "output_root_protection": 7,
+      "frozen_mock_isolation": 30,
+      "protected_csv_registry": 32,
+      "fm_gate_battery": 21,
+      "execute_hold_seal": 7
+    },
+    "fingerprint_sha256": "269c8e375a25cdb5efde0db955a98aa8d32fccad14e5954abaeb53431646146a"
+  },
+  "failed_disposition_path": "outputs/validation/_mock_c_fm27_scale_residual_disposition_quarantine_pending_fence_safety/failed_disposition_quarantine_ledger.json",
+  "surface_fence_path": "outputs/validation/_mock_c_fm27_scale_residual_disposition_quarantine_pending_fence_safety/surface_delta_pending_fence_ledger.json",
+  "partial_band_path": "outputs/validation/_mock_c_fm27_scale_residual_disposition_quarantine_pending_fence_safety/partial_risk_band_rollup_ledger.json",
+  "battery_path": "outputs/validation/_mock_c_fm27_scale_residual_disposition_quarantine_pending_fence_safety/fm_gate_battery.json",
+  "packet_path": "outputs/validation/_mock_c_fm27_scale_residual_disposition_quarantine_pending_fence_safety/scale_packet.json",
+  "observed_fps": {
+    "failed_disposition_quarantine": "d8a70c1a820dacbf344c059b52a94bd84b7649acd7a58e0bba2f81930c007daa",
+    "surface_delta_pending_fence": "2d711e4444256a8c0cf483b62269c16fff183422dc61b59715b3c74dc3ff86ad",
+    "partial_risk_band_rollup": "fbb51d7701bc85ac6727f77ab08a4348d00cb13429b151bc7ffc99047e6dbf90"
+  },
+  "inputs": {
+    "harvest_863_status": "outputs/harvest/cninfo_c_class/quality/company_harvest_status.csv",
+    "harvest_phase35_status": "outputs/harvest/cninfo_c_class/phase35_batch_500_001/quality/company_harvest_status.csv",
+    "harvest_phase3_status": "outputs/harvest/cninfo_c_class/phase3_batch_500_001/quality/company_harvest_status.csv",
+    "harvest_phase2_status": "outputs/harvest/cninfo_c_class/phase2_smoke_200/quality/company_harvest_status.csv",
+    "harvest_fuller_status": "outputs/harvest/cninfo_c_class/fuller_market_slice1_200/quality/company_harvest_status.csv",
+    "harvest_phase35_resume_status": "outputs/harvest/cninfo_c_class/phase35_batch_500_001_resume/quality/company_harvest_status.csv",
+    "fm01_snapshot_status": "outputs/validation/_mock_snapshot_batch_standard_dryrun_isolated/quality/company_snapshot_status.csv",
+    "exclusion_universe": "outputs/validation/cninfo_c_class_snapshot_progression_exclusion_universe_20260714.csv",
+    "fm26_packet": "outputs/validation/_mock_c_fm26_scale_residual_status_triage_surface_delta_safety/scale_packet.json"
+  },
+  "mock_root_is_isolated": true,
+  "seal_chain_extended": false
+}

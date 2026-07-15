@@ -1,0 +1,35 @@
+{
+  "generated_at": "2026-07-15T14:06:25Z",
+  "task_id": "C-FM-27",
+  "fingerprint_sha256": "fbb51d7701bc85ac6727f77ab08a4348d00cb13429b151bc7ffc99047e6dbf90",
+  "partial_n": 106,
+  "risk_bands": {
+    "p35_heavy": 75,
+    "p3_mid": 14,
+    "p2_mid": 12,
+    "fu_light": 5
+  },
+  "winning_batch_counts": {
+    "fu": 5,
+    "p2": 12,
+    "p3": 14,
+    "p35": 75
+  },
+  "doc": {
+    "kind": "partial_risk_band_rollup",
+    "partial_n": 106,
+    "risk_bands": {
+      "p35_heavy": 75,
+      "p3_mid": 14,
+      "p2_mid": 12,
+      "fu_light": 5
+    },
+    "winning_batch_counts": {
+      "fu": 5,
+      "p2": 12,
+      "p3": 14,
+      "p35": 75
+    },
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

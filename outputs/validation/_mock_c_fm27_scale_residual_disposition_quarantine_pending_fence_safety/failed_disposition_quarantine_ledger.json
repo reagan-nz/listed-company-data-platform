@@ -1,0 +1,78 @@
+{
+  "generated_at": "2026-07-15T14:06:25Z",
+  "task_id": "C-FM-27",
+  "fingerprint_sha256": "d8a70c1a820dacbf344c059b52a94bd84b7649acd7a58e0bba2f81930c007daa",
+  "failed_n": 9,
+  "failed_codes": [
+    "002140",
+    "300055",
+    "300069",
+    "300074",
+    "300540",
+    "300552",
+    "301195",
+    "603885",
+    "605060"
+  ],
+  "failed_winning_batch": {
+    "002140": "p35",
+    "300055": "p3",
+    "300069": "p3",
+    "300074": "p3",
+    "300540": "p35",
+    "300552": "p35",
+    "301195": "p35",
+    "603885": "p35",
+    "605060": "p35"
+  },
+  "disposition_by_code": {
+    "002140": "quarantine_pre_execute_not_approved",
+    "300055": "quarantine_pre_execute_not_approved",
+    "300069": "quarantine_pre_execute_not_approved",
+    "300074": "quarantine_pre_execute_not_approved",
+    "300540": "quarantine_pre_execute_not_approved",
+    "300552": "quarantine_pre_execute_not_approved",
+    "301195": "quarantine_pre_execute_not_approved",
+    "603885": "quarantine_pre_execute_not_approved",
+    "605060": "quarantine_pre_execute_not_approved"
+  },
+  "doc": {
+    "kind": "failed_residual_disposition_quarantine",
+    "failed_n": 9,
+    "failed_codes": [
+      "002140",
+      "300055",
+      "300069",
+      "300074",
+      "300540",
+      "300552",
+      "301195",
+      "603885",
+      "605060"
+    ],
+    "failed_winning_batch": {
+      "002140": "p35",
+      "300055": "p3",
+      "300069": "p3",
+      "300074": "p3",
+      "300540": "p35",
+      "300552": "p35",
+      "301195": "p35",
+      "603885": "p35",
+      "605060": "p35"
+    },
+    "disposition_by_code": {
+      "002140": "quarantine_pre_execute_not_approved",
+      "300055": "quarantine_pre_execute_not_approved",
+      "300069": "quarantine_pre_execute_not_approved",
+      "300074": "quarantine_pre_execute_not_approved",
+      "300540": "quarantine_pre_execute_not_approved",
+      "300552": "quarantine_pre_execute_not_approved",
+      "301195": "quarantine_pre_execute_not_approved",
+      "603885": "quarantine_pre_execute_not_approved",
+      "605060": "quarantine_pre_execute_not_approved"
+    },
+    "promote_to_complete_allowed": false,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
