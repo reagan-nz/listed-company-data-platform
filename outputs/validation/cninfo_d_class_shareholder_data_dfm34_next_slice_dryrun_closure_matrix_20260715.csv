@@ -1,0 +1,6 @@
+case_id,company_code,company_name,anchor_rdate,shared_probe_key,expected_behavior,dryrun_status,planned_request_count,cninfo_called,live_found_path_20251231,fixture_tier1_refs,final_effective_status,notes
+DSD101,000001,平安银行,20260331,rdate_report_period_20260331,captured_normal,planned_ok,1,false,NOT_PROVEN,DSD101_found.json,s4_planned_ok_shared_20260331,D-FM-33 dry-run only; not live
+DSD102,000895,双汇发展,20260331,rdate_report_period_20260331,captured_normal_or_empty_but_valid,planned_ok,1,false,NOT_PROVEN,DSD102_found.json;DSD102_empty.json,s4_planned_ok_shared_20260331,mixed found/empty fixtures; not live
+DSD103,600519,贵州茅台,20260331,rdate_report_period_20260331,captured_normal_or_empty_but_valid,planned_ok,1,false,NOT_PROVEN,DSD103_found.json;DSD103_empty.json,s4_planned_ok_shared_20260331,SSE diversify; not live-proven path
+DSD104,002415,海康威视,20251231,rdate_report_period_20251231,captured_normal_or_empty_but_valid,planned_ok,1,false,NOT_PROVEN,DSD104_found.json;DSD104_empty.json,s4_planned_ok_shared_20251231_unproven,second rdate; cite != live found-path
+DSD105,000004,国华退,20251231,rdate_report_period_20251231,empty_but_valid,planned_ok,1,false,NOT_PROVEN,DSD105_empty_but_valid_synthetic.json,s4_planned_ok_empty_control_20251231,empty control; do not forced pass

@@ -1,0 +1,36 @@
+metric_group,metric_name,value,gate_impact,notes
+next_slice,total_cases,5,closure,DSD101-DSD105 only
+next_slice,planned_ok,5,closure,D-FM-33 S4 dry-run 5/5; D-FM-34 read-only harden
+next_slice,planned_shared_cninfo_requests,2,closure,rdate_20260331 + rdate_20251231
+next_slice,planned_request_budget_total,5,closure,per-case budget slot sum
+next_slice,live_report_present,no,closure,no live this phase; live_gate NOT_APPROVED
+next_slice,live_acceptable,n/a,closure,execution_gate remains NOT_APPLICABLE
+cninfo,CNINFO_during_dfm33_dryrun,0,s4,offline dry-run only
+cninfo,CNINFO_during_dfm34_closure,0,closure,evidence hardening; no network
+cninfo,shared_probe_prefer,2,planning,prefer two shared rdates for future live
+caveat,live_found_path_20251231,NOT_PROVEN,closure,DSD104-105 cite strength unproven
+caveat,s4_pass_offline_not_live,yes,closure,PASS_OFFLINE != live authorize
+caveat,runner_ready_not_approved,yes,closure,READY_FOR_APPROVAL != APPROVED
+caveat,multi_rdate_next_slice_only,yes,closure,must not rewrite first-slice VR-008
+caveat,at_next_live_not_flipped,yes,closure,controller_execution_allowed=false
+safety,pdf_download,0,red_line,no PDF
+safety,ocr,0,red_line,no OCR
+safety,extraction,0,red_line,no extraction
+safety,db_write,0,red_line,no DB
+safety,minio_write,0,red_line,no MinIO
+safety,rag_run,0,red_line,no RAG
+exclusion,688671_excluded,yes,universe,policy retained
+exclusion,301259_excluded,yes,universe,DLC006R not reopened
+track,sd_next_dryrun_root_frozen,yes,closure,sha256 freeze ledger enforced
+track,at_next_dryrun_root_frozen,yes,closure,not mutated this task
+track,at_sd_first_slice_frozen,yes,closure,locks + live roots untouched
+track,fia_first_next_live_frozen,yes,closure,locks + live roots untouched
+gate,approval_gate,STANDING_SCOPE_AUTHORIZED,preserved,D-FM-32
+gate,fixture_vr_gate,PASS_OFFLINE,preserved,D-FM-32
+gate,runner_extension_gate,READY_FOR_APPROVAL,preserved,D-FM-33
+gate,s4_dryrun_gate,PASS_OFFLINE,preserved,D-FM-33; not bare PASS
+gate,live_path_gate,READY_FOR_APPROVAL,preserved,path wired offline
+gate,live_gate,NOT_APPROVED,preserved,approve + controller_execution_allowed required
+gate,execution_gate,NOT_APPLICABLE,preserved,no live this phase
+gate,s4_dryrun_closure_gate,PASS_OFFLINE,closure,dry-run phase closed with caveats; NOT verified
+gate,commit_boundary_gate,READY_FOR_COMMIT_REVIEW,closure,controller commit-boundary next
