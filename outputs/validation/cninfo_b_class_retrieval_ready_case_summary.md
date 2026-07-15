@@ -21,8 +21,8 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 | 指标 | 数值 |
 |------|------|
 | total_cases | **26** |
-| placeholder | **3** |
-| ready | **23** |
+| placeholder | **2** |
+| ready | **24** |
 | retired | **0** |
 | invalid_ready | **0** |
 | result | **PASS** |
@@ -49,6 +49,7 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 - `inquiry_sample_002` (category_sample) → `cninfo_inquiry_reply_pdf`
 - `inquiry_sample_003` (category_sample) → `cninfo_inquiry_reply_pdf`
 - `meeting_sample_001` (category_sample) → `cninfo_meeting_notice_pdf`
+- `meeting_sample_002` (category_sample) → `cninfo_general_announcement_pdf`
 - `ir_activity_sample_001` (category_sample) → `cninfo_meeting_notice_pdf`
 - `ir_activity_sample_002` (category_sample) → `cninfo_meeting_notice_pdf`
 - `periodic_guard_002` (category_sample) → `cninfo_general_announcement_pdf`

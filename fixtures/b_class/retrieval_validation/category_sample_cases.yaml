@@ -149,12 +149,12 @@ cases:
       行 BD2E177（quality=pass）；同窗另有盐湖股份业绩说明会。不写 verified；不下载 PDF。
 
   - case_id: meeting_sample_002
-    case_status: placeholder
-    source_id: cninfo_meeting_notice_pdf
-    source_category: meeting_notice_pdf
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    source_category: announcement_pdf
     title_pattern: "股东大会通知"
-    date_start: null
-    date_end: null
+    date_start: "2025-06-22"
+    date_end: "2025-06-26"
     expected_min_results: 1
     expected_document_types:
       - shareholder_meeting_material
@@ -163,8 +163,11 @@ cases:
     false_positive_guard_patterns:
       - 年度报告
     notes: >-
-      Design-only; may route to general_announcement per routing rules. Audit
-      classification on live sample.
+      B-FM-14 自 harvest 证据晋升（锚定 B-R16-01 shareholder_meeting_known_001）：
+      航天智造 300446 announcement_id=1223974102（2025-06-24，BD2E574）。
+      纯「股东大会通知」（无说明会）路由为 shareholder_meeting_material →
+      cninfo_general_announcement_pdf；若窗内出现「股东大会通知暨…说明会」允许
+      meeting_notice。来源 fuller slice2 report。不写 verified；不下载 PDF。
 
   # --- IR activity category sample（集体接待日边角；依赖 B-FM-04）---
   - case_id: ir_activity_sample_001
