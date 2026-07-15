@@ -1,0 +1,6 @@
+case_id,industry_code,query_mode,anchor_rdate,expected_behavior,shared_probe_key,scale_delta_vs_next_slice,evidence_cite,universe_lock_status,cninfo_this_round,notes
+DFIA201,B,default,,captured_normal_or_empty_but_valid,default,add_default_B_missing_in_next_slice,D-FM-26_DFIA103_sample,draft_not_locked,0,rolling default may omit B; mixed ok
+DFIA202,A,rdate,20260331,captured_normal,rdate_20260331,add_rdate_20260331_A_filter,D-FM-26_DFIA103_sample,draft_not_locked,0,shared with next-slice DFIA103/104 probe key
+DFIA203,*,rdate,20251231,captured_normal,rdate_20251231,extend_cross_section_to_20251231,D-FM-26_DFIA105_found,draft_not_locked,0,shared with DFIA204/205
+DFIA204,A,rdate,20251231,captured_normal_or_empty_but_valid,rdate_20251231,add_rdate_20251231_A_beyond_next_slice_C,D-FM-26_DFIA103_sample,draft_not_locked,0,A observed on cross-section sample; mixed ok
+DFIA205,B,rdate,20251231,captured_normal_or_empty_but_valid,rdate_20251231,add_rdate_20251231_B_beyond_next_slice_C,D-FM-26_DFIA103_sample,draft_not_locked,0,B observed on cross-section sample; mixed ok
