@@ -1,0 +1,121 @@
+{
+  "generated_at": "2026-07-15T09:01:28Z",
+  "task_id": "C-FM-02",
+  "gate": "PASS_OFFLINE",
+  "cohort_gates": {
+    "slice1_190_included": "PASS_OFFLINE",
+    "slice1_caveat10_negative_control": "PASS_OFFLINE",
+    "standard_isolated_fingerprint": "PASS_OFFLINE"
+  },
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "slice1_190": {
+    "cohort_id": "slice1_190_included",
+    "negative_control_cohort_id": "slice1_caveat10_negative_control",
+    "output_root": "outputs/validation/_mock_c_fm02_slice1_190_validation_cohort",
+    "filtered_universe": "outputs/validation/_mock_c_fm02_slice1_190_validation_cohort/filtered_universe_included.yaml",
+    "source_universe_count": 200,
+    "included_count": 190,
+    "excluded_control_count": 10,
+    "lineage_summary": {
+      "included_count": 190,
+      "excluded_control_count": 10,
+      "lineage_fail_count": 0,
+      "checks": {
+        "included_count_matches": true,
+        "included_lineage_all_ok": true,
+        "excluded_negative_control_all_ok": true,
+        "excluded_count_matches": true,
+        "no_lineage_failures": true,
+        "partial7_covered": true,
+        "empty_dividend3_covered": true
+      },
+      "gate": "PASS_OFFLINE"
+    },
+    "checks": {
+      "included_count_matches": true,
+      "included_lineage_all_ok": true,
+      "excluded_negative_control_all_ok": true,
+      "excluded_count_matches": true,
+      "no_lineage_failures": true,
+      "partial7_covered": true,
+      "empty_dividend3_covered": true,
+      "fingerprint_reproducible": true,
+      "dryrun_universe_ok": true,
+      "source_universe_200": true,
+      "excluded_codes_match_filter": true
+    },
+    "gate": "PASS_OFFLINE",
+    "fingerprint": {
+      "output_root": "outputs/validation/_mock_c_fm02_slice1_190_validation_cohort",
+      "gate": "PASS_WITH_CAVEAT",
+      "company_count": 190,
+      "status_row_count": 190,
+      "files_present": {
+        "quality/company_snapshot_status.csv": true,
+        "quality/company_snapshot_error.csv": true,
+        "dryrun_report.csv": true,
+        "dryrun_summary.md": true
+      },
+      "content_sha256": "29efb7c20e1b92ac8f6db12d7ee3b56e6729095dac4f388209a81c14708be61c",
+      "cninfo_calls": 0,
+      "execute_production_snapshot_rebuild": false,
+      "fingerprint_sha256": "6dc30af0fe8e8ade2f10da8599891005fde0158e324c9a1273112a461f04971c"
+    },
+    "reproducible": true,
+    "dryrun_runs": [
+      {
+        "run_index": 1,
+        "gate": "PASS_WITH_CAVEAT",
+        "company_count": 190,
+        "content_sha256": "29efb7c20e1b92ac8f6db12d7ee3b56e6729095dac4f388209a81c14708be61c",
+        "fingerprint_sha256": "6dc30af0fe8e8ade2f10da8599891005fde0158e324c9a1273112a461f04971c"
+      },
+      {
+        "run_index": 2,
+        "gate": "PASS_WITH_CAVEAT",
+        "company_count": 190,
+        "content_sha256": "29efb7c20e1b92ac8f6db12d7ee3b56e6729095dac4f388209a81c14708be61c",
+        "fingerprint_sha256": "6dc30af0fe8e8ade2f10da8599891005fde0158e324c9a1273112a461f04971c"
+      }
+    ],
+    "matrix_path": "outputs/validation/_mock_c_fm02_slice1_190_validation_cohort/cohort_lineage_matrix.csv",
+    "builder_gate": "PASS_WITH_CAVEAT"
+  },
+  "standard_isolated": {
+    "cohort_id": "standard_isolated_fingerprint",
+    "output_root": "outputs/validation/_mock_snapshot_batch_standard_dryrun_isolated",
+    "status_rows": 863,
+    "files_present": {
+      "status_csv": true,
+      "report_csv": true,
+      "summary_md": true
+    },
+    "fingerprint": {
+      "output_root": "outputs/validation/_mock_snapshot_batch_standard_dryrun_isolated",
+      "gate": "",
+      "company_count": 863,
+      "status_row_count": 863,
+      "files_present": {
+        "quality/company_snapshot_status.csv": true,
+        "quality/company_snapshot_error.csv": true,
+        "dryrun_report.csv": true,
+        "dryrun_summary.md": true
+      },
+      "content_sha256": "ff2ef43bd6f94f0d5736cd98ed3d979eb55950c4970702ef9f808ca282d5dd0e",
+      "cninfo_calls": 0,
+      "execute_production_snapshot_rebuild": false,
+      "fingerprint_sha256": "1e27691bb0f1204e285def02510b07c282c86267cd292f5cfaaf167bcc272392"
+    },
+    "checks": {
+      "artifacts_present": true,
+      "status_rows_positive": true,
+      "fingerprint_nonempty": true,
+      "content_sha256_nonempty": true,
+      "cninfo_calls_zero": true,
+      "execute_flag_false": true
+    },
+    "gate": "PASS_OFFLINE",
+    "run_dryrun": false
+  }
+}
