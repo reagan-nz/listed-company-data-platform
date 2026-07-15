@@ -1,0 +1,21 @@
+{
+  "generated_at": "2026-07-15T13:56:03Z",
+  "task_id": "C-FM-25",
+  "fingerprint_sha256": "d7aa3a92f479398b94c7a2a569d2b7dc6b18d1d4d7c2916a8a232d2bac4f3ad1",
+  "improved": 28,
+  "same": 1,
+  "worse": 0,
+  "same_codes": [
+    "301212"
+  ],
+  "doc": {
+    "kind": "resume_vs_base_delta",
+    "resume_total": 29,
+    "improved": 28,
+    "same": 1,
+    "worse": 0,
+    "same_codes": [
+      "301212"
+    ]
+  }
+}

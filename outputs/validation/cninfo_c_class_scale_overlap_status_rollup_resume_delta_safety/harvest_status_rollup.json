@@ -1,0 +1,34 @@
+{
+  "generated_at": "2026-07-15T13:56:03Z",
+  "task_id": "C-FM-25",
+  "fingerprint_sha256": "bf2c366446cb04846f4432ce6bb60de2d8009b20ff19b0cf64280065397529a9",
+  "unique_union": 2249,
+  "union_counts": {
+    "complete": 2134,
+    "failed": 9,
+    "partial": 106
+  },
+  "per_batch": {
+    "h863": {
+      "complete": 861
+    },
+    "p35": {
+      "complete": 419,
+      "failed": 6,
+      "partial": 75
+    },
+    "p3": {
+      "complete": 483,
+      "failed": 3,
+      "partial": 14
+    },
+    "p2": {
+      "complete": 188,
+      "partial": 12
+    },
+    "fu": {
+      "complete": 193,
+      "partial": 7
+    }
+  }
+}
