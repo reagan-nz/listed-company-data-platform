@@ -364,3 +364,23 @@ cases:
       路由为 shareholder_meeting_material → cninfo_general_announcement_pdf。
       来源 outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/b_class_erad_next_scale_slice1_combined_report.csv
       行 BD2E276（quality=pass）。不写 verified；不下载 PDF。
+
+  - case_id: shareholder_meeting_known_007
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "001335"
+    company_name: "信凯科技"
+    title_pattern: "年度股东会决议"
+    expected_document_type: shareholder_meeting_material
+    date_start: "2025-06-24"
+    date_end: "2025-06-27"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-22 自 harvest 证据晋升（依赖 B-FM-20 「股东会」简称 routing edge；闭合 B-FM-21 推迟项）：
+      信凯科技 001335，2024年年度股东会决议公告
+      （announcement_id=1223981729，披露日 2025-06-25）。标题为简称「年度股东会决议」，
+      与 known_005「临时股东会决议」及 known_003 完整「股东大会决议」可区分；
+      路由为 shareholder_meeting_material → cninfo_general_announcement_pdf。
+      来源 outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/b_class_erad_next_scale_slice1_combined_report.csv
+      行 BD2E258（quality=pass）。不写 verified；不下载 PDF。

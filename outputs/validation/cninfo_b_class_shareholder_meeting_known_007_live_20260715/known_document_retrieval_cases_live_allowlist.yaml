@@ -1,0 +1,22 @@
+# B-FM-22 live allow-list — 仅新晋 shareholder_meeting_known_007
+version: "draft-0.1"
+status: live_sample_scoped_B-FM-22
+verified: false
+notes: B-FM-22 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS
+
+cases:
+  - case_id: shareholder_meeting_known_007
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "001335"
+    company_name: "信凯科技"
+    title_pattern: "年度股东会决议"
+    expected_document_type: shareholder_meeting_material
+    date_start: "2025-06-24"
+    date_end: "2025-06-27"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-22 live allow-list（依赖 B-FM-20 route + 本包晋升）：
+      信凯科技 001335，BD2E258 / announcement_id=1223981729。
+      标题「年度股东会决议」。不写 verified；不下载 PDF。
