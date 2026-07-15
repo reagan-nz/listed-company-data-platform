@@ -1,0 +1,57 @@
+{
+  "generated_at": "2026-07-15T12:12:06Z",
+  "task_id": "C-FM-12",
+  "gate": "PASS_OFFLINE",
+  "layer_gates": {
+    "dryrun_base_fingerprint": "PASS_OFFLINE",
+    "dryrun_lineage_extension": "PASS_OFFLINE",
+    "frozen_mock_isolation": "PASS_OFFLINE",
+    "harvest_exclusion_dual_layer_cross_fp": "PASS_OFFLINE",
+    "protected_csv_registry": "PASS_OFFLINE"
+  },
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "ready_for_execute": false,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+  "idle_not_required_while_awaiting": true,
+  "fail_count": 0,
+  "matrix_rows": 44,
+  "output_root": "outputs/validation/_mock_c_fm12_dryrun_fingerprint_lineage_isolation",
+  "matrix_path": "outputs/validation/_mock_c_fm12_dryrun_fingerprint_lineage_isolation/isolation_matrix.csv",
+  "fingerprint_path": "outputs/validation/_mock_c_fm12_dryrun_fingerprint_lineage_isolation/isolation_fingerprint.json",
+  "fingerprint": {
+    "row_count": 44,
+    "ok_count": 44,
+    "fail_count": 0,
+    "layers": [
+      "dryrun_base_fingerprint",
+      "dryrun_lineage_extension",
+      "frozen_mock_isolation",
+      "harvest_exclusion_dual_layer_cross_fp",
+      "protected_csv_registry"
+    ],
+    "fingerprint_sha256": "f529e1f20321b75cb7adae8c5b8c562f73f410a67f21c465500527978a7670d1"
+  },
+  "battery_path": "outputs/validation/_mock_c_fm12_dryrun_fingerprint_lineage_isolation/fm_gate_battery.json",
+  "packet_path": "outputs/validation/_mock_c_fm12_dryrun_fingerprint_lineage_isolation/lineage_isolation_packet.json",
+  "lineage_extension": {
+    "fm02_lineage_ext_sha256": "56c5340f2802310a56efcac8036ad853a780cc8ba0855f60f8ea302b6325101c",
+    "fm01_lineage_ext_sha256": "2bf5faf0db57d6d14277f9f3c2c8be8204cd3847d5f1dd894796b4121302b3d1"
+  },
+  "inputs": {
+    "fm01_gate_json": "outputs/validation/cninfo_c_class_isolated_snapshot_dryrun_repro_check_20260715.json",
+    "fm02_gate_json": "outputs/validation/cninfo_c_class_isolated_snapshot_validation_cohorts_20260715.json",
+    "fm03_gate_json": "outputs/validation/cninfo_c_class_harvest_exclusion_dual_layer_consistency_20260715.json",
+    "fm04_gate_json": "outputs/validation/cninfo_c_class_dual_layer_ledger_resume_lineage_20260715.json",
+    "fm01_mock_root": "outputs/validation/_mock_snapshot_batch_standard_dryrun_isolated",
+    "fm02_mock_root": "outputs/validation/_mock_c_fm02_slice1_190_validation_cohort",
+    "fm03_mock_root": "outputs/validation/_mock_c_fm03_harvest_exclusion_dual_layer_consistency",
+    "fm04_mock_root": "outputs/validation/_mock_c_fm04_dual_layer_ledger_resume_lineage",
+    "harvest_863_status": "outputs/harvest/cninfo_c_class/quality/company_harvest_status.csv",
+    "protected_roots_csv": "outputs/validation/cninfo_c_class_erad_protected_output_roots.csv"
+  },
+  "mock_root_is_isolated": true,
+  "seal_chain_extended": false
+}

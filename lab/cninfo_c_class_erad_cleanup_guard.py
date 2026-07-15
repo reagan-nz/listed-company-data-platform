@@ -51,6 +51,15 @@ AUTHORITATIVE_DUAL_LAYER_INDEX_ROOT_REL = (
 
 DUAL_LAYER_INDEX_WRITE_FORBIDDEN = "DUAL_LAYER_INDEX_WRITE_FORBIDDEN"
 
+# 已登记冻结 mock cohort 写拒绝（防止后继任务覆盖 MOCK3+ 冻结根）
+FROZEN_MOCK_COHORT_WRITE_FORBIDDEN = "FROZEN_MOCK_COHORT_WRITE_FORBIDDEN"
+
+# dry-run 指纹可选 lineage 扩展产物（默认不纳入，保持既有 base 指纹稳定）
+DRYRUN_LINEAGE_ARTIFACT_RELS: Tuple[str, ...] = (
+    "filtered_universe_included.yaml",
+    "cohort_lineage_matrix.csv",
+)
+
 
 def normalize_cleanup_path(path: str, *, base_dir: str = BASE_DIR) -> str:
     """解析为绝对路径并规范化（抵御 ../ 与尾斜杠）。"""
@@ -307,10 +316,15 @@ def fingerprint_isolated_snapshot_dryrun(
     base_dir: str = BASE_DIR,
     gate: str = "",
     company_count: Optional[int] = None,
+    lineage_artifacts: bool = False,
 ) -> Dict[str, Any]:
     """
     对隔离 dry-run 产物做可复现指纹（status/error/report 存在性 + 内容哈希）。
     不读取生产 snapshot JSON。
+
+    lineage_artifacts=False（默认）：仅哈希四件套，保持既有 base 指纹稳定。
+    lineage_artifacts=True：额外纳入 filtered_universe / cohort_lineage（存在或缺失均入哈希），
+    并在 payload 中标记 lineage_artifacts=true（扩展指纹与 base 区分）。
     """
     root = normalize_cleanup_path(output_root, base_dir=base_dir)
     quality = os.path.join(root, "quality")
@@ -320,6 +334,9 @@ def fingerprint_isolated_snapshot_dryrun(
         os.path.join(root, "dryrun_report.csv"),
         os.path.join(root, "dryrun_summary.md"),
     ]
+    if lineage_artifacts:
+        for rel in DRYRUN_LINEAGE_ARTIFACT_RELS:
+            candidates.append(os.path.join(root, rel))
     parts: List[str] = []
     present: Dict[str, bool] = {}
     status_rows = 0
@@ -337,7 +354,7 @@ def fingerprint_isolated_snapshot_dryrun(
             with open(path, encoding="utf-8", newline="") as fh:
                 status_rows = max(0, sum(1 for _ in fh) - 1)
 
-    payload = {
+    payload: Dict[str, Any] = {
         "output_root": os.path.relpath(root, base_dir).replace("\\", "/"),
         "gate": gate,
         "company_count": company_count if company_count is not None else status_rows,
@@ -349,7 +366,87 @@ def fingerprint_isolated_snapshot_dryrun(
         "cninfo_calls": 0,
         "execute_production_snapshot_rebuild": False,
     }
+    # 仅扩展模式写入该键，避免改变既有 base 指纹 canonical JSON
+    if lineage_artifacts:
+        payload["lineage_artifacts"] = True
     payload["fingerprint_sha256"] = hashlib.sha256(
         json.dumps(payload, ensure_ascii=False, sort_keys=True).encode("utf-8")
     ).hexdigest()
     return payload
+
+
+@lru_cache(maxsize=1)
+def load_frozen_mock_cohort_roots(
+    csv_rel: str = PROTECTED_ROOTS_CSV_REL,
+    base_dir: str = BASE_DIR,
+) -> Tuple[Tuple[str, str], ...]:
+    """
+    从 protected CSV 加载已登记冻结 mock cohort 根。
+    返回 ((root_id, abs_prefix), ...)，长前缀优先。
+    仅纳入 protection_level=mock 且 path_pattern 为具体路径（无通配）的条目。
+    """
+    entries: List[Tuple[str, str]] = []
+    csv_path = os.path.join(base_dir, csv_rel)
+    if not os.path.isfile(csv_path):
+        return tuple()
+    with open(csv_path, encoding="utf-8") as fh:
+        reader = csv.DictReader(fh)
+        for row in reader:
+            if (row.get("protection_level") or "").strip() != "mock":
+                continue
+            root_id = (row.get("root_id") or "").strip()
+            pattern = (row.get("path_pattern") or "").strip().rstrip("/")
+            if not root_id or not pattern:
+                continue
+            if "**" in pattern or "*" in pattern:
+                continue
+            # 仅冻结 validation 下具体 _mock_* 根
+            if "outputs/validation/" not in pattern.replace("\\", "/"):
+                continue
+            abs_prefix = normalize_cleanup_path(pattern, base_dir=base_dir)
+            entries.append((root_id, abs_prefix))
+    # 长前缀优先，避免短路径误匹配
+    entries.sort(key=lambda x: len(x[1]), reverse=True)
+    return tuple(entries)
+
+
+def resolve_frozen_mock_cohort_root_id(
+    path: str,
+    *,
+    base_dir: str = BASE_DIR,
+    csv_rel: str = PROTECTED_ROOTS_CSV_REL,
+) -> Optional[str]:
+    """若路径落在已登记冻结 mock 根下，返回 root_id；否则 None。"""
+    norm = normalize_cleanup_path(path, base_dir=base_dir)
+    for root_id, prefix in load_frozen_mock_cohort_roots(
+        csv_rel=csv_rel, base_dir=base_dir
+    ):
+        if norm == prefix or norm.startswith(prefix + os.sep):
+            return root_id
+    return None
+
+
+def assert_frozen_mock_cohort_write_forbidden(
+    path: str,
+    *,
+    allow_root_ids: Optional[Tuple[str, ...]] = None,
+    base_dir: str = BASE_DIR,
+    csv_rel: str = PROTECTED_ROOTS_CSV_REL,
+) -> str:
+    """
+    冻结 mock cohort 写隔离：路径若落在已登记 MOCK 根下且 root_id 不在 allow 列表，硬拒绝。
+    未登记的 ephemeral `_mock_*`（如 cli/unit tmp）不受此守卫约束。
+    返回规范化绝对路径（当未拒绝时）。
+    """
+    allowed = set(allow_root_ids or ())
+    norm = normalize_cleanup_path(path, base_dir=base_dir)
+    root_id = resolve_frozen_mock_cohort_root_id(
+        norm, base_dir=base_dir, csv_rel=csv_rel
+    )
+    if root_id is not None and root_id not in allowed:
+        rel = os.path.relpath(norm, base_dir).replace("\\", "/")
+        raise RuntimeError(
+            f"{FROZEN_MOCK_COHORT_WRITE_FORBIDDEN}: {rel} "
+            f"(frozen root_id={root_id}; allow_root_ids={sorted(allowed) or []})"
+        )
+    return norm

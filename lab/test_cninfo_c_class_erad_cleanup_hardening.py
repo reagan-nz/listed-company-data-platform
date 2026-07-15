@@ -140,6 +140,70 @@ class TestCClassEradCleanupHardening(unittest.TestCase):
                 allowed_audit_root_rel=AUTHORITATIVE_DUAL_LAYER_INDEX_ROOT_REL,
             )
 
+    def test_case10_frozen_mock_cohort_write_isolation(self) -> None:
+        from cninfo_c_class_erad_cleanup_guard import (
+            FROZEN_MOCK_COHORT_WRITE_FORBIDDEN,
+            assert_frozen_mock_cohort_write_forbidden,
+            load_frozen_mock_cohort_roots,
+            resolve_frozen_mock_cohort_root_id,
+        )
+
+        load_frozen_mock_cohort_roots.cache_clear()
+        frozen = load_frozen_mock_cohort_roots()
+        self.assertTrue(frozen)
+        # MOCK8（pre-EXECUTE wall）必须被识别为冻结根
+        mock8 = (
+            "outputs/validation/_mock_c_fm06_pre_execute_safe_snapshot_wall"
+        )
+        self.assertEqual(
+            resolve_frozen_mock_cohort_root_id(mock8), "C-ROOT-MOCK8"
+        )
+        with self.assertRaisesRegex(
+            RuntimeError, FROZEN_MOCK_COHORT_WRITE_FORBIDDEN
+        ):
+            assert_frozen_mock_cohort_write_forbidden(mock8)
+        # allow 列表放行
+        allowed = assert_frozen_mock_cohort_write_forbidden(
+            mock8, allow_root_ids=("C-ROOT-MOCK8",)
+        )
+        self.assertTrue(allowed.endswith("safe_snapshot_wall") or "fm06" in allowed)
+        # 未登记 ephemeral mock 不受冻结守卫约束
+        ephemeral = (
+            "outputs/validation/_mock_c_fm12_cli_test_tmp_isolation_probe"
+        )
+        self.assertIsNone(resolve_frozen_mock_cohort_root_id(ephemeral))
+        assert_frozen_mock_cohort_write_forbidden(ephemeral)
+
+    def test_case11_dryrun_fingerprint_lineage_extension_stable(self) -> None:
+        from cninfo_c_class_erad_cleanup_guard import (
+            fingerprint_isolated_snapshot_dryrun,
+        )
+
+        root = (
+            "outputs/validation/_mock_c_fm02_slice1_190_validation_cohort"
+        )
+        base = fingerprint_isolated_snapshot_dryrun(
+            root, gate="PASS_WITH_CAVEAT", company_count=190
+        )
+        base2 = fingerprint_isolated_snapshot_dryrun(
+            root, gate="PASS_WITH_CAVEAT", company_count=190
+        )
+        self.assertEqual(base["fingerprint_sha256"], base2["fingerprint_sha256"])
+        self.assertNotIn("lineage_artifacts", base)
+        ext = fingerprint_isolated_snapshot_dryrun(
+            root,
+            gate="PASS_WITH_CAVEAT",
+            company_count=190,
+            lineage_artifacts=True,
+        )
+        self.assertTrue(ext.get("lineage_artifacts"))
+        self.assertNotEqual(base["fingerprint_sha256"], ext["fingerprint_sha256"])
+        # FM-02 应含 lineage 产物
+        self.assertTrue(
+            ext["files_present"].get("filtered_universe_included.yaml")
+        )
+        self.assertTrue(ext["files_present"].get("cohort_lineage_matrix.csv"))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,18 @@
+{
+  "generated_at": "2026-07-15T12:12:06Z",
+  "task_id": "C-FM-12",
+  "gate": "PASS_OFFLINE",
+  "capability": [
+    "dryrun_base_fingerprint_zero_drift",
+    "dryrun_lineage_fingerprint_extension",
+    "frozen_mock_cohort_write_isolation",
+    "harvest_exclusion_dual_layer_cross_fingerprint"
+  ],
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "ready_for_execute": false,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "seal_chain_extended": false,
+  "notes": "non-seal-chain offline QA; EXECUTE remains human-held"
+}

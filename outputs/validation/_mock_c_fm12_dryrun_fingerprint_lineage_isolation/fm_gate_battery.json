@@ -1,0 +1,23 @@
+{
+  "generated_at": "2026-07-15T12:12:06Z",
+  "task_id": "C-FM-12",
+  "gate": "PASS_OFFLINE",
+  "layer_gates": {
+    "dryrun_base_fingerprint": "PASS_OFFLINE",
+    "dryrun_lineage_extension": "PASS_OFFLINE",
+    "frozen_mock_isolation": "PASS_OFFLINE",
+    "harvest_exclusion_dual_layer_cross_fp": "PASS_OFFLINE",
+    "protected_csv_registry": "PASS_OFFLINE"
+  },
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "ready_for_execute": false,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+  "idle_not_required_while_awaiting": true,
+  "lineage_extension": {
+    "fm02_lineage_ext_sha256": "56c5340f2802310a56efcac8036ad853a780cc8ba0855f60f8ea302b6325101c",
+    "fm01_lineage_ext_sha256": "2bf5faf0db57d6d14277f9f3c2c8be8204cd3847d5f1dd894796b4121302b3d1"
+  }
+}
