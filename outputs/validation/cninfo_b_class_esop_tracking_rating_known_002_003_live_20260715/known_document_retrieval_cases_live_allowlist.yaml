@@ -1,0 +1,41 @@
+# B-FM-46 live allow-list — 仅新晋 employee_stock_ownership_plan_known_002 /
+# tracking_rating_report_known_003
+status: live_sample_scoped_B-FM-46
+verified: false
+notes: B-FM-46 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS including ESOP/tracking known_001/002 and B-FM-45
+cases:
+  - case_id: employee_stock_ownership_plan_known_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "301063"
+    company_name: "海锅股份"
+    title_pattern: "员工持股计划第一次持有人会议决议"
+    expected_document_type: announcement
+    date_start: "2025-06-19"
+    date_end: "2025-06-22"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-46 live allow-list（员工持股计划持有人会议决议 known_002）：
+      harvest BD2E672 海锅股份 301063 ann=1223951294 2025-06-20。
+      title_pattern 取「员工持股计划第一次持有人会议决议」
+      （≠东方盛虹 known_001 草案修订稿）。
+      不写 verified；不下载 PDF。
+
+  - case_id: tracking_rating_report_known_003
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000009"
+    company_name: "中国宝安"
+    title_pattern: "公开发行公司债券(第一期)定期跟踪评级报告"
+    expected_document_type: announcement
+    date_start: "2025-06-15"
+    date_end: "2025-06-18"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-46 live allow-list（普通公司债券定期跟踪评级 known_003）：
+      harvest BD2E051 中国宝安 000009 ann=1223886549 2025-06-16。
+      title_pattern 取「公开发行公司债券(第一期)定期跟踪评级报告」
+      （≠可转债定期 known_001 / 主体年度 known_002）。
+      不写 verified；不下载 PDF。

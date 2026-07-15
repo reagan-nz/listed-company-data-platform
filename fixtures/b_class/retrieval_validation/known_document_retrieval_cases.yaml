@@ -624,6 +624,30 @@ cases:
       b_class_erad_scale_200_report.csv 行 BD2E086（quality=pass）。
       不写 verified；不下载 PDF。
 
+  - case_id: tracking_rating_report_known_003
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000009"
+    company_name: "中国宝安"
+    title_pattern: "公开发行公司债券(第一期)定期跟踪评级报告"
+    expected_document_type: announcement
+    date_start: "2025-06-15"
+    date_end: "2025-06-18"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-46 自 harvest 证据晋升（普通公司债券定期跟踪评级 known_003；对称
+      known_001 可转债定期 / known_002 主体年度跟踪评级）：中国宝安 000009，
+      中国宝安集团股份有限公司2022年面向合格投资者公开发行公司债券(第一期)定期
+      跟踪评级报告（announcement_id=1223886549，披露日 2025-06-16）。路由已由
+      B-FM-29 硬化（「跟踪评级报告」→ announcement）；本包不改路由。
+      title_pattern 取「公开发行公司债券(第一期)定期跟踪评级报告」：覆盖普通
+      公司债定期跟踪，且不命中 known_001「…可转换公司债券定期跟踪评级报告」
+      与 known_002「股份有限公司2025年跟踪评级报告」。与受托管理 / 保荐书 /
+      法律意见书可区分。来源 outputs/validation/cninfo_b_class_erad_scale_200/
+      reports/b_class_erad_scale_200_report.csv 行 BD2E051（quality=pass）。
+      不写 verified；不下载 PDF。
+
   # --- continuous_supervision / 持续督导 × 2（B-FM-30；document_type=announcement；勿进 annual_report / other）---
   - case_id: continuous_supervision_annual_known_001
     case_status: ready
@@ -898,6 +922,29 @@ cases:
       与章程/制度/薪酬/名单/简报等低价值 other 边角可区分。来源
       outputs/validation/cninfo_b_class_erad_scale_200/reports/
       b_class_erad_scale_200_report.csv 行 BD2E062（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: employee_stock_ownership_plan_known_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "301063"
+    company_name: "海锅股份"
+    title_pattern: "员工持股计划第一次持有人会议决议"
+    expected_document_type: announcement
+    date_start: "2025-06-19"
+    date_end: "2025-06-22"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-46 自 harvest 证据晋升（员工持股计划持有人会议决议 known_002；对称
+      known_001 草案修订稿）：海锅股份 301063，2025年员工持股计划第一次持有人
+      会议决议公告（announcement_id=1223951294，披露日 2025-06-20）。路由已由
+      B-FM-35 硬化（「员工持股计划」→ announcement）；本包不改路由。
+      title_pattern 取「员工持股计划第一次持有人会议决议」：覆盖持有人会议子类型，
+      且不命中 known_001「第二期员工持股计划（草案）(修订稿）」与购买价格调整公告。
+      勿裸「员工持股计划」。与自查报告 / 激励对象名单 / 章程制度可区分。来源
+      outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
+      b_class_erad_fuller_next_slice2_report.csv 行 BD2E672（quality=pass）。
       不写 verified；不下载 PDF。
 
   # --- company_articles / 公司章程（B-FM-36；勿落 other）---

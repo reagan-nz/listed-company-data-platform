@@ -1,0 +1,3 @@
+case_id,case_type,case_status,source_id,title_pattern,date_start,date_end,expected_document_type,expected_route_to,dry_run_status,would_query,query_status,notes
+employee_stock_ownership_plan_known_002,known_document,ready,cninfo_general_announcement_pdf,员工持股计划第一次持有人会议决议,2025-06-19,2025-06-22,announcement,cninfo_general_announcement_pdf,ready_for_future_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called
+tracking_rating_report_known_003,known_document,ready,cninfo_general_announcement_pdf,公开发行公司债券(第一期)定期跟踪评级报告,2025-06-15,2025-06-18,announcement,cninfo_general_announcement_pdf,ready_for_future_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called
