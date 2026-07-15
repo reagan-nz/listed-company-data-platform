@@ -1,0 +1,6 @@
+case_id,company_code,company_name,anchor_tdate,shared_probe_key,expected_behavior,dryrun_status,planned_request_count,cninfo_called,live_found_path_DEP101_105,fixture_tier1_refs,final_effective_status,notes
+DEP101,000001,平安银行,2026-07-02,tdate_daily_2026-07-02,captured_normal_or_empty_but_valid,planned_ok,1,false,NOT_PROVEN,DEP101_found.json;DEP101_empty.json,s4_planned_ok_shared_2026-07-02,D-FM-43 dry-run only; not live
+DEP102,000895,双汇发展,2026-07-02,tdate_daily_2026-07-02,captured_normal_or_empty_but_valid,planned_ok,1,false,NOT_PROVEN,DEP102_found.json;DEP102_empty.json,s4_planned_ok_shared_2026-07-02,SZSE diversify; cite != live found-path
+DEP103,600000,浦发银行,2026-07-02,tdate_daily_2026-07-02,captured_normal_or_empty_but_valid,planned_ok,1,false,NOT_PROVEN,DEP103_found.json;DEP103_empty.json,s4_planned_ok_shared_2026-07-02,SSE diversify; not live-proven
+DEP104,002415,海康威视,2026-07-02,tdate_daily_2026-07-02,captured_normal_or_empty_but_valid,planned_ok,1,false,NOT_PROVEN,DEP104_found.json;DEP104_empty.json,s4_planned_ok_shared_2026-07-02,mixed found/empty; not live
+DEP105,601988,中国银行,2026-07-02,tdate_daily_2026-07-02,empty_but_valid,planned_ok,1,false,NOT_PROVEN,DEP105_empty_but_valid_synthetic.json,s4_planned_ok_empty_control_2026-07-02,empty control; do not forced pass
