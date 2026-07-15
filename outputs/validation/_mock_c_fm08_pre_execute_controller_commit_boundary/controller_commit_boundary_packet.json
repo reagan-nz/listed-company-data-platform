@@ -1,0 +1,26 @@
+{
+  "packet_kind": "pre_execute_controller_commit_boundary",
+  "task_id": "C-FM-08",
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "cninfo_calls": 0,
+  "human_action_required_for_execute": true,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "ready_for_commit": true,
+  "ready_for_execute": false,
+  "controller_action": "COMMIT_BOUNDARY_ONLY",
+  "verified_claim_forbidden": true,
+  "production_ready_claim_forbidden": true,
+  "frozen_wall_fingerprint_sha256": "30ff8a3b3841aec0ac21374fcde0ad947fc84227f6e52b3828067d15b3c01ca3",
+  "frozen_exclusion_fingerprint_sha256": "e305e275b4b8e4e28ccd11a396cda5b93c6a3c99925a2956cba79386a08aa2ac",
+  "notes": "本包聚合 FM-01..07 seal-chain 并产出 controller commit-boundary 就绪账本；KEEP_EXECUTE_FALSE；不覆盖 MOCK8/MOCK9；不翻转 approved_for_snapshot_rebuild；生产 snapshot EXECUTE 仍须独立人批；本 executor 不 commit/push。",
+  "generated_at": "2026-07-15T10:05:56Z",
+  "gate": "PASS_OFFLINE",
+  "layer_gates": {
+    "fm_gate_battery": "PASS_OFFLINE",
+    "seal_chain_continuity": "PASS_OFFLINE",
+    "execute_hold_seal": "PASS_OFFLINE",
+    "controller_readiness": "PASS_OFFLINE",
+    "protected_csv_registry": "PASS_OFFLINE"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-07-15T10:05:56Z",
+  "task_id": "C-FM-08",
+  "fm01_gate": "PASS_OFFLINE",
+  "fm02_gate": "PASS_OFFLINE",
+  "fm03_gate": "PASS_OFFLINE",
+  "fm04_gate": "PASS_OFFLINE",
+  "fm05_gate": "PASS_OFFLINE",
+  "fm06_gate": "PASS_OFFLINE",
+  "fm07_gate": "PASS_OFFLINE",
+  "fm08_gate": "PASS_OFFLINE",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false
+}
