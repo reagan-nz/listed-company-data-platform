@@ -1,0 +1,101 @@
+{
+  "generated_at": "2026-07-15T16:00:03Z",
+  "task_id": "C-FM-40",
+  "fingerprint_sha256": "7e6ac9f4bfab0d522aa6695cdb60403be1f1f86b79e65ddb5f5093b775a4cc74",
+  "composition_sha256": "7725392d7fe52f14bd6868b89a4e0feb04e72108e472c5bd86d0261985b60d53",
+  "union_formula": "2134+106+9=2249",
+  "sample_denials": [
+    {
+      "proposed": {
+        "unique": 2250,
+        "complete": 2134,
+        "partial": 106,
+        "failed": 9
+      },
+      "frozen": {
+        "unique": 2249,
+        "complete": 2134,
+        "partial": 106,
+        "failed": 9
+      },
+      "union_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "unique_union_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "unique": 2249,
+        "complete": 2135,
+        "partial": 106,
+        "failed": 9
+      },
+      "frozen": {
+        "unique": 2249,
+        "complete": 2134,
+        "partial": 106,
+        "failed": 9
+      },
+      "union_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "unique_union_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "unique": 2248,
+        "complete": 2134,
+        "partial": 106,
+        "failed": 9
+      },
+      "frozen": {
+        "unique": 2249,
+        "complete": 2134,
+        "partial": 106,
+        "failed": 9
+      },
+      "union_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "unique_union_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "unique": 2249,
+        "complete": 2134,
+        "partial": 106,
+        "failed": 9
+      },
+      "frozen": {
+        "unique": 2249,
+        "complete": 2134,
+        "partial": 106,
+        "failed": 9
+      },
+      "union_formula_holds": true,
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "unique_union_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "unique_union_composition_identity_lock",
+    "harvest_unique_union": 2249,
+    "union_complete": 2134,
+    "union_partial": 106,
+    "union_failed": 9,
+    "complete_codes_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431",
+    "partial_codes_sha256": "5d5da7030f91e60893627d7fcf208b79f4f09e3edc5c4255fb797c1706672d73",
+    "failed_codes_sha256": "fb74a9df6bbecf75a7c2b354491a80c4b294c3c1cd392ec429bd8d16b74a14f6",
+    "composition_sha256": "7725392d7fe52f14bd6868b89a4e0feb04e72108e472c5bd86d0261985b60d53",
+    "union_formula": "2134+106+9=2249",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

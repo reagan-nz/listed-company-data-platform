@@ -1,0 +1,130 @@
+{
+  "generated_at": "2026-07-15T16:00:03Z",
+  "task_id": "C-FM-40",
+  "fingerprint_sha256": "4040a47e3a4f258af9b5ebbbe325c014289e9aafd6edc13224d4f1d9a1275f25",
+  "bundle_sha256": "f2561a695dcd567d7dc2b76873bdfc7c3ab229fb55c209ff50ee0d25917e4813",
+  "formulas": {
+    "residual_formula": "106+9+2=117",
+    "union_formula": "2134+106+9=2249",
+    "surface_formula": "2249+2=2251",
+    "additive_formula": "2249+12=2261",
+    "tier_coverage_formula": "tiers=7;coverage_sum=3314",
+    "risk_band_formula": "75+14+12+5=106",
+    "resume_formula": "28+1+0=29"
+  },
+  "sample_denials": [
+    {
+      "proposed_formulas": {
+        "residual_formula": "106+9+2=117",
+        "union_formula": "2134+106+9=2249",
+        "surface_formula": "2249+2=2251",
+        "additive_formula": "2249+12=2261",
+        "tier_coverage_formula": "tiers=7;coverage_sum=3314",
+        "risk_band_formula": "75+14+12+5=106",
+        "resume_formula": "28+1+0=29",
+        "extra_formula": "0=0"
+      },
+      "frozen_formulas": {
+        "residual_formula": "106+9+2=117",
+        "union_formula": "2134+106+9=2249",
+        "surface_formula": "2249+2=2251",
+        "additive_formula": "2249+12=2261",
+        "tier_coverage_formula": "tiers=7;coverage_sum=3314",
+        "risk_band_formula": "75+14+12+5=106",
+        "resume_formula": "28+1+0=29"
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_formula_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_formulas": {
+        "residual_formula": "106+9+2=117",
+        "union_formula": "2134+106+9=2249",
+        "surface_formula": "2249+2=2251",
+        "additive_formula": "2249+12=2261",
+        "tier_coverage_formula": "tiers=7;coverage_sum=3314",
+        "risk_band_formula": "75+14+12+5=106"
+      },
+      "frozen_formulas": {
+        "residual_formula": "106+9+2=117",
+        "union_formula": "2134+106+9=2249",
+        "surface_formula": "2249+2=2251",
+        "additive_formula": "2249+12=2261",
+        "tier_coverage_formula": "tiers=7;coverage_sum=3314",
+        "risk_band_formula": "75+14+12+5=106",
+        "resume_formula": "28+1+0=29"
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_formula_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_formulas": {
+        "residual_formula": "106+9+2=117",
+        "union_formula": "2134+106+8=2248",
+        "surface_formula": "2249+2=2251",
+        "additive_formula": "2249+12=2261",
+        "tier_coverage_formula": "tiers=7;coverage_sum=3314",
+        "risk_band_formula": "75+14+12+5=106",
+        "resume_formula": "28+1+0=29"
+      },
+      "frozen_formulas": {
+        "residual_formula": "106+9+2=117",
+        "union_formula": "2134+106+9=2249",
+        "surface_formula": "2249+2=2251",
+        "additive_formula": "2249+12=2261",
+        "tier_coverage_formula": "tiers=7;coverage_sum=3314",
+        "risk_band_formula": "75+14+12+5=106",
+        "resume_formula": "28+1+0=29"
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_formula_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_formulas": {
+        "residual_formula": "106+9+2=117",
+        "union_formula": "2134+106+9=2249",
+        "surface_formula": "2249+2=2251",
+        "additive_formula": "2249+12=2261",
+        "tier_coverage_formula": "tiers=7;coverage_sum=3314",
+        "risk_band_formula": "75+14+12+5=106",
+        "resume_formula": "28+1+0=29"
+      },
+      "frozen_formulas": {
+        "residual_formula": "106+9+2=117",
+        "union_formula": "2134+106+9=2249",
+        "surface_formula": "2249+2=2251",
+        "additive_formula": "2249+12=2261",
+        "tier_coverage_formula": "tiers=7;coverage_sum=3314",
+        "risk_band_formula": "75+14+12+5=106",
+        "resume_formula": "28+1+0=29"
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "cross_formula_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "cross_formula_bundle_identity_lock",
+    "formulas": {
+      "residual_formula": "106+9+2=117",
+      "union_formula": "2134+106+9=2249",
+      "surface_formula": "2249+2=2251",
+      "additive_formula": "2249+12=2261",
+      "tier_coverage_formula": "tiers=7;coverage_sum=3314",
+      "risk_band_formula": "75+14+12+5=106",
+      "resume_formula": "28+1+0=29"
+    },
+    "bundle_sha256": "f2561a695dcd567d7dc2b76873bdfc7c3ab229fb55c209ff50ee0d25917e4813",
+    "deny_formula_mutate": true,
+    "deny_bundle_inflate": true,
+    "deny_bundle_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

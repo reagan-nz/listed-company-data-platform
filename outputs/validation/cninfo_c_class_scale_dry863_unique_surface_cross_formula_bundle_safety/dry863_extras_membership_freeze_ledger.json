@@ -1,0 +1,85 @@
+{
+  "generated_at": "2026-07-15T16:00:03Z",
+  "task_id": "C-FM-40",
+  "fingerprint_sha256": "11b4dde77764bbc99113c26ea57249de518efc52fceb4907830aacea8106b0b8",
+  "dry863_extras": [
+    "000037",
+    "000055"
+  ],
+  "dry863_extras_sha256": "4d2821153fad3e9298cb7f98ddf9f051cbcb9022ffa65f5c1ebd15777c7ac15d",
+  "sample_denials": [
+    {
+      "action": "inject",
+      "proposed": [
+        "000037",
+        "000055",
+        "999999"
+      ],
+      "frozen": [
+        "000037",
+        "000055"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "dry863_extras_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "drop",
+      "proposed": [
+        "000037"
+      ],
+      "frozen": [
+        "000037",
+        "000055"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "dry863_extras_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "replace",
+      "proposed": [
+        "000001",
+        "000002"
+      ],
+      "frozen": [
+        "000037",
+        "000055"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "dry863_extras_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "replace",
+      "proposed": [
+        "000037",
+        "000055"
+      ],
+      "frozen": [
+        "000037",
+        "000055"
+      ],
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "dry863_extras_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "dry863_extras_membership_freeze",
+    "dry863_extras": [
+      "000037",
+      "000055"
+    ],
+    "dry863_n": 2,
+    "dry863_extras_sha256": "4d2821153fad3e9298cb7f98ddf9f051cbcb9022ffa65f5c1ebd15777c7ac15d",
+    "deny_inject": true,
+    "deny_drop": true,
+    "deny_replace": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
