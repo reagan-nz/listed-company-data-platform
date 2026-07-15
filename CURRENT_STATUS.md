@@ -530,7 +530,7 @@ _最后更新：2026-07-14_
 | **Snapshot Full Batch** | [full snapshots](outputs/snapshot/cninfo_c_class/full/) · **863** JSON · status **complete_with_caveat=863** |
 | **Snapshot Full QA Review** | [review script](lab/review_cninfo_c_class_snapshot_full_quality.py) · [quality summary](outputs/validation/cninfo_c_class_snapshot_full_quality_summary.md) · [module coverage](outputs/validation/cninfo_c_class_snapshot_full_module_coverage.csv) · test **5/5 PASS** |
 | **Full Market Expansion Planning** | [registry plan](plans/cninfo_c_class_full_market_universe_registry_plan.md) · [universe design](outputs/validation/cninfo_c_class_full_market_universe_design.md) · [BSE strategy](plans/cninfo_c_class_bse_expansion_strategy.md) · [hold policy](plans/cninfo_c_class_hold_company_policy.md) · [harvest architecture](plans/cninfo_c_class_full_market_harvest_architecture.md) · [expansion summary](outputs/validation/cninfo_c_class_full_market_expansion_planning_summary.md) |
-| 性质 | **Era D post-fix8 audit verified**（**813 complete / 50 needs_review**）· **HOLD live/rebuild** · C-line **continues** |
+| 性质 | **863 snapshot 已生成 · QA review 完成 · Phase 3.5 expanded 491 track commit 完成** · **holdout signoff commit 完成**（Option 1 · 9 holdout · commit review gate **`READY_FOR_HUMAN_DECISION`**）；状态 **`SNAPSHOT_GENERATED_QA_REVIEW`** · 491 track **closed-with-caveat** · **Era D post-fix8 audit verified**（**813 complete / 50 needs_review**）· **HOLD live/rebuild** · C-line **continues** · 不入库 · 不写 verified |
 
 ---
 
