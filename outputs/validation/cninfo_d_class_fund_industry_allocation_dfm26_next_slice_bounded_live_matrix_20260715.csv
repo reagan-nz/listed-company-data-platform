@@ -1,0 +1,21 @@
+metric,value,notes
+task_id,D-FM-26,FIA next-slice bounded real live
+cninfo_calls,3,shared probes default+rdate_20260331+rdate_20251231
+acceptable,5/5,DFIA101-DFIA105 all found
+DFIA101,found/1/yes,industry=A default
+DFIA102,found/1/yes,industry=C default
+DFIA103,found/19/yes,industry=* rdate_20260331
+DFIA104,found/1/yes,industry=B rdate_20260331
+DFIA105,found/1/yes,industry=C rdate_20251231
+execution_gate,PASS_WITH_CAVEAT,not bare PASS
+live_path_gate,READY_FOR_APPROVAL,path ready
+live_gate,NOT_APPROVED,constant; single-task authorize only
+approval_gate,STANDING_SCOPE_AUTHORIZED,from D-FM-24
+s4_dryrun_gate,PASS_OFFLINE,from D-FM-25
+wall_seconds,13,exit=0
+first_slice_roots_mutated,no,FIA/ES/AT/SD sha256 OK
+ess_h3_h4,forbidden,not touched
+level2_idle,forbidden,not executed
+dlc006r_reopen,forbidden,not reopened
+abc_tracks,untouched,isolation held
+ready_for_commit,true,controller commit-boundary
