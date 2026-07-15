@@ -2,16 +2,19 @@
 CNINFO C-class Era D cleanup 保护工具（仅测试 teardown / 临时目录清理）。
 
 禁止清理生产 harvest / snapshot / validation 根；仅允许 `_mock_*` / `_mock_live_test` 下路径。
+同时提供 snapshot dry-run 写根守卫与隔离 dry-run 可复现指纹（无 CNINFO）。
 """
 
 from __future__ import annotations
 
 import csv
+import hashlib
+import json
 import os
 import shutil
 import tempfile
 from functools import lru_cache
-from typing import Iterable, List, Sequence, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 # lab/ 上一级为仓库根
 BASE_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
@@ -26,10 +29,18 @@ _EXTRA_PRODUCTION_ROOT_RELS: Tuple[str, ...] = (
 )
 
 CLEANUP_REFUSED_MSG = "C_CLASS_ERAD_CLEANUP_REFUSED"
+PRODUCTION_SNAPSHOT_DRYRUN_WRITE_FORBIDDEN = (
+    "PRODUCTION_SNAPSHOT_DRYRUN_WRITE_FORBIDDEN"
+)
 
 # Era D harvest resume audit 默认只写此 validation 子树（或 _mock_*）
 DEFAULT_ERAD_AUDIT_OUTPUT_ROOT_REL = (
     "outputs/validation/cninfo_c_class_erad_harvest_resume_audit"
+)
+
+# 标准 snapshot batch dry-run 默认隔离根（禁止默认写入生产 snapshot quality）
+DEFAULT_ISOLATED_SNAPSHOT_DRYRUN_ROOT_REL = (
+    "outputs/validation/_mock_snapshot_batch_standard_dryrun_isolated"
 )
 
 
@@ -153,3 +164,143 @@ def create_c_class_mock_test_output_root(
         raise RuntimeError(f"{CLEANUP_REFUSED_MSG}: mock parent not allowed: {parent}")
     os.makedirs(parent, exist_ok=True)
     return tempfile.mkdtemp(prefix=prefix, dir=parent)
+
+
+@lru_cache(maxsize=1)
+def load_protected_snapshot_root_prefixes(
+    csv_rel: str = PROTECTED_ROOTS_CSV_REL,
+    base_dir: str = BASE_DIR,
+) -> Tuple[str, ...]:
+    """从 CSV 加载 production snapshot 根前缀（绝对路径、长前缀优先）。"""
+    prefixes: List[str] = []
+    csv_path = os.path.join(base_dir, csv_rel)
+    if os.path.isfile(csv_path):
+        with open(csv_path, encoding="utf-8") as fh:
+            reader = csv.DictReader(fh)
+            for row in reader:
+                if row.get("protection_level") != "production":
+                    continue
+                if (row.get("root_class") or "").strip() != "snapshot":
+                    continue
+                pattern = (row.get("path_pattern") or "").strip().rstrip("/")
+                if not pattern or "**" in pattern or "*" in pattern:
+                    continue
+                prefixes.append(normalize_cleanup_path(pattern, base_dir=base_dir))
+    unique = sorted(set(prefixes), key=len, reverse=True)
+    return tuple(unique)
+
+
+def is_protected_c_class_production_snapshot_root(
+    path: str, *, base_dir: str = BASE_DIR
+) -> bool:
+    """路径落在生产 C 类 snapshot 根下且非 mock 测试区。"""
+    if is_allowed_mock_test_cleanup_path(path, base_dir=base_dir):
+        return False
+    norm = normalize_cleanup_path(path, base_dir=base_dir)
+    for prefix in load_protected_snapshot_root_prefixes(base_dir=base_dir):
+        if _is_under_prefix(norm, prefix):
+            return True
+    return False
+
+
+def assert_safe_c_class_snapshot_dryrun_write_root(
+    path: str,
+    *,
+    base_dir: str = BASE_DIR,
+    allow_production_scaffold: bool = False,
+) -> str:
+    """
+    Snapshot dry-run 写根守卫：
+      - mock / 临时隔离根：允许
+      - 生产 snapshot 根：默认拒绝（需显式 allow_production_scaffold）
+    返回规范化绝对路径。
+    """
+    norm = normalize_cleanup_path(path, base_dir=base_dir)
+    if allow_production_scaffold:
+        return norm
+    if is_allowed_mock_test_cleanup_path(norm, base_dir=base_dir):
+        return norm
+    if is_protected_c_class_production_snapshot_root(norm, base_dir=base_dir):
+        rel = os.path.relpath(norm, base_dir).replace("\\", "/")
+        raise RuntimeError(
+            f"{PRODUCTION_SNAPSHOT_DRYRUN_WRITE_FORBIDDEN}: {rel} "
+            f"(use isolated validation/_mock_* root or "
+            f"--allow-production-dryrun-scaffold)"
+        )
+    return norm
+
+
+def resolve_standard_snapshot_dryrun_output_root(
+    requested: Optional[str],
+    *,
+    base_dir: str = BASE_DIR,
+    allow_production_scaffold: bool = False,
+    default_isolated_rel: str = DEFAULT_ISOLATED_SNAPSHOT_DRYRUN_ROOT_REL,
+) -> str:
+    """
+    解析标准 dry-run 输出根：未指定时落到隔离 mock 根；
+    指定生产 snapshot 根时除非显式允许否则拒绝。
+    """
+    if not requested:
+        target = normalize_cleanup_path(default_isolated_rel, base_dir=base_dir)
+    else:
+        target = normalize_cleanup_path(requested, base_dir=base_dir)
+    return assert_safe_c_class_snapshot_dryrun_write_root(
+        target,
+        base_dir=base_dir,
+        allow_production_scaffold=allow_production_scaffold,
+    )
+
+
+def fingerprint_isolated_snapshot_dryrun(
+    output_root: str,
+    *,
+    base_dir: str = BASE_DIR,
+    gate: str = "",
+    company_count: Optional[int] = None,
+) -> Dict[str, Any]:
+    """
+    对隔离 dry-run 产物做可复现指纹（status/error/report 存在性 + 内容哈希）。
+    不读取生产 snapshot JSON。
+    """
+    root = normalize_cleanup_path(output_root, base_dir=base_dir)
+    quality = os.path.join(root, "quality")
+    candidates = [
+        os.path.join(quality, "company_snapshot_status.csv"),
+        os.path.join(quality, "company_snapshot_error.csv"),
+        os.path.join(root, "dryrun_report.csv"),
+        os.path.join(root, "dryrun_summary.md"),
+    ]
+    parts: List[str] = []
+    present: Dict[str, bool] = {}
+    status_rows = 0
+    for path in candidates:
+        rel = os.path.relpath(path, root).replace("\\", "/")
+        exists = os.path.isfile(path)
+        present[rel] = exists
+        if not exists:
+            parts.append(f"{rel}:missing")
+            continue
+        with open(path, "rb") as fh:
+            digest = hashlib.sha256(fh.read()).hexdigest()
+        parts.append(f"{rel}:{digest}")
+        if rel.endswith("company_snapshot_status.csv"):
+            with open(path, encoding="utf-8", newline="") as fh:
+                status_rows = max(0, sum(1 for _ in fh) - 1)
+
+    payload = {
+        "output_root": os.path.relpath(root, base_dir).replace("\\", "/"),
+        "gate": gate,
+        "company_count": company_count if company_count is not None else status_rows,
+        "status_row_count": status_rows,
+        "files_present": present,
+        "content_sha256": hashlib.sha256(
+            "\n".join(parts).encode("utf-8")
+        ).hexdigest(),
+        "cninfo_calls": 0,
+        "execute_production_snapshot_rebuild": False,
+    }
+    payload["fingerprint_sha256"] = hashlib.sha256(
+        json.dumps(payload, ensure_ascii=False, sort_keys=True).encode("utf-8")
+    ).hexdigest()
+    return payload

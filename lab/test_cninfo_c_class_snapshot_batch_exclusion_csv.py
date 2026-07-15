@@ -6,7 +6,9 @@ CNINFO C-class — batch builder 原生 --exclusion-csv 单测（离线）。
   - --exclusion-csv + --execute 硬拒绝
   - Wave1 reconcile 过滤后 company_count=190
   - 生产 snapshot 根拒绝
-  - 无 --exclusion-csv 时行为不变（不强制 validation 根）
+  - 无 --exclusion-csv 时标准 dry-run 默认隔离 mock 根（不强制 exclusion 的 validation 根语义）；
+    生产 snapshot 根仍需 --allow-production-dryrun-scaffold
+
 
 运行：
     python3 lab/test_cninfo_c_class_snapshot_batch_exclusion_csv.py

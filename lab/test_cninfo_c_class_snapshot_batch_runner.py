@@ -78,9 +78,13 @@ class TestSnapshotBatchRunner(unittest.TestCase):
         self.assertEqual(len(result["report_rows"]), EXPECTED_COMPANY_COUNT)
         self.assertEqual(result["gate"], "PASS_WITH_CAVEAT")
 
+        # CLI bare --dry-run：写隔离 mock 根，不触碰生产 snapshot quality
         proc = _run_runner(["--dry-run"])
         self.assertEqual(proc.returncode, 0, proc.stderr)
         self.assertIn("snapshot_batch_dryrun_gate: PASS_WITH_CAVEAT", proc.stdout)
+        self.assertIn("snapshot_dryrun_output_root_isolation: enforced", proc.stdout)
+        self.assertIn("_mock_snapshot_batch_standard_dryrun_isolated", proc.stdout)
+        self.assertIn("dryrun_fingerprint_sha256:", proc.stdout)
 
     def test_case2_hold_overlap_detection(self) -> None:
         companies, _ = load_universe_yaml(UNIVERSE_YAML)

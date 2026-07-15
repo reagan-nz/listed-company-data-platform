@@ -12,6 +12,7 @@ import io
 import os
 import subprocess
 import sys
+import tempfile
 import unittest
 import yaml
 from contextlib import redirect_stderr
@@ -186,17 +187,22 @@ class TestPhase3SuccessSnapshotApproval(unittest.TestCase):
         self.assertIn("PHASE3_OUTPUT_ROOT_MISMATCH", buf.getvalue())
 
     def test_case10_dry_run_does_not_require_approval(self) -> None:
-        result = _run_runner([
-            "--dry-run",
-            "--sample-file",
-            "lab/eval_companies_c_class_phase3_batch_500_success_snapshot_491.yaml",
-            "--harvest-root", PHASE3_HARVEST_ROOT,
-            "--output-dir", PHASE3_SNAPSHOT_ROOT,
-            "--output-csv",
-            "outputs/validation/cninfo_c_class_phase3_success_snapshot_approval_dryrun_test_report.csv",
-            "--output-md",
-            "outputs/validation/cninfo_c_class_phase3_success_snapshot_approval_dryrun_test_summary.md",
-        ])
+        with tempfile.TemporaryDirectory(
+            prefix="_mock_phase3_dry_",
+            dir=os.path.join(BASE_DIR, "outputs/validation"),
+        ) as tmp:
+            out_rel = os.path.relpath(tmp, BASE_DIR).replace("\\", "/")
+            result = _run_runner([
+                "--dry-run",
+                "--sample-file",
+                "lab/eval_companies_c_class_phase3_batch_500_success_snapshot_491.yaml",
+                "--harvest-root", PHASE3_HARVEST_ROOT,
+                "--output-dir", out_rel,
+                "--output-csv",
+                os.path.join(out_rel, "dryrun_report.csv"),
+                "--output-md",
+                os.path.join(out_rel, "dryrun_summary.md"),
+            ])
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("snapshot_batch_dryrun_gate: PASS_WITH_CAVEAT", result.stdout)
         self.assertIn("company_count: 491", result.stdout)
@@ -208,10 +214,12 @@ class TestPhase3SuccessSnapshotApproval(unittest.TestCase):
         self.assertTrue(ok)
         self.assertEqual(len(companies), EXPECTED_COMPANY_COUNT)
 
+        # bare --dry-run：隔离根 · 不写生产 full/quality
         proc = _run_runner(["--dry-run"])
         self.assertEqual(proc.returncode, 0, proc.stderr)
         self.assertIn("snapshot_batch_dryrun_gate: PASS_WITH_CAVEAT", proc.stdout)
         self.assertIn(f"company_count: {EXPECTED_COMPANY_COUNT}", proc.stdout)
+        self.assertIn("snapshot_dryrun_output_root_isolation: enforced", proc.stdout)
 
         proc2 = _run_runner(["--execute"])
         self.assertEqual(proc2.returncode, 2)

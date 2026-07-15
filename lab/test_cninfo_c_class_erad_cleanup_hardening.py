@@ -102,6 +102,23 @@ class TestCClassEradCleanupHardening(unittest.TestCase):
         get_mock.assert_not_called()
         post_mock.assert_not_called()
 
+    def test_case8_snapshot_dryrun_write_guard_refuses_full(self) -> None:
+        from cninfo_c_class_erad_cleanup_guard import (
+            PRODUCTION_SNAPSHOT_DRYRUN_WRITE_FORBIDDEN,
+            assert_safe_c_class_snapshot_dryrun_write_root,
+            is_protected_c_class_production_snapshot_root,
+            resolve_standard_snapshot_dryrun_output_root,
+        )
+
+        full = os.path.join(BASE_DIR, SNAPSHOT_FULL)
+        self.assertTrue(is_protected_c_class_production_snapshot_root(full))
+        with self.assertRaisesRegex(
+            RuntimeError, PRODUCTION_SNAPSHOT_DRYRUN_WRITE_FORBIDDEN
+        ):
+            assert_safe_c_class_snapshot_dryrun_write_root(full)
+        isolated = resolve_standard_snapshot_dryrun_output_root(None)
+        self.assertIn("_mock_snapshot_batch_standard_dryrun_isolated", isolated)
+
 
 if __name__ == "__main__":
     unittest.main()

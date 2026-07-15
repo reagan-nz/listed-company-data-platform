@@ -3,6 +3,8 @@
 CNINFO C-class Company Snapshot Full Batch Runner（Era C Phase 4）。
 
 默认 --dry-run：验证 universe · 输出路径 · status/error/resume 框架，**不调用 build_snapshot**。
+标准 dry-run 默认写隔离根 outputs/validation/_mock_snapshot_batch_standard_dryrun_isolated/，
+禁止默认覆盖生产 snapshot quality；生产 scaffold 需 --allow-production-dryrun-scaffold。
 Full batch 执行需显式 --execute --approve-full-snapshot-batch（本轮不默认执行）。
 
 可选 --exclusion-csv（仅 dry-run）：按 exclusion reconcile/manifest 过滤 universe，
@@ -46,6 +48,13 @@ from build_cninfo_c_class_company_snapshot import (  # noqa: E402
     _load_harvest_status_at_root,
     _load_source_quality_at_root,
     _load_mapping,
+)
+from cninfo_c_class_erad_cleanup_guard import (  # noqa: E402
+    DEFAULT_ISOLATED_SNAPSHOT_DRYRUN_ROOT_REL,
+    PRODUCTION_SNAPSHOT_DRYRUN_WRITE_FORBIDDEN,
+    assert_safe_c_class_snapshot_dryrun_write_root,
+    fingerprint_isolated_snapshot_dryrun,
+    resolve_standard_snapshot_dryrun_output_root,
 )
 from cninfo_c_class_snapshot_exclusion_filter import (  # noqa: E402
     ExclusionFilterResult,
@@ -1565,16 +1574,30 @@ def run_dry_run(
     summary_path: str = DRYRUN_SUMMARY_MD,
     resume: bool = False,
     force: bool = False,
+    allow_production_scaffold: bool = False,
 ) -> Dict[str, Any]:
     """
     Dry-run：验证输入 · 生成 status/error 框架 · 写 dry-run 报告。
     **不调用 build_snapshot** · **不写 snapshot JSON**。
+    默认拒绝写入生产 snapshot 根（需 allow_production_scaffold）。
     """
-    configure_snapshot_batch_paths(harvest_root=harvest_root, output_dir=out_dir)
+    # 未指定 out_dir 时落到隔离 mock 根，避免覆盖 full/quality
+    if out_dir is None:
+        out_dir = os.path.join(BASE_DIR, DEFAULT_ISOLATED_SNAPSHOT_DRYRUN_ROOT_REL)
+    safe_out = assert_safe_c_class_snapshot_dryrun_write_root(
+        out_dir,
+        allow_production_scaffold=allow_production_scaffold,
+    )
+    configure_snapshot_batch_paths(harvest_root=harvest_root, output_dir=safe_out)
     effective_out_dir = FULL_OUT_DIR
     effective_quality_dir = QUALITY_DIR
     effective_status_path = status_path or STATUS_CSV
     effective_error_path = error_path or ERROR_CSV
+    # status/error 写路径同样受生产 snapshot 根守卫约束
+    assert_safe_c_class_snapshot_dryrun_write_root(
+        os.path.dirname(effective_status_path) or effective_out_dir,
+        allow_production_scaffold=allow_production_scaffold,
+    )
 
     companies, universe_meta = load_universe_yaml(universe_path)
     hold_codes = load_hold_codes(hold_path)
@@ -1622,6 +1645,11 @@ def run_dry_run(
         quality_dir=effective_quality_dir,
         expected_company_count=expected_count,
     )
+    fingerprint = fingerprint_isolated_snapshot_dryrun(
+        effective_out_dir,
+        gate=gate,
+        company_count=expected_count,
+    )
 
     return {
         "validation": validation,
@@ -1631,6 +1659,8 @@ def run_dry_run(
         "report_rows": report_rows,
         "gate": gate,
         "resume_skipped": resume_skipped,
+        "output_dir": effective_out_dir,
+        "dryrun_fingerprint": fingerprint,
     }
 
 
@@ -1705,7 +1735,10 @@ def main() -> int:
     parser.add_argument(
         "--output-root",
         default=None,
-        help="snapshot 输出根目录（--output-dir 别名，Phase 3.5 expanded 模式）",
+        help=(
+            "snapshot 输出根目录（--output-dir 别名；"
+            "标准 dry-run 与 Phase 3.5 / exclusion-csv 均尊重）"
+        ),
     )
     parser.add_argument(
         "--output-csv",
@@ -1733,6 +1766,14 @@ def main() -> int:
         help=(
             "exclusion reconcile/manifest CSV；仅 dry-run；"
             "与 --execute 互斥；输出须在 outputs/validation/"
+        ),
+    )
+    parser.add_argument(
+        "--allow-production-dryrun-scaffold",
+        action="store_true",
+        help=(
+            "允许 dry-run 向生产 snapshot 根写 status/error scaffold；"
+            "默认禁止，改写隔离 mock 根"
         ),
     )
     args = parser.parse_args()
@@ -1845,8 +1886,26 @@ def main() -> int:
     # --- 标准 dry-run / execute 路径 ---
     exclusion_filter_result: Optional[ExclusionFilterResult] = None
     universe_for_run = sample_file
-    # 无 exclusion-csv 时保持旧行为：仅 --output-dir 生效（--output-root 在非 phase35 下仍忽略）
-    dry_run_out_dir: Optional[str] = args.output_dir
+    allow_prod_scaffold = bool(
+        getattr(args, "allow_production_dryrun_scaffold", False)
+    )
+    # dry-run：尊重 --output-root/--output-dir；未指定则隔离 mock 根
+    # execute：保持旧行为，仅 --output-dir（不在此强制隔离）
+    dry_run_out_dir: Optional[str] = None
+    if args.dry_run:
+        if exclusion_csv_arg:
+            dry_run_out_dir = output_dir
+        else:
+            try:
+                dry_run_out_dir = resolve_standard_snapshot_dryrun_output_root(
+                    output_dir,
+                    allow_production_scaffold=allow_prod_scaffold,
+                )
+            except RuntimeError as exc:
+                print(str(exc), file=sys.stderr)
+                raise SystemExit(2) from exc
+    else:
+        dry_run_out_dir = args.output_dir
 
     if exclusion_csv_arg and exclusion_csv_abs:
         # exclusion-csv 原生路径：默认 validation 隔离根，并同时尊重 --output-root
@@ -1867,14 +1926,12 @@ def main() -> int:
             print(str(exc), file=sys.stderr)
             raise SystemExit(2) from exc
 
-    if exclusion_csv_arg and dry_run_out_dir:
-        # 默认报告落到 validation 隔离根（可被 --output-csv/--output-md 覆盖）
-        report_path = args.output_csv or os.path.join(
-            dry_run_out_dir, "dryrun_report.csv"
-        )
-        summary_path = args.output_md or os.path.join(
-            dry_run_out_dir, "dryrun_summary.md"
-        )
+    if args.dry_run and dry_run_out_dir:
+        # 隔离根下默认报告不覆盖 tracked validation dryrun 文件
+        default_report = os.path.join(dry_run_out_dir, "dryrun_report.csv")
+        default_summary = os.path.join(dry_run_out_dir, "dryrun_summary.md")
+        report_path = args.output_csv or default_report
+        summary_path = args.output_md or default_summary
     else:
         report_path = args.output_csv or DRYRUN_REPORT_CSV
         summary_path = args.output_md or DRYRUN_SUMMARY_MD
@@ -1884,16 +1941,24 @@ def main() -> int:
         summary_path = os.path.join(BASE_DIR, summary_path)
 
     if args.dry_run:
-        result = run_dry_run(
-            universe_path=universe_for_run,
-            harvest_root=args.harvest_root,
-            out_dir=dry_run_out_dir,
-            report_path=report_path,
-            summary_path=summary_path,
-            resume=args.resume,
-            force=args.force,
-        )
+        try:
+            result = run_dry_run(
+                universe_path=universe_for_run,
+                harvest_root=args.harvest_root,
+                out_dir=dry_run_out_dir,
+                report_path=report_path,
+                summary_path=summary_path,
+                resume=args.resume,
+                force=args.force,
+                allow_production_scaffold=allow_prod_scaffold,
+            )
+        except RuntimeError as exc:
+            if PRODUCTION_SNAPSHOT_DRYRUN_WRITE_FORBIDDEN in str(exc):
+                print(str(exc), file=sys.stderr)
+                raise SystemExit(2) from exc
+            raise
         v = result["validation"]
+        fp = result.get("dryrun_fingerprint") or {}
         print("mode: dry-run")
         if exclusion_csv_arg:
             print("sample_mode: exclusion_csv_filter")
@@ -1913,22 +1978,26 @@ def main() -> int:
         print(f"company_count: {v['company_count']}")
         print(f"hold_overlap: {v['hold_overlap_count']}")
         print(f"harvest_root: {configure_snapshot_harvest_root(args.harvest_root)}")
-        print(f"output_dir: {FULL_OUT_DIR}")
+        print(f"output_dir: {result.get('output_dir', FULL_OUT_DIR)}")
         print(f"status_csv: {STATUS_CSV}")
         print(f"error_csv: {ERROR_CSV}")
         print(f"dryrun_report: {report_path}")
         print(f"dryrun_summary: {summary_path}")
         print(f"snapshot_batch_dryrun_gate: {result['gate']}")
+        if fp:
+            print(f"dryrun_fingerprint_sha256: {fp.get('fingerprint_sha256', '')}")
+            print(f"dryrun_content_sha256: {fp.get('content_sha256', '')}")
         print("cninfo_calls=0")
         print("snapshot_json_written=0")
+        print("execute_production_snapshot_rebuild: false")
         if exclusion_csv_arg:
             capability_gate = (
                 "PASS_OFFLINE" if result["universe_ok"] else "FAIL_REVIEW_REQUIRED"
             )
             print(f"exclusion_csv_native_dryrun_gate: {capability_gate}")
             print("capability_gain: true")
-            print("execute_production_snapshot_rebuild: false")
             return 0 if result["universe_ok"] else 1
+        print("snapshot_dryrun_output_root_isolation: enforced")
         return 0 if result["universe_ok"] else 1
 
     # execute 路径：exclusion-csv 已在上方 refuse；此处沿用原逻辑

@@ -12,6 +12,7 @@ import io
 import os
 import subprocess
 import sys
+import tempfile
 import unittest
 import yaml
 from contextlib import redirect_stderr
@@ -131,12 +132,17 @@ class TestPhase2SnapshotBuilderExtension(unittest.TestCase):
         self.assertIn(PHASE2_SMOKE_188_APPROVAL_REQUIRED, buf.getvalue())
 
     def test_case8_dry_run_does_not_require_approval(self) -> None:
-        result = _run_runner([
-            "--dry-run",
-            "--sample-file", "lab/eval_companies_c_class_phase2_smoke_188_snapshot.yaml",
-            "--harvest-root", PHASE2_HARVEST_ROOT,
-            "--output-dir", PHASE2_SNAPSHOT_ROOT,
-        ])
+        with tempfile.TemporaryDirectory(
+            prefix="_mock_phase2_dry_",
+            dir=os.path.join(BASE_DIR, "outputs/validation"),
+        ) as tmp:
+            out_rel = os.path.relpath(tmp, BASE_DIR).replace("\\", "/")
+            result = _run_runner([
+                "--dry-run",
+                "--sample-file", "lab/eval_companies_c_class_phase2_smoke_188_snapshot.yaml",
+                "--harvest-root", PHASE2_HARVEST_ROOT,
+                "--output-dir", out_rel,
+            ])
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("snapshot_batch_dryrun_gate: PASS_WITH_CAVEAT", result.stdout)
 
