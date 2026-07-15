@@ -1,0 +1,31 @@
+{
+  "case_id": "DFIA004",
+  "probe_key": "fia_rdate_20260331_C26",
+  "industry_code": "C26",
+  "industry_name": "化学原料和化学制品制造业",
+  "component": "fund_industry_allocation",
+  "query_mode": "rdate",
+  "anchor_rdate": "20260331",
+  "shared_probe_key": "rdate_20260331",
+  "planned_requests": [
+    "default",
+    "rdate_20260331",
+    "rdate_20251231"
+  ],
+  "query_params": {
+    "rdate": "20260331"
+  },
+  "endpoint": "https://www.cninfo.com.cn/data20/fund/industry",
+  "records_path": "data.records",
+  "shared_request": true,
+  "industry_filter_offline": true,
+  "filter_industry_code": "C26",
+  "expected_logical_table": "d_industry_aggregate",
+  "expected_behavior": "captured_normal_or_empty_but_valid",
+  "fixture_refs": [
+    "fixtures/d_class/fund_industry_allocation_first_slice/DFIA004_found.json",
+    "fixtures/d_class/fund_industry_allocation_first_slice/DFIA004_empty.json",
+    "fixtures/d_class/fund_industry_allocation_first_slice/DFIA004_industry_filtered_empty.json"
+  ],
+  "cninfo_called": false
+}

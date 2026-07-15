@@ -1555,6 +1555,9 @@ ABNORMAL_TRADING_FIRST_SLICE_RSU_OUTPUT_ROOT_WRITE_BLOCKED = (
 ABNORMAL_TRADING_FIRST_SLICE_SHAREHOLDER_DATA_OUTPUT_ROOT_WRITE_BLOCKED = (
     "shareholder_data_first_slice_output_root_write_blocked"
 )
+ABNORMAL_TRADING_FIRST_SLICE_FUND_INDUSTRY_ALLOCATION_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "fund_industry_allocation_first_slice_output_root_write_blocked"
+)
 ABNORMAL_TRADING_FIRST_SLICE_UNIVERSE_SIZE_MISMATCH = (
     "abnormal_trading_first_slice_universe_size_must_equal_5"
 )
@@ -1780,6 +1783,9 @@ SHAREHOLDER_DATA_FIRST_SLICE_RSU_OUTPUT_ROOT_WRITE_BLOCKED = (
 SHAREHOLDER_DATA_FIRST_SLICE_ABNORMAL_TRADING_OUTPUT_ROOT_WRITE_BLOCKED = (
     "abnormal_trading_first_slice_output_root_write_blocked"
 )
+SHAREHOLDER_DATA_FIRST_SLICE_FUND_INDUSTRY_ALLOCATION_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "fund_industry_allocation_first_slice_output_root_write_blocked"
+)
 SHAREHOLDER_DATA_FIRST_SLICE_UNIVERSE_SIZE_MISMATCH = (
     "shareholder_data_first_slice_universe_size_must_equal_5"
 )
@@ -1872,6 +1878,262 @@ SHAREHOLDER_DATA_FIRST_SLICE_LIVE_REPORT_COLUMNS = [
 SHAREHOLDER_DATA_FIRST_SLICE_QUALITY_REPORT_COLUMNS = [
     "case_id",
     "component",
+    "anchor_rdate",
+    "expected_behavior",
+    "retrieval_status",
+    "record_count",
+    "quality_status",
+    "acceptable",
+    "failure_type",
+    "cninfo_request_count",
+    "notes",
+]
+
+
+
+DEFAULT_FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_OUTPUT_ROOT = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_d_class_fund_industry_allocation_first_slice",
+)
+DEFAULT_FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_UNIVERSE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_d_class_fund_industry_allocation_first_slice_universe_lock_20260715.csv",
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_FIXTURE_DIR = os.path.join(
+    BASE_DIR,
+    "fixtures",
+    "d_class",
+    "fund_industry_allocation_first_slice",
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_DRYRUN_REPORT_CSV = os.path.join(
+    DEFAULT_FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_OUTPUT_ROOT,
+    "reports",
+    "d_class_fund_industry_allocation_first_slice_dryrun_report.csv",
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_DRYRUN_SUMMARY_MD = os.path.join(
+    DEFAULT_FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_OUTPUT_ROOT,
+    "reports",
+    "d_class_fund_industry_allocation_first_slice_dryrun_summary.md",
+)
+
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_RUNNER_GATE = "READY_FOR_APPROVAL"
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_LIVE_PATH_GATE = "READY_FOR_APPROVAL"
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_LIVE_GATE = "NOT_APPROVED"
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_EXECUTION_GATE_PASS = "PASS_WITH_CAVEAT"
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_EXECUTION_GATE_FAIL = "FAIL_REVIEW_REQUIRED"
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_EXPECTED_UNIVERSE_SIZE = 5
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_ALLOWED_CASE_IDS: Set[str] = {
+    "DFIA001",
+    "DFIA002",
+    "DFIA003",
+    "DFIA004",
+    "DFIA005",
+}
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_EXPECTED_INDUSTRY_CODES: Dict[str, str] = {
+    "DFIA001": "C26",
+    "DFIA002": "*",
+    "DFIA003": "*",
+    "DFIA004": "C26",
+    "DFIA005": "*",
+}
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_EXPECTED_QUERY_MODES: Dict[str, str] = {
+    "DFIA001": "default",
+    "DFIA002": "default",
+    "DFIA003": "rdate",
+    "DFIA004": "rdate",
+    "DFIA005": "rdate",
+}
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_EXPECTED_ANCHOR_RDATES: Dict[str, str] = {
+    "DFIA001": "",
+    "DFIA002": "",
+    "DFIA003": "20260331",
+    "DFIA004": "20260331",
+    "DFIA005": "20251231",
+}
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_FORBIDDEN_COMPANY_CODES: Set[str] = {
+    "688671",
+    "301259",
+}
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_COMPONENT = "fund_industry_allocation"
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_ENDPOINT = (
+    "https://www.cninfo.com.cn/data20/fund/industry"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_RECORDS_PATH = "data.records"
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_PER_CASE_MAX_REQUESTS = 1
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_TOTAL_MAX_REQUESTS = 5
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_PLANNED_SHARED_REQUESTS = 3
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_SHARED_PROBE_KEYS: Tuple[str, ...] = (
+    "default",
+    "rdate_20260331",
+    "rdate_20251231",
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_CASE_FIXTURES: Dict[str, Tuple[str, ...]] = {
+    "DFIA001": ("DFIA001_found.json",),
+    "DFIA002": ("DFIA002_found.json",),
+    "DFIA003": ("DFIA003_found.json",),
+    "DFIA004": (
+        "DFIA004_found.json",
+        "DFIA004_empty.json",
+        "DFIA004_industry_filtered_empty.json",
+    ),
+    "DFIA005": ("DFIA005_empty_but_valid_synthetic.json",),
+}
+
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_APPROVAL_REQUIRED = (
+    "approve_d_class_fund_industry_allocation_first_slice_required"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_WRONG_APPROVAL_FLAG = (
+    "wrong_approval_flag_for_fund_industry_allocation_first_slice"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_MIXED_MODE_BLOCKED = (
+    "fund_industry_allocation_first_slice_incompatible_with_other_modes"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_UNIVERSE_CSV_REQUIRED = (
+    "fund_industry_allocation_first_slice_requires_explicit_universe_csv"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_OUTPUT_ROOT_REQUIRED = (
+    "fund_industry_allocation_first_slice_output_root_must_be_cninfo_d_class_fund_industry_allocation_first_slice"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_V1_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "v1_output_root_write_blocked_for_fund_industry_allocation_first_slice"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_V2_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "v2_output_root_write_blocked_for_fund_industry_allocation_first_slice"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_REPLACEMENT_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "replacement_output_root_write_blocked_for_fund_industry_allocation_first_slice"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_TARGETED_PROBE_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "targeted_probe_output_root_write_blocked_for_fund_industry_allocation_first_slice"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_EXECUTIVE_SHAREHOLDING_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "executive_shareholding_first_slice_output_root_write_blocked"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_SHAREHOLDER_CHANGE_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "shareholder_change_first_slice_output_root_write_blocked"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_EQUITY_PLEDGE_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "equity_pledge_first_slice_output_root_write_blocked"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_MARGIN_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "margin_trading_first_slice_output_root_write_blocked"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_DISCLOSURE_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "disclosure_schedule_first_slice_output_root_write_blocked"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_BLOCK_TRADE_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "block_trade_first_slice_output_root_write_blocked"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_RSU_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "restricted_shares_unlock_first_slice_output_root_write_blocked"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_ABNORMAL_TRADING_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "abnormal_trading_first_slice_output_root_write_blocked"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_SHAREHOLDER_DATA_OUTPUT_ROOT_WRITE_BLOCKED = (
+    "shareholder_data_first_slice_output_root_write_blocked"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_UNIVERSE_SIZE_MISMATCH = (
+    "fund_industry_allocation_first_slice_universe_size_must_equal_5"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_FORBIDDEN_CASE_ID = (
+    "forbidden_case_id_in_fund_industry_allocation_first_slice_universe"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_WRONG_COMPONENT = (
+    "fund_industry_allocation_first_slice_component_must_be_fund_industry_allocation"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_INCLUDE_REQUIRED = "first_slice_include_must_be_yes"
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_FORBIDDEN_COMPANY_CODE = (
+    "forbidden_company_code_in_fund_industry_allocation_first_slice_universe"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_WRONG_INDUSTRY_CODE = (
+    "fund_industry_allocation_first_slice_industry_code_mismatch"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_WRONG_QUERY_MODE = (
+    "fund_industry_allocation_first_slice_query_mode_mismatch"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_WRONG_ANCHOR_RDATE = (
+    "fund_industry_allocation_first_slice_anchor_rdate_mismatch"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_PER_CASE_CAP_EXCEEDED = (
+    "fund_industry_allocation_first_slice_per_case_request_cap_exceeded"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_TOTAL_CAP_EXCEEDED = (
+    "fund_industry_allocation_first_slice_total_request_cap_exceeded"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_SHARED_PLAN_MISMATCH = (
+    "fund_industry_allocation_first_slice_shared_plan_must_equal_3"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_FIXTURE_MISSING = (
+    "fund_industry_allocation_first_slice_tier1_fixture_missing"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_SHARED_REQUEST_REQUIRED = (
+    "fund_industry_allocation_first_slice_shared_request_required"
+)
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_COMPANY_CODE_FORBIDDEN = (
+    "fund_industry_allocation_first_slice_company_code_field_forbidden"
+)
+
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_DRYRUN_REPORT_COLUMNS = [
+    "case_id",
+    "industry_code",
+    "industry_name",
+    "component",
+    "query_mode",
+    "anchor_rdate",
+    "first_slice_include",
+    "expected_behavior",
+    "planned_request_count",
+    "shared_probe_key",
+    "planned_output_root",
+    "planned_endpoint",
+    "fixture_refs",
+    "cninfo_call_planned",
+    "pdf_download",
+    "ocr",
+    "extraction",
+    "db_write",
+    "minio_write",
+    "rag_run",
+    "dryrun_status",
+    "notes",
+]
+
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_LIVE_REPORT_COLUMNS = [
+    "case_id",
+    "industry_code",
+    "industry_name",
+    "component",
+    "query_mode",
+    "anchor_rdate",
+    "expected_behavior",
+    "retrieval_status",
+    "quality_status",
+    "lineage_status",
+    "record_count",
+    "empty_but_valid",
+    "needs_review",
+    "endpoint_used",
+    "cninfo_request_count",
+    "acceptable",
+    "failure_type",
+    "pdf_download",
+    "ocr",
+    "extraction",
+    "db_write",
+    "minio_write",
+    "rag_run",
+    "notes",
+]
+
+FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_QUALITY_REPORT_COLUMNS = [
+    "case_id",
+    "component",
+    "query_mode",
     "anchor_rdate",
     "expected_behavior",
     "retrieval_status",
@@ -2310,6 +2572,23 @@ class ShareholderDataFirstSliceRow:
     company_name: str
     component: str
     market: str
+    anchor_rdate: str
+    first_slice_include: str
+    expected_behavior: str
+    exclude_flags: str
+    notes: str
+    sample_raw_reference: str
+
+
+
+@dataclass
+class FundIndustryAllocationFirstSliceRow:
+    case_id: str
+    probe_key: str
+    industry_code: str
+    industry_name: str
+    component: str
+    query_mode: str
     anchor_rdate: str
     first_slice_include: str
     expected_behavior: str
@@ -7566,6 +7845,7 @@ def enforce_executive_shareholding_first_slice_forbidden_options(
         ("shareholder_change_first_slice", args.shareholder_change_first_slice),
         ("abnormal_trading_first_slice", args.abnormal_trading_first_slice),
         ("shareholder_data_first_slice", args.shareholder_data_first_slice),
+        ("fund_industry_allocation_first_slice", args.fund_industry_allocation_first_slice),
     ]
     for name, enabled in mixed_modes:
         if args.executive_shareholding_first_slice and enabled:
@@ -7615,6 +7895,10 @@ def enforce_executive_shareholding_first_slice_forbidden_options(
         (
             "approve_d_class_shareholder_data_first_slice",
             args.approve_d_class_shareholder_data_first_slice,
+        ),
+        (
+            "approve_d_class_fund_industry_allocation_first_slice",
+            args.approve_d_class_fund_industry_allocation_first_slice,
         ),
     ]
     for name, enabled in wrong_flags:
@@ -8421,6 +8705,10 @@ def validate_abnormal_trading_first_slice_output_root(
             _normalize_output_root(DEFAULT_SHAREHOLDER_DATA_FIRST_SLICE_OUTPUT_ROOT),
             ABNORMAL_TRADING_FIRST_SLICE_SHAREHOLDER_DATA_OUTPUT_ROOT_WRITE_BLOCKED,
         ),
+        (
+            _normalize_output_root(DEFAULT_FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_OUTPUT_ROOT),
+            ABNORMAL_TRADING_FIRST_SLICE_FUND_INDUSTRY_ALLOCATION_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
     ]
     for blocked_root, token in blocked_pairs:
         if root == blocked_root or root.startswith(blocked_root + os.sep):
@@ -8446,6 +8734,7 @@ def enforce_abnormal_trading_first_slice_write_block_targets(
         _normalize_output_root(DEFAULT_BLOCK_TRADE_FIRST_SLICE_OUTPUT_ROOT),
         _normalize_output_root(DEFAULT_RESTRICTED_SHARES_UNLOCK_FIRST_SLICE_OUTPUT_ROOT),
         _normalize_output_root(DEFAULT_SHAREHOLDER_DATA_FIRST_SLICE_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_OUTPUT_ROOT),
         _normalize_output_root(CALIBRATED_UNIVERSE_CSV),
         _normalize_output_root(DEFAULT_UNIVERSE_CSV),
     ]
@@ -8475,6 +8764,7 @@ def enforce_abnormal_trading_first_slice_forbidden_options(
         ("shareholder_change_first_slice", args.shareholder_change_first_slice),
         ("executive_shareholding_first_slice", args.executive_shareholding_first_slice),
         ("shareholder_data_first_slice", args.shareholder_data_first_slice),
+        ("fund_industry_allocation_first_slice", args.fund_industry_allocation_first_slice),
     ]
     for name, enabled in mixed_modes:
         if args.abnormal_trading_first_slice and enabled:
@@ -8524,6 +8814,10 @@ def enforce_abnormal_trading_first_slice_forbidden_options(
         (
             "approve_d_class_shareholder_data_first_slice",
             args.approve_d_class_shareholder_data_first_slice,
+        ),
+        (
+            "approve_d_class_fund_industry_allocation_first_slice",
+            args.approve_d_class_fund_industry_allocation_first_slice,
         ),
     ]
     for name, enabled in wrong_flags:
@@ -9302,6 +9596,10 @@ def validate_shareholder_data_first_slice_output_root(
             _normalize_output_root(DEFAULT_ABNORMAL_TRADING_FIRST_SLICE_OUTPUT_ROOT),
             SHAREHOLDER_DATA_FIRST_SLICE_ABNORMAL_TRADING_OUTPUT_ROOT_WRITE_BLOCKED,
         ),
+        (
+            _normalize_output_root(DEFAULT_FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_OUTPUT_ROOT),
+            SHAREHOLDER_DATA_FIRST_SLICE_FUND_INDUSTRY_ALLOCATION_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
     ]
     for blocked_root, token in blocked_pairs:
         if root == blocked_root or root.startswith(blocked_root + os.sep):
@@ -9327,6 +9625,7 @@ def enforce_shareholder_data_first_slice_write_block_targets(
         _normalize_output_root(DEFAULT_BLOCK_TRADE_FIRST_SLICE_OUTPUT_ROOT),
         _normalize_output_root(DEFAULT_RESTRICTED_SHARES_UNLOCK_FIRST_SLICE_OUTPUT_ROOT),
         _normalize_output_root(DEFAULT_ABNORMAL_TRADING_FIRST_SLICE_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_OUTPUT_ROOT),
         _normalize_output_root(CALIBRATED_UNIVERSE_CSV),
         _normalize_output_root(DEFAULT_UNIVERSE_CSV),
     ]
@@ -9356,6 +9655,7 @@ def enforce_shareholder_data_first_slice_forbidden_options(
         ("shareholder_change_first_slice", args.shareholder_change_first_slice),
         ("executive_shareholding_first_slice", args.executive_shareholding_first_slice),
         ("abnormal_trading_first_slice", args.abnormal_trading_first_slice),
+        ("fund_industry_allocation_first_slice", args.fund_industry_allocation_first_slice),
     ]
     for name, enabled in mixed_modes:
         if args.shareholder_data_first_slice and enabled:
@@ -9405,6 +9705,10 @@ def enforce_shareholder_data_first_slice_forbidden_options(
         (
             "approve_d_class_abnormal_trading_first_slice",
             args.approve_d_class_abnormal_trading_first_slice,
+        ),
+        (
+            "approve_d_class_fund_industry_allocation_first_slice",
+            args.approve_d_class_fund_industry_allocation_first_slice,
         ),
     ]
     for name, enabled in wrong_flags:
@@ -10163,6 +10467,1146 @@ def run_shareholder_data_first_slice(args: argparse.Namespace) -> int:
     print(
         "live_gate=d_class_shareholder_data_first_slice_live_gate="
         f"{SHAREHOLDER_DATA_FIRST_SLICE_LIVE_GATE}"
+    )
+    print(f"dryrun_report={report_path}")
+    print(f"dryrun_summary={summary_path}")
+    return 0
+
+
+
+
+
+
+def load_fund_industry_allocation_first_slice_universe(
+    path: str,
+) -> List[FundIndustryAllocationFirstSliceRow]:
+    rows: List[FundIndustryAllocationFirstSliceRow] = []
+    with open(path, newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            rows.append(
+                FundIndustryAllocationFirstSliceRow(
+                    case_id=str(row.get("case_id", "")).strip(),
+                    probe_key=str(row.get("probe_key", "")).strip(),
+                    industry_code=str(row.get("industry_code", "")).strip(),
+                    industry_name=str(row.get("industry_name", "")).strip(),
+                    component=str(row.get("component", "")).strip(),
+                    query_mode=str(row.get("query_mode", "")).strip(),
+                    anchor_rdate=str(row.get("anchor_rdate", "")).strip(),
+                    first_slice_include=str(
+                        row.get("first_slice_include", "")
+                    ).strip(),
+                    expected_behavior=str(
+                        row.get("expected_behavior", "")
+                    ).strip(),
+                    exclude_flags=str(row.get("exclude_flags", "")).strip(),
+                    notes=str(row.get("notes", "")).strip(),
+                    sample_raw_reference=str(
+                        row.get("sample_raw_reference", "")
+                    ).strip(),
+                )
+            )
+    return rows
+
+
+def build_fund_industry_allocation_first_slice_plan() -> List[str]:
+    """fund_industry_allocation 第一切片：≤3 共享探针 default / rdate filled / rdate empty。"""
+    return list(FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_SHARED_PROBE_KEYS)
+
+
+def resolve_fund_industry_allocation_first_slice_shared_probe_key(
+    row: FundIndustryAllocationFirstSliceRow,
+) -> str:
+    if row.query_mode == "default":
+        return "default"
+    if row.query_mode == "rdate" and row.anchor_rdate:
+        return f"rdate_{row.anchor_rdate}"
+    return ""
+
+
+def _build_fund_industry_allocation_first_slice_params_for_probe(
+    probe_key: str,
+) -> Dict[str, Any]:
+    if probe_key == "default":
+        return {}
+    if probe_key.startswith("rdate_"):
+        return {"rdate": probe_key[len("rdate_") :]}
+    raise ValueError(f"unknown_shared_probe_key:{probe_key}")
+
+
+def compute_fund_industry_allocation_first_slice_planned_shared() -> int:
+    return len(build_fund_industry_allocation_first_slice_plan())
+
+
+def compute_fund_industry_allocation_first_slice_planned_requests(
+    row: FundIndustryAllocationFirstSliceRow,
+) -> int:
+    """每案预算槽位（共享请求按案分摊预算 ≤1）。"""
+    return 1
+
+
+def resolve_fund_industry_allocation_first_slice_fixture_refs(
+    case_id: str,
+) -> List[str]:
+    names = FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_CASE_FIXTURES.get(case_id, ())
+    return [
+        os.path.join(FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_FIXTURE_DIR, name)
+        for name in names
+    ]
+
+
+def validate_fund_industry_allocation_first_slice_fixtures(
+    rows: List[FundIndustryAllocationFirstSliceRow],
+) -> List[str]:
+    issues: List[str] = []
+    for row in rows:
+        refs = resolve_fund_industry_allocation_first_slice_fixture_refs(row.case_id)
+        if not refs:
+            issues.append(
+                f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_FIXTURE_MISSING}:{row.case_id}"
+            )
+            continue
+        for ref in refs:
+            if not os.path.isfile(ref):
+                issues.append(
+                    f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_FIXTURE_MISSING}:"
+                    f"{row.case_id}:{os.path.basename(ref)}"
+                )
+    return issues
+
+
+def validate_fund_industry_allocation_first_slice_universe(
+    rows: List[FundIndustryAllocationFirstSliceRow],
+) -> List[str]:
+    issues: List[str] = []
+    if len(rows) != FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_EXPECTED_UNIVERSE_SIZE:
+        issues.append(
+            f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_UNIVERSE_SIZE_MISMATCH}:"
+            f"got={len(rows)}"
+        )
+    seen_ids: Set[str] = set()
+    budget_total = 0
+    for row in rows:
+        case_id = row.case_id
+        if case_id in seen_ids:
+            issues.append(f"duplicate_case_id:{case_id}")
+        seen_ids.add(case_id)
+        if case_id not in FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_ALLOWED_CASE_IDS:
+            issues.append(
+                f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_FORBIDDEN_CASE_ID}:{case_id}"
+            )
+        # 行业聚合：禁止 company_code 列语义；exclude_flags 须声明 no_company_code
+        if "no_company_code" not in row.exclude_flags:
+            issues.append(
+                f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_COMPANY_CODE_FORBIDDEN}:"
+                f"{case_id}"
+            )
+        for forbidden in FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_FORBIDDEN_COMPANY_CODES:
+            if f"exclude_{forbidden}" not in row.exclude_flags:
+                issues.append(
+                    f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_FORBIDDEN_COMPANY_CODE}:"
+                    f"missing_exclude_{forbidden}"
+                )
+        expected_code = FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_EXPECTED_INDUSTRY_CODES.get(
+            case_id
+        )
+        if expected_code is not None and row.industry_code != expected_code:
+            issues.append(
+                f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_WRONG_INDUSTRY_CODE}:"
+                f"{case_id}={row.industry_code}"
+            )
+        expected_mode = FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_EXPECTED_QUERY_MODES.get(
+            case_id
+        )
+        if expected_mode is not None and row.query_mode != expected_mode:
+            issues.append(
+                f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_WRONG_QUERY_MODE}:"
+                f"{case_id}={row.query_mode}"
+            )
+        expected_rdate = FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_EXPECTED_ANCHOR_RDATES.get(
+            case_id
+        )
+        if expected_rdate is not None and row.anchor_rdate != expected_rdate:
+            issues.append(
+                f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_WRONG_ANCHOR_RDATE}:"
+                f"{case_id}={row.anchor_rdate}"
+            )
+        if row.component != FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_COMPONENT:
+            issues.append(
+                f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_WRONG_COMPONENT}:{case_id}"
+            )
+        if row.first_slice_include.lower() != "yes":
+            issues.append(
+                f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_INCLUDE_REQUIRED}:{case_id}"
+            )
+        probe_key = resolve_fund_industry_allocation_first_slice_shared_probe_key(row)
+        if probe_key not in FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_SHARED_PROBE_KEYS:
+            issues.append(
+                f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_SHARED_PLAN_MISMATCH}:"
+                f"{case_id}={probe_key}"
+            )
+        planned = compute_fund_industry_allocation_first_slice_planned_requests(row)
+        if planned > FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_PER_CASE_MAX_REQUESTS:
+            issues.append(
+                f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_PER_CASE_CAP_EXCEEDED}:"
+                f"{case_id}={planned}"
+            )
+        budget_total += planned
+    for required_id in sorted(FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_ALLOWED_CASE_IDS):
+        if required_id not in seen_ids:
+            issues.append(f"missing_case_id:{required_id}")
+    shared = compute_fund_industry_allocation_first_slice_planned_shared()
+    if shared != FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_PLANNED_SHARED_REQUESTS:
+        issues.append(
+            f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_SHARED_PLAN_MISMATCH}:got={shared}"
+        )
+    if shared > FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_TOTAL_MAX_REQUESTS:
+        issues.append(
+            f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_TOTAL_CAP_EXCEEDED}:{shared}"
+        )
+    if budget_total > FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_TOTAL_MAX_REQUESTS:
+        issues.append(
+            f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_TOTAL_CAP_EXCEEDED}:"
+            f"budget={budget_total}"
+        )
+    issues.extend(validate_fund_industry_allocation_first_slice_fixtures(rows))
+    return issues
+
+
+def validate_fund_industry_allocation_first_slice_output_root(
+    output_root: str,
+) -> Tuple[bool, str]:
+    root = _normalize_output_root(output_root)
+    allowed = _normalize_output_root(
+        DEFAULT_FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_OUTPUT_ROOT
+    )
+    blocked_pairs = [
+        (
+            _normalize_output_root(DEFAULT_OUTPUT_ROOT),
+            FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_V1_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(DEFAULT_V2_OUTPUT_ROOT),
+            FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_V2_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(DEFAULT_REPLACEMENT_OUTPUT_ROOT),
+            FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_REPLACEMENT_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(DEFAULT_TARGETED_PROBE_OUTPUT_ROOT),
+            FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_TARGETED_PROBE_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(
+                DEFAULT_EXECUTIVE_SHAREHOLDING_FIRST_SLICE_OUTPUT_ROOT
+            ),
+            FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_EXECUTIVE_SHAREHOLDING_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(DEFAULT_SHAREHOLDER_CHANGE_FIRST_SLICE_OUTPUT_ROOT),
+            FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_SHAREHOLDER_CHANGE_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(DEFAULT_EQUITY_PLEDGE_FIRST_SLICE_OUTPUT_ROOT),
+            FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_EQUITY_PLEDGE_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(DEFAULT_MARGIN_TRADING_FIRST_SLICE_OUTPUT_ROOT),
+            FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_MARGIN_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(DEFAULT_DISCLOSURE_SCHEDULE_FIRST_SLICE_OUTPUT_ROOT),
+            FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_DISCLOSURE_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(DEFAULT_BLOCK_TRADE_FIRST_SLICE_OUTPUT_ROOT),
+            FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_BLOCK_TRADE_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(
+                DEFAULT_RESTRICTED_SHARES_UNLOCK_FIRST_SLICE_OUTPUT_ROOT
+            ),
+            FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_RSU_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(DEFAULT_ABNORMAL_TRADING_FIRST_SLICE_OUTPUT_ROOT),
+            FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_ABNORMAL_TRADING_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+        (
+            _normalize_output_root(DEFAULT_SHAREHOLDER_DATA_FIRST_SLICE_OUTPUT_ROOT),
+            FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_SHAREHOLDER_DATA_OUTPUT_ROOT_WRITE_BLOCKED,
+        ),
+    ]
+    for blocked_root, token in blocked_pairs:
+        if root == blocked_root or root.startswith(blocked_root + os.sep):
+            return False, token
+    if root == allowed or root.startswith(allowed + os.sep):
+        return True, ""
+    return False, FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_OUTPUT_ROOT_REQUIRED
+
+
+def enforce_fund_industry_allocation_first_slice_write_block_targets(
+    output_paths: Dict[str, str],
+) -> None:
+    protected = [
+        _normalize_output_root(DEFAULT_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_V2_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_REPLACEMENT_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_TARGETED_PROBE_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_EXECUTIVE_SHAREHOLDING_FIRST_SLICE_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_SHAREHOLDER_CHANGE_FIRST_SLICE_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_EQUITY_PLEDGE_FIRST_SLICE_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_MARGIN_TRADING_FIRST_SLICE_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_DISCLOSURE_SCHEDULE_FIRST_SLICE_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_BLOCK_TRADE_FIRST_SLICE_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_RESTRICTED_SHARES_UNLOCK_FIRST_SLICE_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_ABNORMAL_TRADING_FIRST_SLICE_OUTPUT_ROOT),
+        _normalize_output_root(DEFAULT_SHAREHOLDER_DATA_FIRST_SLICE_OUTPUT_ROOT),
+        _normalize_output_root(CALIBRATED_UNIVERSE_CSV),
+        _normalize_output_root(DEFAULT_UNIVERSE_CSV),
+    ]
+    for key in ("root", "reports"):
+        target = _normalize_output_root(output_paths[key])
+        for blocked in protected:
+            if target == blocked or target.startswith(blocked + os.sep):
+                print(
+                    f"ERROR: {FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_V1_OUTPUT_ROOT_WRITE_BLOCKED}:{key}",
+                    file=sys.stderr,
+                )
+                sys.exit(2)
+
+
+def enforce_fund_industry_allocation_first_slice_forbidden_options(
+    args: argparse.Namespace,
+) -> None:
+    enforce_forbidden_options(args)
+    mixed_modes = [
+        ("known_event_replacement", args.known_event_replacement),
+        ("known_event_targeted_probe", args.known_event_targeted_probe),
+        ("bounded_probe_v2", args.bounded_probe_v2),
+        ("margin_trading_first_slice", args.margin_trading_first_slice),
+        ("block_trade_first_slice", args.block_trade_first_slice),
+        (
+            "restricted_shares_unlock_first_slice",
+            args.restricted_shares_unlock_first_slice,
+        ),
+        ("equity_pledge_first_slice", args.equity_pledge_first_slice),
+        ("shareholder_change_first_slice", args.shareholder_change_first_slice),
+        ("executive_shareholding_first_slice", args.executive_shareholding_first_slice),
+        ("abnormal_trading_first_slice", args.abnormal_trading_first_slice),
+        ("shareholder_data_first_slice", args.shareholder_data_first_slice),
+    ]
+    for name, enabled in mixed_modes:
+        if args.fund_industry_allocation_first_slice and enabled:
+            print(
+                f"ERROR: {FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_MIXED_MODE_BLOCKED}:{name}",
+                file=sys.stderr,
+            )
+            sys.exit(2)
+    wrong_flags = [
+        ("approve_d_class_tiny_live_validation", args.approve_d_class_tiny_live_validation),
+        (
+            "approve_d_class_tiny_live_v2_bounded_probe",
+            args.approve_d_class_tiny_live_v2_bounded_probe,
+        ),
+        (
+            "approve_d_class_known_event_replacement_validation",
+            args.approve_d_class_known_event_replacement_validation,
+        ),
+        (
+            "approve_d_class_known_event_targeted_probe",
+            args.approve_d_class_known_event_targeted_probe,
+        ),
+        (
+            "approve_d_class_margin_trading_first_slice",
+            args.approve_d_class_margin_trading_first_slice,
+        ),
+        (
+            "approve_d_class_block_trade_first_slice",
+            args.approve_d_class_block_trade_first_slice,
+        ),
+        (
+            "approve_d_class_restricted_shares_unlock_first_slice",
+            args.approve_d_class_restricted_shares_unlock_first_slice,
+        ),
+        (
+            "approve_d_class_equity_pledge_first_slice",
+            args.approve_d_class_equity_pledge_first_slice,
+        ),
+        (
+            "approve_d_class_shareholder_change_first_slice",
+            args.approve_d_class_shareholder_change_first_slice,
+        ),
+        (
+            "approve_d_class_executive_shareholding_first_slice",
+            args.approve_d_class_executive_shareholding_first_slice,
+        ),
+        (
+            "approve_d_class_abnormal_trading_first_slice",
+            args.approve_d_class_abnormal_trading_first_slice,
+        ),
+        (
+            "approve_d_class_shareholder_data_first_slice",
+            args.approve_d_class_shareholder_data_first_slice,
+        ),
+    ]
+    for name, enabled in wrong_flags:
+        if args.fund_industry_allocation_first_slice and enabled:
+            print(
+                f"ERROR: {FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_WRONG_APPROVAL_FLAG}:{name}",
+                file=sys.stderr,
+            )
+            sys.exit(2)
+    if (
+        not args.fund_industry_allocation_first_slice
+        and args.approve_d_class_fund_industry_allocation_first_slice
+    ):
+        print(
+            f"ERROR: {FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_WRONG_APPROVAL_FLAG}:"
+            "fund_industry_allocation_first_slice_flag_without_mode",
+            file=sys.stderr,
+        )
+        sys.exit(2)
+    for flag_name in ("pdf_download", "ocr", "extraction"):
+        if getattr(args, flag_name, False):
+            token = {
+                "pdf_download": PDF_DOWNLOAD_BLOCKED,
+                "ocr": OCR_BLOCKED,
+                "extraction": EXTRACTION_BLOCKED,
+            }[flag_name]
+            print(f"ERROR: {token}", file=sys.stderr)
+            sys.exit(2)
+
+
+def enforce_fund_industry_allocation_first_slice_live_approval_gate(
+    args: argparse.Namespace,
+) -> None:
+    if args.mode == "live" and args.fund_industry_allocation_first_slice:
+        if not args.approve_d_class_fund_industry_allocation_first_slice:
+            print(
+                f"ERROR: {FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_APPROVAL_REQUIRED}",
+                file=sys.stderr,
+            )
+            sys.exit(2)
+
+
+def build_fund_industry_allocation_first_slice_dryrun_rows(
+    rows: List[FundIndustryAllocationFirstSliceRow],
+    output_root: str,
+) -> List[Dict[str, str]]:
+    dry_rows: List[Dict[str, str]] = []
+    shared = compute_fund_industry_allocation_first_slice_planned_shared()
+    plan = build_fund_industry_allocation_first_slice_plan()
+    for row in rows:
+        planned_requests = compute_fund_industry_allocation_first_slice_planned_requests(
+            row
+        )
+        probe_key = resolve_fund_industry_allocation_first_slice_shared_probe_key(row)
+        fixture_refs = resolve_fund_industry_allocation_first_slice_fixture_refs(
+            row.case_id
+        )
+        dry_rows.append(
+            {
+                "case_id": row.case_id,
+                "industry_code": row.industry_code,
+                "industry_name": row.industry_name,
+                "component": row.component,
+                "query_mode": row.query_mode,
+                "anchor_rdate": row.anchor_rdate,
+                "first_slice_include": row.first_slice_include,
+                "expected_behavior": row.expected_behavior,
+                "planned_request_count": str(planned_requests),
+                "shared_probe_key": probe_key,
+                "planned_output_root": output_root,
+                "planned_endpoint": FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_ENDPOINT,
+                "fixture_refs": ";".join(os.path.basename(r) for r in fixture_refs),
+                "cninfo_call_planned": (
+                    "shared" if row.first_slice_include.lower() == "yes" else "no"
+                ),
+                "pdf_download": "no",
+                "ocr": "no",
+                "extraction": "no",
+                "db_write": "no",
+                "minio_write": "no",
+                "rag_run": "no",
+                "dryrun_status": "planned_ok",
+                "notes": (
+                    f"probe_key={probe_key}; plan={','.join(plan)}; "
+                    f"shared_probes={shared}; industry_filter_offline=yes; "
+                    f"schema=d_industry_aggregate; no_company_code=yes; "
+                    f"empty_but_valid_allowed=yes; tier1_fixtures={len(fixture_refs)}"
+                ),
+            }
+        )
+    return dry_rows
+
+
+def write_fund_industry_allocation_first_slice_planned_snapshots(
+    rows: List[FundIndustryAllocationFirstSliceRow],
+    output_paths: Dict[str, str],
+) -> None:
+    snap_dir = os.path.join(output_paths["root"], "planned_snapshots")
+    os.makedirs(snap_dir, exist_ok=True)
+    plan = build_fund_industry_allocation_first_slice_plan()
+    for row in rows:
+        probe_key = resolve_fund_industry_allocation_first_slice_shared_probe_key(row)
+        params = _build_fund_industry_allocation_first_slice_params_for_probe(probe_key)
+        fixture_refs = resolve_fund_industry_allocation_first_slice_fixture_refs(
+            row.case_id
+        )
+        payload = {
+            "case_id": row.case_id,
+            "probe_key": row.probe_key,
+            "industry_code": row.industry_code,
+            "industry_name": row.industry_name,
+            "component": row.component,
+            "query_mode": row.query_mode,
+            "anchor_rdate": row.anchor_rdate,
+            "shared_probe_key": probe_key,
+            "planned_requests": plan,
+            "query_params": params,
+            "endpoint": FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_ENDPOINT,
+            "records_path": FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_RECORDS_PATH,
+            "shared_request": True,
+            "industry_filter_offline": True,
+            "filter_industry_code": row.industry_code,
+            "expected_logical_table": "d_industry_aggregate",
+            "expected_behavior": row.expected_behavior,
+            "fixture_refs": [
+                os.path.relpath(r, BASE_DIR).replace("\\", "/") for r in fixture_refs
+            ],
+            "cninfo_called": False,
+        }
+        out = os.path.join(snap_dir, f"{row.case_id}_fund_industry_allocation.json")
+        with open(out, "w", encoding="utf-8") as f:
+            json.dump(payload, f, ensure_ascii=False, indent=2)
+            f.write("\n")
+
+
+def write_fund_industry_allocation_first_slice_dryrun_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"],
+        "d_class_fund_industry_allocation_first_slice_dryrun_report.csv",
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(
+            f, fieldnames=FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_DRYRUN_REPORT_COLUMNS
+        )
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_fund_industry_allocation_first_slice_dryrun_summary(
+    dry_rows: List[Dict[str, str]],
+    output_paths: Dict[str, str],
+    universe_csv: str,
+) -> str:
+    shared = compute_fund_industry_allocation_first_slice_planned_shared()
+    budget_total = sum(int(r["planned_request_count"]) for r in dry_rows)
+    lines = [
+        "# CNINFO D 类 fund_industry_allocation First-Slice Dry-run Summary",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** fund_industry_allocation first-slice dry-run only · **CNINFO calls = 0** · **NOT APPROVED for live**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        f"| cases | **{len(dry_rows)}** |",
+        f"| planned_ok | **{len(dry_rows)}/{len(dry_rows)}** |",
+        f"| planned_shared_cninfo_requests | **{shared}** |",
+        f"| planned_request_budget_total | **{budget_total}** |",
+        f"| planned_request_count_total | **{shared}** |",
+        f"| CNINFO calls | **0** |",
+        f"| universe | `{universe_csv}` |",
+        "",
+        "## Endpoint",
+        "",
+        "- component: **fund_industry_allocation**",
+        f"- endpoint: `{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_ENDPOINT}`",
+        "- query modes: **default** · **rdate**",
+        "- shared probes: **default** · **rdate=20260331** · **rdate=20251231**",
+        f"- records_path: **{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_RECORDS_PATH}**",
+        "- schema: **d_industry_aggregate** · offline F001V industry filter · **no company_code**",
+        "- fixture root: `fixtures/d_class/fund_industry_allocation_first_slice/`",
+        "",
+        "## Gates",
+        "",
+        "```text",
+        f"d_class_fund_industry_allocation_first_slice_runner_extension_gate = {FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_RUNNER_GATE}",
+        f"d_class_fund_industry_allocation_first_slice_live_path_gate = {FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_LIVE_PATH_GATE}",
+        f"d_class_fund_industry_allocation_first_slice_live_gate = {FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_LIVE_GATE}",
+        "approval_status = STANDING_SCOPE_AUTHORIZED_OFFLINE",
+        "approved_for_live = false",
+        "```",
+        "",
+        "**NOT PASS** · **NOT live_ready** · **NOT verified** · **NOT production_ready**",
+        "",
+        "Future acceptance threshold: **≥3/5 acceptable → PASS_WITH_CAVEAT**",
+        "",
+    ]
+    summary_path = os.path.join(
+        output_paths["reports"],
+        "d_class_fund_industry_allocation_first_slice_dryrun_summary.md",
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    return summary_path
+
+
+def _filter_industry_records(
+    records: List[Dict[str, Any]], industry_code: str
+) -> List[Dict[str, Any]]:
+    """离线按 F001V 过滤行业；industry_code=* 表示全截面。"""
+    if industry_code in ("*", "", "ALL"):
+        return list(records)
+    matched: List[Dict[str, Any]] = []
+    for rec in records:
+        code = str(rec.get("F001V") or rec.get("f001v") or "").strip()
+        if code == industry_code:
+            matched.append(rec)
+    return matched
+
+
+def is_fund_industry_allocation_first_slice_acceptable(
+    row: FundIndustryAllocationFirstSliceRow,
+    summary: Dict[str, str],
+) -> bool:
+    rs = summary.get("retrieval_status", "")
+    qs = summary.get("quality_status", "")
+    eb = row.expected_behavior
+    try:
+        rc = int(summary.get("record_count", "0"))
+    except ValueError:
+        rc = 0
+    if eb == "empty_but_valid" and rs == "empty_but_valid" and rc == 0:
+        return True
+    if "empty_but_valid" in eb and rs == "empty_but_valid" and rc == 0:
+        return True
+    if "captured_normal_or_empty_but_valid" in eb and (
+        (rs == "found" and rc >= 1) or (rs == "empty_but_valid" and rc == 0)
+    ):
+        return qs in ("pass", "needs_review", "")
+    if eb == "captured_normal" and rs == "found" and rc >= 1 and qs in (
+        "pass",
+        "needs_review",
+    ):
+        return True
+    if "captured_normal" in eb and rs == "found" and rc >= 1 and qs in (
+        "pass",
+        "needs_review",
+    ):
+        return True
+    if rs == "found" and rc >= 1 and qs in ("pass", "needs_review"):
+        return True
+    return False
+
+
+def assess_fund_industry_allocation_first_slice_failure_type(
+    row: FundIndustryAllocationFirstSliceRow,
+    summary: Dict[str, str],
+) -> str:
+    if is_fund_industry_allocation_first_slice_acceptable(row, summary):
+        return ""
+    rs = summary.get("retrieval_status", "")
+    if rs in ("http_error", "blocked"):
+        return "transport_or_http_error"
+    return "expectation_mismatch"
+
+
+def validate_fund_industry_allocation_first_slice_request_caps(
+    stats: LiveStats,
+) -> List[str]:
+    issues: List[str] = []
+    allowed_shared = set(FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_SHARED_PROBE_KEYS)
+    for case_id, count in stats.case_request_counts.items():
+        if case_id not in allowed_shared and count > 0:
+            issues.append(
+                f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_SHARED_REQUEST_REQUIRED}:"
+                f"non_shared_case={case_id}={count}"
+            )
+        if case_id in allowed_shared and count > 1:
+            issues.append(
+                f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_PER_CASE_CAP_EXCEEDED}:"
+                f"{case_id}={count}"
+            )
+    if stats.cninfo_requests > FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_TOTAL_MAX_REQUESTS:
+        issues.append(
+            f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_TOTAL_CAP_EXCEEDED}:"
+            f"{stats.cninfo_requests}"
+        )
+    if stats.cninfo_requests > FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_PLANNED_SHARED_REQUESTS:
+        issues.append(
+            f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_SHARED_PLAN_MISMATCH}:"
+            f"cninfo_requests={stats.cninfo_requests}"
+        )
+    return issues
+
+
+def assess_fund_industry_allocation_first_slice_shared_case(
+    row: FundIndustryAllocationFirstSliceRow,
+    industry_records: List[Dict[str, Any]],
+    http_status: int,
+    last_error: str,
+    endpoint: str,
+    used_params: Dict[str, Any],
+    shared_cninfo_requests: int,
+    probe_key: str,
+) -> Dict[str, str]:
+    record_count = len(industry_records)
+    empty_but_valid = "no"
+    needs_review = "no"
+    notes_parts: List[str] = [
+        f"shared_probe={probe_key}",
+        "industry_filter=yes",
+        f"query_mode={row.query_mode}",
+        "schema=d_industry_aggregate",
+    ]
+
+    if last_error in ("rate_limited",) or last_error.startswith("network_error"):
+        retrieval_status = (
+            "http_error" if last_error.startswith("network_error") else "blocked"
+        )
+        quality_status = "blocked"
+        lineage_status = "needs_review"
+        notes_parts.append(last_error)
+    elif last_error.startswith("http_") or last_error == "invalid_json":
+        retrieval_status = "http_error"
+        quality_status = "blocked"
+        lineage_status = "needs_review"
+        notes_parts.append(last_error)
+    elif record_count == 0:
+        retrieval_status = "empty_but_valid"
+        quality_status = "pass"
+        lineage_status = "discovered"
+        empty_but_valid = "yes"
+        notes_parts.append(
+            "industry-level zero rows after F001V filter; legal empty per quality policy"
+        )
+    else:
+        retrieval_status = "found"
+        lineage_status = "discovered"
+        quality_status = "pass"
+        notes_parts.append(f"found {record_count} row(s) for industry filter")
+
+    return {
+        "case_id": row.case_id,
+        "industry_code": row.industry_code,
+        "industry_name": row.industry_name,
+        "component": row.component,
+        "query_mode": row.query_mode,
+        "anchor_rdate": row.anchor_rdate,
+        "expected_behavior": row.expected_behavior,
+        "retrieval_status": retrieval_status,
+        "quality_status": quality_status,
+        "lineage_status": lineage_status,
+        "record_count": str(record_count),
+        "empty_but_valid": empty_but_valid,
+        "needs_review": needs_review,
+        "endpoint_used": endpoint,
+        "cninfo_request_count": str(shared_cninfo_requests),
+        "db_write": "no",
+        "minio_write": "no",
+        "rag_run": "no",
+        "notes": "; ".join(notes_parts),
+        "_http_status": str(http_status),
+        "_used_params": used_params,
+        "_sample_records": industry_records[:3],
+        "_probe_key": probe_key,
+    }
+
+
+def write_fund_industry_allocation_first_slice_live_snapshot(
+    row: FundIndustryAllocationFirstSliceRow,
+    summary: Dict[str, str],
+    output_paths: Dict[str, str],
+) -> str:
+    snapshot_path = os.path.join(
+        output_paths["live_snapshots"],
+        f"{row.case_id}_{row.component}.json",
+    )
+    used_params = summary.get("_used_params") or {}
+    sample_records = summary.get("_sample_records") or []
+    with open(snapshot_path, "w", encoding="utf-8") as f:
+        json.dump(
+            {
+                "case_id": row.case_id,
+                "industry_code": row.industry_code,
+                "industry_name": row.industry_name,
+                "component": row.component,
+                "query_mode": row.query_mode,
+                "anchor_rdate": row.anchor_rdate,
+                "retrieval_status": summary.get("retrieval_status", ""),
+                "quality_status": summary.get("quality_status", ""),
+                "lineage_status": summary.get("lineage_status", ""),
+                "record_count": summary.get("record_count", "0"),
+                "endpoint_used": summary.get("endpoint_used", ""),
+                "query_params": used_params,
+                "sample_records": sample_records,
+                "shared_probe": summary.get("_probe_key", ""),
+                "cninfo_called": True,
+            },
+            f,
+            ensure_ascii=False,
+            indent=2,
+        )
+        f.write("\n")
+    return snapshot_path
+
+
+def compute_fund_industry_allocation_first_slice_execution_gate(
+    universe_rows: List[FundIndustryAllocationFirstSliceRow],
+    case_summaries: Dict[str, Dict[str, str]],
+) -> str:
+    acceptable = 0
+    for row in universe_rows:
+        summary = case_summaries.get(row.case_id, {})
+        if is_fund_industry_allocation_first_slice_acceptable(row, summary):
+            acceptable += 1
+    if acceptable >= 3:
+        return FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_EXECUTION_GATE_PASS
+    return FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_EXECUTION_GATE_FAIL
+
+
+def build_fund_industry_allocation_first_slice_live_row(
+    row: FundIndustryAllocationFirstSliceRow,
+    summary: Dict[str, str],
+) -> Dict[str, str]:
+    acceptable = is_fund_industry_allocation_first_slice_acceptable(row, summary)
+    failure_type = assess_fund_industry_allocation_first_slice_failure_type(
+        row, summary
+    )
+    return {
+        "case_id": row.case_id,
+        "industry_code": row.industry_code,
+        "industry_name": row.industry_name,
+        "component": row.component,
+        "query_mode": row.query_mode,
+        "anchor_rdate": row.anchor_rdate,
+        "expected_behavior": row.expected_behavior,
+        "retrieval_status": summary.get("retrieval_status", ""),
+        "quality_status": summary.get("quality_status", ""),
+        "lineage_status": summary.get("lineage_status", ""),
+        "record_count": summary.get("record_count", "0"),
+        "empty_but_valid": summary.get("empty_but_valid", "no"),
+        "needs_review": summary.get("needs_review", "no"),
+        "endpoint_used": summary.get("endpoint_used", ""),
+        "cninfo_request_count": summary.get("cninfo_request_count", "0"),
+        "acceptable": "yes" if acceptable else "no",
+        "failure_type": failure_type,
+        "pdf_download": "no",
+        "ocr": "no",
+        "extraction": "no",
+        "db_write": "no",
+        "minio_write": "no",
+        "rag_run": "no",
+        "notes": summary.get("notes", ""),
+    }
+
+
+def write_fund_industry_allocation_first_slice_live_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    report_path = os.path.join(
+        output_paths["reports"],
+        "d_class_fund_industry_allocation_first_slice_live_report.csv",
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(
+            f, fieldnames=FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_LIVE_REPORT_COLUMNS
+        )
+        writer.writeheader()
+        writer.writerows(rows)
+    return report_path
+
+
+def write_fund_industry_allocation_first_slice_quality_report(
+    rows: List[Dict[str, str]], output_paths: Dict[str, str]
+) -> str:
+    quality_rows = [
+        {
+            "case_id": r["case_id"],
+            "component": r["component"],
+            "query_mode": r["query_mode"],
+            "anchor_rdate": r["anchor_rdate"],
+            "expected_behavior": r["expected_behavior"],
+            "retrieval_status": r["retrieval_status"],
+            "record_count": r["record_count"],
+            "quality_status": r["quality_status"],
+            "acceptable": r["acceptable"],
+            "failure_type": r["failure_type"],
+            "cninfo_request_count": r["cninfo_request_count"],
+            "notes": r["notes"],
+        }
+        for r in rows
+    ]
+    report_path = os.path.join(
+        output_paths["reports"],
+        "d_class_fund_industry_allocation_first_slice_quality_report.csv",
+    )
+    with open(report_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(
+            f, fieldnames=FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_QUALITY_REPORT_COLUMNS
+        )
+        writer.writeheader()
+        writer.writerows(quality_rows)
+    return report_path
+
+
+def write_fund_industry_allocation_first_slice_live_summary(
+    live_rows: List[Dict[str, str]],
+    stats: LiveStats,
+    gate: str,
+    output_paths: Dict[str, str],
+) -> str:
+    acceptable = sum(1 for r in live_rows if r["acceptable"] == "yes")
+    lines = [
+        "# CNINFO D 类 fund_industry_allocation First-Slice Live Summary",
+        "",
+        f"_生成时间：{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC_",
+        "",
+        "> **性质：** fund_industry_allocation first-slice live path · **live_gate=NOT_APPROVED**",
+        "",
+        "## Counts",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        f"| cases | **{len(live_rows)}** |",
+        f"| acceptable | **{acceptable}/{len(live_rows)}** |",
+        f"| shared_cninfo_requests | **{stats.cninfo_requests}** |",
+        f"| CNINFO calls | **{stats.cninfo_requests}** |",
+        "",
+        "## Gates",
+        "",
+        "```text",
+        f"d_class_fund_industry_allocation_first_slice_live_path_gate = {FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_LIVE_PATH_GATE}",
+        f"d_class_fund_industry_allocation_first_slice_live_gate = {FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_LIVE_GATE}",
+        f"d_class_fund_industry_allocation_first_slice_execution_gate = {gate}",
+        "```",
+        "",
+        "**NOT verified** · **NOT production_ready** · **NOT bare PASS**",
+        "",
+    ]
+    summary_path = os.path.join(
+        output_paths["reports"],
+        "d_class_fund_industry_allocation_first_slice_live_summary.md",
+    )
+    with open(summary_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    return summary_path
+
+
+def execute_fund_industry_allocation_first_slice_live(
+    universe_rows: List[FundIndustryAllocationFirstSliceRow],
+    output_paths: Dict[str, str],
+) -> int:
+    """fund_industry_allocation 第一切片 live：≤3 共享探针 + 离线 F001V 过滤。"""
+    endpoints = load_registry_endpoints()
+    source_configs = load_table_source_configs()
+    component_cfg = copy.deepcopy(
+        source_configs.get(FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_COMPONENT, {})
+    )
+    endpoint = endpoints.get(
+        FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_COMPONENT,
+        component_cfg.get("api_url", FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_ENDPOINT),
+    )
+    component_cfg["api_url"] = endpoint
+
+    for row in universe_rows:
+        planned = compute_fund_industry_allocation_first_slice_planned_requests(row)
+        if planned > FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_PER_CASE_MAX_REQUESTS:
+            print(
+                f"ERROR: {FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_PER_CASE_CAP_EXCEEDED}:"
+                f"planned={planned}",
+                file=sys.stderr,
+            )
+            return 2
+
+    shared_plan = compute_fund_industry_allocation_first_slice_planned_shared()
+    if shared_plan != FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_PLANNED_SHARED_REQUESTS:
+        print(
+            f"ERROR: {FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_SHARED_PLAN_MISMATCH}:"
+            f"got={shared_plan}",
+            file=sys.stderr,
+        )
+        return 2
+
+    session = requests.Session()
+    stats = LiveStats()
+    probe_payloads: Dict[str, Tuple[Any, int, str, Dict[str, Any]]] = {}
+    for probe_key in build_fund_industry_allocation_first_slice_plan():
+        params = _build_fund_industry_allocation_first_slice_params_for_probe(probe_key)
+        payload, http_status, last_error = _cninfo_request(
+            session,
+            component_cfg,
+            params,
+            stats,
+            probe_key,
+        )
+        probe_payloads[probe_key] = (payload, http_status, last_error, params)
+
+    case_summaries: Dict[str, Dict[str, str]] = {}
+    for row in sorted(universe_rows, key=lambda r: r.case_id):
+        probe_key = resolve_fund_industry_allocation_first_slice_shared_probe_key(row)
+        payload, http_status, last_error, used_params = probe_payloads[probe_key]
+        all_records = _extract_records(payload) if payload is not None else []
+        industry_records = _filter_industry_records(all_records, row.industry_code)
+        summary = assess_fund_industry_allocation_first_slice_shared_case(
+            row,
+            industry_records,
+            http_status,
+            last_error,
+            endpoint,
+            used_params,
+            stats.cninfo_requests,
+            probe_key,
+        )
+        write_fund_industry_allocation_first_slice_live_snapshot(
+            row, summary, output_paths
+        )
+        public_summary = {
+            k: v for k, v in summary.items() if not k.startswith("_")
+        }
+        case_summaries[row.case_id] = public_summary
+        print(
+            f"{row.case_id} {public_summary['retrieval_status']}: "
+            f"records={public_summary['record_count']} "
+            f"shared_requests={stats.cninfo_requests} probe={probe_key}",
+            flush=True,
+        )
+
+    cap_issues = validate_fund_industry_allocation_first_slice_request_caps(stats)
+    if cap_issues:
+        print(
+            "ERROR: fund_industry_allocation first-slice request cap validation failed: "
+            f"{cap_issues}",
+            file=sys.stderr,
+        )
+        return 2
+
+    gate = compute_fund_industry_allocation_first_slice_execution_gate(
+        universe_rows, case_summaries
+    )
+    if stats.db_writes or stats.minio_writes or stats.rag_runs:
+        gate = FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_EXECUTION_GATE_FAIL
+
+    live_rows = [
+        build_fund_industry_allocation_first_slice_live_row(
+            row, case_summaries[row.case_id]
+        )
+        for row in sorted(universe_rows, key=lambda r: r.case_id)
+        if row.case_id in case_summaries
+    ]
+
+    report_path = write_fund_industry_allocation_first_slice_live_report(
+        live_rows, output_paths
+    )
+    quality_path = write_fund_industry_allocation_first_slice_quality_report(
+        live_rows, output_paths
+    )
+    summary_path = write_fund_industry_allocation_first_slice_live_summary(
+        live_rows, stats, gate, output_paths
+    )
+
+    print(
+        f"mode=fund_industry_allocation_first_slice_live cases={len(live_rows)} "
+        f"acceptable={sum(1 for r in live_rows if r['acceptable'] == 'yes')}/"
+        f"{len(live_rows)} cninfo_calls={stats.cninfo_requests} "
+        f"shared_request={FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_PLANNED_SHARED_REQUESTS}"
+    )
+    print(
+        f"gate=d_class_fund_industry_allocation_first_slice_execution_gate={gate}"
+    )
+    print(
+        "live_path_gate=d_class_fund_industry_allocation_first_slice_live_path_gate="
+        f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_LIVE_PATH_GATE}"
+    )
+    print(
+        "live_gate=d_class_fund_industry_allocation_first_slice_live_gate="
+        f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_LIVE_GATE}"
+    )
+    print(f"live_report={report_path}")
+    print(f"quality_report={quality_path}")
+    print(f"live_summary={summary_path}")
+    return 0 if gate == FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_EXECUTION_GATE_PASS else 1
+
+
+def run_fund_industry_allocation_first_slice(args: argparse.Namespace) -> int:
+    enforce_fund_industry_allocation_first_slice_forbidden_options(args)
+    enforce_fund_industry_allocation_first_slice_live_approval_gate(args)
+
+    if args.universe_csv == DEFAULT_UNIVERSE_CSV:
+        print(
+            f"ERROR: {FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_UNIVERSE_CSV_REQUIRED}",
+            file=sys.stderr,
+        )
+        return 2
+
+    if not os.path.isfile(args.universe_csv):
+        print(f"ERROR: universe not found: {args.universe_csv}", file=sys.stderr)
+        return 2
+
+    ok_root, root_err = validate_fund_industry_allocation_first_slice_output_root(
+        args.output_root
+    )
+    if not ok_root:
+        print(f"ERROR: {root_err}", file=sys.stderr)
+        return 2
+
+    universe_rows = load_fund_industry_allocation_first_slice_universe(args.universe_csv)
+    universe_issues = validate_fund_industry_allocation_first_slice_universe(
+        universe_rows
+    )
+    if universe_issues:
+        print(
+            "ERROR: fund_industry_allocation first-slice universe validation failed: "
+            f"{universe_issues}",
+            file=sys.stderr,
+        )
+        return 2
+
+    output_root = _normalize_output_root(args.output_root)
+    output_paths = ensure_output_layout(output_root, args.mode)
+    enforce_fund_industry_allocation_first_slice_write_block_targets(output_paths)
+
+    if args.mode == "live":
+        return execute_fund_industry_allocation_first_slice_live(
+            universe_rows, output_paths
+        )
+
+    dry_rows = build_fund_industry_allocation_first_slice_dryrun_rows(
+        universe_rows, output_root
+    )
+    write_fund_industry_allocation_first_slice_planned_snapshots(
+        universe_rows, output_paths
+    )
+    report_path = write_fund_industry_allocation_first_slice_dryrun_report(
+        dry_rows, output_paths
+    )
+    summary_path = write_fund_industry_allocation_first_slice_dryrun_summary(
+        dry_rows, output_paths, args.universe_csv
+    )
+    shared = compute_fund_industry_allocation_first_slice_planned_shared()
+    print(
+        f"mode=fund_industry_allocation_first_slice_dry_run cases={len(dry_rows)} "
+        f"planned_request_count_total={shared} cninfo_calls=0"
+    )
+    print(
+        "gate=d_class_fund_industry_allocation_first_slice_runner_extension_gate="
+        f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_RUNNER_GATE}"
+    )
+    print(
+        "live_path_gate=d_class_fund_industry_allocation_first_slice_live_path_gate="
+        f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_LIVE_PATH_GATE}"
+    )
+    print(
+        "live_gate=d_class_fund_industry_allocation_first_slice_live_gate="
+        f"{FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_LIVE_GATE}"
     )
     print(f"dryrun_report={report_path}")
     print(f"dryrun_summary={summary_path}")
@@ -12142,11 +13586,27 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="显式批准 shareholder_data first-slice live（须人工批准 · 本任务未授权）",
     )
+
+    parser.add_argument(
+        "--fund-industry-allocation-first-slice",
+        action="store_true",
+        help="启用 fund_industry_allocation 第一切片模式（仅 DFIA001–DFIA005）",
+    )
+    parser.add_argument(
+        "--approve-d-class-fund-industry-allocation-first-slice",
+        action="store_true",
+        help="显式批准 fund_industry_allocation first-slice live（须人工批准 · 本任务未授权）",
+    )
     return parser
 
 
 def main(argv: Optional[List[str]] = None) -> int:
     args = build_parser().parse_args(argv)
+
+    if args.fund_industry_allocation_first_slice:
+        if args.output_root is None:
+            args.output_root = DEFAULT_FUND_INDUSTRY_ALLOCATION_FIRST_SLICE_OUTPUT_ROOT
+        return run_fund_industry_allocation_first_slice(args)
 
     if args.shareholder_data_first_slice:
         if args.output_root is None:

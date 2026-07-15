@@ -1,10 +1,10 @@
 # CNINFO D 类 fund_industry_allocation First-Slice — Command Draft
 
-_生成时间：2026-07-15 · D-FM-11_
+_生成时间：2026-07-15 · D-FM-12 更新_
 
-> **性质：** 命令草案 · **runner 未实现** · **CNINFO = 0** · **真实 live 未授权**
+> **性质：** runner **已实现** · S4 dry-run **已跑** · **CNINFO = 0** · **真实 live 未授权**
 
-## S4 dry-run（未来 · CNINFO=0 · runner 另批）
+## S4 dry-run（已实现 · CNINFO=0）
 
 ```bash
 cd listed_company_data_collector
@@ -18,7 +18,7 @@ python lab/run_cninfo_d_class_tiny_live_validation.py \
 ## Live（NOT authorized this task）
 
 ```bash
-# DO NOT RUN until runner + approve flag + live gate
+# DO NOT RUN until live gate + human approve
 python lab/run_cninfo_d_class_tiny_live_validation.py \
   --live \
   --fund-industry-allocation-first-slice \
@@ -42,8 +42,8 @@ python lab/run_cninfo_d_class_tiny_live_validation.py \
 
 | 项 | 状态 |
 |----|------|
-| `--fund-industry-allocation-first-slice` | **未实现**（blocked_until_runner） |
-| S4 dry-run | **blocked_until_runner** |
-| live path | **NOT_APPROVED** |
+| `--fund-industry-allocation-first-slice` | **已实现**（D-FM-12） |
+| S4 dry-run | **PASS_OFFLINE** · CNINFO=0 · planned_shared=3 |
+| live path | **READY_FOR_APPROVAL**（代码就绪 · 须 approve flag） |
 | live | **NOT_APPROVED** |
 | CNINFO this task | **0** |
