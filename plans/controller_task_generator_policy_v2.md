@@ -252,4 +252,18 @@ Forbidden:
 - stopping with NO_VALUABLE_SAFE_TASK without recording rejected candidates and reasons  
 - removing a WAITING_APPROVAL track from autonomous generation  
 - treating “D needs approval” as “D has no autonomous candidates” without checking schema/taxonomy/sample/validation offline work  
-- letting one track’s easy successors monopolize generation while other tracks’ Autonomous Queues are non-empty  
+- letting one track’s easy successors monopolize generation while other tracks’ Autonomous Queues are non-empty
+
+
+
+---
+
+
+# 9. Relationship to Mission Execution Engine v3
+
+
+[controller_mission_execution_engine_v3.md](controller_mission_execution_engine_v3.md)（architecture design only · 未启用）在本文件的生成/过滤/晋级流程（§3–§7）之上追加两点，均为附加式，不改变本文件的安全过滤或 approval split 规则：
+
+
+1. §3 candidate audit 的 considered/rejected 输出，v3 要求同时写入 [track execution queue v2 §7.1](controller_track_execution_queue_policy_v2.md) 的持久化字段 `candidate_successors` / `rejected_tasks`，而不仅在停机报告里出现一次。
+2. §2 的生成触发条件（"after every completed task"）在 v3 下额外接收一个 `capability_gain`（v3 §6：`CAPABILITY_ADVANCED` / `CAPABILITY_MAINTAINED` / `NO_CAPABILITY_CHANGE`）作为上下文；当结果连续为 `NO_CAPABILITY_CHANGE` 时，生成器应优先探索本文件 §6 表中**尚未尝试**的候选维度，而不是重复上一批同类候选（呼应本文件 §8 anti-pattern "duplicate completed memory entries"）。  

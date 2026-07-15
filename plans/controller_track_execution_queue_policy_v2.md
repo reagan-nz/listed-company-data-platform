@@ -194,6 +194,20 @@ approval_queued: # human-gated items（not dispatchable）
 ```
 
 
+## 7.1 v3 additive fields（optional · backward compatible）
+
+
+[controller_mission_execution_engine_v3.md §4](controller_mission_execution_engine_v3.md) 定义了两个**可选、追加式**字段，persist 此前只在 candidate audit（mission replanning loop v2 §2.2）里临时出现一次的 considered/rejected 信息，供跨轮 replan 直接复用。旧 Controller 若不读取这两个字段，行为不受影响；`active_task` / `queued_tasks` / `stop_reason` / `approval_queued` 的既有语义**不变**：
+
+
+```text
+candidate_successors:  # generator v2 产出但尚未晋级 queued_tasks 的候选（可选）
+rejected_tasks:         # 持久化拒绝记录，每条含 task_id + reason_rejected（可选）
+                        #   reason_rejected ∈ {requires_approval, unsafe, duplicate,
+                        #                       already_completed, low_mission_value, other}
+```
+
+
 
 ---
 

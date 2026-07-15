@@ -376,3 +376,15 @@ execution_cycle:
   continued_despite_hold_or_waiting: true|false
   tracks_still_ready_at_stop: []
 ```
+
+
+
+---
+
+
+# 11. Relationship to Mission Execution Engine v3
+
+
+[controller_mission_execution_engine_v3.md](controller_mission_execution_engine_v3.md)（architecture design only · 未启用）引用本文件 §2/§3/§4 作为迭代机制、任务发现和停机条件的权威，不改变其中任何规则。v3 唯一的整合动作：在本文件 §3 步骤 11（"execute/validate/commit/memory → return to step 1"）与下一轮 replan 之间，插入一次 **Capability Gain Check**（v3 §6），其结果反馈进 stuck detection v2 与 task priority v2 的降级判断，但不新增停机条件、不改变 §4 的四个 stop reason 枚举。
+
+本文件的 stop-reason 语义（`NO_SAFE_READY` / `HUMAN_INTERRUPT` / `BUDGET_REACHED` / `SAFETY_VIOLATION`）保持权威不变；v3 §3.2/§12 只是把它们与 track 级 stop-reason（stop reason policy v2）并列展示，供整体理解。

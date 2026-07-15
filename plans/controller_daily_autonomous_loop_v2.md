@@ -569,3 +569,19 @@ Enabling Daily Loop v2 as default runtime requires human acceptance of these fou
 - Not a single-iteration day（one queue pass then stop while safe READY + budget remain）  
 - Not a **controller maintenance loop**（policy/report commits with 0 track-agent mission work while discoverable safe A/B/C/D candidates exist）  
 - Not a **fixed todo batch**（generate A/B/C/D once · execute · stop without mission reassessment）
+
+
+
+---
+
+
+# 15. Relationship to Mission Execution Engine v3
+
+
+[controller_mission_execution_engine_v3.md](controller_mission_execution_engine_v3.md)（architecture design only · 未启用）把本文件 §11 的多轮调度算法，与 Execution Cycle v2 / Mission Replanning Loop v2 一起，组装成一个统一的 Mission Execution Loop 阅读视图，并在每次任务完成后追加一个 **Capability Gain Check**（`CAPABILITY_ADVANCED` / `CAPABILITY_MAINTAINED` / `NO_CAPABILITY_CHANGE`）。
+
+
+本文件 §11 的算法**不因此改变**——v3 只是在"write_task_memory(R)"与"update_track_state(P, R)"之间概念性地插入该判定，用于驱动 anti-stagnation（stuck detection v2）与优先级降级（task priority v2），不引入新的停机条件、不放宽任何安全边界。
+
+
+是否将 v3 设为默认运行引擎，需要单独的人类确认（与本文件启用 Daily Loop v2 时的要求一致）。
