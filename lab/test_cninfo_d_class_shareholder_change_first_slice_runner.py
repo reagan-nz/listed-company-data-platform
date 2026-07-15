@@ -472,5 +472,169 @@ class TestShareholderChangeFirstSliceRunner(unittest.TestCase):
         self.assertIn("type_inc", content)
 
 
+class TestShareholderChangeFirstSliceClosureOffline(unittest.TestCase):
+    """S5 closure 离线校验：acceptable 规则 + live/quality/ledger schema（无 CNINFO）。"""
+
+    LIVE_REPORT = os.path.join(
+        OUTPUT_ROOT,
+        "reports",
+        "d_class_shareholder_change_first_slice_live_report.csv",
+    )
+    QUALITY_REPORT = os.path.join(
+        OUTPUT_ROOT,
+        "reports",
+        "d_class_shareholder_change_first_slice_quality_report.csv",
+    )
+    OUTCOME_LEDGER = os.path.join(
+        BASE_DIR,
+        "outputs",
+        "validation",
+        "cninfo_d_class_shareholder_change_first_slice_live_outcome_ledger.csv",
+    )
+
+    def _row(self, case_id: str) -> runner.ShareholderChangeFirstSliceRow:
+        return _sc_row_from_dict(
+            next(r for r in _read_universe_rows() if r["case_id"] == case_id)
+        )
+
+    def test_empty_but_valid_acceptable_when_expectation_allows(self) -> None:
+        summary = {
+            "retrieval_status": "empty_but_valid",
+            "quality_status": "pass",
+            "record_count": "0",
+        }
+        for case_id in ("DSC001", "DSC002", "DSC003", "DSC005"):
+            with self.subTest(case_id=case_id):
+                row = self._row(case_id)
+                self.assertTrue(
+                    runner.is_shareholder_change_first_slice_acceptable(row, summary)
+                )
+                self.assertEqual(
+                    runner.assess_shareholder_change_first_slice_failure_type(
+                        row, summary
+                    ),
+                    "",
+                )
+
+    def test_dsc004_empty_is_expectation_mismatch(self) -> None:
+        row = self._row("DSC004")
+        self.assertEqual(row.expected_behavior, "captured_normal_or_needs_review")
+        summary = {
+            "retrieval_status": "empty_but_valid",
+            "quality_status": "pass",
+            "record_count": "0",
+        }
+        self.assertFalse(
+            runner.is_shareholder_change_first_slice_acceptable(row, summary)
+        )
+        self.assertEqual(
+            runner.assess_shareholder_change_first_slice_failure_type(row, summary),
+            "expectation_mismatch",
+        )
+
+    def test_dsc004_found_or_needs_review_with_rows_is_acceptable(self) -> None:
+        row = self._row("DSC004")
+        for rs in ("found", "needs_review"):
+            with self.subTest(retrieval_status=rs):
+                summary = {
+                    "retrieval_status": rs,
+                    "quality_status": "needs_review" if rs == "needs_review" else "pass",
+                    "record_count": "1",
+                }
+                self.assertTrue(
+                    runner.is_shareholder_change_first_slice_acceptable(row, summary)
+                )
+
+    def test_execution_gate_four_of_five_sparse_day(self) -> None:
+        rows = [_sc_row_from_dict(r) for r in _read_universe_rows()]
+        summaries = {
+            r.case_id: {
+                "retrieval_status": "empty_but_valid",
+                "quality_status": "pass",
+                "record_count": "0",
+            }
+            for r in rows
+        }
+        gate = runner.compute_shareholder_change_first_slice_execution_gate(
+            rows, summaries
+        )
+        self.assertEqual(gate, runner.SHAREHOLDER_CHANGE_FIRST_SLICE_EXECUTION_GATE_PASS)
+        acceptable = sum(
+            1
+            for r in rows
+            if runner.is_shareholder_change_first_slice_acceptable(r, summaries[r.case_id])
+        )
+        self.assertEqual(acceptable, 4)
+
+    def test_live_report_schema_and_dsc004_row(self) -> None:
+        if not os.path.isfile(self.LIVE_REPORT):
+            self.skipTest("live report not present")
+        with open(self.LIVE_REPORT, newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            self.assertEqual(
+                list(reader.fieldnames or []),
+                runner.SHAREHOLDER_CHANGE_FIRST_SLICE_LIVE_REPORT_COLUMNS,
+            )
+            rows = list(reader)
+        self.assertEqual(len(rows), 5)
+        by_id = {r["case_id"]: r for r in rows}
+        self.assertEqual(by_id["DSC004"]["acceptable"], "no")
+        self.assertEqual(by_id["DSC004"]["failure_type"], "expectation_mismatch")
+        self.assertEqual(by_id["DSC004"]["retrieval_status"], "empty_but_valid")
+        for case_id in ("DSC001", "DSC002", "DSC003", "DSC005"):
+            self.assertEqual(by_id[case_id]["acceptable"], "yes")
+            self.assertEqual(by_id[case_id]["failure_type"], "")
+
+    def test_quality_report_schema_matches_live_acceptable(self) -> None:
+        if not os.path.isfile(self.QUALITY_REPORT):
+            self.skipTest("quality report not present")
+        with open(self.QUALITY_REPORT, newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            self.assertEqual(
+                list(reader.fieldnames or []),
+                runner.SHAREHOLDER_CHANGE_FIRST_SLICE_QUALITY_REPORT_COLUMNS,
+            )
+            q_rows = {r["case_id"]: r for r in reader}
+        with open(self.LIVE_REPORT, newline="", encoding="utf-8") as f:
+            live_rows = {r["case_id"]: r for r in csv.DictReader(f)}
+        for case_id in runner.SHAREHOLDER_CHANGE_FIRST_SLICE_ALLOWED_CASE_IDS:
+            self.assertEqual(
+                q_rows[case_id]["acceptable"], live_rows[case_id]["acceptable"]
+            )
+            self.assertEqual(
+                q_rows[case_id]["failure_type"], live_rows[case_id]["failure_type"]
+            )
+
+    def test_outcome_ledger_schema_and_cross_check(self) -> None:
+        if not os.path.isfile(self.OUTCOME_LEDGER):
+            self.skipTest("outcome ledger not present")
+        expected_cols = [
+            "case_id",
+            "company_code",
+            "company_name",
+            "anchor_tdate",
+            "query_type",
+            "expected_behavior",
+            "retrieval_status",
+            "quality_status",
+            "record_count",
+            "outcome",
+            "acceptable",
+            "failure_type",
+            "cninfo_request_count",
+            "notes",
+        ]
+        with open(self.OUTCOME_LEDGER, newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            self.assertEqual(list(reader.fieldnames or []), expected_cols)
+            ledger = {r["case_id"]: r for r in reader}
+        self.assertEqual(len(ledger), 5)
+        self.assertEqual(ledger["DSC004"]["acceptable"], "no")
+        self.assertEqual(ledger["DSC004"]["failure_type"], "expectation_mismatch")
+        self.assertEqual(ledger["DSC004"]["outcome"], "empty_but_valid")
+        for case_id in ("DSC001", "DSC002", "DSC003", "DSC005"):
+            self.assertEqual(ledger[case_id]["acceptable"], "yes")
+
+
 if __name__ == "__main__":
     unittest.main()
