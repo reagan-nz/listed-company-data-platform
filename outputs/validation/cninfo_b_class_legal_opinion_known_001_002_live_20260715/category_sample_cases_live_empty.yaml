@@ -1,0 +1,7 @@
+# B-FM-25 — 空 category-sample（仅跑 legal_opinion_known_001/002）
+version: "draft-0.1"
+status: live_sample_scoped_B-FM-25_empty_category
+verified: false
+notes: empty category allow-list; known-document only
+
+cases: []

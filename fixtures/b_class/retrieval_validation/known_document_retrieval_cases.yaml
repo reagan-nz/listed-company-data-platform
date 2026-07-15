@@ -290,6 +290,48 @@ cases:
       来源 outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/b_class_erad_next_scale_slice1_combined_report.csv
       行 BD2E244（quality=pass）。不写 verified；不下载 PDF。
 
+  # --- legal_opinion / 法律意见书 × 2（document_type=announcement；非 shareholder_meeting_material）---
+  - case_id: legal_opinion_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "002756"
+    company_name: "永兴材料"
+    title_pattern: "第一次临时股东大会的法律意见书"
+    expected_document_type: announcement
+    date_start: "2025-06-01"
+    date_end: "2025-06-04"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-25 自 harvest 证据晋升（闭合 B-FM-24 指出的「法律意见书保持 announcement」边角）：
+      永兴材料 002756，2025年第一次临时股东大会的法律意见书
+      （announcement_id=1223733432，披露日 2025-06-02）。标题含完整「股东大会」+「法律意见书」，
+      不得抬成 shareholder_meeting_material；title_pattern 取「第一次临时股东大会的法律意见书」
+      （届次锚定）。路由为 announcement → cninfo_general_announcement_pdf。
+      来源 outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/b_class_erad_fuller_next_slice2_report.csv
+      行 BD2E544（quality=pass）。不写 verified；不下载 PDF。
+
+  - case_id: legal_opinion_known_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "600560"
+    company_name: "金自天正"
+    title_pattern: "年度股东会的法律意见书"
+    expected_document_type: announcement
+    date_start: "2025-06-25"
+    date_end: "2025-06-28"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-25 自 harvest 证据晋升（简称「股东会」法律意见书边角；对称 known_001 完整「股东大会」）：
+      金自天正 600560，北京市星河律师事务所关于北京金自天正智能控制股份有限公司
+      2024年年度股东会的法律意见书（announcement_id=1223998801，披露日 2025-06-26）。
+      标题含简称「股东会」+「法律意见书」，不得抬成 shareholder_meeting_material；
+      title_pattern 取「年度股东会的法律意见书」（与 known_001「临时股东大会的法律意见书」
+      及股东会决议族可区分）。路由仍为 announcement → cninfo_general_announcement_pdf。
+      来源 outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/b_class_erad_next_scale_slice1_combined_report.csv
+      行 BD2E416（quality=pass）。不写 verified；不下载 PDF。
+
   # --- shareholder_meeting_material × 4 ---
   - case_id: shareholder_meeting_known_001
     case_status: ready

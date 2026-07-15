@@ -1,0 +1,40 @@
+# B-FM-25 live allow-list — 仅新晋 legal_opinion_known_001 / known_002
+version: "draft-0.1"
+status: live_sample_scoped_B-FM-25
+verified: false
+notes: B-FM-25 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS
+
+cases:
+  - case_id: legal_opinion_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "002756"
+    company_name: "永兴材料"
+    title_pattern: "第一次临时股东大会的法律意见书"
+    expected_document_type: announcement
+    date_start: "2025-06-01"
+    date_end: "2025-06-04"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-25 live allow-list（法律意见书保持 announcement；非 shareholder_meeting_material）：
+      永兴材料 002756，BD2E544 / announcement_id=1223733432。
+      标题「2025年第一次临时股东大会的法律意见书」。
+      pattern「第一次临时股东大会的法律意见书」。不写 verified；不下载 PDF。
+
+  - case_id: legal_opinion_known_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "600560"
+    company_name: "金自天正"
+    title_pattern: "年度股东会的法律意见书"
+    expected_document_type: announcement
+    date_start: "2025-06-25"
+    date_end: "2025-06-28"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-25 live allow-list（简称股东会法律意见书边角）：
+      金自天正 600560，BD2E416 / announcement_id=1223998801。
+      标题含「2024年年度股东会的法律意见书」。
+      pattern「年度股东会的法律意见书」。不写 verified；不下载 PDF。
