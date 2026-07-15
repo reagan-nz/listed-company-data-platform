@@ -43,6 +43,14 @@ DEFAULT_ISOLATED_SNAPSHOT_DRYRUN_ROOT_REL = (
     "outputs/validation/_mock_snapshot_batch_standard_dryrun_isolated"
 )
 
+# QA closure 累积双层证据索引权威根（只读；禁止 runner 覆盖）
+AUTHORITATIVE_DUAL_LAYER_INDEX_ROOT_REL = (
+    "outputs/validation/"
+    "cninfo_c_class_erad_fuller_market_slice1_qa_closure_dual_layer_index"
+)
+
+DUAL_LAYER_INDEX_WRITE_FORBIDDEN = "DUAL_LAYER_INDEX_WRITE_FORBIDDEN"
+
 
 def normalize_cleanup_path(path: str, *, base_dir: str = BASE_DIR) -> str:
     """解析为绝对路径并规范化（抵御 ../ 与尾斜杠）。"""
@@ -134,6 +142,45 @@ def safe_cleanup_temp_output_root(path: str, *, base_dir: str = BASE_DIR) -> Non
         shutil.rmtree(norm, ignore_errors=True)
 
 
+def is_authoritative_dual_layer_index_path(
+    path: str,
+    *,
+    base_dir: str = BASE_DIR,
+    authoritative_root_rel: str = AUTHORITATIVE_DUAL_LAYER_INDEX_ROOT_REL,
+) -> bool:
+    """路径是否落在权威 dual-layer QA closure 索引根下（非 mock）。"""
+    if is_allowed_mock_test_cleanup_path(path, base_dir=base_dir):
+        return False
+    norm = normalize_cleanup_path(path, base_dir=base_dir)
+    root = normalize_cleanup_path(authoritative_root_rel, base_dir=base_dir)
+    return norm == root or norm.startswith(root + os.sep)
+
+
+def assert_authoritative_dual_layer_index_write_forbidden(
+    path: str,
+    *,
+    base_dir: str = BASE_DIR,
+    authoritative_root_rel: str = AUTHORITATIVE_DUAL_LAYER_INDEX_ROOT_REL,
+) -> str:
+    """
+    权威 dual-layer 索引写拒绝：任何落在 QA closure dual_layer_index 根下的写路径硬拒绝。
+    mock 路径不受此守卫约束（由调用方另做 mock 隔离断言）。
+    返回规范化绝对路径（当未拒绝时）。
+    """
+    norm = normalize_cleanup_path(path, base_dir=base_dir)
+    if is_authoritative_dual_layer_index_path(
+        norm,
+        base_dir=base_dir,
+        authoritative_root_rel=authoritative_root_rel,
+    ):
+        rel = os.path.relpath(norm, base_dir).replace("\\", "/")
+        raise RuntimeError(
+            f"{DUAL_LAYER_INDEX_WRITE_FORBIDDEN}: {rel} "
+            f"(authoritative dual-layer index is read-only; write only under validation/_mock_*)"
+        )
+    return norm
+
+
 def assert_safe_erad_audit_write_path(
     path: str,
     *,
@@ -142,6 +189,8 @@ def assert_safe_erad_audit_write_path(
 ) -> None:
     """审计 runner 写入路径：仅允许 Era D audit 根或 mock 测试区；禁止生产 harvest/snapshot。"""
     norm = normalize_cleanup_path(path, base_dir=base_dir)
+    # 权威 dual-layer 索引：即使误配 allowed_audit_root 也硬拒绝覆盖
+    assert_authoritative_dual_layer_index_write_forbidden(norm, base_dir=base_dir)
     if is_allowed_mock_test_cleanup_path(norm, base_dir=base_dir):
         return
     allowed = normalize_cleanup_path(allowed_audit_root_rel, base_dir=base_dir)

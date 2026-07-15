@@ -1,0 +1,43 @@
+{
+  "generated_at": "2026-07-15T09:14:10Z",
+  "task_id": "C-FM-04",
+  "gate": "PASS_OFFLINE",
+  "layer_gates": {
+    "ledger_resume_caveat": "PASS_OFFLINE",
+    "resume_aggregate": "PASS_OFFLINE",
+    "index_write_isolation": "PASS_OFFLINE",
+    "fm_gate_battery": "PASS_OFFLINE"
+  },
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "fail_count": 0,
+  "matrix_rows": 21,
+  "output_root": "outputs/validation/_mock_c_fm04_dual_layer_ledger_resume_lineage",
+  "matrix_path": "outputs/validation/_mock_c_fm04_dual_layer_ledger_resume_lineage/lineage_matrix.csv",
+  "fingerprint_path": "outputs/validation/_mock_c_fm04_dual_layer_ledger_resume_lineage/lineage_fingerprint.json",
+  "fingerprint": {
+    "row_count": 21,
+    "ok_count": 21,
+    "fail_count": 0,
+    "layers": {
+      "ledger_resume_caveat": 11,
+      "resume_aggregate": 5,
+      "index_write_isolation": 1,
+      "fm_gate_battery": 4
+    },
+    "fingerprint_sha256": "96d6fcaa48cc101f17c4f29fd597520c9e71e7c88593919d93b92d4d0aac601c"
+  },
+  "battery_path": "outputs/validation/_mock_c_fm04_dual_layer_ledger_resume_lineage/fm_gate_battery.json",
+  "inputs": {
+    "harvest_root": "outputs/harvest/cninfo_c_class/fuller_market_slice1_200",
+    "resume_audit_report": "outputs/validation/cninfo_c_class_erad_fuller_market_slice1_qa_closure_audit/reports/c_class_erad_harvest_resume_audit_report.csv",
+    "resume_audit_metrics": "outputs/validation/cninfo_c_class_erad_fuller_market_slice1_qa_closure_audit/reports/c_class_erad_harvest_resume_audit_metrics.csv",
+    "exclusion_reconcile": "outputs/validation/cninfo_c_class_erad_snapshot_rebuild_dryrun/exclusion_reconcile.csv",
+    "empty3_index": "outputs/validation/cninfo_c_class_erad_fuller_market_slice1_qa_closure_dual_layer_index/qa_closure_dual_layer_evidence_index.csv",
+    "partial7_index": "outputs/validation/cninfo_c_class_erad_fuller_market_slice1_qa_closure_dual_layer_index/qa_closure_dual_layer_evidence_index_partial7.csv",
+    "fm01_gate_json": "outputs/validation/cninfo_c_class_isolated_snapshot_dryrun_repro_check_20260715.json",
+    "fm02_gate_json": "outputs/validation/cninfo_c_class_isolated_snapshot_validation_cohorts_20260715.json",
+    "fm03_gate_json": "outputs/validation/cninfo_c_class_harvest_exclusion_dual_layer_consistency_20260715.json"
+  },
+  "mock_root_is_isolated": true
+}

@@ -1,0 +1,18 @@
+{
+  "generated_at": "2026-07-15T09:14:10Z",
+  "task_id": "C-FM-04",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "fingerprint": {
+    "row_count": 21,
+    "ok_count": 21,
+    "fail_count": 0,
+    "layers": {
+      "ledger_resume_caveat": 11,
+      "resume_aggregate": 5,
+      "index_write_isolation": 1,
+      "fm_gate_battery": 4
+    },
+    "fingerprint_sha256": "96d6fcaa48cc101f17c4f29fd597520c9e71e7c88593919d93b92d4d0aac601c"
+  }
+}

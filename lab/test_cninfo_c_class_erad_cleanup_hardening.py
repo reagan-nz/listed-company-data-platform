@@ -119,6 +119,27 @@ class TestCClassEradCleanupHardening(unittest.TestCase):
         isolated = resolve_standard_snapshot_dryrun_output_root(None)
         self.assertIn("_mock_snapshot_batch_standard_dryrun_isolated", isolated)
 
+    def test_case9_authoritative_dual_layer_index_write_forbidden(self) -> None:
+        from cninfo_c_class_erad_cleanup_guard import (
+            AUTHORITATIVE_DUAL_LAYER_INDEX_ROOT_REL,
+            DUAL_LAYER_INDEX_WRITE_FORBIDDEN,
+            assert_authoritative_dual_layer_index_write_forbidden,
+            assert_safe_erad_audit_write_path,
+            is_authoritative_dual_layer_index_path,
+        )
+
+        auth = os.path.join(BASE_DIR, AUTHORITATIVE_DUAL_LAYER_INDEX_ROOT_REL)
+        self.assertTrue(is_authoritative_dual_layer_index_path(auth))
+        probe = os.path.join(auth, "qa_closure_dual_layer_evidence_index.csv")
+        with self.assertRaisesRegex(RuntimeError, DUAL_LAYER_INDEX_WRITE_FORBIDDEN):
+            assert_authoritative_dual_layer_index_write_forbidden(probe)
+        # 即使误把权威索引当作 allowed_audit_root，也必须拒绝
+        with self.assertRaisesRegex(RuntimeError, DUAL_LAYER_INDEX_WRITE_FORBIDDEN):
+            assert_safe_erad_audit_write_path(
+                probe,
+                allowed_audit_root_rel=AUTHORITATIVE_DUAL_LAYER_INDEX_ROOT_REL,
+            )
+
 
 if __name__ == "__main__":
     unittest.main()
