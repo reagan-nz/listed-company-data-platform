@@ -57,6 +57,7 @@ documents:
     expected_route_to: cninfo_periodic_report_pdf
     expected_document_type: annual_report
     expected_classification: periodic_report
+    expected_period: "2024"
     benchmark_group: periodic_report
 
   - benchmark_id: periodic_002
@@ -64,6 +65,7 @@ documents:
     expected_route_to: cninfo_periodic_report_pdf
     expected_document_type: semi_annual_report
     expected_classification: periodic_report
+    expected_period: "2024H1"
     benchmark_group: periodic_report
 
   - benchmark_id: periodic_003
@@ -71,6 +73,7 @@ documents:
     expected_route_to: cninfo_periodic_report_pdf
     expected_document_type: quarterly_report_q1
     expected_classification: periodic_report
+    expected_period: "2024Q1"
     benchmark_group: periodic_report
 
   - benchmark_id: periodic_false_positive_001
@@ -153,6 +156,7 @@ documents:
     expected_route_to: cninfo_periodic_report_pdf
     expected_document_type: quarterly_report_q3
     expected_classification: periodic_report
+    expected_period: "2024Q3"
     benchmark_group: periodic_report
     notes: "Era D2E — quarterly_report_q3 document_type 此前无 benchmark 覆盖（仅 q1 有覆盖）"
 
@@ -245,3 +249,44 @@ documents:
     expected_false_positive_reason: wrong_company
     benchmark_group: false_positive_guard
     notes: "Run12 — 无提示性公告字样的实体名交叉披露；须 fp=wrong_company（非空）"
+
+  # Run 12 Wave 2 — wrong_period 报告期不匹配 lineage（validation_design §7；非标题排除）
+  - benchmark_id: periodic_false_positive_014
+    title: "某某公司2023年年度报告"
+    expected_route_to: cninfo_periodic_report_pdf
+    expected_document_type: annual_report
+    expected_classification: periodic_report
+    expected_period: "2024"
+    expected_false_positive_reason: wrong_period
+    benchmark_group: false_positive_guard
+    notes: "Run12W2 — 合法年报全文但报告期≠expected；仍 route periodic；fp=wrong_period"
+
+  - benchmark_id: periodic_false_positive_015
+    title: "某某公司2023年半年度报告"
+    expected_route_to: cninfo_periodic_report_pdf
+    expected_document_type: semi_annual_report
+    expected_classification: periodic_report
+    expected_period: "2024H1"
+    expected_false_positive_reason: wrong_period
+    benchmark_group: false_positive_guard
+    notes: "Run12W2 — 半年度报告期年错位；fp=wrong_period"
+
+  - benchmark_id: periodic_false_positive_016
+    title: "某某公司2023年第一季度报告"
+    expected_route_to: cninfo_periodic_report_pdf
+    expected_document_type: quarterly_report_q1
+    expected_classification: periodic_report
+    expected_period: "2024Q1"
+    expected_false_positive_reason: wrong_period
+    benchmark_group: false_positive_guard
+    notes: "Run12W2 — Q1 报告期年错位；fp=wrong_period"
+
+  - benchmark_id: periodic_false_positive_017
+    title: "某某公司2024年第三季度报告"
+    expected_route_to: cninfo_periodic_report_pdf
+    expected_document_type: quarterly_report_q3
+    expected_classification: periodic_report
+    expected_period: "2024Q1"
+    expected_false_positive_reason: wrong_period
+    benchmark_group: false_positive_guard
+    notes: "Run12W2 — 同年错季（Q3 vs expected Q1）；fp=wrong_period"

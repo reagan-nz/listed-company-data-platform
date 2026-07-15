@@ -39,6 +39,7 @@ FALSE_POSITIVE_REASONS = {
     "meeting_notice_as_report": "meeting_notice_as_report",
     "announcement_preview": "announcement_preview",
     "wrong_company": "wrong_company",
+    "wrong_period": "wrong_period",
 }
 
 # 本公司报告期提示：「关于披露第一季度报告…」——非交叉披露
@@ -137,6 +138,74 @@ def _is_wrong_company_cross_disclosure(title: str) -> bool:
     return bool(entity and not re.fullmatch(r"[\d年月日\s的]*", entity))
 
 
+def parse_title_report_period(title: str, document_type: str = "") -> str:
+    """从标题解析报告期标签（与 Phase 1 coverage 口径对齐：2024 / 2024H1 / 2024Q1 / 2024Q3）。
+
+    半年度须先于年度判断（「半年度报告」含子串「年度报告」；「半年报」含子串「年报」）。
+    """
+    if not title:
+        return "unknown"
+    t = "".join(title.split())
+    m = re.search(r"(20\d{2})", t)
+    if not m:
+        return "unknown"
+    year = m.group(1)
+    dtype = (document_type or "").strip()
+    if not dtype:
+        if "半年度报告" in t or "半年报" in t:
+            dtype = "semi_annual_report"
+        elif "第一季度" in t or "一季度" in t:
+            dtype = "quarterly_report_q1"
+        elif "第三季度" in t or "三季度" in t:
+            dtype = "quarterly_report_q3"
+        elif "年度报告" in t or "年报" in t:
+            dtype = "annual_report"
+
+    if dtype == "semi_annual_report":
+        return f"{year}H1" if ("半年度报告" in t or "半年报" in t) else "unknown"
+    if dtype == "quarterly_report_q1":
+        return f"{year}Q1" if ("第一季度" in t or "一季度" in t) else "unknown"
+    if dtype == "quarterly_report_q3":
+        return f"{year}Q3" if ("第三季度" in t or "三季度" in t) else "unknown"
+    if dtype == "annual_report":
+        if "半年度报告" in t or "半年报" in t:
+            return "unknown"
+        return year if ("年度报告" in t or "年报" in t) else "unknown"
+    return "unknown"
+
+
+def _apply_wrong_period_fp(
+    result: RouteResult,
+    title: str,
+    expected_period: Optional[str],
+) -> RouteResult:
+    """expected_period 与标题解析期不一致时标注 false_positive_reason=wrong_period。
+
+    标题仍可正确路由到 periodic；wrong_period 是 expected-period 层假阳性（validation_design §7），
+    不同于 announcement_preview / wrong_company 的标题排除。
+    """
+    if not expected_period:
+        return result
+    if result.predicted_route_to != "cninfo_periodic_report_pdf":
+        return result
+    if result.predicted_classification != "periodic_report":
+        return result
+    parsed = parse_title_report_period(title, result.predicted_document_type)
+    expected = str(expected_period).strip()
+    if parsed == "unknown" or parsed == expected:
+        return result
+    return RouteResult(
+        predicted_route_to=result.predicted_route_to,
+        predicted_document_type=result.predicted_document_type,
+        predicted_classification=result.predicted_classification,
+        classification_status=result.classification_status,
+        false_positive_reason=FALSE_POSITIVE_REASONS["wrong_period"],
+        matched_patterns=list(result.matched_patterns),
+        notes=(result.notes + "; " if result.notes else "")
+        + f"period mismatch: parsed={parsed} expected={expected}",
+    )
+
+
 def _excluded_false_positive_reason(
     hits: List[str],
     *,
@@ -188,7 +257,11 @@ def _general_document_type(title: str, patterns: List[str]) -> str:
     return "other"
 
 
-def route_title(title: str, config: Dict[str, Any]) -> RouteResult:
+def route_title(
+    title: str,
+    config: Dict[str, Any],
+    expected_period: Optional[str] = None,
+) -> RouteResult:
     categories = config.get("categories") or {}
     excluded_cfg = config.get("excluded_from_periodic_routing") or {}
 
@@ -253,13 +326,14 @@ def route_title(title: str, config: Dict[str, Any]) -> RouteResult:
     # Priority 3: periodic (only if positive match and no exclusion)
     if periodic_doc_type and not periodic_exclusion_hits:
         matched.append(periodic_doc_type)
-        return RouteResult(
+        result = RouteResult(
             predicted_route_to=periodic_cat.get("route_to", {}).get("source_id", "cninfo_periodic_report_pdf"),
             predicted_document_type=periodic_doc_type,
             predicted_classification="periodic_report",
             classification_status="classified_correctly",
             matched_patterns=matched,
         )
+        return _apply_wrong_period_fp(result, title, expected_period)
 
     if periodic_exclusion_hits:
         excluded_from_periodic = True
@@ -329,7 +403,8 @@ def evaluate_benchmark(
     config: Dict[str, Any],
 ) -> Dict[str, Any]:
     title = doc.get("title", "")
-    result = route_title(title, config)
+    expected_period = doc.get("expected_period")
+    result = route_title(title, config, expected_period=expected_period)
 
     expected_route = doc.get("expected_route_to", "")
     expected_doc_type = doc.get("expected_document_type", "")
@@ -413,7 +488,10 @@ def write_summary_md(
     fp_caught = sum(
         1 for r in fp_rows
         if r["route_match"] == "PASS"
-        and r["predicted_route_to"] != "cninfo_periodic_report_pdf"
+        and (
+            r["predicted_route_to"] != "cninfo_periodic_report_pdf"
+            or r.get("false_positive_reason") == "wrong_period"
+        )
     )
 
     mismatches = [r for r in rows if r["route_match"] == "FAIL" or r["document_type_match"] == "FAIL"]

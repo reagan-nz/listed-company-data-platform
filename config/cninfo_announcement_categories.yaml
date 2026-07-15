@@ -71,6 +71,8 @@ categories:
       Inherits Phase 1 A-class retrieval (749/796 effective coverage). Requires
       period match + positive pattern + NOT exclusion. Official CNINFO category
       codes for quarterly reports (e.g. category_yjdbg_szsh) not locked in this draft.
+      Period mismatch vs expected_period → false_positive_reason=wrong_period
+      (validation_design §7); title may still route to cninfo_periodic_report_pdf.
 
   inquiry_reply:
     category_name_cn: 问询函及回复
