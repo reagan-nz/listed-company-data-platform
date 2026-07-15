@@ -1,0 +1,126 @@
+{
+  "generated_at": "2026-07-15T15:20:49Z",
+  "task_id": "C-FM-36",
+  "fingerprint_sha256": "0b0708213941c07fa4774783f429d188b3a07869ea9f560a6e0caa541c90a4b5",
+  "identity": {
+    "hold_recommendation": "KEEP_EXECUTE_FALSE",
+    "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+    "approved_for_snapshot_rebuild": false,
+    "ready_for_execute": false,
+    "execute_production_snapshot_rebuild": false,
+    "seal_chain_extended": false,
+    "idle_not_required_while_awaiting": true
+  },
+  "sample_denials": [
+    {
+      "proposed": {
+        "hold_recommendation": "READY_EXECUTE",
+        "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+        "approved_for_snapshot_rebuild": false,
+        "ready_for_execute": false,
+        "execute_production_snapshot_rebuild": false,
+        "seal_chain_extended": false,
+        "idle_not_required_while_awaiting": true
+      },
+      "frozen": {
+        "hold_recommendation": "KEEP_EXECUTE_FALSE",
+        "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+        "approved_for_snapshot_rebuild": false,
+        "ready_for_execute": false,
+        "execute_production_snapshot_rebuild": false,
+        "seal_chain_extended": false,
+        "idle_not_required_while_awaiting": true
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "hold_decision_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "hold_recommendation": "KEEP_EXECUTE_FALSE",
+        "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+        "approved_for_snapshot_rebuild": true,
+        "ready_for_execute": false,
+        "execute_production_snapshot_rebuild": false,
+        "seal_chain_extended": false,
+        "idle_not_required_while_awaiting": true
+      },
+      "frozen": {
+        "hold_recommendation": "KEEP_EXECUTE_FALSE",
+        "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+        "approved_for_snapshot_rebuild": false,
+        "ready_for_execute": false,
+        "execute_production_snapshot_rebuild": false,
+        "seal_chain_extended": false,
+        "idle_not_required_while_awaiting": true
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "hold_decision_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "hold_recommendation": "KEEP_EXECUTE_FALSE",
+        "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+        "approved_for_snapshot_rebuild": false,
+        "ready_for_execute": false,
+        "execute_production_snapshot_rebuild": false,
+        "seal_chain_extended": true,
+        "idle_not_required_while_awaiting": true
+      },
+      "frozen": {
+        "hold_recommendation": "KEEP_EXECUTE_FALSE",
+        "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+        "approved_for_snapshot_rebuild": false,
+        "ready_for_execute": false,
+        "execute_production_snapshot_rebuild": false,
+        "seal_chain_extended": false,
+        "idle_not_required_while_awaiting": true
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "hold_decision_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "hold_recommendation": "KEEP_EXECUTE_FALSE",
+        "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+        "approved_for_snapshot_rebuild": false,
+        "ready_for_execute": false,
+        "execute_production_snapshot_rebuild": false,
+        "seal_chain_extended": false,
+        "idle_not_required_while_awaiting": true
+      },
+      "frozen": {
+        "hold_recommendation": "KEEP_EXECUTE_FALSE",
+        "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+        "approved_for_snapshot_rebuild": false,
+        "ready_for_execute": false,
+        "execute_production_snapshot_rebuild": false,
+        "seal_chain_extended": false,
+        "idle_not_required_while_awaiting": true
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "hold_decision_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "hold_decision_identity_lock",
+    "hold_recommendation": "KEEP_EXECUTE_FALSE",
+    "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+    "approved_for_snapshot_rebuild": false,
+    "ready_for_execute": false,
+    "execute_production_snapshot_rebuild": false,
+    "seal_chain_extended": false,
+    "idle_not_required_while_awaiting": true,
+    "deny_hold_flip": true,
+    "deny_approved_flip": true,
+    "deny_seal_extend": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "generated_at": "2026-07-15T15:20:49Z",
+  "task_id": "C-FM-36",
+  "fingerprint_sha256": "237cd509fe9a9db9d49bbf60b070177a25f1e75bc4804556cf1103878898e674",
+  "same_codes": [
+    "301212"
+  ],
+  "worse_codes": [],
+  "sample_denials": [
+    {
+      "bucket": "same",
+      "proposed_codes": [
+        "301212",
+        "999999"
+      ],
+      "frozen_codes": [
+        "301212"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_same_worse_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "bucket": "same",
+      "proposed_codes": [],
+      "frozen_codes": [
+        "301212"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_same_worse_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "bucket": "worse",
+      "proposed_codes": [
+        "000001"
+      ],
+      "frozen_codes": [],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_same_worse_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "bucket": "same",
+      "proposed_codes": [
+        "301212"
+      ],
+      "frozen_codes": [
+        "301212"
+      ],
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "resume_same_worse_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "resume_same_worse_membership_freeze",
+    "resume_same": 1,
+    "resume_worse": 0,
+    "same_codes": [
+      "301212"
+    ],
+    "worse_codes": [],
+    "deny_same_inject": true,
+    "deny_same_drop": true,
+    "deny_worse_inject": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

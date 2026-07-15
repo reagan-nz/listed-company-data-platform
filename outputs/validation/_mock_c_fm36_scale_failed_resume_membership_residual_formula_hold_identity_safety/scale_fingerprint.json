@@ -1,0 +1,78 @@
+{
+  "generated_at": "2026-07-15T15:20:49Z",
+  "task_id": "C-FM-36",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "seal_chain_extended": false,
+  "scale_tier_count": 7,
+  "company_coverage_sum": 3314,
+  "harvest_unique_union": 2249,
+  "harvest_additive": 2261,
+  "overlap_delta": 12,
+  "surface_unique": 2251,
+  "combined_dryrun_coverage": 1053,
+  "union_complete": 2134,
+  "union_partial": 106,
+  "union_failed": 9,
+  "resume_improved": 28,
+  "resume_same": 1,
+  "resume_worse": 0,
+  "surface_harvest_delta_n": 2,
+  "partial_risk_bands": {
+    "p35_heavy": 75,
+    "p3_mid": 14,
+    "p2_mid": 12,
+    "fu_light": 5
+  },
+  "residual_safety_coverage": 117,
+  "complete_codes_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431",
+  "partial_codes_sha256": "5d5da7030f91e60893627d7fcf208b79f4f09e3edc5c4255fb797c1706672d73",
+  "failed_codes_sha256": "fb74a9df6bbecf75a7c2b354491a80c4b294c3c1cd392ec429bd8d16b74a14f6",
+  "winner_map_sha256": "ff2c6a28b361498b0dbf163ad1d1779041e1dd4e772b652e6382e1d4051fbb07",
+  "improved_codes_sha256": "8be1b0a704f205387c024d05b3d592d4cc64c6b3b9556546f6e65614001d54e8",
+  "same_codes_sha256": "2896da9453ebb1a999cf3074dc4753d776587b6a385ab9d5a5ed0fe9942bf5d6",
+  "worse_codes_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "batch_priority": [
+    "h863",
+    "p35",
+    "p3",
+    "p2",
+    "fu"
+  ],
+  "residual_formula": "106+9+2=117",
+  "frozen_fps": {
+    "failed_codes_membership_freeze": "232308b7488af325257c650380adb7a4cdea65464a3400ad3931c83f23d83bce",
+    "resume_same_worse_membership_freeze": "237cd509fe9a9db9d49bbf60b070177a25f1e75bc4804556cf1103878898e674",
+    "residual_formula_identity_lock": "62cc02077579e6cd37c12a32df266c5c6e7f2f99e87594711727a5a2fd8f27d9",
+    "hold_decision_identity_lock": "0b0708213941c07fa4774783f429d188b3a07869ea9f560a6e0caa541c90a4b5",
+    "fm35_winner_map_sha256_lock": "56d85b2152b814d18b9b6ab510a583b635e57a6da72ed750cdcc4d0ad4759377",
+    "fm35_resume_taxonomy_codeset_sha256_lock": "3a0acb3b796dff56415539b60dd8a765ca752a180e29f8808d3abd516fe95591",
+    "fm35_batch_priority_order_freeze": "83abddccc8e699ac3c8e7bc9d5fb0ea7ec139c53f596b39ae8957b5350a0c566",
+    "fm35_partial_risk_band_cardinality_freeze": "5b634b3a7dc546b7f686ff377a74693a86531d12e967b89b679c7a1f27836953"
+  },
+  "observed_fps": {
+    "failed_codes_membership_freeze": "232308b7488af325257c650380adb7a4cdea65464a3400ad3931c83f23d83bce",
+    "resume_same_worse_membership_freeze": "237cd509fe9a9db9d49bbf60b070177a25f1e75bc4804556cf1103878898e674",
+    "residual_formula_identity_lock": "62cc02077579e6cd37c12a32df266c5c6e7f2f99e87594711727a5a2fd8f27d9",
+    "hold_decision_identity_lock": "0b0708213941c07fa4774783f429d188b3a07869ea9f560a6e0caa541c90a4b5"
+  },
+  "fingerprint": {
+    "row_count": 156,
+    "ok_count": 156,
+    "fail_count": 0,
+    "layers": {
+      "fm35_continuity": 8,
+      "failed_codes_membership_freeze": 5,
+      "resume_same_worse_membership_freeze": 5,
+      "residual_formula_identity_lock": 5,
+      "hold_decision_identity_lock": 5,
+      "protected_write_guard": 5,
+      "output_root_protection": 7,
+      "frozen_mock_isolation": 38,
+      "protected_csv_registry": 41,
+      "fm_gate_battery": 30,
+      "execute_hold_seal": 7
+    },
+    "fingerprint_sha256": "4f186e80e3bc666dc39d8833f16c59e52f8c68b91192c51c8ad78e0c67a8ba6f"
+  }
+}

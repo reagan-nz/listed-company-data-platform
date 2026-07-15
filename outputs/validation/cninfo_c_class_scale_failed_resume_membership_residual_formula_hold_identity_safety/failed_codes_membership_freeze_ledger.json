@@ -1,0 +1,153 @@
+{
+  "generated_at": "2026-07-15T15:20:49Z",
+  "task_id": "C-FM-36",
+  "fingerprint_sha256": "232308b7488af325257c650380adb7a4cdea65464a3400ad3931c83f23d83bce",
+  "failed_codes": [
+    "002140",
+    "300055",
+    "300069",
+    "300074",
+    "300540",
+    "300552",
+    "301195",
+    "603885",
+    "605060"
+  ],
+  "sample_denials": [
+    {
+      "action": "inject",
+      "proposed_codes": [
+        "002140",
+        "300055",
+        "300069",
+        "300074",
+        "300540",
+        "300552",
+        "301195",
+        "603885",
+        "605060",
+        "999999"
+      ],
+      "frozen_codes": [
+        "002140",
+        "300055",
+        "300069",
+        "300074",
+        "300540",
+        "300552",
+        "301195",
+        "603885",
+        "605060"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "failed_codes_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "drop",
+      "proposed_codes": [
+        "002140",
+        "300055",
+        "300069",
+        "300074",
+        "300540",
+        "300552",
+        "301195",
+        "603885"
+      ],
+      "frozen_codes": [
+        "002140",
+        "300055",
+        "300069",
+        "300074",
+        "300540",
+        "300552",
+        "301195",
+        "603885",
+        "605060"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "failed_codes_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "replace",
+      "proposed_codes": [
+        "000001",
+        "000001",
+        "000001",
+        "000001",
+        "000001",
+        "000001",
+        "000001",
+        "000001",
+        "000001"
+      ],
+      "frozen_codes": [
+        "002140",
+        "300055",
+        "300069",
+        "300074",
+        "300540",
+        "300552",
+        "301195",
+        "603885",
+        "605060"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "failed_codes_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "action": "replace",
+      "proposed_codes": [
+        "002140",
+        "300055",
+        "300069",
+        "300074",
+        "300540",
+        "300552",
+        "301195",
+        "603885",
+        "605060"
+      ],
+      "frozen_codes": [
+        "002140",
+        "300055",
+        "300069",
+        "300074",
+        "300540",
+        "300552",
+        "301195",
+        "603885",
+        "605060"
+      ],
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "failed_codes_membership_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "failed_codes_membership_freeze",
+    "failed_codes": [
+      "002140",
+      "300055",
+      "300069",
+      "300074",
+      "300540",
+      "300552",
+      "301195",
+      "603885",
+      "605060"
+    ],
+    "failed_n": 9,
+    "deny_inject": true,
+    "deny_drop": true,
+    "deny_replace": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
