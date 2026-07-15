@@ -1,0 +1,31 @@
+{
+  "case_id": "DSC104",
+  "probe_key": "sc_ns_shared_desc_002415",
+  "company_code": "002415",
+  "company_name": "海康威视",
+  "component": "shareholder_change",
+  "anchor_tdate": "2026-07-03",
+  "query_mode": "type_desc_tdate_daily",
+  "query_type": "desc",
+  "shared_probe_key": "type_desc_tdate_daily_2026-07-03",
+  "planned_requests": [
+    "type_desc_tdate_daily_2026-07-03"
+  ],
+  "query_params": {
+    "type": "desc",
+    "tdate": "2026-07-03"
+  },
+  "endpoint": "https://www.cninfo.com.cn/data20/shareholeder/detail",
+  "records_path": "data.records",
+  "shared_request": true,
+  "company_filter_offline": true,
+  "company_filter_field": "SECCODE",
+  "filter_company_code": "002415",
+  "forbidden_sole_found_anchor": "type=inc+2026-07-03",
+  "expected_behavior": "captured_normal_or_empty_but_valid",
+  "fixture_refs": [
+    "fixtures/d_class/shareholder_change_next_slice/DSC104_found.json",
+    "fixtures/d_class/shareholder_change_next_slice/DSC104_empty.json"
+  ],
+  "cninfo_called": false
+}

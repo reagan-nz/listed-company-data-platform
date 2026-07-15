@@ -1,0 +1,6 @@
+case_id,company_code,query_mode,query_type,anchor_tdate,expected_behavior,dryrun_status,cninfo_call_planned,shared_probe_key,cninfo_called,live_found_path_DSC101_105,fixture_refs
+DSC101,000550,type_desc_tdate_daily,desc,2026-07-03,captured_normal_or_empty_but_valid,planned_ok,shared,type_desc_tdate_daily_2026-07-03,false,NOT_PROVEN,DSC101_found.json;DSC101_empty.json
+DSC102,000895,type_desc_tdate_daily,desc,2026-07-03,captured_normal_or_empty_but_valid,planned_ok,shared,type_desc_tdate_daily_2026-07-03,false,NOT_PROVEN,DSC102_found.json;DSC102_empty.json
+DSC103,600000,type_desc_tdate_daily,desc,2026-07-03,captured_normal_or_empty_but_valid,planned_ok,shared,type_desc_tdate_daily_2026-07-03,false,NOT_PROVEN,DSC103_found.json;DSC103_empty.json
+DSC104,002415,type_desc_tdate_daily,desc,2026-07-03,captured_normal_or_empty_but_valid,planned_ok,shared,type_desc_tdate_daily_2026-07-03,false,NOT_PROVEN,DSC104_found.json;DSC104_empty.json
+DSC105,601988,type_desc_tdate_daily,desc,2026-07-03,empty_but_valid,planned_ok,shared,type_desc_tdate_daily_2026-07-03,false,NOT_PROVEN,DSC105_empty_but_valid_synthetic.json
