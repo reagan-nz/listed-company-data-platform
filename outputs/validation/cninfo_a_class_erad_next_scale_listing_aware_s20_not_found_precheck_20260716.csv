@@ -1,0 +1,7 @@
+case_id,company_code,company_name,report_type,expected_period,listing_date,org_id_offline,listing_before_period,prior_live_retrieval,prior_cninfo_count,prior_last_err_class,likely_cause,retry_include
+AD2E1540,605133,嵘泰股份,quarterly_report_q3,2024-09-30,2021-02-24,9900039741,yes,not_found,0,ssl_eof_protocol_violation,transient_ssl_transport_not_listing_or_orgid,yes
+AD2E1541,605151,西上海,annual_report,2024-12-31,2020-12-15,9900032989,yes,not_found,0,ssl_eof_protocol_violation,transient_ssl_transport_not_listing_or_orgid,yes
+AD2E1542,605222,起帆电缆,annual_report,2024-12-31,2020-07-31,9900039833,yes,not_found,0,ssl_eof_protocol_violation,transient_ssl_transport_not_listing_or_orgid,yes
+AD2E1543,605296,神农集团,annual_report,2024-12-31,2021-05-28,9900033227,yes,not_found,0,ssl_eof_protocol_violation,transient_ssl_transport_not_listing_or_orgid,yes
+AD2E1544,605305,中际联合,annual_report,2024-12-31,2021-05-06,gfbj0831344,yes,not_found,0,ssl_eof_protocol_violation,transient_ssl_transport_not_listing_or_orgid,yes
+AD2E1545,605333,沪光股份,annual_report,2024-12-31,2020-08-18,9900038389,yes,not_found,0,ssl_eof_protocol_violation,transient_ssl_transport_not_listing_or_orgid,yes

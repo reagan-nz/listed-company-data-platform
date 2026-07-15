@@ -1,0 +1,7 @@
+case_id,company_code,company_name,prior_retrieval,retry_retrieval,retry_quality,retry_cninfo_request_count,announcement_id,announcement_title,recovered,evidence_root
+AD2E1540,605133,嵘泰股份,not_found,found,pass,2,1221557943,嵘泰股份2024年第三季度报告,yes,retry_not_found_1540_1545
+AD2E1541,605151,西上海,not_found,found,pass,2,1223285173,西上海2024年年度报告,yes,retry_not_found_1540_1545
+AD2E1542,605222,起帆电缆,not_found,found,pass,2,1223281324,起帆电缆2024年年度报告,yes,retry_not_found_1540_1545
+AD2E1543,605296,神农集团,not_found,found,pass,2,1223366038,云南神农农业产业集团股份有限公司2024年年度报告,yes,retry_not_found_1540_1545
+AD2E1544,605305,中际联合,not_found,found,pass,2,1223142895,中际联合2024年年度报告,yes,retry_not_found_1540_1545
+AD2E1545,605333,沪光股份,not_found,found,pass,2,1223316677,2024年年度报告,yes,retry_not_found_1540_1545
