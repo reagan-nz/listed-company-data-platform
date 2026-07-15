@@ -1,0 +1,5 @@
+# B-FM-28 — 空 category-sample（仅跑 listing_sponsor_known_001 / equity_change_report_known_001）
+version: "draft-0.1"
+status: live_sample_scoped_B-FM-28_empty_category
+generated: "2026-07-15"
+cases: []

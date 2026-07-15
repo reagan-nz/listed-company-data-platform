@@ -419,6 +419,51 @@ cases:
       b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E466（quality=pass）。
       不写 verified；不下载 PDF。
 
+  # --- listing_sponsor / equity_change_report × 2（B-FM-28；document_type=announcement；勿落 other）---
+  - case_id: listing_sponsor_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "001301"
+    company_name: "尚太科技"
+    title_pattern: "可转换公司债券的上市保荐书"
+    expected_document_type: announcement
+    date_start: "2025-06-08"
+    date_end: "2025-06-11"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-28 自 harvest 证据晋升（上市保荐书 routing 边角：旧逻辑落 other）：
+      尚太科技 001301，国信证券股份有限公司关于石家庄尚太科技股份有限公司主板向不特定
+      对象发行可转换公司债券的上市保荐书（修订稿）（announcement_id=1223824291，
+      披露日 2025-06-09）。标题无「公告」等 general positive_patterns（B-FM-28 前），
+      落 other；硬化后为 announcement。title_pattern 取「可转换公司债券的上市保荐书」。
+      与核查意见 / 法律意见书 / 权益变动报告书 / 股东会决议可区分。来源
+      outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
+      b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E252（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: equity_change_report_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "688069"
+    company_name: "德林海"
+    title_pattern: "权益变动报告书"
+    expected_document_type: announcement
+    date_start: "2025-06-24"
+    date_end: "2025-06-27"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-28 自 harvest 证据晋升（简式权益变动报告书第二边角；对称 listing_sponsor）：
+      德林海 688069，德林海简式权益变动报告书（announcement_id=1223980482，
+      披露日 2025-06-25）。同样无 general positive_patterns，旧逻辑落 other；
+      硬化后 announcement。title_pattern 取「权益变动报告书」（CNINFO searchkey
+      对「简式权益变动报告书」整串返回空；「权益变动报告书」可命中且不误匹配同窗
+      「权益变动提示性公告」）。来源
+      outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
+      b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E482（quality=pass）。
+      不写 verified；不下载 PDF。
+
   # --- shareholder_meeting_material × 4 ---
   - case_id: shareholder_meeting_known_001
     case_status: ready

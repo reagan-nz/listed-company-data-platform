@@ -165,6 +165,8 @@ categories:
       - 法律意见书
       - 法律意见
       - 核查意见
+      - 保荐书
+      - 权益变动报告书
     exclusion_patterns: []
     route_to:
       source_id: cninfo_general_announcement_pdf
@@ -181,6 +183,9 @@ categories:
       B-FM-26：非会议类法律意见书（增持/差异化分红/可转债等）含「法律意见」一律
       document_type=announcement（勿落 other；勿抬成 shareholder_meeting_material）。
       B-FM-27：保荐机构等「核查意见」（募资置换/限售流通等）含「核查意见」一律
+      document_type=announcement（勿落 other；不扩 schema）。
+      B-FM-28：上市保荐书 / 简式权益变动报告书等标题常无「公告」等 general
+      positive_patterns，旧逻辑落 other；含「保荐书」或「权益变动报告书」一律
       document_type=announcement（勿落 other；不扩 schema）。
 
 # 延期披露 / 摘要 / 提示性预告等：从 periodic 排除后的候选路由（非独立 source，归入 general 或 future disclosure_related）

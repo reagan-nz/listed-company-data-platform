@@ -1,0 +1,38 @@
+# B-FM-28 live allow-list — 仅新晋 listing_sponsor_known_001 / equity_change_report_known_001
+# 上市保荐书 / 简式权益变动报告书；排除全部已 LIVE_PASS
+status: live_sample_scoped_B-FM-28
+generated: "2026-07-15"
+notes: B-FM-28 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS
+cases:
+  - case_id: listing_sponsor_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "001301"
+    company_name: "尚太科技"
+    title_pattern: "可转换公司债券的上市保荐书"
+    expected_document_type: announcement
+    date_start: "2025-06-08"
+    date_end: "2025-06-11"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-28 live allow-list（可转债上市保荐书；闭合 other 误落）：
+      尚太科技 001301，披露日约 2025-06-09。
+      pattern「可转换公司债券的上市保荐书」。不写 verified；不下载 PDF。
+
+  - case_id: equity_change_report_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "688069"
+    company_name: "德林海"
+    title_pattern: "权益变动报告书"
+    expected_document_type: announcement
+    date_start: "2025-06-24"
+    date_end: "2025-06-27"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-28 live allow-list（简式权益变动报告书边角）：
+      德林海 688069，披露日约 2025-06-25。
+      pattern「权益变动报告书」（searchkey 可命中；勿用「简式」前缀整串）。
+      不写 verified；不下载 PDF。
