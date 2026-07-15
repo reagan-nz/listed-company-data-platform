@@ -1,0 +1,6 @@
+SUMMARY  ready=2  query_executed=3  pass=2  fail=0  ambiguous=0  result=LIVE_PASS
+CSV   outputs/validation/cninfo_b_class_regulatory_work_letter_promotion_live_20260715/cninfo_b_class_regulatory_work_letter_promotion_live_20260715_report.csv
+MD    outputs/validation/cninfo_b_class_regulatory_work_letter_promotion_live_20260715/cninfo_b_class_regulatory_work_letter_promotion_live_20260715_summary.md
+NOTE  topSearch empty/failed for 600715; using registry orgId=gssh0600715
+NOTE  REQUEST_TIMEOUT=45 for this run only (shared validator unchanged)
+wrapper_wall_s≈90
