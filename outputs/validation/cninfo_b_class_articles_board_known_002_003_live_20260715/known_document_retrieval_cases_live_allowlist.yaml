@@ -1,0 +1,41 @@
+# B-FM-48 live allow-list — 仅新晋 company_articles_known_003 /
+# board_resolution_known_002
+status: live_sample_scoped_B-FM-48
+verified: false
+notes: B-FM-48 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS including articles known_001/002 and B-FM-47
+cases:
+  - case_id: company_articles_known_003
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000419"
+    company_name: "通程控股"
+    title_pattern: "【通程控股】公司章程"
+    expected_document_type: announcement
+    date_start: "2025-06-19"
+    date_end: "2025-06-22"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-48 live allow-list（公司章程短标题 known_003）：
+      harvest BD2E189 通程控股 000419 ann=1223954488 2025-06-20。
+      title_pattern 取「【通程控股】公司章程」
+      （≠古麒修订串 / 秀强全称修订串）。
+      不写 verified；不下载 PDF。
+
+  - case_id: board_resolution_known_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "300930"
+    company_name: "屹通新材"
+    title_pattern: "第三届董事会第四次会议决议公告"
+    expected_document_type: board_resolution
+    date_start: "2025-06-19"
+    date_end: "2025-06-22"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-48 live allow-list（董事会届次决议 known_002）：
+      harvest BD2E648 屹通新材 300930 ann=1223953622 2025-06-20。
+      title_pattern 取「第三届董事会第四次会议决议公告」
+      （≠威孚高科 known_001 宽串「董事会决议公告」单独检索语境）。
+      不写 verified；不下载 PDF。

@@ -1,0 +1,3 @@
+case_id,case_type,case_status,source_id,title_pattern,date_start,date_end,expected_document_type,expected_route_to,dry_run_status,would_query,query_status,notes
+company_articles_known_003,known_document,ready,cninfo_general_announcement_pdf,【通程控股】公司章程,2025-06-19,2025-06-22,announcement,cninfo_general_announcement_pdf,ready_for_future_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called
+board_resolution_known_002,known_document,ready,cninfo_general_announcement_pdf,第三届董事会第四次会议决议公告,2025-06-19,2025-06-22,board_resolution,cninfo_general_announcement_pdf,ready_for_future_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called

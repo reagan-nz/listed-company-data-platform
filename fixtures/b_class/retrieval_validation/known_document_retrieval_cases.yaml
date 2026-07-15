@@ -228,7 +228,7 @@ cases:
       outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/b_class_erad_next_scale_slice1_combined_report.csv
       行 BD2E232（quality=pass）。不写 verified；不下载 PDF。
 
-  # --- board_resolution × 1 ---
+  # --- board_resolution × 2（known_002 = B-FM-48 届次决议子类型）---
   - case_id: board_resolution_known_001
     case_status: ready
     source_id: cninfo_general_announcement_pdf
@@ -244,6 +244,29 @@ cases:
       Real CNINFO sample: 威孚高科 000581, 2025-04-17 董事会决议公告 (CNINFO title;
       longer session-specific title not returned by search). Checklist reviewed;
       routes to cninfo_general_announcement_pdf. Do not write verified.
+
+  - case_id: board_resolution_known_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "300930"
+    company_name: "屹通新材"
+    title_pattern: "第三届董事会第四次会议决议公告"
+    expected_document_type: board_resolution
+    date_start: "2025-06-19"
+    date_end: "2025-06-22"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-48 自 harvest 证据晋升（董事会决议 known_002；对称 known_001 宽串
+      「董事会决议公告」）：屹通新材 300930，第三届董事会第四次会议决议公告
+      （announcement_id=1223953622，披露日 2025-06-20）。路由已有董事会决议 →
+      board_resolution；本包不改路由。title_pattern 取
+      「第三届董事会第四次会议决议公告」：覆盖届次/次数决议子类型，且不单独等同
+      known_001 宽串检索语境下的威孚高科案。勿裸「决议公告」。与监事会决议 /
+      股东会决议可区分。来源
+      outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
+      b_class_erad_fuller_next_slice2_report.csv 行 BD2E648（quality=pass）。
+      不写 verified；不下载 PDF。
 
   # --- supervisory_board / 监事会决议 × 2（document_type=announcement；非 board_resolution）---
   - case_id: supervisory_board_known_001
@@ -1041,6 +1064,29 @@ cases:
       勿裸「章程」）。与货币资金/对外担保管理制度、薪酬/名单/简报/ESG 可区分。
       来源 outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
       b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E330（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: company_articles_known_003
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000419"
+    company_name: "通程控股"
+    title_pattern: "【通程控股】公司章程"
+    expected_document_type: announcement
+    date_start: "2025-06-19"
+    date_end: "2025-06-22"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-48 自 harvest 证据晋升（公司章程 known_003；短标题无修订日期边角；
+      闭合 B-FM-36 章程×3 中尚未晋升的 BD2E189）：通程控股 000419，
+      【通程控股】公司章程（announcement_id=1223954488，披露日 2025-06-20）。
+      路由已由 B-FM-36 硬化（「公司章程」→ announcement）；本包不改路由。
+      title_pattern 取「【通程控股】公司章程」：覆盖短标题/方括号公司名前缀子类型，
+      且不命中 known_001「公司章程（2025年6月修订）」与 known_002 秀强全称修订串。
+      勿裸「章程」。与「关于修订《公司章程》的公告」/管理制度/薪酬/名单可区分。
+      来源 outputs/validation/cninfo_b_class_erad_scale_200/reports/
+      b_class_erad_scale_200_report.csv 行 BD2E189（quality=pass）。
       不写 verified；不下载 PDF。
 
   # --- raised_funds_management_system / 募集资金管理制度（B-FM-36；对称第二边角）---
