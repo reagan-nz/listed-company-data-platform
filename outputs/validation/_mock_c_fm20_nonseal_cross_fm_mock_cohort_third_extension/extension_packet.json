@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-07-15T13:25:40Z",
+  "task_id": "C-FM-20",
+  "gate": "PASS_OFFLINE",
+  "capability": [
+    "nonseal_cross_fm_mock_cohort_third_extension",
+    "fingerprint_chain_fm01_05_12_19",
+    "nonseal_chain_continuity_mock20_21",
+    "frozen_mock_cohort_write_isolation_mock3_21",
+    "harvest_exclusion_dual_layer_consistency",
+    "protected_output_root_mock22"
+  ],
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "ready_for_execute": false,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+  "idle_not_required_while_awaiting": true,
+  "seal_chain_extended": false,
+  "notes": "本包在 C-FM-19 commit 后做 non-seal 三次 cohort 完整性扩展：FM01-05+FM12-19 注册表 · MOCK20-21 锚点零漂移 · MOCK3-21 写隔离 · MOCK22 保护根；不新增 seal/decision-await/commit-boundary 层；不覆盖 MOCK3-21；不翻转 approved_for_snapshot_rebuild；生产 snapshot EXECUTE 仍须独立人批；本 executor 不 commit/push。"
+}
