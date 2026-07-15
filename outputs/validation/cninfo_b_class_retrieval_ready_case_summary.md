@@ -21,8 +21,8 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 | 指标 | 数值 |
 |------|------|
 | total_cases | **24** |
-| placeholder | **5** |
-| ready | **19** |
+| placeholder | **3** |
+| ready | **21** |
 | retired | **0** |
 | invalid_ready | **0** |
 | result | **PASS** |
@@ -32,6 +32,7 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 - `inquiry_known_001` (known_document) → `cninfo_inquiry_reply_pdf`
 - `inquiry_known_002` (known_document) → `cninfo_inquiry_reply_pdf`
 - `inquiry_known_003` (known_document) → `cninfo_inquiry_reply_pdf`
+- `regulatory_known_001` (known_document) → `cninfo_inquiry_reply_pdf`
 - `regulatory_known_002` (known_document) → `cninfo_inquiry_reply_pdf`
 - `meeting_known_001` (known_document) → `cninfo_meeting_notice_pdf`
 - `meeting_known_002` (known_document) → `cninfo_meeting_notice_pdf`
@@ -43,6 +44,7 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 - `general_sample_001` (category_sample) → `cninfo_general_announcement_pdf`
 - `general_sample_002` (category_sample) → `cninfo_general_announcement_pdf`
 - `general_sample_003` (category_sample) → `cninfo_general_announcement_pdf`
+- `inquiry_sample_001` (category_sample) → `cninfo_inquiry_reply_pdf`
 - `inquiry_sample_002` (category_sample) → `cninfo_inquiry_reply_pdf`
 - `meeting_sample_001` (category_sample) → `cninfo_meeting_notice_pdf`
 - `ir_activity_sample_001` (category_sample) → `cninfo_meeting_notice_pdf`

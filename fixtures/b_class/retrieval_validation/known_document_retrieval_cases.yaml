@@ -69,19 +69,23 @@ cases:
 
   # --- regulatory_inquiry × 3 ---
   - case_id: regulatory_known_001
-    case_status: placeholder
+    case_status: ready
     source_id: cninfo_inquiry_reply_pdf
-    company_code: null
-    company_name: null
-    title_pattern: "问询函"
+    company_code: "300792"
+    company_name: "壹网壹创"
+    title_pattern: "关于收到浙江证监局警示函的公告"
     expected_document_type: regulatory_inquiry
-    date_start: null
-    date_end: null
+    date_start: "2025-06-22"
+    date_end: "2025-06-25"
     expected_route_to: cninfo_inquiry_reply_pdf
     expected_pdf_url_available: true
     notes: >-
-      Placeholder regulatory inquiry (交易所/监管问询函原文). Replace with real
-      company + date window; must NOT classify as periodic report.
+      B-FM-08 自 harvest 证据晋升（依赖 B-FM-07 routing edge）：壹网壹创 300792，
+      关于收到浙江证监局警示函的公告
+      （announcement_id=1223957037，披露日 2025-06-23）。标题含「警示函」且无
+      「回复」后缀；与关注函 known_002 / 真·问询函原文（仍缺 harvest）可区分。
+      来源 outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/b_class_erad_fuller_next_slice2_report.csv
+      行 BD2E626（quality=pass）。不写 verified；不下载 PDF。
 
   - case_id: regulatory_known_002
     case_status: ready

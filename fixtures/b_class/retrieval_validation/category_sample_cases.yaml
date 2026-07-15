@@ -70,12 +70,12 @@ cases:
 
   # --- inquiry reply category sample × 2 ---
   - case_id: inquiry_sample_001
-    case_status: placeholder
+    case_status: ready
     source_id: cninfo_inquiry_reply_pdf
     source_category: inquiry_reply_pdf
-    title_pattern: "问询函"
-    date_start: null
-    date_end: null
+    title_pattern: "警示函"
+    date_start: "2025-06-21"
+    date_end: "2025-06-25"
     expected_min_results: 1
     expected_document_types:
       - regulatory_inquiry
@@ -84,8 +84,10 @@ cases:
       - 年度报告
       - 半年度报告
     notes: >-
-      Category-sample for inquiry corpus non-empty rate. Replace date window
-      before live validation; do not use random success rate as pass criteria.
+      B-FM-08 自 harvest 证据晋升（依赖 B-FM-07 routing edge）：警示函全市场窗。
+      壹网壹创 300792 announcement_id=1223957037（2025-06-23，BD2E626）。
+      窗内「收到…警示函」应为 regulatory_inquiry；「警示函的回复」允许 inquiry_reply。
+      来源 fuller slice2 report。不写 verified；不下载 PDF。
 
   - case_id: inquiry_sample_002
     case_status: ready
