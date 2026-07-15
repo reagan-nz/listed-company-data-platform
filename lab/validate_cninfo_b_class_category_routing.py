@@ -91,6 +91,26 @@ def _periodic_blocked(title: str) -> bool:
     return any(b in title for b in blockers)
 
 
+def _excluded_false_positive_reason(
+    hits: List[str],
+    *,
+    block_key: str = "",
+    title: str = "",
+) -> str:
+    """将 excluded_from_periodic 命中映射到 validation_design §7 false_positive 类型。"""
+    joined = "".join(hits)
+    haystack = joined + title
+    if block_key == "delayed_disclosure" or "延期披露" in haystack:
+        return FALSE_POSITIVE_REASONS["delayed_disclosure_notice"]
+    if block_key == "announcement_preview" or any(
+        p in haystack for p in ("披露提示性公告", "提示性公告", "预告公告")
+    ):
+        return FALSE_POSITIVE_REASONS["announcement_preview"]
+    if block_key == "report_summary" or any(p in haystack for p in ("摘要", "解读")):
+        return FALSE_POSITIVE_REASONS["summary"]
+    return ""
+
+
 def _meeting_document_type(title: str) -> str:
     if "投资者关系活动记录表" in title:
         return "investor_relations_activity"
@@ -196,21 +216,21 @@ def route_title(title: str, config: Dict[str, Any]) -> RouteResult:
         excluded_from_periodic = True
         matched.extend(periodic_exclusion_hits)
 
-    # Priority 4: excluded_from_periodic_routing (delayed / summary)
-    for _key, block in excluded_cfg.items():
+    # Priority 4: excluded_from_periodic_routing (delayed / summary / preview)
+    for key, block in excluded_cfg.items():
         if not isinstance(block, dict):
             continue
         hits = _match_any(title, block.get("positive_patterns") or [])
         if hits:
             matched.extend(hits)
             suggested = (block.get("suggested_document_types") or ["announcement"])[0]
-            reason = "delayed_disclosure_notice" if "延期披露" in "".join(hits) else "summary"
+            reason = _excluded_false_positive_reason(hits, block_key=str(key), title=title)
             return RouteResult(
                 predicted_route_to=block.get("route_to", {}).get("source_id", "cninfo_general_announcement_pdf"),
                 predicted_document_type=suggested,
                 predicted_classification="excluded_from_periodic_but_routed",
                 classification_status="title_excluded_from_periodic_but_routed",
-                false_positive_reason=FALSE_POSITIVE_REASONS.get(reason, reason),
+                false_positive_reason=reason,
                 matched_patterns=matched,
                 notes="Routed via excluded_from_periodic_routing",
             )
@@ -223,12 +243,17 @@ def route_title(title: str, config: Dict[str, Any]) -> RouteResult:
         doc_type = _general_document_type(title, general_patterns)
         status = "title_excluded_from_periodic_but_routed" if excluded_from_periodic else "classified_correctly"
         classification = "excluded_from_periodic_but_routed" if excluded_from_periodic else "general_announcement"
+        fp_reason = (
+            _excluded_false_positive_reason(matched, title=title)
+            if excluded_from_periodic
+            else ""
+        )
         return RouteResult(
             predicted_route_to=general_cat.get("route_to", {}).get("source_id", "cninfo_general_announcement_pdf"),
             predicted_document_type=doc_type,
             predicted_classification=classification,
             classification_status=status,
-            false_positive_reason="summary" if excluded_from_periodic and "摘要" in title else "",
+            false_positive_reason=fp_reason,
             matched_patterns=matched,
         )
 
@@ -281,6 +306,13 @@ def evaluate_benchmark(
         else:
             class_match = result.predicted_classification == expected_class
 
+    # 可选：锁定 false_positive_reason（disclosure/event 边缘分类 lineage）
+    expected_fp = doc.get("expected_false_positive_reason")
+    if expected_fp is None:
+        fp_match = True
+    else:
+        fp_match = result.false_positive_reason == expected_fp
+
     return {
         "benchmark_id": doc.get("benchmark_id", ""),
         "title": title,
@@ -296,7 +328,7 @@ def evaluate_benchmark(
         "false_positive_reason": result.false_positive_reason,
         "notes": doc.get("notes", "") or result.notes,
         "benchmark_group": doc.get("benchmark_group", ""),
-        "overall_pass": route_match and doc_type_match and class_match,
+        "overall_pass": route_match and doc_type_match and class_match and fp_match,
     }
 
 
@@ -461,7 +493,7 @@ def main() -> None:
 
     route_pass = sum(1 for r in rows if r["route_match"] == "PASS")
     doc_pass = sum(1 for r in rows if r["document_type_match"] == "PASS")
-    fail_n = sum(1 for r in rows if r["route_match"] == "FAIL" or r["document_type_match"] == "FAIL")
+    fail_n = sum(1 for r in rows if not r.get("overall_pass", False))
 
     print(
         f"SUMMARY  benchmarks={len(rows)}  route_pass={route_pass}  "

@@ -163,3 +163,48 @@ documents:
     expected_classification: ambiguous
     benchmark_group: ambiguous
     notes: "Era D2E — 同时命中 inquiry 与 meeting 关键词的 ambiguous 分支此前无 benchmark 覆盖（routing rules §5）"
+
+  # Run 11 — Phase 1 主假阳性类 announcement_preview + 更正公告；补齐 false_positive_reason lineage
+  - benchmark_id: periodic_false_positive_005
+    title: "某某公司2024年第一季度报告披露提示性公告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: excluded_from_periodic_but_routed
+    expected_false_positive_reason: announcement_preview
+    benchmark_group: false_positive_guard
+    notes: "Run11 — Phase 1 quality audit 主假阳性（创业板 Q1 披露提示性公告）；须 fp=announcement_preview"
+
+  - benchmark_id: periodic_false_positive_006
+    title: "某某公司2024年第三季度报告披露提示性公告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: excluded_from_periodic_but_routed
+    expected_false_positive_reason: announcement_preview
+    benchmark_group: false_positive_guard
+    notes: "Run11 — Q3 披露提示性公告对称覆盖；fp=announcement_preview"
+
+  - benchmark_id: periodic_false_positive_007
+    title: "关于披露第一季度报告的提示性公告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: excluded_from_periodic_but_routed
+    expected_false_positive_reason: announcement_preview
+    benchmark_group: false_positive_guard
+    notes: "Run11 — 提示性公告变体（含关于披露交叉披露 exclusion）；fp=announcement_preview"
+
+  - benchmark_id: periodic_false_positive_008
+    title: "某某公司2024年半年度报告预告公告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: excluded_from_periodic_but_routed
+    expected_false_positive_reason: announcement_preview
+    benchmark_group: false_positive_guard
+    notes: "Run11 — 预告公告分支；fp=announcement_preview（非 delayed_disclosure）"
+
+  - benchmark_id: periodic_false_positive_009
+    title: "关于2024年年度报告的更正公告"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_document_type: announcement
+    expected_classification: excluded_from_periodic_but_routed
+    benchmark_group: false_positive_guard
+    notes: "Run11 — 更正公告不得路由为 periodic 全文（_periodic_blocked）；与补充公告对称"

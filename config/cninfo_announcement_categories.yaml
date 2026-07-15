@@ -149,7 +149,7 @@ categories:
       Broad fallback corpus. Titles excluded from periodic_report may land here with
       re-classified document_type. Use category-sample validation, NOT random success rate.
 
-# 延期披露 / 摘要等：从 periodic 排除后的候选路由（非独立 source，归入 general 或 future disclosure_related）
+# 延期披露 / 摘要 / 提示性预告等：从 periodic 排除后的候选路由（非独立 source，归入 general 或 future disclosure_related）
 excluded_from_periodic_routing:
   delayed_disclosure:
     positive_patterns:
@@ -171,6 +171,20 @@ excluded_from_periodic_routing:
     route_to:
       source_id: cninfo_general_announcement_pdf
     notes: Not periodic report full text; do not use for RAG report corpus primary source.
+
+  # Phase 1 quality audit 主假阳性类（创业板 Q1/Q3 披露提示性公告）；须保留 false_positive_reason=announcement_preview
+  announcement_preview:
+    positive_patterns:
+      - 披露提示性公告
+      - 提示性公告
+      - 预告公告
+    suggested_document_types:
+      - announcement
+    route_to:
+      source_id: cninfo_general_announcement_pdf
+    notes: >-
+      Phase 1 primary periodic false-positive class. Retain in disclosure/event
+      corpus as preview/tip notice; never count as periodic full text.
 
 # Sub Issue 2 旧 category_key → 新 routing 映射（供脚本迁移参考，非运行时路由）
 legacy_category_key_map:
