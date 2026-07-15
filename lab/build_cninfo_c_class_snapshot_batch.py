@@ -5,8 +5,16 @@ CNINFO C-class Company Snapshot Full Batch Runner（Era C Phase 4）。
 默认 --dry-run：验证 universe · 输出路径 · status/error/resume 框架，**不调用 build_snapshot**。
 Full batch 执行需显式 --execute --approve-full-snapshot-batch（本轮不默认执行）。
 
+可选 --exclusion-csv（仅 dry-run）：按 exclusion reconcile/manifest 过滤 universe，
+输出须落在 outputs/validation/（默认 _batch_exclusion_csv_native_dryrun）；
+禁止与 --execute 同用 · 禁止触碰 863/phase3/phase35 生产 snapshot 根。
+
 Usage:
     python lab/build_cninfo_c_class_snapshot_batch.py --dry-run
+    python lab/build_cninfo_c_class_snapshot_batch.py --dry-run \\
+      --sample-file lab/eval_companies_c_class_fuller_market_slice1_200.yaml \\
+      --exclusion-csv outputs/validation/cninfo_c_class_erad_snapshot_rebuild_dryrun/exclusion_reconcile.csv \\
+      --output-root outputs/validation/_batch_exclusion_csv_native_dryrun/
     python lab/build_cninfo_c_class_snapshot_batch.py --execute --approve-full-snapshot-batch  # 未来执行
 """
 
@@ -38,6 +46,11 @@ from build_cninfo_c_class_company_snapshot import (  # noqa: E402
     _load_harvest_status_at_root,
     _load_source_quality_at_root,
     _load_mapping,
+)
+from cninfo_c_class_snapshot_exclusion_filter import (  # noqa: E402
+    ExclusionFilterResult,
+    filter_universe_with_exclusion_csv,
+    refuse_exclusion_with_execute,
 )
 
 BASE_DIR = os.path.dirname(_LAB_DIR)
@@ -135,6 +148,23 @@ PHASE35_EXPANDED_SNAPSHOT_ISOLATION_VIOLATION = (
     "PHASE35_EXPANDED_SNAPSHOT_ISOLATION_VIOLATION"
 )
 PHASE35_EXPANDED_MERGE_MANIFEST_REQUIRED = "PHASE35_EXPANDED_MERGE_MANIFEST_REQUIRED"
+
+# exclusion-csv 原生 dry-run：默认写 validation 隔离根（禁止生产 snapshot 根）
+EXCLUSION_CSV_NATIVE_DRYRUN_OUTPUT_ROOT_REL = (
+    "outputs/validation/_batch_exclusion_csv_native_dryrun"
+)
+EXCLUSION_CSV_PHASE35_UNSUPPORTED = "EXCLUSION_CSV_PHASE35_UNSUPPORTED"
+EXCLUSION_CSV_OUTPUT_NOT_UNDER_VALIDATION = (
+    "EXCLUSION_CSV_OUTPUT_NOT_UNDER_VALIDATION"
+)
+PRODUCTION_SNAPSHOT_ROOT_FORBIDDEN = "PRODUCTION_SNAPSHOT_ROOT_FORBIDDEN"
+
+EXCLUSION_CSV_FORBIDDEN_PROD_SNAPSHOT_ROOTS = (
+    FULL_SNAPSHOT_OUT_DIR_REL,
+    PHASE3_SUCCESS_SNAPSHOT_OUTPUT_ROOT_REL,
+    PHASE35_EXPANDED_SNAPSHOT_OUTPUT_ROOT_REL,
+    PHASE2_SNAPSHOT_OUTPUT_ROOT_REL,
+)
 
 PHASE35_EXPANDED_DRYRUN_REPORT_CSV = os.path.join(
     BASE_DIR,
@@ -1425,6 +1455,105 @@ def write_dryrun_summary(
     return gate
 
 
+def assert_exclusion_csv_dryrun_output_root_safe(output_dir: str) -> str:
+    """
+    exclusion-csv 原生 dry-run 输出根守卫：
+      1) 必须落在 outputs/validation/
+      2) 不得落在 863/full · phase3 · phase35 · phase2 生产 snapshot 根
+    """
+    norm = _norm_abs_path(output_dir).rstrip("/")
+    validation_root = _norm_abs_path(
+        os.path.join(BASE_DIR, "outputs/validation")
+    ).rstrip("/")
+    if not (norm == validation_root or norm.startswith(validation_root + "/")):
+        rel = os.path.relpath(norm, BASE_DIR).replace("\\", "/")
+        raise RuntimeError(
+            f"{EXCLUSION_CSV_OUTPUT_NOT_UNDER_VALIDATION}: "
+            f"output 必须在 outputs/validation/ 下，收到: {rel}"
+        )
+    for forbidden_rel in EXCLUSION_CSV_FORBIDDEN_PROD_SNAPSHOT_ROOTS:
+        forbidden_abs = _norm_abs_path(
+            os.path.join(BASE_DIR, forbidden_rel)
+        ).rstrip("/")
+        if norm == forbidden_abs or norm.startswith(forbidden_abs + "/"):
+            raise RuntimeError(
+                f"{PRODUCTION_SNAPSHOT_ROOT_FORBIDDEN}: {forbidden_rel}"
+            )
+    return norm
+
+
+def write_exclusion_filtered_universe_yaml(
+    included: List[Dict[str, str]],
+    path: str,
+    *,
+    source_universe: str,
+    exclusion_csv: str,
+    csv_kind: str,
+    excluded_unique_count: int,
+) -> None:
+    """写出 exclusion 过滤后的 universe YAML（validation 根 · 非生产）。"""
+    payload = {
+        "version": "c-class-exclusion-csv-native-filtered-v1",
+        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "purpose": "batch_builder_native_exclusion_csv_dryrun",
+        "source_universe": source_universe,
+        "exclusion_csv": exclusion_csv,
+        "csv_kind": csv_kind,
+        "company_count": len(included),
+        "excluded_unique_count": excluded_unique_count,
+        "execute_production_snapshot_rebuild": False,
+        "note": "validation dry-run only · not production snapshot universe",
+        "companies": [
+            {
+                "stock_code": c["company_code"],
+                "company_code": c["company_code"],
+                "company_name": c.get("company_name") or "",
+                "board": c.get("board") or "",
+            }
+            for c in included
+        ],
+    }
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+    with open(path, "w", encoding="utf-8") as fh:
+        yaml.safe_dump(payload, fh, allow_unicode=True, sort_keys=False)
+
+
+def prepare_exclusion_csv_dryrun_universe(
+    sample_file: str,
+    exclusion_csv: str,
+    output_dir: str,
+) -> Tuple[str, ExclusionFilterResult]:
+    """
+    加载 sample universe，按 exclusion-csv 过滤，写入 validation 根下临时 YAML。
+    返回 (filtered_yaml_path, filter_result)。
+    """
+    assert_exclusion_csv_dryrun_output_root_safe(output_dir)
+    os.makedirs(output_dir, exist_ok=True)
+
+    companies, _meta = load_universe_yaml(sample_file)
+    if not os.path.isfile(exclusion_csv):
+        raise FileNotFoundError(f"exclusion_csv_missing: {exclusion_csv}")
+    filter_result = filter_universe_with_exclusion_csv(companies, exclusion_csv)
+
+    source_rel = sample_file
+    if os.path.isabs(sample_file):
+        source_rel = os.path.relpath(sample_file, BASE_DIR).replace("\\", "/")
+    exclusion_rel = exclusion_csv
+    if os.path.isabs(exclusion_csv):
+        exclusion_rel = os.path.relpath(exclusion_csv, BASE_DIR).replace("\\", "/")
+
+    filtered_path = os.path.join(output_dir, "filtered_universe_included.yaml")
+    write_exclusion_filtered_universe_yaml(
+        filter_result.included,
+        filtered_path,
+        source_universe=source_rel,
+        exclusion_csv=exclusion_rel,
+        csv_kind=filter_result.csv_kind,
+        excluded_unique_count=len(filter_result.excluded_codes),
+    )
+    return filtered_path, filter_result
+
+
 def run_dry_run(
     universe_path: str = UNIVERSE_YAML,
     hold_path: str = HOLD_YAML,
@@ -1598,17 +1727,51 @@ def main() -> int:
         action="store_true",
         help="忽略 resume 跳过，重建全部",
     )
+    parser.add_argument(
+        "--exclusion-csv",
+        default=None,
+        help=(
+            "exclusion reconcile/manifest CSV；仅 dry-run；"
+            "与 --execute 互斥；输出须在 outputs/validation/"
+        ),
+    )
     args = parser.parse_args()
+
+    # 硬拒绝：exclusion-csv 禁止与 execute 同用（无静默忽略）
+    try:
+        refuse_exclusion_with_execute(
+            dry_run=args.dry_run,
+            exclusion_csv=args.exclusion_csv,
+        )
+    except RuntimeError as exc:
+        print(str(exc), file=sys.stderr)
+        raise SystemExit(2) from exc
 
     sample_file = args.sample_file or args.universe_file
     if not os.path.isabs(sample_file):
         sample_file = os.path.join(BASE_DIR, sample_file)
+
+    exclusion_csv_arg = args.exclusion_csv
+    exclusion_csv_abs: Optional[str] = None
+    if exclusion_csv_arg:
+        exclusion_csv_abs = (
+            exclusion_csv_arg
+            if os.path.isabs(exclusion_csv_arg)
+            else os.path.join(BASE_DIR, exclusion_csv_arg)
+        )
 
     output_dir = args.output_root or args.output_dir
     if output_dir and not os.path.isabs(output_dir):
         output_dir = os.path.join(BASE_DIR, output_dir)
 
     if is_phase35_expanded_snapshot_mode(args, sample_file):
+        if exclusion_csv_arg:
+            print(
+                f"{EXCLUSION_CSV_PHASE35_UNSUPPORTED}: "
+                "--exclusion-csv 仅支持标准 dry-run 路径，不支持 Phase 3.5",
+                file=sys.stderr,
+            )
+            raise SystemExit(2)
         universe_csv = os.path.join(BASE_DIR, PHASE35_EXPANDED_UNIVERSE_CSV_REL)
         manifest_path = args.merge_manifest or os.path.join(BASE_DIR, PHASE35_MERGE_MANIFEST_CSV_REL)
         if not os.path.isabs(manifest_path):
@@ -1679,8 +1842,42 @@ def main() -> int:
         print(f"phase35_expanded_success_subset_snapshot_build_gate: {result['gate']}")
         return 0 if result["failed_count"] == 0 and snapshot_count == PHASE35_EXPANDED_EXPECTED_COUNT else 1
 
-    report_path = args.output_csv or DRYRUN_REPORT_CSV
-    summary_path = args.output_md or DRYRUN_SUMMARY_MD
+    # --- 标准 dry-run / execute 路径 ---
+    exclusion_filter_result: Optional[ExclusionFilterResult] = None
+    universe_for_run = sample_file
+    # 无 exclusion-csv 时保持旧行为：仅 --output-dir 生效（--output-root 在非 phase35 下仍忽略）
+    dry_run_out_dir: Optional[str] = args.output_dir
+
+    if exclusion_csv_arg and exclusion_csv_abs:
+        # exclusion-csv 原生路径：默认 validation 隔离根，并同时尊重 --output-root
+        dry_run_out_dir = output_dir or os.path.join(
+            BASE_DIR, EXCLUSION_CSV_NATIVE_DRYRUN_OUTPUT_ROOT_REL
+        )
+        if not os.path.isabs(dry_run_out_dir):
+            dry_run_out_dir = os.path.join(BASE_DIR, dry_run_out_dir)
+        try:
+            universe_for_run, exclusion_filter_result = (
+                prepare_exclusion_csv_dryrun_universe(
+                    sample_file,
+                    exclusion_csv_abs,
+                    dry_run_out_dir,
+                )
+            )
+        except RuntimeError as exc:
+            print(str(exc), file=sys.stderr)
+            raise SystemExit(2) from exc
+
+    if exclusion_csv_arg and dry_run_out_dir:
+        # 默认报告落到 validation 隔离根（可被 --output-csv/--output-md 覆盖）
+        report_path = args.output_csv or os.path.join(
+            dry_run_out_dir, "dryrun_report.csv"
+        )
+        summary_path = args.output_md or os.path.join(
+            dry_run_out_dir, "dryrun_summary.md"
+        )
+    else:
+        report_path = args.output_csv or DRYRUN_REPORT_CSV
+        summary_path = args.output_md or DRYRUN_SUMMARY_MD
     if not os.path.isabs(report_path):
         report_path = os.path.join(BASE_DIR, report_path)
     if not os.path.isabs(summary_path):
@@ -1688,9 +1885,9 @@ def main() -> int:
 
     if args.dry_run:
         result = run_dry_run(
-            universe_path=sample_file,
+            universe_path=universe_for_run,
             harvest_root=args.harvest_root,
-            out_dir=args.output_dir,
+            out_dir=dry_run_out_dir,
             report_path=report_path,
             summary_path=summary_path,
             resume=args.resume,
@@ -1698,6 +1895,20 @@ def main() -> int:
         )
         v = result["validation"]
         print("mode: dry-run")
+        if exclusion_csv_arg:
+            print("sample_mode: exclusion_csv_filter")
+            print(f"exclusion_csv: {exclusion_csv_arg}")
+            if exclusion_filter_result is not None:
+                print(f"csv_kind: {exclusion_filter_result.csv_kind}")
+                print(
+                    f"excluded_unique_count: "
+                    f"{len(exclusion_filter_result.excluded_codes)}"
+                )
+                print(
+                    f"company_count_before_filter: "
+                    f"{exclusion_filter_result.included_count + exclusion_filter_result.excluded_count}"
+                )
+            print(f"filtered_universe: {universe_for_run}")
         print(f"universe_ok: {result['universe_ok']}")
         print(f"company_count: {v['company_count']}")
         print(f"hold_overlap: {v['hold_overlap_count']}")
@@ -1708,8 +1919,19 @@ def main() -> int:
         print(f"dryrun_report: {report_path}")
         print(f"dryrun_summary: {summary_path}")
         print(f"snapshot_batch_dryrun_gate: {result['gate']}")
+        print("cninfo_calls=0")
+        print("snapshot_json_written=0")
+        if exclusion_csv_arg:
+            capability_gate = (
+                "PASS_OFFLINE" if result["universe_ok"] else "FAIL_REVIEW_REQUIRED"
+            )
+            print(f"exclusion_csv_native_dryrun_gate: {capability_gate}")
+            print("capability_gain: true")
+            print("execute_production_snapshot_rebuild: false")
+            return 0 if result["universe_ok"] else 1
         return 0 if result["universe_ok"] else 1
 
+    # execute 路径：exclusion-csv 已在上方 refuse；此处沿用原逻辑
     enforce_execute_approval(args, sample_file)
     configure_snapshot_batch_paths(harvest_root=args.harvest_root, output_dir=args.output_dir)
 
