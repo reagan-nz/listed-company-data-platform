@@ -165,6 +165,45 @@ ERAD_SLICE2_ORGID_FALLBACK_RETRY_UNIVERSE_SIZE_VIOLATION = (
 ERAD_SLICE2_ORGID_FALLBACK_RETRY_CASE_SET_VIOLATION = (
     "erad_a_slice2_orgid_fallback_retry_case_ids_must_be_AD2E578_590_598"
 )
+# A-FM-01：listing-aware 下一片（AD2E601–650 · 独立根 · 不得写入封闭 S1 live 根）
+DEFAULT_ERAD_LISTING_AWARE_S2_UNIVERSE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_erad_next_scale_listing_aware_s2_plus50_universe_20260715.csv",
+)
+DEFAULT_ERAD_LISTING_AWARE_S2_OUTPUT_ROOT = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_erad_next_scale_listing_aware_s2",
+)
+REQUIRED_ERAD_LISTING_AWARE_S2_UNIVERSE_SIZE = 50
+ERAD_LISTING_AWARE_S2_REQUEST_CAP = 120
+ERAD_LISTING_AWARE_S2_COHORT = "next_scale_listing_aware"
+ALLOWED_ERAD_LISTING_AWARE_S2_CASE_IDS: Set[str] = {
+    f"AD2E{i:03d}" for i in range(601, 651)
+}
+ERAD_LISTING_AWARE_S2_INCLUDE_REASON = (
+    "next_scale_listing_aware_s2;a_cumulative_disjoint;listing_period_gate;"
+    "st_exclude;non_bse;b_overlap_allowed_cross_track;metadata_only_no_pdf"
+)
+ERAD_LISTING_AWARE_S2_CLOSED_ROOT_WRITE_FORBIDDEN = (
+    "listing_aware_s2_must_not_write_closed_slice2_s1_live_root"
+)
+ERAD_LISTING_AWARE_S2_UNIVERSE_CSV_REQUIRED = (
+    "erad_a_listing_aware_s2_universe_csv_required"
+)
+ERAD_LISTING_AWARE_S2_UNIVERSE_SIZE_VIOLATION = (
+    "erad_a_listing_aware_s2_universe_size_must_equal_50"
+)
+ERAD_LISTING_AWARE_S2_CASE_SET_VIOLATION = (
+    "erad_a_listing_aware_s2_case_ids_must_be_AD2E601_650"
+)
+ERAD_LISTING_AWARE_S2_COHORT_INVALID = (
+    "erad_a_listing_aware_s2_cohort_must_be_next_scale_listing_aware"
+)
+ERAD_LISTING_AWARE_S2_OVERLAP_A_S2_S1 = "erad_a_listing_aware_s2_overlap_a_slice2_s1"
 ERAD_NEXT_SCALE_SLICE2_SCALE200_EFFECTIVE_LEDGER = os.path.join(
     BASE_DIR,
     "outputs",
@@ -5378,7 +5417,7 @@ def _erad_a_slice2_case_number(case_id: str) -> int:
 
 
 def _derive_a_slice2_report_fields(case_num: int) -> Tuple[str, str, str, str]:
-    """按 case 序号推导 report_type / period / title keywords（case_num 501–600 · mod-10 同 slice1）。"""
+    """按 case 序号推导 report_type / period / title keywords（501+ · mod-10；含 AD2E601+）。"""
     idx = case_num - 501
     slot = idx % 10
     if slot < 7:
@@ -5411,7 +5450,7 @@ def _derive_a_slice2_report_fields(case_num: int) -> Tuple[str, str, str, str]:
 
 
 def load_erad_next_scale_slice2_universe(path: str) -> List[EraDNextScaleSlice2UniverseCase]:
-    """加载 slice2 S1 +100 冻结 universe（4 列 CSV）；派生运行字段，不 mutate 源文件。"""
+    """加载 slice2 / listing-aware universe（4 列 CSV）；派生运行字段，不 mutate 源文件。"""
     cases: List[EraDNextScaleSlice2UniverseCase] = []
     with open(path, newline="", encoding="utf-8") as f:
         for row in csv.DictReader(f):
@@ -5427,6 +5466,11 @@ def load_erad_next_scale_slice2_universe(path: str) -> List[EraDNextScaleSlice2U
             report_type, expected_period, title_kw, excluded_kw = _derive_a_slice2_report_fields(
                 case_num
             )
+            include_reason = (
+                ERAD_LISTING_AWARE_S2_INCLUDE_REASON
+                if cohort == ERAD_LISTING_AWARE_S2_COHORT
+                else ERAD_NEXT_SCALE_SLICE2_INCLUDE_REASON
+            )
             cases.append(
                 EraDNextScaleSlice2UniverseCase(
                     case_id=case_id,
@@ -5439,7 +5483,7 @@ def load_erad_next_scale_slice2_universe(path: str) -> List[EraDNextScaleSlice2U
                     excluded_title_keywords=excluded_kw,
                     cohort=cohort,
                     prior_in_scale_200="no",
-                    include_reason=ERAD_NEXT_SCALE_SLICE2_INCLUDE_REASON,
+                    include_reason=include_reason,
                     erad_include="yes",
                 )
             )
@@ -5463,7 +5507,41 @@ def slice2_to_phase2_case(case: EraDNextScaleSlice2UniverseCase) -> Phase2Univer
     )
 
 
+def validate_erad_listing_aware_s2_case(case: EraDNextScaleSlice2UniverseCase) -> List[str]:
+    """listing-aware S2 单案校验（AD2E601–650 · cohort=next_scale_listing_aware）。"""
+    issues: List[str] = []
+    if case.case_id not in ALLOWED_ERAD_LISTING_AWARE_S2_CASE_IDS:
+        issues.append(f"{ERAD_SLICE2_CASE_ID_NOT_ALLOWED}:{case.case_id}")
+    case_num = (
+        _erad_a_slice2_case_number(case.case_id)
+        if ERAD_SCALE_200_CASE_ID_PATTERN.match(case.case_id)
+        else 0
+    )
+    if case_num and case_num <= 600:
+        issues.append(f"{ERAD_SLICE2_PRIOR_CASE_FORBIDDEN}:{case.case_id}")
+    if case.erad_include != "yes":
+        issues.append(ERAD_SLICE2_INCLUDE_REQUIRED)
+    if case.cohort != ERAD_LISTING_AWARE_S2_COHORT:
+        issues.append(ERAD_LISTING_AWARE_S2_COHORT_INVALID)
+    if case.prior_in_scale_200 != "no":
+        issues.append(ERAD_SLICE2_PRIOR_SCALE_200_INVALID)
+    if not case.company_code:
+        issues.append("company_code_missing")
+    if not case.company_name:
+        issues.append("company_name_missing")
+    if case.report_type not in tiny_live.VALID_REPORT_TYPES:
+        issues.append(f"invalid_report_type:{case.report_type}")
+    if not case.expected_period:
+        issues.append("expected_period_missing")
+    if ERAD_SLICE2_ST_NAME_PATTERN.search(case.company_name or ""):
+        issues.append(f"{ERAD_SLICE2_ST_NAME_HIT}:{case.company_code}")
+    issues.extend(validate_universe_code_name(slice2_to_phase2_case(case)))
+    return issues
+
+
 def validate_erad_next_scale_slice2_case(case: EraDNextScaleSlice2UniverseCase) -> List[str]:
+    if case.cohort == ERAD_LISTING_AWARE_S2_COHORT:
+        return validate_erad_listing_aware_s2_case(case)
     issues: List[str] = []
     if case.case_id not in ALLOWED_ERAD_NEXT_SCALE_SLICE2_CASE_IDS:
         issues.append(f"{ERAD_SLICE2_CASE_ID_NOT_ALLOWED}:{case.case_id}")
@@ -5494,10 +5572,28 @@ def validate_erad_next_scale_slice2_case(case: EraDNextScaleSlice2UniverseCase) 
     return issues
 
 
+def validate_erad_listing_aware_s2_universe_size(
+    cases: List[EraDNextScaleSlice2UniverseCase],
+) -> Tuple[bool, str]:
+    included = [c for c in cases if c.erad_include == "yes"]
+    if len(included) != REQUIRED_ERAD_LISTING_AWARE_S2_UNIVERSE_SIZE:
+        return (
+            False,
+            f"{ERAD_LISTING_AWARE_S2_UNIVERSE_SIZE_VIOLATION}: got {len(included)} "
+            f"expected {REQUIRED_ERAD_LISTING_AWARE_S2_UNIVERSE_SIZE}",
+        )
+    case_ids = {c.case_id for c in included}
+    if case_ids != ALLOWED_ERAD_LISTING_AWARE_S2_CASE_IDS:
+        return False, f"{ERAD_LISTING_AWARE_S2_CASE_SET_VIOLATION}: got={sorted(case_ids)[:5]}..."
+    return True, ""
+
+
 def validate_erad_next_scale_slice2_universe_size(
     cases: List[EraDNextScaleSlice2UniverseCase],
 ) -> Tuple[bool, str]:
     included = [c for c in cases if c.erad_include == "yes"]
+    if included and included[0].cohort == ERAD_LISTING_AWARE_S2_COHORT:
+        return validate_erad_listing_aware_s2_universe_size(cases)
     if len(included) != REQUIRED_ERAD_NEXT_SCALE_SLICE2_UNIVERSE_SIZE:
         return (
             False,
@@ -5525,10 +5621,60 @@ def validate_erad_next_scale_slice2_duplicate_codes(
     return issues
 
 
+def lint_erad_listing_aware_s2_overlap(
+    cases: List[EraDNextScaleSlice2UniverseCase],
+) -> List[str]:
+    """
+    listing-aware S2 overlap lint：仅 A cumulative（含 slice2 S1）+ ST + L-D6。
+
+    B 轨 overlap 允许（跨轨不同维度）；不做 B / AB_182 阻断。
+    """
+    issues: List[str] = []
+    slice2_codes = {c.company_code for c in cases if c.erad_include == "yes"}
+    a_s200 = _load_company_codes_from_csv(DEFAULT_ERAD_SCALE_200_UNIVERSE_CSV, "company_code")
+    a_s1 = _load_company_codes_from_csv(DEFAULT_ERAD_NEXT_SCALE_SLICE1_UNIVERSE_CSV, "company_code")
+    a_s2_s1 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_UNIVERSE_CSV, "company_code"
+    )
+    a_all = a_s200 | a_s1 | a_s2_s1
+    a_cum_eff = _load_company_codes_from_csv(
+        ERAD_NEXT_SCALE_SLICE2_SCALE200_EFFECTIVE_LEDGER, "company_code"
+    ) | _load_company_codes_from_csv(
+        ERAD_NEXT_SCALE_SLICE2_SLICE1_EFFECTIVE_LEDGER, "company_code"
+    )
+    checks = (
+        (a_all, ERAD_SLICE2_OVERLAP_A_ALL),
+        (a_cum_eff, ERAD_SLICE2_OVERLAP_A_CUM_EFF),
+        (a_s200, ERAD_SLICE2_OVERLAP_A_S200),
+        (a_s1, ERAD_SLICE2_OVERLAP_A_S1),
+        (a_s2_s1, ERAD_LISTING_AWARE_S2_OVERLAP_A_S2_S1),
+    )
+    for ref_codes, err_code in checks:
+        overlap = slice2_codes & ref_codes
+        if overlap:
+            issues.append(f"{err_code}:count={len(overlap)}")
+
+    st_hits = [
+        c.company_code
+        for c in cases
+        if c.erad_include == "yes" and ERAD_SLICE2_ST_NAME_PATTERN.search(c.company_name or "")
+    ]
+    if st_hits:
+        issues.append(f"{ERAD_SLICE2_ST_NAME_HIT}:count={len(st_hits)}")
+    listing_blocking, _listing_flags = lint_erad_next_scale_slice2_listing_period(
+        cases,
+        grandfather_case_ids=set(),
+    )
+    issues.extend(listing_blocking)
+    return issues
+
+
 def lint_erad_next_scale_slice2_overlap(
     cases: List[EraDNextScaleSlice2UniverseCase],
 ) -> List[str]:
     """离线 overlap lint：A/B cumulative · AB_182 · L-D4 ST · L-D6 listing_period。"""
+    if cases and any(c.cohort == ERAD_LISTING_AWARE_S2_COHORT for c in cases if c.erad_include == "yes"):
+        return lint_erad_listing_aware_s2_overlap(cases)
     issues: List[str] = []
     slice2_codes = {c.company_code for c in cases if c.erad_include == "yes"}
     a_s200 = _load_company_codes_from_csv(DEFAULT_ERAD_SCALE_200_UNIVERSE_CSV, "company_code")
@@ -5661,6 +5807,74 @@ def validate_erad_next_scale_slice2_universe_csv_path(universe_csv: str) -> Tupl
     return True, ""
 
 
+def is_erad_listing_aware_s2_mode(
+    universe_csv: Optional[str] = None,
+    output_root: Optional[str] = None,
+) -> bool:
+    """判定是否为 AD2E601–650 listing-aware 下一片模式。"""
+    la_universe = os.path.normpath(
+        os.path.abspath(DEFAULT_ERAD_LISTING_AWARE_S2_UNIVERSE_CSV)
+    )
+    la_root = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S2_OUTPUT_ROOT)
+    if universe_csv:
+        actual_u = os.path.normpath(os.path.abspath(universe_csv))
+        if actual_u == la_universe:
+            return True
+    if output_root:
+        root = _normalize_output_root(output_root)
+        if root == la_root or root.startswith(la_root + os.sep):
+            return True
+    return False
+
+
+def validate_erad_listing_aware_s2_universe_csv_path(universe_csv: str) -> Tuple[bool, str]:
+    expected = os.path.normpath(os.path.abspath(DEFAULT_ERAD_LISTING_AWARE_S2_UNIVERSE_CSV))
+    actual = os.path.normpath(os.path.abspath(universe_csv))
+    if actual != expected:
+        return False, ERAD_LISTING_AWARE_S2_UNIVERSE_CSV_REQUIRED
+    return True, ""
+
+
+def validate_erad_listing_aware_s2_output_root(output_root: str) -> Tuple[bool, str]:
+    """listing-aware S2 输出仅允许独立根；禁止写入封闭 slice2 S1 live 根。"""
+    root = _normalize_output_root(output_root)
+    allowed = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S2_OUTPUT_ROOT)
+    closed_s1 = _normalize_output_root(DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_OUTPUT_ROOT)
+    if root == closed_s1 or root.startswith(closed_s1 + os.sep):
+        return False, ERAD_LISTING_AWARE_S2_CLOSED_ROOT_WRITE_FORBIDDEN
+    blocked = (
+        (PHASE1_OUTPUT_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
+        (DEFAULT_OUTPUT_ROOT, PHASE2_EXPANSION_WRITE_FORBIDDEN),
+        (DEFAULT_RETRY_OUTPUT_ROOT, RETRY_V1_WRITE_FORBIDDEN),
+        (DEFAULT_RETRY_V2_OUTPUT_ROOT, RETRY_V2_WRITE_FORBIDDEN),
+        (DEFAULT_RETRY_V3_OUTPUT_ROOT, RETRY_V3_OUTPUT_ROOT_VIOLATION),
+        (PRECHECK_OUTPUT_ROOT, PRECHECK_WRITE_FORBIDDEN),
+        (DEFAULT_PHASE3_OUTPUT_ROOT, PHASE3_OUTPUT_ROOT_VIOLATION),
+        (DEFAULT_A3M017_RETRY_OUTPUT_ROOT, "a3m017_isolated_retry_output_root_forbidden"),
+        (DEFAULT_ERAD_SCALE_200_OUTPUT_ROOT, ERAD_SLICE2_SCALE_200_ROOT_WRITE_FORBIDDEN),
+        (
+            DEFAULT_ERAD_FAILED_RETRY_OUTPUT_ROOT,
+            ERAD_SLICE2_FAILED_RETRY_ROOT_WRITE_FORBIDDEN,
+        ),
+        (DEFAULT_ERAD_NEXT_SCALE_SLICE1_OUTPUT_ROOT, ERAD_SLICE2_SLICE1_ROOT_WRITE_FORBIDDEN),
+        (
+            DEFAULT_ERAD_SLICE2_ORGID_FALLBACK_RETRY_OUTPUT_ROOT,
+            "orgid_fallback_retry_root_forbidden_for_listing_aware_s2",
+        ),
+        (C_CLASS_HARVEST_ROOT, "c_class_harvest_output_root_forbidden"),
+        (B_CLASS_VALIDATION_PREFIX, "b_class_validation_output_root_forbidden"),
+        (C_CLASS_VALIDATION_PREFIX, "c_class_validation_output_root_forbidden"),
+        (D_CLASS_VALIDATION_PREFIX, "d_class_validation_output_root_forbidden"),
+    )
+    for path, err in blocked:
+        p = _normalize_output_root(path)
+        if root == p or root.startswith(p + os.sep):
+            return False, err
+    if root == allowed or root.startswith(allowed + os.sep):
+        return True, ""
+    return False, "output_root_must_be_under_cninfo_a_class_erad_next_scale_listing_aware_s2"
+
+
 def is_erad_slice2_orgid_fallback_retry_mode(
     universe_csv: Optional[str] = None,
     output_root: Optional[str] = None,
@@ -5750,10 +5964,16 @@ def validate_erad_slice2_orgid_fallback_retry_universe_size(
     return True, ""
 
 
-def erad_slice2_request_cap_for_mode(*, orgid_fallback_retry: bool) -> int:
+def erad_slice2_request_cap_for_mode(
+    *,
+    orgid_fallback_retry: bool = False,
+    listing_aware_s2: bool = False,
+) -> int:
     """按模式返回 CNINFO 请求上限。"""
     if orgid_fallback_retry:
         return ERAD_SLICE2_ORGID_FALLBACK_RETRY_REQUEST_CAP
+    if listing_aware_s2:
+        return ERAD_LISTING_AWARE_S2_REQUEST_CAP
     return ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP
 
 
@@ -5779,6 +5999,10 @@ def validate_erad_next_scale_slice2_output_root(output_root: str) -> Tuple[bool,
         (
             DEFAULT_ERAD_SLICE2_ORGID_FALLBACK_RETRY_OUTPUT_ROOT,
             "orgid_fallback_retry_root_forbidden_for_full_slice2",
+        ),
+        (
+            DEFAULT_ERAD_LISTING_AWARE_S2_OUTPUT_ROOT,
+            "listing_aware_s2_root_forbidden_for_full_slice2_s1",
         ),
         (C_CLASS_HARVEST_ROOT, "c_class_harvest_output_root_forbidden"),
         (B_CLASS_VALIDATION_PREFIX, "b_class_validation_output_root_forbidden"),
@@ -5832,11 +6056,17 @@ def parse_erad_a_slice2_case_range(case_range: str) -> Tuple[str, str]:
         raise ValueError(ERAD_SLICE2_CASE_RANGE_INVALID)
     start_id = parts[0].strip()
     end_id = parts[1].strip()
-    if start_id not in ALLOWED_ERAD_NEXT_SCALE_SLICE2_CASE_IDS:
+    allowed = ALLOWED_ERAD_NEXT_SCALE_SLICE2_CASE_IDS | ALLOWED_ERAD_LISTING_AWARE_S2_CASE_IDS
+    if start_id not in allowed:
         raise ValueError(f"{ERAD_SLICE2_CASE_RANGE_INVALID}:start={start_id}")
-    if end_id not in ALLOWED_ERAD_NEXT_SCALE_SLICE2_CASE_IDS:
+    if end_id not in allowed:
         raise ValueError(f"{ERAD_SLICE2_CASE_RANGE_INVALID}:end={end_id}")
-    if _erad_a_slice2_case_number(start_id) > _erad_a_slice2_case_number(end_id):
+    # 不允许跨模式混用 501–600 与 601–650
+    start_num = _erad_a_slice2_case_number(start_id)
+    end_num = _erad_a_slice2_case_number(end_id)
+    if (start_num <= 600) != (end_num <= 600):
+        raise ValueError(f"{ERAD_SLICE2_CASE_RANGE_INVALID}:cross_mode_range")
+    if start_num > end_num:
         raise ValueError(f"{ERAD_SLICE2_CASE_RANGE_INVALID}:order")
     return start_id, end_id
 
@@ -6497,14 +6727,26 @@ def main(argv: Optional[List[str]] = None) -> int:
         orgid_fb_retry = is_erad_slice2_orgid_fallback_retry_mode(
             args.universe_csv, args.output_root
         )
-        if args.output_root is None:
-            args.output_root = (
-                DEFAULT_ERAD_SLICE2_ORGID_FALLBACK_RETRY_OUTPUT_ROOT
-                if orgid_fb_retry
-                else DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_OUTPUT_ROOT
+        listing_aware_s2 = is_erad_listing_aware_s2_mode(
+            args.universe_csv, args.output_root
+        )
+        if orgid_fb_retry and listing_aware_s2:
+            print(
+                "ERROR: erad_a_slice2_orgid_fallback_and_listing_aware_s2_mutually_exclusive",
+                file=sys.stderr,
             )
-            # 若仅给了 retry universe，需再判定一次
+            return 2
+        if args.output_root is None:
+            if orgid_fb_retry:
+                args.output_root = DEFAULT_ERAD_SLICE2_ORGID_FALLBACK_RETRY_OUTPUT_ROOT
+            elif listing_aware_s2:
+                args.output_root = DEFAULT_ERAD_LISTING_AWARE_S2_OUTPUT_ROOT
+            else:
+                args.output_root = DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_OUTPUT_ROOT
             orgid_fb_retry = is_erad_slice2_orgid_fallback_retry_mode(
+                args.universe_csv, args.output_root
+            )
+            listing_aware_s2 = is_erad_listing_aware_s2_mode(
                 args.universe_csv, args.output_root
             )
         enforce_forbidden_options(args)
@@ -6520,6 +6762,17 @@ def main(argv: Optional[List[str]] = None) -> int:
             ok_root, root_err = validate_erad_slice2_orgid_fallback_retry_output_root(
                 args.output_root
             )
+            if not ok_root:
+                print(f"ERROR: {root_err}", file=sys.stderr)
+                return 2
+        elif listing_aware_s2:
+            ok_csv, csv_err = validate_erad_listing_aware_s2_universe_csv_path(
+                args.universe_csv
+            )
+            if not ok_csv:
+                print(f"ERROR: {csv_err}", file=sys.stderr)
+                return 2
+            ok_root, root_err = validate_erad_listing_aware_s2_output_root(args.output_root)
             if not ok_root:
                 print(f"ERROR: {root_err}", file=sys.stderr)
                 return 2
@@ -6550,13 +6803,17 @@ def main(argv: Optional[List[str]] = None) -> int:
             except ValueError as exc:
                 print(f"ERROR: {exc}", file=sys.stderr)
                 return 2
-        request_cap = erad_slice2_request_cap_for_mode(orgid_fallback_retry=orgid_fb_retry)
+        request_cap = erad_slice2_request_cap_for_mode(
+            orgid_fallback_retry=orgid_fb_retry,
+            listing_aware_s2=listing_aware_s2,
+        )
         if args.limit is not None and not case_range:
-            expected_limit = (
-                REQUIRED_ERAD_SLICE2_ORGID_FALLBACK_RETRY_SIZE
-                if orgid_fb_retry
-                else REQUIRED_ERAD_NEXT_SCALE_SLICE2_UNIVERSE_SIZE
-            )
+            if orgid_fb_retry:
+                expected_limit = REQUIRED_ERAD_SLICE2_ORGID_FALLBACK_RETRY_SIZE
+            elif listing_aware_s2:
+                expected_limit = REQUIRED_ERAD_LISTING_AWARE_S2_UNIVERSE_SIZE
+            else:
+                expected_limit = REQUIRED_ERAD_NEXT_SCALE_SLICE2_UNIVERSE_SIZE
             if args.limit != expected_limit:
                 print(
                     f"ERROR: {ERAD_NEXT_SCALE_SLICE2_UNIVERSE_SIZE_VIOLATION}: limit={args.limit}",
@@ -6577,6 +6834,11 @@ def main(argv: Optional[List[str]] = None) -> int:
             if not ok_size:
                 print(f"ERROR: {size_err}", file=sys.stderr)
                 return 2
+        elif listing_aware_s2 and not case_range:
+            ok_size, size_err = validate_erad_listing_aware_s2_universe_size(included)
+            if not ok_size:
+                print(f"ERROR: {size_err}", file=sys.stderr)
+                return 2
         elif not case_range:
             ok_size, size_err = validate_erad_next_scale_slice2_universe_size(included)
             if not ok_size:
@@ -6586,18 +6848,19 @@ def main(argv: Optional[List[str]] = None) -> int:
             print(f"ERROR: {ERAD_SLICE2_CASE_RANGE_INVALID}:empty_subset", file=sys.stderr)
             return 2
         expected_case_count = len(included)
-        mode_label = (
-            "erad_a_scale_500_slice2_orgid_fallback_retry_live"
-            if orgid_fb_retry
-            else "erad_a_scale_500_slice2_live"
-        )
+        if orgid_fb_retry:
+            mode_label = "erad_a_scale_500_slice2_orgid_fallback_retry_live"
+        elif listing_aware_s2:
+            mode_label = "erad_a_listing_aware_s2_live"
+        else:
+            mode_label = "erad_a_scale_500_slice2_live"
         if args.mode == "dry_run":
             rows, universe_issues = process_erad_next_scale_slice2_dry_run(included, normalized_root)
             total_planned = sum(
                 int(r.get("planned_request_count_case", "0")) for r in rows
             )
             ok_cap, cap_err = enforce_erad_next_scale_slice2_request_cap(total_planned)
-            if orgid_fb_retry and total_planned > request_cap:
+            if (orgid_fb_retry or listing_aware_s2) and total_planned > request_cap:
                 ok_cap, cap_err = (
                     False,
                     f"{ERAD_SLICE2_REQUEST_CAP_EXCEEDED}:{total_planned}>{request_cap}",
@@ -6605,7 +6868,7 @@ def main(argv: Optional[List[str]] = None) -> int:
             if not ok_cap:
                 universe_issues.append(cap_err)
             report_path = write_erad_next_scale_slice2_dryrun_report(rows, output_paths)
-            if case_range or orgid_fb_retry:
+            if case_range or orgid_fb_retry or listing_aware_s2:
                 gate = ERAD_NEXT_SCALE_SLICE2_RUNNER_GATE if not universe_issues else "FAIL"
             else:
                 gate = compute_erad_next_scale_slice2_runner_gate(
@@ -6619,6 +6882,7 @@ def main(argv: Optional[List[str]] = None) -> int:
                 f"mode=erad_a_scale_500_slice2_dry_run cases={len(included)} "
                 f"planned_ok={planned_ok} cninfo_calls=0"
                 f"{' orgid_fallback_retry=yes' if orgid_fb_retry else ''}"
+                f"{' listing_aware_s2=yes' if listing_aware_s2 else ''}"
             )
             print(f"planned_request_count_total={total_planned}")
             print(

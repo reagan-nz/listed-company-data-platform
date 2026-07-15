@@ -1,0 +1,177 @@
+"""
+A-class listing-aware cohort builder 离线单测（CNINFO = 0）。
+
+运行：
+    python lab/test_cninfo_a_class_listing_aware_cohort_builder.py
+"""
+
+from __future__ import annotations
+
+import csv
+import json
+import os
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+_LAB = Path(__file__).resolve().parent
+if str(_LAB) not in sys.path:
+    sys.path.insert(0, str(_LAB))
+
+import cninfo_a_class_listing_aware_cohort_builder as builder  # noqa: E402
+
+
+def _write_profile(profile_dir: Path, code: str, listing_date: str) -> None:
+    payload = {
+        "company_code": code,
+        "listing_date": listing_date,
+        "raw_record_json": {"basicInformation": [{"F006D": listing_date}]},
+    }
+    (profile_dir / f"{code}.json").write_text(
+        json.dumps(payload, ensure_ascii=False), encoding="utf-8"
+    )
+
+
+def _write_yaml(path: Path, companies: list) -> None:
+    # 最小 YAML（避免测试依赖复杂结构）
+    lines = ["companies:"]
+    for c in companies:
+        lines.append(f"  - stock_code: '{c['stock_code']}'")
+        lines.append(f"    short_name: '{c['short_name']}'")
+        lines.append(f"    exchange: '{c.get('exchange', 'SZSE')}'")
+        lines.append(f"    orgid: '{c.get('orgid', 'x')}'")
+        lines.append(f"    board: '{c.get('board', 'szse_main')}'")
+        lines.append(f"    financial: {str(c.get('financial', False)).lower()}")
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def _write_exclude_csv(path: Path, codes: list) -> None:
+    with path.open("w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=["company_code", "company_name", "case_id", "cohort"])
+        w.writeheader()
+        for i, code in enumerate(codes):
+            w.writerow(
+                {
+                    "company_code": code,
+                    "company_name": f"已占用{i}",
+                    "case_id": f"AD2E{i+1:03d}",
+                    "cohort": "prior",
+                }
+            )
+
+
+class ListingAwareCohortBuilderTests(unittest.TestCase):
+    def test_derive_report_fields_mod10(self) -> None:
+        rt, ep, _, _ = builder.derive_report_fields_for_case_num(601)
+        self.assertEqual(rt, "annual_report")
+        self.assertEqual(ep, "2024-12-31")
+        rt7, ep7, _, _ = builder.derive_report_fields_for_case_num(608)
+        self.assertEqual(rt7, "semi_annual_report")
+        self.assertEqual(ep7, "2024-06-30")
+
+    def test_build_skips_a_exclude_st_bse_and_listing_gap(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            profile_dir = tmp_path / "profiles"
+            profile_dir.mkdir()
+            yaml_path = tmp_path / "fm.yaml"
+            exclude_csv = tmp_path / "a_exclude.csv"
+
+            # 000001: A 已占用
+            # 000002: ST
+            # 430017: BSE
+            # 000003: listing_gap（上市日晚于 Q1 期）
+            # 000004–000008: 可选（足够填 target=3，中间会跳过 gap）
+            companies = [
+                {"stock_code": "000001", "short_name": "已占用甲"},
+                {"stock_code": "000002", "short_name": "*ST乙"},
+                {"stock_code": "430017", "short_name": "北交丙"},
+                {"stock_code": "000003", "short_name": "晚上市丁"},
+                {"stock_code": "000004", "short_name": "可选戊"},
+                {"stock_code": "000005", "short_name": "可选己"},
+                {"stock_code": "000006", "short_name": "可选庚"},
+            ]
+            _write_yaml(yaml_path, companies)
+            _write_exclude_csv(exclude_csv, ["000001"])
+            _write_profile(profile_dir, "000001", "1999-01-01")
+            _write_profile(profile_dir, "000002", "1999-01-01")
+            _write_profile(profile_dir, "430017", "1999-01-01")
+            # 000003：若分配到 Q1(2024-03-31) 会 gap；若 annual 则 ok。
+            # 为稳定触发 gap：用极晚上市日，对任何 2024 期窗都 gap。
+            _write_profile(profile_dir, "000003", "2025-06-01")
+            for code, ld in (
+                ("000004", "2010-01-01"),
+                ("000005", "2010-01-01"),
+                ("000006", "2010-01-01"),
+            ):
+                _write_profile(profile_dir, code, ld)
+
+            result = builder.build_listing_aware_cohort(
+                target_size=3,
+                case_id_start=601,
+                a_exclude_csvs=[str(exclude_csv)],
+                profile_dir=str(profile_dir),
+                full_market_yaml=str(yaml_path),
+            )
+            self.assertEqual(result.cninfo_calls, 0)
+            self.assertEqual(len(result.selected), 3)
+            codes = [r.company_code for r in result.selected]
+            self.assertEqual(codes, ["000004", "000005", "000006"])
+            self.assertEqual(result.selected[0].case_id, "AD2E601")
+            self.assertEqual(result.selected[0].cohort, builder.COHORT_LABEL)
+            stages = {r.reject_stage for r in result.rejected}
+            self.assertIn("a_cumulative_exclude", stages)
+            self.assertIn("st_exclude", stages)
+            self.assertIn("listing_period_gate", stages)
+            self.assertTrue(builder.is_bse_code("430017"))
+            self.assertFalse(builder.is_bse_code("000004"))
+
+    def test_undersized_raises_explicit(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            profile_dir = tmp_path / "profiles"
+            profile_dir.mkdir()
+            yaml_path = tmp_path / "fm.yaml"
+            exclude_csv = tmp_path / "a_exclude.csv"
+            _write_yaml(
+                yaml_path,
+                [{"stock_code": "000010", "short_name": "仅一码"}],
+            )
+            _write_exclude_csv(exclude_csv, [])
+            _write_profile(profile_dir, "000010", "2010-01-01")
+            with self.assertRaises(RuntimeError) as ctx:
+                builder.build_listing_aware_cohort(
+                    target_size=5,
+                    a_exclude_csvs=[str(exclude_csv)],
+                    profile_dir=str(profile_dir),
+                    full_market_yaml=str(yaml_path),
+                )
+            self.assertIn("listing_aware_cohort_undersized", str(ctx.exception))
+
+    def test_write_universe_csv_format(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "u.csv"
+            rows = [
+                builder.CohortRow(
+                    company_code="000004",
+                    company_name="可选戊",
+                    case_id="AD2E601",
+                    cohort=builder.COHORT_LABEL,
+                    report_type="annual_report",
+                    expected_period="2024-12-31",
+                    listing_date="2010-01-01",
+                )
+            ]
+            builder.write_universe_csv(rows, str(path))
+            with path.open(encoding="utf-8") as f:
+                reader = csv.DictReader(f)
+                self.assertEqual(reader.fieldnames, builder.UNIVERSE_COLUMNS)
+                got = list(reader)
+            self.assertEqual(len(got), 1)
+            self.assertEqual(got[0]["case_id"], "AD2E601")
+            self.assertEqual(got[0]["cohort"], builder.COHORT_LABEL)
+
+
+if __name__ == "__main__":
+    unittest.main()
