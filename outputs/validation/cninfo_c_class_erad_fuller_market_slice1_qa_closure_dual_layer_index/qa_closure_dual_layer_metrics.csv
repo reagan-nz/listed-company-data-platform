@@ -1,0 +1,9 @@
+metric_key,metric_value,notes
+dual_layer_empty_dividend_audited_count,3,C-R16-02 QA closure dual-layer evidence index
+dual_layer_empty_dividend_indexed_pass_count,3,index_status=indexed_pass
+dual_layer_empty_dividend_gate,PASS_OFFLINE,upstream_audit_gate=PASS_OFFLINE
+dual_layer_evidence_index_rows,3,cumulative index for QA closure consumers
+dual_layer_audit_csv_ref,outputs/validation/cninfo_c_class_empty_dividend_zero_byte_present_audit/empty_dividend_zero_byte_present_audit.csv,machine-checkable present audit
+dual_layer_rule_matrix_ref,outputs/validation/cninfo_c_class_empty_dividend_zero_byte_present_audit/dual_layer_rule_check_matrix.csv,DLVR-E01–E05 per-case matrix
+original_qa_closure_caveat_ledger_mutated,false,append-only sibling index; closed ledger untouched
+cninfo_calls,0,offline only

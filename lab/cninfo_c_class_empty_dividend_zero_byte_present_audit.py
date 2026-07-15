@@ -102,6 +102,38 @@ RULE_CHECK_FIELDS = [
     "notes",
 ]
 
+# QA closure 累积双层证据索引（供 C 类 QA 闭合消费；不改写既有 caveat/metrics）
+QA_CLOSURE_INDEX_FIELDS = [
+    "case_id",
+    "company_code",
+    "company_name",
+    "caveat_class",
+    "disposition",
+    "ledger_harvest_status",
+    "ledger_sources_present_existence",
+    "audit_sources_present_content",
+    "dividend_byte_size",
+    "ledger_dividend_present",
+    "audit_dividend_present",
+    "dlvr_e01",
+    "dlvr_e02",
+    "dlvr_e03",
+    "dlvr_e04",
+    "dlvr_e05",
+    "rules_all_pass",
+    "dual_layer_audit_gate",
+    "index_status",
+    "audit_csv_ref",
+    "rule_matrix_ref",
+    "notes",
+]
+
+QA_CLOSURE_METRIC_FIELDS = [
+    "metric_key",
+    "metric_value",
+    "notes",
+]
+
 
 @dataclass
 class EmptyDividendZeroByteAuditResult:
@@ -110,6 +142,17 @@ class EmptyDividendZeroByteAuditResult:
     rows: List[Dict[str, str]] = field(default_factory=list)
     rule_rows: List[Dict[str, str]] = field(default_factory=list)
     disk_zero_byte_codes: Set[str] = field(default_factory=set)
+    checks: Dict[str, bool] = field(default_factory=dict)
+    gate: str = "FAIL_REVIEW_REQUIRED"
+    notes: str = ""
+
+
+@dataclass
+class QaClosureDualLayerIndexResult:
+    """empty-dividend 双层审计 → QA closure 累积证据索引。"""
+
+    rows: List[Dict[str, str]] = field(default_factory=list)
+    metric_rows: List[Dict[str, str]] = field(default_factory=list)
     checks: Dict[str, bool] = field(default_factory=dict)
     gate: str = "FAIL_REVIEW_REQUIRED"
     notes: str = ""
@@ -230,6 +273,26 @@ def discover_zero_byte_dividend_codes(harvest_root: str) -> Set[str]:
             continue
         path = os.path.join(dividend_dir, name)
         if os.path.isfile(path) and os.path.getsize(path) == 0:
+            codes.add(name[: -len(".jsonl")])
+    return codes
+
+
+def discover_content_empty_dividend_codes(harvest_root: str) -> Set[str]:
+    """
+    扫描 audit 语义下 content-empty 的 dividend 代码集合。
+    含 0 字节与仅空白行（size>0 但无非空行）；用于硬化零字节以外的边缘 cohort。
+    """
+    dividend_dir = os.path.join(harvest_root, "normalized", DIVIDEND_SUBDIR)
+    if not os.path.isdir(dividend_dir):
+        raise FileNotFoundError(f"missing_dividend_normalized_dir: {dividend_dir}")
+    codes: Set[str] = set()
+    for name in sorted(os.listdir(dividend_dir)):
+        if not name.endswith(".jsonl"):
+            continue
+        path = os.path.join(dividend_dir, name)
+        if not os.path.isfile(path):
+            continue
+        if not audit_content_present(path):
             codes.add(name[: -len(".jsonl")])
     return codes
 
@@ -604,6 +667,7 @@ def run_empty_dividend_zero_byte_present_audit(
     dual_rows = load_csv_rows(dual_path)
 
     disk_zero = discover_zero_byte_dividend_codes(harvest)
+    content_empty = discover_content_empty_dividend_codes(harvest)
 
     audit_rows: List[Dict[str, str]] = []
     rule_rows: List[Dict[str, str]] = []
@@ -644,6 +708,8 @@ def run_empty_dividend_zero_byte_present_audit(
         ),
         "no_unexpected_zero_byte_dividend": disk_zero <= set(EXPECTED_EMPTY_DIVIDEND_CODES),
         "no_missing_expected_zero_byte": set(EXPECTED_EMPTY_DIVIDEND_CODES) <= disk_zero,
+        # 硬化：content-empty 与零字节集合一致（无仅空白行额外 cohort）
+        "content_empty_equals_zero_byte_cohort": content_empty == disk_zero,
         "no_execute_flag": True,
         "cninfo_calls_zero": True,
         "harvest_read_only": True,
@@ -652,6 +718,7 @@ def run_empty_dividend_zero_byte_present_audit(
 
     unexpected = sorted(disk_zero - set(EXPECTED_EMPTY_DIVIDEND_CODES))
     missing = sorted(set(EXPECTED_EMPTY_DIVIDEND_CODES) - disk_zero)
+    whitespace_only = sorted(content_empty - disk_zero)
     return EmptyDividendZeroByteAuditResult(
         rows=audit_rows,
         rule_rows=rule_rows,
@@ -661,6 +728,188 @@ def run_empty_dividend_zero_byte_present_audit(
         notes=(
             f"fail_count={len(fail_rows)}; "
             f"disk_zero={sorted(disk_zero)}; "
-            f"unexpected={unexpected}; missing={missing}"
+            f"unexpected={unexpected}; missing={missing}; "
+            f"whitespace_only_extra={whitespace_only}"
+        ),
+    )
+
+
+def build_qa_closure_dual_layer_evidence_index(
+    *,
+    audit_rows: Sequence[Dict[str, str]],
+    rule_rows: Sequence[Dict[str, str]],
+    caveat_ledger_rows: Sequence[Dict[str, str]],
+    audit_gate: str,
+    audit_csv_ref: str,
+    rule_matrix_ref: str,
+) -> QaClosureDualLayerIndexResult:
+    """
+    将 empty-dividend 双层审计结果接入 QA closure 累积证据索引。
+
+    只读消费 caveat ledger 中 empty_but_valid 行；不改写原 ledger/metrics。
+    要求：每个 empty3 caveat 行均有对应 audit PASS，且无孤儿 audit 行。
+    """
+    caveat_empty = [
+        r
+        for r in caveat_ledger_rows
+        if _normalize(r.get("caveat_class")) == EXPECTED_CAVEAT_CLASS
+    ]
+    caveat_by_case = index_by_case_id(caveat_empty)
+    audit_by_case = index_by_case_id(list(audit_rows))
+
+    rule_by_case: Dict[str, Dict[str, str]] = {}
+    for rr in rule_rows:
+        case_id = _normalize(rr.get("case_id"))
+        rule_id = _normalize(rr.get("rule_id")).lower().replace("-", "_")
+        if not case_id or not rule_id:
+            continue
+        rule_by_case.setdefault(case_id, {})[rule_id] = _normalize(rr.get("result"))
+
+    index_rows: List[Dict[str, str]] = []
+    for case_id in sorted(EXPECTED_EMPTY_DIVIDEND_CASE_CODE.keys()):
+        code = EXPECTED_EMPTY_DIVIDEND_CASE_CODE[case_id]
+        caveat = caveat_by_case.get(case_id) or {}
+        audit = audit_by_case.get(case_id) or {}
+        rules = rule_by_case.get(case_id) or {}
+
+        notes: List[str] = []
+        if not caveat:
+            notes.append("FAIL:missing_caveat_ledger_row")
+        else:
+            if _normalize(caveat.get("company_code")) != code:
+                notes.append(
+                    f"FAIL:caveat_code_mismatch={_normalize(caveat.get('company_code'))}"
+                )
+            if _normalize(caveat.get("disposition")) != EXPECTED_DISPOSITION:
+                notes.append(
+                    f"FAIL:disposition={_normalize(caveat.get('disposition')) or 'empty'}"
+                )
+
+        if not audit:
+            notes.append("FAIL:missing_audit_row")
+            index_status = "caveat_missing_audit"
+            rules_ok = False
+        else:
+            rules_ok = _normalize(audit.get("rules_all_pass")).lower() == "yes"
+            if not rules_ok:
+                notes.append("FAIL:rules_all_pass_not_yes")
+                index_status = "indexed_fail"
+            elif notes:
+                index_status = "indexed_fail"
+                rules_ok = False
+            else:
+                index_status = "indexed_pass"
+                notes.append(
+                    "qa_closure_dual_layer_indexed; linked_to_empty_dividend_audit"
+                )
+
+        company_name = (
+            _normalize(audit.get("company_name"))
+            or _normalize(caveat.get("company_name"))
+        )
+        row = {
+            "case_id": case_id,
+            "company_code": code,
+            "company_name": company_name,
+            "caveat_class": _normalize(caveat.get("caveat_class"))
+            or EXPECTED_CAVEAT_CLASS,
+            "disposition": _normalize(caveat.get("disposition")),
+            "ledger_harvest_status": _normalize(audit.get("ledger_harvest_status"))
+            or _normalize(caveat.get("harvest_status")),
+            "ledger_sources_present_existence": _normalize(
+                audit.get("ledger_sources_present_existence")
+            ),
+            "audit_sources_present_content": _normalize(
+                audit.get("audit_sources_present_content")
+            ),
+            "dividend_byte_size": _normalize(audit.get("dividend_byte_size")),
+            "ledger_dividend_present": _normalize(audit.get("ledger_dividend_present")),
+            "audit_dividend_present": _normalize(audit.get("audit_dividend_present")),
+            "dlvr_e01": rules.get("dlvr_e01") or _normalize(audit.get("dlvr_e01")),
+            "dlvr_e02": rules.get("dlvr_e02") or _normalize(audit.get("dlvr_e02")),
+            "dlvr_e03": rules.get("dlvr_e03") or _normalize(audit.get("dlvr_e03")),
+            "dlvr_e04": rules.get("dlvr_e04") or _normalize(audit.get("dlvr_e04")),
+            "dlvr_e05": rules.get("dlvr_e05") or _normalize(audit.get("dlvr_e05")),
+            "rules_all_pass": "yes" if rules_ok else "no",
+            "dual_layer_audit_gate": audit_gate,
+            "index_status": index_status,
+            "audit_csv_ref": audit_csv_ref,
+            "rule_matrix_ref": rule_matrix_ref,
+            "notes": "; ".join(notes),
+        }
+        index_rows.append(row)
+
+    pass_rows = [r for r in index_rows if r["index_status"] == "indexed_pass"]
+    fail_rows = [r for r in index_rows if r["index_status"] != "indexed_pass"]
+    caveat_case_ids = set(caveat_by_case.keys())
+    audit_case_ids = set(audit_by_case.keys())
+    orphan_audit = sorted(audit_case_ids - EXPECTED_EMPTY_DIVIDEND_CASE_IDS)
+    orphan_caveat = sorted(caveat_case_ids - EXPECTED_EMPTY_DIVIDEND_CASE_IDS)
+
+    checks = {
+        "index_covers_empty3": {r["case_id"] for r in index_rows}
+        == EXPECTED_EMPTY_DIVIDEND_CASE_IDS,
+        "all_indexed_pass": len(pass_rows) == 3 and not fail_rows,
+        "caveat_empty3_match_expected": caveat_case_ids
+        == EXPECTED_EMPTY_DIVIDEND_CASE_IDS,
+        "no_orphan_audit_rows": not orphan_audit,
+        "no_orphan_caveat_empty_rows": not orphan_caveat,
+        "audit_gate_pass_offline": audit_gate == "PASS_OFFLINE",
+        "cninfo_calls_zero": True,
+        "original_caveat_ledger_unmutated": True,
+    }
+    gate = "PASS_OFFLINE" if all(checks.values()) else "FAIL_REVIEW_REQUIRED"
+
+    metric_rows = [
+        {
+            "metric_key": "dual_layer_empty_dividend_audited_count",
+            "metric_value": str(len(index_rows)),
+            "notes": "C-R16-02 QA closure dual-layer evidence index",
+        },
+        {
+            "metric_key": "dual_layer_empty_dividend_indexed_pass_count",
+            "metric_value": str(len(pass_rows)),
+            "notes": "index_status=indexed_pass",
+        },
+        {
+            "metric_key": "dual_layer_empty_dividend_gate",
+            "metric_value": gate,
+            "notes": f"upstream_audit_gate={audit_gate}",
+        },
+        {
+            "metric_key": "dual_layer_evidence_index_rows",
+            "metric_value": str(len(index_rows)),
+            "notes": "cumulative index for QA closure consumers",
+        },
+        {
+            "metric_key": "dual_layer_audit_csv_ref",
+            "metric_value": audit_csv_ref,
+            "notes": "machine-checkable present audit",
+        },
+        {
+            "metric_key": "dual_layer_rule_matrix_ref",
+            "metric_value": rule_matrix_ref,
+            "notes": "DLVR-E01–E05 per-case matrix",
+        },
+        {
+            "metric_key": "original_qa_closure_caveat_ledger_mutated",
+            "metric_value": "false",
+            "notes": "append-only sibling index; closed ledger untouched",
+        },
+        {
+            "metric_key": "cninfo_calls",
+            "metric_value": "0",
+            "notes": "offline only",
+        },
+    ]
+
+    return QaClosureDualLayerIndexResult(
+        rows=index_rows,
+        metric_rows=metric_rows,
+        checks=checks,
+        gate=gate,
+        notes=(
+            f"indexed_pass={len(pass_rows)}; indexed_fail={len(fail_rows)}; "
+            f"orphan_audit={orphan_audit}; orphan_caveat={orphan_caveat}"
         ),
     )
