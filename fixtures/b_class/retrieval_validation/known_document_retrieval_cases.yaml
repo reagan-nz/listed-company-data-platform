@@ -509,6 +509,51 @@ cases:
       b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E408（quality=pass）。
       不写 verified；不下载 PDF。
 
+  # --- continuous_supervision / 持续督导 × 2（B-FM-30；document_type=announcement；勿进 annual_report / other）---
+  - case_id: continuous_supervision_annual_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "601100"
+    company_name: "恒立液压"
+    title_pattern: "持续督导年度报告书"
+    expected_document_type: announcement
+    date_start: "2025-05-07"
+    date_end: "2025-05-10"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-30 自 harvest 证据晋升（持续督导年度报告书 routing 边角：旧逻辑误进 annual_report）：
+      恒立液压 601100，中国国际金融股份有限公司关于江苏恒立液压股份有限公司2024年度
+      持续督导年度报告书（announcement_id=1223493907，披露日 2025-05-08）。
+      标题含子串「年度报告」，B-FM-30 前 predicted_document_type=annual_report /
+      cninfo_periodic_report_pdf；硬化后为 announcement（_periodic_document_type
+      对「持续督导年度报告」早退 + general「持续督导」pattern）。
+      title_pattern 取「持续督导年度报告书」。与真·年度报告 / 培训情况报告 / 变更保荐代表人
+      公告可区分。来源 outputs/validation/cninfo_b_class_erad_scale_200/reports/
+      b_class_erad_scale_200_report.csv 行 BD2E131（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: continuous_supervision_training_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "001282"
+    company_name: "三联锻造"
+    title_pattern: "持续督导培训情况的报告"
+    expected_document_type: announcement
+    date_start: "2025-06-22"
+    date_end: "2025-06-25"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-30 自 harvest 证据晋升（持续督导培训情况报告第二边角；对称 annual）：
+      三联锻造 001282，国投证券股份有限公司关于芜湖三联锻造股份有限公司2025年度
+      持续督导培训情况的报告（announcement_id=1223955243，披露日 2025-06-23）。
+      标题无「公告」等 general positive_patterns（B-FM-30 前），落 other；硬化后
+      announcement。title_pattern 取「持续督导培训情况的报告」。来源
+      outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
+      b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E248（quality=pass）。
+      不写 verified；不下载 PDF。
+
   # --- shareholder_meeting_material × 4 ---
   - case_id: shareholder_meeting_known_001
     case_status: ready

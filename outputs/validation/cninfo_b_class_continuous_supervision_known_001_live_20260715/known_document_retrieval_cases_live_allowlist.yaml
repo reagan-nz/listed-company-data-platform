@@ -1,0 +1,38 @@
+# B-FM-30 live allow-list — 仅新晋 continuous_supervision_annual_known_001 /
+# continuous_supervision_training_known_001
+# 持续督导年度报告书 / 持续督导培训情况的报告；排除全部已 LIVE_PASS
+status: live_sample_scoped_B-FM-30
+generated: "2026-07-15"
+notes: B-FM-30 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS
+cases:
+  - case_id: continuous_supervision_annual_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "601100"
+    company_name: "恒立液压"
+    title_pattern: "持续督导年度报告书"
+    expected_document_type: announcement
+    date_start: "2025-05-07"
+    date_end: "2025-05-10"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-30 live allow-list（持续督导年度报告书；闭合 periodic 误抬）：
+      恒立液压 601100，披露日约 2025-05-08。
+      pattern「持续督导年度报告书」。不写 verified；不下载 PDF。
+
+  - case_id: continuous_supervision_training_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "001282"
+    company_name: "三联锻造"
+    title_pattern: "持续督导培训情况的报告"
+    expected_document_type: announcement
+    date_start: "2025-06-22"
+    date_end: "2025-06-25"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-30 live allow-list（持续督导培训情况报告边角）：
+      三联锻造 001282，披露日约 2025-06-23。
+      pattern「持续督导培训情况的报告」。不写 verified；不下载 PDF。

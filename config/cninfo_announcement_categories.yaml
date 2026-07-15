@@ -169,6 +169,7 @@ categories:
       - 权益变动报告书
       - 受托管理事务报告
       - 跟踪评级报告
+      - 持续督导
     exclusion_patterns: []
     route_to:
       source_id: cninfo_general_announcement_pdf
@@ -192,6 +193,9 @@ categories:
       B-FM-29：债券受托管理事务报告 / 跟踪评级报告等标题常无「公告」等 general
       positive_patterns，旧逻辑落 other；含「受托管理事务报告」或「跟踪评级报告」一律
       document_type=announcement（勿落 other；不扩 schema）。
+      B-FM-30：持续督导年度报告书 / 持续督导培训情况的报告——前者含子串「年度报告」会
+      误进 periodic；后者无 general positive_patterns 落 other；含「持续督导」一律
+      announcement（勿进 annual_report；勿落 other；不扩 schema）。
 
 # 延期披露 / 摘要 / 提示性预告等：从 periodic 排除后的候选路由（非独立 source，归入 general 或 future disclosure_related）
 excluded_from_periodic_routing:

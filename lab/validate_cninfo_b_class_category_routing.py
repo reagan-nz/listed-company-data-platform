@@ -315,6 +315,9 @@ def _meeting_document_type(title: str) -> str:
 
 
 def _periodic_document_type(title: str, positive: Dict[str, List[str]]) -> Optional[str]:
+    # B-FM-30：「持续督导年度报告书」含子串「年度报告」，不得抬成 annual_report
+    if "持续督导年度报告" in title:
+        return None
     best: Optional[Tuple[int, str]] = None
     for doc_type, patterns in positive.items():
         for p in _sorted_patterns(patterns):
@@ -349,6 +352,10 @@ def _general_document_type(title: str, patterns: List[str]) -> str:
     B-FM-29：债券「受托管理事务报告」/「跟踪评级报告」等标题常无「公告」等 general
     positive_patterns，旧逻辑落 other。凡含「受托管理事务报告」或「跟踪评级报告」一律
     announcement（不扩 schema；不抬成 board_resolution / shareholder_meeting_material）。
+
+    B-FM-30：保荐机构「持续督导年度报告书」/「持续督导培训情况的报告」——前者含子串
+    「年度报告」会误进 periodic；后者无 general positive_patterns 落 other。
+    凡含「持续督导」一律 announcement（不扩 schema；勿进 annual_report / other）。
     """
     # 法律意见书/法律意见：中介见证材料，保持 announcement（会议与非会议均适用）
     if "法律意见" in title:
@@ -367,6 +374,9 @@ def _general_document_type(title: str, patterns: List[str]) -> str:
         return "announcement"
     # 跟踪评级报告：主体/债券跟踪评级，保持 announcement（勿落 other）
     if "跟踪评级报告" in title:
+        return "announcement"
+    # 持续督导：年度报告书 / 培训情况报告等保荐机构督导材料，保持 announcement
+    if "持续督导" in title:
         return "announcement"
     if "董事会" in title and "决议" in title:
         return "board_resolution"

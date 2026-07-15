@@ -1,0 +1,5 @@
+# B-FM-30 live category-sample 空壳（本包仅 known-document allow-list）
+status: live_sample_scoped_B-FM-30_category_empty
+generated: "2026-07-15"
+notes: empty category sample for continuous_supervision known_001 live scope
+cases: []
