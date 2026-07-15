@@ -24,11 +24,13 @@ _生成时间：2026-07-15 · D-FM-11 · offline draft_
 | VR-009 | 全行业截面按 `industry_code`（F001V）离线过滤目标行业 |
 | VR-010 | empty records / 无匹配 F001V → `empty_but_valid` 合法 |
 | VR-011 | found 骨架：F001V · F002V · ENDDATE · F003N · F004N · F005N |
-| VR-012 | expectation mix：empty_but_valid + captured_normal_or_empty_but_valid + captured_normal · 至多一例 needs_review |
+| VR-012 | expectation mix：captured_normal_or_empty_but_valid + captured_normal · empty 路径由 mixed 期望覆盖 · 至多一例 needs_review |
 | VR-013 | **禁止** sole `captured_normal_candidate` 作为唯一成功标准 |
-| VR-014 | DFIA005 期望 empty_but_valid · **不** forced pass |
+| VR-014 | DFIA005 期望 `captured_normal_or_empty_but_valid` · **不** forced pass · found/empty 双合法 |
 
-> **D-FM-17 amend（VR-012 注释）：** DFIA001 `expected_behavior` 由 `captured_normal` → `captured_normal_or_empty_but_valid`（对齐 DFIA004 · 保持 C26/default）。mix 仍含 DFIA002/DFIA003 `captured_normal` + DFIA005 `empty_but_valid` · VR-012 成立。DFIA005 锚点/期望 **未** 改。
+> **D-FM-17 amend（VR-012 注释）：** DFIA001 `expected_behavior` 由 `captured_normal` → `captured_normal_or_empty_but_valid`（对齐 DFIA004 · 保持 C26/default）。
+>
+> **D-FM-19 amend（VR-012/014 注释）：** DFIA005 `expected_behavior` 由 `empty_but_valid` → `captured_normal_or_empty_but_valid`（D-FM-18 单探针 found=19 · Phase2 空控锚点过期 · 保持 rdate=20251231）。mix 现为 DFIA001/004/005 mixed + DFIA002/003 `captured_normal`；专用 empty_but_valid 行退休，empty 仍由 mixed 覆盖。
 
 ## C — Field Mapping（VR-015–VR-024）
 
@@ -51,7 +53,7 @@ _生成时间：2026-07-15 · D-FM-11 · offline draft_
 |----|------|
 | VR-025 | captured / empty_but_valid / needs_review 三分法 |
 | VR-026 | empty_but_valid ⇒ metric_count=0 · quality pass |
-| VR-027 | DFIA005 期望 empty_but_valid |
+| VR-027 | DFIA005 期望 `captured_normal_or_empty_but_valid`（empty fixture 仍合法；found 亦合法） |
 | VR-028 | freeze 字段：industry_code · report_period · metric_name · metric_value · quality_status |
 | VR-029 | quality_status 与 envelope 一致 |
 | VR-030 | ≥3/5 acceptable → PASS_WITH_CAVEAT · **不是 bare PASS** |

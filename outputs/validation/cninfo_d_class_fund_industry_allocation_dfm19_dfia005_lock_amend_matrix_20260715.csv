@@ -1,0 +1,8 @@
+case_id,field,old_value,new_value,mutated,rationale,fixture_action,vr_sync,anchor_kept,notes
+DFIA005,expected_behavior,empty_but_valid,captured_normal_or_empty_but_valid,yes,D-FM-18 probe found=19; empty_control_anchor_stale; align DFIA001/DFIA004 mixed policy,keep_DFIA005_empty_but_valid_synthetic.json,VR-012_014_027_amend_note;approval_table,yes,rdate=20251231 kept; approval_task_id=D-FM-11
+DFIA005,anchor_rdate,20251231,20251231,no,keep_probe_key_and_rdate,,,yes,
+DFIA005,industry_code,*,*,no,cross_section_kept,,,yes,
+DFIA001,expected_behavior,captured_normal_or_empty_but_valid,captured_normal_or_empty_but_valid,no,D-FM-17 prior amend · not this task,,,yes,
+DFIA002,expected_behavior,captured_normal,captured_normal,no,,,,yes,
+DFIA003,expected_behavior,captured_normal,captured_normal,no,,,,yes,
+DFIA004,expected_behavior,captured_normal_or_empty_but_valid,captured_normal_or_empty_but_valid,no,template_for_DFIA005,,,yes,

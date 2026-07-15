@@ -3,7 +3,8 @@
 """
 D-FM-18：DFIA005 单探针 bounded retry（仅 rdate=20251231 · CNINFO≤1）。
 
-复用 first-slice runner 评估逻辑；不改 universe lock；不重跑 default/rdate_20260331。
+复用 first-slice runner 评估逻辑；不重跑 default/rdate_20260331。
+D-FM-19 后 lock expected=`captured_normal_or_empty_but_valid`（本脚本只读 lock · 不 mutate）。
 默认 dry-run（CNINFO=0）；live 须显式 --live + approve flag。
 """
 
@@ -61,10 +62,11 @@ def _load_dfia005_row(
             f"ERROR: DFIA005 lock anchor mismatch: "
             f"mode={row.query_mode} rdate={row.anchor_rdate}"
         )
-    if row.expected_behavior != "empty_but_valid":
+    # D-FM-19：期望已放宽；仍拒绝其它未知期望，避免静默漂移
+    if row.expected_behavior != "captured_normal_or_empty_but_valid":
         raise SystemExit(
-            f"ERROR: DFIA005 expected_behavior must remain empty_but_valid; "
-            f"got={row.expected_behavior}"
+            f"ERROR: DFIA005 expected_behavior must be "
+            f"captured_normal_or_empty_but_valid; got={row.expected_behavior}"
         )
     return row
 
@@ -187,23 +189,17 @@ def execute_live_single_probe(
     except ValueError:
         rc = 0
 
-    # 探针层 caveat：运输 vs 空控锚点漂移（不 mutate lock · 不改 shared acceptable）
+    # 探针层 caveat：运输 vs 期望匹配（D-FM-19 后 found/empty 均合法 · 无 stale）
     if last_error or rs in ("http_error", "blocked"):
         caveat = "transport_or_http_error"
         gate = PROBE_GATE_PASS
-    elif (
-        row.expected_behavior == "empty_but_valid"
-        and rs == "empty_but_valid"
-        and rc == 0
-    ):
+    elif rs == "empty_but_valid" and rc == 0 and acceptable:
         caveat = ""
         gate = PROBE_GATE_CLEAR
-    elif row.expected_behavior == "empty_but_valid" and rs == "found" and rc >= 1:
-        # Phase2 empty 先例过期；runner 宽 found 路径仍可 acceptable=yes
-        caveat = "empty_control_anchor_stale"
-        gate = PROBE_GATE_PASS
-        if not failure_type:
-            failure_type = "empty_control_anchor_stale"
+    elif rs == "found" and rc >= 1 and acceptable:
+        # D-FM-19：mixed 期望下 found 为合法路径；不再标 empty_control_anchor_stale
+        caveat = ""
+        gate = PROBE_GATE_CLEAR
     elif acceptable:
         caveat = ""
         gate = PROBE_GATE_PASS

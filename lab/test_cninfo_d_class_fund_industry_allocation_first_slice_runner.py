@@ -313,6 +313,17 @@ class TestFundIndustryAllocationFirstSliceRunner(unittest.TestCase):
                 by_id["DFIA005"], summary
             )
         )
+        # D-FM-19：DFIA005 期望放宽后 found 亦可接受（对齐 D-FM-18 探针）
+        found_summary = {
+            "retrieval_status": "found",
+            "quality_status": "pass",
+            "record_count": "19",
+        }
+        self.assertTrue(
+            runner.is_fund_industry_allocation_first_slice_acceptable(
+                by_id["DFIA005"], found_summary
+            )
+        )
 
     def test_live_with_approval_mock_shared_path_cninfo_zero(self) -> None:
         """离线 mock live：3 次共享探针 + F001V 过滤 · 不触网 · CNINFO=0。"""
@@ -422,7 +433,7 @@ class TestFundIndustryAllocationFirstSliceRunner(unittest.TestCase):
             self.assertEqual(
                 live_rows["DFIA004"]["retrieval_status"], "empty_but_valid"
             )
-            # DFIA005: empty control
+            # DFIA005: rdate empty 路径在 mixed 期望下仍可接受
             self.assertEqual(live_rows["DFIA005"]["acceptable"], "yes")
             self.assertEqual(
                 live_rows["DFIA005"]["retrieval_status"], "empty_but_valid"

@@ -1,6 +1,6 @@
 # CNINFO D 类 fund_industry_allocation — Tier-1 Fixture VR Validation（Offline）
 
-_生成时间：D-FM-11 · wall≈0.00s_
+_生成时间：D-FM-11 · wall≈0.01s_
 
 > **性质：** Tier-1 fixture offline VR · **CNINFO = 0** · **不是 verified**
 

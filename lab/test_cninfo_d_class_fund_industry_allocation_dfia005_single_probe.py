@@ -102,7 +102,7 @@ class TestDfia005SingleProbe(unittest.TestCase):
             self.assertEqual(row["failure_type"], "")
             self.assertEqual(row["probe_key"], "rdate_20251231")
 
-    def test_mocked_live_found_marks_anchor_stale(self) -> None:
+    def test_mocked_live_found_clears_under_mixed_expectation(self) -> None:
         def _fake_cninfo(session, source_cfg, params_override, stats, case_id):
             stats.cninfo_requests += 1
             stats.case_request_counts[case_id] = 1
@@ -137,8 +137,9 @@ class TestDfia005SingleProbe(unittest.TestCase):
                 row = next(csv.DictReader(f))
             self.assertEqual(row["retrieval_status"], "found")
             self.assertEqual(row["acceptable"], "yes")
-            self.assertEqual(row["caveat"], "empty_control_anchor_stale")
-            self.assertEqual(row["probe_gate"], "PASS_WITH_CAVEAT")
+            # D-FM-19：mixed 期望下 found 不再标 empty_control_anchor_stale
+            self.assertEqual(row["caveat"], "")
+            self.assertEqual(row["probe_gate"], "PASS_OFFLINE_TRANSPORT_CLEARED")
             self.assertEqual(row["cninfo_requests"], "1")
 
     def test_mocked_live_timeout_keeps_caveat(self) -> None:

@@ -246,9 +246,11 @@ class TestFundIndustryAllocationFixtures(unittest.TestCase):
             "captured_normal_or_empty_but_valid",
         )
         dfia005 = next(d for c, _p, d in self.fixtures if c == "DFIA005")
+        # D-FM-19：lock 期望放宽为 captured_normal_or_empty_but_valid（empty fixture 仍合法）
         self.assertEqual(dfia005["metric_envelope"]["metric_status"], "empty_but_valid")
         self.assertEqual(
-            self.universe_by_id["DFIA005"]["expected_behavior"], "empty_but_valid"
+            self.universe_by_id["DFIA005"]["expected_behavior"],
+            "captured_normal_or_empty_but_valid",
         )
 
     def test_vr009_industry_filtered_empty(self) -> None:
