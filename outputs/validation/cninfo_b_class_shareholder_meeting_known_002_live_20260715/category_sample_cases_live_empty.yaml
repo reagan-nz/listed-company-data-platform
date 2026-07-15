@@ -1,0 +1,5 @@
+version: draft-0.1
+status: live_sample_no_category
+verified: false
+notes: 'B-FM-17: intentionally empty — known-document live only; excludes category/guard'
+cases: []

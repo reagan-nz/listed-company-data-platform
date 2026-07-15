@@ -1,0 +1,22 @@
+# B-FM-17 live allow-list — 仅 B-FM-16 新晋 shareholder_meeting_known_002（股东大会的通知）
+version: "draft-0.1"
+status: live_sample_scoped_B-FM-17
+verified: false
+notes: B-FM-17 live allow-list only; not a new fixture lineage
+
+cases:
+  - case_id: shareholder_meeting_known_002
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "002237"
+    company_name: "恒邦股份"
+    title_pattern: "股东大会的通知"
+    expected_document_type: shareholder_meeting_material
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-17 live allow-list（依赖 B-FM-16 晋升）：
+      恒邦股份 002237，BD2E292 / announcement_id=1224014462。
+      标题「股东大会的通知」（含「的」助词）。不写 verified；不下载 PDF。
