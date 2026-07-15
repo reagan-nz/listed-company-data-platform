@@ -1,0 +1,37 @@
+# B-FM-26 live allow-list — 仅新晋 legal_opinion_known_003 / known_004
+# 非会议类法律意见书（增持 / 差异化分红）；排除 known_001/002 及全部已 LIVE_PASS
+status: live_sample_scoped_B-FM-26
+generated: "2026-07-15"
+notes: B-FM-26 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS
+cases:
+  - case_id: legal_opinion_known_003
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000703"
+    company_name: "恒逸石化"
+    title_pattern: "增持公司股份之法律意见书"
+    expected_document_type: announcement
+    date_start: "2025-06-23"
+    date_end: "2025-06-26"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-26 live allow-list（非会议增持法律意见书；闭合 other 误落）：
+      恒逸石化 000703，披露日约 2025-06-24。
+      pattern「增持公司股份之法律意见书」。不写 verified；不下载 PDF。
+
+  - case_id: legal_opinion_known_004
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "600826"
+    company_name: "兰生股份"
+    title_pattern: "差异化分红的法律意见书"
+    expected_document_type: announcement
+    date_start: "2025-06-16"
+    date_end: "2025-06-19"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-26 live allow-list（差异化分红法律意见书边角）：
+      兰生股份 600826，披露日约 2025-06-17。
+      pattern「差异化分红的法律意见书」。不写 verified；不下载 PDF。

@@ -333,7 +333,14 @@ def _general_document_type(title: str, patterns: List[str]) -> str:
 
     B-FM-20：「股东会」为「股东大会」同义简称（如「临时股东会决议」「召开…股东会的通知」）；
     「股东会」不是「股东大会」子串，须经 `_is_shareholder_meeting_title` 分别匹配。
+
+    B-FM-26：非会议类法律意见书（增持/差异化分红/可转债等）标题常无 general
+    positive_patterns，旧逻辑落 other；含「决议」的会议法律意见亦会被抬成
+    shareholder_meeting_material。凡含「法律意见」一律 announcement（不扩 schema）。
     """
+    # 法律意见书/法律意见：中介见证材料，保持 announcement（会议与非会议均适用）
+    if "法律意见" in title:
+        return "announcement"
     if "董事会" in title and "决议" in title:
         return "board_resolution"
     sm = _is_shareholder_meeting_title(title)
@@ -341,11 +348,10 @@ def _general_document_type(title: str, patterns: List[str]) -> str:
         return "shareholder_meeting_material"
     if sm and "决议" in title:
         return "shareholder_meeting_material"
-    # 召开股东（大）会公告（无「通知」字样；排除法律意见书/会议材料）
+    # 召开股东（大）会公告（无「通知」字样；排除会议材料/资料；法律意见已早退）
     if (
         "召开" in title
         and sm
-        and "法律意见" not in title
         and "会议材料" not in title
         and "会议资料" not in title
     ):

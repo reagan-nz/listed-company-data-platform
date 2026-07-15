@@ -1,0 +1,3 @@
+case_id,case_type,case_status,source_id,title_pattern,date_start,date_end,expected_document_type,expected_route_to,dry_run_status,would_query,query_status,notes
+legal_opinion_known_003,known_document,ready,cninfo_general_announcement_pdf,增持公司股份之法律意见书,2025-06-23,2025-06-26,announcement,cninfo_general_announcement_pdf,ready_for_future_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called
+legal_opinion_known_004,known_document,ready,cninfo_general_announcement_pdf,差异化分红的法律意见书,2025-06-16,2025-06-19,announcement,cninfo_general_announcement_pdf,ready_for_future_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called

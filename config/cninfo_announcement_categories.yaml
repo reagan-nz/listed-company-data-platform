@@ -162,6 +162,8 @@ categories:
       - 利润分配
       - 回购
       - 业绩预告
+      - 法律意见书
+      - 法律意见
     exclusion_patterns: []
     route_to:
       source_id: cninfo_general_announcement_pdf
@@ -175,6 +177,8 @@ categories:
       shareholder_meeting_material；法律意见书与会议材料仍为 announcement。
       B-FM-20：「股东会」同义简称（临时/年度股东会决议、召开…股东会的通知/公告）同样
       document_type=shareholder_meeting_material；法律意见书与会议材料/资料仍为 announcement。
+      B-FM-26：非会议类法律意见书（增持/差异化分红/可转债等）含「法律意见」一律
+      document_type=announcement（勿落 other；勿抬成 shareholder_meeting_material）。
 
 # 延期披露 / 摘要 / 提示性预告等：从 periodic 排除后的候选路由（非独立 source，归入 general 或 future disclosure_related）
 excluded_from_periodic_routing:
