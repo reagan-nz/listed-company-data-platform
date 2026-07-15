@@ -185,6 +185,8 @@ categories:
       - 总经理工作细则  # B-FM-37：窄；勿裸「工作细则」/「细则」
       - 货币资金管理制度  # B-FM-38：窄；勿裸「管理制度」/「制度」
       - 对外担保管理制度  # B-FM-38：窄；勿裸「管理制度」；与「对外担保的情况简报」可区分
+      - 子公司管理制度  # B-FM-39：窄；覆盖「分、子公司管理制度」；勿裸「管理制度」/「制度」
+      - 薪酬与考核方案  # B-FM-39：窄；勿裸「薪酬」/「考核方案」
     exclusion_patterns: []
     route_to:
       source_id: cninfo_general_announcement_pdf
@@ -233,6 +235,9 @@ categories:
       B-FM-38：「货币资金管理制度」/「对外担保管理制度」旧逻辑落 other；窄 pattern
       一律 announcement（勿裸「管理制度」/「制度」；分子公司管理制度、薪酬/名单/
       简报/ESG 仍可 other；与「对外担保的情况简报」可区分；不扩 schema）。
+      B-FM-39：「子公司管理制度」/「薪酬与考核方案」旧逻辑落 other；窄 pattern 一律
+      announcement（勿裸「管理制度」/「薪酬」；名单/简报/ESG/对外担保情况简报仍可
+      other；不扩 schema）。
 
 # 延期披露 / 摘要 / 提示性预告等：从 periodic 排除后的候选路由（非独立 source，归入 general 或 future disclosure_related）
 excluded_from_periodic_routing:

@@ -45,7 +45,7 @@ NONSTANDARD = (
 )
 SM_RES = "2025年第二次临时股东大会决议公告"
 BOARD = "第七届董事会第十一次会议决议公告"
-ZHIDU = "分、子公司管理制度（2025年6月）"  # 分子公司管理制度仍 other（B-FM-38 未推）
+BARE_ZHIDU = "某事项管理制度"  # 裸管理制度仍 other（B-FM-39 未泛化）
 
 
 class TestAssetValuationAuditRoutingEdge(unittest.TestCase):
@@ -92,8 +92,8 @@ class TestAssetValuationAuditRoutingEdge(unittest.TestCase):
         self.assertEqual(r.predicted_route_to, "cninfo_periodic_report_pdf")
 
     def test_general_system_still_other(self) -> None:
-        """一般管理制度低价值边角仍落 other（本包不硬推）。"""
-        r = routing.route_title(ZHIDU, self.config)
+        """裸管理制度仍落 other（本包不硬推；勿泛化）。"""
+        r = routing.route_title(BARE_ZHIDU, self.config)
         self.assertEqual(r.predicted_document_type, "other")
 
     def test_prior_paths_not_regressed(self) -> None:

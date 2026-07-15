@@ -1,0 +1,39 @@
+# B-FM-39 live allow-list — 仅新晋 subsidiary_management_system_known_001 /
+# compensation_assessment_plan_known_001
+status: live_sample_scoped_B-FM-39
+verified: false
+notes: B-FM-39 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS
+cases:
+  - case_id: subsidiary_management_system_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "300261"
+    company_name: "雅本化学"
+    title_pattern: "子公司管理制度"
+    expected_document_type: announcement
+    date_start: "2025-06-15"
+    date_end: "2025-06-18"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-39 live allow-list（子公司管理制度）：
+      harvest BD2E342 雅本化学 300261 ann=1223889267 2025-06-16。
+      title_pattern 窄串「子公司管理制度」（覆盖「分、子公司管理制度」；勿裸「管理制度」）。
+      不写 verified；不下载 PDF。
+
+  - case_id: compensation_assessment_plan_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "002258"
+    company_name: "利尔化学"
+    title_pattern: "薪酬与考核方案"
+    expected_document_type: announcement
+    date_start: "2025-06-09"
+    date_end: "2025-06-12"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-39 live allow-list（薪酬与考核方案）：
+      harvest BD2E296 利尔化学 002258 ann=1223834178 2025-06-10。
+      title_pattern 窄串「薪酬与考核方案」（勿裸「薪酬」）。
+      不写 verified；不下载 PDF。
