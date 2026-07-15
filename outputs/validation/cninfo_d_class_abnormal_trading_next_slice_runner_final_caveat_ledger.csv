@@ -1,7 +1,11 @@
-caveat_id,caveat_type,severity,forbidden_interpretation,evidence
-CAV-AT-NS-R01,s4_dryrun_not_live,S4 dry-run PASS_OFFLINE does not authorize live,bare PASS / live_ready / verified,dfm31_s4_dryrun
-CAV-AT-NS-R02,runner_ready_not_approved,READY_FOR_APPROVAL is not live approval,approved_for_live=true,runner_extension_gate
-CAV-AT-NS-R03,shared_probe_not_found_path,shared denser-day cite is not company-level found-path,live_found_path_for_DAT101_105=PROVEN,anchor_2026-07-02
-CAV-AT-NS-R04,forbidden_sparse_anchor,2026-07-03 must not be sole found anchor,use_20260703_as_sole_found,VR-NS-003
-CAV-AT-NS-R05,closed_roots_frozen,AT/SD first-slice and FIA first/next-slice live roots must stay frozen,reopen_or_mutate_closed_roots,lock_sha256_checks
-CAV-AT-NS-R06,ess_paused,ESS H3/H4 remain paused_pending_devtools,blind_probe_H3_H4,ess_pause_hold
+caveat_id,scope,case_id,component,caveat_type,caveat_description,allowed_interpretation,forbidden_interpretation,next_action,notes
+CAV-AT-NS-R01,track,,abnormal_trading,s4_dryrun_not_live,S4 dry-run PASS_OFFLINE does not authorize live,dry-run phase may close offline with caveats,bare PASS / live_ready / verified / production_ready,keep live_gate=NOT_APPROVED,dfm31_s4_dryrun;dfm35_closure
+CAV-AT-NS-R02,gate,,abnormal_trading,runner_ready_not_approved,READY_FOR_APPROVAL is not live approval,runner/live_path wired for future explicit approve,approved_for_live=true without approve flag + controller_execution_allowed,retain READY_FOR_APPROVAL until separate live authorize,runner_extension_gate;live_path_gate
+CAV-AT-NS-R03,evidence,DAT101;DAT102;DAT103;DAT104;DAT105,abnormal_trading,shared_probe_not_found_path,shared denser-day cite 2026-07-02 is not company-level live found-path,planning/shared-probe design cite only,live_found_path_for_DAT101_105=PROVEN; force-pass on cite alone,bounded live must prove or accept empty_but_valid honestly,anchor_2026-07-02
+CAV-AT-NS-R04,anchor,,abnormal_trading,forbidden_sparse_anchor,2026-07-03 must not be sole found anchor,fixtures and lock use denser-day 2026-07-02 only,use_20260703_as_sole_found,keep denser-day cite,VR-NS-003
+CAV-AT-NS-R05,track,,abnormal_trading,closed_roots_frozen,AT/SD first-slice · AT next-slice dry-run · SD next-slice dry-run · FIA first/next-slice live roots must stay frozen,D-FM-35 read-only evidence packaging,reopen_or_mutate_closed_roots; rewrite dry-run artifacts,enforce freeze ledger sha256,lock_and_artifact_sha256
+CAV-AT-NS-R06,track,,abnormal_trading,at_sd_live_not_flipped,AT/SD next-slice live remain NOT_APPROVED; controller_execution_allowed=false,honest skip of AT/SD live this round,flip AT or SD live without explicit approve,keep at_next_slice_live_flipped=false; sd_next_slice_live_flipped=false,controller_execution_allowed
+CAV-AT-NS-R07,exclusion,,abnormal_trading,dlc006r_closed,DLC006R / 301259 / 688671 remain closed policy exclusions,retain exclude flags on universe policy,DLC006R reopen via AT dry-run closure,no DLC006R reopen,exclude_301259;exclude_688671
+CAV-AT-NS-R08,track,,abnormal_trading,ess_paused,ESS H3/H4 remain paused_pending_devtools,document-only pause hold,blind_probe_H3_H4; Level-2 IDLE,DevTools Network capture only when human ready,ess_pause_hold
+CAV-AT-NS-R09,signoff,,abnormal_trading,not_verified,dry-run closure PASS_OFFLINE is offline formal sign-off before commit boundary only,controller commit-boundary review for D-FM-35 package,verified; production_ready; automatic harvest promotion,executor does not commit/push,VR-NS-042
+CAV-AT-NS-R10,case,DAT105,abnormal_trading,empty_control_not_forced_pass,DAT105 empty_but_valid control must not be forced to found,honest empty_but_valid acceptable under VR,force found to brush 5/5 live later,keep empty control expectation,VR-NS-empty-control

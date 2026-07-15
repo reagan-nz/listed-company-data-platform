@@ -61,8 +61,15 @@ FIA_FIRST_LOCK = os.path.join(
     "validation",
     "cninfo_d_class_fund_industry_allocation_first_slice_universe_lock_20260715.csv",
 )
+SD_NEXT_LOCK = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_d_class_shareholder_data_next_slice_universe_lock_20260715.csv",
+)
+SD_NEXT_OUTPUT_ROOT = runner.DEFAULT_SHAREHOLDER_DATA_NEXT_SLICE_OUTPUT_ROOT
 
-# D-FM-30/31 冻结 lock sha256；本任务不得 mutate
+# D-FM-30/31/34/35 冻结 lock sha256；本任务不得 mutate
 AT_FIRST_LOCK_SHA256 = (
     "d197b9618dc86c89d2a034addb75c37999baaf58e7455ab8626facd3f02adac2"
 )
@@ -71,6 +78,9 @@ AT_NEXT_LOCK_SHA256 = (
 )
 SD_FIRST_LOCK_SHA256 = (
     "06633a0da42d5ddc669935b64942f4182611017d55907d7076528fc0993917b5"
+)
+SD_NEXT_LOCK_SHA256 = (
+    "c07c2f27546bf11a3ea02b3efaa8adf1886b8a24549afe6dfe035c22978b994f"
 )
 FIA_NEXT_LOCK_SHA256 = (
     "c9f2c3598b48dd823e1ad60c66f326b91d8bf2b6564565b083e13eeb8b9d0515"
@@ -562,6 +572,7 @@ class TestAbnormalTradingNextSliceRunner(unittest.TestCase):
         self.assertEqual(_sha256_file(AT_FIRST_LOCK), AT_FIRST_LOCK_SHA256)
         self.assertEqual(_sha256_file(UNIVERSE_CSV), AT_NEXT_LOCK_SHA256)
         self.assertEqual(_sha256_file(SD_FIRST_LOCK), SD_FIRST_LOCK_SHA256)
+        self.assertEqual(_sha256_file(SD_NEXT_LOCK), SD_NEXT_LOCK_SHA256)
         self.assertEqual(_sha256_file(FIA_NEXT_LOCK), FIA_NEXT_LOCK_SHA256)
         self.assertEqual(_sha256_file(FIA_FIRST_LOCK), FIA_FIRST_LOCK_SHA256)
 
@@ -575,6 +586,194 @@ class TestAbnormalTradingNextSliceRunner(unittest.TestCase):
             self.assertTrue(refs)
             for ref in refs:
                 self.assertTrue(os.path.isfile(ref), ref)
+
+
+class TestAbnormalTradingNextSliceDfm35DryrunClosure(unittest.TestCase):
+    """D-FM-35 AT next-slice dry-run offline closure：只读复核 + freeze（无 CNINFO · 无 dry-run 重写）。"""
+
+    VALIDATION = os.path.join(BASE_DIR, "outputs", "validation")
+    CLOSURE_METRICS = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_abnormal_trading_next_slice_dryrun_closure_metrics.csv",
+    )
+    CAVEAT_LEDGER = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_abnormal_trading_next_slice_runner_final_caveat_ledger.csv",
+    )
+    FREEZE_LEDGER = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_abnormal_trading_next_slice_dryrun_artifact_freeze_ledger.csv",
+    )
+    CLOSURE_MATRIX = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_abnormal_trading_dfm35_next_slice_dryrun_closure_matrix_20260715.csv",
+    )
+    CLOSURE_DECISION = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_abnormal_trading_next_slice_dryrun_closure_decision.md",
+    )
+    CLOSURE_SUMMARY = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_abnormal_trading_next_slice_dryrun_closure_summary.md",
+    )
+    CLOSURE_EVIDENCE = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_abnormal_trading_dfm35_next_slice_dryrun_offline_closure_20260715.md",
+    )
+    POST_NEXT = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_abnormal_trading_next_slice_post_dryrun_closure_next_step_recommendation.md",
+    )
+    LIVE_REPORT = os.path.join(
+        OUTPUT_ROOT,
+        "reports",
+        "d_class_abnormal_trading_next_slice_live_report.csv",
+    )
+
+    # D-FM-31 冻结的 dry-run 产物 sha256；D-FM-35 不得改写
+    DRYRUN_ARTIFACT_SHA256 = {
+        "dryrun_report": (
+            "51bda4864aee4853328b6e76f3ee0de073ca9e6d14b7d78d7cd8fb6ffe329497"
+        ),
+        "dryrun_summary": (
+            "7fae1ccaacf31cbb254e51fc4b5a139554f40185eacd29ed692b1ce9320bb624"
+        ),
+        "planned_snapshot_DAT101": (
+            "f1fefd89417f00080d4a1f4c4692e08f7700941a91154679d7e9d0e1b2b96673"
+        ),
+        "planned_snapshot_DAT102": (
+            "dae68e77544474d391491221998c9c4b266f8e7cfb9946480deb53aab3e4a976"
+        ),
+        "planned_snapshot_DAT103": (
+            "80ef09cfd5bf29f14b36cd5750aebf03dd70051bb1cc91c592e7980e7727f5ff"
+        ),
+        "planned_snapshot_DAT104": (
+            "8fc2906fa1a0ccbc4c4f902e83643ad572805309c6f11bee98476fe17cbeec5f"
+        ),
+        "planned_snapshot_DAT105": (
+            "14f424d5ec83eb6765a3c537e2dc9854eece2348f9d26170b924c7d7bbaff9db"
+        ),
+    }
+
+    def test_closure_artifacts_present_and_caveats(self) -> None:
+        for path in (
+            self.CLOSURE_METRICS,
+            self.CAVEAT_LEDGER,
+            self.FREEZE_LEDGER,
+            self.CLOSURE_MATRIX,
+            self.CLOSURE_DECISION,
+            self.CLOSURE_SUMMARY,
+            self.CLOSURE_EVIDENCE,
+            self.POST_NEXT,
+        ):
+            self.assertTrue(os.path.isfile(path), msg=path)
+        with open(self.CAVEAT_LEDGER, newline="", encoding="utf-8") as f:
+            caveats = {c["caveat_id"]: c for c in csv.DictReader(f)}
+        self.assertIn("CAV-AT-NS-R01", caveats)
+        self.assertEqual(caveats["CAV-AT-NS-R01"]["caveat_type"], "s4_dryrun_not_live")
+        self.assertIn("bare PASS", caveats["CAV-AT-NS-R01"]["forbidden_interpretation"])
+        self.assertEqual(
+            caveats["CAV-AT-NS-R03"]["caveat_type"], "shared_probe_not_found_path"
+        )
+        self.assertEqual(
+            caveats["CAV-AT-NS-R06"]["caveat_type"], "at_sd_live_not_flipped"
+        )
+        with open(self.CLOSURE_METRICS, newline="", encoding="utf-8") as f:
+            metrics = {r["metric_name"]: r["value"] for r in csv.DictReader(f)}
+        self.assertEqual(metrics["planned_ok"], "5")
+        self.assertEqual(metrics["planned_shared_cninfo_requests"], "1")
+        self.assertEqual(metrics["CNINFO_during_dfm35_closure"], "0")
+        self.assertEqual(metrics["s4_dryrun_closure_gate"], "PASS_OFFLINE")
+        self.assertEqual(metrics["live_gate"], "NOT_APPROVED")
+        self.assertEqual(metrics["execution_gate"], "NOT_APPLICABLE")
+        self.assertEqual(metrics["commit_boundary_gate"], "READY_FOR_COMMIT_REVIEW")
+        self.assertEqual(metrics["live_report_present"], "no")
+        with open(self.CLOSURE_MATRIX, newline="", encoding="utf-8") as f:
+            matrix = {r["case_id"]: r for r in csv.DictReader(f)}
+        self.assertEqual(len(matrix), 5)
+        for case_id in ("DAT101", "DAT102", "DAT103", "DAT104", "DAT105"):
+            self.assertEqual(matrix[case_id]["dryrun_status"], "planned_ok")
+            self.assertEqual(matrix[case_id]["cninfo_called"], "false")
+            self.assertEqual(matrix[case_id]["live_found_path_DAT101_105"], "NOT_PROVEN")
+        self.assertEqual(matrix["DAT105"]["expected_behavior"], "empty_but_valid")
+        self.assertEqual(matrix["DAT101"]["anchor_tdate"], "2026-07-02")
+
+    def test_frozen_dryrun_artifacts_and_locks(self) -> None:
+        self.assertFalse(os.path.isfile(self.LIVE_REPORT))
+        self.assertTrue(os.path.isfile(DRYRUN_REPORT))
+        self.assertTrue(os.path.isfile(DRYRUN_SUMMARY))
+        self.assertEqual(
+            _sha256_file(DRYRUN_REPORT),
+            self.DRYRUN_ARTIFACT_SHA256["dryrun_report"],
+        )
+        self.assertEqual(
+            _sha256_file(DRYRUN_SUMMARY),
+            self.DRYRUN_ARTIFACT_SHA256["dryrun_summary"],
+        )
+        for case_id in ("DAT101", "DAT102", "DAT103", "DAT104", "DAT105"):
+            path = os.path.join(
+                OUTPUT_ROOT, "planned_snapshots", f"{case_id}_abnormal_trading.json"
+            )
+            self.assertTrue(os.path.isfile(path), msg=path)
+            key = f"planned_snapshot_{case_id}"
+            self.assertEqual(
+                _sha256_file(path), self.DRYRUN_ARTIFACT_SHA256[key], msg=key
+            )
+        with open(self.FREEZE_LEDGER, newline="", encoding="utf-8") as f:
+            freeze_rows = list(csv.DictReader(f))
+        freeze_by_role = {r["artifact_role"]: r for r in freeze_rows}
+        for role, expected in self.DRYRUN_ARTIFACT_SHA256.items():
+            self.assertEqual(freeze_by_role[role]["sha256"], expected, msg=role)
+            self.assertEqual(freeze_by_role[role]["freeze_policy"], "frozen_read_only")
+        self.assertEqual(_sha256_file(AT_FIRST_LOCK), AT_FIRST_LOCK_SHA256)
+        self.assertEqual(_sha256_file(UNIVERSE_CSV), AT_NEXT_LOCK_SHA256)
+        self.assertEqual(_sha256_file(SD_FIRST_LOCK), SD_FIRST_LOCK_SHA256)
+        self.assertEqual(_sha256_file(SD_NEXT_LOCK), SD_NEXT_LOCK_SHA256)
+        self.assertEqual(_sha256_file(FIA_NEXT_LOCK), FIA_NEXT_LOCK_SHA256)
+        self.assertEqual(_sha256_file(FIA_FIRST_LOCK), FIA_FIRST_LOCK_SHA256)
+        # SD next-slice dry-run 根只读确认（本任务不得 mutate）
+        sd_dryrun_report = os.path.join(
+            SD_NEXT_OUTPUT_ROOT,
+            "reports",
+            "d_class_shareholder_data_next_slice_dryrun_report.csv",
+        )
+        sd_dryrun_summary = os.path.join(
+            SD_NEXT_OUTPUT_ROOT,
+            "reports",
+            "d_class_shareholder_data_next_slice_dryrun_summary.md",
+        )
+        self.assertEqual(
+            _sha256_file(sd_dryrun_report),
+            freeze_by_role["sd_next_dryrun_report"]["sha256"],
+        )
+        self.assertEqual(
+            _sha256_file(sd_dryrun_summary),
+            freeze_by_role["sd_next_dryrun_summary"]["sha256"],
+        )
+
+    def test_dryrun_report_readonly_five_of_five(self) -> None:
+        with open(DRYRUN_REPORT, newline="", encoding="utf-8") as f:
+            rows = list(csv.DictReader(f))
+        self.assertEqual(len(rows), 5)
+        self.assertTrue(all(r["dryrun_status"] == "planned_ok" for r in rows))
+        shared = {r["shared_probe_key"] for r in rows}
+        self.assertEqual(shared, {runner.ABNORMAL_TRADING_NEXT_SLICE_SHARED_PROBE_KEY})
+        with open(DRYRUN_SUMMARY, encoding="utf-8") as f:
+            content = f.read()
+        self.assertIn("planned_shared_cninfo_requests | **1**", content)
+        self.assertIn("NOT APPROVED for live", content)
+        self.assertIn("2026-07-02", content)
+        self.assertIn("2026-07-03", content)
+        with open(self.CLOSURE_EVIDENCE, encoding="utf-8") as f:
+            evidence = f.read()
+        self.assertIn("s4_dryrun_closure_gate = PASS_OFFLINE", evidence)
+        self.assertIn("cninfo_calls = 0", evidence)
+        self.assertIn("at_next_slice_live_flipped = false", evidence)
+        self.assertIn("sd_next_slice_live_flipped = false", evidence)
+        self.assertIn("NOT verified", evidence)
+        self.assertIn("NOT production_ready", evidence)
+        self.assertIn("不使用：** bare PASS", evidence)
+        self.assertIn("ready_for_commit = true", evidence)
 
 
 if __name__ == "__main__":
