@@ -1,0 +1,22 @@
+# B-FM-23 live allow-list — 仅新晋 supervisory_board_known_001
+version: "draft-0.1"
+status: live_sample_scoped_B-FM-23
+verified: false
+notes: B-FM-23 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS
+
+cases:
+  - case_id: supervisory_board_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "300017"
+    company_name: "网宿科技"
+    title_pattern: "第二十四次会议决议公告"
+    expected_document_type: announcement
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-23 live allow-list（依赖 general_006 监事会→announcement route + 本包晋升）：
+      网宿科技 300017，BD2E091 / announcement_id=1224016408。
+      标题「第六届监事会第二十四次会议决议公告」。不写 verified；不下载 PDF。

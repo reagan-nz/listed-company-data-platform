@@ -245,6 +245,29 @@ cases:
       longer session-specific title not returned by search). Checklist reviewed;
       routes to cninfo_general_announcement_pdf. Do not write verified.
 
+  # --- supervisory_board / 监事会决议 × 1（document_type=announcement；非 board_resolution）---
+  - case_id: supervisory_board_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "300017"
+    company_name: "网宿科技"
+    title_pattern: "第二十四次会议决议公告"
+    expected_document_type: announcement
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-23 自 harvest 证据晋升（路由已有 general_006「监事会决议公告」→ announcement；
+      闭合 B-FM-22 推迟的监事会 known-document 边角）：网宿科技 300017，
+      第六届监事会第二十四次会议决议公告
+      （announcement_id=1224016408，披露日 2025-06-27）。title_pattern 取长标题
+      可匹配子串「第二十四次会议决议公告」（「监事会决议公告」非长标题连续子串）；
+      与 board_resolution_known_001「董事会决议公告」及股东会决议族可区分；
+      路由为 announcement → cninfo_general_announcement_pdf（监事会分支，非董事会决议）。
+      来源 outputs/validation/cninfo_b_class_erad_scale_200/reports/b_class_erad_scale_200_report.csv
+      行 BD2E091（quality=pass；phase3 B3E091）。不写 verified；不下载 PDF。
+
   # --- shareholder_meeting_material × 4 ---
   - case_id: shareholder_meeting_known_001
     case_status: ready
