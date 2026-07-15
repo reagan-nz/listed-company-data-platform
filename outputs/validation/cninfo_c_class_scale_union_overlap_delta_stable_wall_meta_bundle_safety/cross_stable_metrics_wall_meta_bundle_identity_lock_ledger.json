@@ -1,0 +1,340 @@
+{
+  "generated_at": "2026-07-15T16:38:47Z",
+  "task_id": "C-FM-43",
+  "fingerprint_sha256": "e21ac8926e4873ecfb6d129f8bb90dfb848278eed8d8951bb500e48380699fbd",
+  "bundle_sha256": "ed331490393a9e65b839e4eb30f0b628662a407eaa03b998ec204eb55fc50102",
+  "compositions": {
+    "union_status_composition": {
+      "formula": "2134/106/9",
+      "composition_sha256": "97fc97bc27d8b13e92a27664085344fdafce1e47b6b357cd541e833beb55d0d0"
+    },
+    "overlap_delta_composition": {
+      "formula": "overlap_delta=12",
+      "composition_sha256": "f5e743a9daab48aed4ae549e764969f9874a5f53ab0a04dac57d72aac122635c"
+    },
+    "surface_delta_composition": {
+      "formula": "surface_delta=2",
+      "composition_sha256": "a6b2e2b37c83907a778de5c6468fb6f0c4b8c373ee62601ddbbe7b6016303cca"
+    },
+    "cross_formula_composition_meta_bundle": {
+      "bundle_sha256": "1a95681ad05421037aa96867a2c3c7182791b4111a3924c1b9568aa4bff4cff2"
+    },
+    "stable_metrics_wall": {
+      "harvest_unique_union": 2249,
+      "surface_unique": 2251,
+      "harvest_additive": 2261,
+      "union_status": "2134/106/9",
+      "overlap_delta": 12,
+      "residual_safety_coverage": 117,
+      "resume_taxonomy": "28/1/0",
+      "tier_coverage": "7/3314",
+      "combined_dryrun_coverage": 1053,
+      "risk_band": "75/14/12/5",
+      "coverage": 117
+    }
+  },
+  "sample_denials": [
+    {
+      "proposed_compositions": {
+        "union_status_composition": {
+          "formula": "2134/106/9",
+          "composition_sha256": "97fc97bc27d8b13e92a27664085344fdafce1e47b6b357cd541e833beb55d0d0"
+        },
+        "overlap_delta_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "f5e743a9daab48aed4ae549e764969f9874a5f53ab0a04dac57d72aac122635c"
+        },
+        "surface_delta_composition": {
+          "formula": "surface_delta=2",
+          "composition_sha256": "a6b2e2b37c83907a778de5c6468fb6f0c4b8c373ee62601ddbbe7b6016303cca"
+        },
+        "cross_formula_composition_meta_bundle": {
+          "bundle_sha256": "1a95681ad05421037aa96867a2c3c7182791b4111a3924c1b9568aa4bff4cff2"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        },
+        "resume_composition": {
+          "formula": "28+1+0=29",
+          "composition_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      },
+      "frozen_compositions": {
+        "union_status_composition": {
+          "formula": "2134/106/9",
+          "composition_sha256": "97fc97bc27d8b13e92a27664085344fdafce1e47b6b357cd541e833beb55d0d0"
+        },
+        "overlap_delta_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "f5e743a9daab48aed4ae549e764969f9874a5f53ab0a04dac57d72aac122635c"
+        },
+        "surface_delta_composition": {
+          "formula": "surface_delta=2",
+          "composition_sha256": "a6b2e2b37c83907a778de5c6468fb6f0c4b8c373ee62601ddbbe7b6016303cca"
+        },
+        "cross_formula_composition_meta_bundle": {
+          "bundle_sha256": "1a95681ad05421037aa96867a2c3c7182791b4111a3924c1b9568aa4bff4cff2"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_stable_metrics_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "union_status_composition": {
+          "formula": "2134/106/9",
+          "composition_sha256": "97fc97bc27d8b13e92a27664085344fdafce1e47b6b357cd541e833beb55d0d0"
+        },
+        "overlap_delta_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "f5e743a9daab48aed4ae549e764969f9874a5f53ab0a04dac57d72aac122635c"
+        },
+        "cross_formula_composition_meta_bundle": {
+          "bundle_sha256": "1a95681ad05421037aa96867a2c3c7182791b4111a3924c1b9568aa4bff4cff2"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "frozen_compositions": {
+        "union_status_composition": {
+          "formula": "2134/106/9",
+          "composition_sha256": "97fc97bc27d8b13e92a27664085344fdafce1e47b6b357cd541e833beb55d0d0"
+        },
+        "overlap_delta_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "f5e743a9daab48aed4ae549e764969f9874a5f53ab0a04dac57d72aac122635c"
+        },
+        "surface_delta_composition": {
+          "formula": "surface_delta=2",
+          "composition_sha256": "a6b2e2b37c83907a778de5c6468fb6f0c4b8c373ee62601ddbbe7b6016303cca"
+        },
+        "cross_formula_composition_meta_bundle": {
+          "bundle_sha256": "1a95681ad05421037aa96867a2c3c7182791b4111a3924c1b9568aa4bff4cff2"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_stable_metrics_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "union_status_composition": {
+          "formula": "2134/106/9",
+          "composition_sha256": "97fc97bc27d8b13e92a27664085344fdafce1e47b6b357cd541e833beb55d0d0"
+        },
+        "overlap_delta_composition": {
+          "formula": "overlap_delta=11",
+          "composition_sha256": "f5e743a9daab48aed4ae549e764969f9874a5f53ab0a04dac57d72aac122635c"
+        },
+        "surface_delta_composition": {
+          "formula": "surface_delta=2",
+          "composition_sha256": "a6b2e2b37c83907a778de5c6468fb6f0c4b8c373ee62601ddbbe7b6016303cca"
+        },
+        "cross_formula_composition_meta_bundle": {
+          "bundle_sha256": "1a95681ad05421037aa96867a2c3c7182791b4111a3924c1b9568aa4bff4cff2"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "frozen_compositions": {
+        "union_status_composition": {
+          "formula": "2134/106/9",
+          "composition_sha256": "97fc97bc27d8b13e92a27664085344fdafce1e47b6b357cd541e833beb55d0d0"
+        },
+        "overlap_delta_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "f5e743a9daab48aed4ae549e764969f9874a5f53ab0a04dac57d72aac122635c"
+        },
+        "surface_delta_composition": {
+          "formula": "surface_delta=2",
+          "composition_sha256": "a6b2e2b37c83907a778de5c6468fb6f0c4b8c373ee62601ddbbe7b6016303cca"
+        },
+        "cross_formula_composition_meta_bundle": {
+          "bundle_sha256": "1a95681ad05421037aa96867a2c3c7182791b4111a3924c1b9568aa4bff4cff2"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_stable_metrics_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "union_status_composition": {
+          "formula": "2134/106/9",
+          "composition_sha256": "97fc97bc27d8b13e92a27664085344fdafce1e47b6b357cd541e833beb55d0d0"
+        },
+        "overlap_delta_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "f5e743a9daab48aed4ae549e764969f9874a5f53ab0a04dac57d72aac122635c"
+        },
+        "surface_delta_composition": {
+          "formula": "surface_delta=2",
+          "composition_sha256": "a6b2e2b37c83907a778de5c6468fb6f0c4b8c373ee62601ddbbe7b6016303cca"
+        },
+        "cross_formula_composition_meta_bundle": {
+          "bundle_sha256": "1a95681ad05421037aa96867a2c3c7182791b4111a3924c1b9568aa4bff4cff2"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "frozen_compositions": {
+        "union_status_composition": {
+          "formula": "2134/106/9",
+          "composition_sha256": "97fc97bc27d8b13e92a27664085344fdafce1e47b6b357cd541e833beb55d0d0"
+        },
+        "overlap_delta_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "f5e743a9daab48aed4ae549e764969f9874a5f53ab0a04dac57d72aac122635c"
+        },
+        "surface_delta_composition": {
+          "formula": "surface_delta=2",
+          "composition_sha256": "a6b2e2b37c83907a778de5c6468fb6f0c4b8c373ee62601ddbbe7b6016303cca"
+        },
+        "cross_formula_composition_meta_bundle": {
+          "bundle_sha256": "1a95681ad05421037aa96867a2c3c7182791b4111a3924c1b9568aa4bff4cff2"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "cross_stable_metrics_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "cross_stable_metrics_wall_meta_bundle_identity_lock",
+    "compositions": {
+      "union_status_composition": {
+        "formula": "2134/106/9",
+        "composition_sha256": "97fc97bc27d8b13e92a27664085344fdafce1e47b6b357cd541e833beb55d0d0"
+      },
+      "overlap_delta_composition": {
+        "formula": "overlap_delta=12",
+        "composition_sha256": "f5e743a9daab48aed4ae549e764969f9874a5f53ab0a04dac57d72aac122635c"
+      },
+      "surface_delta_composition": {
+        "formula": "surface_delta=2",
+        "composition_sha256": "a6b2e2b37c83907a778de5c6468fb6f0c4b8c373ee62601ddbbe7b6016303cca"
+      },
+      "cross_formula_composition_meta_bundle": {
+        "bundle_sha256": "1a95681ad05421037aa96867a2c3c7182791b4111a3924c1b9568aa4bff4cff2"
+      },
+      "stable_metrics_wall": {
+        "harvest_unique_union": 2249,
+        "surface_unique": 2251,
+        "harvest_additive": 2261,
+        "union_status": "2134/106/9",
+        "overlap_delta": 12,
+        "residual_safety_coverage": 117,
+        "resume_taxonomy": "28/1/0",
+        "tier_coverage": "7/3314",
+        "combined_dryrun_coverage": 1053,
+        "risk_band": "75/14/12/5",
+        "coverage": 117
+      }
+    },
+    "bundle_sha256": "ed331490393a9e65b839e4eb30f0b628662a407eaa03b998ec204eb55fc50102",
+    "deny_composition_mutate": true,
+    "deny_bundle_inflate": true,
+    "deny_bundle_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
