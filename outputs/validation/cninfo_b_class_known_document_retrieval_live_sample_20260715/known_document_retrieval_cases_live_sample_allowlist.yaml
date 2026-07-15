@@ -1,0 +1,61 @@
+version: draft-0.1
+status: live_sample_scoped_B-R16-02
+verified: false
+notes: B-R16-02 live sample allow-list only; not a new fixture lineage
+cases:
+- case_id: inquiry_known_002
+  case_status: ready
+  source_id: cninfo_inquiry_reply_pdf
+  company_code: '601901'
+  company_name: 方正证券
+  title_pattern: 信息披露监管问询函的回复公告
+  expected_document_type: inquiry_reply
+  date_start: '2025-06-12'
+  date_end: '2025-06-15'
+  expected_route_to: cninfo_inquiry_reply_pdf
+  expected_pdf_url_available: true
+  notes: B-R16-01 自 harvest 证据晋升：方正证券 601901， 关于2024年年度报告的信息披露监管问询函的回复公告（announcement_id=1223879047，
+    披露日 2025-06-13）。来源 outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/b_class_erad_next_scale_slice1_combined_report.csv
+    行 BD2E470（quality=pass）。不写 verified；不下载 PDF。
+- case_id: meeting_known_002
+  case_status: ready
+  source_id: cninfo_meeting_notice_pdf
+  company_code: '688041'
+  company_name: 海光信息
+  title_pattern: 关于召开重大资产重组事项投资者说明会的公告
+  expected_document_type: meeting_notice
+  date_start: '2025-06-09'
+  date_end: '2025-06-12'
+  expected_route_to: cninfo_meeting_notice_pdf
+  expected_pdf_url_available: true
+  notes: B-R16-01 自 harvest 证据晋升：海光信息 688041， 海光信息技术股份有限公司关于召开重大资产重组事项投资者说明会的公告 （announcement_id=1223836435，披露日
+    2025-06-10）。来源 outputs/validation/cninfo_b_class_erad_scale_200/reports/b_class_erad_scale_200_report.csv
+    行 BD2E177（quality=pass）。不写 verified；不下载 PDF。
+- case_id: ir_activity_known_001
+  case_status: ready
+  source_id: cninfo_meeting_notice_pdf
+  company_code: 000559
+  company_name: 万向钱潮
+  title_pattern: 投资者关系活动记录表
+  expected_document_type: investor_relations_activity
+  date_start: '2025-06-24'
+  date_end: '2025-06-27'
+  expected_route_to: cninfo_meeting_notice_pdf
+  expected_pdf_url_available: true
+  notes: B-R16-01 自 harvest 证据晋升：万向钱潮 000559， 万向钱潮投资者关系活动记录表（2025年6月24日） （announcement_id=1223981179，披露日
+    2025-06-25）。来源 outputs/validation/cninfo_b_class_erad_scale_200/reports/b_class_erad_scale_200_report.csv
+    行 BD2E071（quality=pass）；phase3 retry_v2 同源 B3E071。不写 verified；不下载 PDF。
+- case_id: shareholder_meeting_known_001
+  case_status: ready
+  source_id: cninfo_general_announcement_pdf
+  company_code: '300446'
+  company_name: 航天智造
+  title_pattern: 股东大会通知
+  expected_document_type: shareholder_meeting_material
+  date_start: '2025-06-23'
+  date_end: '2025-06-26'
+  expected_route_to: cninfo_general_announcement_pdf
+  expected_pdf_url_available: true
+  notes: B-R16-01 自 harvest 证据晋升：航天智造 300446， 关于召开2025年度第二次临时股东大会通知的公告 （announcement_id=1223974102，披露日
+    2025-06-24）。来源 outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/b_class_erad_fuller_next_slice2_report.csv
+    行 BD2E574（quality=pass）。路由期望 general_announcement（无说明会）。 不写 verified；不下载 PDF。

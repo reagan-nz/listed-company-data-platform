@@ -1,0 +1,5 @@
+version: draft-0.1
+status: live_sample_no_guards
+verified: false
+notes: 'B-R16-02: intentionally empty — sample excludes periodic_guard live'
+cases: []
