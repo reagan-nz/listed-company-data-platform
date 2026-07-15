@@ -1,0 +1,38 @@
+# B-FM-21 live allow-list — 仅新晋 shareholder_meeting_known_005/006
+version: "draft-0.1"
+status: live_sample_scoped_B-FM-21
+verified: false
+notes: B-FM-21 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS
+
+cases:
+  - case_id: shareholder_meeting_known_005
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "300907"
+    company_name: "康平科技"
+    title_pattern: "临时股东会决议"
+    expected_document_type: shareholder_meeting_material
+    date_start: "2025-06-29"
+    date_end: "2025-07-02"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-21 live allow-list（依赖 B-FM-20 route + 本包晋升）：
+      康平科技 300907，BD2E646 / announcement_id=1224039628。
+      标题「临时股东会决议」。不写 verified；不下载 PDF。
+
+  - case_id: shareholder_meeting_known_006
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "002083"
+    company_name: "孚日股份"
+    title_pattern: "股东会的通知"
+    expected_document_type: shareholder_meeting_material
+    date_start: "2025-06-25"
+    date_end: "2025-06-28"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-21 live allow-list（依赖 B-FM-20 route + 本包晋升）：
+      孚日股份 002083，BD2E276 / announcement_id=1223997400。
+      标题「股东会的通知」。不写 verified；不下载 PDF。

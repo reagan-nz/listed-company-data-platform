@@ -324,3 +324,43 @@ cases:
       路由为 shareholder_meeting_material → cninfo_general_announcement_pdf。
       来源 outputs/validation/cninfo_b_class_erad_scale_200/reports/b_class_erad_scale_200_report.csv
       行 BD2E080（quality=pass；phase3 B3E080）。不写 verified；不下载 PDF。
+
+  - case_id: shareholder_meeting_known_005
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "300907"
+    company_name: "康平科技"
+    title_pattern: "临时股东会决议"
+    expected_document_type: shareholder_meeting_material
+    date_start: "2025-06-29"
+    date_end: "2025-07-02"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-21 自 harvest 证据晋升（依赖 B-FM-20 「股东会」简称 routing edge）：康平科技 300907，
+      2025年第五次临时股东会决议公告
+      （announcement_id=1224039628，披露日 2025-06-30）。标题为简称「临时股东会决议」，
+      与 known_003 完整「股东大会决议」可区分；路由为 shareholder_meeting_material →
+      cninfo_general_announcement_pdf。
+      来源 outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/b_class_erad_fuller_next_slice2_report.csv
+      行 BD2E646（quality=pass）。不写 verified；不下载 PDF。
+
+  - case_id: shareholder_meeting_known_006
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "002083"
+    company_name: "孚日股份"
+    title_pattern: "股东会的通知"
+    expected_document_type: shareholder_meeting_material
+    date_start: "2025-06-25"
+    date_end: "2025-06-28"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-21 自 harvest 证据晋升（依赖 B-FM-20 「股东会」简称 routing edge）：孚日股份 002083，
+      关于召开2025年第二次临时股东会的通知
+      （announcement_id=1223997400，披露日 2025-06-26）。标题为简称「股东会的通知」，
+      与 known_002 完整「股东大会的通知」可区分（「股东会的通知」不是「股东大会的通知」子串）；
+      路由为 shareholder_meeting_material → cninfo_general_announcement_pdf。
+      来源 outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/b_class_erad_next_scale_slice1_combined_report.csv
+      行 BD2E276（quality=pass）。不写 verified；不下载 PDF。
