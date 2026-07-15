@@ -490,5 +490,124 @@ class TestFundIndustryAllocationNextSliceRunner(unittest.TestCase):
             )
 
 
+class TestFundIndustryAllocationNextSliceDfm27Closure(unittest.TestCase):
+    """D-FM-27 next-slice offline closure：统一 live 5/5 + 产物 schema（无 CNINFO）。"""
+
+    VALIDATION = os.path.join(BASE_DIR, "outputs", "validation")
+    CLOSURE_METRICS = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_fund_industry_allocation_next_slice_closure_metrics.csv",
+    )
+    CAVEAT_LEDGER = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_fund_industry_allocation_next_slice_final_caveat_ledger.csv",
+    )
+    EFFECTIVE_RESULT = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_fund_industry_allocation_next_slice_effective_result.csv",
+    )
+    CLOSURE_MATRIX = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_fund_industry_allocation_dfm27_next_slice_closure_matrix_20260715.csv",
+    )
+    LIVE_REPORT = os.path.join(
+        OUTPUT_ROOT,
+        "reports",
+        "d_class_fund_industry_allocation_next_slice_live_report.csv",
+    )
+    NEXT_SLICE_LOCK = UNIVERSE_CSV
+    FIRST_SLICE_LOCK = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_fund_industry_allocation_first_slice_universe_lock_20260715.csv",
+    )
+    # D-FM-24/26 冻结的 next-slice / first-slice lock sha256；closure 不得改动
+    NEXT_SLICE_LOCK_SHA256 = (
+        "c9f2c3598b48dd823e1ad60c66f326b91d8bf2b6564565b083e13eeb8b9d0515"
+    )
+    FIRST_SLICE_LOCK_SHA256 = (
+        "49345c88dee35e568784048aed4bcadcf3adb69fdb7c22495bcd0741f413dc8c"
+    )
+
+    @staticmethod
+    def _sha256_file(path: str) -> str:
+        import hashlib
+
+        h = hashlib.sha256()
+        with open(path, "rb") as f:
+            for chunk in iter(lambda: f.read(65536), b""):
+                h.update(chunk)
+        return h.hexdigest()
+
+    def test_unified_live_five_of_five_offline(self) -> None:
+        rows = runner.load_fund_industry_allocation_next_slice_universe(UNIVERSE_CSV)
+        if not os.path.isfile(self.LIVE_REPORT):
+            self.skipTest("live report not present")
+        with open(self.LIVE_REPORT, newline="", encoding="utf-8") as f:
+            live = {r["case_id"]: r for r in csv.DictReader(f)}
+        acceptable = sum(
+            1
+            for r in rows
+            if runner.is_fund_industry_allocation_next_slice_acceptable(
+                r, live[r.case_id]
+            )
+        )
+        self.assertEqual(acceptable, 5)
+        gate = runner.compute_fund_industry_allocation_next_slice_execution_gate(
+            rows, live
+        )
+        self.assertEqual(gate, "PASS_WITH_CAVEAT")
+
+    def test_closure_artifacts_present_and_caveats(self) -> None:
+        for path in (
+            self.CLOSURE_METRICS,
+            self.CAVEAT_LEDGER,
+            self.EFFECTIVE_RESULT,
+            self.CLOSURE_MATRIX,
+        ):
+            self.assertTrue(os.path.isfile(path), msg=path)
+        with open(self.CAVEAT_LEDGER, newline="", encoding="utf-8") as f:
+            caveats = {c["caveat_id"]: c for c in csv.DictReader(f)}
+        self.assertIn("CAV-FIA-NS-002", caveats)
+        self.assertEqual(
+            caveats["CAV-FIA-NS-002"]["caveat_type"],
+            "unified_live_pass_with_caveat",
+        )
+        self.assertIn("bare PASS", caveats["CAV-FIA-NS-002"]["forbidden_interpretation"])
+        self.assertEqual(
+            caveats["CAV-FIA-NS-003"]["caveat_type"], "coarse_f001v_filter"
+        )
+        with open(self.CLOSURE_METRICS, newline="", encoding="utf-8") as f:
+            metrics = {r["metric_name"]: r["value"] for r in csv.DictReader(f)}
+        self.assertEqual(metrics["acceptable_unified_live"], "5")
+        self.assertEqual(metrics["CNINFO_during_closure"], "0")
+        self.assertEqual(metrics["closure_gate"], "PASS_WITH_CAVEAT")
+        self.assertEqual(metrics["CNINFO_during_dfm26_live"], "3")
+        with open(self.EFFECTIVE_RESULT, newline="", encoding="utf-8") as f:
+            eff = {r["case_id"]: r for r in csv.DictReader(f)}
+        self.assertEqual(len(eff), 5)
+        for case_id in ("DFIA101", "DFIA102", "DFIA103", "DFIA104", "DFIA105"):
+            self.assertEqual(eff[case_id]["acceptable"], "yes")
+            self.assertEqual(eff[case_id]["source_of_final_result"], "dfm26_unified_live")
+        self.assertEqual(eff["DFIA103"]["record_count"], "19")
+        self.assertEqual(eff["DFIA101"]["record_count"], "1")
+
+    def test_live_report_not_overwritten_and_locks_frozen(self) -> None:
+        if not os.path.isfile(self.LIVE_REPORT):
+            self.skipTest("live report not present")
+        with open(self.LIVE_REPORT, newline="", encoding="utf-8") as f:
+            live = {r["case_id"]: r for r in csv.DictReader(f)}
+        # D-FM-26 统一 5/5 只读保留；closure 不得改写为其他叙事
+        for case_id in ("DFIA101", "DFIA102", "DFIA103", "DFIA104", "DFIA105"):
+            self.assertEqual(live[case_id]["acceptable"], "yes")
+        self.assertEqual(live["DFIA103"]["record_count"], "19")
+        self.assertEqual(live["DFIA105"]["retrieval_status"], "found")
+        self.assertEqual(
+            self._sha256_file(self.NEXT_SLICE_LOCK), self.NEXT_SLICE_LOCK_SHA256
+        )
+        self.assertEqual(
+            self._sha256_file(self.FIRST_SLICE_LOCK), self.FIRST_SLICE_LOCK_SHA256
+        )
+
+
 if __name__ == "__main__":
     unittest.main()

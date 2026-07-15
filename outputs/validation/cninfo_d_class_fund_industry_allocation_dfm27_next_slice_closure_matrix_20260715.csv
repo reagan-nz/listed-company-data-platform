@@ -1,0 +1,6 @@
+case_id,industry_code,query_mode,anchor_rdate,lock_expected_behavior,dfm26_retrieval,dfm26_records,dfm26_acceptable,effective_acceptable,final_effective_status,failure_type,notes
+DFIA101,A,default,,captured_normal_or_empty_but_valid,found,1,yes,yes,next_slice_default_A_coarse_found,,D-FM-26 shared default probe; F001V=A filter found=1
+DFIA102,C,default,,captured_normal_or_empty_but_valid,found,1,yes,yes,next_slice_default_C_coarse_found,,D-FM-26 shared default probe; F001V=C filter found=1
+DFIA103,*,rdate,20260331,captured_normal,found,19,yes,yes,next_slice_rdate_20260331_cross_section_found,,D-FM-26 shared rdate_20260331 probe; cross-section found=19
+DFIA104,B,rdate,20260331,captured_normal,found,1,yes,yes,next_slice_rdate_20260331_B_coarse_found,,D-FM-26 shared rdate_20260331 probe; F001V=B filter found=1
+DFIA105,C,rdate,20251231,captured_normal_or_empty_but_valid,found,1,yes,yes,next_slice_rdate_20251231_C_coarse_found,,D-FM-26 shared rdate_20251231 probe; F001V=C filter found=1; no timeout

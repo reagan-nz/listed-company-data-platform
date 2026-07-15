@@ -1,0 +1,28 @@
+metric_group,metric_name,value,gate_impact,notes
+next_slice,total_cases,5,closure,DFIA101-DFIA105 only
+next_slice,acceptable_unified_live,5,closure,5/5 from D-FM-26 single unified live; VR-030 forbids bare PASS
+next_slice,found,5,closure,all five cases found after coarse F001V filter
+next_slice,empty_but_valid,0,closure,none this live; mixed expectations still legal offline
+next_slice,http_error_residual,0,closure,no transport failure this live
+next_slice,unresolved_blocking,0,closure,coarse F001V + live_gate constant caveats retained; not blocking
+cninfo,CNINFO_during_dfm26_live,3,execution,shared probes default+rdate_20260331+rdate_20251231
+cninfo,CNINFO_during_closure,0,closure,D-FM-27 offline packaging; no live
+cninfo,request_cap_next_slice,5,planning,total cap; prefer shared probes <=3
+caveat,unified_live_not_layered,yes,closure,unlike first-slice; D-FM-26 ran all five cases in one live
+caveat,coarse_f001v_A_B_C,yes,closure,A/B/C each hit 1 row on filtered cases; not C26 fine-code anchor
+caveat,live_gate_not_approved_constant,yes,closure,single-task authorize does not flip live_gate constant
+safety,pdf_download,0,red_line,no PDF
+safety,ocr,0,red_line,no OCR
+safety,extraction,0,red_line,no extraction
+safety,db_write,0,red_line,no DB
+safety,minio_write,0,red_line,no MinIO
+safety,rag_run,0,red_line,no RAG
+exclusion,company_event_schema_write,no,red_line,industry aggregate only; company_code_available=false
+exclusion,688671_excluded,yes,universe,policy retained; no company bind
+exclusion,301259_excluded,yes,universe,DLC006R not reopened
+track,first_slice_fia_not_mutated,yes,closure,universe lock + live_snapshots untouched
+track,abnormal_trading_not_re_lived,yes,closure,not re-lived this task
+track,shareholder_data_not_re_lived,yes,closure,not re-lived this task
+track,executive_shareholding_not_re_lived,yes,closure,not re-lived this task
+gate,execution_gate,PASS_WITH_CAVEAT,preserved,d_class_fund_industry_allocation_next_slice_execution_gate
+gate,closure_gate,PASS_WITH_CAVEAT,closure,unified 5/5 with coarse-filter caveat; never bare PASS; NOT verified
