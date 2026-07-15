@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-07-15T13:36:04Z",
+  "task_id": "C-FM-22",
+  "gate": "PASS_OFFLINE",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "approved_for_snapshot_rebuild": false,
+  "ready_for_execute": false,
+  "hold_recommendation": "KEEP_EXECUTE_FALSE",
+  "decision_status": "AWAITING_HUMAN_EXECUTE_DECISION",
+  "idle_not_required_while_awaiting": true,
+  "seal_chain_extended": false,
+  "scale_tier_count": 4,
+  "company_coverage_sum": 2414,
+  "notes": "scale harvest-exclusion dual-layer (phase35×500) + multi-cohort repro fingerprint (863/190/861/500) + output-root protection hardening; EXECUTE remains human-held; does not overwrite MOCK3-23"
+}

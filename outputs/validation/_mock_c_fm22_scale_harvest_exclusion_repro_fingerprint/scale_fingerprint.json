@@ -1,0 +1,38 @@
+{
+  "generated_at": "2026-07-15T13:36:04Z",
+  "task_id": "C-FM-22",
+  "cninfo_calls": 0,
+  "execute_production_snapshot_rebuild": false,
+  "seal_chain_extended": false,
+  "scale_tier_count": 4,
+  "company_coverage_sum": 2414,
+  "observed_fps": {
+    "fm01_863": "cb0cf6b116c59e0326b380f31efedb73fefcf30e54d3ce1dd14db91efe508759",
+    "fm02_190": "6dc30af0fe8e8ade2f10da8599891005fde0158e324c9a1273112a461f04971c",
+    "fm03_harvest_863": "b25006b906a7ad14a96c703a896dd7fc18741d2c3e03886e87c01b898ba76278",
+    "phase35_500": "0aa3faad0387d7833769997fb705370105f56ba5204b4ec8878e432df27b9664"
+  },
+  "frozen_fps": {
+    "fm01_863": "cb0cf6b116c59e0326b380f31efedb73fefcf30e54d3ce1dd14db91efe508759",
+    "fm02_190": "6dc30af0fe8e8ade2f10da8599891005fde0158e324c9a1273112a461f04971c",
+    "fm03_harvest_863": "b25006b906a7ad14a96c703a896dd7fc18741d2c3e03886e87c01b898ba76278",
+    "phase35_500": "0aa3faad0387d7833769997fb705370105f56ba5204b4ec8878e432df27b9664"
+  },
+  "fingerprint": {
+    "row_count": 105,
+    "ok_count": 105,
+    "fail_count": 0,
+    "layers": {
+      "scale_lineage_registry": 7,
+      "multi_cohort_repro_fingerprint": 6,
+      "scale_harvest_exclusion_dual_layer": 8,
+      "protected_write_guard": 5,
+      "output_root_protection_hardening": 4,
+      "frozen_mock_isolation": 26,
+      "protected_csv_registry": 26,
+      "fm_gate_battery": 16,
+      "execute_hold_seal": 7
+    },
+    "fingerprint_sha256": "dbbfe862856a0677edb324da22d3c679e21400789a1d131e52b756284be63ff9"
+  }
+}
