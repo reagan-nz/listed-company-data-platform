@@ -73,6 +73,7 @@ categories:
       - 审计机构
       - 内部控制评价报告
       - 非标意见
+      - 非标准审计意见  # B-FM-32：全称变体（「非标意见」非子串）
     route_to:
       source_id: cninfo_periodic_report_pdf
       source_layer: document_corpus
@@ -170,6 +171,8 @@ categories:
       - 受托管理事务报告
       - 跟踪评级报告
       - 持续督导
+      - 非标准审计意见
+      - 募集资金使用情况报告
     exclusion_patterns: []
     route_to:
       source_id: cninfo_general_announcement_pdf
@@ -196,6 +199,10 @@ categories:
       B-FM-30：持续督导年度报告书 / 持续督导培训情况的报告——前者含子串「年度报告」会
       误进 periodic；后者无 general positive_patterns 落 other；含「持续督导」一律
       announcement（勿进 annual_report；勿落 other；不扩 schema）。
+      B-FM-32：CPA「非标准审计意见…消除情况的专项说明」（「非标准审计意见」不含
+      「非标意见」子串）及「前次募集资金使用情况报告」旧逻辑落 other；含
+      「非标准审计意见」或「募集资金使用情况报告」一律 announcement（窄 pattern；
+      不泛化「专项说明」；不扩 schema）。
 
 # 延期披露 / 摘要 / 提示性预告等：从 periodic 排除后的候选路由（非独立 source，归入 general 或 future disclosure_related）
 excluded_from_periodic_routing:
@@ -262,6 +269,7 @@ excluded_from_periodic_routing:
       - 审计机构
       - 内部控制评价报告
       - 非标意见
+      - 非标准审计意见  # B-FM-32：全称变体
     suggested_document_types:
       - announcement
     route_to:

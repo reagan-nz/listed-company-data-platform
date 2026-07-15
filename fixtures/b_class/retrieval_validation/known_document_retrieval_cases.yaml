@@ -599,6 +599,52 @@ cases:
       b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E248（quality=pass）。
       不写 verified；不下载 PDF。
 
+  # --- nonstandard_audit_opinion / 非标准审计意见消除专项说明（B-FM-32；勿落 other）---
+  - case_id: nonstandard_audit_opinion_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "600105"
+    company_name: "永鼎股份"
+    title_pattern: "非标准审计意见审计报告所涉及事项在2024年度消除情况的专项说明"
+    expected_document_type: announcement
+    date_start: "2025-06-22"
+    date_end: "2025-06-25"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-32 自 harvest 证据晋升（非标准审计意见消除专项说明 routing 边角：旧逻辑落 other）：
+      永鼎股份 600105，中兴华会计师事务所关于对永鼎股份2023年度财务报表出具非标准审计意见
+      审计报告所涉及事项在2024年度消除情况的专项说明（announcement_id=1223956135，
+      披露日 2025-06-23）。「非标准审计意见」不含子串「非标意见」（既有 §7 FP 短串），
+      B-FM-32 前落 other；硬化后 announcement。title_pattern 取长串
+      「非标准审计意见审计报告所涉及事项在2024年度消除情况的专项说明」（窄；不泛化「专项说明」）。
+      与监管工作函专项说明 / 非标意见短串 FP / 真·年报可区分。来源
+      outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
+      b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E366（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  # --- raised_funds_usage_report / 前次募集资金使用情况报告（B-FM-32；对称第二边角）---
+  - case_id: raised_funds_usage_report_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000962"
+    company_name: "东方钽业"
+    title_pattern: "前次募集资金使用情况报告"
+    expected_document_type: announcement
+    date_start: "2025-06-22"
+    date_end: "2025-06-25"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-32 自 harvest 证据晋升（前次募集资金使用情况报告第二边角；对称 nonstandard_audit）：
+      东方钽业 000962，公司前次募集资金使用情况报告（announcement_id=1223958745，
+      披露日 2025-06-23）。标题无「公告」等 general positive_patterns（B-FM-32 前），落 other；
+      硬化后 announcement。title_pattern 取「前次募集资金使用情况报告」。
+      与章程/制度/薪酬等低价值 other 边角及真·年报可区分。来源
+      outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
+      b_class_erad_next_scale_slice1_combined_report.csv 行 BD2E234（quality=pass）。
+      不写 verified；不下载 PDF。
+
   # --- shareholder_meeting_material × 4 ---
   - case_id: shareholder_meeting_known_001
     case_status: ready

@@ -1,0 +1,39 @@
+# B-FM-32 live allow-list — 仅新晋 nonstandard_audit_opinion_known_001 / raised_funds_usage_report_known_001
+# 非标准审计意见消除专项说明 / 前次募集资金使用情况报告；排除全部已 LIVE_PASS
+status: live_sample_scoped_B-FM-32
+generated: "2026-07-15"
+notes: B-FM-32 live allow-list only; not a new fixture lineage; excludes prior LIVE_PASS
+cases:
+  - case_id: nonstandard_audit_opinion_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "600105"
+    company_name: "永鼎股份"
+    title_pattern: "非标准审计意见审计报告所涉及事项在2024年度消除情况的专项说明"
+    expected_document_type: announcement
+    date_start: "2025-06-22"
+    date_end: "2025-06-25"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-32 live allow-list（非标准审计意见消除专项说明）：
+      永鼎股份 600105，披露日约 2025-06-23。
+      pattern「非标准审计意见审计报告所涉及事项在2024年度消除情况的专项说明」。
+      不写 verified；不下载 PDF。
+
+  - case_id: raised_funds_usage_report_known_001
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000962"
+    company_name: "东方钽业"
+    title_pattern: "前次募集资金使用情况报告"
+    expected_document_type: announcement
+    date_start: "2025-06-22"
+    date_end: "2025-06-25"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-32 live allow-list（前次募集资金使用情况报告边角）：
+      东方钽业 000962，披露日约 2025-06-23。
+      pattern「前次募集资金使用情况报告」。
+      不写 verified；不下载 PDF。

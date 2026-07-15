@@ -51,6 +51,7 @@ _UNRELATED_ANNOUNCEMENT_MARKERS = (
     "审计机构",
     "内部控制评价报告",
     "非标意见",
+    "非标准审计意见",  # B-FM-32：全称变体（「非标意见」非子串）
 )
 
 # 本公司报告期提示：「关于披露第一季度报告…」——非交叉披露
@@ -356,6 +357,11 @@ def _general_document_type(title: str, patterns: List[str]) -> str:
     B-FM-30：保荐机构「持续督导年度报告书」/「持续督导培训情况的报告」——前者含子串
     「年度报告」会误进 periodic；后者无 general positive_patterns 落 other。
     凡含「持续督导」一律 announcement（不扩 schema；勿进 annual_report / other）。
+
+    B-FM-32：CPA「非标准审计意见…消除情况的专项说明」——「非标准审计意见」不含
+    子串「非标意见」，旧逻辑落 other；「前次募集资金使用情况报告」亦无 general
+    positive_patterns。凡含「非标准审计意见」或「募集资金使用情况报告」一律
+    announcement（窄 pattern；不泛化「专项说明」；不扩 schema）。
     """
     # 法律意见书/法律意见：中介见证材料，保持 announcement（会议与非会议均适用）
     if "法律意见" in title:
@@ -377,6 +383,12 @@ def _general_document_type(title: str, patterns: List[str]) -> str:
         return "announcement"
     # 持续督导：年度报告书 / 培训情况报告等保荐机构督导材料，保持 announcement
     if "持续督导" in title:
+        return "announcement"
+    # 非标准审计意见：全称变体（≠「非标意见」子串），保持 announcement（勿落 other）
+    if "非标准审计意见" in title:
+        return "announcement"
+    # 募集资金使用情况报告：前次/当期募资使用说明，保持 announcement（勿落 other）
+    if "募集资金使用情况报告" in title:
         return "announcement"
     if "董事会" in title and "决议" in title:
         return "board_resolution"
