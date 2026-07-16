@@ -1,0 +1,92 @@
+{
+  "generated_at": "2026-07-16T02:02:18Z",
+  "task_id": "C-FM-46",
+  "fingerprint_sha256": "82f1e2a25a9a8300be5647a1116689bfae16e88e4d8052fb71ae47aaeb1befa1",
+  "composition_sha256": "92fa3d17497a548d926f5aaa408299b7e1ba6c3b63bb0d1e838bebef079c5b0a",
+  "protected_root_registry_formula": "MOCK3-47+MOCK48+resume+auth",
+  "sample_denials": [
+    {
+      "proposed": {
+        "frozen_mock_hi": 48,
+        "allow_mock_id": 48,
+        "required_total": 49
+      },
+      "frozen": {
+        "frozen_mock_hi": 47,
+        "allow_mock_id": 48,
+        "required_total": 49
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "protected_root_registry_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "frozen_mock_hi": 47,
+        "allow_mock_id": 49,
+        "required_total": 49
+      },
+      "frozen": {
+        "frozen_mock_hi": 47,
+        "allow_mock_id": 48,
+        "required_total": 49
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "protected_root_registry_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "frozen_mock_hi": 47,
+        "allow_mock_id": 48,
+        "required_total": 50
+      },
+      "frozen": {
+        "frozen_mock_hi": 47,
+        "allow_mock_id": 48,
+        "required_total": 49
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "protected_root_registry_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "frozen_mock_hi": 47,
+        "allow_mock_id": 48,
+        "required_total": 49
+      },
+      "frozen": {
+        "frozen_mock_hi": 47,
+        "allow_mock_id": 48,
+        "required_total": 49
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "protected_root_registry_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "protected_root_registry_composition_identity_lock",
+    "frozen_mock_lo": 3,
+    "frozen_mock_hi": 47,
+    "frozen_mock_count": 45,
+    "allow_mock_id": 48,
+    "required_extra": [
+      "C-ROOT-002",
+      "C-ROOT-011",
+      "C-ROOT-AUTH1"
+    ],
+    "required_total": 49,
+    "composition_sha256": "92fa3d17497a548d926f5aaa408299b7e1ba6c3b63bb0d1e838bebef079c5b0a",
+    "protected_root_registry_formula": "MOCK3-47+MOCK48+resume+auth",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

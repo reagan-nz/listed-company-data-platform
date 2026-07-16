@@ -1,0 +1,332 @@
+{
+  "generated_at": "2026-07-16T02:02:18Z",
+  "task_id": "C-FM-46",
+  "fingerprint_sha256": "70d0940a13486023e0fc1798696047176d3d55b1ddae6f5a88bfbe45d3b9c3b8",
+  "bundle_sha256": "6c2e17473bf6abe24ae3b9fa60379537c6224d2f687bbbf065d32a015ad17581",
+  "compositions": {
+    "lineage_winner_provenance_composition": {
+      "formula": "winner/complete",
+      "composition_sha256": "848c04020c1d50d4cfddaef2d0506d9fae74edb08e5bca46a74ea2a8f46c0d50"
+    },
+    "partition_codeset_composition": {
+      "formula": "complete/partial/failed",
+      "composition_sha256": "5273a5b38bcb7ca1804fe320d183d0d9c1f15e0c2aa91ccbadd98594b7bf9d0d"
+    },
+    "protected_root_registry_composition": {
+      "formula": "MOCK3-47+MOCK48+resume+auth",
+      "composition_sha256": "92fa3d17497a548d926f5aaa408299b7e1ba6c3b63bb0d1e838bebef079c5b0a"
+    },
+    "cross_unique_surface_additive_tier_dryrun_wall_meta_bundle": {
+      "bundle_sha256": "111ac7f008e38fad1f4f731bbabe264c37dcebb50d5f46e7f572c27c87dffe78"
+    },
+    "stable_metrics_wall": {
+      "harvest_unique_union": 2249,
+      "surface_unique": 2251,
+      "harvest_additive": 2261,
+      "union_status": "2134/106/9",
+      "overlap_delta": 12,
+      "residual_safety_coverage": 117,
+      "resume_taxonomy": "28/1/0",
+      "tier_coverage": "7/3314",
+      "combined_dryrun_coverage": 1053,
+      "risk_band": "75/14/12/5",
+      "coverage": 117,
+      "winner_map_sha256": "ff2c6a28b361498b0dbf163ad1d1779041e1dd4e772b652e6382e1d4051fbb07",
+      "complete_codes_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431"
+    }
+  },
+  "sample_denials": [
+    {
+      "proposed_compositions": {
+        "lineage_winner_provenance_composition": {
+          "formula": "winner/completeX",
+          "composition_sha256": "848c04020c1d50d4cfddaef2d0506d9fae74edb08e5bca46a74ea2a8f46c0d50"
+        },
+        "partition_codeset_composition": {
+          "formula": "complete/partial/failed",
+          "composition_sha256": "5273a5b38bcb7ca1804fe320d183d0d9c1f15e0c2aa91ccbadd98594b7bf9d0d"
+        },
+        "protected_root_registry_composition": {
+          "formula": "MOCK3-47+MOCK48+resume+auth",
+          "composition_sha256": "92fa3d17497a548d926f5aaa408299b7e1ba6c3b63bb0d1e838bebef079c5b0a"
+        },
+        "cross_unique_surface_additive_tier_dryrun_wall_meta_bundle": {
+          "bundle_sha256": "111ac7f008e38fad1f4f731bbabe264c37dcebb50d5f46e7f572c27c87dffe78"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117,
+          "winner_map_sha256": "ff2c6a28b361498b0dbf163ad1d1779041e1dd4e772b652e6382e1d4051fbb07",
+          "complete_codes_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431"
+        }
+      },
+      "frozen_compositions": {
+        "lineage_winner_provenance_composition": {
+          "formula": "winner/complete",
+          "composition_sha256": "848c04020c1d50d4cfddaef2d0506d9fae74edb08e5bca46a74ea2a8f46c0d50"
+        },
+        "partition_codeset_composition": {
+          "formula": "complete/partial/failed",
+          "composition_sha256": "5273a5b38bcb7ca1804fe320d183d0d9c1f15e0c2aa91ccbadd98594b7bf9d0d"
+        },
+        "protected_root_registry_composition": {
+          "formula": "MOCK3-47+MOCK48+resume+auth",
+          "composition_sha256": "92fa3d17497a548d926f5aaa408299b7e1ba6c3b63bb0d1e838bebef079c5b0a"
+        },
+        "cross_unique_surface_additive_tier_dryrun_wall_meta_bundle": {
+          "bundle_sha256": "111ac7f008e38fad1f4f731bbabe264c37dcebb50d5f46e7f572c27c87dffe78"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117,
+          "winner_map_sha256": "ff2c6a28b361498b0dbf163ad1d1779041e1dd4e772b652e6382e1d4051fbb07",
+          "complete_codes_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431"
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_lineage_drift_protected_repro_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {},
+      "frozen_compositions": {
+        "lineage_winner_provenance_composition": {
+          "formula": "winner/complete",
+          "composition_sha256": "848c04020c1d50d4cfddaef2d0506d9fae74edb08e5bca46a74ea2a8f46c0d50"
+        },
+        "partition_codeset_composition": {
+          "formula": "complete/partial/failed",
+          "composition_sha256": "5273a5b38bcb7ca1804fe320d183d0d9c1f15e0c2aa91ccbadd98594b7bf9d0d"
+        },
+        "protected_root_registry_composition": {
+          "formula": "MOCK3-47+MOCK48+resume+auth",
+          "composition_sha256": "92fa3d17497a548d926f5aaa408299b7e1ba6c3b63bb0d1e838bebef079c5b0a"
+        },
+        "cross_unique_surface_additive_tier_dryrun_wall_meta_bundle": {
+          "bundle_sha256": "111ac7f008e38fad1f4f731bbabe264c37dcebb50d5f46e7f572c27c87dffe78"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117,
+          "winner_map_sha256": "ff2c6a28b361498b0dbf163ad1d1779041e1dd4e772b652e6382e1d4051fbb07",
+          "complete_codes_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431"
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_lineage_drift_protected_repro_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "lineage_winner_provenance_composition": {
+          "formula": "winner/complete",
+          "composition_sha256": "848c04020c1d50d4cfddaef2d0506d9fae74edb08e5bca46a74ea2a8f46c0d50"
+        },
+        "partition_codeset_composition": {
+          "formula": "complete/partial/failed",
+          "composition_sha256": "5273a5b38bcb7ca1804fe320d183d0d9c1f15e0c2aa91ccbadd98594b7bf9d0d"
+        },
+        "protected_root_registry_composition": {
+          "formula": "MOCK3-47+MOCK48+resume+auth",
+          "composition_sha256": "92fa3d17497a548d926f5aaa408299b7e1ba6c3b63bb0d1e838bebef079c5b0a"
+        },
+        "cross_unique_surface_additive_tier_dryrun_wall_meta_bundle": {
+          "bundle_sha256": "111ac7f008e38fad1f4f731bbabe264c37dcebb50d5f46e7f572c27c87dffe78"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117,
+          "winner_map_sha256": "ff2c6a28b361498b0dbf163ad1d1779041e1dd4e772b652e6382e1d4051fbb07",
+          "complete_codes_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431"
+        },
+        "extra": {
+          "formula": "x"
+        }
+      },
+      "frozen_compositions": {
+        "lineage_winner_provenance_composition": {
+          "formula": "winner/complete",
+          "composition_sha256": "848c04020c1d50d4cfddaef2d0506d9fae74edb08e5bca46a74ea2a8f46c0d50"
+        },
+        "partition_codeset_composition": {
+          "formula": "complete/partial/failed",
+          "composition_sha256": "5273a5b38bcb7ca1804fe320d183d0d9c1f15e0c2aa91ccbadd98594b7bf9d0d"
+        },
+        "protected_root_registry_composition": {
+          "formula": "MOCK3-47+MOCK48+resume+auth",
+          "composition_sha256": "92fa3d17497a548d926f5aaa408299b7e1ba6c3b63bb0d1e838bebef079c5b0a"
+        },
+        "cross_unique_surface_additive_tier_dryrun_wall_meta_bundle": {
+          "bundle_sha256": "111ac7f008e38fad1f4f731bbabe264c37dcebb50d5f46e7f572c27c87dffe78"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117,
+          "winner_map_sha256": "ff2c6a28b361498b0dbf163ad1d1779041e1dd4e772b652e6382e1d4051fbb07",
+          "complete_codes_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431"
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_lineage_drift_protected_repro_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "lineage_winner_provenance_composition": {
+          "formula": "winner/complete",
+          "composition_sha256": "848c04020c1d50d4cfddaef2d0506d9fae74edb08e5bca46a74ea2a8f46c0d50"
+        },
+        "partition_codeset_composition": {
+          "formula": "complete/partial/failed",
+          "composition_sha256": "5273a5b38bcb7ca1804fe320d183d0d9c1f15e0c2aa91ccbadd98594b7bf9d0d"
+        },
+        "protected_root_registry_composition": {
+          "formula": "MOCK3-47+MOCK48+resume+auth",
+          "composition_sha256": "92fa3d17497a548d926f5aaa408299b7e1ba6c3b63bb0d1e838bebef079c5b0a"
+        },
+        "cross_unique_surface_additive_tier_dryrun_wall_meta_bundle": {
+          "bundle_sha256": "111ac7f008e38fad1f4f731bbabe264c37dcebb50d5f46e7f572c27c87dffe78"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117,
+          "winner_map_sha256": "ff2c6a28b361498b0dbf163ad1d1779041e1dd4e772b652e6382e1d4051fbb07",
+          "complete_codes_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431"
+        }
+      },
+      "frozen_compositions": {
+        "lineage_winner_provenance_composition": {
+          "formula": "winner/complete",
+          "composition_sha256": "848c04020c1d50d4cfddaef2d0506d9fae74edb08e5bca46a74ea2a8f46c0d50"
+        },
+        "partition_codeset_composition": {
+          "formula": "complete/partial/failed",
+          "composition_sha256": "5273a5b38bcb7ca1804fe320d183d0d9c1f15e0c2aa91ccbadd98594b7bf9d0d"
+        },
+        "protected_root_registry_composition": {
+          "formula": "MOCK3-47+MOCK48+resume+auth",
+          "composition_sha256": "92fa3d17497a548d926f5aaa408299b7e1ba6c3b63bb0d1e838bebef079c5b0a"
+        },
+        "cross_unique_surface_additive_tier_dryrun_wall_meta_bundle": {
+          "bundle_sha256": "111ac7f008e38fad1f4f731bbabe264c37dcebb50d5f46e7f572c27c87dffe78"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117,
+          "winner_map_sha256": "ff2c6a28b361498b0dbf163ad1d1779041e1dd4e772b652e6382e1d4051fbb07",
+          "complete_codes_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431"
+        }
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "cross_lineage_drift_protected_repro_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "cross_lineage_drift_protected_repro_wall_meta_bundle_identity_lock",
+    "compositions": {
+      "lineage_winner_provenance_composition": {
+        "formula": "winner/complete",
+        "composition_sha256": "848c04020c1d50d4cfddaef2d0506d9fae74edb08e5bca46a74ea2a8f46c0d50"
+      },
+      "partition_codeset_composition": {
+        "formula": "complete/partial/failed",
+        "composition_sha256": "5273a5b38bcb7ca1804fe320d183d0d9c1f15e0c2aa91ccbadd98594b7bf9d0d"
+      },
+      "protected_root_registry_composition": {
+        "formula": "MOCK3-47+MOCK48+resume+auth",
+        "composition_sha256": "92fa3d17497a548d926f5aaa408299b7e1ba6c3b63bb0d1e838bebef079c5b0a"
+      },
+      "cross_unique_surface_additive_tier_dryrun_wall_meta_bundle": {
+        "bundle_sha256": "111ac7f008e38fad1f4f731bbabe264c37dcebb50d5f46e7f572c27c87dffe78"
+      },
+      "stable_metrics_wall": {
+        "harvest_unique_union": 2249,
+        "surface_unique": 2251,
+        "harvest_additive": 2261,
+        "union_status": "2134/106/9",
+        "overlap_delta": 12,
+        "residual_safety_coverage": 117,
+        "resume_taxonomy": "28/1/0",
+        "tier_coverage": "7/3314",
+        "combined_dryrun_coverage": 1053,
+        "risk_band": "75/14/12/5",
+        "coverage": 117,
+        "winner_map_sha256": "ff2c6a28b361498b0dbf163ad1d1779041e1dd4e772b652e6382e1d4051fbb07",
+        "complete_codes_sha256": "45beb7732efff04fb43bae7db8603b0ccca552700e969f664052fe1ba68c9431"
+      }
+    },
+    "bundle_sha256": "6c2e17473bf6abe24ae3b9fa60379537c6224d2f687bbbf065d32a015ad17581",
+    "deny_composition_mutate": true,
+    "deny_bundle_inflate": true,
+    "deny_bundle_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
