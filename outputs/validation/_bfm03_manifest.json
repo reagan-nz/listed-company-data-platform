@@ -1,0 +1,551 @@
+{
+  "task_id": "B-FM-03",
+  "allow_ids": [
+    "bond_trustee_report_known_008",
+    "bond_trustee_report_known_009",
+    "bond_trustee_report_known_010",
+    "bond_trustee_report_known_011",
+    "tracking_rating_report_known_011",
+    "tracking_rating_report_known_012",
+    "bond_trustee_report_known_012",
+    "bond_trustee_report_known_013",
+    "bond_trustee_report_known_014",
+    "bond_trustee_report_known_015",
+    "bond_trustee_report_known_016",
+    "bond_trustee_report_known_017",
+    "legal_opinion_known_007",
+    "legal_opinion_known_008",
+    "legal_opinion_known_009",
+    "legal_opinion_known_010",
+    "legal_opinion_known_011",
+    "legal_opinion_known_012",
+    "legal_opinion_known_013",
+    "legal_opinion_known_014",
+    "legal_opinion_known_015",
+    "legal_opinion_known_016",
+    "legal_opinion_known_017",
+    "legal_opinion_known_018",
+    "shareholder_meeting_known_008",
+    "shareholder_meeting_known_009",
+    "shareholder_meeting_known_010",
+    "shareholder_meeting_known_011",
+    "shareholder_meeting_known_012",
+    "shareholder_meeting_known_013",
+    "shareholder_meeting_known_014",
+    "continuous_supervision_annual_known_006",
+    "board_resolution_known_006",
+    "board_resolution_known_007",
+    "board_resolution_known_008",
+    "raised_funds_cash_management_known_001",
+    "raised_funds_cash_management_known_002",
+    "raised_funds_cash_management_known_003",
+    "raised_funds_cash_management_known_004",
+    "legal_opinion_known_019",
+    "legal_opinion_known_020",
+    "legal_opinion_known_021",
+    "legal_opinion_known_022",
+    "shareholder_meeting_known_015",
+    "shareholder_meeting_known_016",
+    "shareholder_meeting_known_017",
+    "shareholder_meeting_known_018",
+    "shareholder_meeting_known_019",
+    "board_resolution_known_009",
+    "board_resolution_known_010"
+  ],
+  "yaml_preexisting_r19": [
+    "bond_trustee_report_known_008",
+    "bond_trustee_report_known_009",
+    "bond_trustee_report_known_010",
+    "bond_trustee_report_known_011",
+    "tracking_rating_report_known_011",
+    "tracking_rating_report_known_012"
+  ],
+  "new_case_ids": [
+    "bond_trustee_report_known_012",
+    "bond_trustee_report_known_013",
+    "bond_trustee_report_known_014",
+    "bond_trustee_report_known_015",
+    "bond_trustee_report_known_016",
+    "bond_trustee_report_known_017",
+    "legal_opinion_known_007",
+    "legal_opinion_known_008",
+    "legal_opinion_known_009",
+    "legal_opinion_known_010",
+    "legal_opinion_known_011",
+    "legal_opinion_known_012",
+    "legal_opinion_known_013",
+    "legal_opinion_known_014",
+    "legal_opinion_known_015",
+    "legal_opinion_known_016",
+    "legal_opinion_known_017",
+    "legal_opinion_known_018",
+    "shareholder_meeting_known_008",
+    "shareholder_meeting_known_009",
+    "shareholder_meeting_known_010",
+    "shareholder_meeting_known_011",
+    "shareholder_meeting_known_012",
+    "shareholder_meeting_known_013",
+    "shareholder_meeting_known_014",
+    "continuous_supervision_annual_known_006",
+    "board_resolution_known_006",
+    "board_resolution_known_007",
+    "board_resolution_known_008",
+    "raised_funds_cash_management_known_001",
+    "raised_funds_cash_management_known_002",
+    "raised_funds_cash_management_known_003",
+    "raised_funds_cash_management_known_004",
+    "legal_opinion_known_019",
+    "legal_opinion_known_020",
+    "legal_opinion_known_021",
+    "legal_opinion_known_022",
+    "shareholder_meeting_known_015",
+    "shareholder_meeting_known_016",
+    "shareholder_meeting_known_017",
+    "shareholder_meeting_known_018",
+    "shareholder_meeting_known_019",
+    "board_resolution_known_009",
+    "board_resolution_known_010"
+  ],
+  "harvests": {
+    "bond_trustee_report_known_012": {
+      "title": "四川省新能源动力股份有限公司公司债券受托管理事务报告（2024年度）",
+      "ann": "1224041001",
+      "date": "2025-06-30",
+      "code": "000155",
+      "name": "川能动力",
+      "family": "bond_trustee_report",
+      "rid": "BD2E188"
+    },
+    "bond_trustee_report_known_013": {
+      "title": "山东高速路桥集团股份有限公司公司债券受托管理事务报告（2024年度）",
+      "ann": "1224037293",
+      "date": "2025-06-30",
+      "code": "000498",
+      "name": "山东路桥",
+      "family": "bond_trustee_report",
+      "rid": "BD2E190"
+    },
+    "bond_trustee_report_known_014": {
+      "title": "浙商证券股份有限公司关于荣盛石化股份有限公司公司债券受托管理事务报告（2024年度）",
+      "ann": "1224014733",
+      "date": "2025-06-27",
+      "code": "002493",
+      "name": "荣盛石化",
+      "family": "bond_trustee_report",
+      "rid": "BD2E516"
+    },
+    "bond_trustee_report_known_015": {
+      "title": "广州越秀资本控股集团股份有限公司公开发行公司债券受托管理事务报告（2024年度）",
+      "ann": "1224038671",
+      "date": "2025-06-30",
+      "code": "000987",
+      "name": "越秀资本",
+      "family": "bond_trustee_report",
+      "rid": "BD2E238"
+    },
+    "bond_trustee_report_known_016": {
+      "title": "山西证券股份有限公司公司债券受托管理事务报告（2024年度）",
+      "ann": "1224013440",
+      "date": "2025-06-27",
+      "code": "002500",
+      "name": "山西证券",
+      "family": "bond_trustee_report",
+      "rid": "BD2E312"
+    },
+    "bond_trustee_report_known_017": {
+      "title": "天津红日药业股份有限公司2021年面向专业投资者公开发行公司债券（第一期）受托管理事务报告（2024年度）",
+      "ann": "1224036930",
+      "date": "2025-06-30",
+      "code": "300026",
+      "name": "红日药业",
+      "family": "bond_trustee_report",
+      "rid": "BD2E314"
+    },
+    "legal_opinion_known_007": {
+      "title": "北京市通商律师事务所关于华熙生物科技股份有限公司2024 年年度股东大会的法律意见书",
+      "ann": "1223848710",
+      "date": "2025-06-11",
+      "code": "688363",
+      "name": "华熙生物",
+      "family": "legal_opinion",
+      "rid": "BD2E182"
+    },
+    "legal_opinion_known_008": {
+      "title": "北京市中伦（上海）律师事务所关于上海唯万密封科技股份有限公司2025年第三次临时股东大会的法律意见书",
+      "ann": "1223997389",
+      "date": "2025-06-26",
+      "code": "301161",
+      "name": "唯万密封",
+      "family": "legal_opinion",
+      "rid": "BD2E690"
+    },
+    "legal_opinion_known_009": {
+      "title": "北京德和衡律师事务所关于海看网络科技（山东）股份有限公司2024年年度股东大会的法律意见书",
+      "ann": "1223910602",
+      "date": "2025-06-18",
+      "code": "301262",
+      "name": "海看股份",
+      "family": "legal_opinion",
+      "rid": "BD2E700"
+    },
+    "legal_opinion_known_010": {
+      "title": "北京市中伦（深圳）律师事务所关于公司2025年第二次临时股东大会的法律意见书",
+      "ann": "1224016984",
+      "date": "2025-06-27",
+      "code": "301308",
+      "name": "江波龙",
+      "family": "legal_opinion",
+      "rid": "BD2E710"
+    },
+    "legal_opinion_known_011": {
+      "title": "关于深圳市曼恩斯特科技股份有限公司2024年年度股东会的法律意见书",
+      "ann": "1223804257",
+      "date": "2025-06-06",
+      "code": "301325",
+      "name": "曼恩斯特",
+      "family": "legal_opinion",
+      "rid": "BD2E714"
+    },
+    "legal_opinion_known_012": {
+      "title": "上海市锦天城律师事务所关于东峰集团2024年年度股东大会的法律意见书",
+      "ann": "1224018742",
+      "date": "2025-06-27",
+      "code": "601515",
+      "name": "衢州东峰",
+      "family": "legal_opinion",
+      "rid": "BD2E758"
+    },
+    "legal_opinion_known_013": {
+      "title": "湖南启元律师事务所关于长高电新科技股份公司2025年第二次临时股东大会的法律意见书",
+      "ann": "1223749165",
+      "date": "2025-06-03",
+      "code": "002452",
+      "name": "长高电气",
+      "family": "legal_opinion",
+      "rid": "BD2E508"
+    },
+    "legal_opinion_known_014": {
+      "title": "北京云嘉律师事务所关于杭州万隆光电设备股份有限公司2024年年度股东大会之法律意见书",
+      "ann": "1223633257",
+      "date": "2025-05-22",
+      "code": "300710",
+      "name": "万隆光电",
+      "family": "legal_opinion",
+      "rid": "BD2E614"
+    },
+    "legal_opinion_known_015": {
+      "title": "上海市锦天城（深圳）律师事务所关于深圳市英可瑞科技股份有限公司2024年年度股东大会的法律意见书",
+      "ann": "1223644992",
+      "date": "2025-05-23",
+      "code": "300713",
+      "name": "英可瑞",
+      "family": "legal_opinion",
+      "rid": "BD2E616"
+    },
+    "legal_opinion_known_016": {
+      "title": "北京市君致律师事务所关于北京科拓恒通生物技术股份有限公司2024年年度股东大会的法律意见书",
+      "ann": "1223627232",
+      "date": "2025-05-21",
+      "code": "300858",
+      "name": "科拓生物",
+      "family": "legal_opinion",
+      "rid": "BD2E638"
+    },
+    "legal_opinion_known_017": {
+      "title": "上海市锦天城律师事务所关于公司2024年年度股东大会法律意见书",
+      "ann": "1223527260",
+      "date": "2025-05-12",
+      "code": "300141",
+      "name": "和顺电气",
+      "family": "legal_opinion",
+      "rid": "BD2E328"
+    },
+    "legal_opinion_known_018": {
+      "title": "科力远2025年第一次临时股东大会法律意见书",
+      "ann": "1223980750",
+      "date": "2025-06-25",
+      "code": "600478",
+      "name": "科力远",
+      "family": "legal_opinion",
+      "rid": "BD2E400"
+    },
+    "shareholder_meeting_known_008": {
+      "title": "2024年年度股东大会决议公告",
+      "ann": "1223802837",
+      "date": "2025-06-06",
+      "code": "300413",
+      "name": "芒果超媒",
+      "family": "shareholder_meeting",
+      "rid": "BD2E162"
+    },
+    "shareholder_meeting_known_009": {
+      "title": "关于召开2025年第二次临时股东会的通知",
+      "ann": "1223953437",
+      "date": "2025-06-20",
+      "code": "000595",
+      "name": "*ST宝实",
+      "family": "shareholder_meeting",
+      "rid": "BD2E193"
+    },
+    "shareholder_meeting_known_010": {
+      "title": "2025年第三次临时股东大会决议公告",
+      "ann": "1223956193",
+      "date": "2025-06-23",
+      "code": "301210",
+      "name": "金杨精密",
+      "family": "shareholder_meeting",
+      "rid": "BD2E696"
+    },
+    "shareholder_meeting_known_011": {
+      "title": "2025年第一次临时股东大会决议公告",
+      "ann": "1223956491",
+      "date": "2025-06-23",
+      "code": "300688",
+      "name": "创业黑马",
+      "family": "shareholder_meeting",
+      "rid": "BD2E612"
+    },
+    "shareholder_meeting_known_012": {
+      "title": "2025年第二次临时股东大会决议公告",
+      "ann": "1223887834",
+      "date": "2025-06-16",
+      "code": "300300",
+      "name": "海峡创新",
+      "family": "shareholder_meeting",
+      "rid": "BD2E348"
+    },
+    "shareholder_meeting_known_013": {
+      "title": "哈尔滨空调股份有限公司2024年年度股东会决议公告",
+      "ann": "1223732486",
+      "date": "2025-05-30",
+      "code": "600202",
+      "name": "哈空调",
+      "family": "shareholder_meeting",
+      "rid": "BD2E372"
+    },
+    "shareholder_meeting_known_014": {
+      "title": "安彩高科2024年年度股东大会决议公告",
+      "ann": "1223934489",
+      "date": "2025-06-19",
+      "code": "600207",
+      "name": "安彩高科",
+      "family": "shareholder_meeting",
+      "rid": "BD2E374"
+    },
+    "continuous_supervision_annual_known_006": {
+      "title": "民生证券股份有限公司关于杭州福斯达深冷装备股份有限公司2024年度持续督导年度报告书",
+      "ann": "1223190051",
+      "date": "2025-04-21",
+      "code": "603173",
+      "name": "福斯达",
+      "family": "continuous_supervision_annual",
+      "rid": "BD2E795"
+    },
+    "board_resolution_known_006": {
+      "title": "富士康工业互联网股份有限公司第三届董事会第二十三次会议决议公告",
+      "ann": "1224015359",
+      "date": "2025-06-27",
+      "code": "601138",
+      "name": "工业富联",
+      "family": "board_resolution",
+      "rid": "BD2E171"
+    },
+    "board_resolution_known_007": {
+      "title": "关于第九届董事会第九次临时会议的决议公告",
+      "ann": "1223826815",
+      "date": "2025-06-09",
+      "code": "000981",
+      "name": "山子高科",
+      "family": "board_resolution",
+      "rid": "BD2E236"
+    },
+    "board_resolution_known_008": {
+      "title": "第八届董事会第三十六次会议决议公告",
+      "ann": "1223886943",
+      "date": "2025-06-16",
+      "code": "002065",
+      "name": "东华软件",
+      "family": "board_resolution",
+      "rid": "BD2E274"
+    },
+    "raised_funds_cash_management_known_001": {
+      "title": "关于终止部分募投项目并将剩余募集资金继续存放募集资金专户管理以及部分募投项目延期的公告",
+      "ann": "1224016574",
+      "date": "2025-06-27",
+      "code": "300316",
+      "name": "晶盛机电",
+      "family": "raised_funds_cash_management",
+      "rid": "BD2E160"
+    },
+    "raised_funds_cash_management_known_002": {
+      "title": "关于部分募集资金现金管理专用结算账户销户完成的公告",
+      "ann": "1223886854",
+      "date": "2025-06-16",
+      "code": "301107",
+      "name": "瑜欣电子",
+      "family": "raised_funds_cash_management",
+      "rid": "BD2E676"
+    },
+    "raised_funds_cash_management_known_003": {
+      "title": "关于闲置募集资金（含超募资金）进行现金管理赎回并继续进行现金管理的公告",
+      "ann": "1224013965",
+      "date": "2025-06-27",
+      "code": "301303",
+      "name": "真兰仪表",
+      "family": "raised_funds_cash_management",
+      "rid": "BD2E708"
+    },
+    "raised_funds_cash_management_known_004": {
+      "title": "关于使用部分暂时闲置募集资金进行现金管理的进展公告",
+      "ann": "1224014069",
+      "date": "2025-06-27",
+      "code": "002549",
+      "name": "凯美特气",
+      "family": "raised_funds_cash_management",
+      "rid": "BD2E522"
+    },
+    "legal_opinion_known_019": {
+      "title": "北京市安理律师事务所关于中粮糖业控股股份有限公司2024年年度股东大会的法律意见书",
+      "ann": "1223934627",
+      "date": "2025-06-19",
+      "code": "600737",
+      "name": "中粮糖业",
+      "family": "legal_opinion",
+      "rid": "BD2E436"
+    },
+    "legal_opinion_known_020": {
+      "title": "2024年年度股东大会法律意见书",
+      "ann": "1224016242",
+      "date": "2025-06-27",
+      "code": "600844",
+      "name": "金煤科技",
+      "family": "legal_opinion",
+      "rid": "BD2E446"
+    },
+    "legal_opinion_known_021": {
+      "title": "北京金诚同达（深圳）律师事务所关于深圳市杰普特光电股份有限公司2024年度差异化分红事项的法律意见书",
+      "ann": "1223888805",
+      "date": "2025-06-16",
+      "code": "688025",
+      "name": "杰普特",
+      "family": "legal_opinion",
+      "rid": "BD2E474"
+    },
+    "legal_opinion_known_022": {
+      "title": "关于炬芯科技股份有限公司2024年年度股东大会的法律意见书",
+      "ann": "1223974707",
+      "date": "2025-06-24",
+      "code": "688049",
+      "name": "炬芯科技",
+      "family": "legal_opinion",
+      "rid": "BD2E478"
+    },
+    "shareholder_meeting_known_015": {
+      "title": "南京中央商场（集团）股份有限公司2024年年度股东大会决议公告",
+      "ann": "1223608763",
+      "date": "2025-05-20",
+      "code": "600280",
+      "name": "中央商场",
+      "family": "shareholder_meeting",
+      "rid": "BD2E380"
+    },
+    "shareholder_meeting_known_016": {
+      "title": "2024年年度股东会决议公告",
+      "ann": "1224017350",
+      "date": "2025-06-27",
+      "code": "600377",
+      "name": "宁沪高速",
+      "family": "shareholder_meeting",
+      "rid": "BD2E390"
+    },
+    "shareholder_meeting_known_017": {
+      "title": "绿地控股2024年年度股东大会决议公告",
+      "ann": "1223627606",
+      "date": "2025-05-21",
+      "code": "600606",
+      "name": "绿地控股",
+      "family": "shareholder_meeting",
+      "rid": "BD2E424"
+    },
+    "shareholder_meeting_known_018": {
+      "title": "凤凰股份2024年年度股东大会决议公告",
+      "ann": "1223633807",
+      "date": "2025-05-22",
+      "code": "600716",
+      "name": "凤凰股份",
+      "family": "shareholder_meeting",
+      "rid": "BD2E434"
+    },
+    "shareholder_meeting_known_019": {
+      "title": "四川长虹2024年年度股东大会决议公告",
+      "ann": "1223998811",
+      "date": "2025-06-26",
+      "code": "600839",
+      "name": "四川长虹",
+      "family": "shareholder_meeting",
+      "rid": "BD2E444"
+    },
+    "board_resolution_known_009": {
+      "title": "第七届董事会第一次会议决议公告",
+      "ann": "1223626613",
+      "date": "2025-05-21",
+      "code": "002247",
+      "name": "聚力文化",
+      "family": "board_resolution",
+      "rid": "BD2E294"
+    },
+    "board_resolution_known_010": {
+      "title": "恒源煤电第八届董事会第十六次会议决议公告",
+      "ann": "1223979583",
+      "date": "2025-06-25",
+      "code": "600971",
+      "name": "恒源煤电",
+      "family": "board_resolution",
+      "rid": "BD2E460"
+    }
+  },
+  "yaml_harvests": {
+    "tracking_rating_report_known_011": {
+      "title": "深圳中天精装股份有限公司关于精装转债跟踪评级结果的公告",
+      "ann": "1223973961",
+      "date": "2025-06-24",
+      "code": "002989",
+      "name": "中天精装"
+    },
+    "tracking_rating_report_known_012": {
+      "title": "关于“润达转债”与“23润达医疗MTN001”2025年跟踪评级结果的公告",
+      "ann": "1223980905",
+      "date": "2025-06-25",
+      "code": "603108",
+      "name": "润达医疗"
+    },
+    "bond_trustee_report_known_008": {
+      "title": "武汉精测电子集团股份有限公司向不特定对象发行可转换公司债券受托管理事务报告（2024年度）",
+      "ann": "1224015674",
+      "date": "2025-06-27",
+      "code": "300567",
+      "name": "精测电子"
+    },
+    "bond_trustee_report_known_009": {
+      "title": "宁波润禾高新材料科技股份有限公司向不特定对象发行可转换公司债券受托管理事务报告（2024年度）",
+      "ann": "1224015196",
+      "date": "2025-06-27",
+      "code": "300727",
+      "name": "润禾材料"
+    },
+    "bond_trustee_report_known_010": {
+      "title": "华泰联合证券有限责任公司关于广东奥飞数据科技股份有限公司向不特定对象发行可转换公司债券受托管理事务报告（2024年度）",
+      "ann": "1224036503",
+      "date": "2025-06-30",
+      "code": "300738",
+      "name": "奥飞数据"
+    },
+    "bond_trustee_report_known_011": {
+      "title": "东方证券股份有限公司关于宁波金田铜业（集团）股份有限公司向不特定对象发行可转换公司债券受托管理事务报告（2024年度）",
+      "ann": "1223972050",
+      "date": "2025-06-24",
+      "code": "601609",
+      "name": "金田股份"
+    }
+  }
+}

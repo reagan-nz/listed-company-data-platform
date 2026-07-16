@@ -1,0 +1,32 @@
+cases:
+- case_id: legal_opinion_known_019
+  case_status: ready
+  source_id: cninfo_general_announcement_pdf
+  company_code: '600737'
+  company_name: 中粮糖业
+  title_pattern: 中粮糖业控股股份有限公司2024年年度股东大会的法律意见书
+  expected_document_type: announcement
+  date_start: '2025-06-18'
+  date_end: '2025-06-21'
+  expected_route_to: cninfo_general_announcement_pdf
+  expected_pdf_url_available: true
+  notes: B-FM-03（R19）自 harvest 证据晋升（~50 scale residual；family=legal_opinion）：中粮糖业
+    600737，北京市安理律师事务所关于中粮糖业控股股份有限公司2024年年度股东大会的法律意见书（announcement_id=1223934627，披露日
+    2025-06-19）。路由已硬化/既有 positive；本包不改路由。title_pattern 取公司锚定可区分串（律所全称 searchkey 在
+    CNINFO 返回空，已缩短）。来源 outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/b_class_erad_next_scale_slice1_report.csv
+    行 BD2E436。不写 verified；不下载 PDF。
+- case_id: legal_opinion_known_021
+  case_status: ready
+  source_id: cninfo_general_announcement_pdf
+  company_code: '688025'
+  company_name: 杰普特
+  title_pattern: 深圳市杰普特光电股份有限公司2024年度差异化分红事项的法律意见书
+  expected_document_type: announcement
+  date_start: '2025-06-15'
+  date_end: '2025-06-18'
+  expected_route_to: cninfo_general_announcement_pdf
+  expected_pdf_url_available: true
+  notes: B-FM-03（R19）自 harvest 证据晋升（~50 scale residual；family=legal_opinion）：杰普特 688025，北京金诚同达（深圳）律师事务所关于深圳市杰普特光电股份有限公司2024年度差异化分红事项的法律意见书（announcement_id=1223888805，披露日
+    2025-06-16）。路由已硬化/既有 positive；本包不改路由。title_pattern 取公司锚定可区分串（律所全称 searchkey 在
+    CNINFO 返回空，已缩短）。来源 outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/b_class_erad_next_scale_slice1_report.csv
+    行 BD2E474。不写 verified；不下载 PDF。
