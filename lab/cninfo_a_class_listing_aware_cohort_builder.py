@@ -6,16 +6,17 @@ A-class listing-aware next cohort 构建器（纯离线 · CNINFO = 0）。
 
 选取规则（本构建器冻结）：
 1. 源：company_basic_profile ∩ full_market_2024 名称/交易所
-   （S7/S8/S9/S10/S11/S12/S13/S14/S15/S16/S17/S18/S19/S20/S21 默认使用 A 轨 coverage overlay，合并 latent harvest profiles）
+   （S7/S8/S9/S10/S11/S12/S13/S14/S15/S16/S17/S18/S19/S20/S21/S22 默认使用 A 轨 coverage overlay，合并 latent harvest profiles）
 2. 排除 A cumulative：scale-200 ∪ slice1 ∪ slice2 S1
    （S3 另含 listing-aware S2；S4 另含 S2+S3；S5 另含 S2+S3+S4；
     S6 另含 S2+S3+S4+S5；S7 另含 S2–S6；S8 另含 S2–S7；S9 另含 S2–S8；S10 另含 S2–S9；
     S11 另含 S2–S10；S12 另含 S2–S11；S13 另含 S2–S12；S14 另含 S2–S13；S15 另含 S2–S14；
-    S16 另含 S2–S15；S17 另含 S2–S16；S18 另含 S2–S17；S19 另含 S2–S18；S20 另含 S2–S19；S21 另含 S2–S20）
+    S16 另含 S2–S15；S17 另含 S2–S16；S18 另含 S2–S17；S19 另含 S2–S18；S20 另含 S2–S19；
+    S21 另含 S2–S20；S22 另含 S2–S21）
 3. ST-EXCLUDE（名称命中 *ST / S*ST）
 4. 非 BSE（4/8/92 前缀）
 5. 可选 prefix_concentration：同一 3 位码前缀在本片最多 N 个
-   （S7/S8/S9/S10/S11/S12/S13/S14/S15/S16/S17/S18/S19/S20/S21 默认 N=25；避免 mono-prefix 批处理再现 S6 首轮 timeout 窗）
+   （S7/S8/S9/S10/S11/S12/S13/S14/S15/S16/S17/S18/S19/S20/S21/S22 默认 N=25；避免 mono-prefix 批处理再现 S6 首轮 timeout 窗）
 6. 按 company_code 升序；为候选分配 case_id 与 report_type/expected_period 后
    再跑 listing_period_gate；不通过则跳过该码（不得静默改 period）
 7. B 轨 overlap：**允许**（全市场 A 周期报告元数据 vs B 披露事件，跨轨不同维度）
@@ -40,9 +41,11 @@ A-class listing-aware next cohort 构建器（纯离线 · CNINFO = 0）。
 - S18：AD2E1401–1450（`--slice s18` · overlay + prefix cap）
 - S19：AD2E1451–1500（`--slice s19` · overlay + prefix cap）
 - S20：AD2E1501–1550（`--slice s20` · overlay + prefix cap）
-- S21：AD2E1551–1600（默认 · `--slice s21` · overlay + prefix cap）
+- S21：AD2E1551–1600（`--slice s21` · overlay + prefix cap）
+- S22：AD2E1601–1650（默认 · `--slice s22` · overlay + prefix cap）
+- S23：AD2E1651–1850（`--slice s23` · ~200 · overlay + prefix cap；R19 ladder）
 
-禁止：CNINFO live、伪造上市日、mutate 封闭 S1–S20 live 根、静默改写 expected_period。
+禁止：CNINFO live、伪造上市日、mutate 封闭 S1–S21 live 根、静默改写 expected_period。
 """
 
 from __future__ import annotations
@@ -453,6 +456,45 @@ DEFAULT_S21_REJECT_LEDGER_CSV = os.path.join(
 DEFAULT_S21_PROFILE_DIR = profile_coverage.DEFAULT_OVERLAY_DIR
 DEFAULT_MAX_SAME_PREFIX_S21 = 25
 
+# A-FM-02：listing-aware S22（AD2E1601–1650）；A exclude 含 S2–S21；overlay + prefix cap
+DEFAULT_A_EXCLUDE_S22_UNIVERSE_CSVS: Tuple[str, ...] = DEFAULT_A_EXCLUDE_S21_UNIVERSE_CSVS + (
+    DEFAULT_S21_OUTPUT_UNIVERSE_CSV,
+)
+DEFAULT_S22_OUTPUT_UNIVERSE_CSV = os.path.join(
+    _BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_erad_next_scale_listing_aware_s22_plus50_universe_20260716.csv",
+)
+DEFAULT_S22_REJECT_LEDGER_CSV = os.path.join(
+    _BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_erad_next_scale_listing_aware_s22_reject_ledger_20260716.csv",
+)
+DEFAULT_S22_PROFILE_DIR = profile_coverage.DEFAULT_OVERLAY_DIR
+DEFAULT_MAX_SAME_PREFIX_S22 = 25
+
+# A-FM-03：listing-aware S23（AD2E1651–1850 · ~200）；A exclude 含 S2–S22；overlay + prefix cap
+DEFAULT_A_EXCLUDE_S23_UNIVERSE_CSVS: Tuple[str, ...] = DEFAULT_A_EXCLUDE_S22_UNIVERSE_CSVS + (
+    DEFAULT_S22_OUTPUT_UNIVERSE_CSV,
+)
+DEFAULT_S23_OUTPUT_UNIVERSE_CSV = os.path.join(
+    _BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_erad_next_scale_listing_aware_s23_plus200_universe_20260716.csv",
+)
+DEFAULT_S23_REJECT_LEDGER_CSV = os.path.join(
+    _BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_erad_next_scale_listing_aware_s23_reject_ledger_20260716.csv",
+)
+DEFAULT_S23_PROFILE_DIR = profile_coverage.DEFAULT_OVERLAY_DIR
+DEFAULT_MAX_SAME_PREFIX_S23 = 100
+DEFAULT_TARGET_SIZE_S23 = 200
+
 COHORT_LABEL = "next_scale_listing_aware"
 CASE_ID_START = 601
 CASE_ID_START_S3 = 651
@@ -474,6 +516,8 @@ CASE_ID_START_S18 = 1401
 CASE_ID_START_S19 = 1451
 CASE_ID_START_S20 = 1501
 CASE_ID_START_S21 = 1551
+CASE_ID_START_S22 = 1601
+CASE_ID_START_S23 = 1651
 DEFAULT_TARGET_SIZE = 50
 ST_NAME_PATTERN = re.compile(r"(?:\*?ST|S\*ST)")
 UNIVERSE_COLUMNS = ["company_code", "company_name", "case_id", "cohort"]
@@ -1375,8 +1419,69 @@ def build_and_write_s21_plus50(
     return result
 
 
+def build_and_write_s22_plus50(
+    *,
+    universe_csv: str = DEFAULT_S22_OUTPUT_UNIVERSE_CSV,
+    reject_ledger_csv: str = DEFAULT_S22_REJECT_LEDGER_CSV,
+    target_size: int = DEFAULT_TARGET_SIZE,
+    profile_dir: str = DEFAULT_S22_PROFILE_DIR,
+    max_same_prefix: int = DEFAULT_MAX_SAME_PREFIX_S22,
+    ensure_overlay: bool = True,
+) -> BuildResult:
+    """
+    构建 listing-aware S22 +50 universe（AD2E1601–1650）。
+
+    - A exclude：S2–S21
+    - profile_dir：默认 A 轨 coverage overlay（扩大分母）
+    - max_same_prefix：默认 25（前缀浓度门禁）
+    """
+    if ensure_overlay:
+        profile_coverage.build_profile_overlay(overlay_dir=profile_dir, refresh=True)
+    result = build_listing_aware_cohort(
+        target_size=target_size,
+        case_id_start=CASE_ID_START_S22,
+        a_exclude_csvs=DEFAULT_A_EXCLUDE_S22_UNIVERSE_CSVS,
+        profile_dir=profile_dir,
+        max_same_prefix=max_same_prefix,
+    )
+    write_universe_csv(result.selected, universe_csv)
+    write_reject_ledger(result.rejected, reject_ledger_csv)
+    return result
+
+
+
+def build_and_write_s23_plus200(
+    *,
+    universe_csv: str = DEFAULT_S23_OUTPUT_UNIVERSE_CSV,
+    reject_ledger_csv: str = DEFAULT_S23_REJECT_LEDGER_CSV,
+    target_size: int = DEFAULT_TARGET_SIZE_S23,
+    profile_dir: str = DEFAULT_S23_PROFILE_DIR,
+    max_same_prefix: int = DEFAULT_MAX_SAME_PREFIX_S23,
+    ensure_overlay: bool = True,
+) -> BuildResult:
+    """
+    构建 listing-aware S23 ~200 universe（AD2E1651–1850）。
+
+    - A exclude：S2–S22
+    - profile_dir：默认 A 轨 coverage overlay
+    - max_same_prefix：默认 100（~200 尺度前缀浓度门禁）
+    """
+    if ensure_overlay:
+        profile_coverage.build_profile_overlay(overlay_dir=profile_dir, refresh=True)
+    result = build_listing_aware_cohort(
+        target_size=target_size,
+        case_id_start=CASE_ID_START_S23,
+        a_exclude_csvs=DEFAULT_A_EXCLUDE_S23_UNIVERSE_CSVS,
+        profile_dir=profile_dir,
+        max_same_prefix=max_same_prefix,
+    )
+    write_universe_csv(result.selected, universe_csv)
+    write_reject_ledger(result.rejected, reject_ledger_csv)
+    return result
+
+
 def main(argv: Optional[Iterable[str]] = None) -> int:
-    """CLI：生成 listing-aware universe（offline · 默认 S21）。"""
+    """CLI：生成 listing-aware universe（offline · 默认 S22）。"""
     import argparse
 
     parser = argparse.ArgumentParser(description="listing-aware A cohort builder（CNINFO=0）")
@@ -1384,9 +1489,9 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
         "--slice",
         choices=(
             "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10",
-            "s11", "s12", "s13", "s14", "s15", "s16", "s17", "s18", "s19", "s20", "s21",
+            "s11", "s12", "s13", "s14", "s15", "s16", "s17", "s18", "s19", "s20", "s21", "s22", "s23",
         ),
-        default="s21",
+        default="s23",
         help=(
             "s2=AD2E601-650；s3=AD2E651-700；s4=AD2E701-750；"
             "s5=AD2E751-800；s6=AD2E801-850；s7=AD2E851-900；"
@@ -1394,7 +1499,7 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
             "s11=AD2E1051-1100；s12=AD2E1101-1150；s13=AD2E1151-1200；"
             "s14=AD2E1201-1250；s15=AD2E1251-1300；s16=AD2E1301-1350；"
             "s17=AD2E1351-1400；s18=AD2E1401-1450；s19=AD2E1451-1500；"
-            "s20=AD2E1501-1550；s21=AD2E1551-1600（默认）"
+            "s20=AD2E1501-1550；s21=AD2E1551-1600；s22=AD2E1601-1650；s23=AD2E1651-1850~200（默认）"
         ),
     )
     args = parser.parse_args(list(argv) if argv is not None else None)
@@ -1455,9 +1560,15 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
     elif args.slice == "s20":
         result = build_and_write_s20_plus50()
         universe_path = DEFAULT_S20_OUTPUT_UNIVERSE_CSV
-    else:
+    elif args.slice == "s21":
         result = build_and_write_s21_plus50()
         universe_path = DEFAULT_S21_OUTPUT_UNIVERSE_CSV
+    elif args.slice == "s22":
+        result = build_and_write_s22_plus50()
+        universe_path = DEFAULT_S22_OUTPUT_UNIVERSE_CSV
+    else:
+        result = build_and_write_s23_plus200()
+        universe_path = DEFAULT_S23_OUTPUT_UNIVERSE_CSV
     print(
         f"listing_aware_cohort_built slice={args.slice} size={len(result.selected)} "
         f"rejected={len(result.rejected)} a_exclude={result.a_exclude_count} "
