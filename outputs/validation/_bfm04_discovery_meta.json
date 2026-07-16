@@ -1,0 +1,52 @@
+{
+  "task_id": "B-FM-04",
+  "discovery_cninfo_calls": 50,
+  "discovery_errors": [],
+  "bucket_sizes": {
+    "legal_opinion": 90,
+    "bond_trustee_report": 85,
+    "tracking_rating_report": 83,
+    "shareholder_meeting": 95,
+    "board_resolution": 90,
+    "supervisory_board": 90,
+    "raised_funds_cash_management": 98,
+    "continuous_supervision_annual": 53,
+    "verification_opinion": 106,
+    "company_articles": 88,
+    "employee_stock_ownership_plan": 88
+  },
+  "selected_n": 200,
+  "selected_mix": {
+    "legal_opinion": 43,
+    "bond_trustee_report": 30,
+    "tracking_rating_report": 20,
+    "shareholder_meeting": 29,
+    "board_resolution": 25,
+    "supervisory_board": 15,
+    "raised_funds_cash_management": 15,
+    "continuous_supervision_annual": 8,
+    "verification_opinion": 6,
+    "company_articles": 5,
+    "employee_stock_ownership_plan": 4
+  },
+  "date_windows": [
+    "2025-04-01~2025-05-15",
+    "2025-05-16~2025-06-30"
+  ],
+  "pages_per_query": 4,
+  "discovery_cninfo_calls_round2": 60,
+  "discovery_cninfo_calls_total": 110,
+  "bucket_sizes_round2": {
+    "legal_opinion": 120,
+    "bond_trustee_report": 140,
+    "tracking_rating_report": 133,
+    "shareholder_meeting": 152,
+    "board_resolution": 120,
+    "supervisory_board": 120,
+    "raised_funds_cash_management": 151,
+    "continuous_supervision_annual": 71,
+    "verification_opinion": 133,
+    "company_articles": 147,
+    "employee_stock_ownership_plan": 147
+  }
+}

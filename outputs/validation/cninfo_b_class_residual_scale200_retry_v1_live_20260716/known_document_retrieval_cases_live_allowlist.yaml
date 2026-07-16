@@ -1,0 +1,105 @@
+cases:
+- case_id: legal_opinion_known_033
+  case_status: ready
+  source_id: cninfo_general_announcement_pdf
+  company_code: '300746'
+  company_name: 汉嘉设计
+  title_pattern: 法律意见书
+  expected_document_type: announcement
+  date_start: '2025-05-14'
+  date_end: '2025-05-17'
+  expected_route_to: cninfo_general_announcement_pdf
+  expected_pdf_url_available: true
+  notes: B-FM-04（R19）自 discovery harvest 证据晋升（~200 scale residual；family=legal_opinion）：汉嘉设计
+    300746，汉嘉设计2024年年度股东大会法律意见书（announcement_id=1223557929，披露日 2025-05-15）。路由已硬化/既有
+    positive；本包不改路由。title_pattern 取可区分锚定串（legal 优先公司锚定）。来源 discovery2:法律意见书:szse:p1:2025-04-01~2025-05-15。不写
+    verified；不下载 PDF。 B-FM-04 searchkey harden/retry。
+- case_id: bond_trustee_report_known_023
+  case_status: ready
+  source_id: cninfo_general_announcement_pdf
+  company_code: '000776'
+  company_name: 广发证券
+  title_pattern: 平安证券股份有限公司关于广发证券股份有限公司完成注册资本工商变更登记并修订公司章程的临时受托管理事务报告
+  expected_document_type: announcement
+  date_start: '2025-05-11'
+  date_end: '2025-05-14'
+  expected_route_to: cninfo_general_announcement_pdf
+  expected_pdf_url_available: true
+  notes: B-FM-04（R19）自 discovery harvest 证据晋升（~200 scale residual；family=bond_trustee_report）：广发证券
+    000776，平安证券股份有限公司关于广发证券股份有限公司完成注册资本工商变更登记并修订公司章程的临时受托管理事务报告（announcement_id=1223529556，披露日
+    2025-05-12）。路由已硬化/既有 positive；本包不改路由。title_pattern 取可区分锚定串（legal 优先公司锚定）。来源 discovery2:受托管理事务报告:szse:p1:2025-04-01~2025-05-15。不写
+    verified；不下载 PDF。 B-FM-04 searchkey harden/retry。
+- case_id: tracking_rating_report_known_015
+  case_status: ready
+  source_id: cninfo_general_announcement_pdf
+  company_code: '605189'
+  company_name: 富春染织
+  title_pattern: 跟踪评级结果的公告
+  expected_document_type: announcement
+  date_start: '2025-04-29'
+  date_end: '2025-05-02'
+  expected_route_to: cninfo_general_announcement_pdf
+  expected_pdf_url_available: true
+  notes: B-FM-04（R19）自 discovery harvest 证据晋升（~200 scale residual；family=tracking_rating_report）：富春染织
+    605189，富春染织关于“富春转债”2024年跟踪评级结果的公告（announcement_id=1223442805，披露日 2025-04-30）。路由已硬化/既有
+    positive；本包不改路由。title_pattern 取可区分锚定串（legal 优先公司锚定）。来源 discovery2:跟踪评级:szse:p1:2025-04-01~2025-05-15。不写
+    verified；不下载 PDF。 B-FM-04 searchkey harden/retry。
+- case_id: tracking_rating_report_known_023
+  case_status: ready
+  source_id: cninfo_general_announcement_pdf
+  company_code: '603165'
+  company_name: 荣晟环保
+  title_pattern: 浙江荣晟环保纸业股份有限公司关于
+  expected_document_type: announcement
+  date_start: '2025-04-17'
+  date_end: '2025-04-20'
+  expected_route_to: cninfo_general_announcement_pdf
+  expected_pdf_url_available: true
+  notes: B-FM-04（R19）自 discovery harvest 证据晋升（~200 scale residual；family=tracking_rating_report）：荣晟环保
+    603165，浙江荣晟环保纸业股份有限公司关于“荣23转债”2025年跟踪评级结果的公告（announcement_id=1223148119，披露日 2025-04-18）。路由已硬化/既有
+    positive；本包不改路由。title_pattern 取可区分锚定串（legal 优先公司锚定）。来源 discovery2:跟踪评级:szse:p1:2025-04-01~2025-05-15。不写
+    verified；不下载 PDF。 B-FM-04 searchkey harden/retry。 B-FM-04 retry_v2 pattern harden（公司全称锚定消歧）。
+- case_id: continuous_supervision_annual_known_012
+  case_status: ready
+  source_id: cninfo_general_announcement_pdf
+  company_code: '600370'
+  company_name: 三房巷
+  title_pattern: 华兴证券有限公司关于江苏三房巷聚材股份有限公司2024年持续督导年度报告书
+  expected_document_type: announcement
+  date_start: '2025-05-07'
+  date_end: '2025-05-10'
+  expected_route_to: cninfo_general_announcement_pdf
+  expected_pdf_url_available: true
+  notes: B-FM-04（R19）自 discovery harvest 证据晋升（~200 scale residual；family=continuous_supervision_annual）：三房巷
+    600370，华兴证券有限公司关于江苏三房巷聚材股份有限公司2024年持续督导年度报告书（announcement_id=1223496087，披露日 2025-05-08）。路由已硬化/既有
+    positive；本包不改路由。title_pattern 取可区分锚定串（legal 优先公司锚定）。来源 discovery2:持续督导年度报告书:szse:p2:2025-04-01~2025-05-15。不写
+    verified；不下载 PDF。 B-FM-04 searchkey harden/retry。
+- case_id: legal_opinion_known_065
+  case_status: ready
+  source_id: cninfo_general_announcement_pdf
+  company_code: '300003'
+  company_name: 乐普医疗
+  title_pattern: 债券持有人会议的法律意见书
+  expected_document_type: announcement
+  date_start: '2025-05-14'
+  date_end: '2025-05-17'
+  expected_route_to: cninfo_general_announcement_pdf
+  expected_pdf_url_available: true
+  notes: B-FM-04（R19）自 discovery harvest 证据晋升（~200 scale residual；family=legal_opinion）：乐普医疗
+    300003，北京市中伦律师事务所关于乐普医疗“乐普转2”2025年第一次债券持有人会议的法律意见书（announcement_id=1223557819，披露日
+    2025-05-15）。路由已硬化/既有 positive；本包不改路由。title_pattern 取可区分锚定串（legal 优先公司锚定）。来源 discovery2:法律意见书:szse:p1:2025-04-01~2025-05-15。不写
+    verified；不下载 PDF。 B-FM-04 searchkey harden/retry。
+- case_id: company_articles_known_010
+  case_status: ready
+  source_id: cninfo_general_announcement_pdf
+  company_code: '873665'
+  company_name: 科强股份
+  title_pattern: 关于取消监事会并修订《公司章程》公告
+  expected_document_type: announcement
+  date_start: '2025-06-28'
+  date_end: '2025-07-01'
+  expected_route_to: cninfo_general_announcement_pdf
+  expected_pdf_url_available: true
+  notes: B-FM-04（R19）自 discovery harvest 证据晋升（~200 scale residual；family=company_articles）：科强股份
+    873665，关于取消监事会并修订《公司章程》公告（announcement_id=1224043185，披露日 2025-06-29）。替换原华鑫股份章程案（主公告+附件同窗
+    ambiguous）。路由已硬化；本包不改路由。B-FM-04 searchkey harden/retry。不写 verified；不下载 PDF。
