@@ -1,0 +1,161 @@
+{
+  "generated_at_utc": "2026-07-16 03:08:02",
+  "task_id": "D-FM-09",
+  "endpoint": "https://www.cninfo.com.cn/data20/shareholeder/detail",
+  "query_type": "desc",
+  "forbidden_query_type": "inc",
+  "forbidden_sparse_tdate": "2026-07-03",
+  "primary_tdate": "2026-07-01",
+  "adjacent_tdate": "2026-07-14",
+  "cninfo_requests": 2,
+  "primary": {
+    "params": {
+      "type": "desc",
+      "tdate": "2026-07-01"
+    },
+    "http_status": 200,
+    "last_error": "",
+    "total": 58,
+    "record_count": 58,
+    "unique_codes_after_exclusions": 32,
+    "sample_records": [
+      {
+        "DECLAREDATE": "2026-07-01",
+        "SECCODE": "300334",
+        "SECNAME": "津膜科技",
+        "VARYDATE": "2026-07-01",
+        "F002V": "华益科技国际(英属维尔京群岛)有限公司",
+        "F004N": 1246000,
+        "F005N": 0.412,
+        "F007V": null
+      },
+      {
+        "DECLAREDATE": "2026-07-01",
+        "SECCODE": "300334",
+        "SECNAME": "津膜科技",
+        "VARYDATE": "2026-07-01",
+        "F002V": "华益科技国际(英属维尔京群岛)有限公司",
+        "F004N": 1774600,
+        "F005N": 0.587,
+        "F007V": null
+      },
+      {
+        "DECLAREDATE": "2026-07-01",
+        "SECCODE": "300590",
+        "SECNAME": "移为通信",
+        "VARYDATE": "2026-07-01",
+        "F002V": "精速国际有限公司",
+        "F004N": 2353600,
+        "F005N": 0.509,
+        "F007V": null
+      }
+    ]
+  },
+  "adjacent": {
+    "params": {
+      "type": "desc",
+      "tdate": "2026-07-14"
+    },
+    "http_status": 200,
+    "last_error": "",
+    "total": 40,
+    "record_count": 40,
+    "unique_codes_after_exclusions": 28,
+    "adjacent_only_count": 28,
+    "sample_records": [
+      {
+        "DECLAREDATE": "2026-07-14",
+        "SECCODE": "300211",
+        "SECNAME": "*ST亿通",
+        "VARYDATE": "2026-07-14",
+        "F002V": "王振洪",
+        "F004N": 2639000,
+        "F005N": 0.868,
+        "F007V": "8.30"
+      },
+      {
+        "DECLAREDATE": "2026-07-14",
+        "SECCODE": "301026",
+        "SECNAME": "浩通科技",
+        "VARYDATE": "2026-07-14",
+        "F002V": "夏军",
+        "F004N": 2201700,
+        "F005N": 0.994,
+        "F007V": "17.38"
+      },
+      {
+        "DECLAREDATE": "2026-07-14",
+        "SECCODE": "002097",
+        "SECNAME": "山河智能",
+        "VARYDATE": "2026-07-13",
+        "F002V": "何清华",
+        "F004N": 7041172,
+        "F005N": 0.655,
+        "F007V": "7.61"
+      }
+    ]
+  },
+  "selected_primary_codes": [
+    "000813",
+    "000892",
+    "002617",
+    "300102",
+    "300200",
+    "300321",
+    "300334",
+    "300457",
+    "300493",
+    "300519",
+    "300540",
+    "300552",
+    "300590",
+    "300802",
+    "300876",
+    "300917",
+    "300931",
+    "300959",
+    "301161",
+    "301273",
+    "301333",
+    "301617",
+    "600545",
+    "600803",
+    "603303",
+    "603680",
+    "605198",
+    "688002",
+    "688158",
+    "688262",
+    "688378",
+    "688702"
+  ],
+  "selected_adjacent_codes": [
+    "000402",
+    "000688",
+    "002097",
+    "002115",
+    "002702",
+    "002735",
+    "002976",
+    "003003",
+    "300211",
+    "300358",
+    "300966",
+    "300980",
+    "301026",
+    "301046",
+    "301158",
+    "301429"
+  ],
+  "empty_control_codes": [
+    "000895",
+    "601988"
+  ],
+  "excluded_prior_slice_codes": [
+    "000550",
+    "000895",
+    "002415",
+    "600000",
+    "601988"
+  ]
+}
