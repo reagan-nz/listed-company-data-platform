@@ -1,0 +1,43 @@
+{
+  "task_id": "A-FM-06",
+  "generated_at": "2026-07-16T11:48:02+08:00",
+  "cninfo_calls": 0,
+  "live_executed": false,
+  "overlay_union": 2213,
+  "discover_union": 2213,
+  "canon": 863,
+  "latent_only": 1350,
+  "overlay_with_listing_date": 2207,
+  "a_exclude_post_s24": 2221,
+  "selectable_residual_post_s24": 2,
+  "micro_residual_codes": [
+    {
+      "company_code": "301617",
+      "company_name": "博苑新材",
+      "would_be_case_id": "AD2E2222",
+      "expected_period": "2024-12-31",
+      "listing_date": "2024-12-11"
+    },
+    {
+      "company_code": "688721",
+      "company_name": "龙图光罩",
+      "would_be_case_id": "AD2E2223",
+      "expected_period": "2024-12-31",
+      "listing_date": "2024-08-06"
+    }
+  ],
+  "reject_stages": {
+    "a_cumulative_exclude": 2087,
+    "st_exclude": 68,
+    "listing_period_gate": 56
+  },
+  "size_claim": "residual_371_not_1000",
+  "residual_listing_aware_scale": "EXHAUSTED",
+  "residual_literal_zero": false,
+  "residual_note": "S24 consumed honest max 371 at case window AD2E1851+; post-S24 period-window micro residual=2 (301617,688721). Not a scale cohort. Do not claim ~1000.",
+  "full_market_codes": 6124,
+  "missing_profile_vs_full_market": 3911,
+  "reopen_1000_gate": "selectable_residual_ge_1000_after_overlay_rebuild",
+  "shortfall_vs_1000": 998,
+  "s1_s24_live_roots_mutated": false
+}
