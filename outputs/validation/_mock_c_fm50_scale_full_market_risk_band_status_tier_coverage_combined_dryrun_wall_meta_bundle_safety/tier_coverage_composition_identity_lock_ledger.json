@@ -1,0 +1,77 @@
+{
+  "generated_at": "2026-07-16T02:59:51Z",
+  "task_id": "C-FM-50",
+  "fingerprint_sha256": "2a501f4073aa763762dad2b8bb98837f8f258f32624e45f0f8f054d9ceec07db",
+  "composition_sha256": "e7f80cdccaa8167879a84ba2562939191a358b97c4249f1177c15721c69a975c",
+  "tier_coverage_formula": "7/3314",
+  "sample_denials": [
+    {
+      "proposed": {
+        "scale_tier_count": 6,
+        "company_coverage_sum": 3314
+      },
+      "frozen": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3314
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "tier_coverage_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3313
+      },
+      "frozen": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3314
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "tier_coverage_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "scale_tier_count": 0,
+        "company_coverage_sum": 0
+      },
+      "frozen": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3314
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "tier_coverage_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3314
+      },
+      "frozen": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3314
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "tier_coverage_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "tier_coverage_composition_identity_lock",
+    "scale_tier_count": 7,
+    "company_coverage_sum": 3314,
+    "tier_coverage_formula": "tiers=7;coverage_sum=3314",
+    "composition_sha256": "e7f80cdccaa8167879a84ba2562939191a358b97c4249f1177c15721c69a975c",
+    "tier_coverage_formula_primary": "7/3314",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

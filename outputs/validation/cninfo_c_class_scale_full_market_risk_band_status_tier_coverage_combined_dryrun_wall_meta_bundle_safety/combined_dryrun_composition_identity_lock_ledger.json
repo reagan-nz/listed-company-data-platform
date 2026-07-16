@@ -1,0 +1,76 @@
+{
+  "generated_at": "2026-07-16T02:59:51Z",
+  "task_id": "C-FM-50",
+  "fingerprint_sha256": "be2794b5fb93842a50c62b8567cc3036175160941cbf38ef8736c7256b21e681",
+  "composition_sha256": "30dd7e9b1608185266bcc6b03d09617ae5398d253fba2df9b59a2eca51ffbbef",
+  "combined_dryrun_formula": "combined_dryrun=1053",
+  "sample_denials": [
+    {
+      "proposed": {
+        "combined_dryrun_coverage": 1052,
+        "combined_dryrun_formula": "combined_dryrun=1053"
+      },
+      "frozen": {
+        "combined_dryrun_coverage": 1053,
+        "combined_dryrun_formula": "combined_dryrun=1053"
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "combined_dryrun_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "combined_dryrun_coverage": 1053,
+        "combined_dryrun_formula": "combined_dryrun=0"
+      },
+      "frozen": {
+        "combined_dryrun_coverage": 1053,
+        "combined_dryrun_formula": "combined_dryrun=1053"
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "combined_dryrun_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "combined_dryrun_coverage": 0,
+        "combined_dryrun_formula": "x"
+      },
+      "frozen": {
+        "combined_dryrun_coverage": 1053,
+        "combined_dryrun_formula": "combined_dryrun=1053"
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "combined_dryrun_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "combined_dryrun_coverage": 1053,
+        "combined_dryrun_formula": "combined_dryrun=1053"
+      },
+      "frozen": {
+        "combined_dryrun_coverage": 1053,
+        "combined_dryrun_formula": "combined_dryrun=1053"
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "combined_dryrun_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "combined_dryrun_composition_identity_lock",
+    "combined_dryrun_coverage": 1053,
+    "combined_dryrun_formula": "combined_dryrun=1053",
+    "composition_sha256": "30dd7e9b1608185266bcc6b03d09617ae5398d253fba2df9b59a2eca51ffbbef",
+    "combined_dryrun_formula_primary": "combined_dryrun=1053",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
