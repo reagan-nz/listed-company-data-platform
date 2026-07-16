@@ -1,0 +1,34 @@
+{
+  "case_id": "DEP364",
+  "company_code": "603316",
+  "company_name": "诚邦股份",
+  "component": "equity_pledge",
+  "query_mode": "tdate_daily_multi_day_union",
+  "anchor_tdate": "2026-06-18",
+  "shared_probe_key": "tdate_union_2026-06-16_2026-06-17_2026-06-18_2026-06-19_2026-06-23_2026-06-24_2026-06-25_2026-06-26_2026-06-27_2026-06-30",
+  "planned_requests": [
+    "tdate_daily_2026-06-16",
+    "tdate_daily_2026-06-17",
+    "tdate_daily_2026-06-18",
+    "tdate_daily_2026-06-19",
+    "tdate_daily_2026-06-23",
+    "tdate_daily_2026-06-24",
+    "tdate_daily_2026-06-25",
+    "tdate_daily_2026-06-26",
+    "tdate_daily_2026-06-27",
+    "tdate_daily_2026-06-30"
+  ],
+  "query_params": {
+    "tdate": "2026-06-18"
+  },
+  "endpoint": "https://www.cninfo.com.cn/data20/equityPledge/list",
+  "records_path": "data.records",
+  "shared_request": true,
+  "company_filter_offline": true,
+  "company_filter_field": "SECCODE",
+  "filter_company_code": "603316",
+  "forbidden_sole_found": "2026-07-03",
+  "expected_behavior": "captured_normal",
+  "compose_source_day": "2026-06-18",
+  "cninfo_called": false
+}
