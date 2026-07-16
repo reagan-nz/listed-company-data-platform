@@ -1,0 +1,245 @@
+{
+  "generated_at_utc": "2026-07-16 03:47:35",
+  "task_id": "D-FM-14",
+  "endpoint": "https://www.cninfo.com.cn/data20/liftBan/detail",
+  "forbidden_sparse_tdate": "2026-06-08",
+  "compose_candidate_tdates": [
+    "2026-07-03",
+    "2026-07-02",
+    "2026-07-01",
+    "2026-06-30",
+    "2026-06-26",
+    "2026-06-25",
+    "2026-06-24",
+    "2026-06-23",
+    "2026-06-19",
+    "2026-06-18",
+    "2026-06-17",
+    "2026-06-16"
+  ],
+  "compose_used_tdates": [
+    "2026-07-03",
+    "2026-07-02",
+    "2026-07-01",
+    "2026-06-30",
+    "2026-06-26",
+    "2026-06-25"
+  ],
+  "shared_probe_key": "tdate_union_2026-07-03_2026-07-02_2026-07-01_2026-06-30_2026-06-26_2026-06-25",
+  "cninfo_requests": 6,
+  "days": [
+    {
+      "tdate": "2026-07-03",
+      "params": {
+        "tdate": "2026-07-03"
+      },
+      "http_status": 200,
+      "last_error": "",
+      "total": 9,
+      "record_count": 9,
+      "unique_codes_after_exclusions": 9,
+      "selected": true,
+      "sample_records": [
+        {
+          "SECCODE": "300133",
+          "SECNAME": "华策影视",
+          "DECLAREDATE": "2026-07-01",
+          "F003D": "2026-07-03",
+          "F004N": 1150680,
+          "F005N": 0.0609,
+          "F008N": 1150680
+        },
+        {
+          "SECCODE": "300157",
+          "SECNAME": "新锦动力",
+          "DECLAREDATE": "2026-06-30",
+          "F003D": "2026-07-03",
+          "F004N": 11407500,
+          "F005N": 1.51,
+          "F008N": 11407500
+        }
+      ]
+    },
+    {
+      "tdate": "2026-07-02",
+      "params": {
+        "tdate": "2026-07-02"
+      },
+      "http_status": 200,
+      "last_error": "",
+      "total": 5,
+      "record_count": 5,
+      "unique_codes_after_exclusions": 5,
+      "selected": true,
+      "sample_records": [
+        {
+          "SECCODE": "001309",
+          "SECNAME": "德明利",
+          "DECLAREDATE": "2026-07-01",
+          "F003D": "2026-07-02",
+          "F004N": 231613,
+          "F005N": 0.068,
+          "F008N": 153180
+        },
+        {
+          "SECCODE": "002766",
+          "SECNAME": "索菱股份",
+          "DECLAREDATE": "2026-06-30",
+          "F003D": "2026-07-02",
+          "F004N": 180000,
+          "F005N": 0.0209,
+          "F008N": 180000
+        }
+      ]
+    },
+    {
+      "tdate": "2026-07-01",
+      "params": {
+        "tdate": "2026-07-01"
+      },
+      "http_status": 200,
+      "last_error": "",
+      "total": 13,
+      "record_count": 13,
+      "unique_codes_after_exclusions": 13,
+      "selected": true,
+      "sample_records": [
+        {
+          "SECCODE": "000819",
+          "SECNAME": "岳阳兴长",
+          "DECLAREDATE": "2026-06-26",
+          "F003D": "2026-07-01",
+          "F004N": 487800,
+          "F005N": 0.13,
+          "F008N": 487800
+        },
+        {
+          "SECCODE": "001388",
+          "SECNAME": "信通电子",
+          "DECLAREDATE": "2026-06-29",
+          "F003D": "2026-07-01",
+          "F004N": 64556765,
+          "F005N": 34.194,
+          "F008N": 53342423
+        }
+      ]
+    },
+    {
+      "tdate": "2026-06-30",
+      "params": {
+        "tdate": "2026-06-30"
+      },
+      "http_status": 200,
+      "last_error": "",
+      "total": 9,
+      "record_count": 9,
+      "unique_codes_after_exclusions": 9,
+      "selected": true,
+      "sample_records": [
+        {
+          "SECCODE": "001369",
+          "SECNAME": "双欣材料",
+          "DECLAREDATE": "2026-06-26",
+          "F003D": "2026-06-30",
+          "F004N": 6424045,
+          "F005N": 0.5601,
+          "F008N": 6424045
+        },
+        {
+          "SECCODE": "001396",
+          "SECNAME": "誉帆科技",
+          "DECLAREDATE": "2026-06-26",
+          "F003D": "2026-06-30",
+          "F004N": 510296,
+          "F005N": 0.48,
+          "F008N": 510296
+        }
+      ]
+    },
+    {
+      "tdate": "2026-06-26",
+      "params": {
+        "tdate": "2026-06-26"
+      },
+      "http_status": 200,
+      "last_error": "",
+      "total": 8,
+      "record_count": 8,
+      "unique_codes_after_exclusions": 8,
+      "selected": true,
+      "sample_records": [
+        {
+          "SECCODE": "002278",
+          "SECNAME": "神开股份",
+          "DECLAREDATE": "2026-06-23",
+          "F003D": "2026-06-26",
+          "F004N": 26128266,
+          "F005N": 6.72,
+          "F008N": 26128266
+        },
+        {
+          "SECCODE": "002307",
+          "SECNAME": "北新路桥",
+          "DECLAREDATE": "2026-06-23",
+          "F003D": "2026-06-26",
+          "F004N": 360831455,
+          "F005N": 21.8848,
+          "F008N": 360831455
+        }
+      ]
+    },
+    {
+      "tdate": "2026-06-25",
+      "params": {
+        "tdate": "2026-06-25"
+      },
+      "http_status": 200,
+      "last_error": "",
+      "total": 5,
+      "record_count": 5,
+      "unique_codes_after_exclusions": 5,
+      "selected": true,
+      "sample_records": [
+        {
+          "SECCODE": "001255",
+          "SECNAME": "博菲电气",
+          "DECLAREDATE": "2026-06-23",
+          "F003D": "2026-06-25",
+          "F004N": 1045600,
+          "F005N": 1.2,
+          "F008N": 1045600
+        },
+        {
+          "SECCODE": "002753",
+          "SECNAME": "永东股份",
+          "DECLAREDATE": "2026-06-23",
+          "F003D": "2026-06-25",
+          "F004N": 52975326,
+          "F005N": 12.36,
+          "F008N": 52975326
+        }
+      ]
+    }
+  ],
+  "selected_found_count": 48,
+  "empty_control_codes": [
+    "600519",
+    "000858"
+  ],
+  "excluded_prior_slice_codes": [
+    "000895",
+    "002415",
+    "300009",
+    "300992",
+    "600000",
+    "601988",
+    "688981"
+  ],
+  "found_vs_empty_pad": {
+    "selected_found": 48,
+    "selected_empty": 2,
+    "empty_control_min": 2,
+    "expected_size": 50,
+    "note": "empty pad fills remainder when multi-day liftBan union cannot supply 48 distinct new found codes"
+  }
+}

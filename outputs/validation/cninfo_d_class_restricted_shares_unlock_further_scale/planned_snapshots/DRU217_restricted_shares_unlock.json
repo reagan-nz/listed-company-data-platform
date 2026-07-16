@@ -1,0 +1,30 @@
+{
+  "case_id": "DRU217",
+  "company_code": "003013",
+  "company_name": "地铁设计",
+  "component": "restricted_shares_unlock",
+  "query_mode": "tdate_daily_multi_day_union",
+  "anchor_tdate": "2026-07-01",
+  "shared_probe_key": "tdate_union_2026-06-25_2026-06-26_2026-06-30_2026-07-01_2026-07-02_2026-07-03",
+  "planned_requests": [
+    "tdate_daily_2026-06-25",
+    "tdate_daily_2026-06-26",
+    "tdate_daily_2026-06-30",
+    "tdate_daily_2026-07-01",
+    "tdate_daily_2026-07-02",
+    "tdate_daily_2026-07-03"
+  ],
+  "query_params": {
+    "tdate": "2026-07-01"
+  },
+  "endpoint": "https://www.cninfo.com.cn/data20/liftBan/detail",
+  "records_path": "data.records",
+  "shared_request": true,
+  "company_filter_offline": true,
+  "company_filter_field": "SECCODE",
+  "filter_company_code": "003013",
+  "forbidden_sole_found": "2026-06-08",
+  "expected_behavior": "captured_normal",
+  "compose_source_day": "2026-07-01",
+  "cninfo_called": false
+}
