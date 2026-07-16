@@ -1,0 +1,32 @@
+root_id,path_pattern,root_class,era_origin,protection_level,write_policy,notes
+A-ROOT-S2,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s2/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S2 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S3,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s3/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S3 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S4,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s4/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S4 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S5,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s5/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S5 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S6,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s6/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S6 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S7,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s7/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S7 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S8,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s8/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S8 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S9,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s9/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S9 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S10,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s10/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S10 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S11,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s11/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S11 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S12,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s12/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S12 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S13,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s13/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S13 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S14,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s14/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S14 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S15,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s15/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S15 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S16,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s16/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S16 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S17,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s17/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S17 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S18,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s18/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S18 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S19,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s19/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S19 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S20,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s20/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S20 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S21,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s21/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S21 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S22,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s22/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S22 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S23,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s23/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S23 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-S24,outputs/validation/cninfo_a_class_erad_next_scale_listing_aware_s24/,live_validation,era_a_listing_aware,production,read_only_no_mutate,S24 listing-aware live main root; FM07 protected-root freeze
+A-ROOT-SCALE200,outputs/validation/cninfo_a_class_erad_scale_200/,live_validation,era_a_erad_scale,production,read_only_no_mutate,EraD scale-200 live/validation root
+A-ROOT-SLICE1,outputs/validation/cninfo_a_class_erad_next_scale_slice1/,live_validation,era_a_erad_slice,production,read_only_no_mutate,Next-scale slice1 live root
+A-ROOT-PHASE2-EXP,outputs/validation/cninfo_a_class_phase2_metadata_expansion/,validation_baseline,era_a_phase2,production,read_only_baseline_no_overwrite,Phase2 expansion baseline; dry-path only under isolated roots
+A-ROOT-PHASE2-RETRY,outputs/validation/cninfo_a_class_phase2_metadata_retry/,validation_baseline,era_a_phase2,production,read_only_baseline_no_overwrite,Phase2 failed-retry baseline
+A-ROOT-PHASE2-RETRY-V2,outputs/validation/cninfo_a_class_phase2_metadata_retry_v2/,validation_baseline,era_a_phase2,production,read_only_baseline_no_overwrite,Phase2 retry v2 baseline
+A-ROOT-PHASE2-RETRY-V3,outputs/validation/cninfo_a_class_phase2_metadata_retry_v3/,validation_baseline,era_a_phase2,production,read_only_baseline_no_overwrite,Phase2 retry v3 baseline
+A-ROOT-FM06-FREEZE,outputs/validation/cninfo_a_class_listing_aware_s24_fm06_freeze_attestation_20260716.csv,freeze_attestation,era_a_fm06,authoritative,read_only_no_overwrite,FM06 S24 residual-exhausted freeze attestation
+A-ROOT-MOCK,outputs/validation/_a_fm07_*/,ephemeral,era_a_fm07,mock,delete_ok_tests_only,FM07 isolated offline artifacts only
