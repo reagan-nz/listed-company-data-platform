@@ -1,0 +1,79 @@
+{
+  "generated_at": "2026-07-16T03:16:07Z",
+  "task_id": "C-FM-51",
+  "fingerprint_sha256": "d07e6b8534590027979b90342f65aed2c2aa8a398bb08a14f1a1c92476763471",
+  "composition_sha256": "916baf44ac41c750343005be227423b1f3f2ee709168a886782ae882ac3c74b4",
+  "coverage_formula": "coverage=117",
+  "sample_denials": [
+    {
+      "proposed": {
+        "residual_safety_coverage": 116,
+        "coverage_formula": "coverage=117"
+      },
+      "frozen": {
+        "residual_safety_coverage": 117,
+        "coverage_formula": "coverage=117"
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "coverage_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "residual_safety_coverage": 117,
+        "coverage_formula": "coverage=116"
+      },
+      "frozen": {
+        "residual_safety_coverage": 117,
+        "coverage_formula": "coverage=117"
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "coverage_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "residual_safety_coverage": 0,
+        "coverage_formula": "coverage=0"
+      },
+      "frozen": {
+        "residual_safety_coverage": 117,
+        "coverage_formula": "coverage=117"
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "coverage_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "residual_safety_coverage": 117,
+        "coverage_formula": "coverage=117"
+      },
+      "frozen": {
+        "residual_safety_coverage": 117,
+        "coverage_formula": "coverage=117"
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "coverage_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "coverage_composition_identity_lock",
+    "residual_safety_coverage": 117,
+    "coverage_formula": "coverage=117",
+    "composition_sha256": "916baf44ac41c750343005be227423b1f3f2ee709168a886782ae882ac3c74b4",
+    "coverage_formula_primary": "coverage=117",
+    "union_partial": 106,
+    "union_failed": 9,
+    "surface_harvest_delta_n": 2,
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

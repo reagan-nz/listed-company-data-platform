@@ -1,0 +1,96 @@
+{
+  "generated_at": "2026-07-16T03:16:07Z",
+  "task_id": "C-FM-51",
+  "fingerprint_sha256": "ba18faf57ae2653fb9f8a4eeea710ef637ae889d2afdc75da6a026b48c63d42c",
+  "composition_sha256": "e20603986a7df1980c21388d3dd213ecda7e16ab32c6037c4fa33fdb63b3c5a2",
+  "resume_formula": "28+1+0=29",
+  "sample_denials": [
+    {
+      "proposed": {
+        "resume_improved": 27,
+        "resume_same": 1,
+        "resume_worse": 0,
+        "resume_total": 28
+      },
+      "frozen": {
+        "resume_improved": 28,
+        "resume_same": 1,
+        "resume_worse": 0,
+        "resume_total": 29
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_formula_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "resume_improved": 28,
+        "resume_same": 0,
+        "resume_worse": 0,
+        "resume_total": 28
+      },
+      "frozen": {
+        "resume_improved": 28,
+        "resume_same": 1,
+        "resume_worse": 0,
+        "resume_total": 29
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_formula_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "resume_improved": 0,
+        "resume_same": 0,
+        "resume_worse": 0,
+        "resume_total": 0
+      },
+      "frozen": {
+        "resume_improved": 28,
+        "resume_same": 1,
+        "resume_worse": 0,
+        "resume_total": 29
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_formula_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "resume_improved": 28,
+        "resume_same": 1,
+        "resume_worse": 0,
+        "resume_total": 29
+      },
+      "frozen": {
+        "resume_improved": 28,
+        "resume_same": 1,
+        "resume_worse": 0,
+        "resume_total": 29
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "resume_formula_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "resume_formula_composition_identity_lock",
+    "resume_improved": 28,
+    "resume_same": 1,
+    "resume_worse": 0,
+    "resume_total": 29,
+    "composition_sha256": "e20603986a7df1980c21388d3dd213ecda7e16ab32c6037c4fa33fdb63b3c5a2",
+    "resume_formula": "28+1+0=29",
+    "resume_taxonomy_formula": "28/1/0",
+    "resume_formula_primary": "28+1+0=29",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
