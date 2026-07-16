@@ -1,0 +1,37 @@
+{
+  "case_id": "DSC731",
+  "company_code": "000097",
+  "company_name": "empty_control_000097",
+  "component": "shareholder_change",
+  "query_mode": "type_desc_multi_day_union",
+  "query_type": "desc",
+  "anchor_tdate": "2026-06-27",
+  "shared_probe_key": "type_desc_union_2026-06-27_2026-06-30_2026-07-02_2026-07-04_2026-07-07_2026-07-08_2026-07-09_2026-07-10_2026-07-11_2026-07-14_2026-07-15",
+  "planned_requests": [
+    "type_desc_tdate_daily_2026-06-27",
+    "type_desc_tdate_daily_2026-06-30",
+    "type_desc_tdate_daily_2026-07-02",
+    "type_desc_tdate_daily_2026-07-04",
+    "type_desc_tdate_daily_2026-07-07",
+    "type_desc_tdate_daily_2026-07-08",
+    "type_desc_tdate_daily_2026-07-09",
+    "type_desc_tdate_daily_2026-07-10",
+    "type_desc_tdate_daily_2026-07-11",
+    "type_desc_tdate_daily_2026-07-14",
+    "type_desc_tdate_daily_2026-07-15"
+  ],
+  "query_params": {
+    "type": "desc",
+    "tdate": "2026-06-27"
+  },
+  "endpoint": "https://www.cninfo.com.cn/data20/shareholeder/detail",
+  "records_path": "data.records",
+  "shared_request": true,
+  "company_filter_offline": true,
+  "company_filter_field": "SECCODE",
+  "filter_company_code": "000097",
+  "forbidden_sole_found": "inc+2026-07-03",
+  "expected_behavior": "empty_but_valid",
+  "compose_source_day": "union",
+  "cninfo_called": false
+}
