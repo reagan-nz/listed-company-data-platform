@@ -1,0 +1,32 @@
+{
+  "case_id": "DAT942",
+  "company_code": "600568",
+  "company_name": "ST中珠",
+  "component": "abnormal_trading",
+  "anchor_tdate": "2026-06-30",
+  "query_mode": "single_day_paged",
+  "shared_probe_key": "single_day_multipage_2026-06-30_rows300",
+  "planned_requests": [
+    "single_day_multipage_2026-06-30_rows300"
+  ],
+  "query_params": {
+    "sdate": "2026-06-30",
+    "edate": "2026-06-30",
+    "platecode": "",
+    "orderby": "",
+    "page": 1,
+    "rows": 300
+  },
+  "endpoint": "https://www.cninfo.com.cn/data/statis/getMarketStatisticsData",
+  "records_path": "marketList",
+  "shared_request": true,
+  "multipage": true,
+  "company_filter_offline": true,
+  "company_filter_field": "secCode",
+  "filter_company_code": "600568",
+  "forbidden_sole_found_anchor": "2026-07-03",
+  "expected_behavior": "captured_normal",
+  "cninfo_called": false,
+  "detail_nested_deferred": true,
+  "compose_note": "multi_day_multipage_plus_empty_pad"
+}
