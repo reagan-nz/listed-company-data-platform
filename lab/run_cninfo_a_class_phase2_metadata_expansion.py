@@ -1544,6 +1544,111 @@ DEFAULT_ERAD_LISTING_AWARE_S20_PROFILE_DIR = os.path.join(
     "validation",
     "cninfo_a_class_basic_profile_coverage_overlay_fm06",
 )
+
+# A-FM-01：listing-aware S21（AD2E1551–1600 · 独立根 · 不得写入封闭 S1 / S2–S20 live 根）
+DEFAULT_ERAD_LISTING_AWARE_S21_UNIVERSE_CSV = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_erad_next_scale_listing_aware_s21_plus50_universe_20260716.csv",
+)
+DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_erad_next_scale_listing_aware_s21",
+)
+REQUIRED_ERAD_LISTING_AWARE_S21_UNIVERSE_SIZE = 50
+ERAD_LISTING_AWARE_S21_REQUEST_CAP = 120
+ERAD_LISTING_AWARE_S21_COHORT = ERAD_LISTING_AWARE_S2_COHORT  # 同族 cohort 标签
+ALLOWED_ERAD_LISTING_AWARE_S21_CASE_IDS: Set[str] = {
+    f"AD2E{i:03d}" for i in range(1551, 1601)
+}
+ERAD_LISTING_AWARE_S21_INCLUDE_REASON = (
+    "next_scale_listing_aware_s21;a_cumulative_disjoint;listing_period_gate;"
+    "st_exclude;non_bse;prefix_concentration_cap;b_overlap_allowed_cross_track;"
+    "metadata_only_no_pdf;excludes_listing_aware_s2_s3_s4_s5_s6_s7_s8_s9_s10_s11_s12_s13_s14_s15_s16_s17_s18_s19_s20"
+)
+ERAD_LISTING_AWARE_S21_CLOSED_ROOT_WRITE_FORBIDDEN = (
+    "listing_aware_s21_must_not_write_closed_slice2_s1_or_s2_or_s3_or_s4_or_s5_or_s6_or_s7_or_s8_or_s9_or_s10_or_s11_or_s12_or_s13_or_s14_or_s15_or_s16_or_s17_or_s18_or_s19_or_s20_live_root"
+)
+ERAD_LISTING_AWARE_S21_UNIVERSE_CSV_REQUIRED = (
+    "erad_a_listing_aware_s21_universe_csv_required"
+)
+ERAD_LISTING_AWARE_S21_UNIVERSE_SIZE_VIOLATION = (
+    "erad_a_listing_aware_s21_universe_size_must_equal_50"
+)
+ERAD_LISTING_AWARE_S21_CASE_SET_VIOLATION = (
+    "erad_a_listing_aware_s21_case_ids_must_be_AD2E1551_1600"
+)
+ERAD_LISTING_AWARE_S21_COHORT_INVALID = (
+    "erad_a_listing_aware_s21_cohort_must_be_next_scale_listing_aware"
+)
+ERAD_LISTING_AWARE_S21_OVERLAP_A_S2_S1 = "erad_a_listing_aware_s21_overlap_a_slice2_s1"
+ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S2 = (
+    "erad_a_listing_aware_s21_overlap_a_listing_aware_s2"
+)
+ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S3 = (
+    "erad_a_listing_aware_s21_overlap_a_listing_aware_s3"
+)
+ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S4 = (
+    "erad_a_listing_aware_s21_overlap_a_listing_aware_s4"
+)
+ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S5 = (
+    "erad_a_listing_aware_s21_overlap_a_listing_aware_s5"
+)
+ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S6 = (
+    "erad_a_listing_aware_s21_overlap_a_listing_aware_s6"
+)
+ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S7 = (
+    "erad_a_listing_aware_s21_overlap_a_listing_aware_s7"
+)
+ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S8 = (
+    "erad_a_listing_aware_s21_overlap_a_listing_aware_s8"
+)
+ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S9 = (
+    "erad_a_listing_aware_s21_overlap_a_listing_aware_s9"
+)
+ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S10 = (
+    "erad_a_listing_aware_s21_overlap_a_listing_aware_s10"
+)
+ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S11 = (
+    "erad_a_listing_aware_s21_overlap_a_listing_aware_s11"
+)
+ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S12 = (
+    "erad_a_listing_aware_s21_overlap_a_listing_aware_s12"
+)
+ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S13 = (
+    "erad_a_listing_aware_s21_overlap_a_listing_aware_s13"
+)
+ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S14 = (
+    "erad_a_listing_aware_s21_overlap_a_listing_aware_s14"
+)
+ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S15 = (
+    "erad_a_listing_aware_s21_overlap_a_listing_aware_s15"
+)
+ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S16 = (
+    "erad_a_listing_aware_s21_overlap_a_listing_aware_s16"
+)
+ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S17 = (
+    "erad_a_listing_aware_s21_overlap_a_listing_aware_s17"
+)
+ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S18 = (
+    "erad_a_listing_aware_s21_overlap_a_listing_aware_s18"
+)
+ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S19 = (
+    "erad_a_listing_aware_s21_overlap_a_listing_aware_s19"
+)
+ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S20 = (
+    "erad_a_listing_aware_s21_overlap_a_listing_aware_s20"
+)
+# S21 listing_period lint / gate 使用 A 轨 coverage overlay（非 C harvest 默认分母）
+DEFAULT_ERAD_LISTING_AWARE_S21_PROFILE_DIR = os.path.join(
+    BASE_DIR,
+    "outputs",
+    "validation",
+    "cninfo_a_class_basic_profile_coverage_overlay_fm06",
+)
 ERAD_NEXT_SCALE_SLICE2_SCALE200_EFFECTIVE_LEDGER = os.path.join(
     BASE_DIR,
     "outputs",
@@ -6807,7 +6912,10 @@ def load_erad_next_scale_slice2_universe(path: str) -> List[EraDNextScaleSlice2U
                 case_num
             )
             include_reason = (
-                ERAD_LISTING_AWARE_S20_INCLUDE_REASON
+                ERAD_LISTING_AWARE_S21_INCLUDE_REASON
+                if cohort == ERAD_LISTING_AWARE_S21_COHORT
+                and case_id in ALLOWED_ERAD_LISTING_AWARE_S21_CASE_IDS
+                else ERAD_LISTING_AWARE_S20_INCLUDE_REASON
                 if cohort == ERAD_LISTING_AWARE_S20_COHORT
                 and case_id in ALLOWED_ERAD_LISTING_AWARE_S20_CASE_IDS
                 else ERAD_LISTING_AWARE_S19_INCLUDE_REASON
@@ -7225,6 +7333,38 @@ def validate_erad_listing_aware_s11_case(case: EraDNextScaleSlice2UniverseCase) 
     return issues
 
 
+def validate_erad_listing_aware_s21_case(case: EraDNextScaleSlice2UniverseCase) -> List[str]:
+    """listing-aware S21 单案校验（AD2E1551–1600 · cohort=next_scale_listing_aware）。"""
+    issues: List[str] = []
+    if case.case_id not in ALLOWED_ERAD_LISTING_AWARE_S21_CASE_IDS:
+        issues.append(f"{ERAD_SLICE2_CASE_ID_NOT_ALLOWED}:{case.case_id}")
+    case_num = (
+        _erad_a_slice2_case_number(case.case_id)
+        if ERAD_SCALE_200_CASE_ID_PATTERN.match(case.case_id)
+        else 0
+    )
+    if case_num and case_num <= 1550:
+        issues.append(f"{ERAD_SLICE2_PRIOR_CASE_FORBIDDEN}:{case.case_id}")
+    if case.erad_include != "yes":
+        issues.append(ERAD_SLICE2_INCLUDE_REQUIRED)
+    if case.cohort != ERAD_LISTING_AWARE_S21_COHORT:
+        issues.append(ERAD_LISTING_AWARE_S21_COHORT_INVALID)
+    if case.prior_in_scale_200 != "no":
+        issues.append(ERAD_SLICE2_PRIOR_SCALE_200_INVALID)
+    if not case.company_code:
+        issues.append("company_code_missing")
+    if not case.company_name:
+        issues.append("company_name_missing")
+    if case.report_type not in tiny_live.VALID_REPORT_TYPES:
+        issues.append(f"invalid_report_type:{case.report_type}")
+    if not case.expected_period:
+        issues.append("expected_period_missing")
+    if ERAD_SLICE2_ST_NAME_PATTERN.search(case.company_name or ""):
+        issues.append(f"{ERAD_SLICE2_ST_NAME_HIT}:{case.company_code}")
+    issues.extend(validate_universe_code_name(slice2_to_phase2_case(case)))
+    return issues
+
+
 def validate_erad_listing_aware_s20_case(case: EraDNextScaleSlice2UniverseCase) -> List[str]:
     """listing-aware S20 单案校验（AD2E1501–1550 · cohort=next_scale_listing_aware）。"""
     issues: List[str] = []
@@ -7515,6 +7655,8 @@ def validate_erad_listing_aware_s12_case(case: EraDNextScaleSlice2UniverseCase) 
 
 def validate_erad_next_scale_slice2_case(case: EraDNextScaleSlice2UniverseCase) -> List[str]:
     if case.cohort == ERAD_LISTING_AWARE_S2_COHORT:
+        if case.case_id in ALLOWED_ERAD_LISTING_AWARE_S21_CASE_IDS:
+            return validate_erad_listing_aware_s21_case(case)
         if case.case_id in ALLOWED_ERAD_LISTING_AWARE_S20_CASE_IDS:
             return validate_erad_listing_aware_s20_case(case)
         if case.case_id in ALLOWED_ERAD_LISTING_AWARE_S19_CASE_IDS:
@@ -7762,6 +7904,22 @@ def validate_erad_listing_aware_s12_universe_size(
     return True, ""
 
 
+def validate_erad_listing_aware_s21_universe_size(
+    cases: List[EraDNextScaleSlice2UniverseCase],
+) -> Tuple[bool, str]:
+    included = [c for c in cases if c.erad_include == "yes"]
+    if len(included) != REQUIRED_ERAD_LISTING_AWARE_S21_UNIVERSE_SIZE:
+        return (
+            False,
+            f"{ERAD_LISTING_AWARE_S21_UNIVERSE_SIZE_VIOLATION}: got {len(included)} "
+            f"expected {REQUIRED_ERAD_LISTING_AWARE_S21_UNIVERSE_SIZE}",
+        )
+    case_ids = {c.case_id for c in included}
+    if case_ids != ALLOWED_ERAD_LISTING_AWARE_S21_CASE_IDS:
+        return False, f"{ERAD_LISTING_AWARE_S21_CASE_SET_VIOLATION}: got={sorted(case_ids)[:5]}..."
+    return True, ""
+
+
 def validate_erad_listing_aware_s20_universe_size(
     cases: List[EraDNextScaleSlice2UniverseCase],
 ) -> Tuple[bool, str]:
@@ -7897,6 +8055,8 @@ def validate_erad_next_scale_slice2_universe_size(
 ) -> Tuple[bool, str]:
     included = [c for c in cases if c.erad_include == "yes"]
     if included and included[0].cohort == ERAD_LISTING_AWARE_S2_COHORT:
+        if included[0].case_id in ALLOWED_ERAD_LISTING_AWARE_S21_CASE_IDS:
+            return validate_erad_listing_aware_s21_universe_size(cases)
         if included[0].case_id in ALLOWED_ERAD_LISTING_AWARE_S20_CASE_IDS:
             return validate_erad_listing_aware_s20_universe_size(cases)
         if included[0].case_id in ALLOWED_ERAD_LISTING_AWARE_S19_CASE_IDS:
@@ -8637,6 +8797,137 @@ def lint_erad_listing_aware_s11_overlap(
     )
     issues.extend(listing_blocking)
     return issues
+
+
+def lint_erad_listing_aware_s21_overlap(
+    cases: List[EraDNextScaleSlice2UniverseCase],
+) -> List[str]:
+    """
+    listing-aware S21 overlap lint：A cumulative（含 S1 + listing-aware S2–S20）+ ST + L-D6。
+
+    B 轨 overlap 允许；不做 B / AB_182 阻断。
+    """
+    issues: List[str] = []
+    slice2_codes = {c.company_code for c in cases if c.erad_include == "yes"}
+    a_s200 = _load_company_codes_from_csv(DEFAULT_ERAD_SCALE_200_UNIVERSE_CSV, "company_code")
+    a_s1 = _load_company_codes_from_csv(DEFAULT_ERAD_NEXT_SCALE_SLICE1_UNIVERSE_CSV, "company_code")
+    a_s2_s1 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_UNIVERSE_CSV, "company_code"
+    )
+    a_la_s2 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_LISTING_AWARE_S2_UNIVERSE_CSV, "company_code"
+    )
+    a_la_s3 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_LISTING_AWARE_S3_UNIVERSE_CSV, "company_code"
+    )
+    a_la_s4 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_LISTING_AWARE_S4_UNIVERSE_CSV, "company_code"
+    )
+    a_la_s5 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_LISTING_AWARE_S5_UNIVERSE_CSV, "company_code"
+    )
+    a_la_s6 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_LISTING_AWARE_S6_UNIVERSE_CSV, "company_code"
+    )
+    a_la_s7 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_LISTING_AWARE_S7_UNIVERSE_CSV, "company_code"
+    )
+    a_la_s8 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_LISTING_AWARE_S8_UNIVERSE_CSV, "company_code"
+    )
+    a_la_s9 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_LISTING_AWARE_S9_UNIVERSE_CSV, "company_code"
+    )
+    a_la_s10 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_LISTING_AWARE_S10_UNIVERSE_CSV, "company_code"
+    )
+    a_la_s11 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_LISTING_AWARE_S11_UNIVERSE_CSV, "company_code"
+    )
+    a_la_s12 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_LISTING_AWARE_S12_UNIVERSE_CSV, "company_code"
+    )
+    a_la_s13 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_LISTING_AWARE_S13_UNIVERSE_CSV, "company_code"
+    )
+    a_la_s14 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_LISTING_AWARE_S14_UNIVERSE_CSV, "company_code"
+    )
+    a_la_s15 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_LISTING_AWARE_S15_UNIVERSE_CSV, "company_code"
+    )
+    a_la_s16 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_LISTING_AWARE_S16_UNIVERSE_CSV, "company_code"
+    )
+    a_la_s17 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_LISTING_AWARE_S17_UNIVERSE_CSV, "company_code"
+    )
+    a_la_s18 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_LISTING_AWARE_S18_UNIVERSE_CSV, "company_code"
+    )
+    a_la_s19 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_LISTING_AWARE_S19_UNIVERSE_CSV, "company_code"
+    )
+    a_la_s20 = _load_company_codes_from_csv(
+        DEFAULT_ERAD_LISTING_AWARE_S20_UNIVERSE_CSV, "company_code"
+    )
+    a_all = (
+        a_s200 | a_s1 | a_s2_s1 | a_la_s2 | a_la_s3 | a_la_s4 | a_la_s5 | a_la_s6
+        | a_la_s7 | a_la_s8 | a_la_s9 | a_la_s10 | a_la_s11 | a_la_s12 | a_la_s13
+        | a_la_s14 | a_la_s15 | a_la_s16 | a_la_s17 | a_la_s18 | a_la_s19 | a_la_s20
+    )
+    a_cum_eff = _load_company_codes_from_csv(
+        ERAD_NEXT_SCALE_SLICE2_SCALE200_EFFECTIVE_LEDGER, "company_code"
+    ) | _load_company_codes_from_csv(
+        ERAD_NEXT_SCALE_SLICE2_SLICE1_EFFECTIVE_LEDGER, "company_code"
+    )
+    checks = (
+        (a_all, ERAD_SLICE2_OVERLAP_A_ALL),
+        (a_cum_eff, ERAD_SLICE2_OVERLAP_A_CUM_EFF),
+        (a_s200, ERAD_SLICE2_OVERLAP_A_S200),
+        (a_s1, ERAD_SLICE2_OVERLAP_A_S1),
+        (a_s2_s1, ERAD_LISTING_AWARE_S21_OVERLAP_A_S2_S1),
+        (a_la_s2, ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S2),
+        (a_la_s3, ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S3),
+        (a_la_s4, ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S4),
+        (a_la_s5, ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S5),
+        (a_la_s6, ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S6),
+        (a_la_s7, ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S7),
+        (a_la_s8, ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S8),
+        (a_la_s9, ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S9),
+        (a_la_s10, ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S10),
+        (a_la_s11, ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S11),
+        (a_la_s12, ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S12),
+        (a_la_s13, ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S13),
+        (a_la_s14, ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S14),
+        (a_la_s15, ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S15),
+        (a_la_s16, ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S16),
+        (a_la_s17, ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S17),
+        (a_la_s18, ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S18),
+        (a_la_s19, ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S19),
+        (a_la_s20, ERAD_LISTING_AWARE_S21_OVERLAP_A_LISTING_AWARE_S20),
+    )
+    for ref_codes, err_code in checks:
+        overlap = slice2_codes & ref_codes
+        if overlap:
+            issues.append(f"{err_code}:count={len(overlap)}")
+
+    st_hits = [
+        c.company_code
+        for c in cases
+        if c.erad_include == "yes" and ERAD_SLICE2_ST_NAME_PATTERN.search(c.company_name or "")
+    ]
+    if st_hits:
+        issues.append(f"{ERAD_SLICE2_ST_NAME_HIT}:count={len(st_hits)}")
+    listing_blocking, _listing_flags = lint_erad_next_scale_slice2_listing_period(
+        cases,
+        profile_dir=DEFAULT_ERAD_LISTING_AWARE_S21_PROFILE_DIR,
+        grandfather_case_ids=set(),
+    )
+    issues.extend(listing_blocking)
+    return issues
+
+
 
 
 def lint_erad_listing_aware_s20_overlap(
@@ -9628,6 +9919,8 @@ def lint_erad_next_scale_slice2_overlap(
     """离线 overlap lint：A/B cumulative · AB_182 · L-D4 ST · L-D6 listing_period。"""
     included = [c for c in cases if c.erad_include == "yes"]
     if included and any(c.cohort == ERAD_LISTING_AWARE_S2_COHORT for c in included):
+        if any(c.case_id in ALLOWED_ERAD_LISTING_AWARE_S21_CASE_IDS for c in included):
+            return lint_erad_listing_aware_s21_overlap(cases)
         if any(c.case_id in ALLOWED_ERAD_LISTING_AWARE_S20_CASE_IDS for c in included):
             return lint_erad_listing_aware_s20_overlap(cases)
         if any(c.case_id in ALLOWED_ERAD_LISTING_AWARE_S19_CASE_IDS for c in included):
@@ -9978,6 +10271,9 @@ def validate_erad_listing_aware_s3_output_root(output_root: str) -> Tuple[bool, 
     closed_s20 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT)
     if root == closed_s20 or root.startswith(closed_s20 + os.sep):
         return False, "listing_aware_s20_root_forbidden_for_listing_aware_s3"
+    closed_s21 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
+    if root == closed_s21 or root.startswith(closed_s21 + os.sep):
+        return False, "listing_aware_s21_root_forbidden_for_listing_aware_s3"
     blocked = (
         (PHASE1_OUTPUT_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
         (DEFAULT_OUTPUT_ROOT, PHASE2_EXPANSION_WRITE_FORBIDDEN),
@@ -10100,6 +10396,9 @@ def validate_erad_listing_aware_s4_output_root(output_root: str) -> Tuple[bool, 
     closed_s20 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT)
     if root == closed_s20 or root.startswith(closed_s20 + os.sep):
         return False, "listing_aware_s20_root_forbidden_for_listing_aware_s4"
+    closed_s21 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
+    if root == closed_s21 or root.startswith(closed_s21 + os.sep):
+        return False, "listing_aware_s21_root_forbidden_for_listing_aware_s4"
     blocked = (
         (PHASE1_OUTPUT_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
         (DEFAULT_OUTPUT_ROOT, PHASE2_EXPANSION_WRITE_FORBIDDEN),
@@ -10222,6 +10521,9 @@ def validate_erad_listing_aware_s5_output_root(output_root: str) -> Tuple[bool, 
     closed_s20 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT)
     if root == closed_s20 or root.startswith(closed_s20 + os.sep):
         return False, "listing_aware_s20_root_forbidden_for_listing_aware_s5"
+    closed_s21 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
+    if root == closed_s21 or root.startswith(closed_s21 + os.sep):
+        return False, "listing_aware_s21_root_forbidden_for_listing_aware_s5"
     blocked = (
         (PHASE1_OUTPUT_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
         (DEFAULT_OUTPUT_ROOT, PHASE2_EXPANSION_WRITE_FORBIDDEN),
@@ -10344,6 +10646,9 @@ def validate_erad_listing_aware_s6_output_root(output_root: str) -> Tuple[bool, 
     closed_s20 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT)
     if root == closed_s20 or root.startswith(closed_s20 + os.sep):
         return False, "listing_aware_s20_root_forbidden_for_listing_aware_s6"
+    closed_s21 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
+    if root == closed_s21 or root.startswith(closed_s21 + os.sep):
+        return False, "listing_aware_s21_root_forbidden_for_listing_aware_s6"
     blocked = (
         (PHASE1_OUTPUT_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
         (DEFAULT_OUTPUT_ROOT, PHASE2_EXPANSION_WRITE_FORBIDDEN),
@@ -10466,6 +10771,9 @@ def validate_erad_listing_aware_s7_output_root(output_root: str) -> Tuple[bool, 
     closed_s20 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT)
     if root == closed_s20 or root.startswith(closed_s20 + os.sep):
         return False, "listing_aware_s20_root_forbidden_for_listing_aware_s7"
+    closed_s21 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
+    if root == closed_s21 or root.startswith(closed_s21 + os.sep):
+        return False, "listing_aware_s21_root_forbidden_for_listing_aware_s7"
     blocked = (
         (PHASE1_OUTPUT_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
         (DEFAULT_OUTPUT_ROOT, PHASE2_EXPANSION_WRITE_FORBIDDEN),
@@ -10588,6 +10896,9 @@ def validate_erad_listing_aware_s8_output_root(output_root: str) -> Tuple[bool, 
     closed_s20 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT)
     if root == closed_s20 or root.startswith(closed_s20 + os.sep):
         return False, "listing_aware_s20_root_forbidden_for_listing_aware_s8"
+    closed_s21 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
+    if root == closed_s21 or root.startswith(closed_s21 + os.sep):
+        return False, "listing_aware_s21_root_forbidden_for_listing_aware_s8"
     blocked = (
         (PHASE1_OUTPUT_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
         (DEFAULT_OUTPUT_ROOT, PHASE2_EXPANSION_WRITE_FORBIDDEN),
@@ -10711,6 +11022,9 @@ def validate_erad_listing_aware_s9_output_root(output_root: str) -> Tuple[bool, 
     closed_s20 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT)
     if root == closed_s20 or root.startswith(closed_s20 + os.sep):
         return False, "listing_aware_s20_root_forbidden_for_listing_aware_s9"
+    closed_s21 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
+    if root == closed_s21 or root.startswith(closed_s21 + os.sep):
+        return False, "listing_aware_s21_root_forbidden_for_listing_aware_s9"
     blocked = (
         (PHASE1_OUTPUT_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
         (DEFAULT_OUTPUT_ROOT, PHASE2_EXPANSION_WRITE_FORBIDDEN),
@@ -10834,6 +11148,9 @@ def validate_erad_listing_aware_s10_output_root(output_root: str) -> Tuple[bool,
     closed_s20 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT)
     if root == closed_s20 or root.startswith(closed_s20 + os.sep):
         return False, "listing_aware_s20_root_forbidden_for_listing_aware_s10"
+    closed_s21 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
+    if root == closed_s21 or root.startswith(closed_s21 + os.sep):
+        return False, "listing_aware_s21_root_forbidden_for_listing_aware_s10"
     blocked = (
         (PHASE1_OUTPUT_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
         (DEFAULT_OUTPUT_ROOT, PHASE2_EXPANSION_WRITE_FORBIDDEN),
@@ -10958,6 +11275,9 @@ def validate_erad_listing_aware_s11_output_root(output_root: str) -> Tuple[bool,
     closed_s20 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT)
     if root == closed_s20 or root.startswith(closed_s20 + os.sep):
         return False, "listing_aware_s20_root_forbidden_for_listing_aware_s11"
+    closed_s21 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
+    if root == closed_s21 or root.startswith(closed_s21 + os.sep):
+        return False, "listing_aware_s21_root_forbidden_for_listing_aware_s11"
     blocked = (
         (PHASE1_OUTPUT_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
         (DEFAULT_OUTPUT_ROOT, PHASE2_EXPANSION_WRITE_FORBIDDEN),
@@ -11080,6 +11400,9 @@ def validate_erad_listing_aware_s12_output_root(output_root: str) -> Tuple[bool,
     closed_s20 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT)
     if root == closed_s20 or root.startswith(closed_s20 + os.sep):
         return False, "listing_aware_s20_root_forbidden_for_listing_aware_s12"
+    closed_s21 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
+    if root == closed_s21 or root.startswith(closed_s21 + os.sep):
+        return False, "listing_aware_s21_root_forbidden_for_listing_aware_s12"
     blocked = (
         (PHASE1_OUTPUT_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
         (DEFAULT_OUTPUT_ROOT, PHASE2_EXPANSION_WRITE_FORBIDDEN),
@@ -11202,6 +11525,9 @@ def validate_erad_listing_aware_s13_output_root(output_root: str) -> Tuple[bool,
     closed_s20 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT)
     if root == closed_s20 or root.startswith(closed_s20 + os.sep):
         return False, "listing_aware_s20_root_forbidden_for_listing_aware_s13"
+    closed_s21 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
+    if root == closed_s21 or root.startswith(closed_s21 + os.sep):
+        return False, "listing_aware_s21_root_forbidden_for_listing_aware_s13"
     blocked = (
         (PHASE1_OUTPUT_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
         (DEFAULT_OUTPUT_ROOT, PHASE2_EXPANSION_WRITE_FORBIDDEN),
@@ -11304,6 +11630,9 @@ def validate_erad_listing_aware_s14_output_root(output_root: str) -> Tuple[bool,
     closed_s20 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT)
     if root == closed_s20 or root.startswith(closed_s20 + os.sep):
         return False, "listing_aware_s20_root_forbidden_for_listing_aware_s14"
+    closed_s21 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
+    if root == closed_s21 or root.startswith(closed_s21 + os.sep):
+        return False, "listing_aware_s21_root_forbidden_for_listing_aware_s14"
     blocked = (
         (PHASE1_OUTPUT_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
         (DEFAULT_OUTPUT_ROOT, PHASE2_EXPANSION_WRITE_FORBIDDEN),
@@ -11336,6 +11665,97 @@ def validate_erad_listing_aware_s14_output_root(output_root: str) -> Tuple[bool,
         return True, ""
     return False, "output_root_must_be_under_cninfo_a_class_erad_next_scale_listing_aware_s14"
 
+
+def is_erad_listing_aware_s21_mode(
+    universe_csv: Optional[str] = None,
+    output_root: Optional[str] = None,
+) -> bool:
+    """判定是否为 AD2E1551–1600 listing-aware S21 模式。"""
+    la_universe = os.path.normpath(
+        os.path.abspath(DEFAULT_ERAD_LISTING_AWARE_S21_UNIVERSE_CSV)
+    )
+    la_root = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
+    if universe_csv:
+        actual_u = os.path.normpath(os.path.abspath(universe_csv))
+        if actual_u == la_universe:
+            return True
+    if output_root:
+        root = _normalize_output_root(output_root)
+        if root == la_root or root.startswith(la_root + os.sep):
+            return True
+    return False
+
+
+def validate_erad_listing_aware_s21_universe_csv_path(universe_csv: str) -> Tuple[bool, str]:
+    expected = os.path.normpath(os.path.abspath(DEFAULT_ERAD_LISTING_AWARE_S21_UNIVERSE_CSV))
+    actual = os.path.normpath(os.path.abspath(universe_csv))
+    if actual != expected:
+        return False, ERAD_LISTING_AWARE_S21_UNIVERSE_CSV_REQUIRED
+    return True, ""
+
+
+def validate_erad_listing_aware_s21_output_root(output_root: str) -> Tuple[bool, str]:
+    """listing-aware S21 输出仅允许独立根；禁止写入封闭 S1 / S2–S20 live 根。"""
+    root = _normalize_output_root(output_root)
+    allowed = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
+    closed_s1 = _normalize_output_root(DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_OUTPUT_ROOT)
+    closed_s2 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S2_OUTPUT_ROOT)
+    closed_s3 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S3_OUTPUT_ROOT)
+    closed_s4 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S4_OUTPUT_ROOT)
+    closed_s5 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S5_OUTPUT_ROOT)
+    closed_s6 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S6_OUTPUT_ROOT)
+    closed_s7 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S7_OUTPUT_ROOT)
+    closed_s8 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S8_OUTPUT_ROOT)
+    closed_s9 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S9_OUTPUT_ROOT)
+    closed_s10 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S10_OUTPUT_ROOT)
+    closed_s11 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S11_OUTPUT_ROOT)
+    closed_s12 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S12_OUTPUT_ROOT)
+    closed_s13 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S13_OUTPUT_ROOT)
+    closed_s14 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S14_OUTPUT_ROOT)
+    closed_s15 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S15_OUTPUT_ROOT)
+    closed_s16 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S16_OUTPUT_ROOT)
+    closed_s17 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S17_OUTPUT_ROOT)
+    closed_s18 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S18_OUTPUT_ROOT)
+    closed_s19 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S19_OUTPUT_ROOT)
+    closed_s20 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT)
+    for closed in (
+        closed_s1, closed_s2, closed_s3, closed_s4, closed_s5, closed_s6, closed_s7,
+        closed_s8, closed_s9, closed_s10, closed_s11, closed_s12, closed_s13, closed_s14,
+        closed_s15, closed_s16, closed_s17, closed_s18, closed_s19, closed_s20,
+    ):
+        if root == closed or root.startswith(closed + os.sep):
+            return False, ERAD_LISTING_AWARE_S21_CLOSED_ROOT_WRITE_FORBIDDEN
+    blocked = (
+        (PHASE1_OUTPUT_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
+        (DEFAULT_OUTPUT_ROOT, PHASE2_EXPANSION_WRITE_FORBIDDEN),
+        (DEFAULT_RETRY_OUTPUT_ROOT, RETRY_V1_WRITE_FORBIDDEN),
+        (DEFAULT_RETRY_V2_OUTPUT_ROOT, RETRY_V2_WRITE_FORBIDDEN),
+        (DEFAULT_RETRY_V3_OUTPUT_ROOT, RETRY_V3_OUTPUT_ROOT_VIOLATION),
+        (PRECHECK_OUTPUT_ROOT, PRECHECK_WRITE_FORBIDDEN),
+        (DEFAULT_PHASE3_OUTPUT_ROOT, PHASE3_OUTPUT_ROOT_VIOLATION),
+        (DEFAULT_A3M017_RETRY_OUTPUT_ROOT, "a3m017_isolated_retry_output_root_forbidden"),
+        (DEFAULT_ERAD_SCALE_200_OUTPUT_ROOT, ERAD_SLICE2_SCALE_200_ROOT_WRITE_FORBIDDEN),
+        (
+            DEFAULT_ERAD_FAILED_RETRY_OUTPUT_ROOT,
+            ERAD_SLICE2_FAILED_RETRY_ROOT_WRITE_FORBIDDEN,
+        ),
+        (DEFAULT_ERAD_NEXT_SCALE_SLICE1_OUTPUT_ROOT, ERAD_SLICE2_SLICE1_ROOT_WRITE_FORBIDDEN),
+        (
+            DEFAULT_ERAD_SLICE2_ORGID_FALLBACK_RETRY_OUTPUT_ROOT,
+            "orgid_fallback_retry_root_forbidden_for_listing_aware_s21",
+        ),
+        (C_CLASS_HARVEST_ROOT, "c_class_harvest_output_root_forbidden"),
+        (B_CLASS_VALIDATION_PREFIX, "b_class_validation_output_root_forbidden"),
+        (C_CLASS_VALIDATION_PREFIX, "c_class_validation_output_root_forbidden"),
+        (D_CLASS_VALIDATION_PREFIX, "d_class_validation_output_root_forbidden"),
+    )
+    for path, err in blocked:
+        pth = _normalize_output_root(path)
+        if root == pth or root.startswith(pth + os.sep):
+            return False, err
+    if root == allowed or root.startswith(allowed + os.sep):
+        return True, ""
+    return False, "output_root_must_be_under_cninfo_a_class_erad_next_scale_listing_aware_s21"
 
 def is_erad_listing_aware_s20_mode(
     universe_csv: Optional[str] = None,
@@ -11395,6 +11815,9 @@ def validate_erad_listing_aware_s20_output_root(output_root: str) -> Tuple[bool,
     ):
         if root == closed or root.startswith(closed + os.sep):
             return False, ERAD_LISTING_AWARE_S20_CLOSED_ROOT_WRITE_FORBIDDEN
+    closed_s21 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
+    if root == closed_s21 or root.startswith(closed_s21 + os.sep):
+        return False, "listing_aware_s21_root_forbidden_for_listing_aware_s20"
     blocked = (
         (PHASE1_OUTPUT_ROOT, PHASE1_BASELINE_WRITE_FORBIDDEN),
         (DEFAULT_OUTPUT_ROOT, PHASE2_EXPANSION_WRITE_FORBIDDEN),
@@ -11479,10 +11902,11 @@ def validate_erad_listing_aware_s19_output_root(output_root: str) -> Tuple[bool,
     closed_s17 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S17_OUTPUT_ROOT)
     closed_s18 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S18_OUTPUT_ROOT)
     closed_s20 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT)
+    closed_s21 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
     for closed in (
         closed_s1, closed_s2, closed_s3, closed_s4, closed_s5, closed_s6, closed_s7,
         closed_s8, closed_s9, closed_s10, closed_s11, closed_s12, closed_s13, closed_s14,
-        closed_s15, closed_s16, closed_s17, closed_s18, closed_s20,
+        closed_s15, closed_s16, closed_s17, closed_s18, closed_s20, closed_s21,
     ):
         if root == closed or root.startswith(closed + os.sep):
             return False, ERAD_LISTING_AWARE_S19_CLOSED_ROOT_WRITE_FORBIDDEN
@@ -11570,10 +11994,11 @@ def validate_erad_listing_aware_s18_output_root(output_root: str) -> Tuple[bool,
     closed_s17 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S17_OUTPUT_ROOT)
     closed_s19 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S19_OUTPUT_ROOT)
     closed_s20 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT)
+    closed_s21 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
     for closed in (
         closed_s1, closed_s2, closed_s3, closed_s4, closed_s5, closed_s6, closed_s7,
         closed_s8, closed_s9, closed_s10, closed_s11, closed_s12, closed_s13, closed_s14,
-        closed_s15, closed_s16, closed_s17, closed_s19, closed_s20,
+        closed_s15, closed_s16, closed_s17, closed_s19, closed_s20, closed_s21,
     ):
         if root == closed or root.startswith(closed + os.sep):
             return False, ERAD_LISTING_AWARE_S18_CLOSED_ROOT_WRITE_FORBIDDEN
@@ -11661,10 +12086,11 @@ def validate_erad_listing_aware_s17_output_root(output_root: str) -> Tuple[bool,
     closed_s18 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S18_OUTPUT_ROOT)
     closed_s19 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S19_OUTPUT_ROOT)
     closed_s20 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT)
+    closed_s21 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
     for closed in (
         closed_s1, closed_s2, closed_s3, closed_s4, closed_s5, closed_s6, closed_s7,
         closed_s8, closed_s9, closed_s10, closed_s11, closed_s12, closed_s13, closed_s14,
-        closed_s15, closed_s16, closed_s18, closed_s19, closed_s20,
+        closed_s15, closed_s16, closed_s18, closed_s19, closed_s20, closed_s21,
     ):
         if root == closed or root.startswith(closed + os.sep):
             return False, ERAD_LISTING_AWARE_S17_CLOSED_ROOT_WRITE_FORBIDDEN
@@ -11752,10 +12178,11 @@ def validate_erad_listing_aware_s16_output_root(output_root: str) -> Tuple[bool,
     closed_s18 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S18_OUTPUT_ROOT)
     closed_s19 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S19_OUTPUT_ROOT)
     closed_s20 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT)
+    closed_s21 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
     for closed in (
         closed_s1, closed_s2, closed_s3, closed_s4, closed_s5, closed_s6, closed_s7,
         closed_s8, closed_s9, closed_s10, closed_s11, closed_s12, closed_s13, closed_s14,
-        closed_s15, closed_s17, closed_s18, closed_s19, closed_s20,
+        closed_s15, closed_s17, closed_s18, closed_s19, closed_s20, closed_s21,
     ):
         if root == closed or root.startswith(closed + os.sep):
             return False, ERAD_LISTING_AWARE_S16_CLOSED_ROOT_WRITE_FORBIDDEN
@@ -11843,10 +12270,11 @@ def validate_erad_listing_aware_s15_output_root(output_root: str) -> Tuple[bool,
     closed_s18 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S18_OUTPUT_ROOT)
     closed_s19 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S19_OUTPUT_ROOT)
     closed_s20 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT)
+    closed_s21 = _normalize_output_root(DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT)
     for closed in (
         closed_s1, closed_s2, closed_s3, closed_s4, closed_s5, closed_s6, closed_s7,
         closed_s8, closed_s9, closed_s10, closed_s11, closed_s12, closed_s13, closed_s14,
-        closed_s16, closed_s17, closed_s18, closed_s19, closed_s20,
+        closed_s16, closed_s17, closed_s18, closed_s19, closed_s20, closed_s21,
     ):
         if root == closed or root.startswith(closed + os.sep):
             return False, ERAD_LISTING_AWARE_S15_CLOSED_ROOT_WRITE_FORBIDDEN
@@ -11994,6 +12422,7 @@ def erad_slice2_request_cap_for_mode(
     listing_aware_s18: bool = False,
     listing_aware_s19: bool = False,
     listing_aware_s20: bool = False,
+    listing_aware_s21: bool = False,
 ) -> int:
     """按模式返回 CNINFO 请求上限。"""
     if orgid_fallback_retry:
@@ -12034,6 +12463,8 @@ def erad_slice2_request_cap_for_mode(
         return ERAD_LISTING_AWARE_S18_REQUEST_CAP
     if listing_aware_s19:
         return ERAD_LISTING_AWARE_S19_REQUEST_CAP
+    if listing_aware_s21:
+        return ERAD_LISTING_AWARE_S21_REQUEST_CAP
     if listing_aware_s20:
         return ERAD_LISTING_AWARE_S20_REQUEST_CAP
     return ERAD_NEXT_SCALE_SLICE2_REQUEST_CAP
@@ -12138,6 +12569,10 @@ def validate_erad_next_scale_slice2_output_root(output_root: str) -> Tuple[bool,
             DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT,
             "listing_aware_s20_root_forbidden_for_full_slice2_s1",
         ),
+        (
+            DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT,
+            "listing_aware_s21_root_forbidden_for_full_slice2_s1",
+        ),
         (C_CLASS_HARVEST_ROOT, "c_class_harvest_output_root_forbidden"),
         (B_CLASS_VALIDATION_PREFIX, "b_class_validation_output_root_forbidden"),
         (C_CLASS_VALIDATION_PREFIX, "c_class_validation_output_root_forbidden"),
@@ -12211,12 +12646,14 @@ def parse_erad_a_slice2_case_range(case_range: str) -> Tuple[str, str]:
         | ALLOWED_ERAD_LISTING_AWARE_S18_CASE_IDS
         | ALLOWED_ERAD_LISTING_AWARE_S19_CASE_IDS
         | ALLOWED_ERAD_LISTING_AWARE_S20_CASE_IDS
+        | ALLOWED_ERAD_LISTING_AWARE_S21_CASE_IDS
+        | ALLOWED_ERAD_LISTING_AWARE_S21_CASE_IDS
     )
     if start_id not in allowed:
         raise ValueError(f"{ERAD_SLICE2_CASE_RANGE_INVALID}:start={start_id}")
     if end_id not in allowed:
         raise ValueError(f"{ERAD_SLICE2_CASE_RANGE_INVALID}:end={end_id}")
-    # 不允许跨模式混用 … / 1351–1400 / 1401–1450 / 1451–1500 / 1501–1550
+    # 不允许跨模式混用 … / 1451–1500 / 1501–1550 / 1551–1600
     start_num = _erad_a_slice2_case_number(start_id)
     end_num = _erad_a_slice2_case_number(end_id)
 
@@ -12261,7 +12698,9 @@ def parse_erad_a_slice2_case_range(case_range: str) -> Tuple[str, str]:
             return 18
         if n <= 1550:
             return 19
-        return 20
+        if n <= 1600:
+            return 20
+        return 21
 
     if _band(start_num) != _band(end_num):
         raise ValueError(f"{ERAD_SLICE2_CASE_RANGE_INVALID}:cross_mode_range")
@@ -12983,6 +13422,9 @@ def main(argv: Optional[List[str]] = None) -> int:
         listing_aware_s20 = is_erad_listing_aware_s20_mode(
             args.universe_csv, args.output_root
         )
+        listing_aware_s21 = is_erad_listing_aware_s21_mode(
+            args.universe_csv, args.output_root
+        )
         if orgid_fb_retry and (
             listing_aware_s2
             or listing_aware_s3
@@ -13003,6 +13445,7 @@ def main(argv: Optional[List[str]] = None) -> int:
             or listing_aware_s18
             or listing_aware_s19
             or listing_aware_s20
+            or listing_aware_s21
         ):
             print(
                 "ERROR: erad_a_slice2_orgid_fallback_and_listing_aware_mutually_exclusive",
@@ -13031,12 +13474,13 @@ def main(argv: Optional[List[str]] = None) -> int:
                 listing_aware_s18,
                 listing_aware_s19,
                 listing_aware_s20,
+                listing_aware_s21,
             )
             if flag
         )
         if la_mode_count > 1:
             print(
-                "ERROR: erad_a_listing_aware_s2_s3_s4_s5_s6_s7_s8_s9_s10_s11_s12_s13_s14_s15_s16_s17_s18_s19_s20_mutually_exclusive",
+                "ERROR: erad_a_listing_aware_s2_s3_s4_s5_s6_s7_s8_s9_s10_s11_s12_s13_s14_s15_s16_s17_s18_s19_s20_s21_mutually_exclusive",
                 file=sys.stderr,
             )
             return 2
@@ -13081,6 +13525,8 @@ def main(argv: Optional[List[str]] = None) -> int:
                 args.output_root = DEFAULT_ERAD_LISTING_AWARE_S19_OUTPUT_ROOT
             elif listing_aware_s20:
                 args.output_root = DEFAULT_ERAD_LISTING_AWARE_S20_OUTPUT_ROOT
+            elif listing_aware_s21:
+                args.output_root = DEFAULT_ERAD_LISTING_AWARE_S21_OUTPUT_ROOT
             else:
                 args.output_root = DEFAULT_ERAD_NEXT_SCALE_SLICE2_S1_OUTPUT_ROOT
             orgid_fb_retry = is_erad_slice2_orgid_fallback_retry_mode(
@@ -13141,6 +13587,9 @@ def main(argv: Optional[List[str]] = None) -> int:
                 args.universe_csv, args.output_root
             )
             listing_aware_s20 = is_erad_listing_aware_s20_mode(
+                args.universe_csv, args.output_root
+            )
+            listing_aware_s21 = is_erad_listing_aware_s21_mode(
                 args.universe_csv, args.output_root
             )
         enforce_forbidden_options(args)
@@ -13346,6 +13795,17 @@ def main(argv: Optional[List[str]] = None) -> int:
             if not ok_root:
                 print(f"ERROR: {root_err}", file=sys.stderr)
                 return 2
+        elif listing_aware_s21:
+            ok_csv, csv_err = validate_erad_listing_aware_s21_universe_csv_path(
+                args.universe_csv
+            )
+            if not ok_csv:
+                print(f"ERROR: {csv_err}", file=sys.stderr)
+                return 2
+            ok_root, root_err = validate_erad_listing_aware_s21_output_root(args.output_root)
+            if not ok_root:
+                print(f"ERROR: {root_err}", file=sys.stderr)
+                return 2
         elif listing_aware_s15:
             ok_csv, csv_err = validate_erad_listing_aware_s15_universe_csv_path(
                 args.universe_csv
@@ -13416,6 +13876,7 @@ def main(argv: Optional[List[str]] = None) -> int:
             listing_aware_s18=listing_aware_s18,
             listing_aware_s19=listing_aware_s19,
             listing_aware_s20=listing_aware_s20,
+            listing_aware_s21=listing_aware_s21,
         )
         if args.limit is not None and not case_range:
             if orgid_fb_retry:
@@ -13454,6 +13915,8 @@ def main(argv: Optional[List[str]] = None) -> int:
                 expected_limit = REQUIRED_ERAD_LISTING_AWARE_S19_UNIVERSE_SIZE
             elif listing_aware_s20:
                 expected_limit = REQUIRED_ERAD_LISTING_AWARE_S20_UNIVERSE_SIZE
+            elif listing_aware_s21:
+                expected_limit = REQUIRED_ERAD_LISTING_AWARE_S21_UNIVERSE_SIZE
             elif listing_aware_s15:
                 expected_limit = REQUIRED_ERAD_LISTING_AWARE_S15_UNIVERSE_SIZE
             elif listing_aware_s14:
@@ -13565,6 +14028,11 @@ def main(argv: Optional[List[str]] = None) -> int:
             if not ok_size:
                 print(f"ERROR: {size_err}", file=sys.stderr)
                 return 2
+        elif listing_aware_s21 and not case_range:
+            ok_size, size_err = validate_erad_listing_aware_s21_universe_size(included)
+            if not ok_size:
+                print(f"ERROR: {size_err}", file=sys.stderr)
+                return 2
         elif listing_aware_s15 and not case_range:
             ok_size, size_err = validate_erad_listing_aware_s15_universe_size(included)
             if not ok_size:
@@ -13620,6 +14088,8 @@ def main(argv: Optional[List[str]] = None) -> int:
             mode_label = "erad_a_listing_aware_s19_live"
         elif listing_aware_s20:
             mode_label = "erad_a_listing_aware_s20_live"
+        elif listing_aware_s21:
+            mode_label = "erad_a_listing_aware_s21_live"
         elif listing_aware_s15:
             mode_label = "erad_a_listing_aware_s15_live"
         elif listing_aware_s14:
@@ -13653,6 +14123,7 @@ def main(argv: Optional[List[str]] = None) -> int:
                 or listing_aware_s18
                 or listing_aware_s19
                 or listing_aware_s20
+                or listing_aware_s21
             ) and total_planned > request_cap:
                 ok_cap, cap_err = (
                     False,
@@ -13683,6 +14154,7 @@ def main(argv: Optional[List[str]] = None) -> int:
                 or listing_aware_s18
                 or listing_aware_s19
                 or listing_aware_s20
+                or listing_aware_s21
             ):
                 gate = ERAD_NEXT_SCALE_SLICE2_RUNNER_GATE if not universe_issues else "FAIL"
             else:
@@ -13709,7 +14181,7 @@ def main(argv: Optional[List[str]] = None) -> int:
                 f"{' listing_aware_s11=yes' if listing_aware_s11 else ''}"
                 f"{' listing_aware_s12=yes' if listing_aware_s12 else ''}"
                 f"{' listing_aware_s13=yes' if listing_aware_s13 else ''}"
-                f"{' listing_aware_s14=yes' if listing_aware_s14 else ''}{' listing_aware_s15=yes' if listing_aware_s15 else ''}{' listing_aware_s16=yes' if listing_aware_s16 else ''}{' listing_aware_s17=yes' if listing_aware_s17 else ''}{' listing_aware_s18=yes' if listing_aware_s18 else ''}{' listing_aware_s19=yes' if listing_aware_s19 else ''}{' listing_aware_s20=yes' if listing_aware_s20 else ''}"
+                f"{' listing_aware_s14=yes' if listing_aware_s14 else ''}{' listing_aware_s15=yes' if listing_aware_s15 else ''}{' listing_aware_s16=yes' if listing_aware_s16 else ''}{' listing_aware_s17=yes' if listing_aware_s17 else ''}{' listing_aware_s18=yes' if listing_aware_s18 else ''}{' listing_aware_s19=yes' if listing_aware_s19 else ''}{' listing_aware_s20=yes' if listing_aware_s20 else ''}{' listing_aware_s21=yes' if listing_aware_s21 else ''}"
             )
             print(f"planned_request_count_total={total_planned}")
             print(

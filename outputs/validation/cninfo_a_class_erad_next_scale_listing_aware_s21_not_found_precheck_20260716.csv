@@ -1,0 +1,2 @@
+case_id,code,listing_date,expected_period,org_id_offline,listing_before_period,prior_class,notes
+AD2E1555,600616,1992-06-19,2024-12-31,gssh0600616,yes,matching_v2_empty_window_with_orgid_resolved,S21 main live records=12 last_err=ok cninfo=3; not SSLEof (contrast FM21 605*)

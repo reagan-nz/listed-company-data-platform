@@ -1,0 +1,2 @@
+case_id,company_code,main_status,retry_status,recovered,prior_class,notes
+AD2E1555,600616,not_found,not_found,no,matching_v2_empty_window_with_orgid_resolved,orgid=gssh0600616; main cninfo=3 records=12; retry cninfo=3 still not_found; NOT FM21-style SSLEof
