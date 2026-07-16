@@ -1,0 +1,34 @@
+{
+  "case_id": "DEP820",
+  "company_code": "000188",
+  "company_name": "empty_control_000188",
+  "component": "equity_pledge",
+  "query_mode": "tdate_daily_multi_day_union",
+  "anchor_tdate": "2026-06-30",
+  "shared_probe_key": "tdate_union_2026-06-30_2026-07-01_2026-07-04_2026-07-07_2026-07-08_2026-07-09_2026-07-10_2026-07-11_2026-07-14_2026-07-15",
+  "planned_requests": [
+    "tdate_daily_2026-06-30",
+    "tdate_daily_2026-07-01",
+    "tdate_daily_2026-07-04",
+    "tdate_daily_2026-07-07",
+    "tdate_daily_2026-07-08",
+    "tdate_daily_2026-07-09",
+    "tdate_daily_2026-07-10",
+    "tdate_daily_2026-07-11",
+    "tdate_daily_2026-07-14",
+    "tdate_daily_2026-07-15"
+  ],
+  "query_params": {
+    "tdate": "2026-06-30"
+  },
+  "endpoint": "https://www.cninfo.com.cn/data20/equityPledge/list",
+  "records_path": "data.records",
+  "shared_request": true,
+  "company_filter_offline": true,
+  "company_filter_field": "SECCODE",
+  "filter_company_code": "000188",
+  "forbidden_sole_found": "2026-07-03",
+  "expected_behavior": "empty_but_valid",
+  "compose_source_day": "union",
+  "cninfo_called": false
+}
