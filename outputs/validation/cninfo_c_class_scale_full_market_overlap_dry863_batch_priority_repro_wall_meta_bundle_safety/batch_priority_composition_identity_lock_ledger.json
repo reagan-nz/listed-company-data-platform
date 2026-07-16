@@ -1,0 +1,114 @@
+{
+  "generated_at": "2026-07-16T02:35:52Z",
+  "task_id": "C-FM-48",
+  "fingerprint_sha256": "9feb8279cf49c6c2cb34046e1ad4ab760b7ec99dcdb4508dca5f016adfe8850c",
+  "composition_sha256": "cbc73087b39f7073385cfe7da3b6f55f65127f84669f538c22edd35b1a0608b6",
+  "batch_priority_formula": "h863>p35>p3>p2>fu",
+  "sample_denials": [
+    {
+      "proposed": {
+        "batch_priority": [
+          "p35",
+          "h863",
+          "p3",
+          "p2",
+          "fu"
+        ]
+      },
+      "frozen": {
+        "batch_priority": [
+          "h863",
+          "p35",
+          "p3",
+          "p2",
+          "fu"
+        ]
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "batch_priority_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "batch_priority": [
+          "h863",
+          "p35",
+          "p3",
+          "p2"
+        ]
+      },
+      "frozen": {
+        "batch_priority": [
+          "h863",
+          "p35",
+          "p3",
+          "p2",
+          "fu"
+        ]
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "batch_priority_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "batch_priority": []
+      },
+      "frozen": {
+        "batch_priority": [
+          "h863",
+          "p35",
+          "p3",
+          "p2",
+          "fu"
+        ]
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "batch_priority_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "batch_priority": [
+          "h863",
+          "p35",
+          "p3",
+          "p2",
+          "fu"
+        ]
+      },
+      "frozen": {
+        "batch_priority": [
+          "h863",
+          "p35",
+          "p3",
+          "p2",
+          "fu"
+        ]
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "batch_priority_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "batch_priority_composition_identity_lock",
+    "batch_priority": [
+      "h863",
+      "p35",
+      "p3",
+      "p2",
+      "fu"
+    ],
+    "composition_sha256": "cbc73087b39f7073385cfe7da3b6f55f65127f84669f538c22edd35b1a0608b6",
+    "batch_priority_formula": "h863>p35>p3>p2>fu",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

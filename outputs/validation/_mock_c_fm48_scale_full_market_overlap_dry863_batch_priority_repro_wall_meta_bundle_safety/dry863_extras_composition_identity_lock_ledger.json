@@ -1,0 +1,80 @@
+{
+  "generated_at": "2026-07-16T02:35:52Z",
+  "task_id": "C-FM-48",
+  "fingerprint_sha256": "7e8322b397e89c64b0a37a82988c797aa568364fc919109fdd8896c39ec68b92",
+  "composition_sha256": "8cae12933694ed7f1d8a060b87920498b91b7a9b4dd072c2efaa11c0dbd0f2ab",
+  "dry863_extras_formula": "dry863=2",
+  "sample_denials": [
+    {
+      "proposed": {
+        "dry863_extra_n": 1,
+        "dry863_extras_sha256": "4d2821153fad3e9298cb7f98ddf9f051cbcb9022ffa65f5c1ebd15777c7ac15d"
+      },
+      "frozen": {
+        "dry863_extra_n": 2,
+        "dry863_extras_sha256": "4d2821153fad3e9298cb7f98ddf9f051cbcb9022ffa65f5c1ebd15777c7ac15d"
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "dry863_extras_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "dry863_extra_n": 2,
+        "dry863_extras_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "frozen": {
+        "dry863_extra_n": 2,
+        "dry863_extras_sha256": "4d2821153fad3e9298cb7f98ddf9f051cbcb9022ffa65f5c1ebd15777c7ac15d"
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "dry863_extras_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "dry863_extra_n": 0,
+        "dry863_extras_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "frozen": {
+        "dry863_extra_n": 2,
+        "dry863_extras_sha256": "4d2821153fad3e9298cb7f98ddf9f051cbcb9022ffa65f5c1ebd15777c7ac15d"
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "dry863_extras_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "dry863_extra_n": 2,
+        "dry863_extras_sha256": "4d2821153fad3e9298cb7f98ddf9f051cbcb9022ffa65f5c1ebd15777c7ac15d"
+      },
+      "frozen": {
+        "dry863_extra_n": 2,
+        "dry863_extras_sha256": "4d2821153fad3e9298cb7f98ddf9f051cbcb9022ffa65f5c1ebd15777c7ac15d"
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "dry863_extras_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "dry863_extras_composition_identity_lock",
+    "dry863_extra_n": 2,
+    "dry863_extras": [
+      "000037",
+      "000055"
+    ],
+    "dry863_extras_sha256": "4d2821153fad3e9298cb7f98ddf9f051cbcb9022ffa65f5c1ebd15777c7ac15d",
+    "composition_sha256": "8cae12933694ed7f1d8a060b87920498b91b7a9b4dd072c2efaa11c0dbd0f2ab",
+    "dry863_extras_formula": "dry863=2",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

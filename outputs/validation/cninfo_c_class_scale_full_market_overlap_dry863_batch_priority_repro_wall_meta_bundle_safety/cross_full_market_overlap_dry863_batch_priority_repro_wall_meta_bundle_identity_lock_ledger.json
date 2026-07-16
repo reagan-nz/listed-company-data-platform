@@ -1,0 +1,438 @@
+{
+  "generated_at": "2026-07-16T02:35:52Z",
+  "task_id": "C-FM-48",
+  "fingerprint_sha256": "7e22e11a01709171c57558b0f9922420d2a46db227ccb5a075e8fcb128fb4d02",
+  "bundle_sha256": "8d07e3c52b53bd63e239c01101daea64c9db4d65a6f22464c41c4250ea9fd643",
+  "compositions": {
+    "overlap_membership_composition": {
+      "formula": "overlap_delta=12",
+      "composition_sha256": "e52e7caa2d032f3d13eb54748b62ef83c972288f8c2639d2c0bfdb41795769b9",
+      "overlap_delta": 12,
+      "overlap_codes_sha256": "39ab9b76382938c4919b3c0b6bbde612fd21a4acfbeee279ea7a0fc8e9847cea"
+    },
+    "dry863_extras_composition": {
+      "formula": "dry863=2",
+      "composition_sha256": "8cae12933694ed7f1d8a060b87920498b91b7a9b4dd072c2efaa11c0dbd0f2ab",
+      "n": 2,
+      "dry863_extras_sha256": "4d2821153fad3e9298cb7f98ddf9f051cbcb9022ffa65f5c1ebd15777c7ac15d"
+    },
+    "batch_priority_composition": {
+      "formula": "h863>p35>p3>p2>fu",
+      "composition_sha256": "cbc73087b39f7073385cfe7da3b6f55f65127f84669f538c22edd35b1a0608b6",
+      "batch_priority": [
+        "h863",
+        "p35",
+        "p3",
+        "p2",
+        "fu"
+      ]
+    },
+    "cross_full_market_scale_repro_wall_meta_bundle": {
+      "bundle_sha256": "aa49bbac36a7e688f40ae53a41f07e924fc5cdb9d5004be97ff81bff7c4df9fb"
+    },
+    "stable_metrics_wall": {
+      "harvest_unique_union": 2249,
+      "surface_unique": 2251,
+      "harvest_additive": 2261,
+      "union_status": "2134/106/9",
+      "overlap_delta": 12,
+      "residual_safety_coverage": 117,
+      "resume_taxonomy": "28/1/0",
+      "tier_coverage": "7/3314",
+      "combined_dryrun_coverage": 1053,
+      "risk_band": "75/14/12/5",
+      "coverage": 117,
+      "dry863_extra_n": 2,
+      "batch_priority": [
+        "h863",
+        "p35",
+        "p3",
+        "p2",
+        "fu"
+      ]
+    }
+  },
+  "sample_denials": [
+    {
+      "proposed_compositions": {
+        "overlap_membership_composition": {
+          "formula": "overlap_delta=0",
+          "composition_sha256": "e52e7caa2d032f3d13eb54748b62ef83c972288f8c2639d2c0bfdb41795769b9",
+          "overlap_delta": 0,
+          "overlap_codes_sha256": "39ab9b76382938c4919b3c0b6bbde612fd21a4acfbeee279ea7a0fc8e9847cea"
+        },
+        "dry863_extras_composition": {
+          "formula": "dry863=2",
+          "composition_sha256": "8cae12933694ed7f1d8a060b87920498b91b7a9b4dd072c2efaa11c0dbd0f2ab",
+          "n": 2,
+          "dry863_extras_sha256": "4d2821153fad3e9298cb7f98ddf9f051cbcb9022ffa65f5c1ebd15777c7ac15d"
+        },
+        "batch_priority_composition": {
+          "formula": "h863>p35>p3>p2>fu",
+          "composition_sha256": "cbc73087b39f7073385cfe7da3b6f55f65127f84669f538c22edd35b1a0608b6",
+          "batch_priority": [
+            "h863",
+            "p35",
+            "p3",
+            "p2",
+            "fu"
+          ]
+        },
+        "cross_full_market_scale_repro_wall_meta_bundle": {
+          "bundle_sha256": "aa49bbac36a7e688f40ae53a41f07e924fc5cdb9d5004be97ff81bff7c4df9fb"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117,
+          "dry863_extra_n": 2,
+          "batch_priority": [
+            "h863",
+            "p35",
+            "p3",
+            "p2",
+            "fu"
+          ]
+        }
+      },
+      "frozen_compositions": {
+        "overlap_membership_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "e52e7caa2d032f3d13eb54748b62ef83c972288f8c2639d2c0bfdb41795769b9",
+          "overlap_delta": 12,
+          "overlap_codes_sha256": "39ab9b76382938c4919b3c0b6bbde612fd21a4acfbeee279ea7a0fc8e9847cea"
+        },
+        "dry863_extras_composition": {
+          "formula": "dry863=2",
+          "composition_sha256": "8cae12933694ed7f1d8a060b87920498b91b7a9b4dd072c2efaa11c0dbd0f2ab",
+          "n": 2,
+          "dry863_extras_sha256": "4d2821153fad3e9298cb7f98ddf9f051cbcb9022ffa65f5c1ebd15777c7ac15d"
+        },
+        "batch_priority_composition": {
+          "formula": "h863>p35>p3>p2>fu",
+          "composition_sha256": "cbc73087b39f7073385cfe7da3b6f55f65127f84669f538c22edd35b1a0608b6",
+          "batch_priority": [
+            "h863",
+            "p35",
+            "p3",
+            "p2",
+            "fu"
+          ]
+        },
+        "cross_full_market_scale_repro_wall_meta_bundle": {
+          "bundle_sha256": "aa49bbac36a7e688f40ae53a41f07e924fc5cdb9d5004be97ff81bff7c4df9fb"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117,
+          "dry863_extra_n": 2,
+          "batch_priority": [
+            "h863",
+            "p35",
+            "p3",
+            "p2",
+            "fu"
+          ]
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_overlap_dry863_batch_priority_repro_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {},
+      "frozen_compositions": {
+        "overlap_membership_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "e52e7caa2d032f3d13eb54748b62ef83c972288f8c2639d2c0bfdb41795769b9",
+          "overlap_delta": 12,
+          "overlap_codes_sha256": "39ab9b76382938c4919b3c0b6bbde612fd21a4acfbeee279ea7a0fc8e9847cea"
+        },
+        "dry863_extras_composition": {
+          "formula": "dry863=2",
+          "composition_sha256": "8cae12933694ed7f1d8a060b87920498b91b7a9b4dd072c2efaa11c0dbd0f2ab",
+          "n": 2,
+          "dry863_extras_sha256": "4d2821153fad3e9298cb7f98ddf9f051cbcb9022ffa65f5c1ebd15777c7ac15d"
+        },
+        "batch_priority_composition": {
+          "formula": "h863>p35>p3>p2>fu",
+          "composition_sha256": "cbc73087b39f7073385cfe7da3b6f55f65127f84669f538c22edd35b1a0608b6",
+          "batch_priority": [
+            "h863",
+            "p35",
+            "p3",
+            "p2",
+            "fu"
+          ]
+        },
+        "cross_full_market_scale_repro_wall_meta_bundle": {
+          "bundle_sha256": "aa49bbac36a7e688f40ae53a41f07e924fc5cdb9d5004be97ff81bff7c4df9fb"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117,
+          "dry863_extra_n": 2,
+          "batch_priority": [
+            "h863",
+            "p35",
+            "p3",
+            "p2",
+            "fu"
+          ]
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_overlap_dry863_batch_priority_repro_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "x": {
+          "a": 1
+        }
+      },
+      "frozen_compositions": {
+        "overlap_membership_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "e52e7caa2d032f3d13eb54748b62ef83c972288f8c2639d2c0bfdb41795769b9",
+          "overlap_delta": 12,
+          "overlap_codes_sha256": "39ab9b76382938c4919b3c0b6bbde612fd21a4acfbeee279ea7a0fc8e9847cea"
+        },
+        "dry863_extras_composition": {
+          "formula": "dry863=2",
+          "composition_sha256": "8cae12933694ed7f1d8a060b87920498b91b7a9b4dd072c2efaa11c0dbd0f2ab",
+          "n": 2,
+          "dry863_extras_sha256": "4d2821153fad3e9298cb7f98ddf9f051cbcb9022ffa65f5c1ebd15777c7ac15d"
+        },
+        "batch_priority_composition": {
+          "formula": "h863>p35>p3>p2>fu",
+          "composition_sha256": "cbc73087b39f7073385cfe7da3b6f55f65127f84669f538c22edd35b1a0608b6",
+          "batch_priority": [
+            "h863",
+            "p35",
+            "p3",
+            "p2",
+            "fu"
+          ]
+        },
+        "cross_full_market_scale_repro_wall_meta_bundle": {
+          "bundle_sha256": "aa49bbac36a7e688f40ae53a41f07e924fc5cdb9d5004be97ff81bff7c4df9fb"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117,
+          "dry863_extra_n": 2,
+          "batch_priority": [
+            "h863",
+            "p35",
+            "p3",
+            "p2",
+            "fu"
+          ]
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_overlap_dry863_batch_priority_repro_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "overlap_membership_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "e52e7caa2d032f3d13eb54748b62ef83c972288f8c2639d2c0bfdb41795769b9",
+          "overlap_delta": 12,
+          "overlap_codes_sha256": "39ab9b76382938c4919b3c0b6bbde612fd21a4acfbeee279ea7a0fc8e9847cea"
+        },
+        "dry863_extras_composition": {
+          "formula": "dry863=2",
+          "composition_sha256": "8cae12933694ed7f1d8a060b87920498b91b7a9b4dd072c2efaa11c0dbd0f2ab",
+          "n": 2,
+          "dry863_extras_sha256": "4d2821153fad3e9298cb7f98ddf9f051cbcb9022ffa65f5c1ebd15777c7ac15d"
+        },
+        "batch_priority_composition": {
+          "formula": "h863>p35>p3>p2>fu",
+          "composition_sha256": "cbc73087b39f7073385cfe7da3b6f55f65127f84669f538c22edd35b1a0608b6",
+          "batch_priority": [
+            "h863",
+            "p35",
+            "p3",
+            "p2",
+            "fu"
+          ]
+        },
+        "cross_full_market_scale_repro_wall_meta_bundle": {
+          "bundle_sha256": "aa49bbac36a7e688f40ae53a41f07e924fc5cdb9d5004be97ff81bff7c4df9fb"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117,
+          "dry863_extra_n": 2,
+          "batch_priority": [
+            "h863",
+            "p35",
+            "p3",
+            "p2",
+            "fu"
+          ]
+        }
+      },
+      "frozen_compositions": {
+        "overlap_membership_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "e52e7caa2d032f3d13eb54748b62ef83c972288f8c2639d2c0bfdb41795769b9",
+          "overlap_delta": 12,
+          "overlap_codes_sha256": "39ab9b76382938c4919b3c0b6bbde612fd21a4acfbeee279ea7a0fc8e9847cea"
+        },
+        "dry863_extras_composition": {
+          "formula": "dry863=2",
+          "composition_sha256": "8cae12933694ed7f1d8a060b87920498b91b7a9b4dd072c2efaa11c0dbd0f2ab",
+          "n": 2,
+          "dry863_extras_sha256": "4d2821153fad3e9298cb7f98ddf9f051cbcb9022ffa65f5c1ebd15777c7ac15d"
+        },
+        "batch_priority_composition": {
+          "formula": "h863>p35>p3>p2>fu",
+          "composition_sha256": "cbc73087b39f7073385cfe7da3b6f55f65127f84669f538c22edd35b1a0608b6",
+          "batch_priority": [
+            "h863",
+            "p35",
+            "p3",
+            "p2",
+            "fu"
+          ]
+        },
+        "cross_full_market_scale_repro_wall_meta_bundle": {
+          "bundle_sha256": "aa49bbac36a7e688f40ae53a41f07e924fc5cdb9d5004be97ff81bff7c4df9fb"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117,
+          "dry863_extra_n": 2,
+          "batch_priority": [
+            "h863",
+            "p35",
+            "p3",
+            "p2",
+            "fu"
+          ]
+        }
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_overlap_dry863_batch_priority_repro_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "cross_full_market_overlap_dry863_batch_priority_repro_wall_meta_bundle_identity_lock",
+    "compositions": {
+      "overlap_membership_composition": {
+        "formula": "overlap_delta=12",
+        "composition_sha256": "e52e7caa2d032f3d13eb54748b62ef83c972288f8c2639d2c0bfdb41795769b9",
+        "overlap_delta": 12,
+        "overlap_codes_sha256": "39ab9b76382938c4919b3c0b6bbde612fd21a4acfbeee279ea7a0fc8e9847cea"
+      },
+      "dry863_extras_composition": {
+        "formula": "dry863=2",
+        "composition_sha256": "8cae12933694ed7f1d8a060b87920498b91b7a9b4dd072c2efaa11c0dbd0f2ab",
+        "n": 2,
+        "dry863_extras_sha256": "4d2821153fad3e9298cb7f98ddf9f051cbcb9022ffa65f5c1ebd15777c7ac15d"
+      },
+      "batch_priority_composition": {
+        "formula": "h863>p35>p3>p2>fu",
+        "composition_sha256": "cbc73087b39f7073385cfe7da3b6f55f65127f84669f538c22edd35b1a0608b6",
+        "batch_priority": [
+          "h863",
+          "p35",
+          "p3",
+          "p2",
+          "fu"
+        ]
+      },
+      "cross_full_market_scale_repro_wall_meta_bundle": {
+        "bundle_sha256": "aa49bbac36a7e688f40ae53a41f07e924fc5cdb9d5004be97ff81bff7c4df9fb"
+      },
+      "stable_metrics_wall": {
+        "harvest_unique_union": 2249,
+        "surface_unique": 2251,
+        "harvest_additive": 2261,
+        "union_status": "2134/106/9",
+        "overlap_delta": 12,
+        "residual_safety_coverage": 117,
+        "resume_taxonomy": "28/1/0",
+        "tier_coverage": "7/3314",
+        "combined_dryrun_coverage": 1053,
+        "risk_band": "75/14/12/5",
+        "coverage": 117,
+        "dry863_extra_n": 2,
+        "batch_priority": [
+          "h863",
+          "p35",
+          "p3",
+          "p2",
+          "fu"
+        ]
+      }
+    },
+    "bundle_sha256": "8d07e3c52b53bd63e239c01101daea64c9db4d65a6f22464c41c4250ea9fd643",
+    "deny_composition_mutate": true,
+    "deny_bundle_inflate": true,
+    "deny_bundle_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

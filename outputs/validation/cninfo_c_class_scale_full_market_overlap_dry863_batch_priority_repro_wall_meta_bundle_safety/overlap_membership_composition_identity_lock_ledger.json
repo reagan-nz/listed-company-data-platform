@@ -1,0 +1,77 @@
+{
+  "generated_at": "2026-07-16T02:35:52Z",
+  "task_id": "C-FM-48",
+  "fingerprint_sha256": "012b8200b7e005793b986457bf6ab13dcc23ca99b923df83e3131580fabbe31c",
+  "composition_sha256": "e52e7caa2d032f3d13eb54748b62ef83c972288f8c2639d2c0bfdb41795769b9",
+  "overlap_membership_formula": "overlap_delta=12",
+  "sample_denials": [
+    {
+      "proposed": {
+        "overlap_delta": 11,
+        "overlap_codes_sha256": "39ab9b76382938c4919b3c0b6bbde612fd21a4acfbeee279ea7a0fc8e9847cea"
+      },
+      "frozen": {
+        "overlap_delta": 12,
+        "overlap_codes_sha256": "39ab9b76382938c4919b3c0b6bbde612fd21a4acfbeee279ea7a0fc8e9847cea"
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "overlap_membership_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "overlap_delta": 12,
+        "overlap_codes_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "frozen": {
+        "overlap_delta": 12,
+        "overlap_codes_sha256": "39ab9b76382938c4919b3c0b6bbde612fd21a4acfbeee279ea7a0fc8e9847cea"
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "overlap_membership_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "overlap_delta": 0,
+        "overlap_codes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "frozen": {
+        "overlap_delta": 12,
+        "overlap_codes_sha256": "39ab9b76382938c4919b3c0b6bbde612fd21a4acfbeee279ea7a0fc8e9847cea"
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "overlap_membership_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "overlap_delta": 12,
+        "overlap_codes_sha256": "39ab9b76382938c4919b3c0b6bbde612fd21a4acfbeee279ea7a0fc8e9847cea"
+      },
+      "frozen": {
+        "overlap_delta": 12,
+        "overlap_codes_sha256": "39ab9b76382938c4919b3c0b6bbde612fd21a4acfbeee279ea7a0fc8e9847cea"
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "overlap_membership_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "overlap_membership_composition_identity_lock",
+    "overlap_delta": 12,
+    "overlap_codes_sha256": "39ab9b76382938c4919b3c0b6bbde612fd21a4acfbeee279ea7a0fc8e9847cea",
+    "overlap_delta_composition_sha256": "f5e743a9daab48aed4ae549e764969f9874a5f53ab0a04dac57d72aac122635c",
+    "composition_sha256": "e52e7caa2d032f3d13eb54748b62ef83c972288f8c2639d2c0bfdb41795769b9",
+    "overlap_membership_formula": "overlap_delta=12",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
