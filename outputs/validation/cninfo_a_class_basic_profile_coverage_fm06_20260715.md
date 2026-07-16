@@ -7,10 +7,10 @@ _track A · CNINFO = 0 · 不 mutate C harvest / S1–S6 live_
 | 项 | 值 |
 |----|-----|
 | canon profiles | **863** |
-| latent-only added | **863** |
-| union (overlay) | **1726** |
-| overlay symlinks | **1726** |
-| union with listing_date | **1720** |
+| latent-only added | **1350** |
+| union (overlay) | **2213** |
+| overlay symlinks | **2213** |
+| union with listing_date | **2207** |
 | CNINFO calls | **0** |
 | overlay_dir | `/Users/zhao/Desktop/97/实操/数据收集测试/listed_company_data_collector/outputs/validation/cninfo_a_class_basic_profile_coverage_overlay_fm06` |
 | matrix_csv | `/Users/zhao/Desktop/97/实操/数据收集测试/listed_company_data_collector/outputs/validation/cninfo_a_class_basic_profile_coverage_matrix_fm06_20260715.csv` |
@@ -18,34 +18,34 @@ _track A · CNINFO = 0 · 不 mutate C harvest / S1–S6 live_
 ## Prefix (union top 12)
 
 ```text
-300	308
-600	280
-002	260
-688	241
-603	176
-000	159
-301	155
-601	66
-605	35
-001	32
-003	13
+300	395
+002	351
+600	345
+688	296
+603	228
+000	200
+301	197
+601	88
+605	51
+001	44
+003	17
 302	1
 ```
 
 ## Prefix (latent-only top 12)
 
 ```text
-300	165
-600	165
-002	131
-688	116
-000	94
-603	68
-301	67
-601	25
-605	18
-001	7
-003	6
+300	252
+600	230
+002	222
+688	171
+000	135
+603	120
+301	109
+601	47
+605	34
+001	19
+003	10
 302	1
 ```
 
