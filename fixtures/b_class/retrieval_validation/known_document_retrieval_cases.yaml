@@ -819,6 +819,75 @@ cases:
       b_class_phase2_expansion_report.csv 行 B2E013（quality=pass）。
       不写 verified；不下载 PDF。
 
+  - case_id: bond_trustee_report_known_005
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "600029"
+    company_name: "南方航空"
+    title_pattern: "公开发行A股可转换公司债券受托管理事务报告（2024年度）"
+    expected_document_type: announcement
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-02（R19）自 harvest 证据晋升（A股可转债受托管理事务报告 known_005；
+      对称 known_001 可转债 / known_002 普通公司债整包 / known_003 分期 /
+      known_004 可续期）：南方航空 600029，中国南方航空股份有限公司公开发行A股
+      可转换公司债券受托管理事务报告（2024年度）（announcement_id=1224014795，
+      披露日 2025-06-27）。路由已由 B-FM-29 硬化（「受托管理事务报告」→
+      announcement）；本包不改路由。title_pattern 取「公开发行A股可转换公司债券
+      受托管理事务报告（2024年度）」：覆盖 A 股可转债受托子型，且不命中
+      known_001「可转换公司债券受托…」宽串之外的 known_002–004 锚定串。与
+      跟踪评级 / 保荐书 / 法律意见书可区分。来源
+      outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
+      b_class_erad_next_scale_slice1_report.csv 行 BD2E364（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: bond_trustee_report_known_006
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000630"
+    company_name: "铜陵有色"
+    title_pattern: "向特定对象发行可转换公司债券受托管理事务报告（2024年度）"
+    expected_document_type: announcement
+    date_start: "2025-06-25"
+    date_end: "2025-06-28"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-02（R19）自 harvest 证据晋升（向特定对象发行可转债受托 known_006；
+      对称 known_001 不特定对象可转债 / known_005 A股可转债）：铜陵有色 000630，
+      铜陵有色金属集团股份有限公司向特定对象发行可转换公司债券受托管理事务报告
+      （2024年度）（announcement_id=1223997318，披露日 2025-06-26）。路由已由
+      B-FM-29 硬化；本包不改路由。title_pattern 取「向特定对象发行可转换公司债券
+      受托管理事务报告（2024年度）」：与「向不特定对象…」及 known_001–005 互斥。
+      来源 outputs/validation/cninfo_b_class_erad_scale_200/reports/
+      b_class_erad_scale_200_report.csv 行 BD2E076（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: bond_trustee_report_known_007
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000723"
+    company_name: "美锦能源"
+    title_pattern: "公开发行可转换公司债券2024年度受托管理事务报告"
+    expected_document_type: announcement
+    date_start: "2025-06-28"
+    date_end: "2025-07-01"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-02（R19）自 harvest 证据晋升（可转债受托「2024年度」前置语序 known_007；
+      对称 known_001「…受托管理事务报告（2024年度）」括号年度后缀）：美锦能源
+      000723，山西美锦能源股份有限公司公开发行可转换公司债券2024年度受托管理事务
+      报告（announcement_id=1224016384，披露日 2025-06-29）。路由已由 B-FM-29
+      硬化；本包不改路由。title_pattern 取「公开发行可转换公司债券2024年度受托
+      管理事务报告」：年度在「受托」之前，不命中 known_001/005/006 括号年度后缀。
+      来源 outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
+      b_class_erad_next_scale_slice1_report.csv 行 BD2E208（quality=pass）。
+      不写 verified；不下载 PDF。
+
   - case_id: tracking_rating_report_known_001
     case_status: ready
     source_id: cninfo_general_announcement_pdf
@@ -931,6 +1000,114 @@ cases:
       锚定，且与 known_001–004 pattern 互斥。与受托管理 / 保荐书 / 法律意见书
       可区分。来源 outputs/validation/cninfo_b_class_erad_fuller_next_slice2/
       reports/b_class_erad_fuller_next_slice2_report.csv 行 BD2E636（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: tracking_rating_report_known_006
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "002949"
+    company_name: "华阳国际"
+    title_pattern: "深圳市华阳国际工程设计股份有限公司公开发行可转换公司债券2025年跟踪评级报告"
+    expected_document_type: announcement
+    date_start: "2025-06-19"
+    date_end: "2025-06-22"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-02（R19）自 harvest 证据晋升（可转债2025年跟踪评级无「定期」词 known_006；
+      对称 known_001「…可转换公司债券定期跟踪评级报告」）：华阳国际 002949，
+      2020年深圳市华阳国际工程设计股份有限公司公开发行可转换公司债券2025年跟踪
+      评级报告（announcement_id=1223952243，披露日 2025-06-20）。路由已由
+      B-FM-29 硬化；本包不改路由。title_pattern 取公司全称锚定「深圳市华阳国际
+      工程设计股份有限公司公开发行可转换公司债券2025年跟踪评级报告」，避免与
+      known_001–005 / known_008 立讯同构误抬。来源
+      outputs/validation/cninfo_b_class_erad_fuller_next_slice2/reports/
+      b_class_erad_fuller_next_slice2_report.csv 行 BD2E558（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: tracking_rating_report_known_007
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "300900"
+    company_name: "广联航空"
+    title_pattern: "广联航空工业股份有限公司相关债券2025年跟踪评级报告"
+    expected_document_type: announcement
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-02（R19）自 harvest 证据晋升（相关债券跟踪评级第二公司案 known_007；
+      对称 known_004 南京聚隆「相关债券2025年跟踪评级报告」短串）：广联航空
+      300900，广联航空工业股份有限公司相关债券2025年跟踪评级报告
+      （announcement_id=1224016467，披露日 2025-06-27）。路由已由 B-FM-29 硬化；
+      本包不改路由。title_pattern 取公司全称锚定，避免与 known_004 短串在文档
+      层混淆。来源 outputs/validation/cninfo_b_class_erad_fuller_next_slice2/
+      reports/b_class_erad_fuller_next_slice2_report.csv 行 BD2E644（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: tracking_rating_report_known_008
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "002475"
+    company_name: "立讯精密"
+    title_pattern: "立讯精密工业股份有限公司公开发行可转换公司债券2025年跟踪评级报告"
+    expected_document_type: announcement
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-02（R19）自 harvest 证据晋升（可转债2025年跟踪评级公司锚定 known_008；
+      对称 known_006 华阳国际同构子型）：立讯精密 002475，立讯精密工业股份有限
+      公司公开发行可转换公司债券2025年跟踪评级报告（announcement_id=1224016122，
+      披露日 2025-06-27）。路由已由 B-FM-29 硬化；本包不改路由。title_pattern
+      取公司全称锚定，与 known_006 互斥。来源
+      outputs/validation/cninfo_b_class_erad_scale_200/reports/
+      b_class_erad_scale_200_report.csv 行 BD2E156（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: tracking_rating_report_known_009
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "688599"
+    company_name: "天合光能"
+    title_pattern: "向不特定对象发行可转换公司债券2025年跟踪评级报告"
+    expected_document_type: announcement
+    date_start: "2025-06-22"
+    date_end: "2025-06-25"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-02（R19）自 harvest 证据晋升（向不特定对象发行可转债跟踪评级 known_009；
+      对称 known_001 定期跟踪 / known_006–008 公开发行可转债2025年跟踪）：天合光能
+      688599，天合光能股份有限公司向不特定对象发行可转换公司债券2025年跟踪评级
+      报告（announcement_id=1223956820，披露日 2025-06-23/24）。路由已由
+      B-FM-29 硬化；本包不改路由。title_pattern 取「向不特定对象发行可转换公司
+      债券2025年跟踪评级报告」。来源
+      outputs/validation/cninfo_b_class_phase2_expansion/reports/
+      b_class_phase2_expansion_report.csv 行 B2E012（quality=pass）。
+      不写 verified；不下载 PDF。
+
+  - case_id: tracking_rating_report_known_010
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "300424"
+    company_name: "航新科技"
+    title_pattern: "广州航新航空科技股份有限公司公开发行可转换公司债券定期跟踪评级报告"
+    expected_document_type: announcement
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-02（R19）自 harvest 证据晋升（可转债定期跟踪评级第二公司案 known_010；
+      对称 known_001 华海药业「跟踪评级报告」宽串）：航新科技 300424，广州航新
+      航空科技股份有限公司公开发行可转换公司债券定期跟踪评级报告
+      （announcement_id=1224012941，披露日 2025-06-27）。路由已由 B-FM-29 硬化；
+      本包不改路由。title_pattern 取公司全称锚定，避免与 known_001 宽串误抬。
+      来源 outputs/validation/cninfo_b_class_erad_next_scale_slice1/reports/
+      b_class_erad_next_scale_slice1_report.csv 行 BD2E360（quality=pass）。
       不写 verified；不下载 PDF。
 
   # --- continuous_supervision / 持续督导 × 5（B-FM-30 known_001；B-FM-43 known_002；B-FM-47 known_003；B-FM-53 known_004；B-FM-54 known_005；document_type=announcement；勿进 annual_report / other）---
