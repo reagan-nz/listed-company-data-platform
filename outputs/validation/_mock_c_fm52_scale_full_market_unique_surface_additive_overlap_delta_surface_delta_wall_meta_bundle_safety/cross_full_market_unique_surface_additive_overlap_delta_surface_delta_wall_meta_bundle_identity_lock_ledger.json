@@ -1,0 +1,511 @@
+{
+  "generated_at": "2026-07-16T03:42:10Z",
+  "task_id": "C-FM-52",
+  "fingerprint_sha256": "81879db467924098c4527a1c6b8717259a3631aa625e71d01325a8128fe47205",
+  "bundle_sha256": "bd91376cc24d0e76389aad62d547e5eb05fd1698bb32cbe72007f3b8835fab65",
+  "compositions": {
+    "unique_surface_additive_composition": {
+      "formula": "2249/2251/2261",
+      "composition_sha256": "8b9336b0fbc684b285ad90558870c65313c38cbf1ae3154317efd806166bbb0b",
+      "harvest_unique_union": 2249,
+      "surface_unique": 2251,
+      "harvest_additive": 2261,
+      "unique_surface_additive_formula": "2249/2251/2261",
+      "surface_formula": "2249+2=2251",
+      "additive_formula": "2249+12=2261",
+      "union_formula": "2134+106+9=2249"
+    },
+    "overlap_delta_composition": {
+      "formula": "overlap_delta=12",
+      "composition_sha256": "1224d2cd3123f9e53725bfa0cedda87e9202d130cbf4066107677e0079534a8e",
+      "overlap_delta": 12,
+      "harvest_unique_union": 2249,
+      "harvest_additive": 2261,
+      "overlap_delta_formula": "overlap_delta=12",
+      "additive_formula": "2249+12=2261"
+    },
+    "surface_delta_composition": {
+      "formula": "surface_delta=2",
+      "composition_sha256": "74673c57d8a566efaea8d0f40567d4d4d89965c884c54fd1bea971840fde8f8a",
+      "surface_harvest_delta_n": 2,
+      "harvest_unique_union": 2249,
+      "surface_unique": 2251,
+      "surface_delta_formula": "surface_delta=2",
+      "surface_formula": "2249+2=2251"
+    },
+    "cross_full_market_residual_formula_resume_formula_coverage_wall_meta_bundle": {
+      "bundle_sha256": "1b7ca472bee9b9d21520ceb5a523ea08f66e557402ec52abb4e5f581b772b143"
+    },
+    "stable_metrics_wall": {
+      "harvest_unique_union": 2249,
+      "surface_unique": 2251,
+      "harvest_additive": 2261,
+      "union_status": "2134/106/9",
+      "overlap_delta": 12,
+      "surface_harvest_delta_n": 2,
+      "residual_safety_coverage": 117,
+      "resume_taxonomy": "28/1/0",
+      "tier_coverage": "7/3314",
+      "combined_dryrun_coverage": 1053,
+      "risk_band": "75/14/12/5",
+      "coverage": 117
+    }
+  },
+  "sample_denials": [
+    {
+      "proposed_compositions": {
+        "unique_surface_additive_composition": {
+          "formula": "2249/2251/2261",
+          "composition_sha256": "8b9336b0fbc684b285ad90558870c65313c38cbf1ae3154317efd806166bbb0b",
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "unique_surface_additive_formula": "2249/2251/2261",
+          "surface_formula": "2249+2=2251",
+          "additive_formula": "2249+12=2261",
+          "union_formula": "2134+106+9=2249"
+        },
+        "overlap_delta_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "1224d2cd3123f9e53725bfa0cedda87e9202d130cbf4066107677e0079534a8e",
+          "overlap_delta": 12,
+          "harvest_unique_union": 2249,
+          "harvest_additive": 2261,
+          "overlap_delta_formula": "overlap_delta=12",
+          "additive_formula": "2249+12=2261"
+        },
+        "surface_delta_composition": {
+          "formula": "surface_delta=2",
+          "composition_sha256": "74673c57d8a566efaea8d0f40567d4d4d89965c884c54fd1bea971840fde8f8a",
+          "surface_harvest_delta_n": 3,
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "surface_delta_formula": "surface_delta=2",
+          "surface_formula": "2249+2=2251"
+        },
+        "cross_full_market_residual_formula_resume_formula_coverage_wall_meta_bundle": {
+          "bundle_sha256": "1b7ca472bee9b9d21520ceb5a523ea08f66e557402ec52abb4e5f581b772b143"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "surface_harvest_delta_n": 2,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "frozen_compositions": {
+        "unique_surface_additive_composition": {
+          "formula": "2249/2251/2261",
+          "composition_sha256": "8b9336b0fbc684b285ad90558870c65313c38cbf1ae3154317efd806166bbb0b",
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "unique_surface_additive_formula": "2249/2251/2261",
+          "surface_formula": "2249+2=2251",
+          "additive_formula": "2249+12=2261",
+          "union_formula": "2134+106+9=2249"
+        },
+        "overlap_delta_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "1224d2cd3123f9e53725bfa0cedda87e9202d130cbf4066107677e0079534a8e",
+          "overlap_delta": 12,
+          "harvest_unique_union": 2249,
+          "harvest_additive": 2261,
+          "overlap_delta_formula": "overlap_delta=12",
+          "additive_formula": "2249+12=2261"
+        },
+        "surface_delta_composition": {
+          "formula": "surface_delta=2",
+          "composition_sha256": "74673c57d8a566efaea8d0f40567d4d4d89965c884c54fd1bea971840fde8f8a",
+          "surface_harvest_delta_n": 2,
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "surface_delta_formula": "surface_delta=2",
+          "surface_formula": "2249+2=2251"
+        },
+        "cross_full_market_residual_formula_resume_formula_coverage_wall_meta_bundle": {
+          "bundle_sha256": "1b7ca472bee9b9d21520ceb5a523ea08f66e557402ec52abb4e5f581b772b143"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "surface_harvest_delta_n": 2,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_unique_surface_additive_overlap_delta_surface_delta_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "unique_surface_additive_composition": {
+          "formula": "2249/2251/2261",
+          "composition_sha256": "8b9336b0fbc684b285ad90558870c65313c38cbf1ae3154317efd806166bbb0b",
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "unique_surface_additive_formula": "2249/2251/2261",
+          "surface_formula": "2249+2=2251",
+          "additive_formula": "2249+12=2261",
+          "union_formula": "2134+106+9=2249"
+        },
+        "overlap_delta_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "1224d2cd3123f9e53725bfa0cedda87e9202d130cbf4066107677e0079534a8e",
+          "overlap_delta": 12,
+          "harvest_unique_union": 2249,
+          "harvest_additive": 2261,
+          "overlap_delta_formula": "overlap_delta=12",
+          "additive_formula": "2249+12=2261"
+        },
+        "cross_full_market_residual_formula_resume_formula_coverage_wall_meta_bundle": {
+          "bundle_sha256": "1b7ca472bee9b9d21520ceb5a523ea08f66e557402ec52abb4e5f581b772b143"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "surface_harvest_delta_n": 2,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "frozen_compositions": {
+        "unique_surface_additive_composition": {
+          "formula": "2249/2251/2261",
+          "composition_sha256": "8b9336b0fbc684b285ad90558870c65313c38cbf1ae3154317efd806166bbb0b",
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "unique_surface_additive_formula": "2249/2251/2261",
+          "surface_formula": "2249+2=2251",
+          "additive_formula": "2249+12=2261",
+          "union_formula": "2134+106+9=2249"
+        },
+        "overlap_delta_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "1224d2cd3123f9e53725bfa0cedda87e9202d130cbf4066107677e0079534a8e",
+          "overlap_delta": 12,
+          "harvest_unique_union": 2249,
+          "harvest_additive": 2261,
+          "overlap_delta_formula": "overlap_delta=12",
+          "additive_formula": "2249+12=2261"
+        },
+        "surface_delta_composition": {
+          "formula": "surface_delta=2",
+          "composition_sha256": "74673c57d8a566efaea8d0f40567d4d4d89965c884c54fd1bea971840fde8f8a",
+          "surface_harvest_delta_n": 2,
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "surface_delta_formula": "surface_delta=2",
+          "surface_formula": "2249+2=2251"
+        },
+        "cross_full_market_residual_formula_resume_formula_coverage_wall_meta_bundle": {
+          "bundle_sha256": "1b7ca472bee9b9d21520ceb5a523ea08f66e557402ec52abb4e5f581b772b143"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "surface_harvest_delta_n": 2,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_unique_surface_additive_overlap_delta_surface_delta_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "unique_surface_additive_composition": {
+          "formula": "2249/2251/2261",
+          "composition_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "unique_surface_additive_formula": "2249/2251/2261",
+          "surface_formula": "2249+2=2251",
+          "additive_formula": "2249+12=2261",
+          "union_formula": "2134+106+9=2249"
+        },
+        "overlap_delta_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "1224d2cd3123f9e53725bfa0cedda87e9202d130cbf4066107677e0079534a8e",
+          "overlap_delta": 12,
+          "harvest_unique_union": 2249,
+          "harvest_additive": 2261,
+          "overlap_delta_formula": "overlap_delta=12",
+          "additive_formula": "2249+12=2261"
+        },
+        "surface_delta_composition": {
+          "formula": "surface_delta=2",
+          "composition_sha256": "74673c57d8a566efaea8d0f40567d4d4d89965c884c54fd1bea971840fde8f8a",
+          "surface_harvest_delta_n": 2,
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "surface_delta_formula": "surface_delta=2",
+          "surface_formula": "2249+2=2251"
+        },
+        "cross_full_market_residual_formula_resume_formula_coverage_wall_meta_bundle": {
+          "bundle_sha256": "1b7ca472bee9b9d21520ceb5a523ea08f66e557402ec52abb4e5f581b772b143"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "surface_harvest_delta_n": 2,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "frozen_compositions": {
+        "unique_surface_additive_composition": {
+          "formula": "2249/2251/2261",
+          "composition_sha256": "8b9336b0fbc684b285ad90558870c65313c38cbf1ae3154317efd806166bbb0b",
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "unique_surface_additive_formula": "2249/2251/2261",
+          "surface_formula": "2249+2=2251",
+          "additive_formula": "2249+12=2261",
+          "union_formula": "2134+106+9=2249"
+        },
+        "overlap_delta_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "1224d2cd3123f9e53725bfa0cedda87e9202d130cbf4066107677e0079534a8e",
+          "overlap_delta": 12,
+          "harvest_unique_union": 2249,
+          "harvest_additive": 2261,
+          "overlap_delta_formula": "overlap_delta=12",
+          "additive_formula": "2249+12=2261"
+        },
+        "surface_delta_composition": {
+          "formula": "surface_delta=2",
+          "composition_sha256": "74673c57d8a566efaea8d0f40567d4d4d89965c884c54fd1bea971840fde8f8a",
+          "surface_harvest_delta_n": 2,
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "surface_delta_formula": "surface_delta=2",
+          "surface_formula": "2249+2=2251"
+        },
+        "cross_full_market_residual_formula_resume_formula_coverage_wall_meta_bundle": {
+          "bundle_sha256": "1b7ca472bee9b9d21520ceb5a523ea08f66e557402ec52abb4e5f581b772b143"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "surface_harvest_delta_n": 2,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_unique_surface_additive_overlap_delta_surface_delta_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "unique_surface_additive_composition": {
+          "formula": "2249/2251/2261",
+          "composition_sha256": "8b9336b0fbc684b285ad90558870c65313c38cbf1ae3154317efd806166bbb0b",
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "unique_surface_additive_formula": "2249/2251/2261",
+          "surface_formula": "2249+2=2251",
+          "additive_formula": "2249+12=2261",
+          "union_formula": "2134+106+9=2249"
+        },
+        "overlap_delta_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "1224d2cd3123f9e53725bfa0cedda87e9202d130cbf4066107677e0079534a8e",
+          "overlap_delta": 12,
+          "harvest_unique_union": 2249,
+          "harvest_additive": 2261,
+          "overlap_delta_formula": "overlap_delta=12",
+          "additive_formula": "2249+12=2261"
+        },
+        "surface_delta_composition": {
+          "formula": "surface_delta=2",
+          "composition_sha256": "74673c57d8a566efaea8d0f40567d4d4d89965c884c54fd1bea971840fde8f8a",
+          "surface_harvest_delta_n": 2,
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "surface_delta_formula": "surface_delta=2",
+          "surface_formula": "2249+2=2251"
+        },
+        "cross_full_market_residual_formula_resume_formula_coverage_wall_meta_bundle": {
+          "bundle_sha256": "1b7ca472bee9b9d21520ceb5a523ea08f66e557402ec52abb4e5f581b772b143"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "surface_harvest_delta_n": 2,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "frozen_compositions": {
+        "unique_surface_additive_composition": {
+          "formula": "2249/2251/2261",
+          "composition_sha256": "8b9336b0fbc684b285ad90558870c65313c38cbf1ae3154317efd806166bbb0b",
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "unique_surface_additive_formula": "2249/2251/2261",
+          "surface_formula": "2249+2=2251",
+          "additive_formula": "2249+12=2261",
+          "union_formula": "2134+106+9=2249"
+        },
+        "overlap_delta_composition": {
+          "formula": "overlap_delta=12",
+          "composition_sha256": "1224d2cd3123f9e53725bfa0cedda87e9202d130cbf4066107677e0079534a8e",
+          "overlap_delta": 12,
+          "harvest_unique_union": 2249,
+          "harvest_additive": 2261,
+          "overlap_delta_formula": "overlap_delta=12",
+          "additive_formula": "2249+12=2261"
+        },
+        "surface_delta_composition": {
+          "formula": "surface_delta=2",
+          "composition_sha256": "74673c57d8a566efaea8d0f40567d4d4d89965c884c54fd1bea971840fde8f8a",
+          "surface_harvest_delta_n": 2,
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "surface_delta_formula": "surface_delta=2",
+          "surface_formula": "2249+2=2251"
+        },
+        "cross_full_market_residual_formula_resume_formula_coverage_wall_meta_bundle": {
+          "bundle_sha256": "1b7ca472bee9b9d21520ceb5a523ea08f66e557402ec52abb4e5f581b772b143"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "surface_harvest_delta_n": 2,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_unique_surface_additive_overlap_delta_surface_delta_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "cross_full_market_unique_surface_additive_overlap_delta_surface_delta_wall_meta_bundle_identity_lock",
+    "compositions": {
+      "unique_surface_additive_composition": {
+        "formula": "2249/2251/2261",
+        "composition_sha256": "8b9336b0fbc684b285ad90558870c65313c38cbf1ae3154317efd806166bbb0b",
+        "harvest_unique_union": 2249,
+        "surface_unique": 2251,
+        "harvest_additive": 2261,
+        "unique_surface_additive_formula": "2249/2251/2261",
+        "surface_formula": "2249+2=2251",
+        "additive_formula": "2249+12=2261",
+        "union_formula": "2134+106+9=2249"
+      },
+      "overlap_delta_composition": {
+        "formula": "overlap_delta=12",
+        "composition_sha256": "1224d2cd3123f9e53725bfa0cedda87e9202d130cbf4066107677e0079534a8e",
+        "overlap_delta": 12,
+        "harvest_unique_union": 2249,
+        "harvest_additive": 2261,
+        "overlap_delta_formula": "overlap_delta=12",
+        "additive_formula": "2249+12=2261"
+      },
+      "surface_delta_composition": {
+        "formula": "surface_delta=2",
+        "composition_sha256": "74673c57d8a566efaea8d0f40567d4d4d89965c884c54fd1bea971840fde8f8a",
+        "surface_harvest_delta_n": 2,
+        "harvest_unique_union": 2249,
+        "surface_unique": 2251,
+        "surface_delta_formula": "surface_delta=2",
+        "surface_formula": "2249+2=2251"
+      },
+      "cross_full_market_residual_formula_resume_formula_coverage_wall_meta_bundle": {
+        "bundle_sha256": "1b7ca472bee9b9d21520ceb5a523ea08f66e557402ec52abb4e5f581b772b143"
+      },
+      "stable_metrics_wall": {
+        "harvest_unique_union": 2249,
+        "surface_unique": 2251,
+        "harvest_additive": 2261,
+        "union_status": "2134/106/9",
+        "overlap_delta": 12,
+        "surface_harvest_delta_n": 2,
+        "residual_safety_coverage": 117,
+        "resume_taxonomy": "28/1/0",
+        "tier_coverage": "7/3314",
+        "combined_dryrun_coverage": 1053,
+        "risk_band": "75/14/12/5",
+        "coverage": 117
+      }
+    },
+    "bundle_sha256": "bd91376cc24d0e76389aad62d547e5eb05fd1698bb32cbe72007f3b8835fab65",
+    "deny_composition_mutate": true,
+    "deny_bundle_inflate": true,
+    "deny_bundle_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "generated_at": "2026-07-16T03:42:10Z",
+  "task_id": "C-FM-52",
+  "fingerprint_sha256": "2c522489946bcb6906c3b8a4dddd814d6116868208f51a961dcab3239b163833",
+  "composition_sha256": "74673c57d8a566efaea8d0f40567d4d4d89965c884c54fd1bea971840fde8f8a",
+  "surface_delta_formula": "surface_delta=2",
+  "sample_denials": [
+    {
+      "proposed": {
+        "delta_n": 3,
+        "unique": 2249,
+        "surface": 2251
+      },
+      "frozen": {
+        "delta_n": 2,
+        "unique": 2249,
+        "surface": 2251
+      },
+      "surface_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "surface_delta_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "delta_n": 2,
+        "unique": 2248,
+        "surface": 2251
+      },
+      "frozen": {
+        "delta_n": 2,
+        "unique": 2249,
+        "surface": 2251
+      },
+      "surface_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "surface_delta_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "delta_n": 0,
+        "unique": 0,
+        "surface": 0
+      },
+      "frozen": {
+        "delta_n": 2,
+        "unique": 2249,
+        "surface": 2251
+      },
+      "surface_formula_holds": true,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "surface_delta_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "delta_n": 2,
+        "unique": 2249,
+        "surface": 2251
+      },
+      "frozen": {
+        "delta_n": 2,
+        "unique": 2249,
+        "surface": 2251
+      },
+      "surface_formula_holds": true,
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "surface_delta_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "surface_delta_composition_identity_lock",
+    "surface_harvest_delta_n": 2,
+    "harvest_unique_union": 2249,
+    "surface_unique": 2251,
+    "composition_sha256": "74673c57d8a566efaea8d0f40567d4d4d89965c884c54fd1bea971840fde8f8a",
+    "surface_delta_formula": "surface_delta=2",
+    "surface_formula": "2249+2=2251",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

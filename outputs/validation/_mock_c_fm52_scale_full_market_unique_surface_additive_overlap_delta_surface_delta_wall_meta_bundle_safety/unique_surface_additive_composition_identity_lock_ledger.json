@@ -1,0 +1,96 @@
+{
+  "generated_at": "2026-07-16T03:42:10Z",
+  "task_id": "C-FM-52",
+  "fingerprint_sha256": "691004dc6e301474362fffd1670a34f19453770fa63623e1c7723bba17ebafc8",
+  "composition_sha256": "8b9336b0fbc684b285ad90558870c65313c38cbf1ae3154317efd806166bbb0b",
+  "unique_surface_additive_formula": "2249/2251/2261",
+  "sample_denials": [
+    {
+      "proposed": {
+        "unique": 2250,
+        "surface": 2251,
+        "additive": 2261
+      },
+      "frozen": {
+        "unique": 2249,
+        "surface": 2251,
+        "additive": 2261
+      },
+      "surface_formula_holds": false,
+      "additive_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "unique_surface_additive_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "unique": 2249,
+        "surface": 2250,
+        "additive": 2261
+      },
+      "frozen": {
+        "unique": 2249,
+        "surface": 2251,
+        "additive": 2261
+      },
+      "surface_formula_holds": false,
+      "additive_formula_holds": true,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "unique_surface_additive_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "unique": 0,
+        "surface": 0,
+        "additive": 0
+      },
+      "frozen": {
+        "unique": 2249,
+        "surface": 2251,
+        "additive": 2261
+      },
+      "surface_formula_holds": false,
+      "additive_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "unique_surface_additive_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "unique": 2249,
+        "surface": 2251,
+        "additive": 2261
+      },
+      "frozen": {
+        "unique": 2249,
+        "surface": 2251,
+        "additive": 2261
+      },
+      "surface_formula_holds": true,
+      "additive_formula_holds": true,
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "unique_surface_additive_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "unique_surface_additive_composition_identity_lock",
+    "harvest_unique_union": 2249,
+    "surface_unique": 2251,
+    "harvest_additive": 2261,
+    "composition_sha256": "8b9336b0fbc684b285ad90558870c65313c38cbf1ae3154317efd806166bbb0b",
+    "unique_surface_additive_formula": "2249/2251/2261",
+    "surface_formula": "2249+2=2251",
+    "additive_formula": "2249+12=2261",
+    "union_formula": "2134+106+9=2249",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
