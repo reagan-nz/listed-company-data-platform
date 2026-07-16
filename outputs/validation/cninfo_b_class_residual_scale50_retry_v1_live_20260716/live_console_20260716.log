@@ -1,6 +1,0 @@
-SUMMARY  ready=2  query_executed=2  pass=2  fail=0  ambiguous=0  result=LIVE_PASS
-CSV   outputs/validation/cninfo_b_class_residual_scale50_retry_v1_live_20260716/cninfo_b_class_residual_scale50_retry_v1_live_20260716_report.csv
-MD    outputs/validation/cninfo_b_class_residual_scale50_retry_v1_live_20260716/cninfo_b_class_residual_scale50_retry_v1_live_20260716_summary.md
-real 11.99
-user 0.21
-sys 0.05
