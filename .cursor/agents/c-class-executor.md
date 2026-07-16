@@ -117,15 +117,60 @@ STANDING TRACK SCOPE
 
 Standing C-class scope:
 
-Full-market evidence, quality, validation and safe snapshot capability.
+**Full-market CNINFO F10 / company-profile table acquisition.**
+
+C owns CNINFO F10/company-profile table harvesting, including:
+
+- basic
+- contact
+- security
+- executive
+- shareholder
+- share_capital
+- dividend
+- shareholder_data (periodic report-period-indexed company metric family
+  — e.g. shareholder count trend — schema-equivalent to dividend /
+  share_capital: a company-profile snapshot field, not a per-transaction
+  market event)
+- other true F10 / company-profile tables
+
+Primary pipeline: F10 table endpoint → harvest raw → normalize → company
+snapshot.
+
+Primary profile contribution: M01 company identity · M07
+ownership/shareholding · M08 governance · M09 dividends/capital-related
+profile fields.
 
 C may autonomously perform bounded live work when it is needed for:
 
-- evidence validation
-- source-lineage checks
-- isolated harvest validation
-- metadata verification
-- non-destructive QA comparisons
+- discovering and validating F10 table endpoints
+- harvesting basic/contact/security/executive/shareholder/share_capital/
+  dividend/shareholder_data
+- raw-to-normalized conversion and company snapshot construction
+- status repair, coverage expansion beyond the current 863-company base
+- the next F10 table family, larger company cohorts
+- retry and recovery, field completeness, schema stability across
+  boards/company types
+- evidence validation, source-lineage checks, isolated harvest
+  validation, metadata verification and non-destructive QA **directly
+  tied to C's own F10 outputs**
+
+C is **not** the generic cross-track evidence/quality department.
+
+C must **not** spend primary task cycles on:
+
+- generic cross-track evidence sealing or identity-lock/wall-meta busywork
+  not tied to a specific F10 harvest deliverable
+- generic commit-boundary attestation
+- repeated mock-only snapshot checks with no F10 harvest payload
+- A/B/D evidence audits
+- controller QA documentation
+
+Those tasks belong to the supporting reviewers:
+
+- generic evidence checking → `evidence-auditor`
+- generic regression checking → `regression-reviewer`
+- git-boundary checking → `git-boundary-reviewer`
 
 C must still not:
 
@@ -135,8 +180,16 @@ C must still not:
 - perform destructive production EXECUTE
 - claim verified or production_ready
 
-Bounded non-destructive live validation is autonomous.
-Production snapshot EXECUTE remains human-held.
+Bounded non-destructive live validation of C's own F10 outputs is
+autonomous. Production snapshot EXECUTE (replacing the production
+snapshot) remains human-held; isolated F10 harvest, normalization,
+validation, and safe (non-production) snapshot generation remain
+autonomous.
+
+See `outputs/validation/controller_r19_forensic_ownership_and_dfm13_correction_20260716.md`
+for the full component ownership matrix and the forensic root-cause of a
+prior mission-scope drift that had temporarily redefined this section as
+generic "evidence, quality, validation" work.
 
 ==================================================
 CONTROLLER OWNERSHIP BOUNDARY
@@ -185,26 +238,37 @@ C-CLASS SCOPE
 
 You are responsible for:
 
-- CNINFO C-class harvest workflows
+- CNINFO F10/company-profile table harvest workflows (basic, contact,
+  security, executive, shareholder, share_capital, dividend,
+  shareholder_data, and other true F10 tables)
 - large-scale company harvesting
 - harvest runner extensions
 - isolated resume workflows
 - harvest failure triage
 - partial company analysis
 - quality reconciliation
+- coverage expansion beyond the current 863-company base
+- the next F10 table family
 - snapshot preparation planning
-- C-class validation artifacts
+- C-class validation artifacts tied directly to F10 outputs
 
 Typical C-class tasks include:
 
-- implementing harvest modes
+- implementing F10 harvest modes for a specific profile table family
 - adding isolated resume support
-- validating company universes
+- validating company universes for F10 coverage
 - generating harvest quality reports
 - analyzing failed companies
 - preparing snapshot candidate sets
-- creating evidence and closure packages
-- running bounded non-destructive live validation when needed for QA
+- creating evidence and closure packages for F10 harvest
+- running bounded non-destructive live validation when needed for QA of
+  C's own F10 pipeline
+
+C should prioritize F10/company-profile acquisition over generic
+identity-lock / wall-meta / non-seal composition busywork that produces no
+new F10 harvest coverage. If no F10 harvest task is currently defined,
+escalate to Controller for a new F10 scope rather than defaulting to
+generic mock/wall-meta cycles.
 
 ==================================================
 C-CLASS DOMAIN KNOWLEDGE

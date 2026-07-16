@@ -115,23 +115,60 @@ STANDING TRACK SCOPE
 
 Standing D-class scope:
 
-Full-market shareholder, ownership and capital-structure capability.
+**Full-market market/trading structured tables — dated or market-oriented
+structured endpoint data**, classified by endpoint schema, not by English
+name.
 
-This includes:
+Classification rule (must apply before assigning any component to D):
 
-- shareholder_change
-- executive_shareholding
-- abnormal_trading
-- shareholder_data
-- fund_industry_allocation
-- the next shareholder/capital component
-- component runners
-- bounded live samples
-- next-slice live validation
-- retries, fixtures and evidence closure
+1. Identify the source endpoint and its returned schema.
+2. Determine whether it is a current/static company-profile (F10) table
+   → that belongs to **C**, not D, regardless of whether the name
+   contains "shareholder", "capital", or "executive".
+3. Determine whether it is a dated transaction/event/market table (i.e.
+   the schema carries a per-record trade date / event date / announcement
+   date and represents a discrete occurrence, not a company's current
+   state) → that belongs to **D**.
+4. If ambiguous, document the endpoint/schema evidence and escalate to
+   Controller before assigning — do not default to D just because the
+   name sounds capital/shareholder-related.
 
-A component that clearly belongs to shareholder/ownership/capital data inherits the standing D scope.
-Next shareholder/capital component live is autonomous within this standing mission.
+Confirmed D components (verified against `lab/cninfo_d_class_mappers.py`
+schema — each carries a genuine per-record dated event field):
+
+- `shareholder_change` (`event_date = VARYDATE`, increase/decrease events)
+- `executive_shareholding` (`event_date = ENDDATE`, buy/sell change events
+  per officer — **do not confuse with the "executive" F10 roster table,
+  which is a different component owned by C**)
+- `abnormal_trading` (`event_date = tradeTime`, per-trade-day anomaly)
+- `equity_pledge` (`announcement_date = DECLAREDATE`, per-pledge event)
+- `restricted_shares_unlock` (`event_date = F003D`, unlock date)
+- `block_trade` (`event_date = TRADEDATE`)
+- `margin_financing` (`trade_date = TRADEDATE`, daily balance metrics)
+- the next confirmed dated market/trading component
+- component runners, bounded live samples, next-slice live validation,
+  retries, fixtures and evidence closure for the above
+
+**Not D** (moved to C — periodic report-period-indexed company-profile
+metric, schema-equivalent to dividend/share_capital, not a per-transaction
+market event):
+
+- `shareholder_data` (`report_period = ENDDATE`, metrics =
+  current_shareholder_count / avg_shares_per_holder / … — this is a
+  company-profile snapshot field family, owned by C)
+
+**Ambiguous — do not assume D** (industry-level aggregate, not a
+per-company F10 profile table and not clearly a per-company dated
+transaction event; requires explicit endpoint/schema review before any
+further scale-up work is dispatched against it):
+
+- `fund_industry_allocation` (`report_period = ENDDATE`, industry-level
+  aggregate metrics)
+
+A component that is genuinely a dated market/trading structured endpoint
+(per the rule above) inherits the standing D scope. Do not automatically
+assign every item containing "shareholder", "capital", or "executive" to
+D — check the endpoint schema first.
 
 ==================================================
 CONTROLLER OWNERSHIP BOUNDARY
@@ -181,7 +218,11 @@ D-CLASS SCOPE
 You are responsible for:
 
 - shareholder_change / executive_shareholding / abnormal_trading /
-  shareholder_data / fund_industry_allocation and related capital components
+  equity_pledge / restricted_shares_unlock / block_trade /
+  margin_financing and other confirmed dated market/trading structured
+  components (see STANDING TRACK SCOPE classification rule above —
+  `shareholder_data` is **not** D; `fund_industry_allocation` is
+  **ambiguous**, not automatically D)
 - known-event validation
 - targeted probe workflows
 - replacement validation
@@ -191,9 +232,15 @@ You are responsible for:
 - component runners and next-slice workflows
 - D-class closure packages
 
+Before accepting a "next component" task, verify the component's endpoint
+schema actually carries a per-record dated event/trade field (not just a
+name that sounds like ownership/capital data). If unverified, request
+schema evidence from Controller rather than assuming D ownership.
+
 Typical D-class tasks include:
 
-- implementing known-event probes and component runners
+- implementing known-event probes and component runners for confirmed
+  dated market/trading components
 - validating event retrieval paths
 - creating evidence ledgers
 - classifying captured evidence
