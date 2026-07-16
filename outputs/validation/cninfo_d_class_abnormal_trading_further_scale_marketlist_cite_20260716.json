@@ -1,0 +1,335 @@
+{
+  "generated_at_utc": "2026-07-16 02:16:41",
+  "task_id": "D-FM-03",
+  "endpoint": "https://www.cninfo.com.cn/data/statis/getMarketStatisticsData",
+  "params": {
+    "sdate": "2026-07-02",
+    "edate": "2026-07-02",
+    "platecode": "",
+    "orderby": "",
+    "page": 1,
+    "rows": 200
+  },
+  "http_status": 200,
+  "last_error": "",
+  "cninfo_requests": 1,
+  "total": 170,
+  "record_count": 170,
+  "unique_codes_after_exclusions": 156,
+  "selected_found_codes": [
+    "000010",
+    "000016",
+    "000021",
+    "000078",
+    "000520",
+    "000536",
+    "000601",
+    "000632",
+    "000639",
+    "000677",
+    "000698",
+    "000700",
+    "000711",
+    "000725",
+    "000820",
+    "000821",
+    "000909",
+    "000972",
+    "000988",
+    "001237",
+    "001248",
+    "001313",
+    "001358",
+    "002005",
+    "002102",
+    "002109",
+    "002167",
+    "002175",
+    "002198",
+    "002273",
+    "002305",
+    "002326",
+    "002360",
+    "002371",
+    "002384",
+    "002396",
+    "002403",
+    "002407",
+    "002458",
+    "002463",
+    "002512",
+    "002522",
+    "002542",
+    "002547",
+    "002552",
+    "002559",
+    "002569",
+    "002580"
+  ],
+  "empty_control_codes": [
+    "000895",
+    "601988"
+  ],
+  "sample_records": [
+    {
+      "secCode": "000010",
+      "secName": "*ST美丽",
+      "tradeTime": "2026-07-02",
+      "type": "连续三个交易日内涨幅偏离值累计达15%的ST证券",
+      "buyTotal": null,
+      "sellTotal": null,
+      "buyPercent": null,
+      "sellPercent": null,
+      "detail": [
+        {
+          "buyOrgName": "中信建投证券股份有限公司上海营口路证券营业部",
+          "buyOrgBuyTotal": "4,870,647.00",
+          "buyOrgSellTotal": "294,156.00",
+          "sellOrgName": "国泰海通证券股份有限公司宜春袁山东路证券营业部",
+          "sellOrgBuyTotal": "285,899.00",
+          "sellOrgSellTotal": "3,671,187.00"
+        },
+        {
+          "buyOrgName": "中泰证券股份有限公司宁波分公司",
+          "buyOrgBuyTotal": "1,949,668.00",
+          "buyOrgSellTotal": "2,001,951.00",
+          "sellOrgName": "国泰海通证券股份有限公司上海青浦区佳杰路证券营业部",
+          "sellOrgBuyTotal": "109,581.00",
+          "sellOrgSellTotal": "2,556,336.00"
+        },
+        {
+          "buyOrgName": "中国银河证券股份有限公司北京珠市口大街证券营业部",
+          "buyOrgBuyTotal": "1,877,821.00",
+          "buyOrgSellTotal": "2,198,128.00",
+          "sellOrgName": "中国银河证券股份有限公司北京珠市口大街证券营业部",
+          "sellOrgBuyTotal": "1,877,821.00",
+          "sellOrgSellTotal": "2,198,128.00"
+        },
+        {
+          "buyOrgName": "东方证券股份有限公司长春同志街证券营业部",
+          "buyOrgBuyTotal": "1,843,945.00",
+          "buyOrgSellTotal": "0.00",
+          "sellOrgName": "中泰证券股份有限公司宁波分公司",
+          "sellOrgBuyTotal": "1,949,668.00",
+          "sellOrgSellTotal": "2,001,951.00"
+        },
+        {
+          "buyOrgName": "机构专用",
+          "buyOrgBuyTotal": "1,747,909.00",
+          "buyOrgSellTotal": "414,408.00",
+          "sellOrgName": "中信证券股份有限公司北京京城大厦证券营业部",
+          "sellOrgBuyTotal": "0.00",
+          "sellOrgSellTotal": "1,799,400.00"
+        }
+      ]
+    },
+    {
+      "secCode": "000016",
+      "secName": "*ST康佳A",
+      "tradeTime": "2026-07-02",
+      "type": "连续三个交易日内涨幅偏离值累计达15%的ST证券",
+      "buyTotal": null,
+      "sellTotal": null,
+      "buyPercent": null,
+      "sellPercent": null,
+      "detail": [
+        {
+          "buyOrgName": "金融街证券股份有限公司沈阳奉天街证券营业部",
+          "buyOrgBuyTotal": "2,482,310.00",
+          "buyOrgSellTotal": "2,582,284.00",
+          "sellOrgName": "中信建投证券股份有限公司安徽分公司",
+          "sellOrgBuyTotal": "0.00",
+          "sellOrgSellTotal": "7,496,000.00"
+        },
+        {
+          "buyOrgName": "招商证券股份有限公司深圳前海大道证券营业部",
+          "buyOrgBuyTotal": "2,052,297.00",
+          "buyOrgSellTotal": "2,772.00",
+          "sellOrgName": "金融街证券股份有限公司沈阳奉天街证券营业部",
+          "sellOrgBuyTotal": "2,482,310.00",
+          "sellOrgSellTotal": "2,582,284.00"
+        },
+        {
+          "buyOrgName": "机构专用",
+          "buyOrgBuyTotal": "1,970,755.00",
+          "buyOrgSellTotal": "351,893.00",
+          "sellOrgName": "中信证券股份有限公司苏州分公司",
+          "sellOrgBuyTotal": "0.00",
+          "sellOrgSellTotal": "2,540,000.00"
+        },
+        {
+          "buyOrgName": "东方证券股份有限公司泉州津淮街证券营业部",
+          "buyOrgBuyTotal": "1,678,298.00",
+          "buyOrgSellTotal": "570,893.00",
+          "sellOrgName": "华源证券股份有限公司江苏分公司",
+          "sellOrgBuyTotal": "0.00",
+          "sellOrgSellTotal": "2,530,000.00"
+        },
+        {
+          "buyOrgName": "中信建投证券股份有限公司上海营口路证券营业部",
+          "buyOrgBuyTotal": "1,658,823.52",
+          "buyOrgSellTotal": "987,172.00",
+          "sellOrgName": "中泰证券股份有限公司宁波分公司",
+          "sellOrgBuyTotal": "0.00",
+          "sellOrgSellTotal": "1,673,112.00"
+        }
+      ]
+    },
+    {
+      "secCode": "000021",
+      "secName": "深科技",
+      "tradeTime": "2026-07-02",
+      "type": "跌幅偏离值达7%的证券",
+      "buyTotal": null,
+      "sellTotal": null,
+      "buyPercent": null,
+      "sellPercent": null,
+      "detail": [
+        {
+          "buyOrgName": "深股通专用",
+          "buyOrgBuyTotal": "395,275,357.37",
+          "buyOrgSellTotal": "157,589,104.56",
+          "sellOrgName": "机构专用1",
+          "sellOrgBuyTotal": "28,136,255.10",
+          "sellOrgSellTotal": "294,659,092.11"
+        },
+        {
+          "buyOrgName": "机构专用",
+          "buyOrgBuyTotal": "167,404,267.97",
+          "buyOrgSellTotal": "222,261,761.38",
+          "sellOrgName": "机构专用2",
+          "sellOrgBuyTotal": "167,404,267.97",
+          "sellOrgSellTotal": "222,261,761.38"
+        },
+        {
+          "buyOrgName": "招商证券股份有限公司深圳益田路免税商务大厦证券营业部",
+          "buyOrgBuyTotal": "75,764,507.06",
+          "buyOrgSellTotal": "24,987,349.76",
+          "sellOrgName": "机构专用3",
+          "sellOrgBuyTotal": "48,277,614.09",
+          "sellOrgSellTotal": "222,179,363.70"
+        },
+        {
+          "buyOrgName": "国信证券股份有限公司浙江互联网分公司",
+          "buyOrgBuyTotal": "75,717,153.01",
+          "buyOrgSellTotal": "75,794,564.69",
+          "sellOrgName": "深股通专用",
+          "sellOrgBuyTotal": "395,275,357.37",
+          "sellOrgSellTotal": "157,589,104.56"
+        },
+        {
+          "buyOrgName": "东方财富证券股份有限公司山南香曲东路证券营业部",
+          "buyOrgBuyTotal": "67,289,623.30",
+          "buyOrgSellTotal": "40,206,773.15",
+          "sellOrgName": "机构专用4",
+          "sellOrgBuyTotal": "53,062,578.34",
+          "sellOrgSellTotal": "149,273,202.12"
+        }
+      ]
+    },
+    {
+      "secCode": "000078",
+      "secName": "ST海王",
+      "tradeTime": "2026-07-02",
+      "type": "连续三个交易日内涨幅偏离值累计达15%的ST证券",
+      "buyTotal": null,
+      "sellTotal": null,
+      "buyPercent": null,
+      "sellPercent": null,
+      "detail": [
+        {
+          "buyOrgName": "中信建投证券股份有限公司上海营口路证券营业部",
+          "buyOrgBuyTotal": "4,763,754.00",
+          "buyOrgSellTotal": "44,315.00",
+          "sellOrgName": "东方财富证券股份有限公司拉萨金融城南环路证券营业部",
+          "sellOrgBuyTotal": "1,988,519.00",
+          "sellOrgSellTotal": "2,458,064.00"
+        },
+        {
+          "buyOrgName": "东方财富证券股份有限公司拉萨团结路第二证券营业部",
+          "buyOrgBuyTotal": "3,214,615.00",
+          "buyOrgSellTotal": "2,446,946.00",
+          "sellOrgName": "东方财富证券股份有限公司拉萨团结路第二证券营业部",
+          "sellOrgBuyTotal": "3,214,615.00",
+          "sellOrgSellTotal": "2,446,946.00"
+        },
+        {
+          "buyOrgName": "东方财富证券股份有限公司拉萨金融城南环路证券营业部",
+          "buyOrgBuyTotal": "1,988,519.00",
+          "buyOrgSellTotal": "2,458,064.00",
+          "sellOrgName": "东方财富证券股份有限公司昌都两江大道证券营业部",
+          "sellOrgBuyTotal": "1,345,926.93",
+          "sellOrgSellTotal": "1,546,236.00"
+        },
+        {
+          "buyOrgName": "东方证券股份有限公司泉州津淮街证券营业部",
+          "buyOrgBuyTotal": "1,848,455.00",
+          "buyOrgSellTotal": "1,363,855.00",
+          "sellOrgName": "兴业证券股份有限公司湖北分公司",
+          "sellOrgBuyTotal": "0.00",
+          "sellOrgSellTotal": "1,443,742.00"
+        },
+        {
+          "buyOrgName": "东方财富证券股份有限公司拉萨团结路第一证券营业部",
+          "buyOrgBuyTotal": "1,804,875.00",
+          "buyOrgSellTotal": "1,026,491.00",
+          "sellOrgName": "华林证券股份有限公司株洲天台路证券营业部",
+          "sellOrgBuyTotal": "834,657.93",
+          "sellOrgSellTotal": "1,369,314.26"
+        }
+      ]
+    },
+    {
+      "secCode": "000520",
+      "secName": "凤凰航运",
+      "tradeTime": "2026-07-02",
+      "type": "连续三个交易日内涨幅偏离值累计达20%的证券",
+      "buyTotal": null,
+      "sellTotal": null,
+      "buyPercent": null,
+      "sellPercent": null,
+      "detail": [
+        {
+          "buyOrgName": "机构专用1",
+          "buyOrgBuyTotal": "20,451,067.00",
+          "buyOrgSellTotal": "3,782,907.00",
+          "sellOrgName": "开源证券股份有限公司西安西大街证券营业部",
+          "sellOrgBuyTotal": "16,819,430.00",
+          "sellOrgSellTotal": "11,250,869.00"
+        },
+        {
+          "buyOrgName": "机构专用2",
+          "buyOrgBuyTotal": "17,501,260.00",
+          "buyOrgSellTotal": "0.00",
+          "sellOrgName": "机构专用4",
+          "sellOrgBuyTotal": "7,893,028.50",
+          "sellOrgSellTotal": "11,199,350.00"
+        },
+        {
+          "buyOrgName": "开源证券股份有限公司西安西大街证券营业部",
+          "buyOrgBuyTotal": "16,819,430.00",
+          "buyOrgSellTotal": "11,250,869.00",
+          "sellOrgName": "机构专用5",
+          "sellOrgBuyTotal": "11,199,843.00",
+          "sellOrgSellTotal": "9,417,338.00"
+        },
+        {
+          "buyOrgName": "华鑫证券有限责任公司绍兴胜利东路证券营业部",
+          "buyOrgBuyTotal": "11,969,130.00",
+          "buyOrgSellTotal": "1,328,439.00",
+          "sellOrgName": "国新证券股份有限公司海南分公司",
+          "sellOrgBuyTotal": "6,012,036.75",
+          "sellOrgSellTotal": "5,376,029.00"
+        },
+        {
+          "buyOrgName": "机构专用3",
+          "buyOrgBuyTotal": "11,199,843.00",
+          "buyOrgSellTotal": "9,417,338.00",
+          "sellOrgName": "机构专用6",
+          "sellOrgBuyTotal": "5,096,674.50",
+          "sellOrgSellTotal": "4,413,716.00"
+        }
+      ]
+    }
+  ]
+}
