@@ -64,6 +64,15 @@ DEFAULT_LATENT_PROFILE_DIRS: Tuple[str, ...] = (
         "normalized",
         "company_basic_profile",
     ),
+    os.path.join(
+        _BASE_DIR,
+        "outputs",
+        "harvest",
+        "cninfo_c_class",
+        "phase3_batch_500_001",
+        "normalized",
+        "company_basic_profile",
+    ),
 )
 
 DEFAULT_OVERLAY_DIR = os.path.join(
