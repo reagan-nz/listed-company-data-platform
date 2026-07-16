@@ -1,0 +1,35 @@
+{
+  "case_id": "DSC444",
+  "company_code": "601003",
+  "company_name": "柳钢股份",
+  "component": "shareholder_change",
+  "query_mode": "type_desc_multi_day_union",
+  "query_type": "desc",
+  "anchor_tdate": "2026-06-25",
+  "shared_probe_key": "type_desc_union_2026-06-16_2026-06-17_2026-06-18_2026-06-19_2026-06-23_2026-06-24_2026-06-25_2026-06-26_2026-06-27",
+  "planned_requests": [
+    "type_desc_tdate_daily_2026-06-16",
+    "type_desc_tdate_daily_2026-06-17",
+    "type_desc_tdate_daily_2026-06-18",
+    "type_desc_tdate_daily_2026-06-19",
+    "type_desc_tdate_daily_2026-06-23",
+    "type_desc_tdate_daily_2026-06-24",
+    "type_desc_tdate_daily_2026-06-25",
+    "type_desc_tdate_daily_2026-06-26",
+    "type_desc_tdate_daily_2026-06-27"
+  ],
+  "query_params": {
+    "type": "desc",
+    "tdate": "2026-06-25"
+  },
+  "endpoint": "https://www.cninfo.com.cn/data20/shareholeder/detail",
+  "records_path": "data.records",
+  "shared_request": true,
+  "company_filter_offline": true,
+  "company_filter_field": "SECCODE",
+  "filter_company_code": "601003",
+  "forbidden_sole_found": "inc+2026-07-03",
+  "expected_behavior": "captured_normal",
+  "compose_source_day": "2026-06-25",
+  "cninfo_called": false
+}

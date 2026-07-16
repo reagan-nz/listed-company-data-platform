@@ -1,0 +1,422 @@
+{
+  "generated_at_utc": "2026-07-16 03:19:15",
+  "task_id": "D-FM-10",
+  "endpoint": "https://www.cninfo.com.cn/data20/shareholeder/detail",
+  "query_type": "desc",
+  "forbidden_query_type": "inc",
+  "forbidden_sparse_tdate": "2026-07-03",
+  "compose_candidate_tdates": [
+    "2026-06-16",
+    "2026-06-17",
+    "2026-06-18",
+    "2026-06-19",
+    "2026-06-23",
+    "2026-06-24",
+    "2026-06-25",
+    "2026-06-26",
+    "2026-06-27",
+    "2026-06-30",
+    "2026-07-01",
+    "2026-07-02",
+    "2026-07-04",
+    "2026-07-07",
+    "2026-07-08",
+    "2026-07-09",
+    "2026-07-10",
+    "2026-07-11",
+    "2026-07-14",
+    "2026-07-15"
+  ],
+  "compose_used_tdates": [
+    "2026-06-16",
+    "2026-06-17",
+    "2026-06-18",
+    "2026-06-19",
+    "2026-06-23",
+    "2026-06-24",
+    "2026-06-25",
+    "2026-06-26",
+    "2026-06-27"
+  ],
+  "shared_probe_key": "type_desc_union_2026-06-16_2026-06-17_2026-06-18_2026-06-19_2026-06-23_2026-06-24_2026-06-25_2026-06-26_2026-06-27",
+  "cninfo_requests": 9,
+  "days": [
+    {
+      "tdate": "2026-06-16",
+      "params": {
+        "type": "desc",
+        "tdate": "2026-06-16"
+      },
+      "http_status": 200,
+      "last_error": "",
+      "total": 67,
+      "record_count": 67,
+      "unique_codes_after_exclusions": 24,
+      "selected": true,
+      "sample_records": [
+        {
+          "DECLAREDATE": "2026-06-16",
+          "SECCODE": "300854",
+          "SECNAME": "中兰环保",
+          "VARYDATE": "2026-06-16",
+          "F002V": "刘青松",
+          "F004N": 852300,
+          "F005N": 0.61,
+          "F007V": null
+        },
+        {
+          "DECLAREDATE": "2026-06-16",
+          "SECCODE": "600605",
+          "SECNAME": "汇通能源",
+          "VARYDATE": "2026-06-16",
+          "F002V": "厦门汉云投资管理有限公司-汉云股票精选二期私募证券投资基金",
+          "F004N": 1914200,
+          "F005N": 0.928,
+          "F007V": "28.02-33.94"
+        }
+      ]
+    },
+    {
+      "tdate": "2026-06-17",
+      "params": {
+        "type": "desc",
+        "tdate": "2026-06-17"
+      },
+      "http_status": 200,
+      "last_error": "",
+      "total": 50,
+      "record_count": 50,
+      "unique_codes_after_exclusions": 31,
+      "selected": true,
+      "sample_records": [
+        {
+          "DECLAREDATE": "2026-06-17",
+          "SECCODE": "300071",
+          "SECNAME": "福石控股",
+          "VARYDATE": "2026-06-17",
+          "F002V": "宋春静",
+          "F004N": 9360100,
+          "F005N": 0.971,
+          "F007V": "4.82"
+        },
+        {
+          "DECLAREDATE": "2026-06-17",
+          "SECCODE": "300931",
+          "SECNAME": "通用电梯",
+          "VARYDATE": "2026-06-17",
+          "F002V": "徐志明",
+          "F004N": 3278900,
+          "F005N": 1.35,
+          "F007V": null
+        }
+      ]
+    },
+    {
+      "tdate": "2026-06-18",
+      "params": {
+        "type": "desc",
+        "tdate": "2026-06-18"
+      },
+      "http_status": 200,
+      "last_error": "",
+      "total": 55,
+      "record_count": 55,
+      "unique_codes_after_exclusions": 26,
+      "selected": true,
+      "sample_records": [
+        {
+          "DECLAREDATE": "2026-06-18",
+          "SECCODE": "301136",
+          "SECNAME": "招标股份",
+          "VARYDATE": "2026-06-18",
+          "F002V": "漳州市龙海区国有资产投资经营有限公司",
+          "F004N": 2211600,
+          "F005N": 0.8,
+          "F007V": "16.49"
+        },
+        {
+          "DECLAREDATE": "2026-06-18",
+          "SECCODE": "603330",
+          "SECNAME": "天洋新材",
+          "VARYDATE": "2026-06-18",
+          "F002V": "公司第一期员工持股计划",
+          "F004N": 1939910,
+          "F005N": 0.448,
+          "F007V": null
+        }
+      ]
+    },
+    {
+      "tdate": "2026-06-19",
+      "params": {
+        "type": "desc",
+        "tdate": "2026-06-19"
+      },
+      "http_status": 200,
+      "last_error": "",
+      "total": 121,
+      "record_count": 121,
+      "unique_codes_after_exclusions": 14,
+      "selected": true,
+      "sample_records": [
+        {
+          "DECLAREDATE": "2026-06-19",
+          "SECCODE": "600703",
+          "SECNAME": "三安光电",
+          "VARYDATE": "2026-06-18",
+          "F002V": "公司第五期员工持股计划",
+          "F004N": 138467713,
+          "F005N": 2.775,
+          "F007V": null
+        },
+        {
+          "DECLAREDATE": "2026-06-19",
+          "SECCODE": "603002",
+          "SECNAME": "宏昌电子",
+          "VARYDATE": "2026-06-18",
+          "F002V": "萧志仁",
+          "F004N": 76000,
+          "F005N": 0.007,
+          "F007V": "23.50"
+        }
+      ]
+    },
+    {
+      "tdate": "2026-06-23",
+      "params": {
+        "type": "desc",
+        "tdate": "2026-06-23"
+      },
+      "http_status": 200,
+      "last_error": "",
+      "total": 67,
+      "record_count": 67,
+      "unique_codes_after_exclusions": 23,
+      "selected": true,
+      "sample_records": [
+        {
+          "DECLAREDATE": "2026-06-23",
+          "SECCODE": "300337",
+          "SECNAME": "银邦股份",
+          "VARYDATE": "2026-06-23",
+          "F002V": "无锡新邦科技有限公司",
+          "F004N": 3600000,
+          "F005N": 0.438,
+          "F007V": null
+        },
+        {
+          "DECLAREDATE": "2026-06-23",
+          "SECCODE": "300931",
+          "SECNAME": "通用电梯",
+          "VARYDATE": "2026-06-23",
+          "F002V": "徐志明",
+          "F004N": 1584520,
+          "F005N": 0.65,
+          "F007V": null
+        }
+      ]
+    },
+    {
+      "tdate": "2026-06-24",
+      "params": {
+        "type": "desc",
+        "tdate": "2026-06-24"
+      },
+      "http_status": 200,
+      "last_error": "",
+      "total": 39,
+      "record_count": 39,
+      "unique_codes_after_exclusions": 17,
+      "selected": true,
+      "sample_records": [
+        {
+          "DECLAREDATE": "2026-06-24",
+          "SECCODE": "301526",
+          "SECNAME": "国际复材",
+          "VARYDATE": "2026-06-24",
+          "F002V": "上海信熹投资管理有限公司-云南云熹股权投资基金合伙企业(有限合伙)",
+          "F004N": 113126143,
+          "F005N": 3.0,
+          "F007V": "22.33"
+        },
+        {
+          "DECLAREDATE": "2026-06-24",
+          "SECCODE": "301526",
+          "SECNAME": "国际复材",
+          "VARYDATE": "2026-06-24",
+          "F002V": "上海信熹投资管理有限公司-云南云熹股权投资基金合伙企业(有限合伙)",
+          "F004N": 37708977,
+          "F005N": 1.0,
+          "F007V": "18.84"
+        }
+      ]
+    },
+    {
+      "tdate": "2026-06-25",
+      "params": {
+        "type": "desc",
+        "tdate": "2026-06-25"
+      },
+      "http_status": 200,
+      "last_error": "",
+      "total": 116,
+      "record_count": 116,
+      "unique_codes_after_exclusions": 22,
+      "selected": true,
+      "sample_records": [
+        {
+          "DECLAREDATE": "2026-06-25",
+          "SECCODE": "300337",
+          "SECNAME": "银邦股份",
+          "VARYDATE": "2026-06-25",
+          "F002V": "无锡新邦科技有限公司",
+          "F004N": 2151800,
+          "F005N": 0.26,
+          "F007V": "10.42"
+        },
+        {
+          "DECLAREDATE": "2026-06-25",
+          "SECCODE": "300931",
+          "SECNAME": "通用电梯",
+          "VARYDATE": "2026-06-25",
+          "F002V": "徐志明",
+          "F004N": 2311900,
+          "F005N": 0.95,
+          "F007V": "15.56"
+        }
+      ]
+    },
+    {
+      "tdate": "2026-06-26",
+      "params": {
+        "type": "desc",
+        "tdate": "2026-06-26"
+      },
+      "http_status": 200,
+      "last_error": "",
+      "total": 43,
+      "record_count": 43,
+      "unique_codes_after_exclusions": 24,
+      "selected": true,
+      "sample_records": [
+        {
+          "DECLAREDATE": "2026-06-26",
+          "SECCODE": "002138",
+          "SECNAME": "顺络电子",
+          "VARYDATE": "2026-06-26",
+          "F002V": "公司第二期员工持股计划",
+          "F004N": 8562900,
+          "F005N": 1.06,
+          "F007V": null
+        },
+        {
+          "DECLAREDATE": "2026-06-26",
+          "SECCODE": "300525",
+          "SECNAME": "博思软件",
+          "VARYDATE": "2026-06-26",
+          "F002V": "陕国投·博思软件第三期2号员工持股集合资金信托计划",
+          "F004N": 27406877,
+          "F005N": 3.646,
+          "F007V": null
+        }
+      ]
+    },
+    {
+      "tdate": "2026-06-27",
+      "params": {
+        "type": "desc",
+        "tdate": "2026-06-27"
+      },
+      "http_status": 200,
+      "last_error": "",
+      "total": 62,
+      "record_count": 62,
+      "unique_codes_after_exclusions": 27,
+      "selected": true,
+      "sample_records": [
+        {
+          "DECLAREDATE": "2026-06-27",
+          "SECCODE": "603918",
+          "SECNAME": "金桥信息",
+          "VARYDATE": "2026-06-27",
+          "F002V": "公司2022年员工持股计划",
+          "F004N": 822983,
+          "F005N": 0.225,
+          "F007V": null
+        },
+        {
+          "DECLAREDATE": "2026-06-27",
+          "SECCODE": "688022",
+          "SECNAME": "ST瀚川",
+          "VARYDATE": "2026-06-27",
+          "F002V": "公司第一期员工持股计划",
+          "F004N": 345787,
+          "F005N": 0.197,
+          "F007V": null
+        }
+      ]
+    }
+  ],
+  "selected_found_count": 198,
+  "empty_control_codes": [
+    "000895",
+    "601988"
+  ],
+  "excluded_prior_slice_codes": [
+    "000550",
+    "000895",
+    "002415",
+    "600000",
+    "601988"
+  ],
+  "excluded_s50_found_codes": [
+    "000402",
+    "000688",
+    "000813",
+    "000892",
+    "002097",
+    "002115",
+    "002617",
+    "002702",
+    "002735",
+    "002976",
+    "003003",
+    "300102",
+    "300200",
+    "300211",
+    "300321",
+    "300334",
+    "300358",
+    "300457",
+    "300493",
+    "300519",
+    "300540",
+    "300552",
+    "300590",
+    "300802",
+    "300876",
+    "300917",
+    "300931",
+    "300959",
+    "300966",
+    "300980",
+    "301026",
+    "301046",
+    "301158",
+    "301161",
+    "301273",
+    "301333",
+    "301429",
+    "301617",
+    "600545",
+    "600803",
+    "603303",
+    "603680",
+    "605198",
+    "688002",
+    "688158",
+    "688262",
+    "688378",
+    "688702"
+  ]
+}
