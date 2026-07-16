@@ -1,0 +1,95 @@
+{
+  "generated_at": "2026-07-16T03:56:10Z",
+  "task_id": "C-FM-53",
+  "fingerprint_sha256": "f7b46a571a3cf68f48fc7a59d4448c935fd7a4f26b3a3ca11fd07a01378991cc",
+  "composition_sha256": "5a13be0aa4ab354b74ecda8ff31c1984cf0564b35d6dd17b35f31010fa7cb3c1",
+  "union_formula": "2134+106+9=2249",
+  "sample_denials": [
+    {
+      "proposed": {
+        "complete": 2135,
+        "partial": 106,
+        "failed": 9
+      },
+      "frozen": {
+        "complete": 2134,
+        "partial": 106,
+        "failed": 9,
+        "unique": 2249
+      },
+      "union_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "union_formula_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "complete": 2134,
+        "partial": 105,
+        "failed": 9
+      },
+      "frozen": {
+        "complete": 2134,
+        "partial": 106,
+        "failed": 9,
+        "unique": 2249
+      },
+      "union_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "union_formula_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "complete": 0,
+        "partial": 0,
+        "failed": 0
+      },
+      "frozen": {
+        "complete": 2134,
+        "partial": 106,
+        "failed": 9,
+        "unique": 2249
+      },
+      "union_formula_holds": false,
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "union_formula_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "complete": 2134,
+        "partial": 106,
+        "failed": 9
+      },
+      "frozen": {
+        "complete": 2134,
+        "partial": 106,
+        "failed": 9,
+        "unique": 2249
+      },
+      "union_formula_holds": true,
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "union_formula_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "union_formula_composition_identity_lock",
+    "union_complete": 2134,
+    "union_partial": 106,
+    "union_failed": 9,
+    "harvest_unique_union": 2249,
+    "composition_sha256": "5a13be0aa4ab354b74ecda8ff31c1984cf0564b35d6dd17b35f31010fa7cb3c1",
+    "union_formula": "2134+106+9=2249",
+    "union_formula_primary": "2134+106+9=2249",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

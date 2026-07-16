@@ -1,0 +1,189 @@
+{
+  "generated_at": "2026-07-16T03:56:10Z",
+  "task_id": "C-FM-53",
+  "fingerprint_sha256": "52e2154ebd3235377d95531d9779f524564f1bada4a13d1f169ce499a115748e",
+  "bundle_sha256": "c1c5a8d7430b0225ea4af04dc9edc23f879b234e0d66a36d6f8383fa91dfb83c",
+  "compositions": {
+    "union_formula_composition": {
+      "formula": "2134+106+9=2249",
+      "composition_sha256": "5a13be0aa4ab354b74ecda8ff31c1984cf0564b35d6dd17b35f31010fa7cb3c1",
+      "union_complete": 2134,
+      "union_partial": 106,
+      "union_failed": 9,
+      "harvest_unique_union": 2249,
+      "union_formula": "2134+106+9=2249"
+    },
+    "surface_formula_composition": {
+      "formula": "2249+2=2251",
+      "composition_sha256": "96332f0d6a4829aa8d213dbf27abba14e8011ff4ba46b88f2bdca2d238f5fe9f",
+      "harvest_unique_union": 2249,
+      "surface_harvest_delta_n": 2,
+      "surface_unique": 2251,
+      "surface_formula": "2249+2=2251"
+    },
+    "additive_formula_composition": {
+      "formula": "2249+12=2261",
+      "composition_sha256": "4356e30435f4c29a213b2a6b3a5fa034c2c353ef515949c70529e0260b8ea339",
+      "harvest_unique_union": 2249,
+      "overlap_delta": 12,
+      "harvest_additive": 2261,
+      "additive_formula": "2249+12=2261"
+    },
+    "cross_full_market_unique_surface_additive_overlap_delta_surface_delta_wall_meta_bundle": {
+      "bundle_sha256": "bd91376cc24d0e76389aad62d547e5eb05fd1698bb32cbe72007f3b8835fab65"
+    },
+    "stable_metrics_wall": {
+      "harvest_unique_union": 2249,
+      "surface_unique": 2251,
+      "harvest_additive": 2261,
+      "union_status": "2134/106/9",
+      "overlap_delta": 12,
+      "surface_harvest_delta_n": 2,
+      "residual_safety_coverage": 117,
+      "resume_taxonomy": "28/1/0",
+      "tier_coverage": "7/3314",
+      "combined_dryrun_coverage": 1053,
+      "risk_band": "75/14/12/5",
+      "coverage": 117,
+      "union_formula": "2134+106+9=2249",
+      "surface_formula": "2249+2=2251",
+      "additive_formula": "2249+12=2261"
+    }
+  },
+  "sample_denials": [
+    {
+      "proposed_keys": [
+        "additive_formula_composition",
+        "cross_full_market_unique_surface_additive_overlap_delta_surface_delta_wall_meta_bundle",
+        "stable_metrics_wall",
+        "surface_formula_composition",
+        "union_formula_composition"
+      ],
+      "frozen_keys": [
+        "additive_formula_composition",
+        "cross_full_market_unique_surface_additive_overlap_delta_surface_delta_wall_meta_bundle",
+        "stable_metrics_wall",
+        "surface_formula_composition",
+        "union_formula_composition"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_union_formula_surface_formula_additive_formula_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_keys": [
+        "cross_full_market_unique_surface_additive_overlap_delta_surface_delta_wall_meta_bundle",
+        "stable_metrics_wall",
+        "surface_formula_composition",
+        "union_formula_composition"
+      ],
+      "frozen_keys": [
+        "additive_formula_composition",
+        "cross_full_market_unique_surface_additive_overlap_delta_surface_delta_wall_meta_bundle",
+        "stable_metrics_wall",
+        "surface_formula_composition",
+        "union_formula_composition"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_union_formula_surface_formula_additive_formula_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_keys": [
+        "additive_formula_composition",
+        "cross_full_market_unique_surface_additive_overlap_delta_surface_delta_wall_meta_bundle",
+        "stable_metrics_wall",
+        "surface_formula_composition",
+        "union_formula_composition"
+      ],
+      "frozen_keys": [
+        "additive_formula_composition",
+        "cross_full_market_unique_surface_additive_overlap_delta_surface_delta_wall_meta_bundle",
+        "stable_metrics_wall",
+        "surface_formula_composition",
+        "union_formula_composition"
+      ],
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_union_formula_surface_formula_additive_formula_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_keys": [
+        "additive_formula_composition",
+        "cross_full_market_unique_surface_additive_overlap_delta_surface_delta_wall_meta_bundle",
+        "stable_metrics_wall",
+        "surface_formula_composition",
+        "union_formula_composition"
+      ],
+      "frozen_keys": [
+        "additive_formula_composition",
+        "cross_full_market_unique_surface_additive_overlap_delta_surface_delta_wall_meta_bundle",
+        "stable_metrics_wall",
+        "surface_formula_composition",
+        "union_formula_composition"
+      ],
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_union_formula_surface_formula_additive_formula_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "cross_full_market_union_formula_surface_formula_additive_formula_wall_meta_bundle_identity_lock",
+    "compositions": {
+      "union_formula_composition": {
+        "formula": "2134+106+9=2249",
+        "composition_sha256": "5a13be0aa4ab354b74ecda8ff31c1984cf0564b35d6dd17b35f31010fa7cb3c1",
+        "union_complete": 2134,
+        "union_partial": 106,
+        "union_failed": 9,
+        "harvest_unique_union": 2249,
+        "union_formula": "2134+106+9=2249"
+      },
+      "surface_formula_composition": {
+        "formula": "2249+2=2251",
+        "composition_sha256": "96332f0d6a4829aa8d213dbf27abba14e8011ff4ba46b88f2bdca2d238f5fe9f",
+        "harvest_unique_union": 2249,
+        "surface_harvest_delta_n": 2,
+        "surface_unique": 2251,
+        "surface_formula": "2249+2=2251"
+      },
+      "additive_formula_composition": {
+        "formula": "2249+12=2261",
+        "composition_sha256": "4356e30435f4c29a213b2a6b3a5fa034c2c353ef515949c70529e0260b8ea339",
+        "harvest_unique_union": 2249,
+        "overlap_delta": 12,
+        "harvest_additive": 2261,
+        "additive_formula": "2249+12=2261"
+      },
+      "cross_full_market_unique_surface_additive_overlap_delta_surface_delta_wall_meta_bundle": {
+        "bundle_sha256": "bd91376cc24d0e76389aad62d547e5eb05fd1698bb32cbe72007f3b8835fab65"
+      },
+      "stable_metrics_wall": {
+        "harvest_unique_union": 2249,
+        "surface_unique": 2251,
+        "harvest_additive": 2261,
+        "union_status": "2134/106/9",
+        "overlap_delta": 12,
+        "surface_harvest_delta_n": 2,
+        "residual_safety_coverage": 117,
+        "resume_taxonomy": "28/1/0",
+        "tier_coverage": "7/3314",
+        "combined_dryrun_coverage": 1053,
+        "risk_band": "75/14/12/5",
+        "coverage": 117,
+        "union_formula": "2134+106+9=2249",
+        "surface_formula": "2249+2=2251",
+        "additive_formula": "2249+12=2261"
+      }
+    },
+    "bundle_sha256": "c1c5a8d7430b0225ea4af04dc9edc23f879b234e0d66a36d6f8383fa91dfb83c",
+    "deny_composition_mutate": true,
+    "deny_bundle_inflate": true,
+    "deny_bundle_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
