@@ -700,6 +700,134 @@ class TestExecutiveShareholdingNextSliceRunner(unittest.TestCase):
         self.assertNotIn("\ufffd", content)
 
 
+class TestExecutiveShareholdingNextSlicePostLiveClosure(unittest.TestCase):
+    """D-FM-02 post-live offline closure：只读校验 live/closure 产物（无 CNINFO · 不写 dry-run 根）。"""
+
+    LIVE_REPORT = os.path.join(
+        OUTPUT_ROOT,
+        "reports",
+        "d_class_executive_shareholding_next_slice_live_report.csv",
+    )
+    QUALITY_REPORT = os.path.join(
+        OUTPUT_ROOT,
+        "reports",
+        "d_class_executive_shareholding_next_slice_quality_report.csv",
+    )
+    CLOSURE_METRICS = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_executive_shareholding_next_slice_closure_metrics.csv",
+    )
+    CAVEAT_LEDGER = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_executive_shareholding_next_slice_post_live_final_caveat_ledger.csv",
+    )
+    EFFECTIVE_RESULT = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_executive_shareholding_next_slice_effective_result.csv",
+    )
+    FREEZE_ATTESTATION = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_executive_shareholding_next_slice_post_live_freeze_attestation.csv",
+    )
+    CLOSURE_MATRIX = os.path.join(
+        VALIDATION,
+        "cninfo_d_class_executive_shareholding_dfm02_next_slice_closure_matrix_20260716.csv",
+    )
+    LIVE_REPORT_SHA256 = (
+        "dc16b591b117a9411c0ec458a1ff3cdb4d850417fcf87d5de851c5c73af23e25"
+    )
+    QUALITY_REPORT_SHA256 = (
+        "f5ad91908d5e26007e64443900f19961ead640f627894ea34c612f57c974ef28"
+    )
+    DRYRUN_REPORT_SHA256 = (
+        "e883b43e0da391deac93cecbd2b09e04489acea660caab38235e18fbd8978eba"
+    )
+
+    def test_live_quality_cross_check_five_of_five(self) -> None:
+        if not os.path.isfile(self.LIVE_REPORT):
+            self.skipTest("live report not present")
+        with open(self.LIVE_REPORT, newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            self.assertEqual(
+                list(reader.fieldnames or []),
+                runner.EXECUTIVE_SHAREHOLDING_NEXT_SLICE_LIVE_REPORT_COLUMNS,
+            )
+            live_rows = {r["case_id"]: r for r in reader}
+        with open(self.QUALITY_REPORT, newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            self.assertEqual(
+                list(reader.fieldnames or []),
+                runner.EXECUTIVE_SHAREHOLDING_NEXT_SLICE_QUALITY_REPORT_COLUMNS,
+            )
+            quality_rows = {r["case_id"]: r for r in reader}
+        self.assertEqual(len(live_rows), 5)
+        self.assertEqual(
+            set(live_rows),
+            set(runner.EXECUTIVE_SHAREHOLDING_NEXT_SLICE_ALLOWED_CASE_IDS),
+        )
+        for case_id in runner.EXECUTIVE_SHAREHOLDING_NEXT_SLICE_ALLOWED_CASE_IDS:
+            self.assertEqual(live_rows[case_id]["acceptable"], "yes")
+            self.assertEqual(
+                live_rows[case_id]["acceptable"],
+                quality_rows[case_id]["acceptable"],
+            )
+            self.assertEqual(
+                live_rows[case_id]["failure_type"],
+                quality_rows[case_id]["failure_type"],
+            )
+        self.assertEqual(live_rows["DES101"]["retrieval_status"], "found")
+        self.assertEqual(live_rows["DES101"]["record_count"], "2")
+        for case_id in ("DES102", "DES103", "DES104", "DES105"):
+            self.assertEqual(live_rows[case_id]["retrieval_status"], "empty_but_valid")
+            self.assertEqual(live_rows[case_id]["record_count"], "0")
+
+    def test_freeze_attestation_match_live_and_dryrun(self) -> None:
+        self.assertEqual(_sha256_file(ESH_NEXT_LOCK), ESH_NEXT_LOCK_SHA256)
+        self.assertEqual(_sha256_file(self.LIVE_REPORT), self.LIVE_REPORT_SHA256)
+        self.assertEqual(_sha256_file(self.QUALITY_REPORT), self.QUALITY_REPORT_SHA256)
+        self.assertEqual(_sha256_file(DRYRUN_REPORT), self.DRYRUN_REPORT_SHA256)
+        self.assertEqual(_sha256_file(ESH_FIRST_DRYRUN), ESH_FIRST_DRYRUN_SHA256)
+        self.assertEqual(_sha256_file(SC_NEXT_DRYRUN), SC_NEXT_DRYRUN_SHA256)
+        self.assertEqual(_sha256_file(RSU_NEXT_DRYRUN), RSU_NEXT_DRYRUN_SHA256)
+        self.assertEqual(_sha256_file(EP_NEXT_DRYRUN), EP_NEXT_DRYRUN_SHA256)
+        with open(self.FREEZE_ATTESTATION, newline="", encoding="utf-8") as f:
+            rows = list(csv.DictReader(f))
+        self.assertTrue(rows)
+        for row in rows:
+            self.assertEqual(row["attestation_status"], "MATCH", msg=row["artifact_role"])
+
+    def test_closure_artifacts_density_caveat_and_metrics(self) -> None:
+        for path in (
+            self.CLOSURE_METRICS,
+            self.CAVEAT_LEDGER,
+            self.EFFECTIVE_RESULT,
+            self.CLOSURE_MATRIX,
+            self.FREEZE_ATTESTATION,
+        ):
+            self.assertTrue(os.path.isfile(path), msg=path)
+        with open(self.CAVEAT_LEDGER, newline="", encoding="utf-8") as f:
+            caveats = list(csv.DictReader(f))
+        density = next(
+            c for c in caveats if c["caveat_id"] == "CAV-ESH-NS-PL-002"
+        )
+        self.assertEqual(density["caveat_type"], "density_cite_not_full_company_found")
+        self.assertIn("DES101", density["caveat_description"])
+        with open(self.CLOSURE_METRICS, newline="", encoding="utf-8") as f:
+            metrics = {r["metric_name"]: r["value"] for r in csv.DictReader(f)}
+        self.assertEqual(metrics["acceptable"], "5")
+        self.assertEqual(metrics["found"], "1")
+        self.assertEqual(metrics["empty_but_valid"], "4")
+        self.assertEqual(metrics["CNINFO_during_closure"], "0")
+        self.assertEqual(metrics["closure_gate"], "PASS_WITH_CAVEAT")
+        with open(self.EFFECTIVE_RESULT, newline="", encoding="utf-8") as f:
+            eff = {r["case_id"]: r for r in csv.DictReader(f)}
+        self.assertEqual(eff["DES101"]["retrieval_status"], "found")
+        self.assertEqual(eff["DES101"]["acceptable"], "yes")
+        self.assertEqual(eff["DES105"]["retrieval_status"], "empty_but_valid")
+        for path in (self.CAVEAT_LEDGER, self.CLOSURE_METRICS, self.EFFECTIVE_RESULT):
+            with open(path, encoding="utf-8") as f:
+                self.assertNotIn("\ufffd", f.read())
+
 
 if __name__ == "__main__":
     unittest.main()

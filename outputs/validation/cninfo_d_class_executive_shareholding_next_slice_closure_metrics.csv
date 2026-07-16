@@ -1,0 +1,29 @@
+metric_group,metric_name,value,gate_impact,notes
+next_slice,total_cases,5,closure,DES101-DES105 only
+next_slice,acceptable,5,closure,5/5 acceptable; PASS_WITH_CAVEAT retained for density caveat
+next_slice,found,1,closure,DES101 only; company-level found after SECCODE filter
+next_slice,empty_but_valid,4,closure,DES102-DES105 legal empty under denser threeMonth+b
+next_slice,failed,0,closure,no transport/http failure
+next_slice,needs_review,0,closure,branch not exercised this slice
+next_slice,unresolved_blocking,0,closure,density caveat retained; not blocking closure
+next_slice,shared_cninfo_requests,1,execution,prefer shared probe; offline SECCODE filter
+cninfo,CNINFO_during_live,1,execution,prior D-FM-01 bounded live; shared probe
+cninfo,CNINFO_during_closure,0,closure,this offline review round D-FM-02
+cninfo,request_cap,5,planning,total_request_cap on universe lock
+cninfo,requests_used,1,execution,shared probe 1 of planned shared 1
+caveat,density_not_full_company_found,yes,closure,market-section denser cite != all DES101-105 found; only DES101 hit
+caveat,template_live_gate_not_approved_print,yes,closure,summary template may still print live_gate=NOT_APPROVED; live already executed under R19 standing scope
+safety,pdf_download,0,red_line,no PDF
+safety,ocr,0,red_line,no OCR
+safety,extraction,0,red_line,no extraction
+safety,db_write,0,red_line,no DB
+safety,minio_write,0,red_line,no MinIO
+safety,rag_run,0,red_line,no RAG
+exclusion,688671_excluded,yes,universe,DLC003R not in next-slice primary cases
+exclusion,301259_excluded,yes,universe,DLC006R not in next-slice primary cases; not reopened
+track,esh_first_slice_frozen,yes,closure,DES001-005 roots/lock frozen read-only
+track,sc_rsu_ep_fia_at_sd_frozen,yes,closure,peer capital dry-run/lock roots frozen read-only
+promotion,disclosure_to_captured_normal,no,red_line,no upgrade from disclosure-only evidence
+promotion,empty_but_valid_to_found,no,red_line,DES102-105 empty retained as legal outcome
+gate,execution_gate,PASS_WITH_CAVEAT,preserved,d_class_executive_shareholding_next_slice_execution_gate
+gate,closure_gate,PASS_WITH_CAVEAT,closure,5/5 acceptable with density caveat; never bare PASS; NOT verified
