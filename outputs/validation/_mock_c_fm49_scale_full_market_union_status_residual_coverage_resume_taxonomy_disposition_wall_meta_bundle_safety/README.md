@@ -1,0 +1,21 @@
+# C-FM-49 mock scale lineage/drift/protected/repro-wall-meta-bundle safety root
+
+task_id: C-FM-49
+gate: PASS_OFFLINE
+cninfo_calls: 0
+hold_recommendation: KEEP_EXECUTE_FALSE
+approved_for_snapshot_rebuild: false
+seal_chain_extended: false
+harvest_unique_union: 2249
+surface_unique: 2251
+harvest_additive: 2261
+lineage_winner_provenance_formula: winner/complete
+partition_codeset_formula: complete/partial/failed
+protected_root_registry_formula: MOCK3-47+MOCK48+resume+auth
+lineage_winner_provenance_composition_sha256: 848c04020c1d50d4cfddaef2d0506d9fae74edb08e5bca46a74ea2a8f46c0d50
+partition_codeset_composition_sha256: 5273a5b38bcb7ca1804fe320d183d0d9c1f15e0c2aa91ccbadd98594b7bf9d0d
+protected_root_registry_composition_sha256: 92fa3d17497a548d926f5aaa408299b7e1ba6c3b63bb0d1e838bebef079c5b0a
+cross_lineage_drift_protected_repro_wall_meta_bundle_sha256: 6c2e17473bf6abe24ae3b9fa60379537c6224d2f687bbbf065d32a015ad17581
+
+Isolation: MOCK3-50 frozen; this root is C-ROOT-MOCK51.
+No CNINFO live. No production snapshot EXECUTE.

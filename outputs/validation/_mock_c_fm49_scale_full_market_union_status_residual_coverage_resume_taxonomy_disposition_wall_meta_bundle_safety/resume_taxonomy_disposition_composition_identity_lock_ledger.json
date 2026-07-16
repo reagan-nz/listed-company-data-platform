@@ -1,0 +1,87 @@
+{
+  "generated_at": "2026-07-16T02:47:14Z",
+  "task_id": "C-FM-49",
+  "fingerprint_sha256": "c7f4001f4c5f01e35e2a8057ec3d3ddf524147a1efab0bd4b49575b2d8dea10e",
+  "composition_sha256": "cfa0690ef9f53df05bcaeb698efd89a55ceea5125045bf8b7357778d698561bf",
+  "resume_taxonomy_disposition_formula": "28/1/0",
+  "sample_denials": [
+    {
+      "proposed": {
+        "resume_improved": 27,
+        "resume_same": 1,
+        "resume_worse": 0
+      },
+      "frozen": {
+        "resume_improved": 28,
+        "resume_same": 1,
+        "resume_worse": 0
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_taxonomy_disposition_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "resume_improved": 28,
+        "resume_same": 0,
+        "resume_worse": 0
+      },
+      "frozen": {
+        "resume_improved": 28,
+        "resume_same": 1,
+        "resume_worse": 0
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_taxonomy_disposition_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "resume_improved": 0,
+        "resume_same": 0,
+        "resume_worse": 0
+      },
+      "frozen": {
+        "resume_improved": 28,
+        "resume_same": 1,
+        "resume_worse": 0
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "resume_taxonomy_disposition_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "resume_improved": 28,
+        "resume_same": 1,
+        "resume_worse": 0
+      },
+      "frozen": {
+        "resume_improved": 28,
+        "resume_same": 1,
+        "resume_worse": 0
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "resume_taxonomy_disposition_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "resume_taxonomy_disposition_composition_identity_lock",
+    "resume_improved": 28,
+    "resume_same": 1,
+    "resume_worse": 0,
+    "resume_total": 29,
+    "composition_sha256": "cfa0690ef9f53df05bcaeb698efd89a55ceea5125045bf8b7357778d698561bf",
+    "resume_taxonomy_disposition_formula": "28/1/0",
+    "disposition": "resume_taxonomy_disposition",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

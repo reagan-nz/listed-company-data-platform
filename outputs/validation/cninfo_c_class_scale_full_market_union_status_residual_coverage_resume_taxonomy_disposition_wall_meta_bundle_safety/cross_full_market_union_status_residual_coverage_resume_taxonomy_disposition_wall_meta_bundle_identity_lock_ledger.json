@@ -1,0 +1,358 @@
+{
+  "generated_at": "2026-07-16T02:47:14Z",
+  "task_id": "C-FM-49",
+  "fingerprint_sha256": "01f3e967dc7f83d86f5ff38fe4c7476ef0b2a50d8bb65fa3e3c6f0f86852b176",
+  "bundle_sha256": "11ef5db5b9469daa35adb16e59d6822c695426438065002573f1fae3e3857096",
+  "compositions": {
+    "union_status_composition": {
+      "formula": "2134/106/9",
+      "composition_sha256": "1256457149f34b438186ec40c73b46785bf2b78b66bfa327ff31869f8238b521",
+      "union_complete": 2134,
+      "union_partial": 106,
+      "union_failed": 9
+    },
+    "residual_coverage_composition": {
+      "formula": "coverage=117",
+      "composition_sha256": "6f01a0ffde2a90804807af2ba1389af6a24cf4b5a049cd04f5b161b6c4b3c481",
+      "residual_safety_coverage": 117,
+      "residual_formula": "106+9+2=117"
+    },
+    "resume_taxonomy_disposition_composition": {
+      "formula": "28/1/0",
+      "composition_sha256": "cfa0690ef9f53df05bcaeb698efd89a55ceea5125045bf8b7357778d698561bf",
+      "resume_improved": 28,
+      "resume_same": 1,
+      "resume_worse": 0,
+      "disposition": "resume_taxonomy_disposition"
+    },
+    "cross_full_market_overlap_dry863_batch_priority_repro_wall_meta_bundle": {
+      "bundle_sha256": "8d07e3c52b53bd63e239c01101daea64c9db4d65a6f22464c41c4250ea9fd643"
+    },
+    "stable_metrics_wall": {
+      "harvest_unique_union": 2249,
+      "surface_unique": 2251,
+      "harvest_additive": 2261,
+      "union_status": "2134/106/9",
+      "overlap_delta": 12,
+      "residual_safety_coverage": 117,
+      "resume_taxonomy": "28/1/0",
+      "tier_coverage": "7/3314",
+      "combined_dryrun_coverage": 1053,
+      "risk_band": "75/14/12/5",
+      "coverage": 117
+    }
+  },
+  "sample_denials": [
+    {
+      "proposed_compositions": {
+        "union_status_composition": {
+          "formula": "0/0/0",
+          "composition_sha256": "1256457149f34b438186ec40c73b46785bf2b78b66bfa327ff31869f8238b521",
+          "union_complete": 0,
+          "union_partial": 0,
+          "union_failed": 0
+        },
+        "residual_coverage_composition": {
+          "formula": "coverage=117",
+          "composition_sha256": "6f01a0ffde2a90804807af2ba1389af6a24cf4b5a049cd04f5b161b6c4b3c481",
+          "residual_safety_coverage": 117,
+          "residual_formula": "106+9+2=117"
+        },
+        "resume_taxonomy_disposition_composition": {
+          "formula": "28/1/0",
+          "composition_sha256": "cfa0690ef9f53df05bcaeb698efd89a55ceea5125045bf8b7357778d698561bf",
+          "resume_improved": 28,
+          "resume_same": 1,
+          "resume_worse": 0,
+          "disposition": "resume_taxonomy_disposition"
+        },
+        "cross_full_market_overlap_dry863_batch_priority_repro_wall_meta_bundle": {
+          "bundle_sha256": "8d07e3c52b53bd63e239c01101daea64c9db4d65a6f22464c41c4250ea9fd643"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "frozen_compositions": {
+        "union_status_composition": {
+          "formula": "2134/106/9",
+          "composition_sha256": "1256457149f34b438186ec40c73b46785bf2b78b66bfa327ff31869f8238b521",
+          "union_complete": 2134,
+          "union_partial": 106,
+          "union_failed": 9
+        },
+        "residual_coverage_composition": {
+          "formula": "coverage=117",
+          "composition_sha256": "6f01a0ffde2a90804807af2ba1389af6a24cf4b5a049cd04f5b161b6c4b3c481",
+          "residual_safety_coverage": 117,
+          "residual_formula": "106+9+2=117"
+        },
+        "resume_taxonomy_disposition_composition": {
+          "formula": "28/1/0",
+          "composition_sha256": "cfa0690ef9f53df05bcaeb698efd89a55ceea5125045bf8b7357778d698561bf",
+          "resume_improved": 28,
+          "resume_same": 1,
+          "resume_worse": 0,
+          "disposition": "resume_taxonomy_disposition"
+        },
+        "cross_full_market_overlap_dry863_batch_priority_repro_wall_meta_bundle": {
+          "bundle_sha256": "8d07e3c52b53bd63e239c01101daea64c9db4d65a6f22464c41c4250ea9fd643"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_union_status_residual_coverage_resume_taxonomy_disposition_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {},
+      "frozen_compositions": {
+        "union_status_composition": {
+          "formula": "2134/106/9",
+          "composition_sha256": "1256457149f34b438186ec40c73b46785bf2b78b66bfa327ff31869f8238b521",
+          "union_complete": 2134,
+          "union_partial": 106,
+          "union_failed": 9
+        },
+        "residual_coverage_composition": {
+          "formula": "coverage=117",
+          "composition_sha256": "6f01a0ffde2a90804807af2ba1389af6a24cf4b5a049cd04f5b161b6c4b3c481",
+          "residual_safety_coverage": 117,
+          "residual_formula": "106+9+2=117"
+        },
+        "resume_taxonomy_disposition_composition": {
+          "formula": "28/1/0",
+          "composition_sha256": "cfa0690ef9f53df05bcaeb698efd89a55ceea5125045bf8b7357778d698561bf",
+          "resume_improved": 28,
+          "resume_same": 1,
+          "resume_worse": 0,
+          "disposition": "resume_taxonomy_disposition"
+        },
+        "cross_full_market_overlap_dry863_batch_priority_repro_wall_meta_bundle": {
+          "bundle_sha256": "8d07e3c52b53bd63e239c01101daea64c9db4d65a6f22464c41c4250ea9fd643"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_union_status_residual_coverage_resume_taxonomy_disposition_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "x": {
+          "a": 1
+        }
+      },
+      "frozen_compositions": {
+        "union_status_composition": {
+          "formula": "2134/106/9",
+          "composition_sha256": "1256457149f34b438186ec40c73b46785bf2b78b66bfa327ff31869f8238b521",
+          "union_complete": 2134,
+          "union_partial": 106,
+          "union_failed": 9
+        },
+        "residual_coverage_composition": {
+          "formula": "coverage=117",
+          "composition_sha256": "6f01a0ffde2a90804807af2ba1389af6a24cf4b5a049cd04f5b161b6c4b3c481",
+          "residual_safety_coverage": 117,
+          "residual_formula": "106+9+2=117"
+        },
+        "resume_taxonomy_disposition_composition": {
+          "formula": "28/1/0",
+          "composition_sha256": "cfa0690ef9f53df05bcaeb698efd89a55ceea5125045bf8b7357778d698561bf",
+          "resume_improved": 28,
+          "resume_same": 1,
+          "resume_worse": 0,
+          "disposition": "resume_taxonomy_disposition"
+        },
+        "cross_full_market_overlap_dry863_batch_priority_repro_wall_meta_bundle": {
+          "bundle_sha256": "8d07e3c52b53bd63e239c01101daea64c9db4d65a6f22464c41c4250ea9fd643"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_union_status_residual_coverage_resume_taxonomy_disposition_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "union_status_composition": {
+          "formula": "2134/106/9",
+          "composition_sha256": "1256457149f34b438186ec40c73b46785bf2b78b66bfa327ff31869f8238b521",
+          "union_complete": 2134,
+          "union_partial": 106,
+          "union_failed": 9
+        },
+        "residual_coverage_composition": {
+          "formula": "coverage=117",
+          "composition_sha256": "6f01a0ffde2a90804807af2ba1389af6a24cf4b5a049cd04f5b161b6c4b3c481",
+          "residual_safety_coverage": 117,
+          "residual_formula": "106+9+2=117"
+        },
+        "resume_taxonomy_disposition_composition": {
+          "formula": "28/1/0",
+          "composition_sha256": "cfa0690ef9f53df05bcaeb698efd89a55ceea5125045bf8b7357778d698561bf",
+          "resume_improved": 28,
+          "resume_same": 1,
+          "resume_worse": 0,
+          "disposition": "resume_taxonomy_disposition"
+        },
+        "cross_full_market_overlap_dry863_batch_priority_repro_wall_meta_bundle": {
+          "bundle_sha256": "8d07e3c52b53bd63e239c01101daea64c9db4d65a6f22464c41c4250ea9fd643"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "frozen_compositions": {
+        "union_status_composition": {
+          "formula": "2134/106/9",
+          "composition_sha256": "1256457149f34b438186ec40c73b46785bf2b78b66bfa327ff31869f8238b521",
+          "union_complete": 2134,
+          "union_partial": 106,
+          "union_failed": 9
+        },
+        "residual_coverage_composition": {
+          "formula": "coverage=117",
+          "composition_sha256": "6f01a0ffde2a90804807af2ba1389af6a24cf4b5a049cd04f5b161b6c4b3c481",
+          "residual_safety_coverage": 117,
+          "residual_formula": "106+9+2=117"
+        },
+        "resume_taxonomy_disposition_composition": {
+          "formula": "28/1/0",
+          "composition_sha256": "cfa0690ef9f53df05bcaeb698efd89a55ceea5125045bf8b7357778d698561bf",
+          "resume_improved": 28,
+          "resume_same": 1,
+          "resume_worse": 0,
+          "disposition": "resume_taxonomy_disposition"
+        },
+        "cross_full_market_overlap_dry863_batch_priority_repro_wall_meta_bundle": {
+          "bundle_sha256": "8d07e3c52b53bd63e239c01101daea64c9db4d65a6f22464c41c4250ea9fd643"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_union_status_residual_coverage_resume_taxonomy_disposition_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "cross_full_market_union_status_residual_coverage_resume_taxonomy_disposition_wall_meta_bundle_identity_lock",
+    "compositions": {
+      "union_status_composition": {
+        "formula": "2134/106/9",
+        "composition_sha256": "1256457149f34b438186ec40c73b46785bf2b78b66bfa327ff31869f8238b521",
+        "union_complete": 2134,
+        "union_partial": 106,
+        "union_failed": 9
+      },
+      "residual_coverage_composition": {
+        "formula": "coverage=117",
+        "composition_sha256": "6f01a0ffde2a90804807af2ba1389af6a24cf4b5a049cd04f5b161b6c4b3c481",
+        "residual_safety_coverage": 117,
+        "residual_formula": "106+9+2=117"
+      },
+      "resume_taxonomy_disposition_composition": {
+        "formula": "28/1/0",
+        "composition_sha256": "cfa0690ef9f53df05bcaeb698efd89a55ceea5125045bf8b7357778d698561bf",
+        "resume_improved": 28,
+        "resume_same": 1,
+        "resume_worse": 0,
+        "disposition": "resume_taxonomy_disposition"
+      },
+      "cross_full_market_overlap_dry863_batch_priority_repro_wall_meta_bundle": {
+        "bundle_sha256": "8d07e3c52b53bd63e239c01101daea64c9db4d65a6f22464c41c4250ea9fd643"
+      },
+      "stable_metrics_wall": {
+        "harvest_unique_union": 2249,
+        "surface_unique": 2251,
+        "harvest_additive": 2261,
+        "union_status": "2134/106/9",
+        "overlap_delta": 12,
+        "residual_safety_coverage": 117,
+        "resume_taxonomy": "28/1/0",
+        "tier_coverage": "7/3314",
+        "combined_dryrun_coverage": 1053,
+        "risk_band": "75/14/12/5",
+        "coverage": 117
+      }
+    },
+    "bundle_sha256": "11ef5db5b9469daa35adb16e59d6822c695426438065002573f1fae3e3857096",
+    "deny_composition_mutate": true,
+    "deny_bundle_inflate": true,
+    "deny_bundle_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

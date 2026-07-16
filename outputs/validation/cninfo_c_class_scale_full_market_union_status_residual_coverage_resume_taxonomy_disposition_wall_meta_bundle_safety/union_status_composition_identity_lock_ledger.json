@@ -1,0 +1,87 @@
+{
+  "generated_at": "2026-07-16T02:47:14Z",
+  "task_id": "C-FM-49",
+  "fingerprint_sha256": "3ffa72a457a8359678bb8f1fe43b61b3a2b78b9c78e721b12b73bbc8d0f79660",
+  "composition_sha256": "1256457149f34b438186ec40c73b46785bf2b78b66bfa327ff31869f8238b521",
+  "union_status_formula": "2134/106/9",
+  "sample_denials": [
+    {
+      "proposed": {
+        "union_complete": 2133,
+        "union_partial": 106,
+        "union_failed": 9
+      },
+      "frozen": {
+        "union_complete": 2134,
+        "union_partial": 106,
+        "union_failed": 9
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "union_status_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "union_complete": 2134,
+        "union_partial": 0,
+        "union_failed": 9
+      },
+      "frozen": {
+        "union_complete": 2134,
+        "union_partial": 106,
+        "union_failed": 9
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "union_status_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "union_complete": 0,
+        "union_partial": 0,
+        "union_failed": 0
+      },
+      "frozen": {
+        "union_complete": 2134,
+        "union_partial": 106,
+        "union_failed": 9
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "union_status_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "union_complete": 2134,
+        "union_partial": 106,
+        "union_failed": 9
+      },
+      "frozen": {
+        "union_complete": 2134,
+        "union_partial": 106,
+        "union_failed": 9
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "union_status_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "union_status_composition_identity_lock",
+    "union_complete": 2134,
+    "union_partial": 106,
+    "union_failed": 9,
+    "harvest_unique_union": 2249,
+    "composition_sha256": "1256457149f34b438186ec40c73b46785bf2b78b66bfa327ff31869f8238b521",
+    "union_status_formula": "2134/106/9",
+    "union_formula": "2134+106+9=2249",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
