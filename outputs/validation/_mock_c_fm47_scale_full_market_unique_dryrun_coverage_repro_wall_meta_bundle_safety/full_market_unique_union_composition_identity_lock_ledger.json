@@ -1,0 +1,79 @@
+{
+  "generated_at": "2026-07-16T02:22:59Z",
+  "task_id": "C-FM-47",
+  "fingerprint_sha256": "6332a03f6929fbf83a3375002cdf4a83132a4b03f2e82fb43f36a1b5afad297c",
+  "composition_sha256": "72513072e1a23ae087d00533aea4b08920951a2fcf986ed17366867af4328726",
+  "full_market_unique_union_formula": "unique=2249",
+  "sample_denials": [
+    {
+      "proposed": {
+        "harvest_unique_union": 2200,
+        "unique_union_composition_sha256": "7725392d7fe52f14bd6868b89a4e0feb04e72108e472c5bd86d0261985b60d53"
+      },
+      "frozen": {
+        "harvest_unique_union": 2249,
+        "unique_union_composition_sha256": "7725392d7fe52f14bd6868b89a4e0feb04e72108e472c5bd86d0261985b60d53"
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "full_market_unique_union_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "harvest_unique_union": 2249,
+        "unique_union_composition_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "frozen": {
+        "harvest_unique_union": 2249,
+        "unique_union_composition_sha256": "7725392d7fe52f14bd6868b89a4e0feb04e72108e472c5bd86d0261985b60d53"
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "full_market_unique_union_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "harvest_unique_union": 0,
+        "unique_union_composition_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "frozen": {
+        "harvest_unique_union": 2249,
+        "unique_union_composition_sha256": "7725392d7fe52f14bd6868b89a4e0feb04e72108e472c5bd86d0261985b60d53"
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "full_market_unique_union_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "harvest_unique_union": 2249,
+        "unique_union_composition_sha256": "7725392d7fe52f14bd6868b89a4e0feb04e72108e472c5bd86d0261985b60d53"
+      },
+      "frozen": {
+        "harvest_unique_union": 2249,
+        "unique_union_composition_sha256": "7725392d7fe52f14bd6868b89a4e0feb04e72108e472c5bd86d0261985b60d53"
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "full_market_unique_union_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "full_market_unique_union_composition_identity_lock",
+    "harvest_unique_union": 2249,
+    "union_complete": 2134,
+    "union_partial": 106,
+    "union_failed": 9,
+    "unique_union_composition_sha256": "7725392d7fe52f14bd6868b89a4e0feb04e72108e472c5bd86d0261985b60d53",
+    "composition_sha256": "72513072e1a23ae087d00533aea4b08920951a2fcf986ed17366867af4328726",
+    "full_market_unique_union_formula": "unique=2249",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "generated_at": "2026-07-16T02:22:59Z",
+  "task_id": "C-FM-47",
+  "fingerprint_sha256": "016109e33157aa6a31c61db188c5fbf442a91a7bb3462af8b315948a29d073c9",
+  "composition_sha256": "b996d01adbf37f8de29b6dcff70cac688369cbb23f36ad8ce9a2a2c6a62a8bb0",
+  "company_coverage_scale_formula": "tiers=7;coverage_sum=3314",
+  "sample_denials": [
+    {
+      "proposed": {
+        "scale_tier_count": 6,
+        "company_coverage_sum": 3314
+      },
+      "frozen": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3314
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "company_coverage_scale_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3000
+      },
+      "frozen": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3314
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "company_coverage_scale_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "scale_tier_count": 0,
+        "company_coverage_sum": 0
+      },
+      "frozen": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3314
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "company_coverage_scale_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3314
+      },
+      "frozen": {
+        "scale_tier_count": 7,
+        "company_coverage_sum": 3314
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "company_coverage_scale_composition_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "company_coverage_scale_composition_identity_lock",
+    "scale_tier_count": 7,
+    "company_coverage_sum": 3314,
+    "tier_coverage_composition_sha256": "8dde1cb0a0d885aaffc6bbb9a57fd8114bce94d002d061b507c003c77964f8b0",
+    "composition_sha256": "b996d01adbf37f8de29b6dcff70cac688369cbb23f36ad8ce9a2a2c6a62a8bb0",
+    "company_coverage_scale_formula": "tiers=7;coverage_sum=3314",
+    "deny_composition_mutate": true,
+    "deny_inflate": true,
+    "deny_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}

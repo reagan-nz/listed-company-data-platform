@@ -1,0 +1,318 @@
+{
+  "generated_at": "2026-07-16T02:22:59Z",
+  "task_id": "C-FM-47",
+  "fingerprint_sha256": "e7dc92358156447d3a55e250a7d12df218333d341c35473707c345703052508b",
+  "bundle_sha256": "aa49bbac36a7e688f40ae53a41f07e924fc5cdb9d5004be97ff81bff7c4df9fb",
+  "compositions": {
+    "full_market_unique_union_composition": {
+      "formula": "unique=2249",
+      "composition_sha256": "72513072e1a23ae087d00533aea4b08920951a2fcf986ed17366867af4328726",
+      "n": 2249
+    },
+    "combined_dryrun_cohort_composition": {
+      "formula": "combined_dryrun=1053",
+      "composition_sha256": "d4146a38ee09be82465e3d6bee6dbabe946774898ca6626c05cca4b2cb6e9661",
+      "n": 1053
+    },
+    "company_coverage_scale_composition": {
+      "formula": "tiers=7;coverage_sum=3314",
+      "composition_sha256": "b996d01adbf37f8de29b6dcff70cac688369cbb23f36ad8ce9a2a2c6a62a8bb0",
+      "tiers": 7,
+      "coverage_sum": 3314
+    },
+    "cross_lineage_drift_protected_repro_wall_meta_bundle": {
+      "bundle_sha256": "6c2e17473bf6abe24ae3b9fa60379537c6224d2f687bbbf065d32a015ad17581"
+    },
+    "stable_metrics_wall": {
+      "harvest_unique_union": 2249,
+      "surface_unique": 2251,
+      "harvest_additive": 2261,
+      "union_status": "2134/106/9",
+      "overlap_delta": 12,
+      "residual_safety_coverage": 117,
+      "resume_taxonomy": "28/1/0",
+      "tier_coverage": "7/3314",
+      "combined_dryrun_coverage": 1053,
+      "risk_band": "75/14/12/5",
+      "coverage": 117
+    }
+  },
+  "sample_denials": [
+    {
+      "proposed_compositions": {
+        "full_market_unique_union_composition": {
+          "formula": "unique=2000",
+          "composition_sha256": "72513072e1a23ae087d00533aea4b08920951a2fcf986ed17366867af4328726",
+          "n": 2000
+        },
+        "combined_dryrun_cohort_composition": {
+          "formula": "combined_dryrun=1053",
+          "composition_sha256": "d4146a38ee09be82465e3d6bee6dbabe946774898ca6626c05cca4b2cb6e9661",
+          "n": 1053
+        },
+        "company_coverage_scale_composition": {
+          "formula": "tiers=7;coverage_sum=3314",
+          "composition_sha256": "b996d01adbf37f8de29b6dcff70cac688369cbb23f36ad8ce9a2a2c6a62a8bb0",
+          "tiers": 7,
+          "coverage_sum": 3314
+        },
+        "cross_lineage_drift_protected_repro_wall_meta_bundle": {
+          "bundle_sha256": "6c2e17473bf6abe24ae3b9fa60379537c6224d2f687bbbf065d32a015ad17581"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "frozen_compositions": {
+        "full_market_unique_union_composition": {
+          "formula": "unique=2249",
+          "composition_sha256": "72513072e1a23ae087d00533aea4b08920951a2fcf986ed17366867af4328726",
+          "n": 2249
+        },
+        "combined_dryrun_cohort_composition": {
+          "formula": "combined_dryrun=1053",
+          "composition_sha256": "d4146a38ee09be82465e3d6bee6dbabe946774898ca6626c05cca4b2cb6e9661",
+          "n": 1053
+        },
+        "company_coverage_scale_composition": {
+          "formula": "tiers=7;coverage_sum=3314",
+          "composition_sha256": "b996d01adbf37f8de29b6dcff70cac688369cbb23f36ad8ce9a2a2c6a62a8bb0",
+          "tiers": 7,
+          "coverage_sum": 3314
+        },
+        "cross_lineage_drift_protected_repro_wall_meta_bundle": {
+          "bundle_sha256": "6c2e17473bf6abe24ae3b9fa60379537c6224d2f687bbbf065d32a015ad17581"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_scale_repro_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {},
+      "frozen_compositions": {
+        "full_market_unique_union_composition": {
+          "formula": "unique=2249",
+          "composition_sha256": "72513072e1a23ae087d00533aea4b08920951a2fcf986ed17366867af4328726",
+          "n": 2249
+        },
+        "combined_dryrun_cohort_composition": {
+          "formula": "combined_dryrun=1053",
+          "composition_sha256": "d4146a38ee09be82465e3d6bee6dbabe946774898ca6626c05cca4b2cb6e9661",
+          "n": 1053
+        },
+        "company_coverage_scale_composition": {
+          "formula": "tiers=7;coverage_sum=3314",
+          "composition_sha256": "b996d01adbf37f8de29b6dcff70cac688369cbb23f36ad8ce9a2a2c6a62a8bb0",
+          "tiers": 7,
+          "coverage_sum": 3314
+        },
+        "cross_lineage_drift_protected_repro_wall_meta_bundle": {
+          "bundle_sha256": "6c2e17473bf6abe24ae3b9fa60379537c6224d2f687bbbf065d32a015ad17581"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_scale_repro_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "x": {
+          "a": 1
+        }
+      },
+      "frozen_compositions": {
+        "full_market_unique_union_composition": {
+          "formula": "unique=2249",
+          "composition_sha256": "72513072e1a23ae087d00533aea4b08920951a2fcf986ed17366867af4328726",
+          "n": 2249
+        },
+        "combined_dryrun_cohort_composition": {
+          "formula": "combined_dryrun=1053",
+          "composition_sha256": "d4146a38ee09be82465e3d6bee6dbabe946774898ca6626c05cca4b2cb6e9661",
+          "n": 1053
+        },
+        "company_coverage_scale_composition": {
+          "formula": "tiers=7;coverage_sum=3314",
+          "composition_sha256": "b996d01adbf37f8de29b6dcff70cac688369cbb23f36ad8ce9a2a2c6a62a8bb0",
+          "tiers": 7,
+          "coverage_sum": 3314
+        },
+        "cross_lineage_drift_protected_repro_wall_meta_bundle": {
+          "bundle_sha256": "6c2e17473bf6abe24ae3b9fa60379537c6224d2f687bbbf065d32a015ad17581"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": false,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_scale_repro_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    },
+    {
+      "proposed_compositions": {
+        "full_market_unique_union_composition": {
+          "formula": "unique=2249",
+          "composition_sha256": "72513072e1a23ae087d00533aea4b08920951a2fcf986ed17366867af4328726",
+          "n": 2249
+        },
+        "combined_dryrun_cohort_composition": {
+          "formula": "combined_dryrun=1053",
+          "composition_sha256": "d4146a38ee09be82465e3d6bee6dbabe946774898ca6626c05cca4b2cb6e9661",
+          "n": 1053
+        },
+        "company_coverage_scale_composition": {
+          "formula": "tiers=7;coverage_sum=3314",
+          "composition_sha256": "b996d01adbf37f8de29b6dcff70cac688369cbb23f36ad8ce9a2a2c6a62a8bb0",
+          "tiers": 7,
+          "coverage_sum": 3314
+        },
+        "cross_lineage_drift_protected_repro_wall_meta_bundle": {
+          "bundle_sha256": "6c2e17473bf6abe24ae3b9fa60379537c6224d2f687bbbf065d32a015ad17581"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "frozen_compositions": {
+        "full_market_unique_union_composition": {
+          "formula": "unique=2249",
+          "composition_sha256": "72513072e1a23ae087d00533aea4b08920951a2fcf986ed17366867af4328726",
+          "n": 2249
+        },
+        "combined_dryrun_cohort_composition": {
+          "formula": "combined_dryrun=1053",
+          "composition_sha256": "d4146a38ee09be82465e3d6bee6dbabe946774898ca6626c05cca4b2cb6e9661",
+          "n": 1053
+        },
+        "company_coverage_scale_composition": {
+          "formula": "tiers=7;coverage_sum=3314",
+          "composition_sha256": "b996d01adbf37f8de29b6dcff70cac688369cbb23f36ad8ce9a2a2c6a62a8bb0",
+          "tiers": 7,
+          "coverage_sum": 3314
+        },
+        "cross_lineage_drift_protected_repro_wall_meta_bundle": {
+          "bundle_sha256": "6c2e17473bf6abe24ae3b9fa60379537c6224d2f687bbbf065d32a015ad17581"
+        },
+        "stable_metrics_wall": {
+          "harvest_unique_union": 2249,
+          "surface_unique": 2251,
+          "harvest_additive": 2261,
+          "union_status": "2134/106/9",
+          "overlap_delta": 12,
+          "residual_safety_coverage": 117,
+          "resume_taxonomy": "28/1/0",
+          "tier_coverage": "7/3314",
+          "combined_dryrun_coverage": 1053,
+          "risk_band": "75/14/12/5",
+          "coverage": 117
+        }
+      },
+      "matches_frozen": true,
+      "mutation_allowed": false,
+      "reason": "cross_full_market_scale_repro_wall_meta_bundle_identity_frozen_pre_execute",
+      "hold": "KEEP_EXECUTE_FALSE"
+    }
+  ],
+  "doc": {
+    "kind": "cross_full_market_scale_repro_wall_meta_bundle_identity_lock",
+    "compositions": {
+      "full_market_unique_union_composition": {
+        "formula": "unique=2249",
+        "composition_sha256": "72513072e1a23ae087d00533aea4b08920951a2fcf986ed17366867af4328726",
+        "n": 2249
+      },
+      "combined_dryrun_cohort_composition": {
+        "formula": "combined_dryrun=1053",
+        "composition_sha256": "d4146a38ee09be82465e3d6bee6dbabe946774898ca6626c05cca4b2cb6e9661",
+        "n": 1053
+      },
+      "company_coverage_scale_composition": {
+        "formula": "tiers=7;coverage_sum=3314",
+        "composition_sha256": "b996d01adbf37f8de29b6dcff70cac688369cbb23f36ad8ce9a2a2c6a62a8bb0",
+        "tiers": 7,
+        "coverage_sum": 3314
+      },
+      "cross_lineage_drift_protected_repro_wall_meta_bundle": {
+        "bundle_sha256": "6c2e17473bf6abe24ae3b9fa60379537c6224d2f687bbbf065d32a015ad17581"
+      },
+      "stable_metrics_wall": {
+        "harvest_unique_union": 2249,
+        "surface_unique": 2251,
+        "harvest_additive": 2261,
+        "union_status": "2134/106/9",
+        "overlap_delta": 12,
+        "residual_safety_coverage": 117,
+        "resume_taxonomy": "28/1/0",
+        "tier_coverage": "7/3314",
+        "combined_dryrun_coverage": 1053,
+        "risk_band": "75/14/12/5",
+        "coverage": 117
+      }
+    },
+    "bundle_sha256": "aa49bbac36a7e688f40ae53a41f07e924fc5cdb9d5004be97ff81bff7c4df9fb",
+    "deny_composition_mutate": true,
+    "deny_bundle_inflate": true,
+    "deny_bundle_deflate": true,
+    "hold": "KEEP_EXECUTE_FALSE"
+  }
+}
