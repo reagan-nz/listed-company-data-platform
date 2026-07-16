@@ -1,6 +1,6 @@
 # CNINFO B 类 Retrieval Ready Case Summary
 
-_生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
+_生成时间：2026-07-16（ready-case selector；不请求 CNINFO）_
 
 ## 1. 目的
 
@@ -20,9 +20,9 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 
 | 指标 | 数值 |
 |------|------|
-| total_cases | **94** |
+| total_cases | **97** |
 | placeholder | **2** |
-| ready | **92** |
+| ready | **95** |
 | retired | **0** |
 | invalid_ready | **0** |
 | result | **PASS** |
@@ -65,9 +65,12 @@ _生成时间：2026-07-15（ready-case selector；不请求 CNINFO）_
 - `bond_trustee_report_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `bond_trustee_report_known_002` (known_document) → `cninfo_general_announcement_pdf`
 - `bond_trustee_report_known_003` (known_document) → `cninfo_general_announcement_pdf`
+- `bond_trustee_report_known_004` (known_document) → `cninfo_general_announcement_pdf`
 - `tracking_rating_report_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `tracking_rating_report_known_002` (known_document) → `cninfo_general_announcement_pdf`
 - `tracking_rating_report_known_003` (known_document) → `cninfo_general_announcement_pdf`
+- `tracking_rating_report_known_004` (known_document) → `cninfo_general_announcement_pdf`
+- `tracking_rating_report_known_005` (known_document) → `cninfo_general_announcement_pdf`
 - `continuous_supervision_annual_known_001` (known_document) → `cninfo_general_announcement_pdf`
 - `continuous_supervision_annual_known_002` (known_document) → `cninfo_general_announcement_pdf`
 - `continuous_supervision_annual_known_003` (known_document) → `cninfo_general_announcement_pdf`

@@ -1,0 +1,5 @@
+# B-FM-01 live：category-sample 空（仅 known-document allow-list）
+status: live_sample_scoped_B-FM-01_empty_category
+verified: false
+notes: B-FM-01 R19 live empty category; known-document only
+cases: []

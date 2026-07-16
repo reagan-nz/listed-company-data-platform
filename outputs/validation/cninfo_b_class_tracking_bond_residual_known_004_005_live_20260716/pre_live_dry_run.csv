@@ -1,0 +1,4 @@
+case_id,case_type,case_status,source_id,title_pattern,date_start,date_end,expected_document_type,expected_route_to,dry_run_status,would_query,query_status,notes
+tracking_rating_report_known_004,known_document,ready,cninfo_general_announcement_pdf,相关债券2025年跟踪评级报告,2025-06-26,2025-06-29,announcement,cninfo_general_announcement_pdf,ready_for_future_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called
+tracking_rating_report_known_005,known_document,ready,cninfo_general_announcement_pdf,主体及“申昊转债”2025年度跟踪评级报告,2025-06-26,2025-06-29,announcement,cninfo_general_announcement_pdf,ready_for_future_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called
+bond_trustee_report_known_004,known_document,ready,cninfo_general_announcement_pdf,可续期公司债券受托管理事务报告（2024年度）,2025-06-29,2025-07-02,announcement,cninfo_general_announcement_pdf,ready_for_future_live_validation,true,not_executed_dry_run,dry-run only; CNINFO not called

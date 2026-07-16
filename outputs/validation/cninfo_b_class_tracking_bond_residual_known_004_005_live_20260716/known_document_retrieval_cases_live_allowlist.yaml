@@ -1,0 +1,59 @@
+# B-FM-01 live allow-list — 仅新晋 tracking_rating_report_known_004/005 /
+# bond_trustee_report_known_004
+status: live_sample_scoped_B-FM-01
+verified: false
+notes: B-FM-01 R19 live allow-list only; excludes prior LIVE_PASS and deferred known_002 families
+cases:
+  - case_id: tracking_rating_report_known_004
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "300644"
+    company_name: "南京聚隆"
+    title_pattern: "相关债券2025年跟踪评级报告"
+    expected_document_type: announcement
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-01 live allow-list（相关债券跟踪评级 known_004）：
+      harvest BD2E606 南京聚隆 300644 ann=1224014161 2025-06-27。
+      title_pattern 取「相关债券2025年跟踪评级报告」
+      （≠ known_001–003 / known_005）。
+      不写 verified；不下载 PDF。
+
+  - case_id: tracking_rating_report_known_005
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "300853"
+    company_name: "申昊科技"
+    title_pattern: "主体及“申昊转债”2025年度跟踪评级报告"
+    expected_document_type: announcement
+    date_start: "2025-06-26"
+    date_end: "2025-06-29"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-01 live allow-list（主体及转债联合跟踪评级 known_005）：
+      harvest BD2E636 申昊科技 300853 ann=1224016390 2025-06-27。
+      title_pattern 取「主体及“申昊转债”2025年度跟踪评级报告」
+      （≠ known_001–004）。
+      不写 verified；不下载 PDF。
+
+  - case_id: bond_trustee_report_known_004
+    case_status: ready
+    source_id: cninfo_general_announcement_pdf
+    company_code: "000725"
+    company_name: "京东方A"
+    title_pattern: "可续期公司债券受托管理事务报告（2024年度）"
+    expected_document_type: announcement
+    date_start: "2025-06-29"
+    date_end: "2025-07-02"
+    expected_route_to: cninfo_general_announcement_pdf
+    expected_pdf_url_available: true
+    notes: >-
+      B-FM-01 live allow-list（可续期公司债券受托 known_004）：
+      harvest B2E013 京东方A 000725 ann=1224036525 2025-06-30。
+      title_pattern 取「可续期公司债券受托管理事务报告（2024年度）」
+      （≠ known_001–003）。
+      不写 verified；不下载 PDF。
